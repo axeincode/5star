@@ -1,0 +1,523 @@
+// color
+.purple {
+    color: #637BF9 !important;
+}
+
+.yellow {
+    color: #F9BC01 !important;
+}
+
+.white {
+    color: #FFFFFF !important;
+}
+
+.black {
+    color: #000000 !important;
+}
+
+.slate-gray {
+    color: #7782AA;
+}
+
+.color-FF6200 {
+    color: #FF6200;
+}
+
+.transparent {
+    background-color: transparent !important;
+}
+
+.bg-color-1 {
+    background-color: #1C1929;
+    box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    height: 48px;
+}
+
+.bg-color-211F31 {
+    background-color: #211F31;
+}
+
+.active {
+    color: #12FF76;
+}
+
+.mt-170 {
+    margin-top: 170px !important;
+}
+
+.mt-16 {
+    margin-top: 64px !important;
+}
+
+.mt-15 {
+    margin-top: 60px !important;
+}
+
+.inactive {
+    color: #7782AA;
+}
+
+// text-align
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+// width
+.full-width {
+    width: 100%;
+}
+
+// layout 
+.relative {
+    position: relative;
+}
+
+// label
+.label-text-sm {
+    font-weight: 400;
+    font-size: 12px;
+    font-family: 'Inter';
+}
+
+.label-text-md {
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.label-text-md2 {
+    font-weight: 700;
+    font-size: 20px;
+    font-family: 'Inter';
+}
+
+.label-text-lg {
+    font-weight: 700;
+    font-size: 24px;
+    font-family: 'Inter';
+}
+
+.label-text-xl {
+    font-weight: 700;
+    font-size: 28px;
+    font-family: 'Inter';
+}
+
+.text-400-10 {
+    font-weight: 400;
+    font-size: 10px;
+    font-family: 'Inter';
+}
+
+.text-400-12 {
+    font-weight: 400;
+    font-size: 12px;
+    font-family: 'Inter';
+}
+
+.text-400-14 {
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.text-400-16 {
+    font-weight: 400;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+.text-400-28 {
+    font-weight: 400;
+    font-size: 28px;
+    font-family: 'Inter';
+}
+
+.text-500-8 {
+    font-weight: 500;
+    font-size: 8px;
+    font-family: 'Inter';
+}
+
+.text-500-10 {
+    font-weight: 500;
+    font-size: 10px;
+    font-family: 'Inter';
+}
+.text-500-12 {
+    font-weight: 500;
+    font-size: 12px;
+    font-family: 'Inter';
+}
+
+.text-500-10 {
+    font-weight: 500;
+    font-size: 10px;
+    font-family: 'Inter';
+}
+
+.text-500-14 {
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.text-600-8 {
+    font-weight: 600;
+    font-size: 8px;
+    font-family: 'Inter';
+}
+.text-600-10 {
+    font-weight: 600;
+    font-size: 10px;
+    font-family: 'Inter';
+}
+
+.text-600-12 {
+    font-weight: 600;
+    font-size: 12px;
+    font-family: 'Inter';
+}
+
+.text-600-14 {
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.text-600-16 {
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.text-700-10 {
+    font-weight: 700 !important;
+    font-size: 10px !important;
+    font-family: 'Inter';
+}
+
+.text-700-12 {
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    font-family: 'Inter';
+}
+
+.text-700-14 {
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    font-family: 'Inter';
+}
+
+.text-700-16 {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.text-700-18 {
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Inter';
+}
+
+.text-700-22 {
+    font-weight: 700;
+    font-size: 22px;
+    font-family: 'Inter';
+}
+
+.text-700-20 {
+    font-weight: 700;
+    font-size: 20px;
+    font-family: 'Inter';
+}
+
+.text-800-8 {
+    font-weight: 800;
+    font-size: 8px;
+    font-family: 'Inter';
+}
+
+.text-800-10 {
+    font-weight: 800;
+    font-size: 10px;
+    font-family: 'Inter';
+}
+
+.text-800-12 {
+    font-weight: 800;
+    font-size: 12px;
+    font-family: 'Inter';
+}
+
+.text-800-14 {
+    font-weight: 800;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.text-800-16 {
+    font-weight: 800;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.text-800-20 {
+    font-weight: 800;
+    font-size: 20px;
+    font-family: 'Inter';
+}
+
+.text-800-32 {
+    font-weight: 800;
+    font-size: 32px;
+    font-family: 'Inter';
+}
+
+.text-900-20 {
+    font-weight: 900;
+    font-size: 20px;
+    font-family: 'Inter';
+}
+
+.text-900-28 {
+    font-weight: 900;
+    font-size: 28px;
+    font-family: 'Inter';
+}
+
+.text-900-18 {
+    font-weight: 900;
+    font-size: 18px;
+    font-family: 'Inter';
+}
+
+.text-900-16 {
+    font-weight: 900;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.text-900-14 {
+    font-weight: 900;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.text-900-12 {
+    font-weight: 900;
+    font-size: 12px;
+    font-family: 'Inter';
+    font-style: normal;
+}
+
+.text-900-10 {
+    font-weight: 900;
+    font-size: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+}
+
+.text-gray {
+    color: #7782AA !important;
+}
+
+.gray {
+    color: #7782AA !important;
+}
+
+.color-01983A {
+    color: #01983A;
+}
+
+.color-31E598 {
+    color: #31E598
+}
+
+.color-D42763 {
+    color: #D42763;
+}
+
+.color-F9BC01 {
+    color: #F9BC01;
+}
+
+.color-623AEC {
+    color: #623AEC;
+}
+
+.color-31E598 {
+    color: #31E598
+}
+
+.color-29263C {
+    color: #29263C;
+}
+
+.color-04D981 {
+    color: #04D981
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+// textfield
+.dark-textfield .v-field__field {
+    background-color: #211F31;
+}
+
+.normal-textfield .v-field__field {
+    background-color: #29263C;
+}
+
+.custom-text-field {
+    box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
+}
+
+.form-textfield {
+    margin: 12px;
+    height: 48px;
+
+    .v-field__input {
+        opacity: 1; // for the validation box opacity
+    }
+
+    div.v-field__field {
+        padding-left: 8px;
+        box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+
+        input {
+            color: white;
+        }
+
+        label.v-label.v-field-label {
+            color: #7782AA;
+        }
+    }
+
+    div.v-field.v-field--appended {
+        background-color: #211F31;
+    }
+
+    div.v-field__append-inner {
+        color: #7782AA;
+    }
+}
+
+// button
+button {
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11) !important;
+    border-radius: 12px;
+
+    .v-btn__content {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 22px;
+        text-align: center;
+    }
+}
+
+.button-bright {
+    background-color: #32CFEC !important;
+    color: black !important;
+}
+
+.button-dark {
+    background-color: #353652 !important;
+    color: white !important;
+}
+
+.button-yellow {
+    background-color: #F9BC01 !important;
+    color: black !important;
+}
+
+.button-black {    
+    background-color: #1C1929 !important;
+    color: white !important;
+}
+
+.button-purple {
+    border-radius: 12px;
+    border: 1px solid #6842EC;
+    background: #2F2756;
+}
+
+.button-1C1929 {
+    border-radius: 12px;
+    border: 1px solid #4E7141;
+    background: #1C1929;
+
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+}
+
+.v-btn--disabled {
+    background-color: #353652 !important;
+    color: white !important;
+}
+
+// carousel
+.button-carousel {
+    background: #211F31;
+    box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    width: 32px !important;
+    height: 32px !important;
+    color: white !important;
+}
+
+.carousel {
+    margin-top: -30%;
+    margin-bottom: -30%;
+
+    .v-window__controls {
+        padding-left: 13%;
+        padding-right: 13%;
+    }
+
+    .v-window-item {
+        .v-responsive {
+            width: 37%;
+            margin: 35% auto auto;
+            height: 37%;
+        }
+    }
+}
+
+// dialog
+.v-overlay {
+    .v-overlay__scrim {
+        opacity: 0.72;
+    }
+}
+
+// cursor
+.pointer {
+    cursor: pointer;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.full-height {
+    height: 100%;
+}

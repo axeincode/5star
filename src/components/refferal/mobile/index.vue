@@ -1,0 +1,186 @@
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useDisplay } from 'vuetify';
+import { refferalStore } from '@/store/refferal';
+import Notification from "@/components/global/notification/index.vue";
+
+const { t } = useI18n();
+const { width } = useDisplay();
+const { setRefferalDialogShow } = refferalStore();
+
+const invitedUser = ref<number>(28560);
+const earnMoney = ref<number>(85601479);
+const host = ref<string>("xxx.com");
+const refferalCode = ref<string>("xxxxxxxxxx");
+const siteUrl = ref<string>("https://blue.game/xxxxxxxxxx");
+
+const descriptionVisible = ref<boolean>(false);
+
+const notificationShow = ref<boolean>(false);
+
+const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
+
+const notificationText = ref<string>(t('refferal.copy_success_text'));
+
+const copyToClipboard = () => {
+    navigator.clipboard.writeText(siteUrl.value).then(
+        () => {
+            console.log('Copied to clipboard!');
+            notificationShow.value = !notificationShow.value;
+            // setRefferalDialogShow(false);
+        },
+        (error) => {
+            console.error('Could not copy text: ', error);
+        }
+    );
+}
+
+const showMainDialog = () => {
+    descriptionVisible.value = false;
+}
+
+const showDescriptionDialog = () => {
+    descriptionVisible.value = true;
+}
+
+onMounted(() => {
+})
+</script>
+
+<template>
+    <div class="m-refferal-container">
+        <template v-if="descriptionVisible">
+            <div class="mt-5 text-center text-700-14 white">
+                {{ t('refferal.dialog.header.body_text') }}
+            </div>
+            <div class="mt-3">
+                <img src="@/assets/public/image/bg_public_02_01.png" class="full-width" />
+            </div>
+            <div class="mt-4 mx-6 white text-400-14">
+                {{ t('refferal.description.text_1') }}
+            </div>
+            <div class="mt-3 mx-6 text-gray text-500-10 text-justify">
+                {{ t('refferal.description.text_2') }}
+            </div>
+            <div class="mt-4 mx-6">
+                <v-card height="292" theme="dark" color="#211F31" class="overflow-y-auto">
+                    <div class="mx-4 mt-4 text-600-14 text-gray">
+                        {{ t('refferal.description.term_text') }}
+                    </div>
+                    <p class="mx-4 mt-3 text-400-10 text-gray text-justify">
+                        {{ t('refferal.description.text_3') }}
+                    </p>
+                </v-card>
+            </div>
+            <div class="mt-6 mx-6">
+                <v-btn class="button-dark m-reffer-btn-font text-none" width="-webkit-fill-available" height="46px" @click="showMainDialog">
+                    {{ t('refferal.description.back_btn_text') }}
+                </v-btn>
+            </div>
+        </template>
+        <template v-else>
+            <div class="refferal-dialog-header text-center">
+                <img src="@/assets/public/image/img_public_08.png" class="m-refferal-header-img"/>
+                <div class="mt-3 text-center text-700-14 yellow">
+                    {{ t('refferal.dialog.header.title_text') }}
+                </div>
+                <div class="mt-3 text-center text-700-18 white">
+                    {{ t('refferal.dialog.header.body_text') }}
+                </div>
+                <div class="mx-7 mt-2 text-center text-400-12 white text-justify">
+                    <Font color="#F9BC01">{{ invitedUser.toLocaleString() }}</Font>
+                    {{ t('refferal.dialog.header.body_text_1') }}
+                    <Font color="#F9BC01">{{ earnMoney.toLocaleString() }}</Font>
+                    {{ t('refferal.dialog.header.body_text_2') }}
+                    <Font color="#F9BC01">{{ host }}</Font>
+                    {{ t('refferal.dialog.header.body_text_3') }}
+                </div>
+                <div class="mt-3 text-center text-500-12 color-31E598 boder-bottom-31E598" @click="showDescriptionDialog">
+                    {{ t('refferal.dialog.header.body_text_4') }}
+                </div>
+            </div>
+            <div class="refferal-dialog-body">
+                <div class="text-center mt-6 text-700-18 white">
+                    {{ t('refferal.dialog.body.text_1') }}
+                </div>
+                <div class="text-center mt-4 text-500-12 text-gray">
+                    {{ t('refferal.dialog.body.text_2') }}{{ refferalCode }}{{ t('refferal.dialog.body.text_3') }}
+                </div>
+                <div class="text-center mt-6 mx-6">
+                    <v-card theme="dark" color="#211F31" height="40">
+                        <div class="text-400-14 text-gray mt-2">{{ siteUrl }}</div>
+                    </v-card>
+                </div>
+                <div class="text-center mt-8 mx-6">
+                    <v-btn class="button-bright m-reffer-btn-font text-none" width="-webkit-fill-available" height="48px"
+                        @click="copyToClipboard">
+                        {{ t('refferal.dialog.body.copy_btn_text') }}
+                    </v-btn>
+                </div>
+            </div>
+        </template>
+        <v-btn class="m-close-button" icon="true" @click="setRefferalDialogShow(false)">
+            <v-icon color="#FFFFFF">
+                mdi-close
+            </v-icon>
+        </v-btn>
+        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+    </div>
+</template>
+
+<style lang="scss">
+.m-refferal-container {
+    background: #2E274C;
+    border-radius: 16px;
+    height: 594px;
+
+    .refferal-dialog-header {
+        background: linear-gradient(180deg, #5EAD1F 0%, #1B5A65 100%);
+        border-radius: 16px;
+        height: 333px;
+
+        .m-refferal-header-img {
+            margin-top: -10px;
+            width: 212px;
+        }
+    }
+
+    // close modal button
+    .m-close-button {
+        box-shadow: none !important;
+        background-color: transparent !important;
+        position: absolute !important;
+        top: 5px;
+        right: 5px;
+
+        .v-icon {
+            font-size: 24px;
+        }
+    }
+
+    .boder-bottom-31E598 {
+        color: #31E598;
+        text-decoration: underline;
+        text-underline-position: under;
+        cursor: pointer;
+    }
+
+    .text-over-flow {
+        /* Width of the container */
+        white-space: nowrap;
+        /* Prevents text from breaking into multiple lines */
+        overflow: hidden;
+        /* Hides any overflowing text */
+        text-overflow: ellipsis;
+        /* Adds ellipsis to truncate the text */
+    }
+
+    .m-reffer-btn-font {
+        .v-btn__content {
+            font-weight: 700;
+            font-size: 14px;
+        }
+    }
+}
+</style>

@@ -1,0 +1,113 @@
+<script lang="ts" setup>
+import { ref, computed, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useDisplay } from 'vuetify';
+
+const { t } = useI18n();
+const { width } = useDisplay();
+const emit = defineEmits<{ (e: 'mDialogHide'): void, (e: 'selectActiveIndex', value: number): void }>()
+const props = defineProps<{ avatar: any, nickName: string }>();
+const { avatar, nickName } = toRefs(props);
+
+const menuList = ref<Array<any>>([
+    {
+        title: t('account.menu.user_info_text'),
+        content: t('account.sub_menu.user_info_text'),
+    },
+    {
+        title: t('account.menu.personal_info_text'),
+        content: t('account.sub_menu.personal_info_text'),
+    },
+    {
+        title: t('account.menu.document_text'),
+        content: t('account.sub_menu.document_text'),
+    },
+    {
+        title: t('account.menu.preference_text'),
+        content: t('account.sub_menu.preference_text'),
+    },
+    {
+        title: t('account.menu.suspend_account_text'),
+        content: t('account.sub_menu.suspend_account_text'),
+    },
+])
+
+const handleMenu = (index: number) => {
+    emit('selectActiveIndex', index)
+}
+
+</script>
+
+<template>
+    <div class="m-account-dialog-container">
+        <img :src="avatar" class="m-account-avatar-position" />
+        <v-btn class="close-button" icon="true" @click="emit('mDialogHide')">
+            <v-icon color="#7782AA">
+                mdi-close
+            </v-icon>
+        </v-btn>
+        <v-row class="mt-16 mx-2 justify-center text-700-12 text-gray">
+            {{ nickName }}
+        </v-row>
+        <v-row class="mx-1 mt-2">
+            <v-col cols="12" class="m-account-menu px-1">
+                <v-list theme="dark">
+                    <template v-for="(item, index) in menuList" :key="index">
+                        <v-divider class="m-account-divider mb-1"></v-divider>
+                        <v-list-item :value="item" @click="handleMenu(index)">
+                            <v-list-item-title>
+                                <div class="text-500-14 text-gray">
+                                    {{ item.title }}
+                                </div>
+                                <div class="text-400-10 text-gray">
+                                    {{ item.content }}
+                                </div>
+                            </v-list-item-title>
+                        </v-list-item>
+                    </template>
+                </v-list>
+            </v-col>
+        </v-row>
+    </div>
+</template>
+
+<style lang="scss">
+// mobile account dialog container
+.m-account-dialog-container {
+    background-color: #211F31;
+    border-radius: 32px !important;
+    height: 430px;
+
+    .m-account-avatar-position {
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    // close modal button
+    .close-button {
+        box-shadow: none !important;
+        background-color: transparent !important;
+        position: absolute !important;
+        top: 5px;
+        right: 5px;
+    }
+}
+
+
+.m-account-menu {
+    background-color: #211F31;
+    border-radius: 0px 0px 12px 12px !important;
+
+    .v-list {
+        background: inherit !important;
+    }
+}
+
+.m-account-divider {
+    margin: auto;
+    border-width: thin;
+    background: #3E3A57;
+}
+</style>
