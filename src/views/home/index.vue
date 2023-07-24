@@ -726,7 +726,7 @@ export default Dashboard;
               <v-col cols="4" class="text-700-14 gray text-center py-0">{{ t('home.profit_text') }}</v-col>
             </v-row>
           </v-card>
-          <div class="m-home-overflow-auto" ref="luckyContainer">
+          <div class="m-home-overflow-auto" ref="luckyContainer" style="overflow-y: auto;">
             <v-row v-for="(item, index) in luckyJackpotList" :key="index" class="mx-4 mt-2 align-center">
               <v-col cols="3" class="py-1">
                 <img :src="item.rank" v-if="!isNumeric(item.rank)" width="22" />
