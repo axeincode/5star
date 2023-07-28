@@ -94,6 +94,11 @@ const mobileWidth: any = computed(() => {
   return width.value;
 })
 
+const refferalAppBarShow = computed(() => {
+  const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+  return getRefferalAppBarShow.value;
+})
+
 // get mail data
 const mailList = computed((): GetMailData[] => {
   const { getMailList } = storeToRefs(mailStore())
@@ -112,15 +117,28 @@ watch(rightBarToggle, (newValue) => {
   }
 })
 
+watch(refferalAppBarShow, (newValue) => {
+  if (mobileWidth.value > 1280) {
+    if (rightBarToggle.value) {
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
+    } else {
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc-1 app-bar-position" : "app-bar-pc-1";
+    }
+  } else {
+    appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
+  }
+
+}, { deep: true });
+
 watch(mobileWidth, (newValue: number) => {
   if (newValue > 1280) {
     if (rightBarToggle.value) {
-      appBarWidth.value = "app-bar-pc";
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
     } else {
-      appBarWidth.value = "app-bar-pc-1";
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc-1 app-bar-position" : "app-bar-pc-1";
     }
   } else {
-    appBarWidth.value = "app-bar-mobile";
+    appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
   }
 })
 
@@ -255,12 +273,12 @@ onMounted(async () => {
   mailCount.value = mailList.value.length
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
-      appBarWidth.value = "app-bar-pc";
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
     } else {
-      appBarWidth.value = "app-bar-pc-1";
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc-1 app-bar-position" : "app-bar-pc-1";
     }
   } else {
-    appBarWidth.value = "app-bar-mobile";
+    appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
   }
   if (token.value != undefined) {
     await dispatchUserProfile();
@@ -290,7 +308,7 @@ onMounted(async () => {
       <div class="d-flex">
         <v-menu offset="10" class="deposit-menu">
           <template v-slot:activator="{ props }">
-            <v-card color="#29263C" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
+            <v-card color="#211F31" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
               <v-list-item class="deposit-item user-card-height" v-bind="props">
                 <div class="d-flex align-center">
                   <v-menu offset="20">
@@ -319,15 +337,15 @@ onMounted(async () => {
                 </div>
               </v-list-item>
             </v-card>
-            <v-card color="#29263C" theme="dark" class="mt-3 m-user-card-height" v-else>
-              <v-list-item class="deposit-item m-user-card-height" v-bind="props">
+            <v-card color="#211F31" theme="dark" class="mt-3 m-user-card-height" v-else>
+              <v-list-item class="deposit-item m-user-card-height px-2" v-bind="props">
                 <div class="d-flex align-center">
                   <v-menu offset="20">
                     <template v-slot:activator="{ props }">
                       <div class="d-flex align-center" v-bind="props" style="height: 40px;">
-                        <p class="mr-1">{{ user.currency }}</p>
-                        <p class="mr-2">{{ user.wallet }}</p>
-                        <img src="@/assets/public/svg/icon_public_50.svg" class="mr-2" />
+                        <p class="mr-1 text-700-12">{{ user.currency }}</p>
+                        <p class="mr-2 text-700-12">{{ user.wallet }}</p>
+                        <img src="@/assets/public/svg/icon_public_50.svg" class="mr-1" width="16" />
                       </div>
                     </template>
                     <v-list theme="dark" bg-color="#211F31" class="px-2" width="200px">
@@ -352,7 +370,7 @@ onMounted(async () => {
         </v-menu>
         <v-menu offset="20" class="user-menu" :scrim="true">
           <template v-slot:activator="{ props }">
-            <v-card color="#29263C" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
+            <v-card color="#211F31" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
               <v-list-item class="user-item" v-bind="props" value="user dropdown">
                 <div class="d-flex align-center">
                   <img :src="user.avatar" class="user-avatar-width" />
@@ -564,9 +582,9 @@ onMounted(async () => {
       </div>
     </div>
     <div v-else>
-      <v-btn @click="openLoginBonusDialog" class="text-none">
+      <!-- <v-btn @click="openLoginBonusDialog" class="text-none">
         Login Bonus
-      </v-btn>
+      </v-btn> -->
       <v-switch :label="currentLanguage === 'en' ? 'English' : '中文'" color="success" value="success"
         @change="toggleLanguage" hide-details class="toggle-language-switch" />
       <v-btn @click="openDialog('login')" class="text-none"
@@ -644,6 +662,13 @@ onMounted(async () => {
   color: #ffffff !important;
 }
 
+
+@media (max-width: 600px) {
+  .app-bar-position {
+    top: 32px !important;
+  }
+}
+
 .toggle-language-switch {
   position: absolute;
   top: 1%;
@@ -681,14 +706,14 @@ onMounted(async () => {
 .app-bar-login-btn-mobile {
   width: 80px;
   height: 40px !important;
-  background-color: #29263c;
+  background-color: transparent;
   margin-right: 6px;
   font-size: 6px !important;
   font-weight: 400;
 
   .v-btn__content {
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 14px;
   }
 }
 
@@ -701,11 +726,13 @@ onMounted(async () => {
 .app-bar-signup-btn-mobile {
   width: 96px;
   height: 40px !important;
-  background-color: #5524fd !important;
+  border-radius: 12px;
+  border: 1px solid #8664F7;
+  background: linear-gradient(0deg, #5524FD 0%, #6D44F7 100%);
 
   .v-btn__content {
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 14px;
   }
 
 }
@@ -794,7 +821,7 @@ onMounted(async () => {
   margin-left: auto !important;
 
   .v-overlay__content {
-    top: 80px !important;
+    // top: 80px !important;
     left: unset !important;
     right: 0px !important;
   }
@@ -803,7 +830,7 @@ onMounted(async () => {
     content: "";
     position: absolute;
     align-self: center;
-    right: 100px;
+    right: 32px;
     top: -18px;
     border: 9px solid #211f31;
     border-right-color: transparent;

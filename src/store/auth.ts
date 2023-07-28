@@ -92,10 +92,13 @@ export const authStore = defineStore({
     },
     // dipatch login
     async dispatchSignIn(msg: SignIn.SigninRequestData) {
+
       this.setSuccess(false);
       const route: string = NETWORK.LOGIN.LOGIN;
       const network: Network = Network.getInstance();
+
       // response call back function
+
       const next = (response: SignIn.GetSigninResponseData) => {
         if (response.code == 200) {
           this.setToken(response.token);
@@ -105,13 +108,16 @@ export const authStore = defineStore({
         }
       }
       await network.sendMsg(route, msg, next, 1);
+
     },
     // dipatch signup
     async dispatchSignUp(msg: SignUp.SignupRequestData) {
       this.setSuccess(false);
       const route: string = NETWORK.LOGIN.REGISTER;
       const network: Network = Network.getInstance();
+
       // response call back function
+
       const next = (response: SignUp.GetSignupResponseData) => {
         if (response.code == 200) {
           this.setToken(response.token);
@@ -127,6 +133,7 @@ export const authStore = defineStore({
       this.setSuccess(false);
       const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_INFO;
       const network: Network = Network.getInstance();
+
       // response call back function
       const next = (response: User.GetUserInfoResponseData) => {
         if (response.code == 200) {

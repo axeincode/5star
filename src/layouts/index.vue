@@ -2,6 +2,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import NavBarLayout from './NavBar.vue';
+import MNavBarLayout from './MobileNavBar.vue';
 import UserNavBarLayout from './UserNavBar.vue';
 import RightBarLayout from './RightBar.vue';
 import AppBarLayout from './AppBar.vue'
@@ -15,7 +16,7 @@ import { storeToRefs } from "pinia";
 const { width } = useDisplay();
 
 const refferalAppBarShow = computed(() => {
-  const {getRefferalAppBarShow} = storeToRefs(refferalStore());
+  const { getRefferalAppBarShow } = storeToRefs(refferalStore());
   return getRefferalAppBarShow.value
 })
 
@@ -26,9 +27,10 @@ const mobileWidth = computed(() => {
 
 <template>
   <v-app>
-    <RefferalLayout v-if="refferalAppBarShow"/>
+    <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />
-    <NavBarLayout />
+    <NavBarLayout v-if="mobileWidth > 600" />
+    <MNavBarLayout v-else/>
     <UserNavBarLayout />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />

@@ -289,13 +289,16 @@ watch(mobileWidth, (newValue: number) => {
 
 <style lang="scss">
 .nav-background {
-    background-color: #211F31 !important;
+    background-color: #29253C !important;
     color: #7782AA !important;
     border: 2px !important;
     box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
     top: 0px !important;
     height: 100% !important;
     will-change: auto !important;
+}
+.pb-21 {
+    padding-bottom: 84px !important;
 }
 
 .user-navbar-position {

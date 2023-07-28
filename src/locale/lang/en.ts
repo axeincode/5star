@@ -244,7 +244,7 @@ export const lang: langType = {
   mobile_menu: {
     menu: "Menu",
     casino: "Casino",
-    share: "SHARE",
+    share: "Share",
     sport: "Sport",
     mail: "Mail"
   },

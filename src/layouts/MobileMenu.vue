@@ -40,11 +40,11 @@ const mailList = computed((): GetMailData[] => {
 
 watch(mailList, (newValue) => {
     mailCount.value = newValue.length;
-}, {deep: true})
+}, { deep: true })
 
 watch(navToggle, (newValue) => {
     navbarToggle.value = newValue;
-},{deep: true})
+}, { deep: true })
 
 const handleNavbarToggle = () => {
     navbarToggle.value = !navbarToggle.value
@@ -60,13 +60,13 @@ onMounted(() => {
     <v-bottom-navigation bg-color="#000000" grow class="mobile-menu-index">
         <v-btn class="menu-text-color" @click="handleNavbarToggle">
             <img src="@/assets/public/svg/icon_public_81.svg" width="20" height="20">
-            <div class="pt-2">
+            <div class="pt-1 text-600-12">
                 {{ t('mobile_menu.menu') }}
             </div>
         </v-btn>
         <v-btn class="menu-text-color">
-            <img src="@/assets/public/svg/icon_public_34.svg">
-            <div class="pt-1">
+            <img src="@/assets/public/svg/icon_public_34.svg" width="20" height="20">
+            <div class="pt-1 text-600-12">
                 {{ t('mobile_menu.casino') }}
             </div>
         </v-btn>
@@ -74,13 +74,13 @@ onMounted(() => {
             <div class="circle-background"></div>
             <img src="@/assets/public/svg/bg_public_22.svg" class="share-background-img-position">
             <img src="@/assets/public/image/img_public_19.png" class="share-img-position">
-            <div class="pt-8">
+            <div class="pt-6 text-600-12">
                 {{ t('mobile_menu.share') }}
             </div>
         </v-btn>
         <v-btn class="menu-text-color">
-            <img src="@/assets/public/svg/icon_public_40.svg">
-            <div class="pt-1">
+            <img src="@/assets/public/svg/icon_public_40.svg" width="20">
+            <div class="pt-1 text-600-12">
                 {{ t('mobile_menu.sport') }}
             </div>
         </v-btn>
@@ -88,10 +88,12 @@ onMounted(() => {
             <template v-slot:activator="{ props }">
                 <v-btn class="menu-text-color" v-bind="props">
                     <div class="relative">
-                        <img src="@/assets/public/svg/icon_public_55.svg">
+                        <img src="@/assets/public/svg/icon_public_55.svg" width="20">
                         <p class="chat-box-text">{{ mailCount }}</p>
                     </div>
-                    {{ t('mobile_menu.mail') }}
+                    <div class="text-600-12">
+                        {{ t('mobile_menu.mail') }}
+                    </div>
                 </v-btn>
             </template>
             <v-list theme="dark" bg-color="#211F31" class="px-2" :width="mobileWidth">
@@ -135,11 +137,11 @@ onMounted(() => {
     }
 
     .chat-box-text {
-        top: 4px;
-        right: -8px;
+        top: -1px;
+        right: -6px;
         position: absolute;
         font-weight: 800;
-        font-size: 12px;
+        font-size: 8px;
         color: #000000;
         background: #12ff76;
         border-radius: 15px;
@@ -215,21 +217,21 @@ onMounted(() => {
 
 .share-img-position {
     position: absolute;
-    top: -22px;
-    width: 50px;
+    top: -15px;
+    width: 40px;
 }
 
 .share-background-img-position {
     position: absolute;
-    top: -30px;
-    width: 64px;
+    top: -18px;
+    width: 46px;
 }
 
 .circle-background {
     position: absolute;
-    top: -36px;
-    width: 74px;
-    height: 74px;
+    top: -22px;
+    width: 54px;
+    height: 54px;
     background-color: #000000;
     border-radius: 50%;
 }

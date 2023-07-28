@@ -19,6 +19,7 @@ const Login = defineComponent({
         const { dispatchSignIn } = authStore();
         const { dispatchUserProfile } = authStore();
         const { setAuthModalType } = authStore();
+        const { setToken } = authStore();
 
         // initiate component state
         const state = reactive({
@@ -75,24 +76,35 @@ const Login = defineComponent({
         // methods
         const handleLoginFormSubmit = async () => {
             state.loading = true;
-            await dispatchSignIn({
-                uid: state.formData.emailAddress,
-                password: state.formData.password,
-            })
-            if (success.value) {
-                await dispatchUserProfile();
-                state.notificationShow = !state.notificationShow;
-                state.checkIcon = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
-                state.notificationText = t('login.submit_result.success_text')
-                setTimeout(() => {
-                    setAuthModalType("");
-                    emit('close');
-                }, 1000)
-            } else {
-                state.notificationShow = !state.notificationShow;
-                state.checkIcon = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
-                state.notificationText = t('login.submit_result.err_text')
-            }
+
+            setToken("token");
+            state.notificationShow = !state.notificationShow;
+            state.checkIcon = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
+            state.notificationText = t('login.submit_result.success_text')
+            setTimeout(() => {
+                setAuthModalType("");
+                emit('close');
+            }, 1000)
+
+            // await dispatchSignIn({
+            //     uid: state.formData.emailAddress,
+            //     password: state.formData.password,
+            // })
+            // if (success.value) {
+            //     await dispatchUserProfile();
+            //     state.notificationShow = !state.notificationShow;
+            //     state.checkIcon = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
+            //     state.notificationText = t('login.submit_result.success_text')
+            //     setTimeout(() => {
+            //         setAuthModalType("");
+            //         emit('close');
+            //     }, 1000)
+            // } else {
+            //     state.notificationShow = !state.notificationShow;
+            //     state.checkIcon = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
+            //     state.notificationText = t('login.submit_result.err_text')
+            // }
+
             state.loading = false;
         }
 

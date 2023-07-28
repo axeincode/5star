@@ -115,8 +115,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-navigation-drawer :temporary="mobileWidth < 1280" expand-on-hover :scrim-opacity="0.6" class="nav-background"
-        :width="240" v-model="drawer">
+    <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-21" :width="192"
+        v-model="drawer">
         <template v-slot:prepend>
             <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''">
                 <input type="checkbox" id="casino-toggle" />
@@ -132,32 +132,32 @@ onMounted(() => {
                 </label>
             </v-list-item>
         </template>
-        <v-list density="compact" nav class="mt-4">
-            <v-card color="#211F31" theme="dark">
-                <v-row class="ma-4 align-center" v-ripple.center>
-                    <span class="card-title">{{ t('navBar.my_vip_perks') }}</span>
-                    <span class="ml-10 more-font">{{ t('navBar.more') }}</span>
-                    <v-btn class="right-btn" icon="true">
-                        <v-icon icon="mdi-chevron-right" />
+        <v-list density="compact" nav class="mt-1 px-0">
+            <v-card color="#211F31" theme="dark" style="border-radius: 0px;">
+                <v-row class="ma-2 align-center" v-ripple.center>
+                    <span class="m-card-title">{{ t('navBar.my_vip_perks') }}</span>
+                    <span class="ml-15 m-more-font">{{ t('navBar.more') }}</span>
+                    <v-btn class="m-right-btn" icon="true" height="24" width="24">
+                        <img src="@/assets/public/svg/icon_public_11.svg" width="16"/>
                     </v-btn>
                 </v-row>
                 <v-row class="ma-1">
                     <v-col cols="6" class="pa-1 relative">
                         <v-list-item value="casino" class="ma-0 pa-0" height="48px">
                             <img src="@/assets/public/svg/bg_public_16.svg" class="img-width" />
-                            <img src="@/assets/public/image/img_public_01.png" class="navbar-task-img-position"
-                                width="46" />
-                            <p class="text-700-14 white navbar-task-text-position">{{ t('navBar.task_text') }}</p>
-                            <p class="white navbar-unlock-text-left-position">{{ t('navBar.unlock_text') }}</p>
+                            <img src="@/assets/public/image/img_public_01.png" class="m-navbar-task-img-position"
+                                width="34" />
+                            <p class="text-700-10 white m-navbar-task-text-position">{{ t('navBar.task_text') }}</p>
+                            <p class="text-400-8 white m-navbar-unlock-text-left-position">{{ t('navBar.unlock_text') }}</p>
                         </v-list-item>
                     </v-col>
                     <v-col cols="6" class="pa-1">
                         <v-list-item value="sport" class="ma-0 pa-0" height="48px" @click="openRouletteBonusDialog">
                             <img src="@/assets/public/svg/bg_public_17.svg" class="spin-img-width" />
-                            <img src="@/assets/public/image/img_public_02.png" class="navbar-spin-img-position"
-                                width="38" />
-                            <p class="text-700-14 white navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
-                            <p class="white navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}</p>
+                            <img src="@/assets/public/image/img_public_02.png" class="m-navbar-spin-img-position"
+                                width="28" />
+                            <p class="text-700-10 white m-navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
+                            <p class="text-400-8 white m-navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}</p>
                         </v-list-item>
                     </v-col>
                 </v-row>
@@ -165,9 +165,9 @@ onMounted(() => {
         </v-list>
         <v-list density="compact" nav>
             <v-list-item value="earn free" class="ma-0 pa-0">
-                <img src="@/assets/public/image/img_public_18.png" class="earn-free-img" />
-                <img src="@/assets/public/image/img_public_17.png" class="navbar-free-money-img-position" />
-                <p class="text-700-16 color-29263C navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}</p>
+                <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
+                <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" />
+                <p class="text-700-12 color-29263C m-navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}</p>
             </v-list-item>
         </v-list>
         <v-list v-model:opened="open">
@@ -244,16 +244,16 @@ onMounted(() => {
                 </v-list>
             </v-menu>
         </v-list>
-        <v-list-item class="theme-toggle">
-            <input type="checkbox" id="theme-toggle" />
-            <label for="theme-toggle">
+        <v-list-item class="m-theme-toggle">
+            <input type="checkbox" id="m-theme-toggle" />
+            <label for="m-theme-toggle">
                 <div class="dark">
-                    <img src="@/assets/public/svg/icon_public_46.svg" />
-                    <p>{{ t('navBar.sound_mode.on') }}</p>
+                    <img src="@/assets/public/svg/icon_public_46.svg" width="16"/>
+                    <p class="text-700-10">{{ t('navBar.sound_mode.on') }}</p>
                 </div>
                 <div class="light">
-                    <img src="@/assets/public/svg/icon_public_47.svg" />
-                    <p>{{ t('navBar.sound_mode.off') }}</p>
+                    <img src="@/assets/public/svg/icon_public_47.svg" width="16"/>
+                    <p class="text-700-10">{{ t('navBar.sound_mode.off') }}</p>
                 </div>
             </label>
         </v-list-item>
@@ -368,27 +368,24 @@ onMounted(() => {
 
 }
 
-.card-title {
+.m-card-title {
     color: #D99504;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 12px;
 }
 
-.more-font {
+.m-more-font {
     font-weight: 500;
-    font-size: 12px;
+    font-size: 10px;
     color: #7782AA
 }
 
-.right-btn {
-    font-weight: 500;
-    font-size: 12px;
-    color: #7782AA;
+.m-right-btn {
     box-shadow: none !important;
     background-color: transparent !important;
     position: absolute !important;
-    top: 3px;
-    right: 5px;
+    top: 6px;
+    right: 0px;
 }
 
 .img-width {
@@ -400,7 +397,7 @@ onMounted(() => {
     margin-top: 4px;
 }
 
-.earn-free-img {
+.m-earn-free-img {
     width: 100%
 }
 
@@ -480,13 +477,16 @@ onMounted(() => {
 
 
 // dark and light toggle switch
-.theme-toggle {
-    height: 50px;
+.m-theme-toggle {
+    height: 30px;
 
     label {
-        width: 200px;
-        height: 40px;
-        position: relative;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 164px;
+        height: 30px;
+        position: absolute;
         display: block;
         background: #211F31;
         border-radius: 20px !important;
@@ -506,7 +506,7 @@ onMounted(() => {
         }
 
         .dark {
-            left: 14px;
+            left: 16px;
             transition: 0.3s;
             color: white;
 
@@ -518,7 +518,7 @@ onMounted(() => {
         }
 
         .light {
-            left: 120px;
+            left: 108px;
             transition: 0.3s;
             color: #7782AA;
 
@@ -531,11 +531,11 @@ onMounted(() => {
 
     label:after {
         content: "";
-        width: 100px;
-        height: 36px;
+        width: 74px;
+        height: 28px;
         position: absolute;
-        top: 3px;
-        left: 2px;
+        top: 1px;
+        left: 1px;
         background: #353652;
         border-radius: 18px;
         box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -549,12 +549,12 @@ onMounted(() => {
     }
 
     input:checked+label:after {
-        left: 198px;
+        left: 162px;
         transform: translateX(-100%);
     }
 
     label:active:after {
-        width: 100px;
+        width: 74px;
     }
 
     input:checked+label .dark {
@@ -573,53 +573,51 @@ onMounted(() => {
     }
 }
 
-.navbar-free-money-img-position {
+.m-navbar-free-money-img-position {
     position: absolute;
     left: 32px;
     top: -10px;
 }
 
-.navbar-free-money-text-position {
+.m-navbar-free-money-text-position {
     position: absolute;
-    left: 81px;
-    top: 6px;
-}
-
-.navbar-task-img-position {
-    position: absolute;
-    left: 6px;
-    top: -8px;
-}
-
-.navbar-task-text-position {
-    position: absolute;
-    left: 47px;
-    top: 3px;
-}
-
-.navbar-unlock-text-left-position {
-    position: absolute;
-    left: 43px;
-    top: 18px;
-    font-size: 12px;
-}
-
-.navbar-spin-img-position {
-    position: absolute;
-    left: 4px;
-    top: 2px;
-}
-
-.navbar-spin-text-position {
-    position: absolute;
-    left: 47px;
+    left: 74px;
     top: 5px;
 }
 
-.navbar-unlock-text-right-position {
+.m-navbar-task-img-position {
     position: absolute;
-    left: 43px;
-    top: 20px;
-    font-size: 12px;
+    left: 4px;
+    top: 0px;
+}
+
+.m-navbar-task-text-position {
+    position: absolute;
+    left: 40px;
+    top: 5px;
+}
+
+.m-navbar-unlock-text-left-position {
+    position: absolute;
+    left: 37px;
+    top: 19px;
+}
+
+.m-navbar-spin-img-position {
+    position: absolute;
+    left: 4px;
+    top: 8px;
+}
+
+.m-navbar-spin-text-position {
+    position: absolute;
+    left: 40px;
+    top: 8px;
+}
+
+.m-navbar-unlock-text-right-position {
+    position: absolute;
+    left: 37px;
+    top: 21px;
 }
 </style>

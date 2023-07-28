@@ -7,15 +7,19 @@ import {
   ref,
   computed,
   onMounted,
+  onUnmounted
 } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from 'vuetify';
 import GameProviders from "@/components/global/game_provider/index.vue";
-import { onUnmounted } from "vue";
+import { Carousel, Slide, Navigation } from 'vue3-carousel';
 
 const Dashboard = defineComponent({
   components: {
-    GameProviders
+    GameProviders,
+    Carousel,
+    Slide,
+    Navigation
   },
   setup() {
     const { t } = useI18n();
@@ -501,26 +505,31 @@ export default Dashboard;
 </script>
 
 <template>
-  <div class="my-4 mx-2 home-body">
+  <div class="mx-2 home-body" :class="mobileWidth > 600 ? 'my-4' : ''">
     <!-- image carousel -->
+
     <v-carousel cycle interval="6000" height="225" hide-delimiter-background :hide-delimiters="slides.length <= 1"
       show-arrows="hover">
+
       <!-- prev, next button hide when slides array length is less than 2 -->
+
       <template v-slot:prev="{ props }">
         <v-btn class="button-carousel text-none prev-btn-position" variant="elevated" icon="mdi-chevron-left"
-          @click="props.onClick" v-if="slides.length > 1">
+          @click="props.onClick" v-if="slides.length > 1 && mobileWidth > 600">
         </v-btn>
       </template>
       <template v-slot:next="{ props }">
         <v-btn class="button-carousel text-none next-btn-position" variant="elevated" icon="mdi-chevron-right"
-          @click="props.onClick" v-if="slides.length > 1">
+          @click="props.onClick" v-if="slides.length > 1 && mobileWidth > 600">
         </v-btn>
       </template>
       <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
         <v-sheet color="#31275C" height="100%" tile>
           <v-row align="center" justify="center" class="mx-2 relative">
-            <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="4" lg="4" xl="4">
-              <img :src="slide[index]" class="slider-img-width" />
+            <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="4" lg="4" xl="4"
+              :class="mobileWidth < 600 ? 'px-0' : ''">
+              <img :src="slide[index]" class="slider-img-width"
+                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''" />
             </v-col>
           </v-row>
         </v-sheet>
@@ -528,13 +537,14 @@ export default Dashboard;
     </v-carousel>
 
     <!-- input for search -->
-    <v-row class="px-4 mt-2">
+    <v-row class="mt-2" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
       <v-text-field :placeholder="t('home.search')" class="form-textfield dark-textfield" variant="solo" hide-details
-        filled clearable density="compact" prepend-inner-icon="mdi-magnify" color="#7782AA" />
+        filled clearable density="compact" prepend-inner-icon="mdi-magnify" color="#7782AA"
+        :class="mobileWidth < 600 ? 'home-search-text-height' : ''" />
     </v-row>
 
     <!-- buttons for filter -->
-    <v-row :class="[mobileVersion == 'sm' ? 'mx-2' : 'mx-4']">
+    <v-row :class="[mobileVersion == 'sm' ? 'mx-0' : 'mx-4']">
       <template v-if="mobileVersion != 'sm'">
         <v-btn class="mr-2 my-2 text-none lobby-btn-color">
           {{ t("home.button.lobby") }}
@@ -581,8 +591,8 @@ export default Dashboard;
         <v-img :src="item" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="ml-4 mt-4 justify-center">
-      <v-btn class="text-none more-btn-color" variant="outlined" width="300">
+    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -597,8 +607,8 @@ export default Dashboard;
         <v-img :src="principalItem" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center">
-      <v-btn class="text-none more-btn-color" variant="outlined" width="300">
+    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -616,8 +626,8 @@ export default Dashboard;
         <v-img :src="slotItem" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center">
-      <v-btn class="text-none more-btn-color" variant="outlined" width="300">
+    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -632,8 +642,8 @@ export default Dashboard;
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center">
-      <v-btn class="text-none more-btn-color" variant="outlined" width="300">
+    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -707,11 +717,11 @@ export default Dashboard;
           <input type="checkbox" id="history-toggle" v-model="historyToggleSwitch" />
           <label for="history-toggle">
             <div class="winner">
-              <img src="@/assets/public/svg/icon_public_92.svg" />
+              <img src="@/assets/public/svg/icon_public_92.svg" width="20"/>
               <P class="text-500-12">{{ t('home.lucky_jackpot_text') }}</P>
             </div>
             <div class="prize">
-              <img src="@/assets/public/svg/icon_public_91.svg" />
+              <img src="@/assets/public/svg/icon_public_91.svg" width="20"/>
               <P class="text-500-12">{{ t('home.latest_record_text') }}</P>
             </div>
           </label>
@@ -719,8 +729,8 @@ export default Dashboard;
         <v-card color="#211F32" theme="dark" height="500" class="mt-4 mx-2" v-if="!historyToggleSwitch">
           <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
             <v-row class="mx-3 my-2 align-center">
-              <v-col cols="3" class="text-700-14 gray py-0">{{ t('home.rank_text') }}</v-col>
-              <v-col cols="5" class="text-700-14 gray py-0">
+              <v-col cols="4" class="text-700-14 gray py-0">{{ t('home.rank_text') }}</v-col>
+              <v-col cols="4" class="text-700-14 gray py-0">
                 <p class="ml-2">{{ t('home.player_text') }}</p>
               </v-col>
               <v-col cols="4" class="text-700-14 gray text-center py-0">{{ t('home.profit_text') }}</v-col>
@@ -728,11 +738,11 @@ export default Dashboard;
           </v-card>
           <div class="m-home-overflow-auto" ref="luckyContainer" style="overflow-y: auto;">
             <v-row v-for="(item, index) in luckyJackpotList" :key="index" class="mx-4 mt-2 align-center">
-              <v-col cols="3" class="py-1">
+              <v-col cols="4" class="py-1">
                 <img :src="item.rank" v-if="!isNumeric(item.rank)" width="22" />
                 <p class="text-500-14 gray text-center" style="width: 27px;" v-else>{{ item.rank }}</p>
               </v-col>
-              <v-col cols="5" class="d-flex align-center py-1">
+              <v-col cols="4" class="d-flex align-center py-1">
                 <img :src="item.player.image" width="40" />
                 <p class="text-500-14 gray">{{ item.player.name }}</p>
               </v-col>
@@ -776,6 +786,44 @@ export default Dashboard;
   height: 568px;
 }
 
+.home-search-text-height {
+  height: 30px !important;
+}
+
+@media (max-width: 600px) {
+  .v-field__field {
+    color: var(--sec-text-7782-aa, #7782AA);
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  .v-input__control {
+    .mdi:before {
+      font-size: 19px !important;
+    }
+  }
+
+
+  .lobby-btn-color {
+
+    .v-btn__content {
+      font-size: 12px !important;
+      font-family: "Inter";
+    }
+  }
+
+  .popular-btn-color {
+
+    .v-btn__content {
+      font-size: 12px !important;
+      font-family: "Inter";
+    }
+  }
+}
+
 .m-home-overflow-auto {
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -809,6 +857,10 @@ export default Dashboard;
   right: 5px !important;
   width: 32px !important;
   height: 32px !important;
+}
+
+.m-carousel-img-border {
+  border-radius: 16px 6px;
 }
 
 .v-carousel__controls {
@@ -845,7 +897,7 @@ export default Dashboard;
 
   .v-btn__content {
     font-weight: 700 !important;
-    font-size: 16px !important;
+    font-size: 16px;
   }
 }
 
@@ -856,7 +908,7 @@ export default Dashboard;
 
   .v-btn__content {
     font-weight: 700 !important;
-    font-size: 16px !important;
+    font-size: 16px;
   }
 }
 
@@ -871,6 +923,14 @@ export default Dashboard;
   .original_game_text {
     font-size: 14px;
   }
+  
+
+.more-btn-color {
+
+  .v-btn__content {
+    font-size: 12px !important;
+  }
+}
 }
 
 .original-game-img-border {
@@ -892,7 +952,7 @@ export default Dashboard;
 
   .v-btn__content {
     font-weight: 700 !important;
-    font-size: 16px !important;
+    font-size: 16px;
   }
 }
 

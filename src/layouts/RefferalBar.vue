@@ -25,12 +25,12 @@ const mobileWidth = computed((): number => {
             <p class="white" :class="mobileWidth < 600 ? 'text-500-10' : 'text-700-16'">
                 {{ t('refferal.app_bar_title') }}
             </p>
-            <img src="@/assets/public/image/img_public_09.png" class="ml-2" :width="mobileWidth > 600 ? 50 : 44" />
-            <v-btn rounded height="28px" class="text-none ml-4 earn-btn-bg" @click="setRefferalDialogShow(true)">
+            <img src="@/assets/public/image/img_public_09.png" class="ml-3" :width="mobileWidth > 600 ? 50 : 33" />
+            <v-btn rounded :height="mobileWidth < 600 ? '24px' : '28px'" class="text-none ml-3 earn-btn-bg" @click="setRefferalDialogShow(true)">
                 {{ t('refferal.earn_btn_text') }}
             </v-btn>
         </v-toolbar-title>
-        <v-btn icon density="compact">
+        <v-btn icon density="compact" :height="mobileWidth < 600 ? '20px' : '28px'" :width="mobileWidth < 600 ? '20px' : '28px'">
             <v-icon color="#FFFFFF" style="font-size: 20px;" @click="setRefferalAppBarShow(false)">mdi-close</v-icon>
         </v-btn>
     </v-app-bar>
@@ -39,6 +39,21 @@ const mobileWidth = computed((): number => {
 <style lang="scss">
 .refferal-app-bar-background {
     background: linear-gradient(90deg, #6940F8 0%, #3FDAA9 47.8%, #6940F8 100%) !important;
+
+    .v-toolbar__content {
+        height: 48px;
+    }
+
+    @media (max-width: 600px) {
+
+        .v-toolbar__content {
+            height: 32px !important;
+        }
+    }
+
+    .v-toolbar__content>.v-toolbar-title {
+        margin-inline-start: 0px !important;
+    }
 
     .v-toolbar-title__placeholder {
         display: flex !important;
