@@ -134,7 +134,7 @@ onMounted(() => {
         </template>
         <v-list density="compact" nav class="mt-4">
             <v-card color="#211F31" theme="dark">
-                <v-row class="ma-4 align-center" v-ripple.center>
+                <v-row class="ma-4 align-center">
                     <span class="card-title">{{ t('navBar.my_vip_perks') }}</span>
                     <span class="ml-10 more-font">{{ t('navBar.more') }}</span>
                     <v-btn class="right-btn" icon="true">
