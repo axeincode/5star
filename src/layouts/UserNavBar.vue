@@ -224,7 +224,8 @@ watch(mobileWidth, (newValue: number) => {
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.transactions') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item refer-friend-background" height="48" value="refer_friend" @click="refferalDialogShow">
+            <v-list-item class="user-item refer-friend-background" height="48" value="refer_friend"
+                @click="refferalDialogShow">
                 <template v-slot:prepend>
                     <img src="@/assets/public/svg/icon_public_64.svg" />
                 </template>
@@ -241,7 +242,7 @@ watch(mobileWidth, (newValue: number) => {
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.withdraw') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item app-background" value="app"  height="48">
+            <v-list-item class="user-item app-background" value="app" height="48">
                 <template v-slot:prepend>
                     <img src="@/assets/public/svg/icon_public_66.svg" />
                 </template>
@@ -288,6 +289,10 @@ watch(mobileWidth, (newValue: number) => {
 </template>
 
 <style lang="scss">
+.v-navigation-drawer__scrim {
+    background: lightgray 0px 0px / 100% 100.077% no-repeat;
+}
+
 .nav-background {
     background-color: #29253C !important;
     color: #7782AA !important;
@@ -297,8 +302,9 @@ watch(mobileWidth, (newValue: number) => {
     height: 100% !important;
     will-change: auto !important;
 }
-.pb-21 {
-    padding-bottom: 84px !important;
+
+.pb-20 {
+    padding-bottom: 80px !important;
 }
 
 .user-navbar-position {
@@ -311,11 +317,11 @@ watch(mobileWidth, (newValue: number) => {
     overflow-x: hidden !important;
 
     &::-webkit-scrollbar {
-        width: 2px;
+        width: 0px;
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #5142af;
+        background: transparent;
         border-radius: 20px;
     }
 }
@@ -358,5 +364,4 @@ watch(mobileWidth, (newValue: number) => {
         box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
         border-radius: 20px !important;
     }
-}
-</style>
+}</style>

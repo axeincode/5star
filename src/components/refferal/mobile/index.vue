@@ -64,7 +64,7 @@ onMounted(() => {
                 {{ t('refferal.description.text_2') }}
             </div>
             <div class="mt-4 mx-6">
-                <v-card height="292" theme="dark" color="#211F31" class="overflow-y-auto">
+                <v-card height="292" theme="dark" color="#211F31" class="overflow-y-auto" style="scroll-padding: 20px;">
                     <div class="mx-4 mt-4 text-600-14 text-gray">
                         {{ t('refferal.description.term_text') }}
                     </div>
@@ -82,13 +82,13 @@ onMounted(() => {
         <template v-else>
             <div class="refferal-dialog-header text-center">
                 <img src="@/assets/public/image/img_public_08.png" class="m-refferal-header-img"/>
-                <div class="mt-3 text-center text-700-14 yellow">
+                <div class="mt-2 mx-10 text-center text-700-14 yellow">
                     {{ t('refferal.dialog.header.title_text') }}
                 </div>
-                <div class="mt-3 text-center text-700-18 white">
+                <div class="mt-2 text-center text-700-18 white">
                     {{ t('refferal.dialog.header.body_text') }}
                 </div>
-                <div class="mx-7 mt-2 text-center text-400-12 white text-justify">
+                <div class="mx-7 mt-2 text-center text-400-12 white text-justify" style="letter-spacing: normal;">
                     <Font color="#F9BC01">{{ invitedUser.toLocaleString() }}</Font>
                     {{ t('refferal.dialog.header.body_text_1') }}
                     <Font color="#F9BC01">{{ earnMoney.toLocaleString() }}</Font>

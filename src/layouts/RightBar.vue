@@ -361,11 +361,11 @@ onMounted(() => {
   overflow-x: hidden !important;
 
   &::-webkit-scrollbar {
-    width: 2px;
+    width: 0px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #5142af;
+    background: transparent;
     border-radius: 20px;
   }
 }

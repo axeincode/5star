@@ -18,6 +18,7 @@ const open = ref<Array<string>>(['']);
 const language = ref<string>('English');
 const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
+const originalMenu = ref<boolean>(false);
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -182,10 +183,10 @@ onMounted(() => {
                             :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
                         <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
                             :title="t('navBar.casino_sub_menu.favorites')" value="favorites"></v-list-item>
-                        <v-menu location="end" offset="10" class="original-dropdown">
+                        <v-menu location="end" offset="10" class="original-dropdown" v-model:model-value="originalMenu">
                             <template v-slot:activator="{ props }">
                                 <v-list-item v-bind="props" class="casino-sub-img"
-                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg" append-icon="mdi-chevron-right"
+                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg" :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
                                     :title="t('navBar.casino_sub_menu.game_originals')"
                                     value="game originals"></v-list-item>
                             </template>
@@ -273,11 +274,11 @@ onMounted(() => {
     overflow-x: hidden !important;
 
     &::-webkit-scrollbar {
-        width: 2px
+        width: 0px
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #5142af;
+        background: transparent;
         border-radius: 20px;
     }
 }

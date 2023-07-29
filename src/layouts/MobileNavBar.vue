@@ -18,6 +18,7 @@ const open = ref<Array<string>>(['']);
 const language = ref<string>('English');
 const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
+const originalMenu = ref<boolean>(false);
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -51,31 +52,31 @@ const langItems = ref<Array<string>>([
 const gameOriginalItems = ref<Array<GetGameOriginalData>>([
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlotsSlotsSlots"
+        name: "SlotsSlotsSlots"
     }
 ])
 
@@ -107,6 +108,7 @@ const handleLanguageDropdown = (item: string) => {
 
 const openRouletteBonusDialog = () => {
     setRouletteBonusDialogVisible(true);
+    setNavBarToggle(false);
 }
 
 onMounted(() => {
@@ -115,7 +117,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-21" :width="192"
+    <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-20" :width="192"
         v-model="drawer">
         <template v-slot:prepend>
             <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''">
@@ -138,7 +140,7 @@ onMounted(() => {
                     <span class="m-card-title">{{ t('navBar.my_vip_perks') }}</span>
                     <span class="ml-15 m-more-font">{{ t('navBar.more') }}</span>
                     <v-btn class="m-right-btn" icon="true" height="24" width="24">
-                        <img src="@/assets/public/svg/icon_public_11.svg" width="16"/>
+                        <img src="@/assets/public/svg/icon_public_11.svg" width="16" />
                     </v-btn>
                 </v-row>
                 <v-row class="ma-1">
@@ -157,14 +159,15 @@ onMounted(() => {
                             <img src="@/assets/public/image/img_public_02.png" class="m-navbar-spin-img-position"
                                 width="28" />
                             <p class="text-700-10 white m-navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
-                            <p class="text-400-8 white m-navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}</p>
+                            <p class="text-400-8 white m-navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}
+                            </p>
                         </v-list-item>
                     </v-col>
                 </v-row>
             </v-card>
         </v-list>
         <v-list density="compact" nav>
-            <v-list-item value="earn free" class="ma-0 pa-0">
+            <v-list-item class="ma-0 pa-0">
                 <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
                 <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" />
                 <p class="text-700-12 color-29263C m-navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}</p>
@@ -173,71 +176,72 @@ onMounted(() => {
         <v-list v-model:opened="open">
             <v-list-group value="Casino">
                 <template v-slot:activator="{ props }">
-                    <v-list-item class="avatar-img" v-bind="props" prepend-avatar="@/assets/public/svg/icon_public_34.svg"
-                        :title="t('navBar.casino')" link value="casino"></v-list-item>
+                    <v-list-item class="m-avatar-img" v-bind="props" prepend-avatar="@/assets/public/svg/icon_public_34.svg"
+                        :title="t('navBar.casino')" link value="casino" :height="40"></v-list-item>
                 </template>
-                <v-card color="#211F31" theme="dark" class="ma-2">
+                <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px;">
                     <v-list>
-                        <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_35.svg"
+                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_35.svg"
                             :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
-                        <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
+                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
                             :title="t('navBar.casino_sub_menu.favorites')" value="favorites"></v-list-item>
-                        <v-menu location="end" offset="10" class="original-dropdown">
+                        <v-menu location="end" offset="10" class="original-dropdown" v-model:model-value="originalMenu">
                             <template v-slot:activator="{ props }">
-                                <v-list-item v-bind="props" class="casino-sub-img"
-                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg" append-icon="mdi-chevron-right"
+                                <v-list-item v-bind="props" class="m-casino-sub-img"
+                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg" :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
                                     :title="t('navBar.casino_sub_menu.game_originals')"
-                                    value="game originals"></v-list-item>
+                                    value="game originals">
+                                </v-list-item>
                             </template>
-                            <v-list theme="dark" bg-color="#211F31">
+                            <v-list theme="dark" bg-color="#211F31" width="166">
                                 <v-list-item v-for="(item, i) in gameOriginalItems" :key="i" :value="item.name"
-                                    class="avatar-img" :prepend-avatar="item.icon" :title="item.name">
+                                    class="m-avatar-img" :prepend-avatar="item.icon" :title="item.name">
                                 </v-list-item>
                             </v-list>
                         </v-menu>
-                        <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_38.svg"
+                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_38.svg"
                             :title="t('navBar.casino_sub_menu.slots')" value="slots"></v-list-item>
-                        <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_39.svg"
+                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_39.svg"
                             :title="t('navBar.casino_sub_menu.live_casino')" value="live casino"></v-list-item>
                     </v-list>
                 </v-card>
             </v-list-group>
         </v-list>
         <v-list>
-            <v-list-item class="avatar-img" prepend-avatar="@/assets/public/svg/icon_public_40.svg"
+            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_40.svg"
                 :title="t('navBar.sport')" value="sport"></v-list-item>
         </v-list>
         <v-divider class="divider"></v-divider>
         <v-list>
-            <v-list-item class="avatar-img" prepend-avatar="@/assets/public/svg/icon_public_41.svg"
+            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_41.svg"
                 :title="t('navBar.menu_item_1.promotions')" value="promotions"></v-list-item>
-            <v-list-item class="vip-club" prepend-avatar="@/assets/public/svg/icon_public_42.svg"
+            <v-list-item class="m-vip-club" prepend-avatar="@/assets/public/svg/icon_public_42.svg"
                 :title="t('navBar.menu_item_1.vip_club')" value="vip club" router :to="{ name: 'VIP' }"></v-list-item>
-            <v-list-item class="avatar-img" prepend-avatar="@/assets/public/svg/icon_public_43.svg"
+            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_43.svg"
                 :title="t('navBar.menu_item_1.affiliate')" value="affiliate" router
                 :to="{ name: 'Affiliate' }"></v-list-item>
-            <v-list-item class="avatar-img" prepend-avatar="@/assets/public/svg/icon_public_44.svg"
+            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_44.svg"
                 :title="t('navBar.menu_item_1.blog')" value="blog"></v-list-item>
         </v-list>
         <v-divider class="divider"></v-divider>
         <v-list>
-            <v-list-item class="avatar-img" prepend-avatar="@/assets/public/svg/icon_public_45.svg"
+            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_45.svg"
                 :title="t('navBar.live_support')" value="live support"></v-list-item>
         </v-list>
         <v-list>
             <v-menu location="end" offset="16" v-model:model-value="languageMenu">
                 <template v-slot:activator="{ props }">
-                    <v-card color="#211F31" theme="dark" class="mx-2 language-item">
-                        <v-list-item v-bind="props" class="casino-sub-img"
+                    <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
+                        <v-list-item v-bind="props" class="m-casino-sub-img"
                             prepend-avatar="@/assets/public/svg/icon_public_57.svg" :title="language" value="english"
                             :append-icon="languageMenu ? 'mdi-chevron-right' : 'mdi-chevron-left'">
                         </v-list-item>
                     </v-card>
                 </template>
-                <v-list theme="dark" bg-color="#211F31" width="220" class="text-center">
-                    <v-list-item :title="t('navBar.language.title')" class="avatar-img"></v-list-item>
+                <v-list theme="dark" bg-color="#211F31" width="166" class="text-center">
+                    <v-list-item :title="t('navBar.language.title')" class="m-avatar-img"></v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item v-for="(item, i) in langItems" :key="i" :value="item" class="avatar-img"
+                    <v-list-item v-for="(item, i) in langItems" :key="i" :value="item" class="m-avatar-img"
                         @click="handleLanguageDropdown(item)" :class="language == item ? 'nav-lang-selected-item' : ''">
                         <v-list-item-title>{{ item }}</v-list-item-title>
                     </v-list-item>
@@ -248,11 +252,11 @@ onMounted(() => {
             <input type="checkbox" id="m-theme-toggle" />
             <label for="m-theme-toggle">
                 <div class="dark">
-                    <img src="@/assets/public/svg/icon_public_46.svg" width="16"/>
+                    <img src="@/assets/public/svg/icon_public_46.svg" width="16" />
                     <p class="text-700-10">{{ t('navBar.sound_mode.on') }}</p>
                 </div>
                 <div class="light">
-                    <img src="@/assets/public/svg/icon_public_47.svg" width="16"/>
+                    <img src="@/assets/public/svg/icon_public_47.svg" width="16" />
                     <p class="text-700-10">{{ t('navBar.sound_mode.off') }}</p>
                 </div>
             </label>
@@ -273,11 +277,11 @@ onMounted(() => {
     overflow-x: hidden !important;
 
     &::-webkit-scrollbar {
-        width: 2px
+        width: 0px
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #5142af;
+        background: transparent;
         border-radius: 20px;
     }
 }
@@ -401,7 +405,9 @@ onMounted(() => {
     width: 100%
 }
 
-.avatar-img {
+.m-avatar-img {
+    min-height: 40px !important;
+
     :deep(.v-avatar--density-default) {
         height: 24px;
         width: 20px;
@@ -410,12 +416,20 @@ onMounted(() => {
 
     :deep(.v-list-item-title) {
         font-weight: 700;
-        font-size: 14px;
+        font-size: 12px;
         color: #7782AA;
     }
+
+    :deep(img) {
+        width: 16px;
+        height: 18px;
+        margin-top: 2px;
+    }
 }
 
-.vip-club {
+.m-vip-club {
+    min-height: 40px !important;
+
     :deep(.v-avatar--density-default) {
         height: 24px;
         width: 20px;
@@ -424,12 +438,20 @@ onMounted(() => {
 
     :deep(.v-list-item-title) {
         font-weight: 700;
-        font-size: 14px;
+        font-size: 12px;
         color: #F9BC01;
+    }
+
+    :deep(img) {
+        width: 16px;
+        height: 16px;
+        margin-top: 4px;
     }
 }
 
-.casino-sub-img {
+.m-casino-sub-img {
+    min-height: 40px !important;
+
     :deep(.v-avatar--density-default) {
         height: 22px;
         width: 22px;
@@ -438,8 +460,25 @@ onMounted(() => {
 
     :deep(.v-list-item-title) {
         font-weight: 500;
-        font-size: 14px;
+        font-size: 12px;
         color: #7782AA;
+    }
+
+    :deep(img) {
+        width: 18px;
+        height: 18px;
+        margin-top: 4px;
+    }
+
+    :deep(.v-list-item__content) {
+        align-self: center;
+        grid-area: content;
+        overflow: hidden;
+        width: 90px;
+    }
+
+    :deep(.v-list-item__append > .v-icon) {
+        margin-inline-start: 18px;
     }
 }
 
@@ -449,25 +488,12 @@ onMounted(() => {
     border-width: thin;
 }
 
-.casino-sub-img {
+.m-language-item {
     :deep(.v-list-item__content) {
         align-self: center;
         grid-area: content;
         overflow: hidden;
-        width: 105px;
-    }
-
-    :deep(.v-list-item__append > .v-icon) {
-        margin-inline-start: 18px;
-    }
-}
-
-.language-item {
-    :deep(.v-list-item__content) {
-        align-self: center;
-        grid-area: content;
-        overflow: hidden;
-        width: 105px;
+        width: 76px;
     }
 
     :deep(.v-list-item__append > .v-icon) {
@@ -490,7 +516,6 @@ onMounted(() => {
         display: block;
         background: #211F31;
         border-radius: 20px !important;
-        box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
         cursor: pointer;
         transition: 0.3s;
 

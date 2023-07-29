@@ -346,14 +346,14 @@ const showWinnerBody = () => {
             <div class="m-roulette-bonus-dialog-body-3">
                 <div class="my-1">
                     <v-row v-for="(item, index) in rouletteHistory" :key="index" class="ma-0 mx-2 pa-0">
-                        <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{ item.rouletteTime }}</v-col>
-                        <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{ item.user }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 yellow" v-if="item.rouletteResult == 'IPHONE 14'">{{
+                        <v-col cols="5" class="pa-1 ma-0 text-500-9 gray">{{ item.rouletteTime }}</v-col>
+                        <v-col cols="4" class="pa-1 ma-0 text-500-9 gray">{{ item.user }}</v-col>
+                        <v-col cols="3" class="pa-1 ma-0 text-500-9 yellow" v-if="item.rouletteResult == 'IPHONE 14'">{{
                             item.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 white"
+                        <v-col cols="3" class="pa-1 ma-0 text-900-9 white"
                             v-else-if="item.rouletteResult == 'R$ 5000' || item.rouletteResult == 'R$ 500' || item.rouletteResult == 'R$ 50'">{{
                                 item.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{ item.rouletteResult }}</v-col>
+                        <v-col cols="3" class="pa-1 ma-0 text-900-9 gray" v-else>{{ item.rouletteResult }}</v-col>
                     </v-row>
                 </div>
             </div>
@@ -696,11 +696,12 @@ const showWinnerBody = () => {
             .v-btn__content {
                 color: #FFF;
                 text-align: center;
-                font-family: Inter;
+                font-family: "Inter";
                 font-size: 10px;
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;
+                letter-spacing: normal;
             }
         }
     }

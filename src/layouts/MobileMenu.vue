@@ -16,6 +16,7 @@ const { setRightBarToggle } = appBarStore();
 const mailCount = ref<number>(10);
 // navbar toggle
 const navbarToggle = ref<boolean>(false);
+const mailNavigation = ref<boolean>(false);
 
 // pc or mobile screen switch
 
@@ -84,6 +85,17 @@ onMounted(() => {
                 {{ t('mobile_menu.sport') }}
             </div>
         </v-btn>
+
+        <!-- <v-btn class="menu-text-color" @click="mailNavigation = !mailNavigation">
+            <div class="relative">
+                <img src="@/assets/public/svg/icon_public_55.svg" width="20">
+                <p class="chat-box-text">{{ mailCount }}</p>
+            </div>
+            <div class="text-600-12">
+                {{ t('mobile_menu.mail') }}
+            </div>
+        </v-btn> -->
+
         <v-menu content-class="mobile-mail-menu" :scrim="true">
             <template v-slot:activator="{ props }">
                 <v-btn class="menu-text-color" v-bind="props">
@@ -96,7 +108,8 @@ onMounted(() => {
                     </div>
                 </v-btn>
             </template>
-            <v-list theme="dark" bg-color="#211F31" class="px-2" :width="mobileWidth">
+            <v-list theme="dark" bg-color="transparent" class="px-2" :width="mobileWidth"
+                style="box-shadow: none !important;">
                 <v-list-item>
                     <v-list-item-title class="ml-2">
                         <div class="mail-header-text">{{ t('mail_dialog.header_text') }}</div>
@@ -120,9 +133,38 @@ onMounted(() => {
             </v-list>
         </v-menu>
     </v-bottom-navigation>
+    <!-- <v-navigation-drawer v-model="mailNavigation" location="bottom" temporary class="mobile-mail-menu" :scrim="true">
+        <v-list theme="dark" bg-color="transparent" class="px-2" :width="mobileWidth" style="box-shadow: none !important;">
+            <v-list-item>
+                <v-list-item-title class="ml-2">
+                    <div class="mail-header-text">{{ t('mail_dialog.header_text') }}</div>
+                </v-list-item-title>
+            </v-list-item>
+            <v-list-item class="mail-item" :value="mailItem.mail_content_1.content"
+                v-for="(mailItem, mailIndex) in mailList" :key="mailIndex">
+                <template v-slot:prepend>
+                    <img :src="mailItem.icon" />
+                </template>
+                <v-list-item-title class="ml-2">
+                    <div :class="mailItem.mail_content_1.color">{{ mailItem.mail_content_1.content }}</div>
+                    <div :class="mailItem.mail_content_2.color">{{ mailItem.mail_content_2.content }}</div>
+                </v-list-item-title>
+                <template v-slot:append>
+                    <div :class="mailItem.mail_rail_1.color">{{ mailItem.mail_rail_1.content }}</div>
+                    <div class="completion-area" :class="mailItem.mail_rail_2.color">{{ mailItem.mail_rail_2.content }}
+                    </div>
+                </template>
+            </v-list-item>
+        </v-list>
+    </v-navigation-drawer> -->
 </template>
 
 <style lang="scss">
+.v-overlay__scrim {
+    background: lightgray 0px 0px / 100% 100.077% no-repeat;
+    opacity: 0.8;
+}
+
 .mobile-menu-index {
     z-index: 1009 !important;
     overflow: inherit !important;
@@ -151,8 +193,14 @@ onMounted(() => {
 
 
 .mobile-mail-menu {
+
     margin-left: auto !important;
     left: unset !important;
+
+    // background: transparent !important;
+    // box-shadow: none !important;
+    // border: none !important;
+    // height: 340px !important;
 
     .v-list-item-title {
         font-weight: 500;
