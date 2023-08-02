@@ -47,11 +47,11 @@ onMounted(() => {
 .mobile-dialog-container {
     position: absolute !important;
     top: 0px;
-    height: 50px;
+    height: 40px;
     width: 100%;
 }
 .mobile-dialog-width {
-    width: 80%;
+    width: 240px;
     background: #2E274C;
     margin: auto;
     height: 100%;
@@ -63,13 +63,12 @@ onMounted(() => {
 .mobile-dialog-toggle {
 
     label {
-        width: 200px;
-        height: 40px;
+        width: 160px;
+        height: 32px;
         position: relative;
         display: block;
         background: #211F31;
         border-radius: 20px !important;
-        box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
         cursor: pointer;
         transition: 0.3s;
 
@@ -81,11 +80,11 @@ onMounted(() => {
             display: flex;
             align-items: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 10px;
         }
 
         .login {
-            left: 32px;
+            left: 26px;
             transition: 0.3s;
             color: black;
 
@@ -97,7 +96,7 @@ onMounted(() => {
         }
 
         .register {
-            left: 124px;
+            left: 104px;
             transition: 0.3s;
             color: #7782AA;
 
@@ -110,8 +109,8 @@ onMounted(() => {
 
     label:after {
         content: "";
-        width: 100px;
-        height: 36px;
+        width: 74px;
+        height: 28px;
         position: absolute;
         top: 2px;
         left: 2px;
@@ -129,12 +128,12 @@ onMounted(() => {
     }
 
     input:checked+label:after {
-        left: 200px;
+        left: 158px;
         transform: translateX(-100%);
     }
 
     label:active:after {
-        width: 100px;
+        width: 74px;
     }
 
     input:checked+label .login {

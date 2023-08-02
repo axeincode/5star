@@ -298,7 +298,7 @@ onMounted(async () => {
       </v-btn>
     </v-toolbar-title>
     <v-toolbar-title v-else>
-      <v-btn height="46" width="100" @click="goHomePage" class="align-center mt-1">
+      <v-btn height="46" width="100" @click="goHomePage" class="align-center">
         <img src="@/assets/public/image/logo_public_03.png" />
         <!-- <p class="m-logo-title-1 mt-1">{{ t('main.logo_text_1') }}</p>
           <p class="m-logo-title-2 mt-1">{{ t('main.logo_text_2') }}</p> -->
@@ -337,7 +337,7 @@ onMounted(async () => {
                 </div>
               </v-list-item>
             </v-card>
-            <v-card color="#211F31" theme="dark" class="mt-3 m-user-card-height" v-else>
+            <v-card color="#211F31" theme="dark" class="mt-2 m-user-card-height" style="border-radius: 8px;" v-else>
               <v-list-item class="deposit-item m-user-card-height px-2" v-bind="props">
                 <div class="d-flex align-center">
                   <v-menu offset="20">
@@ -360,8 +360,8 @@ onMounted(async () => {
                     </v-list>
                   </v-menu>
                   <div class="m-deposit-icon-bg cursor-pointer relative" @click="depositDialogShow">
-                    <img src="@/assets/public/svg/icon_public_54.svg" class="deposit-icon-position cursor-pointer" />
-                    <div class="text-700-12 white deposit-text-position">{{ t('appBar.deposit') }}</div>
+                    <img src="@/assets/public/svg/icon_public_54.svg" class="deposit-icon-position cursor-pointer" width="20"/>
+                    <div class="text-700-8 white m-deposit-text-position">{{ t('appBar.deposit') }}</div>
                   </div>
                 </div>
               </v-list-item>->
@@ -386,7 +386,7 @@ onMounted(async () => {
             </v-card>
             <div class="d-flex align-center" v-else>
               <v-list-item class="user-item" value="user dropdown" @click="showUserNavBar">
-                <img :src="user.avatar" width="40" height="40" class="mt-3" />
+                <img :src="user.avatar" width="40" height="40" class="mt-1 mr-2" />
               </v-list-item>
             </div>
           </template>
@@ -667,6 +667,10 @@ onMounted(async () => {
   .app-bar-position {
     top: 32px !important;
   }
+
+  .app-bar-height {
+    height: 60px !important;
+  }
 }
 
 .toggle-language-switch {
@@ -764,7 +768,7 @@ onMounted(async () => {
 }
 
 .m-user-card-height {
-  height: 48px !important;
+  height: 40px !important;
 }
 
 .user-drop-arrow-position {
@@ -806,14 +810,14 @@ onMounted(async () => {
     content: "";
     position: absolute;
     align-self: center;
-    float: right;
-    top: -16px;
-    border: 9px solid #211f31;
+    top: -25px;
+    right: 68px;
+    border: 13px solid #211f31;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
-    border-right-width: 7px;
-    border-left-width: 7px;
+    border-right-width: 10px;
+    border-left-width: 10px;
   }
 }
 
@@ -991,8 +995,8 @@ onMounted(async () => {
 
 .m-deposit-icon-bg {
   margin-left: auto;
-  width: 56px;
-  height: 40px;
+  width: 53px;
+  height: 33px;
   flex-shrink: 0;
   border-radius: 9px;
   border: 1px solid #8664F7;
@@ -1002,6 +1006,13 @@ onMounted(async () => {
 .deposit-text-position {
   position: absolute;
   top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.m-deposit-text-position {
+  position: absolute;
+  top: 18px;
   left: 50%;
   transform: translateX(-50%);
 }

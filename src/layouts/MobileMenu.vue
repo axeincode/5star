@@ -110,15 +110,15 @@ onMounted(() => {
             </template>
             <v-list theme="dark" bg-color="transparent" class="px-2" :width="mobileWidth"
                 style="box-shadow: none !important;">
-                <v-list-item>
+                <v-list-item height="36">
                     <v-list-item-title class="ml-2">
                         <div class="mail-header-text">{{ t('mail_dialog.header_text') }}</div>
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item class="mail-item" :value="mailItem.mail_content_1.content"
-                    v-for="(mailItem, mailIndex) in mailList" :key="mailIndex">
+                    v-for="(mailItem, mailIndex) in mailList" :key="mailIndex" height="36px">
                     <template v-slot:prepend>
-                        <img :src="mailItem.icon" />
+                        <img :src="mailItem.icon" width="20" />
                     </template>
                     <v-list-item-title class="ml-2">
                         <div :class="mailItem.mail_content_1.color">{{ mailItem.mail_content_1.content }}</div>
@@ -160,9 +160,11 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.v-overlay__scrim {
-    background: lightgray 0px 0px / 100% 100.077% no-repeat;
-    opacity: 0.8;
+@media (max-width: 600px) {
+    .v-overlay__scrim {
+        background: lightgray 0px 0px / 100% 100.077% no-repeat;
+        opacity: 0.8;
+    }
 }
 
 .mobile-menu-index {
@@ -196,6 +198,8 @@ onMounted(() => {
 
     margin-left: auto !important;
     left: unset !important;
+    bottom: 90px;
+    top: unset !important;
 
     // background: transparent !important;
     // box-shadow: none !important;
@@ -227,32 +231,34 @@ onMounted(() => {
 
     .text-color-gray {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 9px;
         color: #7782aa;
     }
 
     .text-color-white {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 10px;
         color: #ffffff;
     }
 
     .money-color-white {
-        font-weight: 900;
-        font-size: 16px;
+        font-weight: 800;
+        font-size: 12px;
         color: #ffffff;
     }
 
     .text-color-yellow {
-        font-weight: 500;
-        font-size: 12px;
+        font-weight: 600;
+        font-size: 8px;
         color: #F9BC01;
+        padding: 3px 0px;
     }
 
     .text-color-green {
-        font-weight: 500;
-        font-size: 12px;
+        font-weight: 600;
+        font-size: 8px;
         color: #01983A;
+        padding: 3px 0px;
     }
 
     .mail-item {

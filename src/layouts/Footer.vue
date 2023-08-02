@@ -28,15 +28,15 @@ const mobileWidth = computed(() => {
     <div class="my-4 mx-2">
 
         <!-------------------- footer bar -------------->
-        <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : ''">
-            <v-col cols="3" sm="4" md="2" lg="2">
+        <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-10'">
+            <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
                 <div class="footer-title ml-4">{{ t('home.footer.game.title') }}</div>
                 <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_1') }}</div>
                 <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_2') }}</div>
                 <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_3') }}</div>
                 <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_4') }}</div>
             </v-col>
-            <v-col cols="3" sm="4" md="2" lg="2">
+            <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
                 <div class="footer-title" :class="mobileWidth < 600 ? 'ml-4' : ''">
                     {{ t('home.footer.helpful_links.title') }}
                 </div>
@@ -47,57 +47,72 @@ const mobileWidth = computed(() => {
                     {{ t('home.footer.helpful_links.menu_2') }}
                 </div>
             </v-col>
-            <v-col cols="6" sm="4" md="3" lg="3">
-                <div class="footer-title" :class="mobileWidth < 600 ? 'ml-8' : ''">
+            <v-col cols="6" sm="4" md="3" lg="3" class="px-1">
+                <div class="footer-title" :class="mobileWidth < 600 ? 'ml-12' : ''">
                     {{ t('home.footer.about_us.title') }}
                 </div>
-                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-8' : ''">
+                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
                     {{ t('home.footer.about_us.menu_1') }}</div>
-                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-8' : ''">
+                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
                     {{ t('home.footer.about_us.menu_2') }}
                 </div>
-                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-8' : ''">
+                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
                     {{ t('home.footer.about_us.menu_3') }}
                 </div>
-                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-8' : ''">
+                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
                     {{ t('home.footer.about_us.menu_4') }}
                 </div>
-                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-8' : ''">
+                <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
                     {{ t('home.footer.about_us.menu_5') }}
                 </div>
             </v-col>
-            <v-col cols="12" sm="12" md="5" lg="5" class="text-center">
+            <v-col cols="12" sm="12" md="5" lg="5" class="text-center px-0">
                 <div class="d-flex align-center justify-center">
-                    <img src="@/assets/public/image/logo_public_01.png" />
+                    <img src="@/assets/public/image/logo_public_01.png" :width="mobileWidth < 600 ? 152 : undefined" />
                     <!-- <p class="logo-title-1 ml-1">{{t('main.logo_text_1')}}</p>
                     <p class="logo-title-2 ml-1">{{t('main.logo_text_2')}}</p> -->
                 </div>
-                <div class="mt-1">
+                <div class="mt-4" v-if="mobileWidth > 600">
                     <v-btn color="grey-darken-4"
                         :class="[footerIndex == 0 ? 'footer-icon-button-red' : 'footer-icon-button']" icon=""
                         v-for="(footerIcon, footerIndex) in footerIcons" :key="footerIndex">
                         <img :src="footerIcon" style="width: 100%" />
                     </v-btn>
                 </div>
-                <p class="text-left footer-4-text mt-4">{{ t('home.footer.footer_4.text') }}</p>
+                <div class="mt-4" style="width:  100%;" v-else>
+                    <div>
+                        <template v-for="(footerIcon, footerIndex) in footerIcons" :key="footerIndex">
+                            <v-btn class="m-footer-icon-button" icon="" v-if="footerIndex != 0">
+                                <img :src="footerIcon" style="width: 100%" />
+                            </v-btn>
+                        </template>
+                    </div>
+                    <div class="mt-3">
+                        <v-btn class="m-footer-icon-button-red" icon="">
+                            <img :src="footerIcons[0]" style="width: 100%" />
+                        </v-btn>
+                    </div>
+                </div>
+                <p class="text-left mt-4" :class="mobileWidth < 600 ? 'mx-2 text-400-11 gray' : 'footer-4-text'">{{
+                    t('home.footer.footer_4.text') }}</p>
             </v-col>
         </v-row>
         <v-row class="mx-2 mt-6">
-            <v-card color="#000000" theme="dark" class="justify-center">
+            <v-card color="#211F31" theme="dark" class="justify-center">
                 <v-row class="align-center">
-                    <v-col cols="12" sm="6" md="3" lg="3" class="d-flex justify-center mt-3">
-                        <img src="@/assets/public/image/logo_public_02.png" width="200" />
+                    <v-col cols="12" sm="6" md="3" lg="3" class="d-flex justify-center" :class="mobileWidth > 600 ? 'mt-3' : 'mt-6'">
+                        <img src="@/assets/public/image/logo_public_02.png" :width="mobileWidth > 600 ? 200 : 144" />
                     </v-col>
                     <v-col cols="12" sm="6" md="9" lg="9">
-                        <div class="footer-5-text" :class="[mobileVersion == 'sm' ? 'px-4' : 'pa-4']">{{
-                            t('home.footer.logo.text_1')
-                        }}</div>
-                        <div class="footer-5-text pa-4">{{ t('home.footer.logo.text_2') }}</div>
+                        <div :class="[mobileVersion == 'sm' ? 'px-4 text-400-12 gray' : 'pa-4 footer-5-text']">
+                            {{ t('home.footer.logo.text_1') }}
+                        </div>
+                        <div class="pa-4" :class="[mobileVersion == 'sm' ? 'text-400-12 gray' : 'footer-5-text']">{{ t('home.footer.logo.text_2') }}</div>
                     </v-col>
                 </v-row>
             </v-card>
         </v-row>
-        <v-row class="mt-8 mb-4 justify-center footer-6-text">
+        <v-row class="mt-8 mb-4 justify-center" :class="mobileWidth > 600 ? 'footer-6-text' : 'text-400-12 gray'">
             {{ t('home.footer.footer_6.text') }}
         </v-row>
     </div>
@@ -123,11 +138,12 @@ const mobileWidth = computed(() => {
 @media (max-width: 600px) {
 
     .footer-title {
-        font-size: 14px;
+        font-size: 10px;
     }
 
     .footer-text-1 {
-        font-size: 12px;
+        font-size: 10px;
+        font-weight: 500;
     }
 
 }
@@ -143,6 +159,20 @@ const mobileWidth = computed(() => {
     background-color: #D42763 !important;
     width: 34px !important;
     height: 34px !important;
+    margin: 0px 3px;
+}
+
+.m-footer-icon-button {
+    background-color: #131828 !important;
+    width: 44px !important;
+    height: 44px !important;
+    margin: 0px 6px;
+}
+
+.m-footer-icon-button-red {
+    background-color: #D42763 !important;
+    width: 44px !important;
+    height: 44px !important;
     margin: 0px 3px;
 }
 

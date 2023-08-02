@@ -269,7 +269,7 @@ const closeRouletteBonusDialog = () => {
 }
 
 .mobile-dialog-toggle-height {
-  height: 100px !important;
+  height: 40px !important;
   position: absolute !important;
   margin: 0 !important;
   bottom: unset !important;
@@ -279,7 +279,7 @@ const closeRouletteBonusDialog = () => {
 .mobile-login-dialog-position {
   position: absolute !important;
   margin: 0 !important;
-  height: 660px !important;
+  height: 624px !important;
   bottom: 0 !important;
   top: unset !important;
 }

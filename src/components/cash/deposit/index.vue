@@ -305,6 +305,7 @@ watch(depositToggleSwitch, (newValue) => {
 .deposit-container {
     background-color: #211F31;
     height: 700px;
+    border-radius: 0px 0px 16px 16px;
 
     .deposit-card-height {
         height: 48px;

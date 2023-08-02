@@ -17,31 +17,33 @@ export default SignupHeader
 </script>
 
 <template>
-    <v-row class="signup-header-container">
-        <v-col cols="10" offset="1" class="pl-11 pt-9">
+    <v-row class="m-signup-header-container">
+        <v-col cols="10" offset="1" class="pl-10 pt-9">
             <!-- <v-row>
                 <span class="logo-text purple">{{t('main.logo_text_1')}}</span>
                 <span class="logo-text yellow">{{t('main.logo_text_2')}}</span>
             </v-row> -->
             <v-row>
-                <p class="logo-text2 white">
+                <p class="m-logo-text2 white">
                     {{ t('signup.formPage.header.titleLine1') }}
                     <br>
                     {{ t('signup.formPage.header.titleLine2') }}
                 </p>
             </v-row>
         </v-col>
-        <img src="@/assets/login/image/bg_su_01.png" class="m-bg-image">
-        <img src="@/assets/public/image/logo_public_01.png" class="logo-image" width="180">
+        <!-- <img src="@/assets/login/image/bg_su_01.png" class="m-bg-image"> -->
+        <img src="@/assets/public/image/logo_public_01.png" class="m-logo-image" width="143">
         <img src="@/assets/login/image/img_su_01.png" class="m-coin-image">
     </v-row>
 </template>
 
 <style lang="scss">
-.signup-header-container {
+.m-signup-header-container {
     z-index: 1;
-    height: 187px;
-    margin: 0px !important;
+    height: 172px;
+    border-radius: 26px 26px 0px 0px;
+    margin: 0px !important;    
+    background: linear-gradient(0deg, #F08734 0%, #C6428B 100%), #5904D9;
 
     .v-col {
         z-index: 1;
@@ -55,7 +57,7 @@ export default SignupHeader
         border-radius: 38px 38px 0px 0px;
     }
 
-    img.logo-image {
+    img.m-logo-image {
         position: absolute;
         top: 22px;
         left: 18px;
@@ -63,10 +65,10 @@ export default SignupHeader
 
     img.m-coin-image {
         position: absolute;
-        top: -10px;
+        top: -14px;
         right: 0px;
-        width: 280px;
-        height: 197px;
+        width: 258px;
+        height: 186px;
     }
 
     .signup-logo-title-1-position {
@@ -91,12 +93,12 @@ export default SignupHeader
     text-shadow: #522A59 0px 2px 0px;
 }
 
-.logo-text2 {
+.m-logo-text2 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    margin-top: 40px;
+    font-size: 16px;
+    line-height: normal;
+    margin-top: 30px;
 }
 </style>

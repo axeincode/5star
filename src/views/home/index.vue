@@ -505,7 +505,7 @@ export default Dashboard;
 </script>
 
 <template>
-  <div class="mx-2 home-body" :class="mobileWidth > 600 ? 'my-4' : ''">
+  <div class="mx-2 home-body" :class="mobileWidth > 600 ? 'my-4' : 'my-4'">
     <!-- image carousel -->
 
     <v-carousel cycle interval="6000" height="225" hide-delimiter-background :hide-delimiters="slides.length <= 1"

@@ -46,6 +46,11 @@ const userNavBarToggle = computed(() => {
     return getUserNavBarToggle.value;
 });
 
+const refferalAppBarShow = computed(() => {
+    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+    return getRefferalAppBarShow.value;
+})
+
 const mobileVersion = computed(() => {
     return name.value
 });
@@ -128,7 +133,7 @@ watch(mobileWidth, (newValue: number) => {
 <template>
     <v-navigation-drawer temporary class="nav-background py-14" location="right" width="320" v-model="drawer">
         <template v-slot:prepend>
-            <div class="user-navbar-position"></div>
+            <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
         </template>
         <v-list density="compact" nav>
             <v-list-item class="user-item" value="id">
@@ -308,7 +313,7 @@ watch(mobileWidth, (newValue: number) => {
 }
 
 .user-navbar-position {
-    margin-top: 70px;
+    margin-top: 35px;
 }
 
 .v-navigation-drawer__content {
@@ -364,4 +369,5 @@ watch(mobileWidth, (newValue: number) => {
         box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
         border-radius: 20px !important;
     }
-}</style>
+}
+</style>

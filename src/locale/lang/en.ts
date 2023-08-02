@@ -1,5 +1,4 @@
-import { duration } from "moment-timezone";
-import { langType } from "./lang-base";
+import type { langType } from "./lang-base";
 
 export const lang: langType = {
   main: {
@@ -59,7 +58,7 @@ export const lang: langType = {
       },
       alreadyAccount: "Already have an account? ",
       signIn: "Sign in",
-      button: "SIGN UP",
+      button: "Sign up",
       divider: "OR",
     },
     confirmCancelPage: {
@@ -549,8 +548,8 @@ export const lang: langType = {
       text_5: "Next Level VIP ",
       text_7: "Yesterday’s CASHBACK Bonus",
       text_8: "Historical cumulative CASHBACK bonuses",
-      text_9: "CASHBACK bonus collection records",
-      text_10: "",
+      text_9: "CASHBACK",
+      text_10: " bonus collection records",
       text_11: "Original Games",
       text_12: "SLOT",
       text_13: "SPORTS",

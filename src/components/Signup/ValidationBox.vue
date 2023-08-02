@@ -1,6 +1,6 @@
-
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
+import { useDisplay } from 'vuetify';
 
 const ValidationBox = defineComponent({
     props: {
@@ -24,6 +24,15 @@ const ValidationBox = defineComponent({
             default: [],
         },
     },
+    setup(props) {
+        const { width } = useDisplay();
+        const mobileWidth = computed(() => {
+            return width.value
+        })
+        return {
+            mobileWidth
+        }
+    }
 })
 
 export default ValidationBox
@@ -31,8 +40,9 @@ export default ValidationBox
 
 <template>
     <div class="validation-box-container pa-2 animate glow delay-1 fade-in">
-        <v-row v-if="title.length" class="d-flex justify-center ma-2 ">
-            <img v-if="withCautionIcon" src="@/assets/public/svg/icon_public_03.svg" width="16" class="validation-caution-img" />
+        <v-row v-if="title.length" class="d-flex justify-center" :class="mobileWidth > 600 ? 'ma-2' : 'ma-1'">
+            <img v-if="withCautionIcon" src="@/assets/public/svg/icon_public_03.svg" width="16"
+                class="validation-caution-img" />
             <span class="label-text-sm ml-2 mt-1 slate-gray">
                 {{ title }}
             </span>
@@ -50,6 +60,12 @@ export default ValidationBox
 </template>
 
 <style lang="scss">
+@media(max-width: 600px) {
+    .validation-box-container {
+        bottom: 50px !important;
+    }
+}
+
 .validation-box-container {
     position: absolute;
     bottom: 64px;
@@ -60,7 +76,7 @@ export default ValidationBox
     margin: 12px; // wrapped by v-row
     padding-bottom: 0px !important;
     z-index: 2;
-    
+
     .validation-caution-img {
         position: relative;
         top: 2px;
@@ -96,11 +112,8 @@ export default ValidationBox
     position: relative;
     align-self: center;
     float: right;
-    top: 16px;
-    bottom: 0px;
-    right: 172px;
-    width: 0px;
-    height: 0px;
+    top: 18px;
+    right: 50%;
     border: 9px solid #211f31;
     border-right-color: transparent;
     border-left-color: transparent;

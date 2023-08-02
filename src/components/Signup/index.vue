@@ -28,11 +28,11 @@ const Signup = defineComponent({
             currentPage: 0,  // default signup form
             dialog: true,
             isAgreed: false,
-            iconNameList: [
-                "icon_public_28",
-                "icon_public_29",
-                "icon_public_30",
-                "icon_public_31",
+            socialIconList: [
+                new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
+                new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+                new URL("@/assets/public/svg/icon_public_30.svg", import.meta.url).href,
+                new URL("@/assets/public/svg/icon_public_31.svg", import.meta.url).href,
             ],
             PAGE_TYPE: {
                 SIGNUP_FORM: 0,
@@ -298,7 +298,7 @@ export default Signup
 </script>
 
 <template>
-    <div :class="[mobileVersion == 'sm' ? 'm-signup-container' : 'signup-container']">
+    <div class="signup-container">
         <SignupHeader v-if="currentPage !== PAGE_TYPE.DISPLAY_NAME" />
         <v-row class="signup-body pt-6">
             <!-- SIGN UP FORM  -->
@@ -347,7 +347,7 @@ export default Signup
                         <v-checkbox v-model="formData.isAgreed" hide-details icon class="agreement-checkbox" />
                     </v-col>
                     <v-col cols="10">
-                        <p :class="currentLanguage === 'en' ? 'agreement-text' : 'agreement-text mt-5'">
+                        <p :class="currentLanguage === 'en' ? 'agreement-text' : 'agreement-text mt-3'">
                             {{ t('signup.formPage.agree.prefix') }}
                             <span class="white pointer">
                                 {{ t('signup.formPage.agree.bold') }}
@@ -377,9 +377,9 @@ export default Signup
                 <v-row class="mt-10">
                     <v-col cols="8" offset="2">
                         <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
-                            <v-sheet v-for="n in 4" :key="n" color="#131828" class="rounded">
+                            <v-sheet v-for="(item, index) in socialIconList" :key="index" color="#131828" class="rounded">
                                 <v-btn color="grey-darken-4" class="social-icon-button" icon="">
-                                    <img :src="`src/assets/public/svg/${iconNameList[n - 1]}.svg`" />
+                                    <img :src="item" />
                                 </v-btn>
                             </v-sheet>
                         </div>
@@ -521,13 +521,6 @@ button:active:enabled {
 .signup-container {
     background-color: #2E274C;
     border-radius: 16px !important;
-}
-
-// mobile dialog contaier
-.m-signup-container {
-    background-color: #2E274C;
-    position: absolute;
-    bottom: 0;
 }
 
 // wrapper
