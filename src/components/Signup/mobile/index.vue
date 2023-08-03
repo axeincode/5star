@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed } from 'vue';
+import { defineComponent, reactive, toRefs, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ValidationBox from '@/components/Signup/ValidationBox.vue';
 import SignupHeader from '@/components/Signup/mobile/Header.vue';
@@ -74,7 +74,8 @@ const MSignup = defineComponent({
             emailPartName: "",
             notificationShow: false,
             checkIcon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
-            notificationText: t('signup.submit_result.success_text')
+            notificationText: t('signup.submit_result.success_text'),
+            closeBtnHeight: 0,
         });
 
         const showPassword = () => {
@@ -164,8 +165,7 @@ const MSignup = defineComponent({
         }
 
         const handleOnPasswordInputBlur = (): void => {
-            // state.isShowPasswordValidation = true;
-            state.isShowPasswordValidation = false;
+            // state.isShowPasswordValidation = false;
         }
 
         const handleOnUserNameInputFocus = (): void => {
@@ -265,6 +265,10 @@ const MSignup = defineComponent({
             }, 100)
         }
 
+        onMounted(() => {
+            state.closeBtnHeight = 613 - window.innerHeight + 2;
+        })
+
         return {
             t,
             ...toRefs(state),
@@ -354,7 +358,7 @@ export default MSignup
                     </p>
                 </div>
                 <v-row>
-                    <v-btn class="mt-8 mx-3 m-signup-btn text-none" width="-webkit-fill-available" height="48px"
+                    <v-btn class="mt-8 mx-3 m-signup-btn" width="-webkit-fill-available" height="48px"
                         :loading="loading" :disabled="!isFormDataReady" :onclick="handleSignupFormSubmit">
                         {{ t('signup.formPage.button') }}
                     </v-btn>
@@ -369,7 +373,8 @@ export default MSignup
                     <v-col cols="8" offset="2">
                         <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
                             <v-sheet v-for="(item, index) in socialIconList" :key="index" color="#131828" class="rounded">
-                                <v-btn color="grey-darken-4" class="social-icon-button" icon="" height="36px" width="36px">
+                                <v-btn color="grey-darken-4" class="m-social-icon-button" icon="" height="36px"
+                                    width="36px">
                                     <img :src="item" width="36" />
                                 </v-btn>
                             </v-sheet>
@@ -391,14 +396,14 @@ export default MSignup
                     </p>
                 </v-row>
                 <v-row style="margin-top: 100px;">
-                    <v-btn class="ma-3 button-bright text-none m-signup-continue-btn" width="-webkit-fill-available"
+                    <v-btn class="ma-3 button-bright m-signup-continue-btn" width="-webkit-fill-available"
                         height="48px" @click="handleClickContinueButton">
                         {{ t('signup.confirmCancelPage.continue') }}
                     </v-btn>
                 </v-row>
                 <v-row class="mt-4">
-                    <v-btn class="ma-3 button-dark text-none m-signup-cancel-btn" width="-webkit-fill-available" height="48px"
-                        @click="$emit('close')">
+                    <v-btn class="ma-3 button-dark m-signup-cancel-btn" width="-webkit-fill-available"
+                        height="48px" @click="$emit('close')">
                         {{ t('signup.confirmCancelPage.cancel') }}
                     </v-btn>
                 </v-row>
@@ -406,20 +411,20 @@ export default MSignup
 
             <!-- Already registered notification -->
             <div v-if="currentPage == PAGE_TYPE.ALREADY_REGISTERED" class="full-width">
-                <v-row class="mt-8">
-                    <p class="label-text-md slate-gray center full-width pl-12 pr-12">
+                <v-row>
+                    <p class="m-label-text-md slate-gray center full-width pl-12 pr-12">
                         {{ t('signup.alreadyRegisterPage.title') }}
                     </p>
                 </v-row>
-                <v-row class="mt-12">
-                    <v-btn class="ma-3 button-bright text-none" width="-webkit-fill-available" height="60px"
-                        autocapitalize="off" @click="handleClickConfirmButton">
+                <v-row style="margin-top: 126px;">
+                    <v-btn class="ma-3 button-bright m-signup-confirm-btn" width="-webkit-fill-available"
+                        height="48px" autocapitalize="off" @click="handleClickConfirmButton">
                         {{ t('signup.alreadyRegisterPage.confirm') }}
                     </v-btn>
                 </v-row>
                 <v-row class="mt-4">
-                    <v-btn class="ma-3 button-dark text-none" width="-webkit-fill-available" height="60px"
-                        autocapitalize="off">
+                    <v-btn class="ma-3 button-dark m-signup-cancel-btn" width="-webkit-fill-available"
+                        height="48px" autocapitalize="off">
                         {{ t('signup.alreadyRegisterPage.cancel') }}
                     </v-btn>
                 </v-row>
@@ -430,20 +435,20 @@ export default MSignup
                 <v-row class="carousel-container ml-0">
                     <v-carousel height="400" show-arrows hide-delimiters class="carousel">
                         <template v-slot:prev="{ props }">
-                            <v-btn class="button-carousel ma-2 text-none" variant="text" icon="mdi-chevron-left"
+                            <v-btn class="button-carousel ma-2" variant="text" icon="mdi-chevron-left"
                                 @click="props.onClick"></v-btn>
                         </template>
                         <template v-slot:next="{ props }">
-                            <v-btn class="button-carousel ma-2 text-none" variant="text" icon="mdi-chevron-right"
+                            <v-btn class="button-carousel ma-2" variant="text" icon="mdi-chevron-right"
                                 @click="props.onClick"></v-btn>
                         </template>
                         <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                            <img src="@/assets/public/image/ua_public_01.png">
+                            <img src="@/assets/public/image/ua_public_01.png" width="123" style="margin-top: 20px;">
                         </v-carousel-item>
                     </v-carousel>
                 </v-row>
                 <v-row class="mt-4 mb-2">
-                    <p class="label-text-lg white full-width center">
+                    <p class="text-700-16 white full-width center">
                         {{ t('signup.displayNamePage.title') }}
                     </p>
                 </v-row>
@@ -456,14 +461,16 @@ export default MSignup
                         :descriptionList="userNameValidationStrList" :validationList="userNameValidationList" />
                 </v-row>
                 <v-row>
-                    <v-btn class="ma-3 mt-8 mb-8 button-bright text-none" width="-webkit-fill-available" height="54px"
-                        :disabled="!validateUserName()" @click="$emit('close')">
+                    <v-btn class="ma-3 mt-8 mb-8 button-bright m-signup-confirm-btn"
+                        width="-webkit-fill-available" height="48px" :disabled="!validateUserName()"
+                        @click="$emit('close')">
                         {{ t('signup.displayNamePage.submit') }}
                     </v-btn>
                 </v-row>
             </div>
         </div>
-        <v-btn class="m-close-button" icon="true" @click="closeDialog" width="30" height="30">
+        <v-btn :class="currentPage == PAGE_TYPE.DISPLAY_NAME ? 'm-close-button-1' : 'm-close-button'" icon="true"
+            @click="closeDialog" width="30" height="30" :style="{top: closeBtnHeight + 'px'}">
             <img src="@/assets/public/svg/icon_public_10.svg" />
             <!-- <v-icon :color="currentPage === PAGE_TYPE.DISPLAY_NAME ? '#7782AA' : '#FFFFFF'">
                 mdi-close
@@ -509,8 +516,15 @@ export default MSignup
     }
 
     .v-list-item--density-default.v-list-item--one-line {
-        min-height: 40px !important;
+        min-height: 42px !important;
     }
+}
+
+.m-label-text-md {
+    margin-top: 132px;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: "Inter";
 }
 
 .m-signup-continue-btn {
@@ -523,6 +537,17 @@ export default MSignup
         font-weight: 700;
         line-height: normal;
         text-transform: uppercase;
+    }
+}
+
+.m-signup-confirm-btn {
+    .v-btn__content {
+        text-align: center;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
     }
 }
 
@@ -592,7 +617,6 @@ button:active:enabled {
     position: absolute;
     bottom: 0;
     height: 613px;
-    border-radius: 38px 38px 0px 0px;
     width: 100%;
 
     .v-field--variant-solo {
@@ -616,6 +640,14 @@ button:active:enabled {
     background-color: transparent !important;
     position: absolute !important;
     top: 9px;
+    right: 12px;
+}
+
+.m-close-button-1 {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    position: absolute !important;
+    top: 160px;
     right: 12px;
 }
 
@@ -644,7 +676,7 @@ button:active:enabled {
     }
 }
 
-.social-icon-button {
+.m-social-icon-button {
     background-color: #131828 !important;
     width: 36px;
     height: 36px;
@@ -702,5 +734,4 @@ button:active:enabled {
 // carousel
 .carousel-container {
     width: 100%;
-}
-</style>
+}</style>

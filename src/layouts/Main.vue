@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
@@ -31,6 +31,7 @@ const { name, width } = useDisplay();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
 const { setAuthModalType } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
@@ -52,6 +53,7 @@ const signoutDialog = ref<boolean>(false);
 const loginDialog = ref<boolean>(false);
 const mobileDialog = ref<boolean>(false);
 const mobileDialogCheck = ref<boolean>(false);
+const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
 // methods
 const closeDialog = (type: dialogType) => {
@@ -178,12 +180,42 @@ watch(rouletteBonusDialogVisible, (newValue) => {
 })
 const closeRouletteBonusDialog = () => {
   setRouletteBonusDialogVisible(false);
+  setMainBlurEffectShow(false);
 }
 
+// main blur effect
+const mainBlurEffectShow = computed(() => {
+  const { getMainBlurEffectShow } = storeToRefs(appBarStore());
+  return getMainBlurEffectShow.value
+})
+
+// overlay scrim show
+const overlayScrimShow = computed(() => {
+  const { getOverlayScrimShow } = storeToRefs(appBarStore());
+  return getOverlayScrimShow.value;
+})
+watch(overlayScrimShow, (newValue) => {
+  console.log(newValue);
+  if (newValue) {
+    overlayScrimBackground.value = "transparent";
+  } else {
+    overlayScrimBackground.value = "rgb(var(--v-theme-on-surface))";
+  }
+  document.documentElement.style.setProperty('--background-color', overlayScrimBackground.value);
+})
+
+onMounted(() => {
+  if (overlayScrimShow.value) {
+    overlayScrimBackground.value = "transparent";
+  } else {
+    overlayScrimBackground.value = "rgb(var(--v-theme-on-surface))";
+  }
+  document.documentElement.style.setProperty('--background-color', overlayScrimBackground.value);
+})
 </script>
 
 <template>
-  <v-main class="main-background">
+  <v-main class="main-background" :class="mainBlurEffectShow ? 'main-bg-blur' : ''">
 
     <!---------------------- Deposit Dialog ----------------------------------------------->
 
@@ -209,7 +241,8 @@ const closeRouletteBonusDialog = () => {
       <MobileDialog :mobileDialogCheck="mobileDialogCheck" @switch="switchDialog" />
     </v-dialog>
     <v-dialog v-model="signupDialog" :width="mobileVersion == 'sm' ? '' : 471" :fullscreen="mobileVersion == 'sm'"
-      :scrim="mobileVersion == 'sm' ? false : true" :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'fade'"
+      :scrim="mobileVersion == 'sm' ? false : true"
+      :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'fade'"
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']" @click:outside="closeDialog('signup')">
       <!------------  PC Version ------------>
       <Signup v-if="mobileVersion != 'sm'" @close="closeDialog('signup')" @switch="switchDialog('signup')" />
@@ -217,7 +250,8 @@ const closeRouletteBonusDialog = () => {
       <MSignup v-else @close="closeDialog('signup')" @switch="switchDialog('signup')" />
     </v-dialog>
     <v-dialog v-model="loginDialog" :width="mobileVersion == 'sm' ? '' : 471" :fullscreen="mobileVersion == 'sm'"
-      :scrim="mobileVersion == 'sm' ? false : true" :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'fade'"
+      :scrim="mobileVersion == 'sm' ? false : true"
+      :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'fade'"
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']" @click:outside="closeDialog('login')">
       <!------------  PC Version ------------>
       <Login v-if="mobileVersion != 'sm'" @close="closeDialog('login')" @switch="switchDialog('login')" />
@@ -250,7 +284,7 @@ const closeRouletteBonusDialog = () => {
     <!----------------------------------- roulette bonus dialog --------------------------------->
 
     <v-dialog v-model="rouletteBonusDialog" :width="mobileWidth < 600 ? '340' : '471'" transition="fade"
-      @click:outside="setRouletteBonusDialogVisible(false)">
+      @click:outside="closeRouletteBonusDialog">
       <RouletteBonusDialog v-if="mobileWidth > 600" @closeRouletteBonusDialog="closeRouletteBonusDialog" />
       <MRouletteBonusDialog v-else @closeRouletteBonusDialog="closeRouletteBonusDialog" />
     </v-dialog>
@@ -268,6 +302,11 @@ const closeRouletteBonusDialog = () => {
   background: #31275C;
 }
 
+.main-bg-blur {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+
 .mobile-dialog-toggle-height {
   height: 40px !important;
   position: absolute !important;
@@ -282,5 +321,21 @@ const closeRouletteBonusDialog = () => {
   height: 624px !important;
   bottom: 0 !important;
   top: unset !important;
+}
+
+.v-navigation-drawer__scrim {
+  opacity: 0.72 !important;
+}
+
+@media (max-width: 600px) {
+  .v-overlay__scrim {
+    background: var(--background-color);
+    ;
+  }
+
+  .v-navigation-drawer__scrim {
+    opacity: 0 !important;
+    background: transparent !important;
+  }
 }
 </style>

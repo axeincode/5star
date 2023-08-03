@@ -14,6 +14,7 @@ const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
@@ -121,6 +122,9 @@ watch(userNavBarToggle, (newValue) => {
 
 watch(drawer, (newValue: boolean) => {
     setUserNavBarToggle(newValue);
+    if (!newValue) {
+        setMainBlurEffectShow(false);
+    }
 })
 
 watch(mobileWidth, (newValue: number) => {
@@ -294,10 +298,6 @@ watch(mobileWidth, (newValue: number) => {
 </template>
 
 <style lang="scss">
-.v-navigation-drawer__scrim {
-    background: lightgray 0px 0px / 100% 100.077% no-repeat;
-}
-
 .nav-background {
     background-color: #29253C !important;
     color: #7782AA !important;

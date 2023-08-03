@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
 import { useDisplay } from 'vuetify';
 
@@ -9,6 +10,7 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const { setRefferalAppBarShow } = refferalStore();
 const { setRefferalDialogShow } = refferalStore();
+const { setOverlayScrimShow } = appBarStore();
 
 const invertedScroll = ref<boolean>(true);
 const elevateOnScroll = ref<boolean>(true);
@@ -16,6 +18,10 @@ const elevateOnScroll = ref<boolean>(true);
 const mobileWidth = computed((): number => {
     return width.value
 })
+const openRefferalDialogShow = () => {
+    setOverlayScrimShow(false);
+    setRefferalDialogShow(true)
+}
 </script>
 
 <template>
@@ -26,11 +32,13 @@ const mobileWidth = computed((): number => {
                 {{ t('refferal.app_bar_title') }}
             </p>
             <img src="@/assets/public/image/img_public_09.png" class="ml-3" :width="mobileWidth > 600 ? 50 : 33" />
-            <v-btn rounded :height="mobileWidth < 600 ? '24px' : '28px'" class="text-none ml-3 earn-btn-bg" @click="setRefferalDialogShow(true)">
+            <v-btn rounded :height="mobileWidth < 600 ? '24px' : '28px'" class="text-none ml-3 earn-btn-bg"
+                @click="openRefferalDialogShow">
                 {{ t('refferal.earn_btn_text') }}
             </v-btn>
         </v-toolbar-title>
-        <v-btn icon density="compact" :height="mobileWidth < 600 ? '20px' : '28px'" :width="mobileWidth < 600 ? '20px' : '28px'">
+        <v-btn icon density="compact" :height="mobileWidth < 600 ? '20px' : '28px'"
+            :width="mobileWidth < 600 ? '20px' : '28px'">
             <v-icon color="#FFFFFF" style="font-size: 20px;" @click="setRefferalAppBarShow(false)">mdi-close</v-icon>
         </v-btn>
     </v-app-bar>

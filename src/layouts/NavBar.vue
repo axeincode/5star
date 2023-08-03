@@ -186,7 +186,8 @@ onMounted(() => {
                         <v-menu location="end" offset="10" class="original-dropdown" v-model:model-value="originalMenu">
                             <template v-slot:activator="{ props }">
                                 <v-list-item v-bind="props" class="casino-sub-img"
-                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg" :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg"
+                                    :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
                                     :title="t('navBar.casino_sub_menu.game_originals')"
                                     value="game originals"></v-list-item>
                             </template>

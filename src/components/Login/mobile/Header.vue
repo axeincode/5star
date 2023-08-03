@@ -1,4 +1,3 @@
-
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useI18n } from 'vue-i18n'
@@ -39,56 +38,56 @@ export default LoginHeader
                 {{ t('login.formPage.header.titleLine2') }}
             </span>
         </p>
-        <img src="@/assets/login/image/img_li_01.png" class="logo-image2">
-        <img src="@/assets/login/image/img_li_02.png" class="logo-image3">
-        <img src="@/assets/login/image/img_li_03.png" class="logo-image4">
-        <img src="@/assets/login/image/img_li_04.png" class="logo-image5">
-        <img src="@/assets/login/image/img_li_05.png" class="m-logo-image6">
+        <img src="@/assets/login/image/img_li_01.png" class="m-logo-image2" width="264">
+        <img src="@/assets/login/image/img_li_02.png" class="m-logo-image3" width="118">
+        <img src="@/assets/login/image/img_li_03.png" class="m-logo-image4" width="177">
+        <img src="@/assets/login/image/img_li_04.png" class="m-logo-image5" width="30">
+        <img src="@/assets/login/image/img_li_05.png" class="m-logo-image6" width="134">
     </v-row>
 </template>
 
 <style lang="scss" scoped>
 .m-login-header-container {
     z-index: 1;
-    height: 187px;
+    height: 177px;
     margin: 0px !important;
     background: linear-gradient(0deg, #275798 0%, #9419F0 100%);
-    border-radius: 38px 38px 0px 0px;
+    border-radius: 26px 26px 0px 0px;
 
     .v-col {
         z-index: 1;
     }
 
-    img.logo-image2 {
+    img.m-logo-image2 {
         position: absolute;
         visibility: visible;
-        top: 22px;
-        left: 7px;
+        top: 8px;
+        left: 13px;
         z-index: 3;
     }
 
-    img.logo-image3 {
+    img.m-logo-image3 {
         position: absolute;
-        top: 21px;
-        left: 8px;
+        top: 11px;
+        left: 11px;
     }
 
-    img.logo-image4 {
+    img.m-logo-image4 {
         position: absolute;
         left: 7px;
-        top: 21px;
+        top: 0px;
     }
 
-    img.logo-image5 {
+    img.m-logo-image5 {
         position: absolute;
-        left: 244px;
-        top: 8px;
+        left: 199px;
+        top: 3px;
     }
 
     img.m-logo-image6 {
         position: absolute;
-        right: 9px;
-        top: 56px;
+        right: 48px;
+        top: 29px;
     }
 
     img.bg-image {
@@ -115,13 +114,13 @@ export default LoginHeader
 
 .m-login-logo-text {
     position: absolute;
-    top: 68px;
-    right: 37px;
+    top: 35px;
+    right: 67px;
     z-index: 2;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 13px;
     line-height: 21px;
 }
 </style>

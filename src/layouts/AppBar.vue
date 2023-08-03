@@ -19,6 +19,8 @@ const { setAuthModalType } = authStore();
 const { dispatchUserProfile } = authStore();
 const { setRightBarToggle } = appBarStore();
 const { setNavBarToggle } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
@@ -147,6 +149,7 @@ const toggleLanguage = () => {
 };
 const openDialog = (type: dialogType) => {
   setAuthModalType(type);
+  setOverlayScrimShow(false);
 };
 
 const showSignoutDialog = () => {
@@ -209,6 +212,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
 const showUserNavBar = (): void => {
   userNavBarToggle.value = !userNavBarToggle.value
   setUserNavBarToggle(userNavBarToggle.value);
+  setMainBlurEffectShow(userNavBarToggle.value);
 }
 
 watch(userNavToggle, (newValue) => {
@@ -360,7 +364,8 @@ onMounted(async () => {
                     </v-list>
                   </v-menu>
                   <div class="m-deposit-icon-bg cursor-pointer relative" @click="depositDialogShow">
-                    <img src="@/assets/public/svg/icon_public_54.svg" class="deposit-icon-position cursor-pointer" width="20"/>
+                    <img src="@/assets/public/svg/icon_public_54.svg" class="deposit-icon-position cursor-pointer"
+                      width="20" />
                     <div class="text-700-8 white m-deposit-text-position">{{ t('appBar.deposit') }}</div>
                   </div>
                 </div>

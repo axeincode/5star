@@ -11,6 +11,8 @@ import { storeToRefs } from "pinia";
 
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
 
 const { t } = useI18n();
@@ -39,6 +41,11 @@ const refferalAppBarShow = computed(() => {
 const navBarToggle = computed(() => {
     const { getNavBarToggle } = storeToRefs(appBarStore());
     return getNavBarToggle.value
+})
+
+const rouletteBonusDialog = computed(() => {
+    const { getRouletteBonusDialogVisible } = storeToRefs(loginBonusStore());
+    return getRouletteBonusDialogVisible.value;
 })
 
 // language array
@@ -82,6 +89,9 @@ const gameOriginalItems = ref<Array<GetGameOriginalData>>([
 
 watch(drawer, (newValue: boolean) => {
     setNavBarToggle(newValue);
+    if (!newValue && !rouletteBonusDialog.value) {
+        setMainBlurEffectShow(false);
+    }
 })
 
 watch(navBarToggle, (newValue) => {
@@ -109,6 +119,8 @@ const handleLanguageDropdown = (item: string) => {
 const openRouletteBonusDialog = () => {
     setRouletteBonusDialogVisible(true);
     setNavBarToggle(false);
+    setOverlayScrimShow(true);
+    setMainBlurEffectShow(true);
 }
 
 onMounted(() => {
@@ -120,16 +132,16 @@ onMounted(() => {
     <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-20" :width="192"
         v-model="drawer">
         <template v-slot:prepend>
-            <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''">
+            <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''" style="height: 56px;">
                 <input type="checkbox" id="casino-toggle" />
                 <label for="casino-toggle">
                     <div class="casino">
                         <img src="@/assets/public/svg/icon_public_34.svg" />
-                        <P>{{ t('navBar.casino') }}</P>
+                        <p>{{ t('navBar.casino') }}</p>
                     </div>
                     <div class="sport">
                         <img src="@/assets/public/svg/icon_public_40.svg" />
-                        <P>{{ t('navBar.sport') }}</P>
+                        <p>{{ t('navBar.sport') }}</p>
                     </div>
                 </label>
             </v-list-item>
@@ -188,9 +200,9 @@ onMounted(() => {
                         <v-menu location="end" offset="10" class="original-dropdown" v-model:model-value="originalMenu">
                             <template v-slot:activator="{ props }">
                                 <v-list-item v-bind="props" class="m-casino-sub-img"
-                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg" :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
-                                    :title="t('navBar.casino_sub_menu.game_originals')"
-                                    value="game originals">
+                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg"
+                                    :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+                                    :title="t('navBar.casino_sub_menu.game_originals')" value="game originals">
                                 </v-list-item>
                             </template>
                             <v-list theme="dark" bg-color="#211F31" width="166">

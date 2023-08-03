@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { useDisplay } from "vuetify";
 import { type GetRouletteHistory } from '@/interface/vip';
 import anime, { AnimeInstance } from "animejs";
+import { onMounted } from 'vue';
 
 const emit = defineEmits<{ (e: 'closeRouletteBonusDialog'): void }>()
 const { t } = useI18n();
@@ -14,6 +15,7 @@ const spinNumber = ref<number>(10);
 const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
 const winnerToggleSwitch = ref<boolean>(false);
+const marginShow = ref<boolean>(false);
 
 interface rouletteItem {
     value: string
@@ -270,10 +272,16 @@ const showWinnerBody = () => {
     winnerBodyShow.value = !winnerBodyShow.value;
     winnerBodyHeight.value = winnerBodyShow.value ? 255 : 0;
 }
+
+onMounted(() => {
+    if (window.innerHeight <= 667) {
+        marginShow.value = true;
+    }
+})
 </script>
 
 <template>
-    <div class="m-roulette-bonus-dialog-container">
+    <div class="m-roulette-bonus-dialog-container" :class="marginShow ? 'm-roulette-bonus-dialog-margin' : ''">
         <div class="m-roulette-bonus-dialog-header-left">
             <v-btn class="m-roulette-bonus-dialog-sound-bg-1 ml-4" icon="true" width="34" height="34">
                 <div class="m-roulette-bonus-dialog-sound-bg-2">
@@ -346,14 +354,14 @@ const showWinnerBody = () => {
             <div class="m-roulette-bonus-dialog-body-3">
                 <div class="my-1">
                     <v-row v-for="(item, index) in rouletteHistory" :key="index" class="ma-0 mx-2 pa-0">
-                        <v-col cols="5" class="pa-1 ma-0 text-500-9 gray">{{ item.rouletteTime }}</v-col>
-                        <v-col cols="4" class="pa-1 ma-0 text-500-9 gray">{{ item.user }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-9 yellow" v-if="item.rouletteResult == 'IPHONE 14'">{{
+                        <v-col cols="5" class="px-1 ma-0 text-500-9 gray" style="padding-top: 2px; padding-bottom: 2px;">{{ item.rouletteTime }}</v-col>
+                        <v-col cols="4" class="px-1 ma-0 text-500-9 gray" style="padding-top: 2px; padding-bottom: 2px;">{{ item.user }}</v-col>
+                        <v-col cols="3" class="px-1 ma-0 text-500-9 yellow" v-if="item.rouletteResult == 'IPHONE 14'" style="padding-top: 2px; padding-bottom: 2px;">{{
                             item.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-900-9 white"
+                        <v-col cols="3" class="px-1 ma-0 text-900-9 white" style="padding-top: 2px; padding-bottom: 2px;"
                             v-else-if="item.rouletteResult == 'R$ 5000' || item.rouletteResult == 'R$ 500' || item.rouletteResult == 'R$ 50'">{{
                                 item.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-900-9 gray" v-else>{{ item.rouletteResult }}</v-col>
+                        <v-col cols="3" class="px-1 ma-0 text-900-9 gray" v-else style="padding-top: 2px; padding-bottom: 2px;">{{ item.rouletteResult }}</v-col>
                     </v-row>
                 </div>
             </div>
@@ -368,10 +376,10 @@ const showWinnerBody = () => {
                 <input type="checkbox" id="m-victory-toggle" v-model="winnerToggleSwitch" />
                 <label for="m-victory-toggle">
                     <div class="winner">
-                        <P class="text-700-10">{{ t('vip.roulette_bonus.winner_text') }}</P>
+                        <p class="text-700-10">{{ t('vip.roulette_bonus.winner_text') }}</p>
                     </div>
                     <div class="prize">
-                        <P class="text-700-10">{{ t('vip.roulette_bonus.prize_winner_text') }}</P>
+                        <p class="text-700-10">{{ t('vip.roulette_bonus.prize_winner_text') }}</p>
                     </div>
                 </label>
             </div>
@@ -430,7 +438,12 @@ const showWinnerBody = () => {
     border-left-width: 6px;
 }
 
+.m-roulette-bonus-dialog-margin {
+    margin-top: 80px;
+}
+
 .m-roulette-bonus-dialog-container {
+    width: 340px;
     height: 447px;
     border-radius: 0px 0px 24px 24px;
     background: linear-gradient(180deg, #2C2744 0%, #693FF6 100%);

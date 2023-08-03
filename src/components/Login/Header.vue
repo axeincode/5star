@@ -116,7 +116,7 @@ export default LoginHeader
 .login-logo-text {
     position: absolute;
     top: 57px;
-    left: 290px;
+    left: 265px;
     z-index: 2;
     font-family: 'Inter';
     font-style: normal;

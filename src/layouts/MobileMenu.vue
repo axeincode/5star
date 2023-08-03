@@ -11,12 +11,15 @@ const { t } = useI18n();
 const { name, width } = useDisplay()
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
 
 // mail count
 const mailCount = ref<number>(10);
 // navbar toggle
 const navbarToggle = ref<boolean>(false);
 const mailNavigation = ref<boolean>(false);
+const mailMenuShow = ref<boolean>(false);
 
 // pc or mobile screen switch
 
@@ -47,9 +50,15 @@ watch(navToggle, (newValue) => {
     navbarToggle.value = newValue;
 }, { deep: true })
 
+watch(mailMenuShow, (newValue) => {
+    setMainBlurEffectShow(newValue);
+    setOverlayScrimShow(newValue);
+})
+
 const handleNavbarToggle = () => {
     navbarToggle.value = !navbarToggle.value
     setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
 }
 
 onMounted(() => {
@@ -96,7 +105,7 @@ onMounted(() => {
             </div>
         </v-btn> -->
 
-        <v-menu content-class="mobile-mail-menu" :scrim="true">
+        <v-menu content-class="mobile-mail-menu" :scrim="true" v-model:model-value="mailMenuShow">
             <template v-slot:activator="{ props }">
                 <v-btn class="menu-text-color" v-bind="props">
                     <div class="relative">
@@ -116,17 +125,18 @@ onMounted(() => {
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item class="mail-item" :value="mailItem.mail_content_1.content"
-                    v-for="(mailItem, mailIndex) in mailList" :key="mailIndex" height="36px">
+                    v-for="(mailItem, mailIndex) in mailList" :key="mailIndex">
                     <template v-slot:prepend>
                         <img :src="mailItem.icon" width="20" />
                     </template>
-                    <v-list-item-title class="ml-2">
+                    <v-list-item-title class="ml-2" style="line-height: 18px;">
                         <div :class="mailItem.mail_content_1.color">{{ mailItem.mail_content_1.content }}</div>
                         <div :class="mailItem.mail_content_2.color">{{ mailItem.mail_content_2.content }}</div>
                     </v-list-item-title>
                     <template v-slot:append>
                         <div :class="mailItem.mail_rail_1.color">{{ mailItem.mail_rail_1.content }}</div>
-                        <div class="completion-area" :class="mailItem.mail_rail_2.color">{{ mailItem.mail_rail_2.content }}
+                        <div class="completion-area" :class="mailItem.mail_rail_2.color">
+                            {{ mailItem.mail_rail_2.content }}
                         </div>
                     </template>
                 </v-list-item>
@@ -160,13 +170,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@media (max-width: 600px) {
-    .v-overlay__scrim {
-        background: lightgray 0px 0px / 100% 100.077% no-repeat;
-        opacity: 0.8;
-    }
-}
-
 .mobile-menu-index {
     z-index: 1009 !important;
     overflow: inherit !important;
@@ -226,7 +229,7 @@ onMounted(() => {
     .completion-area {
         background-color: #000000;
         border-radius: 20px;
-        margin-top: 4px;
+        margin-top: 2px;
     }
 
     .text-color-gray {

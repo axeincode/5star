@@ -30,7 +30,7 @@ const mobileWidth = computed(() => {
     <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />
     <NavBarLayout v-if="mobileWidth > 600" />
-    <MNavBarLayout v-else/>
+    <MNavBarLayout v-else />
     <UserNavBarLayout />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
@@ -39,7 +39,4 @@ const mobileWidth = computed(() => {
 </template>
 
 <style lang="scss">
-.v-navigation-drawer__scrim {
-  opacity: 0.8 !important;
-}
 </style>

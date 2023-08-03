@@ -1,3 +1,4 @@
+import { over } from 'lodash-es';
 import { defineStore } from 'pinia'
 
 export const appBarStore = defineStore({
@@ -11,6 +12,8 @@ export const appBarStore = defineStore({
     depositDialogToggle: false as boolean,
     withdrawDialogToggle: false as boolean,
     userNavBarToggle: false as boolean,
+    mainBlurEffectShow: false as boolean,
+    overlayScrimShow: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -21,6 +24,8 @@ export const appBarStore = defineStore({
     getWithdrawDialogToggle: (state) => state.withdrawDialogToggle,
     getCashDialogToggle: (state) => state.cashDialogToggle,
     getUserNavBarToggle: (state) => state.userNavBarToggle,
+    getMainBlurEffectShow: (state) => state.mainBlurEffectShow,
+    getOverlayScrimShow: (state) => state.overlayScrimShow
   },
   actions: {
     setSuccess(success: boolean) {
@@ -46,6 +51,12 @@ export const appBarStore = defineStore({
     },
     setUserNavBarToggle(userNavBarToggle: boolean) {
       this.userNavBarToggle = userNavBarToggle
+    },
+    setMainBlurEffectShow(mainBlurEffectShow: boolean) {
+      this.mainBlurEffectShow = mainBlurEffectShow;
+    },
+    setOverlayScrimShow(overlayScrimShow: boolean) {
+      this.overlayScrimShow = overlayScrimShow;
     }
   }
 })

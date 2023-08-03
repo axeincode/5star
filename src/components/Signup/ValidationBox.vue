@@ -60,9 +60,21 @@ export default ValidationBox
 </template>
 
 <style lang="scss">
-@media(max-width: 600px) {
+@media (max-width: 600px) {
     .validation-box-container {
         bottom: 50px !important;
+    }
+
+    .validation-item-icon {
+
+        .mdi:before,
+        .mdi-set {
+            font-size: 14px !important;
+        }
+    }
+
+    .validation-list-item {
+        font-size: 10px !important;
     }
 }
 

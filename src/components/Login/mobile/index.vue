@@ -6,6 +6,7 @@ import LoginHeader from './Header.vue'
 import { authStore } from "@/store/auth";
 import Notification from "@/components/global/notification/index.vue";
 import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
 const Login = defineComponent({
     components: {
@@ -44,7 +45,8 @@ const Login = defineComponent({
             notificationText: t('login.forgotPasswordPage.notification'),
             loading: false,
             mailCardHeight: 0,
-            emailPartName: ""
+            emailPartName: "",
+            closeBtnHeight: 0,
         });
 
         // computed variables
@@ -115,7 +117,7 @@ const Login = defineComponent({
         const handleEmailBlur = () => {
             // console.log("onblur")
             setTimeout(() => {
-                state.mailCardHeight = 0;
+                // state.mailCardHeight = 0;
             }, 100)
         }
 
@@ -123,7 +125,7 @@ const Login = defineComponent({
             // console.log("onchange")
             if (state.formData.emailAddress.includes("@")) {
                 state.emailPartName = state.formData.emailAddress.split("@")[0];
-                state.mailCardHeight = 260
+                state.mailCardHeight = 220
             } else {
                 setTimeout(() => {
                     state.mailCardHeight = 0;
@@ -135,7 +137,7 @@ const Login = defineComponent({
             // console.log("onFocus")
             if (state.formData.emailAddress.includes("@")) {
                 state.emailPartName = state.formData.emailAddress.split("@")[0];
-                state.mailCardHeight = 260
+                state.mailCardHeight = 220
             }
         }
 
@@ -145,6 +147,10 @@ const Login = defineComponent({
                 state.mailCardHeight = 0;
             }, 100)
         }
+
+        onMounted(() => {
+            state.closeBtnHeight = 613 - window.innerHeight + 2;
+        })
 
         return {
             t,
@@ -166,25 +172,26 @@ export default Login
 <template>
     <div class="m-login-container">
         <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" />
-        <v-row class="login-body px-6 py-6">
+        <div class="m-login-body px-6" :class="currentPage == PAGE_TYPE.FORGOT_PASSWORD ? 'm-login-body-height' : ''">
             <!-- SIGN UP FORM  -->
             <v-form v-if="currentPage === PAGE_TYPE.LOGIN_FORM" ref="form" class="full-width">
-                <v-row class="relative mt-0">
+                <v-row class="relative mt-8">
                     <v-text-field :label="t('signup.formPage.emailAddress')" class="form-textfield dark-textfield"
                         variant="solo" density="comfortable" v-model="formData.emailAddress" :onblur="handleEmailBlur"
                         @input="handleEmailChange" :onfocus="handleEmailFocus" />
                 </v-row>
                 <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
                     <v-list theme="dark" bg-color="#211F31">
-                        <v-list-item class="text-500-16 white" value="gmail" @click="mergeEmail('@gmail.com')">{{
-                            emailPartName }}@gmail.com</v-list-item>
-                        <v-list-item class="text-500-16 white" value="hotmail" @click="mergeEmail('@hotmail.com')">{{
+                        <v-list-item class="text-600-12 white" value="gmail" @click="mergeEmail('@gmail.com')">
+                            {{ emailPartName }}@gmail.com
+                        </v-list-item>
+                        <v-list-item class="text-600-12 white" value="hotmail" @click="mergeEmail('@hotmail.com')">{{
                             emailPartName }}@hotmail.com</v-list-item>
-                        <v-list-item class="text-500-16 white" value="yahoo" @click="mergeEmail('@yahoo.com')">{{
+                        <v-list-item class="text-600-12 white" value="yahoo" @click="mergeEmail('@yahoo.com')">{{
                             emailPartName }}@yahoo.com</v-list-item>
-                        <v-list-item class="text-500-16 white" value="icloud" @click="mergeEmail('@icloud.com')">{{
+                        <v-list-item class="text-600-12 white" value="icloud" @click="mergeEmail('@icloud.com')">{{
                             emailPartName }}@icloud.com</v-list-item>
-                        <v-list-item class="text-500-16 white" value="outlook" @click="mergeEmail('@outlook.com')">{{
+                        <v-list-item class="text-600-12 white" value="outlook" @click="mergeEmail('@outlook.com')">{{
                             emailPartName }}@outlook.com</v-list-item>
                     </v-list>
                 </div>
@@ -192,24 +199,24 @@ export default Login
                     <v-text-field :label="t('signup.formPage.password')" class="form-textfield dark-textfield"
                         variant="solo" density="comfortable" :type="isShowPassword ? 'text' : 'password'"
                         v-model="formData.password" />
-                    <img v-if="isShowPassword" src="@/assets/public/svg/icon_public_07.svg" class="disable-password"
-                        @click="showPassword" />
-                    <img v-else src="@/assets/public/svg/icon_public_06.svg" class="disable-password"
-                        @click="showPassword" />
+                    <img v-if="isShowPassword" src="@/assets/public/svg/icon_public_07.svg" class="m-disable-password"
+                        @click="showPassword" width="16" />
+                    <img v-else src="@/assets/public/svg/icon_public_06.svg" class="m-disable-password"
+                        @click="showPassword" width="16" />
                 </v-row>
                 <v-row>
                     <p class="ml-9 login-forget-passwrod-text" @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD">
                         {{ t('login.formPage.forgetPassword') }}
                     </p>
                 </v-row>
-                <v-row class="mt-4">
-                    <v-btn class="ma-3 button-bright text-none" width="-webkit-fill-available" height="54px"
+                <v-row style="margin-top: 116px;">
+                    <v-btn class="ma-3 button-bright m-signin-btn-text" width="-webkit-fill-available" height="48px"
                         :loading="loading" :disabled="!isFormDataReady" :onclick="handleLoginFormSubmit">
                         {{ t('login.formPage.button') }}
                     </v-btn>
                 </v-row>
-                <v-row class="mt-2">
-                    <p class="divide-text">
+                <v-row class="mt-4">
+                    <p class="m-divide-text">
                         {{ t('signup.formPage.divider') }}
                     </p>
                     <v-divider color="white" />
@@ -218,8 +225,9 @@ export default Login
                     <v-col cols="8" offset="2">
                         <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
                             <v-sheet v-for="(item, index) in socialIconList" :key="index" color="#131828" class="rounded">
-                                <v-btn color="grey-darken-4" class="social-icon-button" icon="">
-                                    <img :src="item" />
+                                <v-btn color="grey-darken-4" class="m-social-icon-button" icon="" width="36px"
+                                    height="36px">
+                                    <img :src="item" width="36" />
                                 </v-btn>
                             </v-sheet>
                         </div>
@@ -228,32 +236,73 @@ export default Login
             </v-form>
             <!-- Forgot password -->
             <div v-if="currentPage == PAGE_TYPE.FORGOT_PASSWORD" class="full-width">
-                <v-row class="mt-8 d-flex justify-center">
-                    <img src="@/assets/public/image/logo_public_01.png" class="logo-image mr-2">
+                <v-row class="mt-10 d-flex justify-center">
+                    <img src="@/assets/public/image/logo_public_01.png" width="182">
                     <!-- <span class="logo-text purple text-large">{{ t('logo_text_1') }}</span>
                     <span class="logo-text yellow text-large">{{ t('main.logo_text_2') }}</span> -->
                 </v-row>
-                <v-row class="mt-8">
-                    <p class="label-text-md2 white center full-width pl-12 pr-12">
+                <v-row class="mt-1 justify-center">
+                    <!-- <p class="label-text-md2 white center full-width pl-12 pr-12">
                         {{ t('login.forgotPasswordPage.title') }}
+                    </p> -->
+                    <p class="m-logo-text2 center white">
+                        {{ t('signup.formPage.header.titleLine1') }}
+                        <br>
+                        {{ t('signup.formPage.header.titleLine2') }}
                     </p>
                 </v-row>
                 <v-row class="relative mt-8">
                     <v-text-field :label="t('signup.formPage.emailAddress')" class="form-textfield dark-textfield"
-                        variant="solo" density="comfortable" />
+                        variant="solo" density="comfortable" v-model="formData.emailAddress" :onblur="handleEmailBlur"
+                        @input="handleEmailChange" :onfocus="handleEmailFocus" />
+                    <div class="m-forgot-mail-card" :style="{ height: mailCardHeight + 'px' }">
+                        <v-list theme="dark" bg-color="#211F31">
+                            <v-list-item class="text-600-12 white" value="gmail" @click="mergeEmail('@gmail.com')">
+                                {{ emailPartName }}@gmail.com
+                            </v-list-item>
+                            <v-list-item class="text-600-12 white" value="hotmail" @click="mergeEmail('@hotmail.com')">{{
+                                emailPartName }}@hotmail.com</v-list-item>
+                            <v-list-item class="text-600-12 white" value="yahoo" @click="mergeEmail('@yahoo.com')">{{
+                                emailPartName }}@yahoo.com</v-list-item>
+                            <v-list-item class="text-600-12 white" value="icloud" @click="mergeEmail('@icloud.com')">{{
+                                emailPartName }}@icloud.com</v-list-item>
+                            <v-list-item class="text-600-12 white" value="outlook" @click="mergeEmail('@outlook.com')">{{
+                                emailPartName }}@outlook.com</v-list-item>
+                        </v-list>
+                    </div>
                 </v-row>
-                <v-row class="mt-8">
-                    <v-btn class="ma-3 button-bright text-none" width="-webkit-fill-available" height="60px"
+                <v-row style="margin-top: 200px;">
+                    <v-btn class="ma-3 button-bright m-signin-btn-text" width="-webkit-fill-available" height="48"
                         autocapitalize="off" @click="notificationShow = !notificationShow">
                         {{ t('login.forgotPasswordPage.submit') }}
                     </v-btn>
                 </v-row>
+                <v-row class="mt-4">
+                    <p class="m-divide-text">
+                        {{ t('signup.formPage.divider') }}
+                    </p>
+                    <v-divider color="white" />
+                </v-row>
+                <v-row class="mt-6">
+                    <v-col cols="8" offset="2">
+                        <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
+                            <v-sheet v-for="(item, index) in socialIconList" :key="index" color="#131828" class="rounded">
+                                <v-btn color="grey-darken-4" class="m-social-icon-button" icon="" width="36px"
+                                    height="36px">
+                                    <img :src="item" width="36" />
+                                </v-btn>
+                            </v-sheet>
+                        </div>
+                    </v-col>
+                </v-row>
             </div>
-        </v-row>
-        <v-btn class="close-button" icon="true" @click="$emit('close')">
-            <v-icon :color="currentPage !== PAGE_TYPE.LOGIN_FORM ? '#7782AA' : '#FFFFFF'">
+        </div>
+        <v-btn class="m-close-button" icon="true" @click="$emit('close')" width="30" height="30"
+            :style="{ top: closeBtnHeight + 'px' }">
+            <img src="@/assets/public/svg/icon_public_10.svg" />
+            <!-- <v-icon :color="currentPage !== PAGE_TYPE.LOGIN_FORM ? '#7782AA' : '#FFFFFF'">
                 mdi-close
-            </v-icon>
+            </v-icon> -->
         </v-btn>
         <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
@@ -262,20 +311,48 @@ export default Login
 <style lang="scss">
 .m-login-mail-card {
     position: absolute;
-    top: 272px;
+    top: 86px;
     left: 50%;
     transform: translateX(-50%);
     background: #211F31;
-    width: 342px;
+    width: 328px;
     border-radius: 16px;
     z-index: 200;
     overflow: hidden;
     transition: height 0.3s ease-out;
 }
 
-.disable-password {
+.m-forgot-mail-card {
     position: absolute;
-    top: 31px;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #211F31;
+    width: 328px;
+    border-radius: 16px;
+    z-index: 200;
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+}
+
+.v-overlay__content {
+    overflow-y: unset !important;
+}
+
+.m-signin-btn-text {
+    .v-btn__content {
+        text-align: center;
+        font-family: "Inter";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
+
+.m-disable-password {
+    position: absolute;
+    top: 28px;
     right: 27px;
     cursor: pointer;
 }
@@ -287,10 +364,10 @@ button:active:enabled {
 
 // container
 .m-login-container {
-    background-color: #2E274C;
+    height: 613px;
+    border-radius: 26px 26px 0px 0px;
     position: absolute;
     bottom: 0;
-    border-radius: 38px 38px 0px 0px;
     width: 100%;
 
     .v-field--variant-solo {
@@ -299,13 +376,22 @@ button:active:enabled {
 }
 
 // wrapper
-.login-body {
-    margin: 0px !important;
-    padding: 48px;
+.m-login-body {
+    border-radius: 26px 26px 0px 0px;
+    background: var(--bg-2-e-274-c, #2E274C);
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 473px;
+    z-index: 2000;
+}
+
+.m-login-body-height {
+    height: 613px !important;
 }
 
 // close modal button
-.close-button {
+.m-close-button {
     box-shadow: none !important;
     background-color: transparent !important;
     position: absolute !important;
@@ -318,8 +404,7 @@ button:active:enabled {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 14px;
     color: #414968;
     position: relative;
     top: 12px;
@@ -339,8 +424,10 @@ button:active:enabled {
     }
 }
 
-.social-icon-button {
+.m-social-icon-button {
     background-color: #131828 !important;
+    width: 36px;
+    height: 36px;
 }
 
 .login-forget-passwrod-text {

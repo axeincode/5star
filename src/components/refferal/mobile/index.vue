@@ -68,20 +68,21 @@ onMounted(() => {
                     <div class="mx-4 mt-4 text-600-14 text-gray">
                         {{ t('refferal.description.term_text') }}
                     </div>
-                    <p class="mx-4 mt-3 text-400-10 text-gray text-justify">
+                    <p class="ml-4 mr-2 mt-3 text-400-10 text-gray text-justify">
                         {{ t('refferal.description.text_3') }}
                     </p>
                 </v-card>
             </div>
             <div class="mt-6 mx-6">
-                <v-btn class="button-dark m-reffer-btn-font text-none" width="-webkit-fill-available" height="46px" @click="showMainDialog">
+                <v-btn class="button-dark m-reffer-btn-font text-none" width="-webkit-fill-available" height="46px"
+                    @click="showMainDialog">
                     {{ t('refferal.description.back_btn_text') }}
                 </v-btn>
             </div>
         </template>
         <template v-else>
             <div class="refferal-dialog-header text-center">
-                <img src="@/assets/public/image/img_public_08.png" class="m-refferal-header-img"/>
+                <img src="@/assets/public/image/img_public_08.png" class="m-refferal-header-img" />
                 <div class="mt-2 mx-10 text-center text-700-14 yellow">
                     {{ t('refferal.dialog.header.title_text') }}
                 </div>
@@ -120,10 +121,11 @@ onMounted(() => {
                 </div>
             </div>
         </template>
-        <v-btn class="m-close-button" icon="true" @click="setRefferalDialogShow(false)">
-            <v-icon color="#FFFFFF">
+        <v-btn class="m-close-button" icon="true" @click="setRefferalDialogShow(false)" width="30" height="30">
+            <img src="@/assets/public/svg/icon_public_10.svg" />
+            <!-- <v-icon color="#FFFFFF">
                 mdi-close
-            </v-icon>
+            </v-icon> -->
         </v-btn>
         <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
@@ -182,5 +184,17 @@ onMounted(() => {
             font-size: 14px;
         }
     }
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 5px solid rgb(33, 31, 49);
+    background-clip: padding-box;
+    border-radius: 15px;
+    background-color: #414968;
+    ;
 }
 </style>
