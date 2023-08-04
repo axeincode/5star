@@ -9,11 +9,12 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
-const {setCashDialogToggle} = appBarStore();
+const { setCashDialogToggle } = appBarStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL"
+    name: "BRL",
+    value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -24,31 +25,38 @@ const selectedPaymentItem = ref<GetPaymentItem>({
 const currencyList = ref<Array<GetCurrencyItem>>([
     {
         icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-        name: "BRL"
+        name: "BRL",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
-        name: "PHP"
+        name: "PHP",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
-        name: "PEN"
+        name: "PEN",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
-        name: "MXN"
+        name: "MXN",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
-        name: "CLP"
+        name: "CLP",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
-        name: "USD"
+        name: "USD",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
-        name: "COP"
+        name: "COP",
+        value: 0
     },
 ])
 
@@ -242,7 +250,7 @@ watch(depositToggleSwitch, (newValue) => {
             </template>
             <v-list theme="dark" bg-color="#181522">
                 <v-row class="payment-width-370">
-                    <v-col cols="6" v-for="(paymentItem, paymentIndex) in paymentList" :key="paymentIndex">
+                    <v-col cols="6" v-for="(paymentItem, paymentIndex) in paymentList" :key="paymentIndex" class="pa-1">
                         <v-card color="#1C1929" theme="dark" class="deposit-card-height text-center">
                             <v-list-item class="payment-select-item pa-2" :value="paymentItem.name"
                                 @click="handleSelectPayment(paymentItem)">
@@ -295,8 +303,7 @@ watch(depositToggleSwitch, (newValue) => {
                 {{ t('deposit_dialog.deposit_btn_text') }}
             </v-btn>
         </v-row>
-        <Notification :notificationShow="notificationShow"
-            :notificationText="notificationText" :checkIcon="checkIcon" />
+        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
 </template>
 

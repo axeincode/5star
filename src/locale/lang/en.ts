@@ -116,7 +116,7 @@ export const lang: langType = {
     text_1: "Don’t forgot to check out our huge selection of promotions!",
     text_2: "Are you sure you want to logout?",
     text_3: "Don’t forgot to check out our huge selection of casino and sports promotions before you leave!",
-    button: "Log Out"
+    button: "LogOut"
   },
   navBar: {
     casino: 'CASINO',

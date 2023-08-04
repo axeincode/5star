@@ -41,10 +41,11 @@ const handleMenu = (index: number) => {
 <template>
     <div class="m-account-dialog-container">
         <img :src="avatar" class="m-account-avatar-position" />
-        <v-btn class="close-button" icon="true" @click="emit('mDialogHide')">
-            <v-icon color="#7782AA">
+        <v-btn class="m-account-close-button" icon="true" @click="emit('mDialogHide')" width="30" height="30">
+            <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
+            <!-- <v-icon color="#7782AA">
                 mdi-close
-            </v-icon>
+            </v-icon> -->
         </v-btn>
         <v-row class="mt-16 mx-2 justify-center text-700-12 text-gray">
             {{ nickName }}
@@ -53,13 +54,13 @@ const handleMenu = (index: number) => {
             <v-col cols="12" class="m-account-menu px-1">
                 <v-list theme="dark">
                     <template v-for="(item, index) in menuList" :key="index">
-                        <v-divider class="m-account-divider mb-1"></v-divider>
+                        <v-divider class="m-account-divider"></v-divider>
                         <v-list-item :value="item" @click="handleMenu(index)">
                             <v-list-item-title>
-                                <div class="text-500-14 text-gray">
+                                <div class="text-700-12 text-gray" style="line-height: 20px;">
                                     {{ item.title }}
                                 </div>
-                                <div class="text-400-10 text-gray">
+                                <div class="text-400-10 text-gray" style="line-height: 20px;">
                                     {{ item.content }}
                                 </div>
                             </v-list-item-title>
@@ -76,7 +77,7 @@ const handleMenu = (index: number) => {
 .m-account-dialog-container {
     background-color: #211F31;
     border-radius: 32px !important;
-    height: 430px;
+    height: 384px;
 
     .m-account-avatar-position {
         position: absolute;
@@ -86,12 +87,12 @@ const handleMenu = (index: number) => {
     }
 
     // close modal button
-    .close-button {
+    .m-account-close-button {
         box-shadow: none !important;
         background-color: transparent !important;
         position: absolute !important;
-        top: 5px;
-        right: 5px;
+        top: 8px;
+        right: 8px;
     }
 }
 

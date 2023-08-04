@@ -165,7 +165,7 @@ const MSignup = defineComponent({
         }
 
         const handleOnPasswordInputBlur = (): void => {
-            // state.isShowPasswordValidation = false;
+            state.isShowPasswordValidation = false;
         }
 
         const handleOnUserNameInputFocus = (): void => {
@@ -358,8 +358,8 @@ export default MSignup
                     </p>
                 </div>
                 <v-row>
-                    <v-btn class="mt-8 mx-3 m-signup-btn" width="-webkit-fill-available" height="48px"
-                        :loading="loading" :disabled="!isFormDataReady" :onclick="handleSignupFormSubmit">
+                    <v-btn class="mt-8 mx-3 m-signup-btn" width="-webkit-fill-available" height="48px" :loading="loading"
+                        :disabled="!isFormDataReady" :onclick="handleSignupFormSubmit">
                         {{ t('signup.formPage.button') }}
                     </v-btn>
                 </v-row>
@@ -396,14 +396,14 @@ export default MSignup
                     </p>
                 </v-row>
                 <v-row style="margin-top: 100px;">
-                    <v-btn class="ma-3 button-bright m-signup-continue-btn" width="-webkit-fill-available"
-                        height="48px" @click="handleClickContinueButton">
+                    <v-btn class="ma-3 button-bright m-signup-continue-btn" width="-webkit-fill-available" height="48px"
+                        @click="handleClickContinueButton">
                         {{ t('signup.confirmCancelPage.continue') }}
                     </v-btn>
                 </v-row>
                 <v-row class="mt-4">
-                    <v-btn class="ma-3 button-dark m-signup-cancel-btn" width="-webkit-fill-available"
-                        height="48px" @click="$emit('close')">
+                    <v-btn class="ma-3 button-dark m-signup-cancel-btn" width="-webkit-fill-available" height="48px"
+                        @click="$emit('close')">
                         {{ t('signup.confirmCancelPage.cancel') }}
                     </v-btn>
                 </v-row>
@@ -417,14 +417,14 @@ export default MSignup
                     </p>
                 </v-row>
                 <v-row style="margin-top: 126px;">
-                    <v-btn class="ma-3 button-bright m-signup-confirm-btn" width="-webkit-fill-available"
-                        height="48px" autocapitalize="off" @click="handleClickConfirmButton">
+                    <v-btn class="ma-3 button-bright m-signup-confirm-btn" width="-webkit-fill-available" height="48px"
+                        autocapitalize="off" @click="handleClickConfirmButton">
                         {{ t('signup.alreadyRegisterPage.confirm') }}
                     </v-btn>
                 </v-row>
                 <v-row class="mt-4">
-                    <v-btn class="ma-3 button-dark m-signup-cancel-btn" width="-webkit-fill-available"
-                        height="48px" autocapitalize="off">
+                    <v-btn class="ma-3 button-dark m-signup-cancel-btn" width="-webkit-fill-available" height="48px"
+                        autocapitalize="off">
                         {{ t('signup.alreadyRegisterPage.cancel') }}
                     </v-btn>
                 </v-row>
@@ -461,16 +461,15 @@ export default MSignup
                         :descriptionList="userNameValidationStrList" :validationList="userNameValidationList" />
                 </v-row>
                 <v-row>
-                    <v-btn class="ma-3 mt-8 mb-8 button-bright m-signup-confirm-btn"
-                        width="-webkit-fill-available" height="48px" :disabled="!validateUserName()"
-                        @click="$emit('close')">
+                    <v-btn class="ma-3 mt-8 mb-8 button-bright m-signup-confirm-btn" width="-webkit-fill-available"
+                        height="48px" :disabled="!validateUserName()" @click="$emit('close')">
                         {{ t('signup.displayNamePage.submit') }}
                     </v-btn>
                 </v-row>
             </div>
         </div>
         <v-btn :class="currentPage == PAGE_TYPE.DISPLAY_NAME ? 'm-close-button-1' : 'm-close-button'" icon="true"
-            @click="closeDialog" width="30" height="30" :style="{top: closeBtnHeight + 'px'}">
+            @click="closeDialog" width="30" height="30" :style="{ top: closeBtnHeight + 'px' }">
             <img src="@/assets/public/svg/icon_public_10.svg" />
             <!-- <v-icon :color="currentPage === PAGE_TYPE.DISPLAY_NAME ? '#7782AA' : '#FFFFFF'">
                 mdi-close
@@ -734,4 +733,5 @@ button:active:enabled {
 // carousel
 .carousel-container {
     width: 100%;
-}</style>
+}
+</style>

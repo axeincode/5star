@@ -12,11 +12,12 @@ const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
-const {setCashDialogToggle} = appBarStore();
+const { setCashDialogToggle } = appBarStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL"
+    name: "BRL",
+    value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -27,31 +28,38 @@ const selectedPaymentItem = ref<GetPaymentItem>({
 const currencyList = ref<Array<GetCurrencyItem>>([
     {
         icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-        name: "BRL"
+        name: "BRL",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
-        name: "PHP"
+        name: "PHP",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
-        name: "PEN"
+        name: "PEN",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
-        name: "MXN"
+        name: "MXN",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
-        name: "CLP"
+        name: "CLP",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
-        name: "USD"
+        name: "USD",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
-        name: "COP"
+        name: "COP",
+        value: 0
     },
 ])
 
@@ -118,6 +126,8 @@ const depositAmount = ref<string>("")
 const bonusCheck = ref<boolean>(false);
 
 const notificationShow = ref<boolean>(false);
+const currencyMenuShow = ref<boolean>(false);
+const paymentMenuShow = ref<boolean>(false);
 
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
@@ -202,102 +212,101 @@ watch(depositToggleSwitch, (newValue) => {
   
 <template>
     <div class="mobile-deposit-container">
-        <v-row class="mt-6 mx-6 deposit-text">
+        <v-row class="mt-6 mx-6 text-400-12 gray">
             {{ t('deposit_dialog.deposit_currency') }}
         </v-row>
-        <v-menu offset="4" class="mt-1">
+        <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
             <template v-slot:activator="{ props }">
-                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 deposit-card-height">
-                    <v-list-item v-bind="props" class="currency-item deposit-card-height" value="currency dropdown"
-                        append-icon="mdi-chevron-down">
+                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 m-deposit-card-height" style="border-radius: 12px;">
+                    <v-list-item v-bind="props" class="currency-item m-deposit-card-height" value="currency dropdown"
+                        :append-icon="currencyMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'">
                         <template v-slot:prepend>
-                            <img :src="selectedCurrencyItem.icon" width="26" />
+                            <img :src="selectedCurrencyItem.icon" width="20" />
                         </template>
-                        <v-list-item-title class="ml-2">{{ selectedCurrencyItem.name }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-400-12">{{ selectedCurrencyItem.name }}</v-list-item-title>
                     </v-list-item>
                 </v-card>
             </template>
-            <v-list theme="dark" bg-color="#211F31" class="px-2">
+            <v-list theme="dark" bg-color="#181522" class="px-2">
                 <v-list-item class="currency-item pl-6" :value="currencyItem.name"
+                    :class="selectedCurrencyItem.name == currencyItem.name ? 'currency-selected-item' : ''"
                     v-for="(currencyItem, currencyIndex) in currencyList" :key="currencyIndex"
                     @click="handleSelectCurrency(currencyItem)">
                     <template v-slot:prepend>
-                        <img :src="currencyItem.icon" width="26" />
+                        <img :src="currencyItem.icon" width="20" />
                     </template>
-                    <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
+                    <v-list-item-title class="ml-2 text-400-12">{{ currencyItem.name }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
-        <v-row class="mt-6 mx-6 deposit-text">
+        <v-row class="mt-6 mx-6 text-400-12 gray">
             {{ t('deposit_dialog.choose_payment_method') }}
         </v-row>
-        <v-menu offset="4" class="mt-1">
+        <v-menu offset="4" class="mt-1" v-model:model-value="paymentMenuShow">
             <template v-slot:activator="{ props }">
-                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 deposit-card-height">
-                    <v-list-item v-bind="props" class="payment-item deposit-card-height" value="payment dropdown"
-                        append-icon="mdi-chevron-down">
+                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 m-deposit-card-height" style="border-radius: 12px;">
+                    <v-list-item v-bind="props" class="payment-item m-deposit-card-height" value="payment dropdown"
+                        :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'">
                         <template v-slot:prepend>
-                            <img :src="selectedPaymentItem.icon" />
+                            <img :src="selectedPaymentItem.icon" width="52" />
                         </template>
-                        <v-list-item-title class="ml-2">{{ selectedPaymentItem.name }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-400-12">{{ selectedPaymentItem.name }}</v-list-item-title>
                     </v-list-item>
                 </v-card>
             </template>
             <v-list theme="dark" bg-color="#181522">
-                <v-row class="payment-width-370">
-                    <v-col cols="6" v-for="(paymentItem, paymentIndex) in paymentList" :key="paymentIndex">
-                        <v-card color="#1C1929" theme="dark" class="deposit-card-height text-center">
+                <v-row class="m-payment-width-370">
+                    <v-col cols="6" v-for="(paymentItem, paymentIndex) in paymentList" :key="paymentIndex" class="pa-1">
+                        <v-card color="#1C1929" theme="dark" class="text-center">
                             <v-list-item class="payment-select-item pa-2" :value="paymentItem.name"
                                 @click="handleSelectPayment(paymentItem)">
-                                <img :src="paymentItem.icon" />
-                                <v-list-item-title>{{ paymentItem.name }}</v-list-item-title>
-                                <v-list-item-title>{{ paymentItem.description }}</v-list-item-title>
+                                <img :src="paymentItem.icon" width="62" />
+                                <v-list-item-title class="text-400-10">{{ paymentItem.name }}</v-list-item-title>
+                                <v-list-item-title class="text-400-10">{{ paymentItem.description }}</v-list-item-title>
                             </v-list-item>
                         </v-card>
                     </v-col>
                 </v-row>
             </v-list>
         </v-menu>
-        <v-row class="mt-6 mx-6 deposit-text">
+        <v-row class="mt-6 mx-6 text-400-12 gray">
             {{ t('deposit_dialog.deposit_amount') }}
         </v-row>
         <v-row class="mt-2 mx-2">
             <v-col cols="4" class="py-1 px-2" v-for="(depositAmountItem, depositAmountIndex) in depositAmountList"
                 :key="depositAmountIndex">
-                <v-btn class="my-1 text-none" height="46px"
-                    :class="[depositAmountItem == depositAmount ? 'deposit-amout-btn-black' : 'deposit-amout-btn-white']"
+                <v-btn class="my-1 text-none" height="40px"
+                    :class="[depositAmountItem == depositAmount ? 'm-deposit-amout-btn-black' : 'm-deposit-amout-btn-white']"
                     @click="handleDepositAmount(depositAmountItem)">
                     {{ depositAmountUnit }} {{ depositAmountItem }}
-                    <div class="deposit-amount-area"></div>
-                    <div class="deposit-amount-rate-text">{{ depositRate }}</div>
+                    <div class="m-deposit-amount-area"></div>
+                    <div class="m-deposit-amount-rate-text">{{ depositRate }}</div>
                 </v-btn>
             </v-col>
         </v-row>
-        <v-row class="mt-4 mx-2 relative">
+        <v-row class="mt-4 mx-1 relative">
             <v-text-field :label="`${t('deposit_dialog.amount')}(${selectedCurrencyItem.name})`"
                 class="form-textfield dark-textfield" variant="solo" density="comfortable" color="#7782AA"
-                v-model="depositAmount" :onfocus="handleAmountInputFocus" :onblur="handleAmountInputBlur"
-                @input="handleAmountInputChange" />
+                style="border-radius: 12px;" v-model="depositAmount" :onfocus="handleAmountInputFocus"
+                :onblur="handleAmountInputBlur" @input="handleAmountInputChange" />
             <ValidationBox v-if="isShowAmountValidaton" />
         </v-row>
-        <v-row class="mt-0 mx-2 align-center">
-            <v-col cols="1">
+        <div class="mt-0 mx-4 d-flex align-center">
+            <div>
                 <v-checkbox hide-details icon class="amount-checkbox" v-model="bonusCheck" />
-            </v-col>
-            <v-col cols="11" class="d-flex">
-                <p class="deposit-text mt-1 ml-1">{{ t('deposit_dialog.check_text') }}</p>
-                <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" />
-            </v-col>
-        </v-row>
-        <v-row class="mt-16 deposit-other-text justify-center mx-2">
+            </div>
+            <p class="text-400-10 gray" style="margin-top: 3px; margin-left: 2px;">{{ t('deposit_dialog.check_text') }}</p>
+            <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
+        </div>
+        <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
             {{ t('deposit_dialog.other_text') }}
         </v-row>
-        <v-row class="mt-2 mx-8">
-            <v-btn class="ma-3 button-bright text-none" width="-webkit-fill-available" height="54px"
+        <div class="m-deposit-btn-position">
+            <v-btn class="ma-3 button-bright m-deposit-btn" width="-webkit-fill-available" height="48px"
                 :disabled="!isDepositBtnReady" :onclick="handleDepositSubmit">
                 {{ t('deposit_dialog.deposit_btn_text') }}
             </v-btn>
-        </v-row>
+        </div>
         <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
 </template>
@@ -308,8 +317,8 @@ watch(depositToggleSwitch, (newValue) => {
     background-color: #211F31;
     height: 100%;
 
-    .deposit-card-height {
-        height: 48px;
+    .m-deposit-card-height {
+        height: 40px;
     }
 
     .v-list-item__prepend {
@@ -328,41 +337,66 @@ watch(depositToggleSwitch, (newValue) => {
         color: #FFFFFF;
     }
 
-    .deposit-amout-btn-black {
+    .m-deposit-amout-btn-black {
         background: #32CFEC;
-        font-weight: 700;
-        font-size: 12px;
         border-radius: 4px;
         box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
         width: 100% !important;
+
+        .v-btn__content {
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
     }
 
-    .deposit-amout-btn-white {
+    .m-deposit-amout-btn-white {
         background: #353652;
-        font-weight: 700;
-        font-size: 12px;
         border-radius: 4px;
         color: #FFFFFF;
         box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
         width: 100% !important;
+
+        .v-btn__content {
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
     }
 
-    .deposit-amount-area {
-        width: 40px;
+    .m-deposit-amount-area {
+        width: 37px;
         position: absolute;
         top: 0;
         right: 0;
         background: #F97001;
         border-radius: 0px 4px;
-        height: 15px;
+        height: 11px;
     }
 
-    .deposit-amount-rate-text {
+    .m-deposit-amount-rate-text {
         position: absolute;
-        top: -3px;
-        right: 2px;
+        top: 1px;
+        right: 4px;
         font-size: 8px;
+        font-weight: 400;
         color: #FFFFFF;
+        letter-spacing: normal;
+    }
+
+    .m-deposit-btn {
+        .v-btn__content {
+            text-align: center;
+            font-family: Inter;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
     }
 
     .dark-textfield .v-field__field {
@@ -374,6 +408,7 @@ watch(depositToggleSwitch, (newValue) => {
     }
 
     .amount-checkbox {
+
         i.v-icon {
             color: #1C1929;
             background-color: #01983A;
@@ -397,21 +432,25 @@ watch(depositToggleSwitch, (newValue) => {
     }
 }
 
-.deposit-text {
-    font-weight: 400;
-    font-size: 14px;
-    color: #7782AA;
+.m-deposit-btn-position {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 98%;
 }
 
-.payment-select-item {
-    font-weight: 300;
-    font-size: 10px;
-    color: #7782AA;
+.m-deposit-footer-text-position {
+    position: absolute;
+    bottom: 128px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
 }
 
-.payment-width-370 {
-    width: 370px !important;
+.m-payment-width-370 {
+    // width: 370px !important;
     margin: auto;
-    height: 440px !important;
+    height: 290px !important;
 }
 </style>

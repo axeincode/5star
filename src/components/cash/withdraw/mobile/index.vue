@@ -18,7 +18,8 @@ const { setMailList } = mailStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL"
+    name: "BRL",
+    value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -29,31 +30,38 @@ const selectedPaymentItem = ref<GetPaymentItem>({
 const currencyList = ref<Array<GetCurrencyItem>>([
     {
         icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-        name: "BRL"
+        name: "BRL",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
-        name: "PHP"
+        name: "PHP",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
-        name: "PEN"
+        name: "PEN",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
-        name: "MXN"
+        name: "MXN",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
-        name: "CLP"
+        name: "CLP",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
-        name: "USD"
+        name: "USD",
+        value: 0
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
-        name: "COP"
+        name: "COP",
+        value: 0
     },
 ])
 
@@ -111,6 +119,9 @@ const notificationText = ref<string>("");
 const isShowAmountValidaton = ref<boolean>(false);
 
 const isDepositBtnReady = ref<boolean>(false);
+
+const currencyMenuShow = ref<boolean>(false);
+const paymentMenuShow = ref<boolean>(false);
 
 const handleSelectCurrency = (item: GetCurrencyItem) => {
     selectedCurrencyItem.value = item;
@@ -186,63 +197,64 @@ watch(withdrawAmount, (newValue) => {
   
 <template>
     <div class="mobile-withdraw-container">
-        <v-row class="mt-6 mx-6 deposit-text">
+        <v-row class="mt-6 mx-6 text-400-12 gray">
             {{ t('withdraw_dialog.withdraw_currency') }}
         </v-row>
-        <v-menu offset="4" class="mt-1">
+        <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
             <template v-slot:activator="{ props }">
-                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 deposit-card-height">
-                    <v-list-item v-bind="props" class="currency-item deposit-card-height" value="currency dropdown"
-                        append-icon="mdi-chevron-down">
+                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 m-deposit-card-height" style="border-radius: 12px;">
+                    <v-list-item v-bind="props" class="currency-item m-deposit-card-height" value="currency dropdown"
+                        :append-icon="currencyMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'">
                         <template v-slot:prepend>
-                            <img :src="selectedCurrencyItem.icon" width="26" />
+                            <img :src="selectedCurrencyItem.icon" width="20" />
                         </template>
-                        <v-list-item-title class="ml-2">{{ selectedCurrencyItem.name }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-400-12">{{ selectedCurrencyItem.name }}</v-list-item-title>
                     </v-list-item>
                 </v-card>
             </template>
             <v-list theme="dark" bg-color="#211F31" class="px-2">
                 <v-list-item class="currency-item pl-6" :value="currencyItem.name"
                     v-for="(currencyItem, currencyIndex) in currencyList" :key="currencyIndex"
+                    :class="selectedCurrencyItem.name == currencyItem.name ? 'currency-selected-item' : ''"
                     @click="handleSelectCurrency(currencyItem)">
                     <template v-slot:prepend>
-                        <img :src="currencyItem.icon" width="26" />
+                        <img :src="currencyItem.icon" width="20" />
                     </template>
-                    <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
+                    <v-list-item-title class="ml-2 text-400-12">{{ currencyItem.name }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
-        <v-row class="mt-6 mx-6 deposit-text">
+        <v-row class="mt-6 mx-6 text-400-12 gray">
             {{ t('withdraw_dialog.withdraw_payment_method') }}
         </v-row>
-        <v-menu offset="4" class="mt-1">
+        <v-menu offset="4" class="mt-1" v-model:model-value="paymentMenuShow">
             <template v-slot:activator="{ props }">
-                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 deposit-card-height">
-                    <v-list-item v-bind="props" class="payment-item deposit-card-height" value="payment dropdown"
-                        append-icon="mdi-chevron-down">
+                <v-card color="#1C1929" theme="dark" class="mx-4 mt-4 m-deposit-card-height" style="border-radius: 12px;">
+                    <v-list-item v-bind="props" class="payment-item m-deposit-card-height" value="payment dropdown"
+                        :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'">
                         <template v-slot:prepend>
-                            <img :src="selectedPaymentItem.icon" />
+                            <img :src="selectedPaymentItem.icon" width="52" />
                         </template>
-                        <v-list-item-title class="ml-2">{{ selectedPaymentItem.name }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-400-12">{{ selectedPaymentItem.name }}</v-list-item-title>
                     </v-list-item>
                 </v-card>
             </template>
             <v-list theme="dark" bg-color="#181522">
-                <v-row class="payment-width-370">
-                    <v-col cols="6" v-for="(paymentItem, paymentIndex) in paymentList" :key="paymentIndex">
-                        <v-card color="#1C1929" theme="dark" class="deposit-card-height text-center">
+                <v-row class="m-payment-width-370">
+                    <v-col cols="6" v-for="(paymentItem, paymentIndex) in paymentList" :key="paymentIndex" class="pa-1">
+                        <v-card color="#1C1929" theme="dark" class="text-center">
                             <v-list-item class="payment-select-item pa-2" :value="paymentItem.name"
                                 @click="handleSelectPayment(paymentItem)">
-                                <img :src="paymentItem.icon" />
-                                <v-list-item-title>{{ paymentItem.name }}</v-list-item-title>
-                                <v-list-item-title>{{ paymentItem.description }}</v-list-item-title>
+                                <img :src="paymentItem.icon" width="62" />
+                                <v-list-item-title class="text-400-10">{{ paymentItem.name }}</v-list-item-title>
+                                <v-list-item-title class="text-400-10">{{ paymentItem.description }}</v-list-item-title>
                             </v-list-item>
                         </v-card>
                     </v-col>
                 </v-row>
             </v-list>
         </v-menu>
-        <v-row class="mt-6 mx-6 withdraw-text">
+        <v-row class="mt-6 mx-6 text-500-10 white">
             {{ t('withdraw_dialog.withdraw_amount') }}
         </v-row>
         <v-row class="mt-4 mx-2 relative">
@@ -252,27 +264,27 @@ watch(withdrawAmount, (newValue) => {
                 @input="handleAmountInputChange" />
             <ValidationBox v-if="isShowAmountValidaton" />
         </v-row>
-        <v-row class="mt-4 mx-6 other-text">
+        <v-row class="mt-4 mx-6 text-400-10 gray">
             {{ t('withdraw_dialog.text_1') }}
         </v-row>
-        <v-row class="mt-4 mx-6 other-text">
+        <v-row class="mt-4 mx-6 text-400-10 gray">
             {{ t('withdraw_dialog.text_2') }}
         </v-row>
-        <v-row class="mt-4 mx-6 other-text">
+        <v-row class="mt-4 mx-6 text-400-10 gray">
             {{ t('withdraw_dialog.text_3') }}
         </v-row>
-        <v-row class="mt-4 mx-6 other-text">
+        <v-row class="mt-4 mx-6 text-400-10 gray">
             {{ t('withdraw_dialog.text_4') }}
         </v-row>
-        <v-row class="mt-16 deposit-other-text justify-center mx-2">
+        <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
             {{ t('withdraw_dialog.other_text') }}
         </v-row>
-        <v-row class="mt-2 mx-8">
-            <v-btn class="ma-3 button-bright text-none" width="-webkit-fill-available" height="54px"
+        <div class="m-deposit-btn-position">
+            <v-btn class="ma-3 button-bright m-deposit-btn" width="-webkit-fill-available" height="48px"
                 :disabled="!isDepositBtnReady" :onclick="handleWithdrawSubmit">
                 {{ t('withdraw_dialog.withdraw_btn_text') }}
             </v-btn>
-        </v-row>
+        </div>
         <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
 </template>
@@ -396,9 +408,15 @@ watch(withdrawAmount, (newValue) => {
     color: #7782AA;
 }
 
-.payment-width-370 {
-    width: 370px !important;
-    margin: auto;
-    height: 440px !important;
+
+.m-deposit-btn {
+    .v-btn__content {
+        text-align: center;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 }
 </style>

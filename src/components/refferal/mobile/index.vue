@@ -191,7 +191,7 @@ onMounted(() => {
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 5px solid rgb(33, 31, 49);
+    border: 5px solid transparent;
     background-clip: padding-box;
     border-radius: 15px;
     background-color: #414968;

@@ -60,6 +60,10 @@ const depositRate = ref<number>(56);
 
 const wagerRate = ref<number>(56);
 
+const currencyMenuShow = ref<boolean>(false);
+
+const currencyMenuWidth = ref<string>("340px");
+
 // get Token
 const token = computed(() => {
   const { getToken } = storeToRefs(authStore());
@@ -142,6 +146,15 @@ watch(mobileWidth, (newValue: number) => {
   } else {
     appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
   }
+
+  if (newValue < 600) {
+    currencyMenuWidth.value = (window.innerWidth - 30) + "px";
+  }
+})
+
+watch(currencyMenuShow, (value: boolean) => {
+  setOverlayScrimShow(value);
+  setMainBlurEffectShow(value);
 })
 
 const toggleLanguage = () => {
@@ -170,37 +183,45 @@ const userNavBarToggle = ref(false);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-  name: "BRL"
+  name: "BRL",
+  value: 515.25
 })
 
 const currencyList = ref<Array<GetCurrencyItem>>([
   {
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL"
+    name: "BRL",
+    value: 515.25
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
-    name: "PHP"
+    name: "PHP",
+    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
-    name: "PEN"
+    name: "PEN",
+    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
-    name: "MXN"
+    name: "MXN",
+    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
-    name: "CLP"
+    name: "CLP",
+    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
-    name: "USD"
+    name: "USD",
+    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
-    name: "COP"
+    name: "COP",
+    value: 0
   },
 ])
 
@@ -273,6 +294,9 @@ const refferalDialogShow = () => {
 }
 
 onMounted(async () => {
+  if (mobileWidth.value < 600) {
+    currencyMenuWidth.value = (window.innerWidth - 30) + "px";
+  }
   setAuthModalType("");
   mailCount.value = mailList.value.length
   if (mobileWidth.value > 1280) {
@@ -285,7 +309,7 @@ onMounted(async () => {
     appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
   }
   if (token.value != undefined) {
-    await dispatchUserProfile();
+    // await dispatchUserProfile();
   }
 });
 </script>
@@ -315,7 +339,7 @@ onMounted(async () => {
             <v-card color="#211F31" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
               <v-list-item class="deposit-item user-card-height" v-bind="props">
                 <div class="d-flex align-center">
-                  <v-menu offset="20">
+                  <v-menu offset="20" v-model:model-value="currencyMenuShow" class="currency-menu">
                     <template v-slot:activator="{ props }">
                       <div class="d-flex align-center" v-bind="props" style="height: 40px;">
                         <p class="mr-1">{{ user.currency }}</p>
@@ -323,14 +347,18 @@ onMounted(async () => {
                         <img src="@/assets/public/svg/icon_public_50.svg" class="mr-2" />
                       </div>
                     </template>
-                    <v-list theme="dark" bg-color="#211F31" class="px-2" width="200px">
+                    <v-list theme="dark" bg-color="#211F31" class="px-2" width="427px">
                       <v-list-item class="currency-item pl-6" :value="currencyItem.name"
                         v-for="(currencyItem, currencyIndex) in currencyList" :key="currencyIndex"
+                        :class="selectedCurrencyItem.name == currencyItem.name ? 'currency-selected-item' : ''"
                         @click="handleSelectCurrency(currencyItem)">
                         <template v-slot:prepend>
-                          <img :src="currencyItem.icon" width="26" />
+                          <img :src="currencyItem.icon" width="24" />
                         </template>
-                        <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-700-14">{{ currencyItem.name }}</v-list-item-title>
+                        <template v-slot:append>
+                          <p class="text-700-14 white">$ {{ currencyItem.value.toFixed(2) }}</p>
+                        </template>
                       </v-list-item>
                     </v-list>
                   </v-menu>
@@ -344,7 +372,7 @@ onMounted(async () => {
             <v-card color="#211F31" theme="dark" class="mt-2 m-user-card-height" style="border-radius: 8px;" v-else>
               <v-list-item class="deposit-item m-user-card-height px-2" v-bind="props">
                 <div class="d-flex align-center">
-                  <v-menu offset="20">
+                  <v-menu offset="20" v-model:model-value="currencyMenuShow" class="m-currency-menu">
                     <template v-slot:activator="{ props }">
                       <div class="d-flex align-center" v-bind="props" style="height: 40px;">
                         <p class="mr-1 text-700-12">{{ user.currency }}</p>
@@ -352,14 +380,18 @@ onMounted(async () => {
                         <img src="@/assets/public/svg/icon_public_50.svg" class="mr-1" width="16" />
                       </div>
                     </template>
-                    <v-list theme="dark" bg-color="#211F31" class="px-2" width="200px">
+                    <v-list theme="dark" bg-color="#211F31" class="px-2" :width="currencyMenuWidth">
                       <v-list-item class="currency-item pl-6" :value="currencyItem.name"
+                        :class="selectedCurrencyItem.name == currencyItem.name ? 'currency-selected-item' : ''"
                         v-for="(currencyItem, currencyIndex) in currencyList" :key="currencyIndex"
                         @click="handleSelectCurrency(currencyItem)">
                         <template v-slot:prepend>
-                          <img :src="currencyItem.icon" width="26" />
+                          <img :src="currencyItem.icon" width="20" />
                         </template>
-                        <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-700-10">{{ currencyItem.name }}</v-list-item-title>
+                        <template v-slot:append>
+                          <p class="text-700-10 white">$ {{ currencyItem.value.toFixed(2) }}</p>
+                        </template>
                       </v-list-item>
                     </v-list>
                   </v-menu>
@@ -605,6 +637,50 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+.currency-selected-item {
+  border: 1px solid #00B25C;
+  border-radius: 14px;
+}
+
+.m-currency-menu {
+
+  .v-overlay__content::after {
+    content: "";
+    position: absolute;
+    align-self: center;
+    top: -25px;
+    right: 150px;
+    border: 13px solid #211f31;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-width: 8px;
+    border-left-width: 8px;
+  }
+}
+
+.currency-menu {
+
+  .v-overlay__content::after {
+    content: "";
+    position: absolute;
+    align-self: center;
+    top: -25px;
+    left: 60px;
+    border: 13px solid #211f31;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-width: 8px;
+    border-left-width: 8px;
+  }
+
+  .v-overlay__content {
+    left: unset !important;
+    right: 17px !important;
+  }
+}
+
 .logo-title-1 {
   color: #637BF9;
   font-size: 28px !important;

@@ -15,6 +15,8 @@ import MDialog from "./dialog/index.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay()
+const { setOverlayScrimShow } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
 
 const accountWidth = ref<string>('account-container');
 const activeMenuIndex = ref<number>(0);
@@ -82,6 +84,11 @@ watch(mobileWidth, (newValue: number) => {
     }
 })
 
+// watch(mobileDialogVisible, (value: boolean) => {
+//     setOverlayScrimShow(value);
+//     setMainBlurEffectShow(value);
+// })
+
 const mDialogHide = () => {
     mobileDialogVisible.value = false;
 }
@@ -126,10 +133,10 @@ onMounted(() => {
         </v-row>
     </div>
     <div v-else>
-        <v-dialog v-model="mobileDialogVisible" width="312">
+        <!-- <v-dialog v-model="mobileDialogVisible" width="312">
             <MDialog @mDialogHide="mDialogHide" :avatar="userInfo.avatar" :nickName="userInfo.name"
                 @selectActiveIndex="selectActiveIndex" />
-        </v-dialog>
+        </v-dialog> -->
         <div class="m-account-container pt-8">
             <div class="m-account-tab-body mx-3 d-flex align-center">
                 <v-btn class="m-account-back-btn">

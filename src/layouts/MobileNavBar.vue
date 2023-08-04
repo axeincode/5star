@@ -501,6 +501,11 @@ onMounted(() => {
 }
 
 .m-language-item {
+    border-radius: 8px;
+    background: var(--text-box-1211-f-31, #211F31);
+    /* Text Box */
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+
     :deep(.v-list-item__content) {
         align-self: center;
         grid-area: content;

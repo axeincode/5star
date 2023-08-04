@@ -62,7 +62,7 @@ export default ValidationBox
 <style lang="scss">
 @media (max-width: 600px) {
     .validation-box-container {
-        bottom: 50px !important;
+        bottom: 58px !important;
     }
 
     .validation-item-icon {

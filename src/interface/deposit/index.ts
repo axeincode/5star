@@ -1,6 +1,7 @@
 export interface GetCurrencyItem {
     icon: string
     name: string
+    value: number
 }
 
 export interface GetPaymentItem {

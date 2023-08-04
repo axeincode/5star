@@ -11,7 +11,7 @@ const { dispatchSignout } = authStore();
 const signOut = (): void => {
     emit("close");
     dispatchSignout();
-    router.push({name: "Dashboard"})
+    router.push({ name: "Dashboard" })
 }
 </script>
   
@@ -19,20 +19,20 @@ const signOut = (): void => {
     <div class="m-signout-container">
         <div class="m-header">
             <img src="@/assets/public/image/img_public_03.png" class="m-logout-logo" />
-            <p class="text-700-20 white">{{ t('signout.text_1') }}</p>
+            <p class="text-700-16 white mt-3 mx-10">{{ t('signout.text_1') }}</p>
         </div>
         <p class="m-signout-text">{{ t('signout.text_2') }}</p>
         <p class="m-signout-notice">{{ t('signout.text_3') }} </p>
-        <div class="my-8 text-center">
-            <v-btn class="signout-btn button-bright text-none" width="-webkit-fill-available" height="54px"
-                @click="signOut">
+        <div class="mt-8 text-center">
+            <v-btn class="m-signout-btn button-bright" width="-webkit-fill-available" height="48px" @click="signOut">
                 {{ t('signout.button') }}
             </v-btn>
         </div>
-        <v-btn class="close-button" icon="true" @click="$emit('close')">
-            <v-icon color="#FFFFFF">
+        <v-btn class="close-button" icon="true" @click="$emit('close')" width="30" height="30">
+            <img src="@/assets/public/svg/icon_public_10.svg" />
+            <!-- <v-icon color="#FFFFFF">
                 mdi-close
-            </v-icon>
+            </v-icon> -->
         </v-btn>
     </div>
 </template>
@@ -40,20 +40,20 @@ const signOut = (): void => {
 <style lang="scss">
 // container
 .m-signout-container {
-    background-color: #2E274C;
-    border-radius: 38px 38px 0px 0px !important;
-    position: absolute;
-    bottom: 0;
+    border-radius: 20px 20px 16px 16px;
+    background: var(--bg-2-e-274-c, #2E274C);
+    width: 328px;
+    height: 465px;
 
     .m-header {
-        text-align: center;
+        border-radius: 20px;
         background: linear-gradient(180deg, #8218EA 0%, #2C549C 100%);
-        border-radius: 38px 38px 0px 0px;
-        height: 270px;
+        text-align: center;
+        height: 201px;
 
         .m-logout-logo {
-            margin-top: -10px;
-            width: 230px;
+            margin-top: -21px;
+            width: 195px;
         }
 
         .logo-text {
@@ -66,22 +66,33 @@ const signOut = (): void => {
     }
 
     .m-signout-text {
-        margin: 40px 50px 0 50px;
+        margin: 24px 65px 0 65px;
         color: white;
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 700;
         text-align: center;
     }
 
     .m-signout-notice {
-        margin: 40px 46px 0 46px;
+        margin: 30px 28px 0 28px;
         color: white;
-        font-size: 16px;
+        font-size: 12px;
+        font-weight: 400;
         text-align: center;
     }
 
-    .signout-btn {
-        width: 375px !important;
+    .m-signout-btn {
+        width: 280px !important;
+
+        .v-btn__content {
+            text-align: center;
+            font-family: "Inter";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 800;
+            line-height: normal;
+            letter-spacing: normal;
+        }
     }
 
     // close modal button

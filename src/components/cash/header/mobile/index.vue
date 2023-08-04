@@ -20,6 +20,8 @@ const confirmValidation = ref<boolean>(false);
 
 const notificationShow = ref<boolean>(false);
 
+const personalInfoMenuShow = ref<boolean>(false);
+
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
 const notificationText = ref<string>("");
@@ -117,77 +119,79 @@ onMounted(() => {
   
 <template>
     <div class="mobile-cash-header">
-        <div class="header d-flex align-center relative">
-            <v-menu offset="-5" :close-on-content-click=false content-class="personal-info-menu">
+        <div class="m-header d-flex align-center relative">
+            <v-menu offset="-5" :close-on-content-click=false content-class="m-personal-info-menu"
+                v-model:model-value="personalInfoMenuShow">
                 <template v-slot:activator="{ props }">
-                    <v-btn class="deposit-header-btn" v-bind="props" @click="handlePersonalInfoToggle">
-                        <div class="deposit-header-account-bg relative">
-                            <div class="deposit-header-account-bg-1">
-                                <img src="@/assets/public/svg/icon_public_59.svg" width="24"
+                    <v-btn class="m-deposit-header-btn" v-bind="props" @click="handlePersonalInfoToggle">
+                        <div class="m-deposit-header-account-bg relative">
+                            <div class="m-deposit-header-account-bg-1">
+                                <img src="@/assets/public/svg/icon_public_59.svg" width="16"
                                     class="deposit-header-account-position" />
                             </div>
                         </div>
-                        <v-icon class="header-mdi-icon">mdi-chevron-right</v-icon>
+                        <!-- <v-icon class="header-mdi-icon">mdi-chevron-right</v-icon> -->
+                        <img src="@/assets/public/svg/icon_public_11.svg" width="16" class="ml-1"
+                            v-if="!personalInfoMenuShow" />
+                        <img src="@/assets/public/svg/icon_public_50.svg" width="16" class="ml-1" v-else />
                     </v-btn>
                 </template>
                 <v-list theme="dark" bg-color="#29253C" class="px-2" :width="mobileWidth > 600 ? 471 : mobileWidth">
                     <v-list-item class="pt-4">
-                        <div class="text-center deposit-text">
+                        <div class="text-center text-400-12 gray">
                             {{ t('deposit_dialog.personal_information.header_text') }}
                         </div>
                     </v-list-item>
-                    <v-list-item>
-                        <div @click="handleConfirmValidation">
-                            <v-text-field :label="t('deposit_dialog.personal_information.id_text')"
-                                class="form-textfield dark-textfield mx-2" variant="solo" density="comfortable"
-                                :disabled="confirmValidation" append-icon="mdi" color="#7782AA"
-                                v-model="personalInfoItem.id" @input="handlePersonalInfoID" />
-                            <img src="@/assets/public/svg/icon_public_19.svg" class="personal-info-key-position"
-                                v-if="confirmValidation" />
-                        </div>
-                    </v-list-item>
-                    <v-list-item>
-                        <div class="d-flex" @click="handleConfirmValidation">
-                            <v-text-field :label="t('deposit_dialog.personal_information.first_name')"
-                                class="form-textfield dark-textfield mx-1" variant="solo" density="comfortable"
-                                append-icon="mdi" color="#7782AA" v-model="personalInfoItem.first_name"
-                                :disabled="confirmValidation" @input="handlePersonalInfoFirstName"
-                                @mousedown="handleConfirmValidation" />
-                            <img src="@/assets/public/svg/icon_public_19.svg" class="personal-info-key-position-1"
-                                v-if="confirmValidation" />
-                            <v-text-field :label="t('deposit_dialog.personal_information.last_name')"
-                                class="form-textfield dark-textfield mx-1" variant="solo" density="comfortable"
-                                append-icon="mdi" color="#7782AA" v-model="personalInfoItem.last_name"
-                                :disabled="confirmValidation" @input="handlePersonalInfoLastName" />
-                            <img src="@/assets/public/svg/icon_public_19.svg" class="personal-info-key-position-2"
-                                v-if="confirmValidation" />
-                        </div>
-                    </v-list-item>
-                    <v-list-item>
-                        <v-btn class="mx-16 mt-2 mb-6 button-bright text-none" width="-webkit-fill-available" height="50px"
+                    <div @click="handleConfirmValidation" class="m-personal-information-id-text mx-4">
+                        <v-text-field :label="t('deposit_dialog.personal_information.id_text')" style="margin: 0px;"
+                            class="form-textfield dark-textfield" variant="solo" density="comfortable"
+                            :disabled="confirmValidation" append-icon="mdi" color="#7782AA" v-model="personalInfoItem.id"
+                            @input="handlePersonalInfoID" />
+                        <img src="@/assets/public/svg/icon_public_19.svg" class="personal-info-key-position"
+                            v-if="confirmValidation" />
+                    </div>
+                    <div class="mx-4 d-flex m-personal-information-id-text" @click="handleConfirmValidation">
+                        <v-text-field :label="t('deposit_dialog.personal_information.first_name')"
+                            class="form-textfield dark-textfield mx-1" variant="solo" density="comfortable"
+                            append-icon="mdi" color="#7782AA" v-model="personalInfoItem.first_name"
+                            :disabled="confirmValidation" @input="handlePersonalInfoFirstName"
+                            @mousedown="handleConfirmValidation" />
+                        <img src="@/assets/public/svg/icon_public_19.svg" class="personal-info-key-position-1"
+                            v-if="confirmValidation" />
+                        <v-text-field :label="t('deposit_dialog.personal_information.last_name')"
+                            class="form-textfield dark-textfield mx-1" variant="solo" density="comfortable"
+                            append-icon="mdi" color="#7782AA" v-model="personalInfoItem.last_name"
+                            :disabled="confirmValidation" @input="handlePersonalInfoLastName">
+                        </v-text-field>
+                        <img src="@/assets/public/svg/icon_public_19.svg" class="personal-info-key-position-2"
+                            v-if="confirmValidation" />
+                    </div>
+                    <v-list-item class="text-center">
+                        <v-btn class="mx-16 mt-2 mb-6 m-personal-confirm-btn" height="48px"
                             :disabled="!isPersonalBtnReady || confirmValidation" :onclick="handlePersonalInfoSubmit">
                             {{ t('deposit_dialog.personal_information.confirm_text') }}
                         </v-btn>
                     </v-list-item>
                 </v-list>
             </v-menu>
-            <div class="deposit-toggle">
-                <input type="checkbox" id="deposit-toggle" v-model="cashToggleSwitch" />
-                <label for="deposit-toggle">
+            <div class="m-deposit-toggle">
+                <input type="checkbox" id="m-deposit-toggle" v-model="cashToggleSwitch" />
+                <label for="m-deposit-toggle">
                     <div class="deposit">
-                        <img src="@/assets/public/svg/icon_public_60.svg" />
-                        <P>{{ t('appBar.deposit') }}</P>
+                        <img src="@/assets/public/svg/icon_public_60.svg" width="18" />
+                        <P class="text-700-10">{{ t('appBar.deposit') }}</P>
                     </div>
                     <div class="withdraw">
-                        <img src="@/assets/public/svg/icon_public_65.svg" />
-                        <P>{{ t('appBar.withdraw') }}</P>
+                        <img src="@/assets/public/svg/icon_public_65.svg" width="18" />
+                        <P class="text-700-10">{{ t('appBar.withdraw') }}</P>
                     </div>
                 </label>
             </div>
-            <v-btn class="close-button" icon="true" @click="cashDialogShow">
-                <v-icon color="#7782AA">
+            <v-btn class="m-deposit-close-button" icon="true" @click="cashDialogShow" width="30" height="30">
+                <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
+                <!-- <v-icon color="#7782AA">
                     mdi-close
-                </v-icon>
+                </v-icon> -->
             </v-btn>
         </div>
         <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
@@ -199,16 +203,17 @@ onMounted(() => {
 .mobile-cash-header {
     background-color: #211F31;
 
-    .header {
+    .m-header {
         text-align: center;
-        background: #29253C;
-        box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
         border-radius: 0px 0px 25px 25px;
-        height: 80px;
+        background: #29253C;
+        /* Button Shadow */
+        box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+        height: 60px;
     }
 
-    .deposit-header-btn {
-        width: 100px !important;
+    .m-deposit-header-btn {
+        width: 70px !important;
         height: 60px !important;
         background: #29253C !important;
         box-shadow: none !important;
@@ -222,29 +227,28 @@ onMounted(() => {
     }
 
     // close modal button
-    .close-button {
+    .m-deposit-close-button {
         box-shadow: none !important;
         background-color: transparent !important;
         position: absolute !important;
-        top: 5px;
+        top: 15px;
         right: 5px;
     }
 
     // deposit and withdraw toggle switch
-    .deposit-toggle {
+    .m-deposit-toggle {
         position: absolute;
         top: 50%;
-        left: 54%;
+        left: 50%;
         transform: translate(-50%, -50%);
 
         label {
-            width: 230px;
-            height: 40px;
+            width: 196px;
+            height: 32px;
             position: relative;
             display: block;
             background: #211F31;
             border-radius: 20px !important;
-            box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
             cursor: pointer;
             transition: 0.3s;
 
@@ -272,7 +276,7 @@ onMounted(() => {
             }
 
             .withdraw {
-                left: 132px;
+                left: 111px;
                 transition: 0.3s;
                 color: #7782AA;
 
@@ -285,11 +289,11 @@ onMounted(() => {
 
         label:after {
             content: "";
-            width: 100px;
-            height: 36px;
+            width: 96px;
+            height: 28px;
             position: absolute;
             top: 2px;
-            left: 3px;
+            left: 2px;
             background: #32CFEC;
             border-radius: 18px;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -304,12 +308,12 @@ onMounted(() => {
         }
 
         input:checked+label:after {
-            left: 226px;
+            left: 193px;
             transform: translateX(-100%);
         }
 
         label:active:after {
-            width: 100px;
+            width: 96px;
         }
 
         input:checked+label .deposit {
@@ -335,25 +339,74 @@ onMounted(() => {
     }
 }
 
-.personal-info-menu {
+
+.m-deposit-header-account-bg {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 48px;
+    background: #211F31;
+}
+
+.m-deposit-header-account-bg-1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border-radius: 38px;
+    background: #29253C;
+}
+
+.m-personal-confirm-btn {
+    text-align: center;
+    width: 150px;
+    border-radius: 12px;
+    background: #353652;
+
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+    .v-btn__content {
+        color: #FFF;
+        text-align: center;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
+
+.m-personal-information-id-text {
+    .v-input__append {
+        width: 0px !important;
+    }
+}
+
+.m-personal-info-menu {
     left: unset !important;
+    top: 50px !important;
+    border-radius: 0px 0px 25px 25px !important;
 
     .personal-info-key-position {
         position: absolute;
-        top: 28px;
-        right: 56px;
+        top: 60px;
+        right: 40px;
     }
 
     .personal-info-key-position-1 {
         position: absolute;
-        top: 28px;
-        left: 144px;
+        top: 119px;
+        left: 40%;
     }
 
     .personal-info-key-position-2 {
         position: absolute;
-        top: 28px;
-        right: 50px;
+        top: 119px;
+        right: 39px;
     }
 
     .v-input--horizontal .v-input__append {

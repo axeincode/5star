@@ -14,6 +14,8 @@ const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
+const { setAccountDialogShow } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setBonusTabIndex } = bonusTransactionStore();
@@ -30,6 +32,8 @@ const drawer = ref<boolean>(false);
 const depositRate = ref<number>(56);
 
 const wagerRate = ref<number>(56);
+
+const accountPageShow = ref<boolean>(false);
 
 // logged in user info
 const user = ref<GetUserData>({
@@ -75,6 +79,7 @@ const withdrawDialogShow = () => {
 const showSignoutDialog = () => {
     setAuthModalType("signout");
     setUserNavBarToggle(false);
+    setOverlayScrimShow(false);
 }
 
 const goBonusPage = () => {
@@ -116,15 +121,25 @@ const refferalDialogShow = () => {
     setUserNavBarToggle(false);
 }
 
+const goAccountPage = () => {
+    accountPageShow.value = true;
+    setAccountDialogShow(true);
+    // router.push({ name: 'Account' })
+    setMainBlurEffectShow(drawer.value);
+    setOverlayScrimShow(drawer.value);
+    setUserNavBarToggle(false);
+}
+
 watch(userNavBarToggle, (newValue) => {
     drawer.value = newValue;
 })
 
 watch(drawer, (newValue: boolean) => {
     setUserNavBarToggle(newValue);
-    if (!newValue) {
+    if (!newValue && !accountPageShow.value) {
         setMainBlurEffectShow(false);
     }
+    accountPageShow.value = false;
 })
 
 watch(mobileWidth, (newValue: number) => {
@@ -203,7 +218,7 @@ watch(mobileWidth, (newValue: number) => {
                     <img src="@/assets/public/image/img_public_05.svg" v-ripple.center class="ml-1" />
                 </template> -->
             </v-list-item>
-            <v-list-item class="user-item" value="account" router :to="{ name: 'Account' }">
+            <v-list-item class="user-item" value="account" @click="goAccountPage">
                 <template v-slot:prepend>
                     <img src="@/assets/public/svg/icon_public_59.svg" />
                 </template>
