@@ -717,11 +717,11 @@ export default Dashboard;
           <input type="checkbox" id="history-toggle" v-model="historyToggleSwitch" />
           <label for="history-toggle">
             <div class="winner">
-              <img src="@/assets/public/svg/icon_public_92.svg" width="20"/>
+              <img src="@/assets/public/svg/icon_public_92.svg" width="20" />
               <P class="text-500-12">{{ t('home.lucky_jackpot_text') }}</P>
             </div>
             <div class="prize">
-              <img src="@/assets/public/svg/icon_public_91.svg" width="20"/>
+              <img src="@/assets/public/svg/icon_public_91.svg" width="20" />
               <P class="text-500-12">{{ t('home.latest_record_text') }}</P>
             </div>
           </label>
@@ -786,23 +786,36 @@ export default Dashboard;
   height: 568px;
 }
 
-.home-search-text-height {
-  height: 30px !important;
-}
-
 @media (max-width: 600px) {
-  .v-field__field {
-    color: var(--sec-text-7782-aa, #7782AA);
-    font-family: Inter;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
 
-  .v-input__control {
-    .mdi:before {
-      font-size: 19px !important;
+  .home-search-text-height {
+    height: 30px !important;
+
+    .v-field__field {
+      padding-left: 0px !important;
+    }
+
+    .v-field__input::placeholder {
+      opacity: unset !important;
+      color: #7782AA !important;
+      font-family: "Inter";
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+
+    .v-field__prepend-inner {
+      .v-icon {
+        opacity: unset !important;
+        color: #7782AA;
+      }
+    }
+
+    .v-input__control {
+      .mdi:before {
+        font-size: 19px !important;
+      }
     }
   }
 
@@ -901,6 +914,7 @@ export default Dashboard;
   }
 }
 
+
 .popular-btn-color {
   background: #211f31 !important;
   color: #7782aa !important;
@@ -923,14 +937,14 @@ export default Dashboard;
   .original_game_text {
     font-size: 14px;
   }
-  
 
-.more-btn-color {
 
-  .v-btn__content {
-    font-size: 12px !important;
+  .more-btn-color {
+
+    .v-btn__content {
+      font-size: 12px !important;
+    }
   }
-}
 }
 
 .original-game-img-border {

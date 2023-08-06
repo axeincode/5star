@@ -2,6 +2,7 @@
 import { ref, watch, computed, onMounted } from "vue"
 import { appBarStore } from "@/store/appBar";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
+import { refferalStore } from '@/store/refferal';
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
@@ -21,8 +22,8 @@ const rightBarToggle = computed(() => {
     return getRightBarToggle.value;
 })
 
-const  bonusTabIndex = computed(() => {
-    const { getBonusTabIndex} = storeToRefs(bonusTransactionStore());
+const bonusTabIndex = computed(() => {
+    const { getBonusTabIndex } = storeToRefs(bonusTransactionStore());
     return getBonusTabIndex.value
 })
 
@@ -30,9 +31,14 @@ const mobileWidth: any = computed(() => {
     return width.value;
 })
 
+const refferalAppBarShow = computed(() => {
+    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+    return getRefferalAppBarShow.value;
+})
+
 watch(bonusTabIndex, (newValue) => {
     selectedTabIndex.value = newValue;
-}, {deep: true});
+}, { deep: true });
 
 watch(rightBarToggle, (newValue) => {
     if (mobileWidth.value > 1280) {
@@ -78,7 +84,7 @@ onMounted(() => {
 
 <template>
     <div :class="affiliateWidth">
-        <div class="affiliate-tabs">
+        <div :class="mobileWidth > 600 ? 'affiliate-tabs' : refferalAppBarShow ? 'm-affiliate-tabs' : 'm-affiliate-tabs-1'">
             <div class="affiliate-tab-body" v-if="mobileWidth > 600">
                 <p class="affiliate-tab-text" v-ripple.center @click="tabSelect(0)"
                     :class="[selectedTabIndex == 0 ? 'selected-tab-text' : '']">{{ t('appBar.bonuses') }}</p>
@@ -98,17 +104,15 @@ onMounted(() => {
                 </v-row>
             </div>
         </div>
-        <div class="affiliate-body">
-            <div v-if="selectedTabIndex == 0">
-                <Bonus v-if="mobileWidth > 600" />
-                <MBonus v-else />
-            </div>
-            <div v-else>
-                <Transaction/>
-            </div>
+        <div v-if="selectedTabIndex == 0">
+            <Bonus v-if="mobileWidth > 600" />
+            <MBonus v-else />
+        </div>
+        <div v-else>
+            <Transaction />
         </div>
     </div>
-    <div class="mx-2 mt-10">
+    <div class="mx-2 pt-12">
         <GameProviders />
     </div>
 </template>
@@ -128,10 +132,74 @@ onMounted(() => {
 }
 
 .m-affiliate-container {
-    margin: -20px 0px;
+    margin: -60px 0px;
     background: #211F31;
     padding-bottom: 20px;
     border-radius: 8px;
+}
+
+.m-affiliate-tabs {
+    padding-top: 50px;
+
+    .m-affiliate-tab-body {
+        display: flex;
+        padding: 0px 60px;
+        align-items: center;
+        background: #29253C;
+        height: 48px;
+        margin: 0px 16px;
+        box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+        border-radius: 12px;
+        font-weight: 400;
+        font-size: 12px;
+        color: #7782AA;
+    }
+
+    .affiliate-tab-text {
+        margin-right: 100px;
+        cursor: pointer;
+    }
+
+    .selected-tab-text {
+        font-weight: 700 !important;
+        color: #FFFFFF !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+}
+
+.m-affiliate-tabs-1 {
+    padding-top: 66px;
+
+    .m-affiliate-tab-body {
+        display: flex;
+        padding: 0px 60px;
+        align-items: center;
+        background: #29253C;
+        height: 48px;
+        margin: 0px 16px;
+        box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+        border-radius: 12px;
+        font-weight: 400;
+        font-size: 12px;
+        color: #7782AA;
+    }
+
+    .affiliate-tab-text {
+        margin-right: 100px;
+        cursor: pointer;
+    }
+
+    .selected-tab-text {
+        font-weight: 700 !important;
+        color: #FFFFFF !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
 }
 
 .affiliate-tabs {
@@ -144,20 +212,6 @@ onMounted(() => {
         background: #29253C;
         height: 64px;
         margin: 8px;
-        box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-        border-radius: 8px;
-        font-weight: 400;
-        font-size: 16px;
-        color: #7782AA;
-    }
-
-    .m-affiliate-tab-body {
-        display: flex;
-        padding: 0px 60px;
-        align-items: center;
-        background: #29253C;
-        height: 54px;
-        margin: 0px 8px;
         box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
         border-radius: 8px;
         font-weight: 400;

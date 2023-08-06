@@ -14,7 +14,7 @@ const emit = defineEmits<{ (e: 'suspendDialogHide'): void }>()
 const props = defineProps<{ suspendDate: number }>();
 const { suspendDate } = toRefs(props);
 const { dispatchSuspendUser } = authStore();
-const {dispatchSignout} = authStore()
+const { dispatchSignout } = authStore()
 
 const loading = ref<boolean>(false);
 const notificationShow = ref<boolean>(false);
@@ -52,29 +52,27 @@ const submitSuspend = async () => {
 </script>
 
 <template>
-    <div class="suspend-dialog-container">
+    <div class="m-suspend-dialog-container">
         <v-row class="mx-4 mt-6 text-700-12 text-gray justify-center">
             {{ t('account.suspend_account.dialog.title_text') }}
         </v-row>
-        <v-row class="mx-4 mt-10 text-700-10 text-gray">
+        <v-row class="mx-4 mt-6 text-700-12 text-gray">
             <p class="text-center">
                 {{ t('account.suspend_account.dialog.content_text_1') }}
-                <Font color="#FFFFFF">
+                <font color="#FFFFFF">
                     {{ suspendDate }}
                     {{ t('account.suspend_account.dialog.content_text_2') }}
-                </Font>
+                </font>
             </p>
         </v-row>
         <v-row class="mx-10 mt-10 text-700-14">
             <div class="m-suspend-confirm-btn">
-                <v-btn class="button-bright text-none" width="-webkit-fill-available" height="30px" @click="submitSuspend"
-                    :loading="loading">
+                <v-btn class="button-bright text-none" height="28" width="76" @click="submitSuspend" :loading="loading">
                     {{ t('account.suspend_account.dialog.determine_btn_text') }}
                 </v-btn>
             </div>
             <div class="m-suspend-cancel-btn ml-auto">
-                <v-btn class="button-bright text-none" width="-webkit-fill-available" height="30px"
-                    @click="emit('suspendDialogHide')">
+                <v-btn class="button-bright text-none" height="28" width="76" @click="emit('suspendDialogHide')">
                     {{ t('account.suspend_account.dialog.cancel_btn_text') }}
                 </v-btn>
             </div>
@@ -85,10 +83,10 @@ const submitSuspend = async () => {
 
 <style lang="scss">
 // account dialog container
-.suspend-dialog-container {
-    background-color: #1C1929;
+.m-suspend-dialog-container {
+    background-color: #29253C;
     border-radius: 16px !important;
-    height: 220px;
+    height: 173px;
 }
 
 .m-suspend-confirm-btn {
@@ -99,7 +97,7 @@ const submitSuspend = async () => {
 
         .v-btn__content {
             font-weight: 700;
-            font-size: 12px;
+            font-size: 10px;
         }
     }
 }
@@ -114,7 +112,7 @@ const submitSuspend = async () => {
 
         .v-btn__content {
             font-weight: 700;
-            font-size: 12px;
+            font-size: 10px;
             color: #FFFFFF;
         }
     }

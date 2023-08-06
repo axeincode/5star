@@ -246,7 +246,7 @@ const selectActiveIndex = (index: number) => {
   setMainBlurEffectShow(false);
   setOverlayScrimShow(false);
   setAccountDialogShow(false);
-  router.push({name: "Account"})
+  router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
 }
 
 watch(accountDialogVisible, (value: boolean) => {

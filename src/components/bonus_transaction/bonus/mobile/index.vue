@@ -63,70 +63,76 @@ const formsList = ref<Array<any>>([
 ])
 </script>
 <template>
-    <v-row class="mt-2 mx-2 text-400-12 text-gray text-center">
+    <v-row class="mt-4 mx-2 text-400-12 text-gray text-center">
         <v-col cols="12" class="pa-0">
             {{ t('bonus.title_text') }}
         </v-col>
     </v-row>
-    <v-row class="mx-1">
+    <v-row class="mx-1 mt-4">
         <v-col cols="12" class="pa-1">
-            <v-list-item class="bg-color-1">
+            <v-list-item class="m-bg-color-1 mx-6">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_26.svg" />
+                    <img src="@/assets/public/svg/icon_public_26.svg" width="30" />
                 </template>
-                <v-list-item-title class="ml-4">
-                    <div class="text-400-12 text-gray">{{ t('bonus.total_text') }}</div>
+                <v-list-item-title class="ml-4" style="line-height: 20px;">
+                    <div class="text-400-10 text-gray">{{ t('bonus.total_text') }}</div>
                     <div class="text-600-12 white">{{ totalAmount }}</div>
                 </v-list-item-title>
                 <template v-slot:append>
-                    <img src="@/assets/public/svg/btn_public_02.svg" />
+                    <img src="@/assets/public/svg/btn_public_02.svg" width="24" />
                 </template>
             </v-list-item>
-            <v-list-item class="bg-color-1 mt-4">
+            <v-list-item class="m-bg-color-1 mt-4 mx-6">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_27.svg" />
+                    <img src="@/assets/public/svg/icon_public_27.svg" width="30" />
                 </template>
-                <v-list-item-title class="ml-4">
-                    <div class="text-400-12 text-gray">{{ t('bonus.withdraw_text') }}</div>
+                <v-list-item-title class="ml-4" style="line-height: 20px;">
+                    <div class="text-400-10 text-gray">{{ t('bonus.withdraw_text') }}</div>
                     <div class="text-600-12 white">{{ withdrawAmount }}</div>
                 </v-list-item-title>
             </v-list-item>
         </v-col>
         <v-col cols="12" class="pa-1">
-            <v-card theme="dark" color="#1C1929" class="bonus-card-body pa-2">
+            <v-card theme="dark" color="#1C1929" class="m-bonus-card-body pa-2">
                 <v-expansion-panels>
-                    <v-expansion-panel class="bg-color-211F31 mt-2 m-collapse-body" v-for="(item, index) in bonusList" :key="index">
+                    <v-expansion-panel class="bg-color-211F31 mt-2 m-collapse-body" v-for="(item, index) in bonusList"
+                        :key="index">
                         <v-expansion-panel-title :class="[item.type == 'Failure' ? 'failure-title' : 'completion-title']">
                             <template v-slot:default="{ expanded }">
                                 <v-row no-gutters class="align-center">
-                                    <v-col cols="4" class="text-700-12 text-center bonus-cash-border d-flex align-center justify-center"
+                                    <v-col cols="3"
+                                        class="text-700-10 text-center bonus-cash-border d-flex align-center justify-center"
                                         :class="[item.type == 'Failure' ? 'black' : '']">{{ item.restCash }}</v-col>
-                                    <v-col cols="3" class="text-400-12 text-center bonus-cash-border d-flex align-center justify-center"
+                                    <v-col cols="3"
+                                        class="text-400-10 text-center bonus-cash-border d-flex align-center justify-center"
                                         :class="[item.type == 'Failure' ? 'color-FF6200' : '']">{{ item.type }}</v-col>
-                                    <v-col cols="3" class="text-center bonus-cash-border" v-if="item.type != 'Underway'">
+                                    <v-col cols="4" class="text-center bonus-cash-border" v-if="item.type != 'Underway'">
                                         <div class="text-400-10" :class="[item.type == 'Failure' ? 'black' : '']">Expire on
                                         </div>
-                                        <div class="text-600-12 mt-2" :class="[item.type == 'Failure' ? 'black' : '']">{{
+                                        <div class="text-600-10 mt-2" :class="[item.type == 'Failure' ? 'black' : '']">{{
                                             item.expireDate }}</div>
                                     </v-col>
-                                    <v-col cols="3" class="text-center bonus-cash-border d-flex align-center justify-center" v-else>
-                                        <div class="text-400-12">No time limit</div>
+                                    <v-col cols="4" class="text-center bonus-cash-border d-flex align-center justify-center"
+                                        v-else>
+                                        <div class="text-400-10">No time limit</div>
                                     </v-col>
-                                    <v-col cols="2" class="text-center">
-                                        <img src="@/assets/bonus/img/img_so_03.png" v-if="item.type == 'Completion'" width="28"/>
-                                        <img src="@/assets/bonus/img/img_so_07.png" v-else-if="item.type == 'Failure'" width="28"/>
+                                    <v-col cols="2" class="text-right">
+                                        <img src="@/assets/bonus/img/img_so_03.png" v-if="item.type == 'Completion'"
+                                            width="25" />
+                                        <img src="@/assets/bonus/img/img_so_07.png" v-else-if="item.type == 'Failure'"
+                                            width="25" />
                                     </v-col>
-                                    <v-col cols="12" class="text-center">
-                                        <div class="text-400-12 mt-2" v-if="item.type != 'Underway'"
+                                    <v-col cols="12" class="text-center mt-1">
+                                        <div class="text-400-10 mt-2" v-if="item.type != 'Underway'"
                                             :class="[item.type == 'Failure' ? 'black' : '']">
                                             Complete the task and get
-                                            <Font :class="[item.type == 'Failure' ? 'bonus-cash-failure' : 'bonus-cash']">{{
+                                            <Font :class="[item.type == 'Failure' ? 'm-bonus-cash-failure' : 'bonus-cash']">{{
                                                 item.bonusCash }}</Font> bonus
                                         </div>
                                         <div :class="[item.type == 'Underway' ? 'mt-4' : 'mt-2']">
-                                            <v-progress-linear v-model="item.rate" height="21"
+                                            <v-progress-linear v-model="item.rate" height="16"
                                                 :class="[item.type == 'Failure' ? 'failure-progress' : 'completion-progress']">
-                                                <div class="text-400-12" :class="[item.type == 'Failure' ? 'gray' : '']">{{
+                                                <div class="text-400-10" :class="[item.type == 'Failure' ? 'gray' : '']">{{
                                                     item.currentCash }} / {{ item.totalCash }}</div>
                                             </v-progress-linear>
                                         </div>
@@ -135,15 +141,15 @@ const formsList = ref<Array<any>>([
                             </template>
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
-                            <v-row class="ma-1">
-                                <v-col cols="6" class="text-right text-700-14">
+                            <v-row class="ma-0">
+                                <v-col cols="8" class="text-right text-400-12">
                                     {{ t('bonus.super_bonus_text') }}
                                 </v-col>
-                                <v-col cols="6" class="text-right">
-                                    <img src="@/assets/public/svg/icon_public_22.svg"/>
+                                <v-col cols="4" class="text-right">
+                                    <img src="@/assets/public/svg/icon_public_53.svg" width="20"/>
                                 </v-col>
                             </v-row>
-                            <v-table class="forms-bonus-table-bg text-400-12">
+                            <v-table class="forms-bonus-table-bg text-400-10">
                                 <thead>
                                     <tr>
                                         <th>
@@ -169,11 +175,11 @@ const formsList = ref<Array<any>>([
                                     </tr>
                                 </tbody>
                             </v-table>
-                            <v-row class="ma-1">
-                                <v-col cols="6" class="text-left text-500-10">
+                            <v-row class="ma-0">
+                                <v-col cols="5" class="text-left text-500-10">
                                     ID: Qsd58844221122
                                 </v-col>
-                                <v-col cols="6" class="justify-end d-flex text-500-10">
+                                <v-col cols="7" class="justify-end d-flex text-500-10">
                                     {{ t('bonus.table.deposit') }} $3000, {{ t('bonus.table.receive') }} $6000
                                 </v-col>
                             </v-row>
@@ -185,20 +191,34 @@ const formsList = ref<Array<any>>([
     </v-row>
 </template>
 <style lang="scss">
-.bonus-card-body {
-    height: 700px;
+.m-bonus-card-body {
+    // height: 700px;
     overflow-y: auto;
+
+    .v-expansion-panel-title__icon {
+        display: inline-flex;
+        margin-bottom: -4px;
+        margin-top: -4px;
+        user-select: none;
+        margin-inline-start: auto;
+        position: absolute;
+        top: 40px;
+        right: 10px;
+    }
 }
+
 .forms-bonus-table-bg {
     background: #1C1929 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 12px !important;
     width: 100% !important;
 }
+
 .v-expansion-panel-title:active:enabled {
     transform: none !important;
     filter: none !important;
 }
+
 .bonus-cash-border {
     height: 30px;
     border-right: 1px solid #211F31;
@@ -255,12 +275,11 @@ const formsList = ref<Array<any>>([
     font-weight: 700;
 }
 
-.bonus-cash-failure {
+.m-bonus-cash-failure {
     color: #000000;
     font-weight: 700;
 }
 
 .v-expansion-panel-text__wrapper {
     padding: 8px 8px 16px !important;
-}
-</style>
+}</style>

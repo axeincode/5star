@@ -1,10 +1,27 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted } from 'vue';
+import { ref, computed } from 'vue';
+import { useDisplay } from 'vuetify';
 
 const page = ref(2);
+const { width } = useDisplay();
+
+const totalVisible = ref<number>(3);
+
+const mobileWidth = computed(() => {
+    return width.value;
+})
+
+onMounted(() => {
+    if (mobileWidth.value > 600) {
+        totalVisible.value = 3
+    } else {
+        totalVisible.value = 1
+    }
+})
 </script>
 <template>
-    <v-pagination v-model="page" :length="10" :total-visible="3" rounded="circle"></v-pagination>
+    <v-pagination v-model="page" :length="10" :total-visible="totalVisible" rounded="circle"></v-pagination>
 </template>
 <style lang="scss">
 .v-pagination__prev,
@@ -76,6 +93,8 @@ const page = ref(2);
     }
 
     .v-pagination__item--is-active {
+        display: none;
+
         .v-btn {
             width: 24px !important;
             height: 24px !important;

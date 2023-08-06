@@ -510,7 +510,7 @@ export default MSignup
 
     .v-input__control {
         .mdi:before {
-            font-size: 23px !important;
+            // font-size: 23px !important;
         }
     }
 

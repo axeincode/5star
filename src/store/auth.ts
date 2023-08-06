@@ -15,7 +15,9 @@ export const authStore = defineStore({
     token: NetworkData.getInstance().getToken() as string | undefined,
     userInfo: {
       uid: "User6696608024",
-      name: "Little Planes",
+      name: "DanDan",
+      email: "anderson.bluegame@gmail.com",
+      phone: "+5517991696669",
       avatar: new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
     } as User.GetUserInfo,
     userAmount: {

@@ -6,12 +6,18 @@ import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import { type GetUserInfo } from "@/interface/user";
 import EditNickname from "@/components/account/user_information/dialog/EditNickname.vue";
+import MEditNickname from "@/components/account/user_information/dialog/mobile/MEditNickname.vue";
 import EditPassword from "@/components/account/user_information/dialog/EditPassword.vue";
+import MEditPassword from "@/components/account/user_information/dialog/mobile/MEditPassword.vue";
 import EditEmail from "@/components/account/user_information/dialog/EditEmail.vue";
+import MEditEmail from "@/components/account/user_information/dialog/mobile/MEditEmail.vue";
 import Notification from "@/components/global/notification/index.vue";
+import { appBarStore } from "@/store/appBar";
 
 const { t } = useI18n();
 const { width } = useDisplay()
+const { setMainBlurEffectShow } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
 
 const userInfo = computed((): GetUserInfo => {
     const { getUserInfo } = storeToRefs(authStore());
@@ -42,6 +48,8 @@ const editNicknameDialogShow = () => {
     editNicknameDialog.value = true;
     editPasswordDialog.value = false;
     editEmailDialog.value = false;
+    setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
 }
 
 const editPasswordDialogShow = () => {
@@ -49,6 +57,8 @@ const editPasswordDialogShow = () => {
     editPasswordDialog.value = true;
     editNicknameDialog.value = false;
     editEmailDialog.value = false;
+    setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
 }
 
 const editEmailDialogShow = () => {
@@ -56,6 +66,8 @@ const editEmailDialogShow = () => {
     editEmailDialog.value = true;
     editPasswordDialog.value = false;
     editNicknameDialog.value = false;
+    setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
 }
 
 const userDialogHide = () => {
@@ -63,6 +75,8 @@ const userDialogHide = () => {
     editPasswordDialog.value = false;
     editNicknameDialog.value = false;
     editEmailDialog.value = false;
+    setMainBlurEffectShow(false);
+    setOverlayScrimShow(false);
 }
 
 const submitNickName = (name: string) => {
@@ -78,17 +92,18 @@ const handleVerifyCode = () => {
         <v-row class="mx-4 mt-4 text-700-12 text-white">
             {{ t('account.menu.user_info_text') }}
         </v-row>
-        <v-row class="mx-3 mt-8">
+        <v-row class="mx-3 mt-6">
             <v-col cols="12" class="pa-0">
                 <v-card color="#1C1929" theme="dark" class="m-user-info-item">
                     <v-list-item style="height: 100%;">
-                        <v-list-item-title class="ml-2">
-                            <div class="text-400-12 text-gray">{{ t('account.item.nick_name_text') }}</div>
+                        <v-list-item-title class="ml-2" style="line-height: 18px;">
+                            <div class="text-400-10 text-gray">{{ t('account.item.nick_name_text') }}</div>
                             <div class="text-600-12">{{ userInfo.name }}</div>
                         </v-list-item-title>
                         <template v-slot:append>
-                            <v-btn class="account-edit-btn" @click="editNicknameDialogShow">{{
-                                t('account.edit_text') }}</v-btn>
+                            <v-btn class="m-account-edit-btn text-none" @click="editNicknameDialogShow">
+                                {{ t('account.edit_text') }}
+                            </v-btn>
                         </template>
                     </v-list-item>
                 </v-card>
@@ -98,14 +113,15 @@ const handleVerifyCode = () => {
             <v-col cols="12" class="pa-0">
                 <v-card color="#1C1929" theme="dark" class="m-user-info-item">
                     <v-list-item style="height: 100%;">
-                        <v-list-item-title class="ml-2">
-                            <div class="text-400-12 text-gray">{{ t('account.item.email_text') }}</div>
-                            <div class="text-600-14">{{ userInfo.email }}</div>
+                        <v-list-item-title class="ml-2" style="line-height: 18px;">
+                            <div class="text-400-10 text-gray">{{ t('account.item.email_text') }}</div>
+                            <div class="text-600-12">{{ userInfo.email }}</div>
                         </v-list-item-title>
                         <template v-slot:append>
-                            <v-btn class="account-edit-btn" @click="editEmailDialogShow">
-                                <img src="@/assets/public/svg/icon_public_08.svg" v-if="userInfo.email_confirmd" />
-                                <img src="@/assets/public/svg/icon_public_09.svg" v-else />
+                            <v-btn class="m-account-edit-btn text-none" @click="editEmailDialogShow">
+                                <img src="@/assets/public/svg/icon_public_08.svg" v-if="userInfo.email_confirmd"
+                                    width="16" />
+                                <img src="@/assets/public/svg/icon_public_09.svg" v-else width="16" />
                                 {{ t('account.edit_text') }}
                             </v-btn>
                         </template>
@@ -113,7 +129,7 @@ const handleVerifyCode = () => {
                 </v-card>
             </v-col>
             <v-col class="pa-0 mt-2">
-                <v-btn class="text-none email-verify-btn-color" @click="handleVerifyCode" height="40px">
+                <v-btn class="text-none m-email-verify-btn-color" @click="handleVerifyCode" height="40px">
                     {{ t('account.verify_code_text') }}
                 </v-btn>
             </v-col>
@@ -122,12 +138,12 @@ const handleVerifyCode = () => {
             <v-col cols="12" class="pa-0">
                 <v-card color="#1C1929" theme="dark" class="m-user-info-item">
                     <v-list-item style="height: 100%;">
-                        <v-list-item-title class="ml-2">
-                            <div class="text-400-12 text-gray">{{ t('account.item.current_pwd_text') }}</div>
-                            <div class="text-600-14 user-pwd-spacing">*******************</div>
+                        <v-list-item-title class="ml-2" style="line-height: 18px;">
+                            <div class="text-400-10 text-gray">{{ t('account.item.current_pwd_text') }}</div>
+                            <div class="text-600-12 user-pwd-spacing">***************</div>
                         </v-list-item-title>
                         <template v-slot:append>
-                            <v-btn class="account-edit-btn" @click="editPasswordDialogShow">
+                            <v-btn class="m-account-edit-btn text-none" @click="editPasswordDialogShow">
                                 {{ t('account.edit_text') }}
                             </v-btn>
                         </template>
@@ -142,13 +158,14 @@ const handleVerifyCode = () => {
                         <v-col cols="4" lg="3">
                             <v-card color="#1C1929" theme="dark" class="m-user-info-item">
                                 <v-list-item :value="t('account.item.area_text')" class="text-center" style="height: 100%;">
-                                    <v-list-item-title>
-                                        <div class="text-400-12 text-gray">
+                                    <v-list-item-title style="line-height: 18px;">
+                                        <div class="text-400-10 text-gray">
                                             {{ t('account.item.area_text') }}
                                         </div>
                                         <div class="d-flex align-center justify-center">
-                                            <img src="@/assets/public/image/img_public_25.png" width="32"/>
-                                            <v-icon class="ml-1">mdi-chevron-down</v-icon>
+                                            <img src="@/assets/public/image/img_public_25.png" width="23" />
+                                            <!-- <v-icon class="ml-1">mdi-chevron-down</v-icon> -->
+                                            <img src="@/assets/public/svg/icon_public_50.svg" width="14" class="ml-2" />
                                         </div>
                                     </v-list-item-title>
                                 </v-list-item>
@@ -158,11 +175,11 @@ const handleVerifyCode = () => {
                             <v-card color="#1C1929" theme="dark" class="m-user-info-item">
                                 <v-list-item style="height: 100%;">
                                     <v-list-item-title class="ml-2">
-                                        <div class="text-600-14 text-gray">{{ userInfo.phone }}</div>
+                                        <div class="text-600-12 text-gray">{{ userInfo.phone }}</div>
                                     </v-list-item-title>
                                     <template v-slot:append>
                                         <v-btn class="account-edit-btn" @click="handlePhonNumber">
-                                            <img src="@/assets/public/svg/icon_public_12.svg" />
+                                            <img src="@/assets/public/svg/icon_public_12.svg" width="16" />
                                         </v-btn>
                                     </template>
                                 </v-list-item>
@@ -172,27 +189,56 @@ const handleVerifyCode = () => {
                 </div>
             </v-col>
         </v-row>
-        <v-dialog v-model="dialogVisible" :width="mobileWidth < 600 ? 330 : 471">
-            <EditNickname v-if="editNicknameDialog" @userDialogHide="userDialogHide" :email="userInfo.email"  @submitNickName="submitNickName"/>
-            <EditPassword v-if="editPasswordDialog" @userDialogHide="userDialogHide" />
-            <EditEmail v-if="editEmailDialog" @userDialogHide="userDialogHide" />
+        <v-btn class="m-account-speaker-bg" icon>
+            <img src="@/assets/public/svg/icon_public_75.svg" class="m-account-speaker-img-position" />
+        </v-btn>
+        <v-dialog v-model="dialogVisible" :width="mobileWidth < 600 ? 328 : 471" @click:outside="userDialogHide">
+            <template v-if="mobileWidth > 600">
+                <EditNickname v-if="editNicknameDialog" @userDialogHide="userDialogHide" :email="userInfo.email"
+                    @submitNickName="submitNickName" />
+                <EditPassword v-if="editPasswordDialog" @userDialogHide="userDialogHide" />
+                <EditEmail v-if="editEmailDialog" @userDialogHide="userDialogHide" />
+            </template>
+            <template v-else>
+                <MEditNickname v-if="editNicknameDialog" @userDialogHide="userDialogHide" :email="userInfo.email"
+                    @submitNickName="submitNickName" />
+                <MEditPassword v-if="editPasswordDialog" @userDialogHide="userDialogHide" />
+                <MEditEmail v-if="editEmailDialog" @userDialogHide="userDialogHide" />
+            </template>
         </v-dialog>
         <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
 </template>
 
 <style lang="scss">
-.m-user-info-item {
-    height: 48px !important;
+.m-account-speaker-bg {
+    width: 44px;
+    height: 44px;
+    background: #4931A5;
+    border-radius: 44px;
+    position: absolute;
+    right: 20px;
+    top: 328px;
+
+    .m-account-speaker-img-position {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
-.account-edit-btn {
+.m-user-info-item {
+    height: 40px !important;
+}
+
+.m-account-edit-btn {
     background: transparent !important;
     box-shadow: none !important;
 
     .v-btn__content {
         font-weight: 400;
-        font-size: 12px;
+        font-size: 10px;
         color: #7782AA;
     }
 }
@@ -201,7 +247,7 @@ const handleVerifyCode = () => {
     letter-spacing: 2px;
 }
 
-.email-verify-btn-color {
+.m-email-verify-btn-color {
     width: 100%;
     background: #2F2756;
     border: 1px solid #6842EC;

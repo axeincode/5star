@@ -34,6 +34,13 @@
     height: 48px;
 }
 
+.m-bg-color-1 {
+    background-color: #1C1929;
+    box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    height: 40px;
+}
+
 .bg-color-211F31 {
     background-color: #211F31;
 }
@@ -510,6 +517,10 @@ button {
 .v-btn--disabled {
     background-color: #353652 !important;
     color: white !important;
+}
+
+.v-btn__content {
+    letter-spacing: normal !important;
 }
 
 // carousel

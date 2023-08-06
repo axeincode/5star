@@ -448,6 +448,7 @@ export const lang: langType = {
       phone_text: "Phone",
       current_pwd_text: "Current Password",
     },
+    back_text: "Back",
     edit_text: "Edit",
     save_text: "Save",
     exist_validation_text: "This nickname already exists, please enter a new one",

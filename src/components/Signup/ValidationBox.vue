@@ -83,7 +83,7 @@ export default ValidationBox
     bottom: 64px;
     width: 94%;
     background: #211F31;
-    box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
+    // box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
     border-radius: 12px;
     margin: 12px; // wrapped by v-row
     padding-bottom: 0px !important;

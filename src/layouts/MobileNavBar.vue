@@ -246,7 +246,7 @@ onMounted(() => {
                     <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
                         <v-list-item v-bind="props" class="m-casino-sub-img"
                             prepend-avatar="@/assets/public/svg/icon_public_57.svg" :title="language" value="english"
-                            :append-icon="languageMenu ? 'mdi-chevron-right' : 'mdi-chevron-left'">
+                            :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'">
                         </v-list-item>
                     </v-card>
                 </template>

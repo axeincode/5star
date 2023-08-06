@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue"
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
 import { storeToRefs } from "pinia";
 import { type GetUserInfo } from "@/interface/user";
 import { authStore } from "@/store/auth";
+import { refferalStore } from '@/store/refferal';
 import UserInformation from "@/components/account/user_information/pc/index.vue";
 import MUserInformation from "@/components/account/user_information/mobile/index.vue";
 import GameProviders from "@/components/global/game_provider/index.vue";
@@ -17,11 +19,13 @@ const { t } = useI18n();
 const { width } = useDisplay()
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
+const route = useRoute();
 
 const accountWidth = ref<string>('account-container');
-const activeMenuIndex = ref<number>(0);
+const activeMenuIndex = ref<any>(0);
 const mobileDialogVisible = ref<boolean>(false);
 const selectedMenuItem = ref<string>(t('account.menu.user_info_text'));
+const accountMenuShow = ref<boolean>(false);
 
 const menuList = ref<Array<string>>([
     t('account.menu.user_info_text'),
@@ -30,6 +34,12 @@ const menuList = ref<Array<string>>([
     t('account.menu.preference_text'),
     t('account.menu.suspend_account_text'),
 ])
+
+const refferalAppBarShow = computed(() => {
+    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+    return getRefferalAppBarShow.value;
+})
+
 
 const handleMenu = (index: number) => {
     activeMenuIndex.value = index;
@@ -53,6 +63,10 @@ const mobileWidth: any = computed(() => {
 const userInfo = computed((): GetUserInfo => {
     const { getUserInfo } = storeToRefs(authStore());
     return getUserInfo.value;
+})
+
+const accountHeight = computed(() => {
+    return window.innerHeight;
 })
 
 const rightBarToggle = computed(() => {
@@ -106,6 +120,7 @@ onMounted(() => {
     if (mobileWidth.value < 600) {
         mobileDialogVisible.value = true;
     }
+    activeMenuIndex.value = route.query.index ? route.query.index : 0
 })
 </script>
 
@@ -137,25 +152,25 @@ onMounted(() => {
             <MDialog @mDialogHide="mDialogHide" :avatar="userInfo.avatar" :nickName="userInfo.name"
                 @selectActiveIndex="selectActiveIndex" />
         </v-dialog> -->
-        <div class="m-account-container pt-8">
+        <div class="m-account-container" :class="refferalAppBarShow ? 'pt-8' : 'pt-12'" :style="{ height: accountHeight + 'px' }">
             <div class="m-account-tab-body mx-3 d-flex align-center">
-                <v-btn class="m-account-back-btn">
-                    <img src="@/assets/public/svg/icon_public_11.svg" width="18" />
-                    {{ t('account.edit_text') }}
+                <v-btn class="m-account-back-btn text-none">
+                    <v-icon class="header-mdi-icon">mdi-chevron-left</v-icon>
+                    <!-- <img src="@/assets/public/svg/icon_public_11.svg" width="18" /> -->
+                    {{ t('account.back_text') }}
                 </v-btn>
-                <v-menu offset="20" class="sport-menu">
+                <v-menu offset="20" v-model:model-value="accountMenuShow" class="m-account-menu-list">
                     <template v-slot:activator="{ props }">
-                        <v-card color="#1C1929" theme="dark" class="ml-auto mr-2" style="width: 200px;">
-                            <v-list-item class="sport-item" v-bind="props" append-icon="mdi-chevron-down"
-                                value="account menu">
+                        <v-card color="#1C1929" theme="dark" class="ml-auto mr-2 m-account-menu-card">
+                            <v-list-item v-bind="props"
+                                :append-icon="accountMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'" value="account menu">
                                 <v-list-item-title class="ml-3 text-800-12 white">{{ selectedMenuItem }}</v-list-item-title>
                             </v-list-item>
                         </v-card>
                     </template>
-                    <v-list theme="dark" bg-color="#211F31">
-                        <v-list-item v-for="(item, i) in menuList" :key="i" :value="item" class="sport-item"
-                            @click="handleDropdown(item, i)">
-                            <v-list-item-title class="text-center">{{ item }}</v-list-item-title>
+                    <v-list theme="dark" bg-color="#29253C">
+                        <v-list-item v-for="(item, i) in menuList" :key="i" :value="item" @click="handleDropdown(item, i)">
+                            <v-list-item-title class="text-center text-600-14 gray">{{ item }}</v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -164,7 +179,7 @@ onMounted(() => {
             <MSuspendAccount v-if="activeMenuIndex == 4" />
         </div>
     </div>
-    <div class="mx-2 mt-10">
+    <div class="mx-2 pt-10">
         <GameProviders />
     </div>
 </template>
@@ -189,9 +204,35 @@ onMounted(() => {
 
 .m-account-container {
     background: #211F31;
-    margin: -20px 0px;
+    margin: -40px 0px;
     padding-bottom: 20px;
     border-radius: 8px;
+}
+
+.m-account-menu-card {
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+
+    .v-list-item__append>.v-icon {
+        font-size: 18px;
+        margin-inline-start: 0px !important;
+    }
+
+}
+
+.m-account-menu-list .v-overlay__content::after {
+    content: "";
+    position: absolute;
+    align-self: center;
+    top: -25px;
+    left: 50%;
+    border: 15px solid #29253C;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-width: 8px;
+    border-left-width: 8px;
 }
 
 

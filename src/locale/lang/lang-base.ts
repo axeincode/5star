@@ -446,6 +446,7 @@ export type langType = {
       phone_text: string
       current_pwd_text: string
     }
+    back_text: string
     edit_text: string
     save_text: string
     exist_validation_text: string
