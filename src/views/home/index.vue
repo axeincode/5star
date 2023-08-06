@@ -508,7 +508,7 @@ export default Dashboard;
   <div class="mx-2 home-body" :class="mobileWidth > 600 ? 'my-4' : 'my-2'">
     <!-- image carousel -->
 
-    <v-carousel cycle interval="6000" height="225" hide-delimiter-background :hide-delimiters="slides.length <= 1"
+    <v-carousel cycle interval="6000" height="247" hide-delimiter-background :hide-delimiters="slides.length <= 1"
       show-arrows="hover">
 
       <!-- prev, next button hide when slides array length is less than 2 -->
@@ -529,7 +529,7 @@ export default Dashboard;
             <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="4" lg="4" xl="4"
               :class="mobileWidth < 600 ? 'px-0' : ''">
               <img :src="slide[index]" class="slider-img-width"
-                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''" />
+                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"/>
             </v-col>
           </v-row>
         </v-sheet>
@@ -849,7 +849,7 @@ export default Dashboard;
 
 .slider-img-width {
   width: 100%;
-  height: 200px;
+  height: 225px;
 }
 
 .v-field {

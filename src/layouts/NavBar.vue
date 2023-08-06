@@ -293,7 +293,6 @@ onMounted(() => {
         display: block;
         background: #211F31;
         border-radius: 20px !important;
-        box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
         cursor: pointer;
         transition: 0.3s;
 
@@ -492,7 +491,6 @@ onMounted(() => {
         display: block;
         background: #211F31;
         border-radius: 20px !important;
-        box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
         cursor: pointer;
         transition: 0.3s;
 

@@ -28,11 +28,11 @@ const handleLoginBonus = (day: number) => {
         </v-btn>
         <img src="@/assets/vip/image/img_agent_02.png" class="m-login-bonus-agent-img" />
         <div class="m-login-bonus-body">
-            <div class="mt-4 text-center">
+            <div class="mt-2 text-center">
                 <Font class="color-F9BC01 text-900-18">{{ vipGrade }}</Font>
                 <Font class="text-900-18 white">&nbsp;{{ t('vip.login_bonus.title_text') }}</Font>
             </div>
-            <v-row class="mt-3 mx-2">
+            <v-row class="mt-2 mx-2">
                 <v-col cols="4" class="pa-0 d-flex justify-center">
                     <div class="m-login-bonus-card-checkout-bg relative" v-if="loginBonusItem.signin_day >= 1">
                         <p class="text-900-14 gray login-bonus-text-position">{{ t('vip.login_bonus.day_1_text') }}</p>
@@ -167,20 +167,20 @@ const handleLoginBonus = (day: number) => {
                     </div>
                 </v-col>
             </v-row>
-            <v-row class="mt-8 mx-1 align-center">
+            <v-row class="mt-7 mx-1 align-center">
                 <v-col cols="2" class="pa-0 ma-0">
                     <v-btn class="m-left-login-bonus-button" icon="true" height="30" width="30">
                         <v-icon color="#FFFFFF">mdi-chevron-left</v-icon>
                     </v-btn>
                 </v-col>
                 <v-col cols="8" class="pa-0 ma-0">
-                    <p class="text-center">
+                    <p class="text-center" style="line-height: normal;">
                         <Font class="text-900-10 white">{{ t('vip.login_bonus.footer_text_1') }}</Font>
                         <Font class="text-900-10 purple">R$20 </Font>
                         <Font class="text-900-10 white">{{ t('vip.login_bonus.footer_text_2') }}</Font>
                         <Font class="text-900-10 purple">{{ t('vip.login_bonus.footer_text_3') }}</Font>
                     </p>
-                    <p class="text-center">
+                    <p class="text-center" style="line-height: normal;">
                         <Font class="text-900-10 white">{{ t('vip.login_bonus.footer_text_4') }}</Font>
                     </p>
                 </v-col>
@@ -196,7 +196,8 @@ const handleLoginBonus = (day: number) => {
 
 <style lang="scss">
 .m-login-bonus-dialog-container {
-    height: 512px;
+    width: 340px;
+    height: 494px;
     border-radius: 16px;
     background: #29263C;
     position: relative;
@@ -229,7 +230,7 @@ const handleLoginBonus = (day: number) => {
     left: 50%;
     transform: translateX(-50%);
     width: 320px;
-    height: 432px;
+    height: 422px;
     border-radius: 14px;
     background: #211F31;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;

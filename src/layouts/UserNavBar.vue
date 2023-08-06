@@ -306,7 +306,7 @@ watch(mobileWidth, (newValue: number) => {
             </v-list-item>
             <v-list-item class="m-user-item">
                 <v-list-item-title>
-                    <div class="d-flex justify-center align-center m-sign-out-btn" v-ripple.center @click="showSignoutDialog">
+                    <div class="d-flex justify-center align-center m-sign-out-btn text-400-12" v-ripple.center @click="showSignoutDialog">
                         <img src="@/assets/public/svg/icon_public_70.svg" class="mr-4" width="20"/>
                         {{ t('appBar.sign_out') }}
                     </div>

@@ -399,5 +399,12 @@ onMounted(() => {
     opacity: 0 !important;
     background: transparent !important;
   }
+
+}
+
+@media(max-width: 388px) {
+  .v-dialog>.v-overlay__content {
+    max-width: unset !important;
+  }
 }
 </style>
