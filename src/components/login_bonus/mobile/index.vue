@@ -7,7 +7,7 @@ const { t } = useI18n();
 
 const vipGrade = ref("VIP1");
 const loginBonusItem = ref({
-    award: [8, 10, 12, 14, 16, 18, 20], // reward list
+    award: [8, 10, 12, 14, 16, 18, 20, 22], // reward list
     signin_day: 0, // The number of days that have been signed in
     is_signin: true, // You can sign in today
 })
@@ -26,7 +26,7 @@ const handleLoginBonus = (day: number) => {
             width="32">
             <img src="@/assets/public/svg/icon_public_52.svg" width="20" />
         </v-btn>
-        <img src="@/assets/affiliate/invite/image/img_agent_02.png" class="m-login-bonus-agent-img" />
+        <img src="@/assets/vip/image/img_agent_02.png" class="m-login-bonus-agent-img" />
         <div class="m-login-bonus-body">
             <div class="mt-4 text-center">
                 <Font class="color-F9BC01 text-900-18">{{ vipGrade }}</Font>
@@ -127,27 +127,42 @@ const handleLoginBonus = (day: number) => {
                 </v-col>
             </v-row>
             <v-row class="mt-6 mx-2">
-                <v-col cols="12" class="pa-0 d-flex justify-center">
-                    <div class="m-login-bonus-card-checkout-bg-1 relative" v-if="loginBonusItem.signin_day >= 7">
+                <v-col cols="4" class="pa-0 d-flex justify-center">
+                    <div class="m-login-bonus-card-checkout-bg relative" v-if="loginBonusItem.signin_day >= 7">
+                        <p class="text-900-14 gray m-login-bonus-text-position">{{ t('vip.login_bonus.day_7_text') }}</p>
+                        <img src="@/assets/public/svg/icon_public_18.svg" class="m-login-bonus-card-cash-position"
+                            width="32" />
+                        <p class="text-900-14 gray m-login-bonus-card-money-position">$ {{ loginBonusItem.award[6] }}</p>
+                    </div>
+                    <div class="m-login-bonus-card-bg-4 relative" v-ripple.center v-else @click="handleLoginBonus(7)">
+                        <img src="@/assets/vip/image/img_vip_32.png" class="m-login-bonus-sunshine-img"
+                            v-if="loginBonusItem.signin_day + 1 == 7" />
+                        <p class="text-900-14 white m-login-bonus-text-position">{{ t('vip.login_bonus.day_7_text') }}</p>
+                        <img src="@/assets/vip/image/img_vip_26.png" class="m-login-bonus-card-cash-position" width="59" />
+                        <p class="text-900-14 white m-login-bonus-card-money-position">$ {{ loginBonusItem.award[6] }}</p>
+                    </div>
+                </v-col>
+                <v-col cols="8" class="pa-0 d-flex justify-center">
+                    <div class="m-login-bonus-card-checkout-bg-1 relative" v-if="loginBonusItem.signin_day >= 8">
                         <p class="text-900-14 gray m-login-bonus-text-position-1">
-                            {{ t('vip.login_bonus.day_7_text') }}
+                            {{ t('vip.login_bonus.day_8_text') }}
                         </p>
                         <p class="text-900-14 gray mt-2 m-login-bonus-card-money-position-1">
-                            $ {{ loginBonusItem.award[6] }}
+                            $ {{ loginBonusItem.award[7] }}
                         </p>
                         <img src="@/assets/public/svg/icon_public_18.svg" class="m-login-bonus-card-cash-position"
                             width="32" />
                     </div>
-                    <div class="m-login-bonus-card-bg-5 relative" v-ripple.center v-else @click="handleLoginBonus(7)">
+                    <div class="m-login-bonus-card-bg-5 relative" v-ripple.center v-else @click="handleLoginBonus(8)">
                         <img src="@/assets/vip/image/img_vip_32.png" class="m-login-bonus-sunshine-img"
-                            v-if="loginBonusItem.signin_day + 1 == 7" />
+                            v-if="loginBonusItem.signin_day + 1 == 8" />
                         <p class="text-900-14 white m-login-bonus-text-position-1">
-                            {{ t('vip.login_bonus.day_7_text') }}
+                            {{ t('vip.login_bonus.day_8_text') }}
                         </p>
                         <p class="text-900-14 white mt-2 m-login-bonus-card-money-position-1">
-                            $ {{ loginBonusItem.award[6] }}
+                            $ {{ loginBonusItem.award[7] }}
                         </p>
-                        <img src="@/assets/vip/image/img_vip_27.png" width="181" height="96"
+                        <img src="@/assets/vip/image/img_vip_27.png" width="131" height="71"
                             class="m-login-bonus-card-cash-position-1" />
                     </div>
                 </v-col>
@@ -160,13 +175,13 @@ const handleLoginBonus = (day: number) => {
                 </v-col>
                 <v-col cols="8" class="pa-0 ma-0">
                     <p class="text-center">
-                        <Font class="text-800-10 white">{{ t('vip.login_bonus.footer_text_1') }}</Font>
-                        <Font class="text-800-10 purple">R$20 </Font>
-                        <Font class="text-800-10 white">{{ t('vip.login_bonus.footer_text_2') }}</Font>
-                        <Font class="text-800-10 purple">{{ t('vip.login_bonus.footer_text_3') }}</Font>
+                        <Font class="text-900-10 white">{{ t('vip.login_bonus.footer_text_1') }}</Font>
+                        <Font class="text-900-10 purple">R$20 </Font>
+                        <Font class="text-900-10 white">{{ t('vip.login_bonus.footer_text_2') }}</Font>
+                        <Font class="text-900-10 purple">{{ t('vip.login_bonus.footer_text_3') }}</Font>
                     </p>
                     <p class="text-center">
-                        <Font class="text-800-10 white">{{ t('vip.login_bonus.footer_text_4') }}</Font>
+                        <Font class="text-900-10 white">{{ t('vip.login_bonus.footer_text_4') }}</Font>
                     </p>
                 </v-col>
                 <v-col cols="2" class="pa-0 ma-0 text-right">
@@ -202,10 +217,10 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-agent-img {
     position: absolute;
-    top: -100px;
+    top: -72px;
     left: 50%;
     transform: translateX(-50%);
-    width: 240px;
+    width: 297px;
 }
 
 .m-login-bonus-body {
@@ -232,8 +247,8 @@ const handleLoginBonus = (day: number) => {
 }
 
 .m-login-bonus-card-checkout-bg-1 {
-    width: 296px;
-    height: 110px;
+    width: 195px;
+    height: 115px;
     border-radius: 6px;
     background: #29263C;
 
@@ -311,8 +326,8 @@ const handleLoginBonus = (day: number) => {
 }
 
 .m-login-bonus-card-bg-5 {
-    width: 296px;
-    height: 110px;
+    width: 195px;
+    height: 115px;
     border-radius: 6px;
     background: linear-gradient(180deg, #9419F0 0%, #275798 100%);
     cursor: pointer;
@@ -329,7 +344,7 @@ const handleLoginBonus = (day: number) => {
 .m-login-bonus-text-position-1 {
     position: absolute;
     top: 26px;
-    left: 30px;
+    left: 20px;
 }
 
 .m-login-bonus-card-cash-position {
@@ -355,13 +370,16 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-money-position-1 {
     position: absolute;
-    top: 48px;
-    left: 30px;
+    top: 40px;
+    left: 20px;
 }
 
 .m-left-login-bonus-button {
     background: #211F31;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+    .v-btn__content {
+        font-size: 16px;
+    }
 }
 </style>

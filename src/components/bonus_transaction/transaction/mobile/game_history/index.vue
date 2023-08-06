@@ -109,7 +109,7 @@ const mobileWidth = computed(() => {
                 <tr v-for="(item, index) in formsList" :key="index">
                     <td>{{ item.game }}</td>
                     <td>{{ item.date }}</td>
-                    <td class="d-flex align-center justify-center" style="width: 130px;">
+                    <td class="d-flex align-center justify-center" style="min-width: 130px;">
                         <div style="width: 16px; height: 16px; background: #414968; border-radius: 20px;">
                             <el-tooltip placement="top" effect="customized">
                                 <template #content>
@@ -130,7 +130,7 @@ const mobileWidth = computed(() => {
                     <td>{{ item.multilier }}</td>
                     <td>{{ item.betId }}</td>
                     <td>{{ item.status }}</td>
-                    <td :class="item.status == 'win' ? 'color-01983A' : 'color-D42763'">
+                    <td :class="item.status == 'win' ? 'color-01983A' : 'color-D42763'" style="min-width: 130px;">
                         {{ item.profit }}
                     </td>
                 </tr>

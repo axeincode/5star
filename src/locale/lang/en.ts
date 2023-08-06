@@ -348,6 +348,7 @@ export const lang: langType = {
       }
     },
     statistics: {
+      receive_btn_text: "Receive",
       total_profit_text: "TOTAL PROFIT",
       mobile_profit_title: "PREMIUMS ISSUED SO FAR",
       text_1: "You receive a commission for every bet you invite users to make, win or lose.",
@@ -611,7 +612,8 @@ export const lang: langType = {
       day_4_text: "DAY 4",
       day_5_text: "DAY 5",
       day_6_text: "DAY 6",
-      day_7_text: "DAY 7",      
+      day_7_text: "DAY 7",
+      day_8_text: "DAY ∞ ",
       footer_text_1: "If you recharge ",
       footer_text_2: "within ",
       footer_text_3: "7 days",

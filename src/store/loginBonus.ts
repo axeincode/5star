@@ -16,6 +16,7 @@ export const loginBonusStore = defineStore({
   },
   actions: {
     setLoginBonusDialogVisible(loginBonusDialogVisible: boolean) {
+      console.log(loginBonusDialogVisible)
       this.loginBonusDialogVisible = loginBonusDialogVisible;
     },
     setRouletteBonusDialogVisible(rouletteBonusDialogVisible: boolean) {

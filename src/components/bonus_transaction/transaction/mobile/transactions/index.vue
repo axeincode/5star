@@ -87,42 +87,43 @@ const mobileWidth = computed(() => {
 })
 </script>
 <template>
-    <v-row class="mx-2 mt-4">
-        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header height="600px">
+    <v-row class="mx-2 mt-1 m-forms-bonus-table">
+        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="600px">
             <thead class="forms-table-header">
                 <tr>
-                    <th class="forms-table-header-text" style="border-radius: 8px 0px 0px 8px;">
+                    <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">
                         {{ t('transaction.transactions.date') }}
                     </th>
-                    <th class="forms-table-header-text">
+                    <th class="text-700-12 black text-center" style="width: 130px;">
                         <div class="forms-table-border">{{ t('transaction.transactions.amount') }}</div>
                     </th>
-                    <th class="forms-table-header-text">
+                    <th class="text-700-12 black text-center">
                         <div>{{ t('transaction.transactions.type') }}</div>
                     </th>
-                    <th class="forms-table-header-text">
+                    <th class="text-700-12 black text-center">
                         <div class="forms-table-border">{{ t('transaction.transactions.id') }}</div>
                     </th>
-                    <th class="forms-table-header-text">
+                    <th class="text-700-12 black text-center">
                         <div class="forms-table-border-right">
                             {{ t('transaction.transactions.note') }}
                         </div>
                     </th>
-                    <th class="forms-table-header-text" style="border-radius: 0px 8px 8px 0px;">
+                    <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px;">
                         {{ t('transaction.transactions.balance') }}
                     </th>
                 </tr>
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-14">{{ item.date }}</td>
-                    <td class="text-400-14"
+                    <td class="text-400-10">{{ item.date }}</td>
+                    <td class="text-400-10" style="min-width: 160px;"
                         :class="item.type != 'Game Bet' && item.type != 'Withdrawal PIX' ? 'color-01983A' : 'color-D42763'">
-                        {{ item.amount }}</td>
-                    <td class="text-400-14">{{ item.type }}</td>
-                    <td class="text-400-14">{{ item.id }}</td>
-                    <td class="text-400-14">{{ item.note }}</td>
-                    <td class="text-400-14">{{ item.balance }}</td>
+                        {{ item.amount }}
+                    </td>
+                    <td class="text-400-10">{{ item.type }}</td>
+                    <td class="text-400-10" style="min-width: 160px;">{{ item.id }}</td>
+                    <td class="text-400-10">{{ item.note }}</td>
+                    <td class="text-400-10" style="min-width: 130px;">{{ item.balance }}</td>
                 </tr>
             </tbody>
         </v-table>
@@ -132,49 +133,47 @@ const mobileWidth = computed(() => {
     </v-row>
 </template>
 <style lang="scss">
-.forms-bonus-table-bg {
+.m-forms-bonus-table-bg {
     background: #1C1929 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 12px !important;
     width: 100% !important;
 }
 
-.v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>td,
-.v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>th {
-    border-bottom: 1px solid #414968;
-}
+.m-forms-bonus-table {
 
-.v-table.v-table--fixed-header>.v-table__wrapper>table>thead>tr>th {
-    background: #414968;
-}
+    .v-table.v-table--fixed-header>.v-table__wrapper>table>thead>tr>th {
+        background: #414968;
+        height: 46px !important;
+    }
 
-.forms-table-header {
-    border-radius: 8px !important;
-}
+    .v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>td,
+    .v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>th {
+        border-bottom: 1px solid #414968;
+    }
 
-.forms-table-body {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    color: #FFFFFF;
-    text-align: center;
-}
+    .forms-table-header {
+        border-radius: 8px !important;
+    }
 
-.forms-table-header-text {
-    font-weight: 700 !important;
-    font-size: 16px !important;
-    text-align: center !important;
-    color: #000000 !important;
-}
+    .forms-table-body {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #FFFFFF;
+        text-align: center;
+    }
 
-.forms-table-border {
-    padding: 0px 20px;
-    border-left: 1px solid #000000 !important;
-    border-right: 1px solid #000000 !important;
-}
+    .forms-table-border {
+        padding: 0px 20px;
+        border-left: 1px solid #000000 !important;
+        border-right: 1px solid #000000 !important;
+    }
 
-.forms-table-border-right {
-    padding-right: 20px;
-    border-right: 1px solid #000000 !important;
+    .forms-table-border-right {
+        padding-right: 20px;
+        border-right: 1px solid #000000 !important;
+    }
+
 }
 </style>

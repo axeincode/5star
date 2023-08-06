@@ -346,6 +346,7 @@ export type langType = {
       }
     },
     statistics: {
+      receive_btn_text: string
       total_profit_text: string
       mobile_profit_title: string
       text_1: string
@@ -610,6 +611,7 @@ export type langType = {
       day_5_text: string
       day_6_text: string
       day_7_text: string
+      day_8_text: string
       footer_text_1: string
       footer_text_2: string
       footer_text_3: string

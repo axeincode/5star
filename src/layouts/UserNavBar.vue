@@ -150,51 +150,54 @@ watch(mobileWidth, (newValue: number) => {
 </script>
 
 <template>
-    <v-navigation-drawer temporary class="nav-background py-14" location="right" width="320" v-model="drawer">
+    <v-navigation-drawer temporary class="nav-background py-14" location="right" width="269" v-model="drawer">
         <template v-slot:prepend>
             <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
         </template>
         <v-list density="compact" nav>
-            <v-list-item class="user-item" value="id">
+            <v-list-item class="m-user-item" value="id">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_58.svg" />
+                    <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
                 </template>
-                <v-list-item-title class="ml-2">{{ t('appBar.id') }}: {{ user.id }}</v-list-item-title>
+                <v-list-item-title class="ml-2 text-600-10">{{ t('appBar.id') }}: {{ user.id }}</v-list-item-title>
                 <template v-slot:append>
-                    <img src="@/assets/public/svg/icon_public_71.svg" v-ripple.center class="ml-6" />
+                    <div style="width: 22px; height: 22px; border-radius: 4px; background: #353652;" class="relative">
+                        <img src="@/assets/public/svg/icon_public_71.svg" width="16"
+                            style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" />
+                    </div>
                 </template>
             </v-list-item>
-            <v-list-item class="user-item" value="vip">
+            <v-list-item class="m-user-item" value="vip">
                 <template v-slot:prepend>
                     <div>
-                        <div style="height: 40px;">
-                            <img src="@/assets/app_bar/image/img_vip_02.png" />
+                        <div style="height: 30px;">
+                            <img src="@/assets/app_bar/image/img_vip_02.png" width="22" />
                         </div>
-                        <div class="text-800-14 color-F9BC01">{{ user.grade }}</div>
+                        <div class="text-800-10 color-F9BC01">{{ user.grade }}</div>
                     </div>
                 </template>
                 <v-list-item-title class="ml-2">
                     <div class="deposit-progress-bg">
                         <div class="d-flex">
-                            <div class="white text-700-12">{{ t('appBar.deposit') }}</div>
-                            <div class="ml-auto">
+                            <div class="white text-500-8">{{ t('appBar.deposit') }}</div>
+                            <div class="ml-auto text-800-8">
                                 <Font>R$ 5642</Font> / <Font color="#F9BC01">R$ 10000</Font>
                             </div>
                         </div>
                         <div>
-                            <v-progress-linear v-model="depositRate" height="18" class="deposit-progress">
+                            <v-progress-linear v-model="depositRate" height="8" class="deposit-progress">
                             </v-progress-linear>
                         </div>
                     </div>
                     <div class="deposit-progress-bg">
                         <div class="d-flex">
-                            <div class="white text-700-12">{{ t('appBar.wager') }}</div>
-                            <div class="ml-auto">
+                            <div class="white text-500-8">{{ t('appBar.wager') }}</div>
+                            <div class="ml-auto text-800-8">
                                 <Font>R$ 5642</Font> / <Font color="#623AEC">R$ 10000</Font>
                             </div>
                         </div>
                         <div>
-                            <v-progress-linear v-model="depositRate" height="18" class="wager-progress">
+                            <v-progress-linear v-model="depositRate" height="8" class="wager-progress">
                             </v-progress-linear>
                         </div>
                     </div>
@@ -218,92 +221,93 @@ watch(mobileWidth, (newValue: number) => {
                     <img src="@/assets/public/image/img_public_05.svg" v-ripple.center class="ml-1" />
                 </template> -->
             </v-list-item>
-            <v-list-item class="user-item" value="account" @click="goAccountPage">
+            <v-list-item class="m-user-item" value="account" @click="goAccountPage">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_59.svg" />
+                    <img src="@/assets/public/svg/icon_public_59.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.account') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="deposit" @click="depositDialogShow">
+            <v-list-item class="m-user-item" value="deposit" @click="depositDialogShow">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_60.svg" />
+                    <img src="@/assets/public/svg/icon_public_60.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.deposit') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="bonuses" @click="goBonusPage">
+            <v-list-item class="m-user-item" value="bonuses" @click="goBonusPage">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_61.svg" />
+                    <img src="@/assets/public/svg/icon_public_61.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.bonuses') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="game_history" @click="goGameHistoryPage">
+            <v-list-item class="m-user-item" value="game_history" @click="goGameHistoryPage">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_62.svg" />
+                    <img src="@/assets/public/svg/icon_public_62.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.game_history') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="transactions" @click="goTransactionPage">
+            <v-list-item class="m-user-item" value="transactions" @click="goTransactionPage">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_63.svg" />
+                    <img src="@/assets/public/svg/icon_public_63.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.transactions') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item refer-friend-background" height="48" value="refer_friend"
+            <v-list-item class="m-user-item refer-friend-background" height="36" value="refer_friend"
                 @click="refferalDialogShow">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_64.svg" />
+                    <img src="@/assets/public/svg/icon_public_64.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.refer_friend') }}</v-list-item-title>
                 <template v-slot:append>
                     <img src="@/assets/public/image/img_public_09.png" v-ripple.center
-                        class="ml-6 refer-friend-img-position" width="64" />
-                    <p class="refer-friend-text-position">{{ t('appBar.earn_money') }}</p>
+                        class="ml-6 m-refer-friend-img-position" width="43" />
+                    <p class="m-refer-friend-text-position">{{ t('appBar.earn_money') }}</p>
                 </template>
             </v-list-item>
-            <v-list-item class="user-item" value="withdraw" @click="withdrawDialogShow">
+            <v-list-item class="m-user-item" value="withdraw" @click="withdrawDialogShow">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_65.svg" />
+                    <img src="@/assets/public/svg/icon_public_65.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.withdraw') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item app-background" value="app" height="48">
+            <v-list-item class="m-user-item app-background" value="app" height="36">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_66.svg" />
+                    <img src="@/assets/public/svg/icon_public_66.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.app') }}</v-list-item-title>
                 <template v-slot:append>
-                    <img src="@/assets/public/image/img_public_04.png" v-ripple.center class="ml-6 app-img-position" />
-                    <p class="app-text-position">{{ t('appBar.install') }}</p>
+                    <img src="@/assets/public/image/img_public_04.png" v-ripple.center class="ml-6 m-app-img-position"
+                        width="73" />
+                    <p class="m-app-text-position">{{ t('appBar.install') }}</p>
                 </template>
             </v-list-item>
-            <v-list-item class="user-item" value="fairness">
+            <v-list-item class="m-user-item" value="fairness">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_72.svg" />
+                    <img src="@/assets/public/svg/icon_public_72.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.fairness') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="rewards">
+            <v-list-item class="m-user-item" value="rewards">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_67.svg" />
+                    <img src="@/assets/public/svg/icon_public_67.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.rewards') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="preferences">
+            <v-list-item class="m-user-item" value="preferences">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_68.svg" />
+                    <img src="@/assets/public/svg/icon_public_68.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.preferences') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item" value="statistics">
+            <v-list-item class="m-user-item" value="statistics">
                 <template v-slot:prepend>
-                    <img src="@/assets/public/svg/icon_public_69.svg" />
+                    <img src="@/assets/public/svg/icon_public_69.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.statistics') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="user-item">
+            <v-list-item class="m-user-item">
                 <v-list-item-title>
-                    <div class="d-flex justify-center align-center sign-out-btn" v-ripple.center @click="showSignoutDialog">
-                        <img src="@/assets/public/svg/icon_public_70.svg" class="mr-4" />
+                    <div class="d-flex justify-center align-center m-sign-out-btn" v-ripple.center @click="showSignoutDialog">
+                        <img src="@/assets/public/svg/icon_public_70.svg" class="mr-4" width="20"/>
                         {{ t('appBar.sign_out') }}
                     </div>
                 </v-list-item-title>
@@ -321,6 +325,32 @@ watch(mobileWidth, (newValue: number) => {
     top: 0px !important;
     height: 100% !important;
     will-change: auto !important;
+}
+
+@media(max-width: 600px) {
+    .v-list-item--density-compact.v-list-item--one-line {
+        min-height: 32px;
+    }
+}
+
+.m-sign-out-btn {
+  cursor: pointer;
+  background: #353652;
+  border-radius: 20px;
+  padding: 6px;
+  margin: 0px 40px;
+}
+
+.m-refer-friend-img-position {
+    position: absolute;
+    right: 26px;
+    top: -15px;
+}
+
+.m-app-img-position {
+    position: absolute;
+    right: 9px;
+    top: -15px;
 }
 
 .pb-20 {
@@ -351,30 +381,38 @@ watch(mobileWidth, (newValue: number) => {
     height: 68px !important;
 }
 
-.user-item {
+.m-user-item {
     padding: 4px 8px !important;
     border-radius: 12px !important;
 
     .v-list-item-title {
-        font-weight: 700;
-        font-size: 14px;
+        font-weight: 600;
+        font-size: 10px;
         color: #7782aa;
     }
 }
 
-.refer-friend-text-position {
+.m-refer-friend-text-position {
     position: absolute;
-    right: 9px;
-    top: 20px;
+    right: 17px;
+    top: 16px;
     background: #211F31;
     border-radius: 20px;
-    padding: 4px 6px;
+    padding: 2px 6px;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 10px;
     color: #FFFFFF !important;
 }
 
-.app-text-position {
+.m-app-text-position {
+    position: absolute;
+    right: 13px;
+    top: 17px;
+    background: #211F31;
+    border-radius: 20px;
+    padding: 2px 17px;
+    font-weight: 500;
+    font-size: 10px;
     color: #FFFFFF !important;
 }
 

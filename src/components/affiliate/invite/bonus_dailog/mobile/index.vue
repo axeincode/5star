@@ -7,10 +7,11 @@ const emit = defineEmits<{ (e: 'close'): void }>()
 </script>
 <template>
     <div class="m-bonus-dialog-container">
-        <v-btn class="close-button" icon="true" @click="emit('close')">
-            <v-icon color="#FFFFFF">
+        <v-btn class="close-button" icon="true" @click="emit('close')" width="30" height="30">
+            <img src="@/assets/public/svg/icon_public_10.svg"/>
+            <!-- <v-icon color="#FFFFFF">
                 mdi-close
-            </v-icon>
+            </v-icon> -->
         </v-btn>
         <v-row class="justify-center mt-5 m-bonus-dialog-header-title">
             {{ t('affiliate.invite.achivement_bonus') }}
@@ -18,7 +19,7 @@ const emit = defineEmits<{ (e: 'close'): void }>()
         <div class="mt-4">
             <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%;" />
         </div>
-        <div class="mt-4 text-center mx-6 m-bonus-dialog-text-1">
+        <div class="mt-2 text-center mx-4 m-bonus-dialog-text-1">
             {{ t('affiliate.invite.bonus_dialog.text_1') }}
         </div>
         <v-row class="mt-1">
@@ -29,7 +30,7 @@ const emit = defineEmits<{ (e: 'close'): void }>()
                 <div class="m-bonus-dialog-text-2 pt-4 text-center">{{ t('affiliate.invite.bonus_dialog.text_3') }}</div>
             </v-col>
         </v-row>
-        <v-row class="justify-center">
+        <v-row class="justify-center mt-1">
             <div class="m-bonus-dialog-card relative d-flex align-center" style="background: #E3E0D9;">
                 <v-row>
                     <v-col cols="6" class="text-center">

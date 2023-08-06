@@ -55,7 +55,7 @@ onMounted(() => {
         <v-slide-group-item v-for="(item, index) in transactionTabs" :key="index" v-slot="{ isSelected, toggle }"
             :value="item">
             <v-btn class="ma-2 text-none transaction-tab-btn" :class="isSelected ? 'white' : 'text-gray'" rounded
-                :color="isSelected ? '#29253C' : 'transparent'" @click="toggle" :width="mobileWidth < 600 ? 120 : 150">
+                :color="isSelected ? '#29253C' : 'transparent'" @click="toggle" :width="mobileWidth < 600 ? 106 : 150">
                 {{ item }}
             </v-btn>
         </v-slide-group-item>
@@ -66,13 +66,16 @@ onMounted(() => {
             <MGameHistory v-else />
         </v-window-item>
         <v-window-item :value="t('transaction.tab.transactions')">
-            <Transactions />
+            <Transactions v-if="mobileWidth > 600" />
+            <MTransactions v-else />
         </v-window-item>
         <v-window-item :value="t('transaction.tab.deposit')">
-            <Deposit />
+            <Deposit v-if="mobileWidth > 600" />
+            <MDeposit v-else />
         </v-window-item>
         <v-window-item :value="t('transaction.tab.withdrawal')">
-            <Withdrawal />
+            <Withdrawal v-if="mobileWidth > 600" />
+            <MWithdrawal v-else />
         </v-window-item>
     </v-window>
 </template>

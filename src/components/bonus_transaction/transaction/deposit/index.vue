@@ -82,7 +82,7 @@ const mobileWidth = computed(() => {
                         <div class="forms-table-border">{{ t('transaction.transactions.id') }}</div>
                     </th>
                     <th class="forms-table-header-text">
-                        <div>{{ t('transaction.transactions.type') }}</div>
+                        <div class="forms-table-border-right">{{ t('transaction.transactions.type') }}</div>
                     </th>
                     <th class="forms-table-header-text">
                         <div>{{ t('transaction.transactions.amount') }}</div>
@@ -97,12 +97,12 @@ const mobileWidth = computed(() => {
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-14">{{ item.date }}</td>
-                    <td class="text-400-14" >{{ item.id }}</td>
-                    <td class="text-400-14">{{ item.type }}</td>
-                    <td class="text-400-14 color-01983A">{{ item.amount }}</td>
-                    <td class="text-400-14" :class="item.status != 'Complete' ? 'color-01983A' : ''">{{ item.status }}</td>
-                    <td class="text-400-14">{{ item.note }}</td>
+                    <td class="text-400-14 text-center">{{ item.date }}</td>
+                    <td class="text-400-14 text-center" >{{ item.id }}</td>
+                    <td class="text-400-14 text-center">{{ item.type }}</td>
+                    <td class="text-400-14 color-01983A text-center">{{ item.amount }}</td>
+                    <td class="text-400-14 text-center" :class="item.status != 'Complete' ? 'color-01983A' : ''">{{ item.status }}</td>
+                    <td class="text-400-14 text-center">{{ item.note }}</td>
                 </tr>
             </tbody>
         </v-table>
@@ -150,6 +150,11 @@ const mobileWidth = computed(() => {
 .forms-table-border {
     padding: 0px 20px;
     border-left: 1px solid #000000 !important;
+    border-right: 1px solid #000000 !important;
+}
+
+.forms-table-border-right {
+    padding-right: 20px;
     border-right: 1px solid #000000 !important;
 }
 

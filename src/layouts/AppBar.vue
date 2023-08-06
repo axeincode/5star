@@ -1005,10 +1005,10 @@ onMounted(async () => {
 .refer-friend-text-position {
   position: absolute;
   right: 9px;
-  top: 20px;
+  top: 23px;
   background: #211F31;
   border-radius: 20px;
-  padding: 4px 6px;
+  padding: 2px 12px;
   font-weight: 500;
   font-size: 12px;
 }
@@ -1025,11 +1025,11 @@ onMounted(async () => {
 
 .app-text-position {
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 13px;
+  top: 22px;
   background: #211F31;
   border-radius: 20px;
-  padding: 4px 13px;
+  padding: 2px 21px;
   font-weight: 500;
   font-size: 12px;
 }

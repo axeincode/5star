@@ -729,20 +729,20 @@ export default Dashboard;
         <v-card color="#211F32" theme="dark" height="500" class="mt-4 mx-2" v-if="!historyToggleSwitch">
           <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
             <v-row class="mx-3 my-2 align-center">
-              <v-col cols="4" class="text-700-14 gray py-0">{{ t('home.rank_text') }}</v-col>
-              <v-col cols="4" class="text-700-14 gray py-0">
+              <v-col cols="3" class="text-700-14 gray py-0">{{ t('home.rank_text') }}</v-col>
+              <v-col cols="5" class="text-700-14 gray py-0">
                 <p class="ml-2">{{ t('home.player_text') }}</p>
               </v-col>
-              <v-col cols="4" class="text-700-14 gray text-center py-0">{{ t('home.profit_text') }}</v-col>
+              <v-col cols="4" class="text-700-14 gray py-0">{{ t('home.profit_text') }}</v-col>
             </v-row>
           </v-card>
           <div class="m-home-overflow-auto" ref="luckyContainer" style="overflow-y: auto;">
             <v-row v-for="(item, index) in luckyJackpotList" :key="index" class="mx-4 mt-2 align-center">
-              <v-col cols="4" class="py-1">
+              <v-col cols="3" class="py-1">
                 <img :src="item.rank" v-if="!isNumeric(item.rank)" width="22" />
                 <p class="text-500-14 gray text-center" style="width: 27px;" v-else>{{ item.rank }}</p>
               </v-col>
-              <v-col cols="4" class="d-flex align-center py-1">
+              <v-col cols="5" class="d-flex align-center py-1">
                 <img :src="item.player.image" width="40" />
                 <p class="text-500-14 gray">{{ item.player.name }}</p>
               </v-col>

@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue"
 import { appBarStore } from "@/store/appBar";
+import { refferalStore } from '@/store/refferal';
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import Invite from "@/components/affiliate/invite/index.vue";
+import MInvite from "@/components/affiliate/invite/mobile/index.vue";
 import Statistics from "@/components/affiliate/statistics/index.vue";
 import MStatistics from "@/components/affiliate/statistics/mobile/index.vue";
 import Forms from "@/components/affiliate/forms/index.vue";
@@ -19,6 +21,11 @@ const selectedTabIndex = ref<number>(0)
 const rightBarToggle = computed(() => {
     const { getRightBarToggle } = storeToRefs(appBarStore());
     return getRightBarToggle.value;
+})
+
+const refferalAppBarShow = computed(() => {
+    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+    return getRefferalAppBarShow.value;
 })
 
 const mobileWidth: any = computed(() => {
@@ -68,7 +75,7 @@ onMounted(() => {
 
 <template>
     <div :class="affiliateWidth">
-        <div class="affiliate-tabs">
+        <div :class="mobileWidth > 600 ? 'affiliate-tabs' : refferalAppBarShow ? 'm-affiliate-tabs' : 'm-affiliate-tabs-1'">
             <div class="affiliate-tab-body" v-if="mobileWidth > 600">
                 <p class="affiliate-tab-text" v-ripple.center @click="tabSelect(0)"
                     :class="[selectedTabIndex == 0 ? 'selected-tab-text' : '']">{{ t('affiliate.tab.text_1') }}</p>
@@ -95,7 +102,10 @@ onMounted(() => {
             </div>
         </div>
         <div class="affiliate-body">
-            <Invite v-if="selectedTabIndex == 0" />
+            <div v-if="selectedTabIndex == 0">
+                <Invite v-if="mobileWidth > 600" />
+                <MInvite v-else />
+            </div>
             <div v-if="selectedTabIndex == 1">
                 <Statistics v-if="mobileWidth > 600" />
                 <MStatistics v-else />
@@ -123,9 +133,10 @@ onMounted(() => {
 }
 
 .m-affiliate-container {
-    margin: -20px 0px;
+    margin: -60px 0px;
     background: #211F31;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 1px;
     border-radius: 8px;
 }
 
@@ -146,17 +157,67 @@ onMounted(() => {
         color: #7782AA;
     }
 
+    .affiliate-tab-text {
+        margin-right: 100px;
+        cursor: pointer;
+    }
+
+    .selected-tab-text {
+        font-weight: 700 !important;
+        color: #FFFFFF !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+}
+
+.m-affiliate-tabs {
+    padding-top: 50px;
+
     .m-affiliate-tab-body {
         display: flex;
         padding: 0px 60px;
         align-items: center;
         background: #29253C;
-        height: 54px;
-        margin: 0px 8px;
+        height: 48px;
+        margin: 0px 16px;
         box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-        border-radius: 8px;
+        border-radius: 12px;
         font-weight: 400;
-        font-size: 16px;
+        font-size: 12px;
+        color: #7782AA;
+    }
+
+    .affiliate-tab-text {
+        margin-right: 100px;
+        cursor: pointer;
+    }
+
+    .selected-tab-text {
+        font-weight: 700 !important;
+        color: #FFFFFF !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+}
+
+.m-affiliate-tabs-1 {
+    padding-top: 66px;
+
+    .m-affiliate-tab-body {
+        display: flex;
+        padding: 0px 60px;
+        align-items: center;
+        background: #29253C;
+        height: 48px;
+        margin: 0px 16px;
+        box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+        border-radius: 12px;
+        font-weight: 400;
+        font-size: 12px;
         color: #7782AA;
     }
 

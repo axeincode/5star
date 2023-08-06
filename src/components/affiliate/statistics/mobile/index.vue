@@ -13,50 +13,53 @@ const mobileWidth = computed(() => {
 })
 </script>
 <template>
-    <v-row class="mt-4 m-statistics-profit-text">
+    <v-row class="mt-4 m-statistics-profit-text justify-center">
         {{ t('affiliate.statistics.mobile_profit_title') }}
     </v-row>
     <v-card class="m-statistics-profit-card-body">
         <v-row class="justify-center">
             <v-col cols="12" class="text-center mt-4">
                 <v-row class="justify-center align-center">
-                    <v-col cols="6">
-                        <img src="@/assets/public/image/img_public_15.png" width="140" />
+                    <v-col cols="12">
+                        <img src="@/assets/public/image/img_public_15.png" width="143" />
                     </v-col>
-                    <v-col cols="6" class="text-justify">
+                    <v-col cols="12" class="py-0">
                         <p class="m-statistics-profit-cash-text">R$ 19,34</p>
                         <p class="m-statistics-profit-text pa-0 my-2">
                             {{ t('affiliate.statistics.total_profit_text') }}
                         </p>
+                        <v-btn class="button-bright text-none m-statistics-receive-btn" width="190" height="48">
+                            {{ t('affiliate.statistics.receive_btn_text') }}
+                        </v-btn>
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="12" class="text-center pt-0">
+            <v-col cols="12" class="text-center pt-0 justify-center">
                 <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                    <p class="m-statistics-profit-cash-text-1 mt-1">R$ 25.916</p>
+                    <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 25.916</p>
                     <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.invitation_bonus') }}</p>
                 </v-card>
                 <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                    <p class="m-statistics-profit-cash-text-1 mt-1">R$ 40.533,73</p>
+                    <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 40.533,73</p>
                     <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.betting_commision') }}</p>
                 </v-card>
                 <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                    <p class="m-statistics-profit-cash-text-1 mt-1">R$ 3.225</p>
+                    <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 3.225</p>
                     <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.achivement_bonus') }}</p>
                 </v-card>
                 <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                    <p class="m-statistics-profit-cash-text-1 mt-1">3972</p>
+                    <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">3972</p>
                     <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.deposit_user') }}</p>
                 </v-card>
                 <div class="px-10 mb-4">
-                    <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.text_1') }}</p>
-                    <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.text_2') }}</p>
-                    <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.text_3') }}</p>
+                    <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.text_1') }}</p>
+                    <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.text_2') }}</p>
+                    <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.text_3') }}</p>
                 </div>
             </v-col>
         </v-row>
     </v-card>
-    <v-tabs v-model="profitTab" bg-color="#211F31" class="mt-4 mx-6">
+    <v-tabs v-model="profitTab" bg-color="#211F31" class="mt-4 mx-6" style="height: 64px !impoartant;">
         <v-tab value="today" :class="[profitTab == 'today' ? 'm-statistics-tab-active' : 'm-statistics-tab']">
             {{ t('affiliate.statistics.tab.text_1') }}
         </v-tab>
@@ -71,14 +74,14 @@ const mobileWidth = computed(() => {
         <v-window-item value="today">
             <v-card class="m-statistics-profit-card-today">
                 <v-row class="justify-center">
-                    <v-col cols="12" class="text-center mt-4">
+                    <v-col cols="12" class="text-center mt-4 px-6 pb-0">
                         <v-row class="justify-center align-center">
                             <v-col cols="6">
-                                <img src="@/assets/public/image/img_public_16.png" width="140" />
+                                <img src="@/assets/public/image/img_public_16.png" width="119" />
                             </v-col>
-                            <v-col cols="6" class="text-justify">
-                                <p class="m-statistics-profit-cash-text">R$ 19,34</p>
-                                <p class="m-statistics-profit-text pa-0 my-2">
+                            <v-col cols="6" class="text-center">
+                                <p class="text-800-26 yellow">R$ 19,34</p>
+                                <p class="text-800-12 white pa-0 my-2">
                                     {{ t('affiliate.statistics.tab.today.profit_today_text') }}
                                 </p>
                             </v-col>
@@ -86,18 +89,18 @@ const mobileWidth = computed(() => {
                     </v-col>
                     <v-col cols="12" class="text-center pt-0">
                         <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                            <p class="m-statistics-profit-cash-text-1 mt-1">R$ 19,34</p>
+                            <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 19,34</p>
                             <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.betting_commision') }}</p>
                         </v-card>
                         <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                            <p class="m-statistics-profit-cash-text-1 mt-1">R$ 0</p>
+                            <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 0</p>
                             <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.invitation_bonus') }}</p>
                         </v-card>
                         <div class="px-10 mb-4">
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
                             <p class="m-statistics-text_1">{{ t('affiliate.statistics.tab.profit_tab_text_3') }}</p>
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
                             <p class="m-statistics-text_1">
                                 {{ t('affiliate.statistics.tab.profit_tab_text_5') }}<Font color="#F9BC01">$12</Font>
                             </p>
@@ -109,14 +112,14 @@ const mobileWidth = computed(() => {
         <v-window-item value="week">
             <v-card class="m-statistics-profit-card-week">
                 <v-row class="justify-center">
-                    <v-col cols="12" class="text-center mt-4">
+                    <v-col cols="12" class="text-center mt-4 px-6 pb-0">
                         <v-row class="justify-center align-center">
                             <v-col cols="6">
-                                <img src="@/assets/public/image/img_public_16.png" width="140" />
+                                <img src="@/assets/public/image/img_public_16.png" width="119" />
                             </v-col>
-                            <v-col cols="6" class="text-justify">
-                                <p class="m-statistics-profit-cash-text">R$ 19,34</p>
-                                <p class="m-statistics-profit-text pa-0 my-2">
+                            <v-col cols="6" class="text-center">
+                                <p class="text-800-26 yellow">R$ 19,34</p>
+                                <p class="text-800-12 white pa-0 my-2">
                                     {{ t('affiliate.statistics.tab.week.profit_this_week_text') }}
                                 </p>
                             </v-col>
@@ -124,18 +127,18 @@ const mobileWidth = computed(() => {
                     </v-col>
                     <v-col cols="12" class="text-center pt-0">
                         <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                            <p class="m-statistics-profit-cash-text-1 mt-1">R$ 19,34</p>
+                            <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 19,34</p>
                             <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.betting_commision') }}</p>
                         </v-card>
                         <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                            <p class="m-statistics-profit-cash-text-1 mt-1">R$ 0</p>
+                            <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 0</p>
                             <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.invitation_bonus') }}</p>
                         </v-card>
                         <div class="px-10 mb-4">
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
                             <p class="m-statistics-text_1">{{ t('affiliate.statistics.tab.profit_tab_text_3') }}</p>
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
                             <p class="m-statistics-text_1">
                                 {{ t('affiliate.statistics.tab.profit_tab_text_5') }}<Font color="#F9BC01">$12</Font>
                             </p>
@@ -147,14 +150,14 @@ const mobileWidth = computed(() => {
         <v-window-item value="month">
             <v-card class="m-statistics-profit-card-month">
                 <v-row class="justify-center">
-                    <v-col cols="12" class="text-center mt-4">
+                    <v-col cols="12" class="text-center mt-4 px-6 pb-0">
                         <v-row class="justify-center align-center">
                             <v-col cols="6">
-                                <img src="@/assets/public/image/img_public_16.png" width="140" />
+                                <img src="@/assets/public/image/img_public_16.png" width="119" />
                             </v-col>
-                            <v-col cols="6" class="text-justify">
-                                <p class="m-statistics-profit-cash-text">R$ 19,34</p>
-                                <p class="m-statistics-profit-text pa-0 my-2">
+                            <v-col cols="6" class="text-center">
+                                <p class="text-800-26 yellow">R$ 19,34</p>
+                                <p class="text-800-12 white pa-0 my-2">
                                     {{ t('affiliate.statistics.tab.month.profit_this_month_text') }}
                                 </p>
                             </v-col>
@@ -162,18 +165,18 @@ const mobileWidth = computed(() => {
                     </v-col>
                     <v-col cols="12" class="text-center pt-0">
                         <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                            <p class="m-statistics-profit-cash-text-1 mt-1">R$ 19,34</p>
+                            <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 19,34</p>
                             <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.betting_commision') }}</p>
                         </v-card>
                         <v-card theme="dark" color="#1C1929" class="ma-4 text-center m-statistics-card-border">
-                            <p class="m-statistics-profit-cash-text-1 mt-1">R$ 0</p>
+                            <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px;">R$ 0</p>
                             <p class="m-statistics-text-700 mb-1">{{ t('affiliate.invite.invitation_bonus') }}</p>
                         </v-card>
                         <div class="px-10 mb-4">
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
                             <p class="m-statistics-text_1">{{ t('affiliate.statistics.tab.profit_tab_text_3') }}</p>
-                            <p class="m-statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
+                            <p class="m-statistics-text_1 mt-4">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
                             <p class="m-statistics-text_1">
                                 {{ t('affiliate.statistics.tab.profit_tab_text_5') }}<Font color="#F9BC01">$12</Font>
                             </p>
@@ -186,21 +189,42 @@ const mobileWidth = computed(() => {
 </template>
 <style lang="scss">
 .m-statistics-text_1 {
-    font-weight: 700;
+    color: var(--white-bg, #FFF);
+    font-family: Inter;
     font-size: 12px;
-    color: #FFFFFF;
-    text-align: justify;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: left;
 }
 
 .m-statistics-profit-text {
-    padding: 0px 86px;
     font-weight: 800;
     font-size: 14px;
     color: #FFFFFF;
 }
 
 .m-statistics-card-border {
+    // width: 280px;
+    height: 70px;
+    flex-shrink: 0;
     border-radius: 30px;
+}
+
+.m-statistics-receive-btn {
+    border-radius: 9px;
+    background: var(--primary-button-32-cfec, #32CFEC);
+
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+    .v-btn__content {
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 }
 
 .m-statistics-profit-card-body {
@@ -211,7 +235,7 @@ const mobileWidth = computed(() => {
 
 .m-statistics-profit-cash-text {
     font-weight: 800;
-    font-size: 26px;
+    font-size: 28px;
     color: #F9BC01;
 }
 
@@ -227,6 +251,12 @@ const mobileWidth = computed(() => {
     color: #FFFFFF;
 }
 
+@media(max-width: 600px) {
+    .v-tabs--density-default {
+        --v-tabs-height: 64px;
+    }
+}
+
 .m-statistics-tab-active {
     width: 100px !important;
     background: #32CFEC !important;
@@ -234,8 +264,8 @@ const mobileWidth = computed(() => {
     border-radius: 8px 8px 0px 0px !important;
 
     .v-btn__content {
-        font-weight: 700 !important;
-        font-size: 12px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
         white-space: normal !important;
         letter-spacing: normal !important;
         line-height: inherit !important;
@@ -250,8 +280,8 @@ const mobileWidth = computed(() => {
     color: #FFFFFF;
 
     .v-btn__content {
-        font-weight: 700 !important;
-        font-size: 12px !important;
+        font-weight: 500 !important;
+        font-size: 13px !important;
         white-space: normal !important;
         letter-spacing: normal !important;
         line-height: inherit !important;

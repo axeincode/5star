@@ -171,9 +171,13 @@ const loginBonusDialogVisible = computed(() => {
   return getLoginBonusDialogVisible.value;
 })
 watch(loginBonusDialogVisible, (newValue) => {
+  console.log(newValue);
   loginBonusDialog.value = newValue;
-})
+  // setOverlayScrimShow(newValue)
+  // setMainBlurEffectShow(newValue);
+}, { deep: true })
 const closeLoginBonusDialog = () => {
+  console.log("ok");
   setLoginBonusDialogVisible(false);
 }
 
