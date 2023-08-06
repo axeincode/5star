@@ -529,7 +529,7 @@ export default Dashboard;
             <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="4" lg="4" xl="4"
               :class="mobileWidth < 600 ? 'px-0' : ''">
               <img :src="slide[index]" class="slider-img-width"
-                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"/>
+                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''" />
             </v-col>
           </v-row>
         </v-sheet>
@@ -1049,5 +1049,24 @@ export default Dashboard;
     color: black
   }
 
+}
+
+.v-carousel__controls .v-btn {
+  background-color: #7782AA !important;
+  width: 6px !important;
+  height: 6px !important;
+  margin-right: 6px !important;
+
+  .v-btn__content .v-icon {
+    display: none;
+    /* Removes the default icon */
+  }
+}
+
+.v-carousel__controls .v-btn--active {
+  width: 18px !important;
+  height: 6px !important;
+  border-radius: 24px !important;
+  background: var(--white-bg, #FFF) !important;
 }
 </style>
