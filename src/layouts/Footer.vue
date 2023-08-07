@@ -25,16 +25,16 @@ const mobileWidth = computed(() => {
 </script>
 
 <template>
-    <div class="my-4 mx-2">
+    <div class="my-4" :class="mobileWidth > 600 ? 'mx-8' : 'mx-2'">
 
         <!-------------------- footer bar -------------->
         <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-10'">
             <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
-                <div class="footer-title ml-4">{{ t('home.footer.game.title') }}</div>
-                <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_1') }}</div>
-                <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_2') }}</div>
-                <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_3') }}</div>
-                <div class="footer-text-1 ml-4">{{ t('home.footer.game.menu_4') }}</div>
+                <div class="footer-title" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.title') }}</div>
+                <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.menu_1') }}</div>
+                <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.menu_2') }}</div>
+                <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.menu_3') }}</div>
+                <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.menu_4') }}</div>
             </v-col>
             <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
                 <div class="footer-title" :class="mobileWidth < 600 ? 'ml-4' : ''">
@@ -93,7 +93,7 @@ const mobileWidth = computed(() => {
                         </v-btn>
                     </div>
                 </div>
-                <p class="text-left mt-4" :class="mobileWidth < 600 ? 'mx-2 text-400-11 gray' : 'footer-4-text'">{{
+                <p class="text-left mt-4" :class="mobileWidth < 600 ? 'mx-2 text-400-11 gray' : 'footer-4-text mx-16'">{{
                     t('home.footer.footer_4.text') }}</p>
             </v-col>
         </v-row>

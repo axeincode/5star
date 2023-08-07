@@ -8,6 +8,7 @@ import { appBarStore } from "@/store/appBar";
 import { loginBonusStore } from "@/store/loginBonus";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
+import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
@@ -19,6 +20,9 @@ const language = ref<string>('English');
 const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
 const originalMenu = ref<boolean>(false);
+const casinoCheckBox = ref<boolean>(false);
+const casinoCheckboxColor = ref<string>("#ffffff");
+const sportCheckboxColor = ref<string>("#7782AA");
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -91,6 +95,16 @@ watch(navBarToggle, (newValue) => {
     }
 })
 
+watch(casinoCheckBox, (value: boolean) => {
+    if (value) {
+        casinoCheckboxColor.value = "#7782AA";
+        sportCheckboxColor.value = "#ffffff";
+    } else {
+        casinoCheckboxColor.value = "#ffffff";
+        sportCheckboxColor.value = "#7782AA";
+    }
+}, { deep: true });
+
 const handleLanguageDropdown = (item: string) => {
     language.value = item;
     switch (item) {
@@ -110,6 +124,20 @@ const openRouletteBonusDialog = () => {
     setRouletteBonusDialogVisible(true);
 }
 
+const casinoTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', casinoCheckboxColor.value)
+    }
+    return el
+}
+
+const sportTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', sportCheckboxColor.value)
+    }
+    return el
+}
+
 onMounted(() => {
     drawer.value = mobileWidth.value < 1280 ? false : true;
 })
@@ -117,39 +145,41 @@ onMounted(() => {
 
 <template>
     <v-navigation-drawer :temporary="mobileWidth < 1280" expand-on-hover :scrim-opacity="0.6" class="nav-background"
-        :width="240" v-model="drawer">
+        :width="280" v-model="drawer">
         <template v-slot:prepend>
-            <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''">
-                <input type="checkbox" id="casino-toggle" />
+            <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-10' : ''">
+                <input type="checkbox" id="casino-toggle" v-model="casinoCheckBox" />
                 <label for="casino-toggle">
                     <div class="casino">
-                        <img src="@/assets/public/svg/icon_public_34.svg" />
-                        <P>{{ t('navBar.casino') }}</P>
+                        <inline-svg src="src/assets/public/svg/icon_public_34.svg" width="24" height="24"
+                            :transform-source="casinoTransform"></inline-svg>
+                        <P class="text-700-14 ml-1">{{ t('navBar.casino') }}</P>
                     </div>
                     <div class="sport">
-                        <img src="@/assets/public/svg/icon_public_40.svg" />
-                        <P>{{ t('navBar.sport') }}</P>
+                        <inline-svg src="src/assets/public/svg/icon_public_40.svg" width="24" height="24"
+                            :transform-source="sportTransform"></inline-svg>
+                        <P class="text-700-14 ml-1">{{ t('navBar.sport') }}</P>
                     </div>
                 </label>
             </v-list-item>
         </template>
-        <v-list density="compact" nav class="mt-4">
-            <v-card color="#211F31" theme="dark">
+        <v-list density="compact" nav class="mt-1">
+            <v-card color="#211F31" theme="dark" class="mx-1">
                 <v-row class="ma-4 align-center">
                     <span class="card-title">{{ t('navBar.my_vip_perks') }}</span>
-                    <span class="ml-10 more-font">{{ t('navBar.more') }}</span>
+                    <span class="ml-16 more-font">{{ t('navBar.more') }}</span>
                     <v-btn class="right-btn" icon="true">
                         <v-icon icon="mdi-chevron-right" />
                     </v-btn>
                 </v-row>
-                <v-row class="ma-1">
+                <v-row class="mx-2 ma-1">
                     <v-col cols="6" class="pa-1 relative">
                         <v-list-item value="casino" class="ma-0 pa-0" height="48px">
                             <img src="@/assets/public/svg/bg_public_16.svg" class="img-width" />
                             <img src="@/assets/public/image/img_public_01.png" class="navbar-task-img-position"
                                 width="46" />
                             <p class="text-700-14 white navbar-task-text-position">{{ t('navBar.task_text') }}</p>
-                            <p class="white navbar-unlock-text-left-position">{{ t('navBar.unlock_text') }}</p>
+                            <p class="white text-400-12 navbar-unlock-text-left-position">{{ t('navBar.unlock_text') }}</p>
                         </v-list-item>
                     </v-col>
                     <v-col cols="6" class="pa-1">
@@ -158,7 +188,7 @@ onMounted(() => {
                             <img src="@/assets/public/image/img_public_02.png" class="navbar-spin-img-position"
                                 width="38" />
                             <p class="text-700-14 white navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
-                            <p class="white navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}</p>
+                            <p class="white text-400-12 navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}</p>
                         </v-list-item>
                     </v-col>
                 </v-row>
@@ -175,7 +205,8 @@ onMounted(() => {
             <v-list-group value="Casino">
                 <template v-slot:activator="{ props }">
                     <v-list-item class="avatar-img" v-bind="props" prepend-avatar="@/assets/public/svg/icon_public_34.svg"
-                        :title="t('navBar.casino')" link value="casino"></v-list-item>
+                        :title="t('navBar.casino')" link value="casino">
+                    </v-list-item>
                 </template>
                 <v-card color="#211F31" theme="dark" class="ma-2">
                     <v-list>
@@ -183,7 +214,7 @@ onMounted(() => {
                             :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
                         <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
                             :title="t('navBar.casino_sub_menu.favorites')" value="favorites"></v-list-item>
-                        <v-menu location="end" offset="10" class="original-dropdown" v-model:model-value="originalMenu">
+                        <v-menu location="end" offset="20" class="original-dropdown" v-model:model-value="originalMenu">
                             <template v-slot:activator="{ props }">
                                 <v-list-item v-bind="props" class="casino-sub-img"
                                     prepend-avatar="@/assets/public/svg/icon_public_37.svg"
@@ -251,11 +282,11 @@ onMounted(() => {
             <label for="theme-toggle">
                 <div class="dark">
                     <img src="@/assets/public/svg/icon_public_46.svg" />
-                    <p>{{ t('navBar.sound_mode.on') }}</p>
+                    <p class="text-700-14 ml-1">{{ t('navBar.sound_mode.on') }}</p>
                 </div>
                 <div class="light">
                     <img src="@/assets/public/svg/icon_public_47.svg" />
-                    <p>{{ t('navBar.sound_mode.off') }}</p>
+                    <p class="text-700-14 ml-1">{{ t('navBar.sound_mode.off') }}</p>
                 </div>
             </label>
         </v-list-item>
@@ -287,14 +318,15 @@ onMounted(() => {
 // casino and sport toggle switch
 .casino-toggle {
     label {
-        width: 200px;
-        height: 40px;
+        width: 232px;
+        height: 48px;
         position: relative;
         display: block;
         background: #211F31;
-        border-radius: 20px !important;
+        border-radius: 24px !important;
         cursor: pointer;
         transition: 0.3s;
+        margin: auto;
 
         div {
             position: absolute;
@@ -303,29 +335,27 @@ onMounted(() => {
             z-index: 100;
             display: flex;
             align-items: center;
-            font-weight: 700;
-            font-size: 14px;
         }
 
         .casino {
-            left: 14px;
+            left: 17px;
             transition: 0.3s;
             color: black;
 
             img {
-                width: 20px;
+                width: 24px;
                 height: 24px;
                 margin-right: 4px;
             }
         }
 
         .sport {
-            left: 120px;
+            left: 134px;
             transition: 0.3s;
             color: #7782AA;
 
             img {
-                width: 20px;
+                width: 24px;
                 margin-right: 4px;
             }
         }
@@ -333,13 +363,13 @@ onMounted(() => {
 
     label:after {
         content: "";
-        width: 100px;
-        height: 36px;
+        width: 112px;
+        height: 40px;
         position: absolute;
-        top: 2px;
-        left: 2px;
+        top: 4px;
+        left: 4px;
         background: #32CFEC;
-        border-radius: 18px;
+        border-radius: 20px;
         box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
         transition: 0.3s;
     }
@@ -351,12 +381,12 @@ onMounted(() => {
     }
 
     input:checked+label:after {
-        left: 198px;
+        left: 228px;
         transform: translateX(-100%);
     }
 
     label:active:after {
-        width: 100px;
+        width: 112px;
     }
 
     input:checked+label .casino {
@@ -393,6 +423,7 @@ onMounted(() => {
 }
 
 .img-width {
+    margin-top: 4px;
     width: 100%;
 }
 
@@ -458,7 +489,7 @@ onMounted(() => {
         align-self: center;
         grid-area: content;
         overflow: hidden;
-        width: 105px;
+        // width: 105px;
     }
 
     :deep(.v-list-item__append > .v-icon) {
@@ -467,6 +498,12 @@ onMounted(() => {
 }
 
 .language-item {
+    border-radius: 8px;
+    background: var(--text-box-1211-f-31, #211F31);
+
+    /* Text Box */
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+
     :deep(.v-list-item__content) {
         align-self: center;
         grid-area: content;
@@ -485,14 +522,15 @@ onMounted(() => {
     height: 50px;
 
     label {
-        width: 200px;
-        height: 40px;
+        width: 240px;
+        height: 44px;
         position: relative;
         display: block;
         background: #211F31;
-        border-radius: 20px !important;
+        border-radius: 22px !important;
         cursor: pointer;
         transition: 0.3s;
+        margin: auto;
 
         div {
             position: absolute;
@@ -506,36 +544,34 @@ onMounted(() => {
         }
 
         .dark {
-            left: 14px;
+            left: 34px;
             transition: 0.3s;
             color: white;
 
             img {
-                width: 20px;
+                width: 24px;
                 height: 24px;
-                margin-right: 4px;
             }
         }
 
         .light {
-            left: 120px;
+            left: 154px;
             transition: 0.3s;
             color: #7782AA;
 
             img {
-                width: 20px;
-                margin-right: 4px;
+                width: 24px;
             }
         }
     }
 
     label:after {
         content: "";
-        width: 100px;
+        width: 116px;
         height: 36px;
         position: absolute;
-        top: 3px;
-        left: 2px;
+        top: 4px;
+        left: 4px;
         background: #353652;
         border-radius: 18px;
         box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -549,12 +585,12 @@ onMounted(() => {
     }
 
     input:checked+label:after {
-        left: 198px;
+        left: 236px;
         transform: translateX(-100%);
     }
 
     label:active:after {
-        width: 100px;
+        width: 116px;
     }
 
     input:checked+label .dark {
@@ -575,32 +611,32 @@ onMounted(() => {
 
 .navbar-free-money-img-position {
     position: absolute;
-    left: 32px;
-    top: -10px;
+    left: 40px;
+    top: -4px;
 }
 
 .navbar-free-money-text-position {
     position: absolute;
-    left: 81px;
-    top: 6px;
+    left: 85px;
+    top: 8px;
 }
 
 .navbar-task-img-position {
     position: absolute;
     left: 6px;
-    top: -8px;
+    top: -6px;
 }
 
 .navbar-task-text-position {
     position: absolute;
-    left: 47px;
-    top: 3px;
+    left: 48px;
+    top: 2px;
 }
 
 .navbar-unlock-text-left-position {
     position: absolute;
-    left: 43px;
-    top: 18px;
+    left: 48px;
+    top: 20px;
     font-size: 12px;
 }
 
@@ -612,13 +648,13 @@ onMounted(() => {
 
 .navbar-spin-text-position {
     position: absolute;
-    left: 47px;
-    top: 5px;
+    left: 48px;
+    top: 2px;
 }
 
 .navbar-unlock-text-right-position {
     position: absolute;
-    left: 43px;
+    left: 48px;
     top: 20px;
     font-size: 12px;
 }

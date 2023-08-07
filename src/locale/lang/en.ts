@@ -137,7 +137,7 @@ export const lang: langType = {
     casino_sub_menu: {
       recently_played: 'Recently Played',
       favorites: 'Favorites',
-      game_originals: 'Game Originals',
+      game_originals: 'BLUEGAME Originals',
       slots: 'Slots',
       live_casino: 'Live Casino',
     },

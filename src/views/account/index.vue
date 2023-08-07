@@ -186,12 +186,12 @@ onMounted(() => {
 
 <style lang="scss">
 .account-container {
-    margin: -20px 20px;
+    margin: -20px 40px;
     padding-bottom: 20px;
 }
 
 .account-container-1 {
-    margin: -20px 10px;
+    margin: -20px 40px;
     padding-bottom: 20px;
 }
 

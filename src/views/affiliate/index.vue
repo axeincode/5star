@@ -119,14 +119,14 @@ onMounted(() => {
 </template>
 <style lang="scss">
 .affiliate-container {
-    margin: -20px 20px;
+    margin: -20px 40px;
     background: #211F31;
     padding-bottom: 20px;
     border-radius: 8px;
 }
 
 .affiliate-container-1 {
-    margin: -20px 10px;
+    margin: -20px 40px;
     background: #211F31;
     padding-bottom: 20px;
     border-radius: 8px;

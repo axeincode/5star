@@ -74,17 +74,35 @@ const Dashboard = defineComponent({
         new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
         new URL("@/assets/home/image/img_og_02.png", import.meta.url).href,
         new URL("@/assets/home/image/img_og_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_04.png", import.meta.url).href,
         new URL("@/assets/home/image/img_og_05.png", import.meta.url).href,
         new URL("@/assets/home/image/img_og_06.png", import.meta.url).href,
         new URL("@/assets/home/image/img_og_07.png", import.meta.url).href,
       ],
+      mOriginalGames: [
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_04.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_05.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_06.png", import.meta.url).href,
+      ],
       principalGames: [
-        new URL("@/assets/home/image/img_pg_08.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_pg_09.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_pg_10.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_pg_12.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_pg_13.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_pg_14.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_04.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_05.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_06.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_07.png", import.meta.url).href,
+      ],
+      mPrincipalGames: [
+        new URL("@/assets/home/image/img_pg_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_04.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_05.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_pg_06.png", import.meta.url).href,
       ],
       gameProviders: [
         new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
@@ -98,11 +116,29 @@ const Dashboard = defineComponent({
         new URL("@/assets/home/image/img_slots_01.png", import.meta.url).href,
         new URL("@/assets/home/image/img_slots_02.png", import.meta.url).href,
         new URL("@/assets/home/image/img_slots_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_slots_04.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_slots_05.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_slots_06.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_slots_07.png", import.meta.url).href,
+      ],
+      mSlots: [
+        new URL("@/assets/home/image/img_slots_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_slots_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_slots_03.png", import.meta.url).href,
         new URL("@/assets/home/image/img_slots_05.png", import.meta.url).href,
         new URL("@/assets/home/image/img_slots_06.png", import.meta.url).href,
         new URL("@/assets/home/image/img_slots_07.png", import.meta.url).href,
       ],
       liveCasinos: [
+        new URL("@/assets/home/image/img_lc_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_lc_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_lc_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_lc_04.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_lc_05.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_lc_06.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
+      ],
+      mLiveCasinos: [
         new URL("@/assets/home/image/img_lc_01.png", import.meta.url).href,
         new URL("@/assets/home/image/img_lc_02.png", import.meta.url).href,
         new URL("@/assets/home/image/img_lc_03.png", import.meta.url).href,
@@ -505,7 +541,7 @@ export default Dashboard;
 </script>
 
 <template>
-  <div class="mx-2 home-body" :class="mobileWidth > 600 ? 'my-4' : 'my-2'">
+  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'my-2 mx-2'">
     <!-- image carousel -->
 
     <v-carousel cycle interval="6000" height="247" hide-delimiter-background :hide-delimiters="slides.length <= 1"
@@ -526,8 +562,8 @@ export default Dashboard;
       <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
         <v-sheet color="#31275C" height="100%" tile>
           <v-row align="center" justify="center" class="mx-2 relative">
-            <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="4" lg="4" xl="4"
-              :class="mobileWidth < 600 ? 'px-0' : ''">
+            <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="6" lg="4" xl="4"
+              :class="mobileWidth < 600 ? 'px-0' : 'px-2'">
               <img :src="slide[index]" class="slider-img-width"
                 :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''" />
             </v-col>
@@ -546,35 +582,35 @@ export default Dashboard;
     <!-- buttons for filter -->
     <v-row :class="[mobileVersion == 'sm' ? 'mx-0' : 'mx-4']">
       <template v-if="mobileVersion != 'sm'">
-        <v-btn class="mr-2 my-2 text-none lobby-btn-color">
+        <v-btn class="mr-2 my-2 text-none lobby-btn-color" width="150" height="48">
           {{ t("home.button.lobby") }}
         </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color">
+        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
           {{ t("home.button.popular") }}
         </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color">
+        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
           {{ t("home.button.slots") }}
         </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color">
+        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
           {{ t("home.button.live_casino") }}
         </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color">
+        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
           {{ t("home.button.blue_originals") }}
         </v-btn>
       </template>
       <template v-else>
         <v-col cols="4" class="px-1">
-          <v-btn class="mr-2 my-2 text-none lobby-btn-color">
+          <v-btn class="mr-2 my-2 text-none lobby-btn-color" width="160">
             {{ t("home.button.lobby") }}
           </v-btn>
         </v-col>
         <v-col cols="4" class="px-1">
-          <v-btn class="mr-2 my-2 text-none popular-btn-color">
+          <v-btn class="mr-2 my-2 text-none popular-btn-color" width="160">
             {{ t("home.button.popular") }}
           </v-btn>
         </v-col>
         <v-col cols="4" class="px-1">
-          <v-btn class="mr-2 my-2 text-none popular-btn-color">
+          <v-btn class="mr-2 my-2 text-none popular-btn-color" width="160">
             {{ t("home.button.slots") }}
           </v-btn>
         </v-col>
@@ -585,14 +621,21 @@ export default Dashboard;
     <v-row class="ml-4 mt-6 mb-2 original_game_text">
       {{ t("home.original_games") }}
     </v-row>
-    <v-row class="mx-2 mt-2">
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center v-for="(item, index) in originalGames"
+    <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
+        v-for="(item, index) in originalGames" :key="index">
+        <v-img :src="item" class="original-game-img-width" />
+      </div>
+    </v-row>
+    <v-row class="mx-2 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center v-for="(item, index) in mOriginalGames"
         :key="index">
         <v-img :src="item" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
+    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -601,14 +644,21 @@ export default Dashboard;
     <v-row class="ml-4 mt-6 mb-2 original_game_text">
       {{ t("home.principal") }}
     </v-row>
-    <v-row class="mx-2 mt-2">
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center
+    <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
         v-for="(principalItem, principalIndex) in principalGames" :key="principalIndex">
+        <v-img :src="principalItem" class="original-game-img-width" />
+      </div>
+    </v-row>
+    <v-row class="mx-2 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center
+        v-for="(principalItem, principalIndex) in mPrincipalGames" :key="principalIndex">
         <v-img :src="principalItem" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
+    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -620,14 +670,21 @@ export default Dashboard;
     <v-row class="ml-4 mt-6 mb-2 original_game_text">
       {{ t("home.slots") }}
     </v-row>
-    <v-row class="mx-2 mt-2">
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center v-for="(slotItem, slotIndex) in slots"
+    <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
+        v-for="(slotItem, slotIndex) in slots" :key="slotIndex">
+        <v-img :src="slotItem" class="original-game-img-width" />
+      </div>
+    </v-row>
+    <v-row class="mx-2 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center v-for="(slotItem, slotIndex) in mSlots"
         :key="slotIndex">
         <v-img :src="slotItem" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
+    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -636,14 +693,21 @@ export default Dashboard;
     <v-row class="ml-4 mt-6 mb-2 original_game_text">
       {{ t("home.live_casino") }}
     </v-row>
-    <v-row class="mx-2 mt-2">
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center
+    <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
         v-for="(liveCasinoItem, liveCasinoIndex) in liveCasinos" :key="liveCasinoIndex">
+        <v-img :src="liveCasinoItem" class="original-game-img-width" />
+      </div>
+    </v-row>
+    <v-row class="mx-2 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center
+        v-for="(liveCasinoItem, liveCasinoIndex) in mLiveCasinos" :key="liveCasinoIndex">
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="mt-4 justify-center" :class="mobileWidth < 600 ? 'mx-3' : 'ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 300">
+    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
+      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48">
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -656,7 +720,8 @@ export default Dashboard;
           <p class="text-700-20 white ml-3">{{ t('home.lucky_jackpot_text') }}</p>
         </div>
         <v-card color="#211F32" theme="dark" class="home-lucky-jackpot-height mt-4">
-          <v-card color="#29253C" theme="dark" height="64" class="mx-2 mt-2">
+          <v-card color="#29253C" theme="dark" height="64" class="mx-2 mt-2"
+            style="border-radius: 16px; background: #29253C; box-shadow: unset;">
             <v-row class="mx-3 my-2 align-center">
               <v-col cols="4" class="text-700-16 gray">{{ t('home.rank_text') }}</v-col>
               <v-col cols="4" class="text-700-16 gray">
@@ -686,7 +751,8 @@ export default Dashboard;
           <p class="text-700-20 white ml-3">{{ t('home.latest_record_text') }}</p>
         </div>
         <v-card color="#211F32" theme="dark" class="home-lucky-jackpot-height mt-4">
-          <v-card color="#29253C" theme="dark" height="64" class="mx-2 mt-2">
+          <v-card color="#29253C" theme="dark" height="64" class="mx-2 mt-2"
+            style="border-radius: 16px; background: #29253C; box-shadow: unset;">
             <v-row class="mx-3 my-2 align-center">
               <v-col cols="4" class="text-700-16 gray">{{ t('home.game_text') }}</v-col>
               <v-col cols="4" class="text-700-16 gray">
@@ -786,6 +852,23 @@ export default Dashboard;
   height: 568px;
 }
 
+.v-field__input::placeholder {
+  opacity: unset !important;
+  color: #7782AA !important;
+  font-family: "Inter";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.v-field__prepend-inner {
+  .v-icon {
+    opacity: unset !important;
+    color: #7782AA;
+  }
+}
+
 @media (max-width: 600px) {
 
   .home-search-text-height {
@@ -803,13 +886,6 @@ export default Dashboard;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
-    }
-
-    .v-field__prepend-inner {
-      .v-icon {
-        opacity: unset !important;
-        color: #7782AA;
-      }
     }
 
     .v-input__control {
@@ -906,7 +982,7 @@ export default Dashboard;
 .lobby-btn-color {
   background: #32cfec !important;
   color: #000000 !important;
-  width: 160px !important;
+  // width: 160px !important;
 
   .v-btn__content {
     font-weight: 700 !important;
@@ -954,7 +1030,7 @@ export default Dashboard;
 }
 
 .original-game-img-width {
-  max-width: 230px !important;
+  max-width: 211px !important;
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -1051,22 +1127,24 @@ export default Dashboard;
 
 }
 
-.v-carousel__controls .v-btn {
-  background-color: #7782AA !important;
-  width: 6px !important;
-  height: 6px !important;
-  margin-right: 6px !important;
+.v-carousel__controls {
+  .v-btn {
+    background-color: #7782AA !important;
+    width: 6px !important;
+    height: 6px !important;
+    margin-right: 6px !important;
 
-  .v-btn__content .v-icon {
-    display: none;
-    /* Removes the default icon */
+    .v-btn__content .v-icon {
+      display: none;
+      /* Removes the default icon */
+    }
   }
-}
 
-.v-carousel__controls .v-btn--active {
-  width: 18px !important;
-  height: 6px !important;
-  border-radius: 24px !important;
-  background: var(--white-bg, #FFF) !important;
+  .v-btn--active {
+    width: 18px !important;
+    height: 6px !important;
+    border-radius: 24px !important;
+    background: var(--white-bg, #FFF) !important;
+  }
 }
 </style>

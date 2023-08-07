@@ -132,9 +132,9 @@ onMounted(() => {
     <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-20" :width="192"
         v-model="drawer">
         <template v-slot:prepend>
-            <v-list-item class="casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''" style="height: 56px;">
-                <input type="checkbox" id="casino-toggle" />
-                <label for="casino-toggle">
+            <v-list-item class="m-casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''" style="height: 56px; visibility: hidden;">
+                <input type="checkbox" id="m-casino-toggle" />
+                <label for="m-casino-toggle">
                     <div class="casino">
                         <img src="@/assets/public/svg/icon_public_34.svg" />
                         <p>{{ t('navBar.casino') }}</p>
@@ -158,7 +158,7 @@ onMounted(() => {
                 <v-row class="ma-1">
                     <v-col cols="6" class="pa-1 relative">
                         <v-list-item value="casino" class="ma-0 pa-0" height="48px">
-                            <img src="@/assets/public/svg/bg_public_16.svg" class="img-width" />
+                            <img src="@/assets/public/svg/bg_public_16.svg" class="m-img-width" />
                             <img src="@/assets/public/image/img_public_01.png" class="m-navbar-task-img-position"
                                 width="34" />
                             <p class="text-700-10 white m-navbar-task-text-position">{{ t('navBar.task_text') }}</p>
@@ -167,7 +167,7 @@ onMounted(() => {
                     </v-col>
                     <v-col cols="6" class="pa-1">
                         <v-list-item value="sport" class="ma-0 pa-0" height="48px" @click="openRouletteBonusDialog">
-                            <img src="@/assets/public/svg/bg_public_17.svg" class="spin-img-width" />
+                            <img src="@/assets/public/svg/bg_public_17.svg" class="m-spin-img-width" />
                             <img src="@/assets/public/image/img_public_02.png" class="m-navbar-spin-img-position"
                                 width="28" />
                             <p class="text-700-10 white m-navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
@@ -299,7 +299,7 @@ onMounted(() => {
 }
 
 // casino and sport toggle switch
-.casino-toggle {
+.m-casino-toggle {
     label {
         width: 200px;
         height: 40px;
@@ -404,11 +404,12 @@ onMounted(() => {
     right: 0px;
 }
 
-.img-width {
+.m-img-width {
     width: 100%;
+    margin-top: 4px;
 }
 
-.spin-img-width {
+.m-spin-img-width {
     width: 100%;
     margin-top: 4px;
 }
@@ -472,7 +473,7 @@ onMounted(() => {
 
     :deep(.v-list-item-title) {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 10px;
         color: #7782AA;
     }
 
@@ -486,11 +487,11 @@ onMounted(() => {
         align-self: center;
         grid-area: content;
         overflow: hidden;
-        width: 90px;
+        width: 100px;
     }
 
     :deep(.v-list-item__append > .v-icon) {
-        margin-inline-start: 18px;
+        margin-inline-start: 6px;
     }
 }
 
@@ -636,13 +637,13 @@ onMounted(() => {
 .m-navbar-task-text-position {
     position: absolute;
     left: 40px;
-    top: 5px;
+    top: 8px;
 }
 
 .m-navbar-unlock-text-left-position {
     position: absolute;
     left: 37px;
-    top: 19px;
+    top: 21px;
 }
 
 .m-navbar-spin-img-position {

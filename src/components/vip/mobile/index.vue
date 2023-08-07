@@ -1060,7 +1060,7 @@ onMounted(() => {
             </div>
 
             <!----------------------------   footer-body    ------------------------------------>
-            <div class="vip-footer-body relative mt-6 mx-2">
+            <div class="m-vip-footer-body relative mt-6 mx-2">
                 <v-row class="ma-0 pa-0 align-center justify-center">
                     <v-col cols="12" md="3">
                         <p class="m-vip-footer-title text-center"> {{ t('vip.footer_body.text_1') }}</p>
@@ -1341,7 +1341,7 @@ onMounted(() => {
     right: 36px;
 }
 
-.vip-footer-body {
+.m-vip-footer-body {
     height: 220px;
     border-radius: 8px;
     background: linear-gradient(90deg, #1F87E8 0%, #66A12D 100%);

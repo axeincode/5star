@@ -320,14 +320,14 @@ const showWinnerBody = () => {
             <!---------------- roulette module ----------------->
             <div class="roulette-bonus-dialog-spin-position-1" ref="roulette">
                 <img src="@/assets/vip/image/img_vip_30.png" width="248" />
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-1">{{ wheelMap[0].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-8">{{ wheelMap[1].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-7">{{ wheelMap[2].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-6">{{ wheelMap[3].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-5">{{ wheelMap[4].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-4">{{ wheelMap[5].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-3">{{ wheelMap[6].value }}</p>
-                <p class="text-900-12 white roulette-bonus-dialog-spin-text-position-2">{{ wheelMap[7].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-1">{{ wheelMap[0].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-8">{{ wheelMap[1].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-7">{{ wheelMap[2].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-6">{{ wheelMap[3].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-5">{{ wheelMap[4].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-4">{{ wheelMap[5].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-3">{{ wheelMap[6].value }}</p>
+                <p class="text-900-14 white roulette-bonus-dialog-spin-text-position-2">{{ wheelMap[7].value }}</p>
             </div>
 
             <img src="@/assets/vip/image/img_vip_28.png" width="52" class="roulette-bonus-dialog-spin-position-2" />

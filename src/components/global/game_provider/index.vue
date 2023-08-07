@@ -10,6 +10,16 @@ const gameProviders = ref<Array<string>>([
     new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
     new URL("@/assets/home/image/img_gp_02.png", import.meta.url).href,
     new URL("@/assets/home/image/img_gp_03.png", import.meta.url).href,
+    new URL("@/assets/home/image/img_gp_04.png", import.meta.url).href,
+    new URL("@/assets/home/image/img_gp_05.png", import.meta.url).href,
+    new URL("@/assets/home/image/img_gp_06.png", import.meta.url).href,
+    new URL("@/assets/home/image/img_gp_07.png", import.meta.url).href,
+])
+
+const mGameProviders = ref<Array<string>>([
+    new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
+    new URL("@/assets/home/image/img_gp_02.png", import.meta.url).href,
+    new URL("@/assets/home/image/img_gp_03.png", import.meta.url).href,
     new URL("@/assets/home/image/img_gp_05.png", import.meta.url).href,
     new URL("@/assets/home/image/img_gp_06.png", import.meta.url).href,
     new URL("@/assets/home/image/img_gp_07.png", import.meta.url).href,
@@ -25,9 +35,14 @@ const mobileWidth = computed(() => {
     <v-row class="mx-4 mt-6 mb-2 white" :class="[mobileWidth < 600 ? 'text-700-14' : 'text-700-22']">
         {{ t("home.game_providers") }}
     </v-row>
-    <v-row class="mx-2 mt-2">
+    <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center v-for="(item, index) in gameProviders" :key="index">
+        <img :src="item" class="game-provider-img-width" />
+      </div>
+    </v-row>
+    <v-row class="mx-2 mt-2" v-else>
         <v-col cols="4" lg="2" md="2" sm="3" class="px-2 py-1 " v-ripple.center
-            v-for="(gameProviderItem, gameProviderIndex) in gameProviders" :key="gameProviderIndex">
+            v-for="(gameProviderItem, gameProviderIndex) in mGameProviders" :key="gameProviderIndex">
             <img :src="gameProviderItem" class="game-provider-img-width" />
         </v-col>
     </v-row>

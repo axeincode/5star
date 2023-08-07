@@ -126,9 +126,9 @@ watch(rightBarToggle, (newValue) => {
 watch(refferalAppBarShow, (newValue) => {
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
-      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
-    } else {
       appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc-1 app-bar-position" : "app-bar-pc-1";
+    } else {
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
     }
   } else {
     appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
@@ -139,9 +139,9 @@ watch(refferalAppBarShow, (newValue) => {
 watch(mobileWidth, (newValue: number) => {
   if (newValue > 1280) {
     if (rightBarToggle.value) {
-      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
-    } else {
       appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc-1 app-bar-position" : "app-bar-pc-1";
+    } else {
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
     }
   } else {
     appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
@@ -153,8 +153,10 @@ watch(mobileWidth, (newValue: number) => {
 })
 
 watch(currencyMenuShow, (value: boolean) => {
-  setOverlayScrimShow(value);
-  setMainBlurEffectShow(value);
+  if (mobileWidth.value < 600) {
+    setOverlayScrimShow(value);
+    setMainBlurEffectShow(value);
+  }
 })
 
 const toggleLanguage = () => {
@@ -301,9 +303,9 @@ onMounted(async () => {
   mailCount.value = mailList.value.length
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
-      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
-    } else {
       appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc-1 app-bar-position" : "app-bar-pc-1";
+    } else {
+      appBarWidth.value = refferalAppBarShow.value ? "app-bar-pc app-bar-position" : "app-bar-pc";
     }
   } else {
     appBarWidth.value = refferalAppBarShow.value ? "app-bar-mobile app-bar-position" : "app-bar-mobile";
@@ -315,11 +317,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-app-bar app dark :color="color" :class="appBarWidth" class="app-bar-height">
+  <v-app-bar app dark :color="color" :class="appBarWidth" class="app-bar-height" style="box-shadow: unset;">
     <v-app-bar-nav-icon @click.stop="setNavBarToggle(true)"
       v-if="!navBarToggle && mobileWidth > 600"></v-app-bar-nav-icon>
     <v-toolbar-title v-if="mobileWidth > 800">
-      <v-btn height="60" @click="goHomePage" class="align-center mt-2">
+      <v-btn height="60" @click="goHomePage" class="align-center mt-1">
         <img src="@/assets/public/image/logo_public_01.png" />
         <!-- <p class="logo-title-1 ml-1">{{ t('main.logo_text_1') }}</p>
         <p class="logo-title-2 ml-1">{{ t('main.logo_text_2') }}</p> -->
@@ -336,12 +338,12 @@ onMounted(async () => {
       <div class="d-flex">
         <v-menu offset="10" class="deposit-menu">
           <template v-slot:activator="{ props }">
-            <v-card color="#211F31" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
-              <v-list-item class="deposit-item user-card-height" v-bind="props">
+            <v-card color="#211F31" theme="dark" class="mr-4 mt-1 user-card-height" v-if="mobileWidth > 600">
+              <v-list-item class="deposit-item user-card-height pr-1" v-bind="props">
                 <div class="d-flex align-center">
                   <v-menu offset="20" v-model:model-value="currencyMenuShow" class="currency-menu">
                     <template v-slot:activator="{ props }">
-                      <div class="d-flex align-center" v-bind="props" style="height: 40px;">
+                      <div class="d-flex align-center text-700-16" v-bind="props" style="height: 40px;">
                         <p class="mr-1">{{ user.currency }}</p>
                         <p class="mr-2">{{ user.wallet }}</p>
                         <img src="@/assets/public/svg/icon_public_50.svg" class="mr-2" />
@@ -407,12 +409,12 @@ onMounted(async () => {
         </v-menu>
         <v-menu offset="20" class="user-menu" :scrim="true">
           <template v-slot:activator="{ props }">
-            <v-card color="#211F31" theme="dark" class="mr-4 mt-2 user-card-height" v-if="mobileWidth > 600">
-              <v-list-item class="user-item" v-bind="props" value="user dropdown">
+            <v-card color="#211F31" theme="dark" class="mr-4 mt-1 user-card-height" style="min-width: 166px !important;" v-if="mobileWidth > 600">
+              <v-list-item class="user-item user-card-height" v-bind="props" value="user dropdown">
                 <div class="d-flex align-center">
                   <img :src="user.avatar" class="user-avatar-width" />
-                  <div class="ml-1">
-                    <div>{{ userInfo.name }}</div>
+                  <div class="ml-4">
+                    <div class="text-500-14">{{ userInfo.name }}</div>
                     <div class="d-flex align-center">
                       <div class="user-grade-text">{{ user.grade }}</div>
                       <img src="@/assets/public/svg/icon_public_50.svg" class="user-drop-arrow-position" />
@@ -586,7 +588,7 @@ onMounted(async () => {
         </v-menu>
         <v-menu class="mail-menu" :scrim="true">
           <template v-slot:activator="{ props }">
-            <div class="mr-4 mt-5 relative mail-height" v-bind="props" v-ripple.center v-if="mobileWidth > 600">
+            <div class="mr-4 mt-4 relative mail-height" v-bind="props" v-ripple.center v-if="mobileWidth > 600">
               <img src="@/assets/public/svg/icon_public_55.svg" />
               <p class="chat-box-text">{{ mailCount }}</p>
             </div>
@@ -719,14 +721,14 @@ onMounted(async () => {
   font-family: "Bauhaus 93";
 }
 
-.app-bar-pc {
-  width: calc((100% - 620px) - 0px) !important;
-  margin-left: 260px;
+.app-bar-pc-1 {
+  width: calc(100% - 660px) !important;
+  margin-left: 300px;
 }
 
-.app-bar-pc-1 {
-  width: calc((100% - 260px) - 0px) !important;
-  margin-left: 250px;
+.app-bar-pc {
+  width: calc(100% - 360px) !important;
+  margin-left: 320px;
 }
 
 .app-bar-mobile {
@@ -835,7 +837,7 @@ onMounted(async () => {
 }
 
 .user-avatar-width {
-  width: 50px;
+  width: 42px;
 }
 
 .user-grade-text {
@@ -845,7 +847,7 @@ onMounted(async () => {
 }
 
 .user-card-height {
-  height: 56px !important;
+  height: 49px !important;
 }
 
 .m-user-card-height {
@@ -915,7 +917,7 @@ onMounted(async () => {
     content: "";
     position: absolute;
     align-self: center;
-    right: 32px;
+    right: 66px;
     top: -18px;
     border: 9px solid #211f31;
     border-right-color: transparent;
