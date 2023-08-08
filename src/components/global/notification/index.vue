@@ -13,7 +13,7 @@ watch(notificationShow, (newValue) => {
 </script>
   
 <template>
-    <v-snackbar v-model="snackbar" multi-line color="#181522" class="snack-bar">
+    <v-snackbar v-model="snackbar" multi-line color="#181522" class="snack-bar" timeout="3000" transition="scale-transition">
         <template v-slot:actions>
             <img :src="checkIcon" class="ml-4 mr-4"/>
             <p class="label-text-sm slate-gray notification-text">
@@ -39,10 +39,12 @@ watch(notificationShow, (newValue) => {
 
 .snack-bar {
     .v-overlay__content {
+        width: 240px;
         position: absolute;
         bottom: 80% !important;
         right: -190px !important;
         left: unset !important;
+        transition: width 0.3s ease-out;
     }
 
     .notification-text {

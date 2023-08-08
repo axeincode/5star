@@ -499,13 +499,20 @@ export default MSignup
             line-height: normal;
         }
 
-        .v-field-label {
+        .v-label.v-field-label {
             font-family: "Inter";
             font-size: 10px;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
         }
+
+        .v-label.v-field-label--floating {
+            --v-field-label-scale: 0.75em;
+            font-size: var(--v-field-label-scale);
+            max-width: 100%;
+        }
+
     }
 
     .v-input__control {

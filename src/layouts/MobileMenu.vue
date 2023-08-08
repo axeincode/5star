@@ -13,6 +13,7 @@ const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
+const { setUserNavBarToggle } = appBarStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -57,8 +58,12 @@ watch(mailMenuShow, (newValue) => {
 
 const handleNavbarToggle = () => {
     navbarToggle.value = !navbarToggle.value
-    setNavBarToggle(navbarToggle.value)
-    setMainBlurEffectShow(navbarToggle.value);
+    setUserNavBarToggle(false);
+    setMainBlurEffectShow(false);
+    setTimeout(() => {
+        setNavBarToggle(navbarToggle.value)
+        setMainBlurEffectShow(navbarToggle.value);
+    }, 200);
 }
 
 onMounted(() => {

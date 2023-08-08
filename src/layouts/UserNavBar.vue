@@ -9,6 +9,7 @@ import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import { useDisplay } from 'vuetify';
 import { useRouter } from "vue-router";
+import Notification from "@/components/global/notification/index.vue";
 
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
@@ -34,6 +35,10 @@ const depositRate = ref<number>(56);
 const wagerRate = ref<number>(56);
 
 const accountPageShow = ref<boolean>(false);
+
+const notificationShow = ref<boolean>(false);
+const checkIcon = ref<string>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
+const notificationText = ref<string>('Successful replication');
 
 // logged in user info
 const user = ref<GetUserData>({
@@ -155,19 +160,19 @@ watch(mobileWidth, (newValue: number) => {
             <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
         </template>
         <v-list density="compact" nav>
-            <v-list-item class="m-user-item" value="id">
+            <v-list-item class="m-user-item">
                 <template v-slot:prepend>
                     <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
                 </template>
                 <v-list-item-title class="ml-2 text-600-10">{{ t('appBar.id') }}: {{ user.id }}</v-list-item-title>
                 <template v-slot:append>
-                    <div style="width: 22px; height: 22px; border-radius: 4px; background: #353652;" class="relative">
+                    <div style="width: 22px; height: 22px; border-radius: 4px; background: #353652;" class="relative" @click="notificationShow = !notificationShow">
                         <img src="@/assets/public/svg/icon_public_71.svg" width="16"
                             style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" />
                     </div>
                 </template>
             </v-list-item>
-            <v-list-item class="m-user-item" value="vip">
+            <v-list-item class="m-user-item">
                 <template v-slot:prepend>
                     <div>
                         <div style="height: 30px;">
@@ -314,6 +319,7 @@ watch(mobileWidth, (newValue: number) => {
             </v-list-item>
         </v-list>
     </v-navigation-drawer>
+        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
 </template>
 
 <style lang="scss">
@@ -329,7 +335,7 @@ watch(mobileWidth, (newValue: number) => {
 
 @media(max-width: 600px) {
     .v-list-item--density-compact.v-list-item--one-line {
-        min-height: 32px;
+        min-height: 36px;
     }
 }
 

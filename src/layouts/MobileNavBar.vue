@@ -14,6 +14,7 @@ const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
+const { setLoginBonusDialogVisible } = loginBonusStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -116,6 +117,10 @@ const handleLanguageDropdown = (item: string) => {
     }
 }
 
+const openLoginBonusDialog = () => {
+  setLoginBonusDialogVisible(true);
+}
+
 const openRouletteBonusDialog = () => {
     setRouletteBonusDialogVisible(true);
     setNavBarToggle(false);
@@ -157,7 +162,7 @@ onMounted(() => {
                 </v-row>
                 <v-row class="ma-1">
                     <v-col cols="6" class="pa-1 relative">
-                        <v-list-item value="casino" class="ma-0 pa-0" height="48px">
+                        <v-list-item value="casino" class="ma-0 pa-0" height="48px" @click="openLoginBonusDialog">
                             <img src="@/assets/public/svg/bg_public_16.svg" class="m-img-width" />
                             <img src="@/assets/public/image/img_public_01.png" class="m-navbar-task-img-position"
                                 width="34" />
@@ -178,10 +183,10 @@ onMounted(() => {
                 </v-row>
             </v-card>
         </v-list>
-        <v-list density="compact" nav>
+        <v-list density="compact" nav class="px-0">
             <v-list-item class="ma-0 pa-0">
-                <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
-                <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" />
+                <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img"/>
+                <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" width="23"/>
                 <p class="text-700-12 color-29263C m-navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}</p>
             </v-list-item>
         </v-list>
@@ -221,31 +226,31 @@ onMounted(() => {
         </v-list>
         <v-list>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_40.svg"
-                :title="t('navBar.sport')" value="sport"></v-list-item>
+                :title="t('navBar.sport')"></v-list-item>
         </v-list>
         <v-divider class="divider"></v-divider>
         <v-list>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_41.svg"
-                :title="t('navBar.menu_item_1.promotions')" value="promotions"></v-list-item>
+                :title="t('navBar.menu_item_1.promotions')" ></v-list-item>
             <v-list-item class="m-vip-club" prepend-avatar="@/assets/public/svg/icon_public_42.svg"
-                :title="t('navBar.menu_item_1.vip_club')" value="vip club" router :to="{ name: 'VIP' }"></v-list-item>
+                :title="t('navBar.menu_item_1.vip_club')" router :to="{ name: 'VIP' }"></v-list-item>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_43.svg"
-                :title="t('navBar.menu_item_1.affiliate')" value="affiliate" router
+                :title="t('navBar.menu_item_1.affiliate')" router
                 :to="{ name: 'Affiliate' }"></v-list-item>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_44.svg"
-                :title="t('navBar.menu_item_1.blog')" value="blog"></v-list-item>
+                :title="t('navBar.menu_item_1.blog')"></v-list-item>
         </v-list>
         <v-divider class="divider"></v-divider>
         <v-list>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_45.svg"
-                :title="t('navBar.live_support')" value="live support"></v-list-item>
+                :title="t('navBar.live_support')"></v-list-item>
         </v-list>
         <v-list>
             <v-menu location="end" offset="16" v-model:model-value="languageMenu">
                 <template v-slot:activator="{ props }">
                     <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
                         <v-list-item v-bind="props" class="m-casino-sub-img"
-                            prepend-avatar="@/assets/public/svg/icon_public_57.svg" :title="language" value="english"
+                            prepend-avatar="@/assets/public/svg/icon_public_57.svg" :title="language"
                             :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'">
                         </v-list-item>
                     </v-card>
@@ -429,7 +434,7 @@ onMounted(() => {
 
     :deep(.v-list-item-title) {
         font-weight: 700;
-        font-size: 12px;
+        font-size: 10px;
         color: #7782AA;
     }
 
@@ -451,7 +456,7 @@ onMounted(() => {
 
     :deep(.v-list-item-title) {
         font-weight: 700;
-        font-size: 12px;
+        font-size: 10px;
         color: #F9BC01;
     }
 
@@ -478,8 +483,8 @@ onMounted(() => {
     }
 
     :deep(img) {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         margin-top: 4px;
     }
 
@@ -618,13 +623,13 @@ onMounted(() => {
 
 .m-navbar-free-money-img-position {
     position: absolute;
-    left: 32px;
-    top: -10px;
+    left: 28px;
+    top: 0px;
 }
 
 .m-navbar-free-money-text-position {
     position: absolute;
-    left: 74px;
+    left: 62px;
     top: 5px;
 }
 

@@ -154,8 +154,8 @@ watch(mobileWidth, (newValue: number) => {
 
 watch(currencyMenuShow, (value: boolean) => {
   if (mobileWidth.value < 600) {
-    setOverlayScrimShow(value);
-    setMainBlurEffectShow(value);
+    // setOverlayScrimShow(value);
+    // setMainBlurEffectShow(value);
   }
 })
 
@@ -234,8 +234,12 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
 
 const showUserNavBar = (): void => {
   userNavBarToggle.value = !userNavBarToggle.value
-  setUserNavBarToggle(userNavBarToggle.value);
-  setMainBlurEffectShow(userNavBarToggle.value);
+  setNavBarToggle(false)
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setUserNavBarToggle(userNavBarToggle.value);
+    setMainBlurEffectShow(userNavBarToggle.value);
+  }, 200)
 }
 
 watch(userNavToggle, (newValue) => {
@@ -317,22 +321,20 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-app-bar app dark :color="color" :class="appBarWidth" class="app-bar-height" style="box-shadow: unset;">
+  <v-app-bar app dark :color="color" :class="appBarWidth" class="app-bar-height">
     <v-app-bar-nav-icon @click.stop="setNavBarToggle(true)"
       v-if="!navBarToggle && mobileWidth > 600"></v-app-bar-nav-icon>
     <v-toolbar-title v-if="mobileWidth > 800">
-      <v-btn height="60" @click="goHomePage" class="align-center mt-1">
+      <img src="@/assets/public/image/logo_public_01.png" @click="goHomePage" />
+      <!-- <v-btn height="60" @click="goHomePage" class="align-center mt-1">
         <img src="@/assets/public/image/logo_public_01.png" />
-        <!-- <p class="logo-title-1 ml-1">{{ t('main.logo_text_1') }}</p>
-        <p class="logo-title-2 ml-1">{{ t('main.logo_text_2') }}</p> -->
-      </v-btn>
+      </v-btn> -->
     </v-toolbar-title>
     <v-toolbar-title v-else>
-      <v-btn height="46" width="100" @click="goHomePage" class="align-center">
+      <img src="@/assets/public/image/logo_public_03.png" @click="goHomePage" class="mt-1" />
+      <!-- <v-btn height="46" width="100" @click="goHomePage" class="align-center">
         <img src="@/assets/public/image/logo_public_03.png" />
-        <!-- <p class="m-logo-title-1 mt-1">{{ t('main.logo_text_1') }}</p>
-          <p class="m-logo-title-2 mt-1">{{ t('main.logo_text_2') }}</p> -->
-      </v-btn>
+      </v-btn> -->
     </v-toolbar-title>
     <div v-if="token != undefined">
       <div class="d-flex">
@@ -372,14 +374,14 @@ onMounted(async () => {
               </v-list-item>
             </v-card>
             <v-card color="#211F31" theme="dark" class="mt-2 m-user-card-height" style="border-radius: 8px;" v-else>
-              <v-list-item class="deposit-item m-user-card-height px-2" v-bind="props">
+              <div class="deposit-item m-user-card-height px-2" v-bind="props">
                 <div class="d-flex align-center">
                   <v-menu offset="20" v-model:model-value="currencyMenuShow" class="m-currency-menu">
                     <template v-slot:activator="{ props }">
                       <div class="d-flex align-center" v-bind="props" style="height: 40px;">
                         <p class="mr-1 text-700-12">{{ user.currency }}</p>
-                        <p class="mr-2 text-700-12">{{ user.wallet }}</p>
-                        <img src="@/assets/public/svg/icon_public_50.svg" class="mr-1" width="16" />
+                        <p class="text-700-12">{{ user.wallet }}</p>
+                        <img src="@/assets/public/svg/icon_public_50.svg" class="mr-3" width="16" />
                       </div>
                     </template>
                     <v-list theme="dark" bg-color="#211F31" class="px-2" :width="currencyMenuWidth">
@@ -403,13 +405,14 @@ onMounted(async () => {
                     <div class="text-700-8 white m-deposit-text-position">{{ t('appBar.deposit') }}</div>
                   </div>
                 </div>
-              </v-list-item>->
+              </div>
             </v-card>
           </template>
         </v-menu>
         <v-menu offset="20" class="user-menu" :scrim="true">
           <template v-slot:activator="{ props }">
-            <v-card color="#211F31" theme="dark" class="mr-4 mt-1 user-card-height" style="min-width: 166px !important;" v-if="mobileWidth > 600">
+            <v-card color="#211F31" theme="dark" class="mr-4 mt-1 user-card-height" style="min-width: 166px !important;"
+              v-if="mobileWidth > 600">
               <v-list-item class="user-item user-card-height" v-bind="props" value="user dropdown">
                 <div class="d-flex align-center">
                   <img :src="user.avatar" class="user-avatar-width" />
@@ -424,9 +427,9 @@ onMounted(async () => {
               </v-list-item>
             </v-card>
             <div class="d-flex align-center" v-else>
-              <v-list-item class="user-item" value="user dropdown" @click="showUserNavBar">
-                <img :src="user.avatar" width="40" height="40" class="mt-1 mr-2" />
-              </v-list-item>
+              <div class="user-item" value="user dropdown" @click="showUserNavBar">
+                <img :src="user.avatar" width="44" height="44" class="mr-0" style="margin-top: 2px;" />
+              </div>
             </div>
           </template>
           <v-list theme="dark" bg-color="#211F31" class="px-2" width="320">

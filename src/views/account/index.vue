@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue"
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
@@ -20,6 +20,7 @@ const { width } = useDisplay()
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const route = useRoute();
+const router = useRouter();
 
 const accountWidth = ref<string>('account-container');
 const activeMenuIndex = ref<any>(0);
@@ -107,6 +108,10 @@ const mDialogHide = () => {
     mobileDialogVisible.value = false;
 }
 
+const goBeforePage = () => {
+    router.go(-1);
+}
+
 onMounted(() => {
     if (mobileWidth.value > 1280) {
         if (rightBarToggle.value) {
@@ -154,7 +159,7 @@ onMounted(() => {
         </v-dialog> -->
         <div class="m-account-container" :class="refferalAppBarShow ? 'pt-8' : 'pt-12'" :style="{ height: accountHeight + 'px' }">
             <div class="m-account-tab-body mx-3 d-flex align-center">
-                <v-btn class="m-account-back-btn text-none">
+                <v-btn class="m-account-back-btn text-none" @click="goBeforePage">
                     <v-icon class="header-mdi-icon">mdi-chevron-left</v-icon>
                     <!-- <img src="@/assets/public/svg/icon_public_11.svg" width="18" /> -->
                     {{ t('account.back_text') }}

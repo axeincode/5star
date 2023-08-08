@@ -17,7 +17,8 @@ const { setMailList } = mailStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL"
+    name: "BRL",
+    value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -28,31 +29,38 @@ const selectedPaymentItem = ref<GetPaymentItem>({
 const currencyList = ref<Array<GetCurrencyItem>>([
     {
         icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-        name: "BRL"
+        name: "BRL",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
-        name: "PHP"
+        name: "PHP",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
-        name: "PEN"
+        name: "PEN",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
-        name: "MXN"
+        name: "MXN",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
-        name: "CLP"
+        name: "CLP",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
-        name: "USD"
+        name: "USD",
+        value: 5.25
     },
     {
         icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
-        name: "COP"
+        name: "COP",
+        value: 5.25
     },
 ])
 

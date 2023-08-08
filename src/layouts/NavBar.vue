@@ -13,6 +13,7 @@ import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
+const { setLoginBonusDialogVisible } = loginBonusStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -44,6 +45,10 @@ const navBarToggle = computed(() => {
     const { getNavBarToggle } = storeToRefs(appBarStore());
     return getNavBarToggle.value
 })
+
+const openLoginBonusDialog = () => {
+  setLoginBonusDialogVisible(true);
+}
 
 // language array
 const langItems = ref<Array<string>>([
@@ -174,8 +179,8 @@ onMounted(() => {
                 </v-row>
                 <v-row class="mx-2 ma-1">
                     <v-col cols="6" class="pa-1 relative">
-                        <v-list-item value="casino" class="ma-0 pa-0" height="48px">
-                            <img src="@/assets/public/svg/bg_public_16.svg" class="img-width" />
+                        <v-list-item value="casino" class="ma-0 pa-0" height="48px" @click="openLoginBonusDialog" >
+                            <img src="@/assets/public/svg/bg_public_16.svg" class="img-width"/>
                             <img src="@/assets/public/image/img_public_01.png" class="navbar-task-img-position"
                                 width="46" />
                             <p class="text-700-14 white navbar-task-text-position">{{ t('navBar.task_text') }}</p>

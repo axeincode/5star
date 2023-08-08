@@ -28,7 +28,7 @@ const mobileWidth = computed(() => {
     <div class="my-4" :class="mobileWidth > 600 ? 'mx-8' : 'mx-2'">
 
         <!-------------------- footer bar -------------->
-        <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-10'">
+        <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-7'">
             <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
                 <div class="footer-title" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.title') }}</div>
                 <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">{{ t('home.footer.game.menu_1') }}</div>
@@ -112,7 +112,7 @@ const mobileWidth = computed(() => {
                 </v-row>
             </v-card>
         </v-row>
-        <v-row class="mt-8 mb-4 justify-center" :class="mobileWidth > 600 ? 'footer-6-text' : 'text-400-12 gray'">
+        <v-row class="mt-8 mb-8 justify-center" :class="mobileWidth > 600 ? 'footer-6-text' : 'text-400-12 gray'">
             {{ t('home.footer.footer_6.text') }}
         </v-row>
     </div>

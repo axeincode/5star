@@ -505,10 +505,10 @@ export default Signup
     background: #0cb6fa;
 }
 
-button:active:enabled {
-    transform: scale(0.95);
-    filter: brightness(80%);
-}
+// button:active:enabled {
+//     transform: scale(0.95);
+//     filter: brightness(80%);
+// }
 
 .disable-password {
     position: absolute;

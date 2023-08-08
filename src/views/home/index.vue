@@ -32,7 +32,6 @@ const Dashboard = defineComponent({
       signoutDialog: false,
       mobileDialog: false,
       mobileDialogCheck: false,
-      historyToggleSwitch: false,
       slides: [
         [
           new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
@@ -454,7 +453,7 @@ const Dashboard = defineComponent({
           },
           amount: 25
         },
-      ]
+      ],
     });
 
     const luckyContainer = ref<HTMLElement | null>(null);
@@ -462,6 +461,10 @@ const Dashboard = defineComponent({
 
     const recordContainer = ref<HTMLElement | null>(null);
     const recordScrollInterval = ref<any>(null)
+    const historyToggleSwitch = ref<boolean>(false);
+
+    const winnerCheckboxColor = ref<string>("#ffffff");
+    const prizeCheckboxColor = ref<string>("#7782AA");
 
     const mobileVersion = computed(() => {
       return name.value
@@ -488,20 +491,19 @@ const Dashboard = defineComponent({
             state.luckyJackpotList = [...state.luckyJackpotList, ...state.luckyJackpotList];
           }
         }
-      }, 600);
+      }, 1000);
     }
 
     const startRecordScrollingInterval = () => {
       recordScrollInterval.value = setInterval(() => {
         if (recordContainer.value) {
           if (mobileWidth.value > 600) {
-            recordContainer.value.scrollTop += 56;
+            recordContainer.value.scrollTop += 65.83;
           } else {
-            recordContainer.value.scrollTop += 51;
+            recordContainer.value.scrollTop += 55.33;
           }
-          // console.log(recordContainer.value.scrollTop + recordContainer.value.clientHeight, recordContainer.value.scrollHeight);
           if (recordContainer.value.scrollTop + recordContainer.value.clientHeight >= recordContainer.value.scrollHeight) {
-            state.recordList = [...state.recordList, ...state.recordList];
+            state.recordList.push(state.recordList[Math.floor(Math.random() * 10)])
           }
         }
       }, 600);
@@ -514,6 +516,288 @@ const Dashboard = defineComponent({
         state.mobileDialog = false;
       }
     })
+
+    watch(mobileWidth, (value) => {
+      clearInterval(luckyScrollInterval.value);
+      clearInterval(recordScrollInterval.value);
+      state.recordList = [
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+            name: "Mines"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 20
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+            name: "Mines"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 12
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+            name: "Mines"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 7
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+            name: "Mines"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 12.17
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+            name: "Double"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 32
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
+            name: "Crash"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 5
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
+            name: "Crash"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 13
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+            name: "Double"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 19
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+            name: "Double"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 22.10
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+            name: "Dice"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 133
+        },
+        {
+          game: {
+            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+            name: "Dice"
+          },
+          player: {
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+            name: "Ar***ra"
+          },
+          amount: 25
+        },
+      ];
+      startRecordScrollingInterval();
+    })
+
+    watch(historyToggleSwitch, (value) => {
+      if (value) {
+        state.recordList = [
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+              name: "Mines"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 20
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+              name: "Mines"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 12
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+              name: "Mines"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 7
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+              name: "Mines"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 12.17
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+              name: "Double"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 32
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
+              name: "Crash"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 5
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
+              name: "Crash"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 13
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+              name: "Double"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 19
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+              name: "Double"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 22.10
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+              name: "Dice"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 133
+          },
+          {
+            game: {
+              image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+              name: "Dice"
+            },
+            player: {
+              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+              name: "Ar***ra"
+            },
+            amount: 25
+          },
+        ];
+        winnerCheckboxColor.value = "#7782AA";
+        prizeCheckboxColor.value = "#ffffff";
+      } else {
+        winnerCheckboxColor.value = "#ffffff";
+        prizeCheckboxColor.value = "#7782AA";
+      }
+    }, { deep: true })
+
+    const winnerTransform = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute('fill', winnerCheckboxColor.value)
+        for (let subNode of node.children) {
+          subNode.setAttribute('fill', winnerCheckboxColor.value)
+        }
+      }
+      return el
+    }
+
+    const prizeTransform = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute('fill', prizeCheckboxColor.value)
+        for (let subNode of node.children) {
+          subNode.setAttribute('fill', prizeCheckboxColor.value)
+        }
+      }
+      return el
+    }
 
     onMounted(() => {
       // startLuckyScrollingInterval();
@@ -530,8 +814,11 @@ const Dashboard = defineComponent({
       ...toRefs(state),
       mobileVersion,
       mobileWidth,
+      historyToggleSwitch,
       luckyContainer,
       recordContainer,
+      winnerTransform,
+      prizeTransform,
       isNumeric
     };
   },
@@ -541,7 +828,7 @@ export default Dashboard;
 </script>
 
 <template>
-  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'my-2 mx-2'">
+  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
     <!-- image carousel -->
 
     <v-carousel cycle interval="6000" height="247" hide-delimiter-background :hide-delimiters="slides.length <= 1"
@@ -618,7 +905,7 @@ export default Dashboard;
     </v-row>
 
     <!-- original games -->
-    <v-row class="ml-4 mt-6 mb-2 original_game_text">
+    <v-row class="ml-4 mt-6 mb-1 original_game_text">
       {{ t("home.original_games") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
@@ -627,13 +914,13 @@ export default Dashboard;
         <v-img :src="item" class="original-game-img-width" />
       </div>
     </v-row>
-    <v-row class="mx-2 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center v-for="(item, index) in mOriginalGames"
+    <v-row class="mx-1 mt-0" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center v-for="(item, index) in mOriginalGames"
         :key="index">
         <v-img :src="item" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
+    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3 mb-0' : 'mt-8 ml-4'">
       <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
         :height="mobileWidth < 600 ? 41 : 48">
         {{ t("home.more") }}
@@ -641,7 +928,7 @@ export default Dashboard;
     </v-row>
 
     <!-- principal games -->
-    <v-row class="ml-4 mt-6 mb-2 original_game_text">
+    <v-row class="ml-4 mt-7 mb-0 original_game_text">
       {{ t("home.principal") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
@@ -650,8 +937,8 @@ export default Dashboard;
         <v-img :src="principalItem" class="original-game-img-width" />
       </div>
     </v-row>
-    <v-row class="mx-2 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center
+    <v-row class="mx-1 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center
         v-for="(principalItem, principalIndex) in mPrincipalGames" :key="principalIndex">
         <v-img :src="principalItem" class="original-game-img-width" />
       </v-col>
@@ -676,8 +963,8 @@ export default Dashboard;
         <v-img :src="slotItem" class="original-game-img-width" />
       </div>
     </v-row>
-    <v-row class="mx-2 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center v-for="(slotItem, slotIndex) in mSlots"
+    <v-row class="mx-1 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center v-for="(slotItem, slotIndex) in mSlots"
         :key="slotIndex">
         <v-img :src="slotItem" class="original-game-img-width" />
       </v-col>
@@ -699,8 +986,8 @@ export default Dashboard;
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </div>
     </v-row>
-    <v-row class="mx-2 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-2" v-ripple.center
+    <v-row class="mx-1 mt-2" v-else>
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center
         v-for="(liveCasinoItem, liveCasinoIndex) in mLiveCasinos" :key="liveCasinoIndex">
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </v-col>
@@ -783,12 +1070,18 @@ export default Dashboard;
           <input type="checkbox" id="history-toggle" v-model="historyToggleSwitch" />
           <label for="history-toggle">
             <div class="winner">
-              <img src="@/assets/public/svg/icon_public_92.svg" width="20" />
-              <P class="text-500-12">{{ t('home.lucky_jackpot_text') }}</P>
+              <inline-svg src="src/assets/public/svg/icon_public_92.svg" width="20" height="20"
+                :transform-source="winnerTransform">
+              </inline-svg>
+              <!-- <img src="@/assets/public/svg/icon_public_92.svg" width="20" /> -->
+              <P class="ml-1">{{ t('home.lucky_jackpot_text') }}</P>
             </div>
             <div class="prize">
-              <img src="@/assets/public/svg/icon_public_91.svg" width="20" />
-              <P class="text-500-12">{{ t('home.latest_record_text') }}</P>
+              <inline-svg src="src/assets/public/svg/icon_public_91.svg" width="20" height="20"
+                :transform-source="prizeTransform">
+              </inline-svg>
+              <!-- <img src="@/assets/public/svg/icon_public_91.svg" width="20" /> -->
+              <P class="ml-1">{{ t('home.latest_record_text') }}</P>
             </div>
           </label>
         </div>
@@ -827,7 +1120,7 @@ export default Dashboard;
             </v-row>
           </v-card>
           <div class="m-home-overflow-auto" ref="recordContainer">
-            <v-row v-for="(item, index) in recordList" :key="index" class="mx-4 mt-2 align-center">
+            <v-row v-for="(item, index) in recordList" :key="index" class="mx-4 mt-1 align-center">
               <v-col cols="4" class="py-1 d-flex align-center">
                 <img :src="item.game.image" width="22" />
                 <p class="text-500-14 gray text-center ml-2">{{ item.game.name }}</p>
@@ -1052,7 +1345,7 @@ export default Dashboard;
   margin-top: -20px;
 
   label {
-    width: 300px;
+    width: 276px;
     height: 38px;
     position: relative;
     display: block;
@@ -1078,14 +1371,20 @@ export default Dashboard;
       left: 8px;
       transition: 0.3s;
       color: black;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 700;
     }
 
     .prize {
       display: flex;
       align-items: center;
-      left: 175px;
+      left: 154px;
       transition: 0.3s;
-      color: #FFFFFF;
+      color: #7782AA;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
     }
   }
 
@@ -1109,7 +1408,7 @@ export default Dashboard;
   }
 
   input:checked+label:after {
-    left: 297px;
+    left: 274px;
     transform: translateX(-100%);
   }
 
@@ -1118,11 +1417,17 @@ export default Dashboard;
   }
 
   input:checked+label .winner {
-    color: #FFFFFF;
+    color: #7782AA;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
   }
 
   input:checked+label .prize {
-    color: black
+    color: black;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
   }
 
 }

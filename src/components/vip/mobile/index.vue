@@ -765,7 +765,7 @@ onMounted(() => {
                                     </p>
                                 </v-col>
                                 <v-col cols="5" class="ma-0 pa-0">
-                                    <v-btn class="text-none button-yellow" height="49px" width="-webkit-fill-available">
+                                    <v-btn class="text-none button-yellow m-spin-now-btn " height="49px" width="-webkit-fill-available">
                                         {{ t('vip.super_spin_body.text_3') }}
                                     </v-btn>
                                 </v-col>
@@ -1419,4 +1419,10 @@ onMounted(() => {
     top: 43px;
     width: -webkit-fill-available;
     z-index: 100000000;
-}</style>
+}
+
+.m-spin-now-btn:active:enabled {
+    transform: scale(1.1);
+    filter: brightness(80%);
+}
+</style>

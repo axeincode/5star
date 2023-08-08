@@ -22,6 +22,9 @@ const notificationShow = ref<boolean>(false);
 
 const personalInfoMenuShow = ref<boolean>(false);
 
+const depositCheckboxColor = ref<string>("#ffffff");
+const withdrawCheckboxColor = ref<string>("#7782AA");
+
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
 const notificationText = ref<string>("");
@@ -101,11 +104,42 @@ watch(cashToggleSwitch, (newValue) => {
     if (newValue) {
         setWithdrawDialogToggle(true);
         setDepositDialogToggle(false);
+
+        depositCheckboxColor.value = "#7782AA";
+        withdrawCheckboxColor.value = "#ffffff";
     } else {
         setWithdrawDialogToggle(false);
         setDepositDialogToggle(true);
+
+        depositCheckboxColor.value = "#ffffff";
+        withdrawCheckboxColor.value = "#7782AA";
     }
 }, { deep: true });
+
+watch(personalInfoMenuShow, (value) => {
+    if (personalInfoItem.value.id != "" && personalInfoItem.value.first_name != "" && personalInfoItem.value.last_name != "") {
+        isPersonalBtnReady.value = true;
+        confirmValidation.value = true;
+    } else {
+        isPersonalBtnReady.value = false;
+        confirmValidation.value = false;
+    }
+})
+
+const depositTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', depositCheckboxColor.value)
+    }
+    return el
+}
+
+const withdrawTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', withdrawCheckboxColor.value)
+    }
+    return el
+}
+
 
 onMounted(() => {
     if (depositDialogToggle.value) {
@@ -167,8 +201,8 @@ onMounted(() => {
                             v-if="confirmValidation" />
                     </div>
                     <v-list-item class="text-center">
-                        <v-btn class="mx-16 mt-2 mb-6 m-personal-confirm-btn" height="48px"
-                            :disabled="!isPersonalBtnReady || confirmValidation" :onclick="handlePersonalInfoSubmit">
+                        <v-btn class="mx-16 mt-2 mb-6 m-personal-confirm-btn" height="48px" :disabled="!isPersonalBtnReady"
+                            :onclick="handlePersonalInfoSubmit">
                             {{ t('deposit_dialog.personal_information.confirm_text') }}
                         </v-btn>
                     </v-list-item>
@@ -178,12 +212,18 @@ onMounted(() => {
                 <input type="checkbox" id="m-deposit-toggle" v-model="cashToggleSwitch" />
                 <label for="m-deposit-toggle">
                     <div class="deposit">
-                        <img src="@/assets/public/svg/icon_public_60.svg" width="18" />
-                        <P class="text-700-10">{{ t('appBar.deposit') }}</P>
+                        <inline-svg src="src/assets/public/svg/icon_public_60.svg" width="18" height="18"
+                            :transform-source="depositTransform">
+                        </inline-svg>
+                        <!-- <img src="@/assets/public/svg/icon_public_60.svg" width="18" /> -->
+                        <P class="text-700-10 ml-1">{{ t('appBar.deposit') }}</P>
                     </div>
                     <div class="withdraw">
-                        <img src="@/assets/public/svg/icon_public_65.svg" width="18" />
-                        <P class="text-700-10">{{ t('appBar.withdraw') }}</P>
+                        <inline-svg src="src/assets/public/svg/icon_public_65.svg" width="18" height="18"
+                            :transform-source="withdrawTransform">
+                        </inline-svg>
+                        <!-- <img src="@/assets/public/svg/icon_public_65.svg" width="18" /> -->
+                        <P class="text-700-10 ml-1">{{ t('appBar.withdraw') }}</P>
                     </div>
                 </label>
             </div>
@@ -411,6 +451,31 @@ onMounted(() => {
 
     .v-input--horizontal .v-input__append {
         margin-inline-start: 0px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .m-personal-info-menu {
+
+        .v-field__field {
+
+            .v-label.v-field-label {
+                font-family: "Inter";
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                color: #4A4567 !important;
+            }
+
+            .v-label.v-field-label--floating {
+                --v-field-label-scale: 0.75em;
+                font-size: var(--v-field-label-scale);
+                max-width: 100%;
+                color: #4A4567 !important;
+            }
+
+        }
     }
 }
 </style>
