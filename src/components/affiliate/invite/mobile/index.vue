@@ -162,7 +162,7 @@ const closeBonusDialog = () => {
 }
 
 const bonusDialogShow = () => {
-    bonusDialog.value = true    
+    bonusDialog.value = true
     // setMainBlurEffectShow(true);
     // setOverlayScrimShow(true);
 }
@@ -310,8 +310,8 @@ onMounted(() => {
     <v-card color="#29253C" class="mt-5 mx-3 px-3 pt-4">
         <v-row class="justify-center mt-1">
             <div class="text-700-14 white">{{ t('affiliate.invite.achivement_bonus') }}</div>
-            <img src="@/assets/public/svg/icon_public_22.svg" class="ml-4" style="cursor: pointer;"
-                @click="bonusDialogShow" width="16" />
+            <img src="@/assets/public/svg/icon_public_22.svg" class="ml-4" style="cursor: pointer;" @click="bonusDialogShow"
+                width="16" />
         </v-row>
         <v-dialog v-model="bonusDialog" :width="mobileWidth < 600 ? 328 : 471">
             <BonusDialog @close="closeBonusDialog" v-if="mobileWidth > 600" />
@@ -495,8 +495,7 @@ onMounted(() => {
                 <div class="mt-4 text-500-12 white">{{ t('affiliate.invite.invite_text_12') }}</div>
             </v-col>
             <v-col cols="12" md="6" lg="6" class="d-flex align-center justify-center">
-                <img src="@/assets/affiliate/invite/image/img_agent_03.png" class="mt-4"
-                   width="281" />
+                <img src="@/assets/affiliate/invite/image/img_agent_03.png" class="mt-4" width="281" />
             </v-col>
         </v-row>
     </v-card>
@@ -529,17 +528,17 @@ onMounted(() => {
         box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11);
     }
 
-    .v-slider-thumb--focused {
-        // display: none;
-        border-radius: 30px;
-    }
-
     .v-slider-thumb__ripple {
         display: none;
     }
 
     .v-slider.v-input--horizontal .v-slider-track__background {
         height: 2px;
+    }
+
+    .v-slider-thumb__surface::before:active {
+        transform: scale(2);
+        opacity: var(--v-focus-opacity);
     }
 
 }

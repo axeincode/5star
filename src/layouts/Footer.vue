@@ -73,27 +73,27 @@ const mobileWidth = computed(() => {
                     <p class="logo-title-2 ml-1">{{t('main.logo_text_2')}}</p> -->
                 </div>
                 <div class="mt-4" v-if="mobileWidth > 600">
-                    <v-btn color="grey-darken-4"
+                    <v-btn color="grey-darken-4" style="margin-right: 10px"
                         :class="[footerIndex == 0 ? 'footer-icon-button-red' : 'footer-icon-button']" icon=""
                         v-for="(footerIcon, footerIndex) in footerIcons" :key="footerIndex">
-                        <img :src="footerIcon" style="width: 100%" />
+                        <img :src="footerIcon" width="40" height="40" />
                     </v-btn>
                 </div>
                 <div class="mt-4" style="width:  100%;" v-else>
                     <div>
                         <template v-for="(footerIcon, footerIndex) in footerIcons" :key="footerIndex">
                             <v-btn class="m-footer-icon-button" icon="" v-if="footerIndex != 0">
-                                <img :src="footerIcon" style="width: 100%" />
+                                <img :src="footerIcon" width="44" height="44" />
                             </v-btn>
                         </template>
                     </div>
                     <div class="mt-3">
                         <v-btn class="m-footer-icon-button-red" icon="">
-                            <img :src="footerIcons[0]" style="width: 100%" />
+                            <img :src="footerIcons[0]"  width="44" height="44"/>
                         </v-btn>
                     </div>
                 </div>
-                <p class="text-left mt-4" :class="mobileWidth < 600 ? 'mx-2 text-400-11 gray' : 'footer-4-text mx-16'">{{
+                <p class="text-left mt-4" :class="mobileWidth < 600 ? 'mx-2 text-400-11 gray' : 'footer-4-text mx-8'">{{
                     t('home.footer.footer_4.text') }}</p>
             </v-col>
         </v-row>

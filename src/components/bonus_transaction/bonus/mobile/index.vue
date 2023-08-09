@@ -79,7 +79,9 @@ const formsList = ref<Array<any>>([
                     <div class="text-600-12 white">{{ totalAmount }}</div>
                 </v-list-item-title>
                 <template v-slot:append>
-                    <img src="@/assets/public/svg/btn_public_02.svg" width="24" />
+                    <div v-ripple.center style="width: 24px; height: 24px;">
+                        <img src="@/assets/public/svg/btn_public_02.svg" width="24" />
+                    </div>
                 </template>
             </v-list-item>
             <v-list-item class="m-bg-color-1 mt-4 mx-6">
@@ -126,8 +128,8 @@ const formsList = ref<Array<any>>([
                                         <div class="text-400-10 mt-2" v-if="item.type != 'Underway'"
                                             :class="[item.type == 'Failure' ? 'black' : '']">
                                             Complete the task and get
-                                            <Font :class="[item.type == 'Failure' ? 'm-bonus-cash-failure' : 'bonus-cash']">{{
-                                                item.bonusCash }}</Font> bonus
+                                            <Font :class="[item.type == 'Failure' ? 'm-bonus-cash-failure' : 'bonus-cash']">
+                                                {{ item.bonusCash }}</Font> bonus
                                         </div>
                                         <div :class="[item.type == 'Underway' ? 'mt-4' : 'mt-2']">
                                             <v-progress-linear v-model="item.rate" height="16"
@@ -146,10 +148,10 @@ const formsList = ref<Array<any>>([
                                     {{ t('bonus.super_bonus_text') }}
                                 </v-col>
                                 <v-col cols="4" class="text-right">
-                                    <img src="@/assets/public/svg/icon_public_53.svg" width="20"/>
+                                    <img src="@/assets/public/svg/icon_public_53.svg" width="20" />
                                 </v-col>
                             </v-row>
-                            <v-table class="forms-bonus-table-bg text-400-10">
+                            <v-table class="m-forms-bonus-table-bg text-400-10">
                                 <thead>
                                     <tr>
                                         <th>
@@ -207,7 +209,7 @@ const formsList = ref<Array<any>>([
     }
 }
 
-.forms-bonus-table-bg {
+.m-forms-bonus-table-bg {
     background: #1C1929 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 12px !important;
@@ -282,4 +284,5 @@ const formsList = ref<Array<any>>([
 
 .v-expansion-panel-text__wrapper {
     padding: 8px 8px 16px !important;
-}</style>
+}
+</style>

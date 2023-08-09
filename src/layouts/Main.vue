@@ -365,8 +365,8 @@ onMounted(() => {
 }
 
 .main-bg-blur {
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
 }
 
 .mobile-dialog-toggle-height {

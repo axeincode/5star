@@ -9,6 +9,13 @@ const { width } = useDisplay()
 const mobileWidth: any = computed(() => {
     return width.value;
 })
+
+onMounted(() => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+})
 </script>
 
 <template>

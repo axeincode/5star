@@ -154,8 +154,8 @@ watch(mobileWidth, (newValue: number) => {
 
 watch(currencyMenuShow, (value: boolean) => {
   if (mobileWidth.value < 600) {
-    // setOverlayScrimShow(value);
-    // setMainBlurEffectShow(value);
+    setOverlayScrimShow(value);
+    setMainBlurEffectShow(value);
   }
 })
 
@@ -648,6 +648,11 @@ onMounted(async () => {
 }
 
 .m-currency-menu {
+
+  .v-overlay__content {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
 
   .v-overlay__content::after {
     content: "";

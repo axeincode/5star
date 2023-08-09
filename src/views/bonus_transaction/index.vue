@@ -69,6 +69,7 @@ const tabSelect = (index: number) => {
 }
 
 onMounted(() => {
+
     if (mobileWidth.value > 1280) {
         if (rightBarToggle.value) {
             affiliateWidth.value = "affiliate-container";
@@ -78,7 +79,12 @@ onMounted(() => {
     } else {
         affiliateWidth.value = "m-affiliate-container";
     }
+
     selectedTabIndex.value = bonusTabIndex.value;
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 })
 </script>
 

@@ -188,6 +188,12 @@ const mobileWidth = computed(() => {
     </v-window>
 </template>
 <style lang="scss">
+.m-statistics-tab-active {
+    .v-tab__slider {
+        height: 0px !important;
+    }
+}
+
 .m-statistics-text_1 {
     color: var(--white-bg, #FFF);
     font-family: Inter;

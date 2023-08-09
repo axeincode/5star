@@ -70,6 +70,10 @@ onMounted(() => {
     } else {
         affiliateWidth.value = "m-affiliate-container";
     }
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 })
 </script>
 

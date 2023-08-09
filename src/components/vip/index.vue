@@ -3,6 +3,7 @@ import { ref, watch, computed, onMounted } from "vue"
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { appBarStore } from "@/store/appBar";
+import { refferalStore } from '@/store/refferal';
 import { type GetVIPData } from "@/interface/vip";
 import { type GetSpinData } from "@/interface/vip";
 import { storeToRefs } from "pinia";
@@ -269,6 +270,12 @@ const missionCardShow = ref<boolean>(false);
 const selectedIndex = ref<number>(1);
 
 const vipSlidePosition = ref<boolean>(false);
+const vipSlideClass = ref<string>("");
+
+const refferalAppBarShow = computed(() => {
+    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+    return getRefferalAppBarShow.value;
+})
 
 const nextDescription = () => {
     selectedVIPDescriptionIndex.value = (selectedVIPDescriptionIndex.value + 1) % vipDescriptionItems.value.length;
@@ -369,9 +376,9 @@ const handleWindowScroll = (even: Event) => {
             selectedVIPTab.value = t('vip.welfare_task');
         }
 
-        if (benefitPosition < 170) {
-            selectedVIPTab.value = t('vip.all_bonus_text');
-        }
+        // if (benefitPosition < 170) {
+        //     selectedVIPTab.value = t('vip.all_bonus_text');
+        // }
 
         if (window.scrollY < 1) {
             vipSlidePosition.value = false;
@@ -453,6 +460,26 @@ const handleVIPTab = () => {
     }, 2000)
 }
 
+watch(vipSlidePosition, (newValue: boolean) => {
+    if (newValue && refferalAppBarShow.value) {
+        vipSlideClass.value = "vip-slide-position"
+    } else if (newValue && !refferalAppBarShow.value) {
+        vipSlideClass.value = "vip-slide-position-1"
+    } else {
+        vipSlideClass.value = "";
+    }
+})
+
+watch(refferalAppBarShow, (newValue: boolean) => {
+    if (vipSlidePosition.value && newValue) {
+        vipSlideClass.value = "vip-slide-position"
+    } else if (vipSlidePosition.value && !newValue) {
+        vipSlideClass.value = "vip-slide-position-1"
+    } else {
+        vipSlideClass.value = "";
+    }
+})
+
 // const handleClick = () => {
 //     isMouseClick.value = true;
 // }
@@ -525,9 +552,9 @@ onMounted(() => {
                 </template>
             </Carousel>
 
-            <div class="mt-8" :class="vipSlidePosition ? 'vip-slide-position' : ''" ref="slideElement"
+            <div class="mt-8" :class="vipSlideClass" ref="slideElement"
                 @click="handleVIPTab">
-                <v-slide-group v-model="selectedVIPTab" show-arrows>
+                <v-slide-group v-model="selectedVIPTab" show-arrows  :style="{ height: vipSlidePosition ? '100px' : 'unset' }" :class="vipSlidePosition ? 'pt-10' : ''">
                     <v-slide-group-item v-for="(item, index) in vipTabs" :key="index" v-slot="{ isSelected, toggle }"
                         :value="item">
                         <v-btn class="ma-2 text-none transaction-tab-btn" :class="isSelected ? 'white' : 'text-gray'"
@@ -1393,9 +1420,17 @@ onMounted(() => {
 
 .vip-slide-position {
     position: fixed;
-    top: 84px;
+    top: 56px;
     width: -webkit-fill-available;
-    z-index: 100000000;
+    z-index: 1009;
+    margin-right: 40px;
+}
+
+.vip-slide-position-1 {
+    position: fixed;
+    top: 3px;
+    width: -webkit-fill-available;
+    z-index: 1009;
     margin-right: 40px;
 }
 </style>

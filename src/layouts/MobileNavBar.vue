@@ -118,7 +118,7 @@ const handleLanguageDropdown = (item: string) => {
 }
 
 const openLoginBonusDialog = () => {
-  setLoginBonusDialogVisible(true);
+    setLoginBonusDialogVisible(true);
 }
 
 const openRouletteBonusDialog = () => {
@@ -134,10 +134,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-20" :width="192"
+    <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" class="nav-background pb-100" :width="192"
         v-model="drawer">
         <template v-slot:prepend>
-            <v-list-item class="m-casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''" style="height: 56px; visibility: hidden;">
+            <v-list-item class="m-casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''"
+                style="height: 56px; visibility: hidden;">
                 <input type="checkbox" id="m-casino-toggle" />
                 <label for="m-casino-toggle">
                     <div class="casino">
@@ -185,8 +186,8 @@ onMounted(() => {
         </v-list>
         <v-list density="compact" nav class="px-0">
             <v-list-item class="ma-0 pa-0">
-                <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img"/>
-                <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" width="23"/>
+                <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
+                <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" width="23" />
                 <p class="text-700-12 color-29263C m-navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}</p>
             </v-list-item>
         </v-list>
@@ -202,7 +203,8 @@ onMounted(() => {
                             :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
                         <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
                             :title="t('navBar.casino_sub_menu.favorites')" value="favorites"></v-list-item>
-                        <v-menu location="end" offset="10" class="original-dropdown" v-model:model-value="originalMenu">
+                        <v-menu location="center" offset="10" content-class="m-original-dropdown"
+                            v-model:model-value="originalMenu">
                             <template v-slot:activator="{ props }">
                                 <v-list-item v-bind="props" class="m-casino-sub-img"
                                     prepend-avatar="@/assets/public/svg/icon_public_37.svg"
@@ -210,7 +212,7 @@ onMounted(() => {
                                     :title="t('navBar.casino_sub_menu.game_originals')" value="game originals">
                                 </v-list-item>
                             </template>
-                            <v-list theme="dark" bg-color="#211F31" width="166">
+                            <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
                                 <v-list-item v-for="(item, i) in gameOriginalItems" :key="i" :value="item.name"
                                     class="m-avatar-img" :prepend-avatar="item.icon" :title="item.name">
                                 </v-list-item>
@@ -231,12 +233,11 @@ onMounted(() => {
         <v-divider class="divider"></v-divider>
         <v-list>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_41.svg"
-                :title="t('navBar.menu_item_1.promotions')" ></v-list-item>
+                :title="t('navBar.menu_item_1.promotions')"></v-list-item>
             <v-list-item class="m-vip-club" prepend-avatar="@/assets/public/svg/icon_public_42.svg"
                 :title="t('navBar.menu_item_1.vip_club')" router :to="{ name: 'VIP' }"></v-list-item>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_43.svg"
-                :title="t('navBar.menu_item_1.affiliate')" router
-                :to="{ name: 'Affiliate' }"></v-list-item>
+                :title="t('navBar.menu_item_1.affiliate')" router :to="{ name: 'Affiliate' }"></v-list-item>
             <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_44.svg"
                 :title="t('navBar.menu_item_1.blog')"></v-list-item>
         </v-list>
@@ -246,7 +247,7 @@ onMounted(() => {
                 :title="t('navBar.live_support')"></v-list-item>
         </v-list>
         <v-list>
-            <v-menu location="end" offset="16" v-model:model-value="languageMenu">
+            <v-menu location="center" offset="16" content-class="m-language-dropdown" v-model:model-value="languageMenu">
                 <template v-slot:activator="{ props }">
                     <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
                         <v-list-item v-bind="props" class="m-casino-sub-img"
@@ -301,6 +302,10 @@ onMounted(() => {
         background: transparent;
         border-radius: 20px;
     }
+}
+
+.m-nav-background {
+    background: #29253C;
 }
 
 // casino and sport toggle switch
@@ -615,10 +620,43 @@ onMounted(() => {
 
 }
 
-.original-dropdown {
-    ::deep(.v-overlay__content) {
-        display: none !important;
-    }
+:deep(.m-original-dropdown) {
+    // top: 270px !important;
+    left: 184px !important;
+}
+
+:deep(.m-original-dropdown:after) {
+    content: "";
+    position: absolute;
+    align-self: center;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -2px;
+    border: 13px solid #211f31;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+}
+
+:deep(.m-language-dropdown) {
+    left: 208px !important;
+}
+
+:deep(.m-language-dropdown:after) {
+    content: "";
+    position: absolute;
+    align-self: center;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -26px;
+    border: 13px solid #211f31;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
 }
 
 .m-navbar-free-money-img-position {

@@ -342,6 +342,32 @@ watch(refferalAppBarShow, (newValue: boolean) => {
     }
 })
 
+watch(spinCardShow, (value) => {
+    if (!value) {
+        // setTimeout(() => {
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const spinRect = spinElement.value.getBoundingClientRect().top;
+        const spinPosition = spinRect - bodyRect;
+        window.scrollTo({
+            top: spinPosition,
+            behavior: 'smooth'
+        });
+        // }, 300)
+    }
+})
+
+watch(missionCardShow, (value) => {
+    if (!value) {
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const vipRect = vipElement.value.getBoundingClientRect().top;
+        const vipPosition = vipRect - bodyRect;
+        window.scrollTo({
+            top: vipPosition,
+            behavior: 'smooth'
+        });
+    }
+})
+
 const cashbackElement = ref<any | null>(null);
 
 const slideElement = ref<any | null>(null);
@@ -392,9 +418,9 @@ const handleWindowScroll = () => {
             selectedVIPTab.value = t('vip.welfare_task');
         }
 
-        if (benefitPosition < 170) {
-            selectedVIPTab.value = t('vip.all_bonus_text');
-        }
+        // if (benefitPosition < 170) {
+        //     selectedVIPTab.value = t('vip.all_bonus_text');
+        // }
 
         if (window.scrollY < 1) {
             vipSlidePosition.value = false;
@@ -485,7 +511,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="m-vip-container">
+    <div class="m-vip-container mb-0">
         <div class="m-vip-body">
 
             <Carousel :itemsToShow="1.2" :wrapAround="true" :transition="500">
@@ -531,7 +557,8 @@ onMounted(() => {
             </Carousel>
 
             <div class="mt-4" :class="vipSlideClass" ref="slideElement" @click="handleVIPTab">
-                <v-slide-group v-model="selectedVIPTab" show-arrows>
+                <v-slide-group v-model="selectedVIPTab" show-arrows :style="{ height: vipSlidePosition ? '88px' : 'unset' }"
+                    :class="vipSlidePosition ? 'pt-8' : ''">
                     <v-slide-group-item v-for="(item, index) in vipTabs" :key="index" v-slot="{ isSelected, toggle }"
                         :value="item">
                         <v-btn class="ma-2 text-none m-transaction-tab-btn" :class="isSelected ? 'black' : 'text-gray'"
@@ -765,7 +792,8 @@ onMounted(() => {
                                     </p>
                                 </v-col>
                                 <v-col cols="5" class="ma-0 pa-0">
-                                    <v-btn class="text-none button-yellow m-spin-now-btn " height="49px" width="-webkit-fill-available">
+                                    <v-btn class="text-none button-yellow m-spin-now-btn " height="49px"
+                                        width="-webkit-fill-available">
                                         {{ t('vip.super_spin_body.text_3') }}
                                     </v-btn>
                                 </v-col>
@@ -790,7 +818,8 @@ onMounted(() => {
                 <v-btn class="text-none button-1C1929 m-spin-more-btn-position" width="140px" height="40px"
                     style="transform: translateX(-50%) !important;" @click="spinCardShow = !spinCardShow">
                     {{ t('vip.super_spin_body.text_5') }}
-                    <v-icon class="mdi-down-position">mdi-chevron-down</v-icon>
+                    <v-icon class="mdi-down-position" v-if="!spinCardShow">mdi-chevron-down</v-icon>
+                    <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
                 </v-btn>
             </div>
 
@@ -894,9 +923,11 @@ onMounted(() => {
                     </v-row>
                 </div>
                 <v-btn class="text-none button-1C1929 m-spin-more-btn-position" width="140px" height="40px"
-                    style="transform: translateX(-50%) !important; border: 1px solid #923D71;" @click="missionCardShow = !missionCardShow">
+                    style="transform: translateX(-50%) !important; border: 1px solid #923D71;"
+                    @click="missionCardShow = !missionCardShow">
                     {{ t('vip.super_spin_body.text_5') }}
-                    <v-icon class="mdi-down-position">mdi-chevron-down</v-icon>
+                    <v-icon class="mdi-down-position" v-if="!missionCardShow">mdi-chevron-down</v-icon>
+                    <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
                 </v-btn>
             </div>
 
@@ -961,7 +992,8 @@ onMounted(() => {
                                                     <p class="text-500-12 text-gray">
                                                         {{ t('vip.benifit_description_body.text_8') }}
                                                     </p>
-                                                    <p class="text-700-16 yellow mt-1">R$ 10 <span class="text-500-12">+ 1 free spin</span></p>
+                                                    <p class="text-700-16 yellow mt-1">R$ 10 <span class="text-500-12">+ 1
+                                                            free spin</span></p>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -969,7 +1001,8 @@ onMounted(() => {
                                             <p class="text-500-12 text-gray">
                                                 {{ t('vip.benifit_description_body.text_9') }}
                                             </p>
-                                            <p class="text-700-16 yellow mt-1">R$ 30 <span class="text-500-12">+ 5 free spin</span></p>
+                                            <p class="text-700-16 yellow mt-1">R$ 30 <span class="text-500-12">+ 5 free
+                                                    spin</span></p>
                                         </v-col>
                                     </v-row>
                                 </v-card>
@@ -1030,7 +1063,8 @@ onMounted(() => {
                                                 <p class="text-500-12 text-gray">
                                                     {{ t('vip.benifit_description_body.text_15') }}
                                                 </p>
-                                                <p class="text-700-16 yellow mt-1">100BRL<span class="text-500-12">/ Monthly</span></p>
+                                                <p class="text-700-16 yellow mt-1">100BRL<span class="text-500-12">/
+                                                        Monthly</span></p>
                                             </div>
                                         </v-col>
                                         <v-col cols="5" class="d-flex justify-center">
@@ -1049,11 +1083,13 @@ onMounted(() => {
                 </v-window>
                 <div class="d-flex align-center justify-center"
                     :class="mobileWidth < 960 ? 'mt-2 mr-4 justify-end' : 'benifit-description-pagination'">
-                    <v-btn class="button-black description-prev-btn" theme="dark" icon @click="prevDescription" width="28" height="28">
+                    <v-btn class="button-black description-prev-btn" theme="dark" icon @click="prevDescription" width="28"
+                        height="28">
                         <v-icon>mdi-chevron-left</v-icon>
                     </v-btn>
                     <p class="text-700-16 white mx-4">{{ descriptionTab }}</p>
-                    <v-btn class="button-black description-prev-btn" theme="dark" icon @click="nextDescription" width="28" height="28">
+                    <v-btn class="button-black description-prev-btn" theme="dark" icon @click="nextDescription" width="28"
+                        height="28">
                         <v-icon>mdi-chevron-right</v-icon>
                     </v-btn>
                 </div>
@@ -1409,16 +1445,16 @@ onMounted(() => {
 
 .m-vip-slide-position {
     position: fixed;
-    top: 76px;
+    top: 48px;
     width: -webkit-fill-available;
-    z-index: 100000000;
+    z-index: 1009;
 }
 
 .m-vip-slide-position-1 {
     position: fixed;
-    top: 43px;
+    top: 12px;
     width: -webkit-fill-available;
-    z-index: 100000000;
+    z-index: 1009;
 }
 
 .m-spin-now-btn:active:enabled {

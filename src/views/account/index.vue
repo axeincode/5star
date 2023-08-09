@@ -126,6 +126,10 @@ onMounted(() => {
         mobileDialogVisible.value = true;
     }
     activeMenuIndex.value = route.query.index ? route.query.index : 0
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 })
 </script>
 
@@ -157,7 +161,8 @@ onMounted(() => {
             <MDialog @mDialogHide="mDialogHide" :avatar="userInfo.avatar" :nickName="userInfo.name"
                 @selectActiveIndex="selectActiveIndex" />
         </v-dialog> -->
-        <div class="m-account-container" :class="refferalAppBarShow ? 'pt-8' : 'pt-12'" :style="{ height: accountHeight + 'px' }">
+        <div class="m-account-container" :class="refferalAppBarShow ? 'pt-8' : 'pt-12'"
+            :style="{ height: accountHeight + 'px' }">
             <div class="m-account-tab-body mx-3 d-flex align-center">
                 <v-btn class="m-account-back-btn text-none" @click="goBeforePage">
                     <v-icon class="header-mdi-icon">mdi-chevron-left</v-icon>

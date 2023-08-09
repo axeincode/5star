@@ -802,6 +802,10 @@ const Dashboard = defineComponent({
     onMounted(() => {
       // startLuckyScrollingInterval();
       startRecordScrollingInterval();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     })
 
     onUnmounted(() => {
@@ -1219,6 +1223,12 @@ export default Dashboard;
 .slider-img-width {
   width: 100%;
   height: 225px;
+}
+
+.slider-img-width:active {
+  // transform: scale(1.2);
+  // filter: brightness(80%);
+  // transition-duration: 0.28s;
 }
 
 .v-field {

@@ -155,7 +155,7 @@ watch(mobileWidth, (newValue: number) => {
 </script>
 
 <template>
-    <v-navigation-drawer temporary class="nav-background py-14" location="right" width="269" v-model="drawer">
+    <v-navigation-drawer temporary class="user-nav-background pt-14 pb-88" location="right" width="269" v-model="drawer">
         <template v-slot:prepend>
             <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
         </template>
@@ -166,7 +166,8 @@ watch(mobileWidth, (newValue: number) => {
                 </template>
                 <v-list-item-title class="ml-2 text-600-10">{{ t('appBar.id') }}: {{ user.id }}</v-list-item-title>
                 <template v-slot:append>
-                    <div style="width: 22px; height: 22px; border-radius: 4px; background: #353652;" class="relative" @click="notificationShow = !notificationShow">
+                    <div style="width: 22px; height: 22px; border-radius: 4px; background: #353652;" class="relative"
+                        @click="notificationShow = !notificationShow">
                         <img src="@/assets/public/svg/icon_public_71.svg" width="16"
                             style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" />
                     </div>
@@ -309,22 +310,28 @@ watch(mobileWidth, (newValue: number) => {
                 </template>
                 <v-list-item-title class="ml-2">{{ t('appBar.statistics') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="m-user-item">
-                <v-list-item-title>
-                    <div class="d-flex justify-center align-center m-sign-out-btn text-400-12" v-ripple.center @click="showSignoutDialog">
-                        <img src="@/assets/public/svg/icon_public_70.svg" class="mr-4" width="20"/>
-                        {{ t('appBar.sign_out') }}
-                    </div>
-                </v-list-item-title>
-            </v-list-item>
+            <div class="d-flex justify-center align-center m-sign-out-btn text-400-12 white" v-ripple.center
+                @click="showSignoutDialog">
+                <img src="@/assets/public/svg/icon_public_70.svg" class="mr-4" width="20" />
+                {{ t('appBar.sign_out') }}
+            </div>
         </v-list>
     </v-navigation-drawer>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+    <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
 </template>
 
 <style lang="scss">
 .nav-background {
     background-color: #29253C !important;
+    color: #7782AA !important;
+    border: 2px !important;
+    box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
+    top: 0px !important;
+    height: 100% !important;
+    will-change: auto !important;
+}
+.user-nav-background {
+    background-color: #211F31 !important;
     color: #7782AA !important;
     border: 2px !important;
     box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -340,11 +347,15 @@ watch(mobileWidth, (newValue: number) => {
 }
 
 .m-sign-out-btn {
-  cursor: pointer;
-  background: #353652;
-  border-radius: 20px;
-  padding: 6px;
-  margin: 0px 40px;
+    width: 157px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--secondary-button-353652, #353652);
+
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+    margin: auto;
 }
 
 .m-refer-friend-img-position {
@@ -357,10 +368,6 @@ watch(mobileWidth, (newValue: number) => {
     position: absolute;
     right: 9px;
     top: -15px;
-}
-
-.pb-20 {
-    padding-bottom: 80px !important;
 }
 
 .user-navbar-position {
