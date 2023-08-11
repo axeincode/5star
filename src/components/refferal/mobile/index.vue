@@ -14,6 +14,7 @@ const earnMoney = ref<number>(85601479);
 const host = ref<string>("xxx.com");
 const refferalCode = ref<string>("xxxxxxxxxx");
 const siteUrl = ref<string>("https://blue.game/xxxxxxxxxx");
+const refferalContainerHeight = ref<number>(0);
 
 const descriptionVisible = ref<boolean>(false);
 
@@ -45,11 +46,12 @@ const showDescriptionDialog = () => {
 }
 
 onMounted(() => {
+    refferalContainerHeight.value = 594;
 })
 </script>
 
 <template>
-    <div class="m-refferal-container">
+    <div class="m-refferal-container" :style="{ height: refferalContainerHeight + 'px' }">
         <template v-if="descriptionVisible">
             <div class="mt-5 text-center text-700-14 white">
                 {{ t('refferal.dialog.header.body_text') }}
@@ -135,7 +137,8 @@ onMounted(() => {
 .m-refferal-container {
     background: #2E274C;
     border-radius: 16px;
-    height: 594px;
+    height: 0px;
+    transition: height 0.3s ease-out;
 
     .refferal-dialog-header {
         background: linear-gradient(180deg, #5EAD1F 0%, #1B5A65 100%);

@@ -73,6 +73,10 @@ const tootipList = ref<Array<any>>([
     },
 ])
 
+window.addEventListener('scroll', function () {
+    gameMenuShow.value = false;
+});
+
 const mobileWidth = computed(() => {
     return width.value
 })

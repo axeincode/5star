@@ -24,10 +24,15 @@ const dateFormat = ref('YYYY/MM/DD');
 
 const selectedBonusItem = ref("Invitation Bonus");
 
+const datePickerShow = ref<boolean>(false);
+
 const bonusItems = ref<Array<string>>([
     "Invitation Bonus",
     "Betting Commission"
 ])
+
+const bonusMenuShow = ref<boolean>(false);
+const cashMenuShow = ref<boolean>(false);
 
 const selectedCashItem = ref<number>(10);
 
@@ -113,13 +118,19 @@ const selectedDate = ref([
     moment().tz("Asia/Hong_Kong").format("YYYY/MM/DD")
 ]);
 
+window.addEventListener('scroll', function () {
+    datePickerShow.value = false;
+    bonusMenuShow.value = false;
+    cashMenuShow.value = false;
+});
+
 const mobileWidth = computed(() => {
     return width.value
 })
 </script>
 <template>
     <v-row class="mt-6 justify-end mx-6">
-        <v-menu offset="10" class="bonus-menu">
+        <v-menu offset="10" class="bonus-menu" v-model="bonusMenuShow">
             <template v-slot:activator="{ props }">
                 <v-card color="#1C1929" theme="dark">
                     <v-list-item class="bonus-item" v-bind="props" :title="selectedBonusItem" append-icon="mdi-chevron-down"
@@ -134,17 +145,18 @@ const mobileWidth = computed(() => {
                 </v-list-item>
             </v-list>
         </v-menu>
-        <div class="relative ml-2">
+        <div class="relative ml-2" @click="datePickerShow = true">
             <el-date-picker v-model="selectedDate" popper-class="date-picker-background" type="daterange"
                 value-format="YYYY/MM/DD" :format="dateFormat" :prefix-icon="customPrefix" :clear-icon="customClear"
-                start-placeholder="Start date" end-placeholder="End date">
+                :visible="datePickerShow" start-placeholder="Start date" end-placeholder="End date"
+                @change="datePickerShow = false" @blur="datePickerShow = false">
                 <template #range-separator>
                     <img src="@/assets/public/svg/icon_public_83.svg" />
                 </template>
             </el-date-picker>
             <img src="@/assets/public/svg/icon_public_23.svg" class="date-icon-position" />
         </div>
-        <v-menu offset="10" class="bonus-menu">
+        <v-menu offset="10" class="bonus-menu" v-model="cashMenuShow">
             <template v-slot:activator="{ props }">
                 <v-card color="#1C1929" theme="dark" class="ml-2">
                     <v-list-item class="bonus-item" v-bind="props" :title="selectedCashItem" append-icon="mdi-chevron-down"
@@ -161,7 +173,7 @@ const mobileWidth = computed(() => {
         </v-menu>
     </v-row>
     <v-row class="mx-4 mt-6">
-        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header height="600px">
+        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header>
             <thead class="forms-table-header">
                 <tr>
                     <th class="forms-table-header-text" style="border-radius: 8px 0px 0px 8px;">

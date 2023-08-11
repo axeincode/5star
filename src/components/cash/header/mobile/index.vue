@@ -6,6 +6,9 @@ import Notification from "@/components/global/notification/index.vue";
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -47,9 +50,14 @@ const handlePersonalInfoToggle = (): void => {
 
 const handleConfirmValidation = (): void => {
     if (confirmValidation.value) {
-        notificationText.value = t('deposit_dialog.personal_information.confirm_warning_text');
-        checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
-        notificationShow.value = !notificationShow.value;
+        // notificationText.value = t('deposit_dialog.personal_information.confirm_warning_text');
+        // checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
+        // notificationShow.value = !notificationShow.value;
+        ElNotification({
+            icon: WarningIcon,
+            title: t('deposit_dialog.personal_information.confirm_warning_text'),
+            duration: 3000,
+        })
     }
 }
 
@@ -85,9 +93,14 @@ const cashDialogShow = () => {
 
 const handlePersonalInfoSubmit = (): void => {
     confirmValidation.value = true;
-    notificationText.value = t('deposit_dialog.personal_information.confirm_success_text');
-    checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
-    notificationShow.value = !notificationShow.value;
+    // notificationText.value = t('deposit_dialog.personal_information.confirm_success_text');
+    // checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
+    // notificationShow.value = !notificationShow.value;
+    ElNotification({
+        icon: SuccessIcon,
+        title: t('deposit_dialog.personal_information.confirm_success_text'),
+        duration: 3000,
+    })
 }
 
 const depositDialogToggle = computed(() => {
@@ -155,7 +168,7 @@ onMounted(() => {
     <div class="mobile-cash-header">
         <div class="m-header d-flex align-center relative">
             <v-menu offset="-5" :close-on-content-click=false content-class="m-personal-info-menu"
-                v-model:model-value="personalInfoMenuShow">
+                transition="slide-y-transition" v-model:model-value="personalInfoMenuShow">
                 <template v-slot:activator="{ props }">
                     <v-btn class="m-deposit-header-btn" v-bind="props" @click="handlePersonalInfoToggle">
                         <div class="m-deposit-header-account-bg relative">
@@ -456,6 +469,7 @@ onMounted(() => {
 
 @media (max-width: 600px) {
     .m-personal-info-menu {
+        transform-origin: top !important;
 
         .v-field__field {
 
@@ -477,5 +491,42 @@ onMounted(() => {
 
         }
     }
+}
+
+@media(max-width: 600px) {
+
+    .el-notification {
+        align-items: center !important;
+        z-index: 1000000000 !important;
+        top: 70px !important;
+        right: 0px !important;
+        height: 60px;
+        border: none;
+        border-radius: 16px 0px 0px 16px;
+        background: var(--bg-2, #181522);
+        box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.40);
+    }
+
+    .el-notification__title {
+        color: var(--sec-text, #7782AA);
+        font-family: Inter;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-align: left;
+    }
+
+    .el-notification__closeBtn svg {
+        display: none;
+    }
+
+    .el-notification__closeBtn {
+        top: 22px !important;
+        background-image: url('@/assets/public/svg/icon_public_52.svg');
+        background-repeat: no-repeat;
+        background-size: 18px;
+    }
+
 }
 </style>

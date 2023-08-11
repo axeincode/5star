@@ -145,6 +145,10 @@ watch(drawer, (newValue: boolean) => {
         setMainBlurEffectShow(false);
     }
     accountPageShow.value = false;
+    if (newValue) {
+        setMainBlurEffectShow(true);
+        setOverlayScrimShow(true);
+    }
 })
 
 watch(mobileWidth, (newValue: number) => {

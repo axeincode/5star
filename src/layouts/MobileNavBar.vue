@@ -93,6 +93,10 @@ watch(drawer, (newValue: boolean) => {
     if (!newValue && !rouletteBonusDialog.value) {
         setMainBlurEffectShow(false);
     }
+    if (newValue) {
+        setMainBlurEffectShow(true);
+        setOverlayScrimShow(true);
+    }
 })
 
 watch(navBarToggle, (newValue) => {

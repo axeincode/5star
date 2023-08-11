@@ -57,6 +57,8 @@ const gameList = ref<Array<string>>([
 
 const selectedGame = ref<string>("Crash");
 
+const gameMenuShow = ref<boolean>(false);
+
 const handleDropdown = (item: string) => {
     selectedGame.value = item;
 }
@@ -75,6 +77,10 @@ const tootipList = ref<Array<any>>([
         cash: "BRL150"
     },
 ])
+
+window.addEventListener('scroll', function () {
+    gameMenuShow.value = false;
+});
 
 const mobileWidth = computed(() => {
     return width.value
@@ -139,7 +145,7 @@ const mobileWidth = computed(() => {
     </v-row>
     <v-row class="ma-4 mx-2">
         <v-col cols="6" md="4" lg="4" class="d-flex justify-start">
-            <v-menu offset="12" class="game-menu">
+            <v-menu offset="12" class="game-menu" v-model="gameMenuShow">
                 <template v-slot:activator="{ props }">
                     <v-card color="#1C1929" theme="dark">
                         <v-list-item class="game-item" v-bind="props" append-icon="mdi-chevron-down"

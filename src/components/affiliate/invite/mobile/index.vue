@@ -27,6 +27,8 @@ const inviteList = ref([
 ])
 const inviteUserValue = ref<number>(44057);
 const depositUserValue = ref<number>(3963);
+const revenuCashMenuShow = ref<boolean>(false);
+const commissionMenuShow = ref<boolean>(false);
 const bonusTodayValue = ref<string>("R$ 55.44");
 const bonusYesterdayValue = ref<string>("R$ 98.02");
 const revenuCash = ref<string>("R$ 415.740");
@@ -161,6 +163,11 @@ const closeBonusDialog = () => {
     bonusDialog.value = false;
 }
 
+window.addEventListener('scroll', function () {
+    revenuCashMenuShow.value = false;
+    commissionMenuShow.value = false;
+});
+
 const bonusDialogShow = () => {
     bonusDialog.value = true
     // setMainBlurEffectShow(true);
@@ -225,7 +232,7 @@ onMounted(() => {
                     <v-col cols="12">
                         <div class="d-flex mt-2">
                             <div class="m-invite-revenu-cash-text">{{ revenuCash }}</div>
-                            <v-menu>
+                            <v-menu v-model="revenuCashMenuShow">
                                 <template v-slot:activator="{ props }">
                                     <img src="@/assets/public/svg/icon_public_22.svg" class="ml-4" v-bind="props"
                                         width="16" />
@@ -428,7 +435,7 @@ onMounted(() => {
     </v-card>
     <v-row class="mt-6 justify-center mx-16">
         <div class="text-700-14 white text-center relative">{{ t('affiliate.invite.commission_title_text') }}
-            <v-menu>
+            <v-menu v-model="commissionMenuShow">
                 <template v-slot:activator="{ props }">
                     <img src="@/assets/public/svg/icon_public_22.svg" v-bind="props"
                         style="cursor: pointer; position: absolute; top:2px; right: -21px;" width="16" />

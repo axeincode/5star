@@ -913,13 +913,13 @@ export default Dashboard;
       {{ t("home.original_games") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
-        v-for="(item, index) in originalGames" :key="index">
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-for="(item, index) in originalGames"
+        :key="index">
         <v-img :src="item" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-0" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center v-for="(item, index) in mOriginalGames"
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-for="(item, index) in mOriginalGames"
         :key="index">
         <v-img :src="item" class="original-game-img-width" />
       </v-col>
@@ -936,13 +936,13 @@ export default Dashboard;
       {{ t("home.principal") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
         v-for="(principalItem, principalIndex) in principalGames" :key="principalIndex">
         <v-img :src="principalItem" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1"
         v-for="(principalItem, principalIndex) in mPrincipalGames" :key="principalIndex">
         <v-img :src="principalItem" class="original-game-img-width" />
       </v-col>
@@ -962,13 +962,13 @@ export default Dashboard;
       {{ t("home.slots") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
         v-for="(slotItem, slotIndex) in slots" :key="slotIndex">
         <v-img :src="slotItem" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center v-for="(slotItem, slotIndex) in mSlots"
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-for="(slotItem, slotIndex) in mSlots"
         :key="slotIndex">
         <v-img :src="slotItem" class="original-game-img-width" />
       </v-col>
@@ -985,13 +985,13 @@ export default Dashboard;
       {{ t("home.live_casino") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-ripple.center
+      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
         v-for="(liveCasinoItem, liveCasinoIndex) in liveCasinos" :key="liveCasinoIndex">
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-ripple.center
+      <v-col cols="4" lg="2" md="2" sm="3" class="px-1"
         v-for="(liveCasinoItem, liveCasinoIndex) in mLiveCasinos" :key="liveCasinoIndex">
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </v-col>
@@ -1337,6 +1337,12 @@ export default Dashboard;
   width: 100%;
   height: 100%;
   cursor: pointer;
+}
+
+.original-game-img-width:active {
+  transform: scale(0.9);
+  filter: brightness(80%);
+  transition-duration: 0.28s;
 }
 
 .more-btn-color {

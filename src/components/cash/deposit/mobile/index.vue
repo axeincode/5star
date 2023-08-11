@@ -8,6 +8,7 @@ import ValidationBox from '@/components/cash/deposit/ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+import { ElNotification } from 'element-plus'
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();

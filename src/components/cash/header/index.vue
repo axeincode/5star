@@ -118,7 +118,7 @@ onMounted(() => {
 <template>
     <div class="cash-header">
         <div class="header d-flex align-center relative">
-            <v-menu :close-on-content-click=false content-class="personal-menu">
+            <v-menu :close-on-content-click=false content-class="personal-menu" transition="slide-y-transition">
                 <template v-slot:activator="{ props }">
                     <v-btn class="deposit-header-btn" v-bind="props" @click="handlePersonalInfoToggle">
                         <div class="deposit-header-account-bg ml-4 relative">
@@ -244,7 +244,7 @@ onMounted(() => {
             display: block;
             background: #211F31;
             border-radius: 20px !important;
-            box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+            // box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
             cursor: pointer;
             transition: 0.3s;
 

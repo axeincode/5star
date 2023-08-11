@@ -38,6 +38,8 @@ const bettingCommissionItem = ref({
 })
 const bonusDialog = ref<boolean>(false);
 const slider = ref<number>(0);
+const revenuCashMenuShow = ref<boolean>(false);
+const commissionMenuShow = ref<boolean>(false);
 const min = 0;
 const max = 100;
 const slides = ref([
@@ -153,6 +155,11 @@ const inviteUrlCopy = () => {
     notificationShow.value = !notificationShow.value;
 }
 
+window.addEventListener('scroll', function () {
+    revenuCashMenuShow.value = false;
+    commissionMenuShow.value = false;
+});
+
 const closeBonusDialog = () => {
     bonusDialog.value = false;
 }
@@ -210,7 +217,7 @@ onMounted(() => {
                     <v-col cols="6" class="pa-0">
                         <div class="d-flex">
                             <div class="invite-revenu-cash-text">{{ revenuCash }}</div>
-                            <v-menu>
+                            <v-menu v-model="revenuCashMenuShow">
                                 <template v-slot:activator="{ props }">
                                     <img src="@/assets/public/svg/icon_public_22.svg" class="ml-4"
                                         style="cursor: pointer;" v-bind="props" />
@@ -231,7 +238,7 @@ onMounted(() => {
                         <div class="invite-revenu-text">{{ t('affiliate.invite.monthly_revenu_goal') }}</div>
                         <div class="d-flex mt-2">
                             <div class="invite-revenu-cash-text">{{ revenuCash }}</div>
-                            <v-menu>
+                            <v-menu v-model="revenuCashMenuShow">
                                 <template v-slot:activator="{ props }">
                                     <img src="@/assets/public/svg/icon_public_22.svg" class="ml-4"
                                         v-bind="props" />
@@ -439,7 +446,7 @@ onMounted(() => {
     </v-card>
     <v-row class="mt-6 justify-center">
         <div class="premiums-text">{{ t('affiliate.invite.commission_title_text') }}</div>
-        <v-menu>
+        <v-menu v-model="commissionMenuShow">
             <template v-slot:activator="{ props }">
                 <img src="@/assets/public/svg/icon_public_22.svg" class="ml-4" v-bind="props"
                     style="cursor: pointer;" />
