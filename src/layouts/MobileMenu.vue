@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import { appBarStore } from "@/store/appBar";
 import { mailStore } from "@/store/mail";
 import { type GetMailData } from '@/interface/mail';
@@ -9,6 +10,7 @@ import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 const { t } = useI18n();
 const { name, width } = useDisplay()
+const router = useRouter();
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
@@ -25,49 +27,53 @@ const mailMenuShow = ref<boolean>(false);
 // pc or mobile screen switch
 
 const mobileVersion = computed(() => {
-    return name.value
+  return name.value
 });
 
 const mobileWidth: any = computed(() => {
-    return width.value;
+  return width.value;
 })
 
 const navToggle = computed(() => {
-    const { getNavBarToggle } = storeToRefs(appBarStore());
-    return getNavBarToggle.value
+  const { getNavBarToggle } = storeToRefs(appBarStore());
+  return getNavBarToggle.value
 })
 
 // get mail data
 const mailList = computed((): GetMailData[] => {
-    const { getMailList } = storeToRefs(mailStore())
-    return getMailList.value
+  const { getMailList } = storeToRefs(mailStore())
+  return getMailList.value
 })
 
 watch(mailList, (newValue) => {
-    mailCount.value = newValue.length;
+  mailCount.value = newValue.length;
 }, { deep: true })
 
 watch(navToggle, (newValue) => {
-    navbarToggle.value = newValue;
+  navbarToggle.value = newValue;
 }, { deep: true })
 
 watch(mailMenuShow, (newValue) => {
-    setMainBlurEffectShow(newValue);
-    setOverlayScrimShow(newValue);
+  setMainBlurEffectShow(newValue);
+  setOverlayScrimShow(newValue);
 })
 
 const handleNavbarToggle = () => {
-    navbarToggle.value = !navbarToggle.value
-    setUserNavBarToggle(false);
-    setMainBlurEffectShow(false);
-    setTimeout(() => {
-        setNavBarToggle(navbarToggle.value)
-        setMainBlurEffectShow(navbarToggle.value);
-    }, 200);
+  navbarToggle.value = !navbarToggle.value
+  setUserNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
+  }, 200);
+}
+
+const goHomePage = () => {
+  router.push({name: "Dashboard"});
 }
 
 onMounted(() => {
-    mailCount.value = mailList.value.length
+  mailCount.value = mailList.value.length
 })
 </script>
 
@@ -79,7 +85,7 @@ onMounted(() => {
         {{ t("mobile_menu.menu") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color">
+    <v-btn class="menu-text-color" @click="goHomePage">
       <img src="@/assets/public/svg/icon_public_34.svg" width="20" height="20" />
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.casino") }}
@@ -87,10 +93,7 @@ onMounted(() => {
     </v-btn>
     <v-btn class="menu-text-color share-ripple-btn">
       <div class="circle-background"></div>
-      <img
-        src="@/assets/public/svg/bg_public_22.svg"
-        class="share-background-img-position"
-      />
+      <img src="@/assets/public/svg/bg_public_22.svg" class="share-background-img-position" />
       <img src="@/assets/public/image/img_public_19.png" class="share-img-position" />
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
@@ -102,22 +105,7 @@ onMounted(() => {
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>
-
-    <!-- <v-btn class="menu-text-color" @click="mailNavigation = !mailNavigation">
-            <div class="relative">
-                <img src="@/assets/public/svg/icon_public_55.svg" width="20">
-                <p class="chat-box-text">{{ mailCount }}</p>
-            </div>
-            <div class="text-600-12">
-                {{ t('mobile_menu.mail') }}
-            </div>
-        </v-btn> -->
-
-    <v-menu
-      content-class="mobile-mail-menu"
-      :scrim="true"
-      v-model:model-value="mailMenuShow"
-    >
+    <v-menu content-class="mobile-mail-menu" :scrim="true" v-model:model-value="mailMenuShow">
       <template v-slot:activator="{ props }">
         <v-btn class="menu-text-color" v-bind="props">
           <div class="relative">
@@ -129,24 +117,14 @@ onMounted(() => {
           </div>
         </v-btn>
       </template>
-      <v-list
-        theme="dark"
-        bg-color="transparent"
-        class="px-2"
-        :width="mobileWidth"
-        style="box-shadow: none !important"
-      >
+      <v-list theme="dark" bg-color="transparent" class="px-2" :width="mobileWidth" style="box-shadow: none !important">
         <v-list-item height="36">
           <v-list-item-title class="ml-2">
             <div class="mail-header-text">{{ t("mail_dialog.header_text") }}</div>
           </v-list-item-title>
         </v-list-item>
-        <v-list-item
-          class="mail-item"
-          :value="mailItem.mail_content_1.content"
-          v-for="(mailItem, mailIndex) in mailList"
-          :key="mailIndex"
-        >
+        <v-list-item class="mail-item" :value="mailItem.mail_content_1.content" v-for="(mailItem, mailIndex) in mailList"
+          :key="mailIndex">
           <template v-slot:prepend>
             <img :src="mailItem.icon" width="20" />
           </template>
@@ -170,30 +148,6 @@ onMounted(() => {
       </v-list>
     </v-menu>
   </v-bottom-navigation>
-  <!-- <v-navigation-drawer v-model="mailNavigation" location="bottom" temporary class="mobile-mail-menu" :scrim="true">
-        <v-list theme="dark" bg-color="transparent" class="px-2" :width="mobileWidth" style="box-shadow: none !important;">
-            <v-list-item>
-                <v-list-item-title class="ml-2">
-                    <div class="mail-header-text">{{ t('mail_dialog.header_text') }}</div>
-                </v-list-item-title>
-            </v-list-item>
-            <v-list-item class="mail-item" :value="mailItem.mail_content_1.content"
-                v-for="(mailItem, mailIndex) in mailList" :key="mailIndex">
-                <template v-slot:prepend>
-                    <img :src="mailItem.icon" />
-                </template>
-                <v-list-item-title class="ml-2">
-                    <div :class="mailItem.mail_content_1.color">{{ mailItem.mail_content_1.content }}</div>
-                    <div :class="mailItem.mail_content_2.color">{{ mailItem.mail_content_2.content }}</div>
-                </v-list-item-title>
-                <template v-slot:append>
-                    <div :class="mailItem.mail_rail_1.color">{{ mailItem.mail_rail_1.content }}</div>
-                    <div class="completion-area" :class="mailItem.mail_rail_2.color">{{ mailItem.mail_rail_2.content }}
-                    </div>
-                </template>
-            </v-list-item>
-        </v-list>
-    </v-navigation-drawer> -->
 </template>
 
 <style lang="scss">

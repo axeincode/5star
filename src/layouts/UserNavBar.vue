@@ -334,6 +334,7 @@ watch(mobileWidth, (newValue: number) => {
     height: 100% !important;
     will-change: auto !important;
 }
+
 .user-nav-background {
     background-color: #211F31 !important;
     color: #7782AA !important;
@@ -376,6 +377,20 @@ watch(mobileWidth, (newValue: number) => {
 
 .user-navbar-position {
     margin-top: 35px;
+}
+
+.m-nav-drawer-content {
+    height: 100%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+        border-radius: 20px;
+    }
 }
 
 .v-navigation-drawer__content {

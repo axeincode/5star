@@ -22,6 +22,7 @@ const language = ref<string>('English');
 const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
 const originalMenu = ref<boolean>(false);
+const navDrawer = ref<any>(null);
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -121,6 +122,16 @@ const handleLanguageDropdown = (item: string) => {
     }
 }
 
+window.addEventListener('scroll', function () {
+    originalMenu.value = false;
+    languageMenu.value = false;
+});
+
+const navDrawerScroll = () => {
+    originalMenu.value = false;
+    languageMenu.value = false;
+}
+
 const openLoginBonusDialog = () => {
     setLoginBonusDialogVisible(true);
 }
@@ -156,133 +167,141 @@ onMounted(() => {
                 </label>
             </v-list-item>
         </template>
-        <v-list density="compact" nav class="mt-1 px-0">
-            <v-card color="#211F31" theme="dark" style="border-radius: 0px;">
-                <v-row class="ma-2 align-center">
-                    <span class="m-card-title">{{ t('navBar.my_vip_perks') }}</span>
-                    <span class="ml-15 m-more-font">{{ t('navBar.more') }}</span>
-                    <v-btn class="m-right-btn" icon="true" height="24" width="24">
-                        <img src="@/assets/public/svg/icon_public_11.svg" width="16" />
-                    </v-btn>
-                </v-row>
-                <v-row class="ma-1">
-                    <v-col cols="6" class="pa-1 relative">
-                        <v-list-item value="casino" class="ma-0 pa-0" height="48px" @click="openLoginBonusDialog">
-                            <img src="@/assets/public/svg/bg_public_16.svg" class="m-img-width" />
-                            <img src="@/assets/public/image/img_public_01.png" class="m-navbar-task-img-position"
-                                width="34" />
-                            <p class="text-700-10 white m-navbar-task-text-position">{{ t('navBar.task_text') }}</p>
-                            <p class="text-400-8 white m-navbar-unlock-text-left-position">{{ t('navBar.unlock_text') }}</p>
-                        </v-list-item>
-                    </v-col>
-                    <v-col cols="6" class="pa-1">
-                        <v-list-item value="sport" class="ma-0 pa-0" height="48px" @click="openRouletteBonusDialog">
-                            <img src="@/assets/public/svg/bg_public_17.svg" class="m-spin-img-width" />
-                            <img src="@/assets/public/image/img_public_02.png" class="m-navbar-spin-img-position"
-                                width="28" />
-                            <p class="text-700-10 white m-navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
-                            <p class="text-400-8 white m-navbar-unlock-text-right-position">{{ t('navBar.unlock_text') }}
-                            </p>
-                        </v-list-item>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-list>
-        <v-list density="compact" nav class="px-0">
-            <v-list-item class="ma-0 pa-0">
-                <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
-                <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position" width="23" />
-                <p class="text-700-12 color-29263C m-navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}</p>
-            </v-list-item>
-        </v-list>
-        <v-list v-model:opened="open">
-            <v-list-group value="Casino">
-                <template v-slot:activator="{ props }">
-                    <v-list-item class="m-avatar-img" v-bind="props" prepend-avatar="@/assets/public/svg/icon_public_34.svg"
-                        :title="t('navBar.casino')" link value="casino" :height="40"></v-list-item>
-                </template>
-                <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px;">
-                    <v-list>
-                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_35.svg"
-                            :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
-                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
-                            :title="t('navBar.casino_sub_menu.favorites')" value="favorites"></v-list-item>
-                        <v-menu location="center" offset="10" content-class="m-original-dropdown"
-                            v-model:model-value="originalMenu">
-                            <template v-slot:activator="{ props }">
-                                <v-list-item v-bind="props" class="m-casino-sub-img"
-                                    prepend-avatar="@/assets/public/svg/icon_public_37.svg"
-                                    :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
-                                    :title="t('navBar.casino_sub_menu.game_originals')" value="game originals">
-                                </v-list-item>
-                            </template>
-                            <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
-                                <v-list-item v-for="(item, i) in gameOriginalItems" :key="i" :value="item.name"
-                                    class="m-avatar-img" :prepend-avatar="item.icon" :title="item.name">
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
-                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_38.svg"
-                            :title="t('navBar.casino_sub_menu.slots')" value="slots"></v-list-item>
-                        <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_39.svg"
-                            :title="t('navBar.casino_sub_menu.live_casino')" value="live casino"></v-list-item>
-                    </v-list>
+        <div class="m-nav-drawer-content" @scroll="navDrawerScroll">
+            <v-list density="compact" nav class="mt-1 px-0">
+                <v-card color="#211F31" theme="dark" style="border-radius: 0px;">
+                    <v-row class="ma-2 align-center">
+                        <span class="m-card-title">{{ t('navBar.my_vip_perks') }}</span>
+                        <span class="ml-15 m-more-font">{{ t('navBar.more') }}</span>
+                        <v-btn class="m-right-btn" icon="true" height="24" width="24">
+                            <img src="@/assets/public/svg/icon_public_11.svg" width="16" />
+                        </v-btn>
+                    </v-row>
+                    <v-row class="ma-1">
+                        <v-col cols="6" class="pa-1 relative">
+                            <v-list-item value="casino" class="ma-0 pa-0" height="48px" @click="openLoginBonusDialog">
+                                <img src="@/assets/public/svg/bg_public_16.svg" class="m-img-width" />
+                                <img src="@/assets/public/image/img_public_01.png" class="m-navbar-task-img-position"
+                                    width="34" />
+                                <p class="text-700-10 white m-navbar-task-text-position">{{ t('navBar.task_text') }}</p>
+                                <p class="text-400-8 white m-navbar-unlock-text-left-position">{{ t('navBar.unlock_text') }}
+                                </p>
+                            </v-list-item>
+                        </v-col>
+                        <v-col cols="6" class="pa-1">
+                            <v-list-item value="sport" class="ma-0 pa-0" height="48px" @click="openRouletteBonusDialog">
+                                <img src="@/assets/public/svg/bg_public_17.svg" class="m-spin-img-width" />
+                                <img src="@/assets/public/image/img_public_02.png" class="m-navbar-spin-img-position"
+                                    width="28" />
+                                <p class="text-700-10 white m-navbar-spin-text-position">{{ t('navBar.spin_text') }}</p>
+                                <p class="text-400-8 white m-navbar-unlock-text-right-position">{{ t('navBar.unlock_text')
+                                }}
+                                </p>
+                            </v-list-item>
+                        </v-col>
+                    </v-row>
                 </v-card>
-            </v-list-group>
-        </v-list>
-        <v-list>
-            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_40.svg"
-                :title="t('navBar.sport')"></v-list-item>
-        </v-list>
-        <v-divider class="divider"></v-divider>
-        <v-list>
-            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_41.svg"
-                :title="t('navBar.menu_item_1.promotions')"></v-list-item>
-            <v-list-item class="m-vip-club" prepend-avatar="@/assets/public/svg/icon_public_42.svg"
-                :title="t('navBar.menu_item_1.vip_club')" router :to="{ name: 'VIP' }"></v-list-item>
-            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_43.svg"
-                :title="t('navBar.menu_item_1.affiliate')" router :to="{ name: 'Affiliate' }"></v-list-item>
-            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_44.svg"
-                :title="t('navBar.menu_item_1.blog')"></v-list-item>
-        </v-list>
-        <v-divider class="divider"></v-divider>
-        <v-list>
-            <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_45.svg"
-                :title="t('navBar.live_support')"></v-list-item>
-        </v-list>
-        <v-list>
-            <v-menu location="center" offset="16" content-class="m-language-dropdown" v-model:model-value="languageMenu">
-                <template v-slot:activator="{ props }">
-                    <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
-                        <v-list-item v-bind="props" class="m-casino-sub-img"
-                            prepend-avatar="@/assets/public/svg/icon_public_57.svg" :title="language"
-                            :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'">
-                        </v-list-item>
+            </v-list>
+            <v-list density="compact" nav class="px-0">
+                <v-list-item class="ma-0 pa-0">
+                    <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
+                    <img src="@/assets/public/image/img_public_17.png" class="m-navbar-free-money-img-position"
+                        width="23" />
+                    <p class="text-700-12 color-29263C m-navbar-free-money-text-position">{{ t('navBar.earn_free_text') }}
+                    </p>
+                </v-list-item>
+            </v-list>
+            <v-list v-model:opened="open">
+                <v-list-group value="Casino">
+                    <template v-slot:activator="{ props }">
+                        <v-list-item class="m-avatar-img" v-bind="props"
+                            prepend-avatar="@/assets/public/svg/icon_public_34.svg" :title="t('navBar.casino')" link
+                            value="casino" :height="40"></v-list-item>
+                    </template>
+                    <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px;">
+                        <v-list>
+                            <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_35.svg"
+                                :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
+                            <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_36.svg"
+                                :title="t('navBar.casino_sub_menu.favorites')" value="favorites"></v-list-item>
+                            <v-menu location="center" offset="10" content-class="m-original-dropdown"
+                                v-model:model-value="originalMenu">
+                                <template v-slot:activator="{ props }">
+                                    <v-list-item v-bind="props" class="m-casino-sub-img"
+                                        prepend-avatar="@/assets/public/svg/icon_public_37.svg"
+                                        :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+                                        :title="t('navBar.casino_sub_menu.game_originals')" value="game originals">
+                                    </v-list-item>
+                                </template>
+                                <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
+                                    <v-list-item v-for="(item, i) in gameOriginalItems" :key="i" :value="item.name"
+                                        class="m-avatar-img" :prepend-avatar="item.icon" :title="item.name">
+                                    </v-list-item>
+                                </v-list>
+                            </v-menu>
+                            <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_38.svg"
+                                :title="t('navBar.casino_sub_menu.slots')" value="slots"></v-list-item>
+                            <v-list-item class="m-casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_39.svg"
+                                :title="t('navBar.casino_sub_menu.live_casino')" value="live casino"></v-list-item>
+                        </v-list>
                     </v-card>
-                </template>
-                <v-list theme="dark" bg-color="#211F31" width="166" class="text-center">
-                    <v-list-item :title="t('navBar.language.title')" class="m-avatar-img"></v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item v-for="(item, i) in langItems" :key="i" :value="item" class="m-avatar-img"
-                        @click="handleLanguageDropdown(item)" :class="language == item ? 'nav-lang-selected-item' : ''">
-                        <v-list-item-title>{{ item }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
-        </v-list>
-        <v-list-item class="m-theme-toggle">
-            <input type="checkbox" id="m-theme-toggle" />
-            <label for="m-theme-toggle">
-                <div class="dark">
-                    <img src="@/assets/public/svg/icon_public_46.svg" width="16" />
-                    <p class="text-700-10">{{ t('navBar.sound_mode.on') }}</p>
-                </div>
-                <div class="light">
-                    <img src="@/assets/public/svg/icon_public_47.svg" width="16" />
-                    <p class="text-700-10">{{ t('navBar.sound_mode.off') }}</p>
-                </div>
-            </label>
-        </v-list-item>
+                </v-list-group>
+            </v-list>
+            <v-list>
+                <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_40.svg"
+                    :title="t('navBar.sport')"></v-list-item>
+            </v-list>
+            <v-divider class="divider"></v-divider>
+            <v-list>
+                <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_41.svg"
+                    :title="t('navBar.menu_item_1.promotions')"></v-list-item>
+                <v-list-item class="m-vip-club" prepend-avatar="@/assets/public/svg/icon_public_42.svg"
+                    :title="t('navBar.menu_item_1.vip_club')" router :to="{ name: 'VIP' }"></v-list-item>
+                <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_43.svg"
+                    :title="t('navBar.menu_item_1.affiliate')" router :to="{ name: 'Affiliate' }"></v-list-item>
+                <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_44.svg"
+                    :title="t('navBar.menu_item_1.blog')"></v-list-item>
+            </v-list>
+            <v-divider class="divider"></v-divider>
+            <v-list>
+                <v-list-item class="m-avatar-img" prepend-avatar="@/assets/public/svg/icon_public_45.svg"
+                    :title="t('navBar.live_support')"></v-list-item>
+            </v-list>
+            <v-list>
+                <v-menu location="center" offset="16" content-class="m-language-dropdown"
+                    v-model:model-value="languageMenu">
+                    <template v-slot:activator="{ props }">
+                        <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
+                            <v-list-item v-bind="props" class="m-casino-sub-img"
+                                prepend-avatar="@/assets/public/svg/icon_public_57.svg" :title="language"
+                                :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'">
+                            </v-list-item>
+                        </v-card>
+                    </template>
+                    <v-list theme="dark" bg-color="#211F31" width="166" class="text-center">
+                        <v-list-item :title="t('navBar.language.title')" class="m-avatar-img"></v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item v-for="(item, i) in langItems" :key="i" :value="item" class="m-avatar-img"
+                            @click="handleLanguageDropdown(item)" :class="language == item ? 'nav-lang-selected-item' : ''">
+                            <v-list-item-title>{{ item }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </v-list>
+            <v-list-item class="m-theme-toggle">
+                <input type="checkbox" id="m-theme-toggle" />
+                <label for="m-theme-toggle">
+                    <div class="dark">
+                        <img src="@/assets/public/svg/icon_public_46.svg" width="16" />
+                        <p class="text-700-10">{{ t('navBar.sound_mode.on') }}</p>
+                    </div>
+                    <div class="light">
+                        <img src="@/assets/public/svg/icon_public_47.svg" width="16" />
+                        <p class="text-700-10">{{ t('navBar.sound_mode.off') }}</p>
+                    </div>
+                </label>
+            </v-list-item>
+        </div>
     </v-navigation-drawer>
 </template>
 

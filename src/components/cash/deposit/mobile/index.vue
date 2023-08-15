@@ -171,11 +171,11 @@ const handleAmountInputChange = (): void => {
 }
 
 const handleAmountInputBlur = (): void => {
-    if (validateAmount()) {
+    // if (validateAmount()) {
         isShowAmountValidaton.value = false;
-    } else {
-        isShowAmountValidaton.value = true;
-    }
+    // } else {
+    //     isShowAmountValidaton.value = true;
+    // }
 }
 
 const handleDepositSubmit = (): void => {

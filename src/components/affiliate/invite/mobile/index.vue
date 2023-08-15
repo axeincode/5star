@@ -530,22 +530,23 @@ onMounted(() => {
         flex-shrink: 0;
         border-radius: 30px;
         background: var(--primary-button-32-cfec, #32CFEC);
-
-        /* Button Shadow */
         box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11);
     }
 
     .v-slider-thumb__ripple {
-        display: none;
+        width: 42px !important;
+        left: -5px !important;
+        height: 28px;
+        top: -4px;
+        border-radius: 32px;
     }
 
     .v-slider.v-input--horizontal .v-slider-track__background {
         height: 2px;
     }
 
-    .v-slider-thumb__surface::before:active {
-        transform: scale(2);
-        opacity: var(--v-focus-opacity);
+    .v-slider-thumb__surface::before {
+        visibility: hidden;
     }
 
 }

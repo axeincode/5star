@@ -23,14 +23,18 @@ const refferalAppBarShow = computed(() => {
 const mobileWidth = computed(() => {
   return width.value
 })
+
+const handleScroll = () => {
+  console.log("scroll");
+}
 </script>
 
 <template>
   <v-app>
     <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />
-    <NavBarLayout v-if="mobileWidth > 600" />
-    <MNavBarLayout v-else />
+      <NavBarLayout v-if="mobileWidth > 600" />
+      <MNavBarLayout v-else />
     <UserNavBarLayout />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
@@ -38,5 +42,4 @@ const mobileWidth = computed(() => {
   </v-app>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
