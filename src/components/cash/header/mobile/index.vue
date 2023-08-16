@@ -9,6 +9,9 @@ import { storeToRefs } from 'pinia';
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import icon_public_60 from "@/assets/public/svg/icon_public_60.svg";
+import icon_public_65 from "@/assets/public/svg/icon_public_65.svg";
+
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -225,14 +228,14 @@ onMounted(() => {
                 <input type="checkbox" id="m-deposit-toggle" v-model="cashToggleSwitch" />
                 <label for="m-deposit-toggle">
                     <div class="deposit">
-                        <inline-svg src="src/assets/public/svg/icon_public_60.svg" width="18" height="18"
+                        <inline-svg :src="icon_public_60" width="18" height="18"
                             :transform-source="depositTransform">
                         </inline-svg>
                         <!-- <img src="@/assets/public/svg/icon_public_60.svg" width="18" /> -->
                         <P class="text-700-10 ml-1">{{ t('appBar.deposit') }}</P>
                     </div>
                     <div class="withdraw">
-                        <inline-svg src="src/assets/public/svg/icon_public_65.svg" width="18" height="18"
+                        <inline-svg :src="icon_public_65" width="18" height="18"
                             :transform-source="withdrawTransform">
                         </inline-svg>
                         <!-- <img src="@/assets/public/svg/icon_public_65.svg" width="18" /> -->

@@ -7,23 +7,27 @@ import {
   ref,
   computed,
   onMounted,
-  onUnmounted
+  onUnmounted,
 } from "vue";
 import { useI18n } from "vue-i18n";
-import { useDisplay } from 'vuetify';
+import { useDisplay } from "vuetify";
 import GameProviders from "@/components/global/game_provider/index.vue";
-import { Carousel, Slide, Navigation } from 'vue3-carousel';
+import { Carousel, Slide, Navigation } from "vue3-carousel";
+import icon_public_92 from "@/assets/public/svg/icon_public_92.svg";
+import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
+import { mailStore } from "@/store/mail";
+import { storeToRefs } from "pinia";
 
 const Dashboard = defineComponent({
   components: {
     GameProviders,
     Carousel,
     Slide,
-    Navigation
+    Navigation,
   },
   setup() {
     const { t } = useI18n();
-    const { name, width } = useDisplay()
+    const { name, width } = useDisplay();
 
     // initiate component state
     const state = reactive({
@@ -149,334 +153,384 @@ const Dashboard = defineComponent({
         {
           rank: new URL("@/assets/public/image/img_public_29.png", import.meta.url).href,
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 13322.17
+          profit: 13322.17,
         },
         {
           rank: new URL("@/assets/public/image/img_public_30.png", import.meta.url).href,
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 12323.29
+          profit: 12323.29,
         },
         {
           rank: new URL("@/assets/public/image/img_public_31.png", import.meta.url).href,
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 10578.15
+          profit: 10578.15,
         },
         {
           rank: "4",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 9394.15
+          profit: 9394.15,
         },
         {
           rank: "5",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 9035.9
+          profit: 9035.9,
         },
         {
           rank: "6",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 8313.59
+          profit: 8313.59,
         },
         {
           rank: "7",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 6570
+          profit: 6570,
         },
         {
           rank: "8",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 6210.23
+          profit: 6210.23,
         },
         {
           rank: "9",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5921.45
+          profit: 5921.45,
         },
         {
           rank: "10",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "11",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
         {
           rank: "12",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "13",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
         {
           rank: "14",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "15",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
         {
           rank: "16",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "17",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
         {
           rank: "18",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "19",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
         {
           rank: "20",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "21",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
         {
           rank: "22",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 5020
+          profit: 5020,
         },
         {
           rank: "23",
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          profit: 4962.35
+          profit: 4962.35,
         },
       ],
       recordList: [
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 20
+          amount: 20,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 12
+          amount: 12,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 7
+          amount: 7,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 12.17
+          amount: 12.17,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-            name: "Double"
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+              .href,
+            name: "Double",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 32
+          amount: 32,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-            name: "Crash"
+            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url)
+              .href,
+            name: "Crash",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 5
+          amount: 5,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-            name: "Crash"
+            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url)
+              .href,
+            name: "Crash",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 13
+          amount: 13,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-            name: "Double"
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+              .href,
+            name: "Double",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 19
+          amount: 19,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-            name: "Double"
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+              .href,
+            name: "Double",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 22.10
+          amount: 22.1,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-            name: "Dice"
+            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url)
+              .href,
+            name: "Dice",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 133
+          amount: 133,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-            name: "Dice"
+            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url)
+              .href,
+            name: "Dice",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 25
+          amount: 25,
         },
       ],
     });
 
     const luckyContainer = ref<HTMLElement | null>(null);
-    const luckyScrollInterval = ref<any>(null)
+    const luckyScrollInterval = ref<any>(null);
 
     const recordContainer = ref<HTMLElement | null>(null);
-    const recordScrollInterval = ref<any>(null)
+    const recordScrollInterval = ref<any>(null);
     const historyToggleSwitch = ref<boolean>(false);
 
     const winnerCheckboxColor = ref<string>("#ffffff");
     const prizeCheckboxColor = ref<string>("#7782AA");
 
     const mobileVersion = computed(() => {
-      return name.value
+      return name.value;
     });
 
     const mobileWidth = computed(() => {
       return width.value;
-    })
+    });
+
+    const mailMenuShow = computed(() => {
+      const { getMailMenuShow } = storeToRefs(mailStore());
+      return getMailMenuShow.value;
+    });
 
     const isNumeric = (value: any) => {
       return /^-?\d+$/.test(value);
-    }
+    };
 
     const startLuckyScrollingInterval = () => {
       luckyScrollInterval.value = setInterval(() => {
@@ -487,12 +541,18 @@ const Dashboard = defineComponent({
             luckyContainer.value.scrollTop += 51;
           }
           // console.log(luckyContainer.value.scrollTop + luckyContainer.value.clientHeight, luckyContainer.value.scrollHeight);
-          if (luckyContainer.value.scrollTop + luckyContainer.value.clientHeight >= luckyContainer.value.scrollHeight) {
-            state.luckyJackpotList = [...state.luckyJackpotList, ...state.luckyJackpotList];
+          if (
+            luckyContainer.value.scrollTop + luckyContainer.value.clientHeight >=
+            luckyContainer.value.scrollHeight
+          ) {
+            state.luckyJackpotList = [
+              ...state.luckyJackpotList,
+              ...state.luckyJackpotList,
+            ];
           }
         }
       }, 1000);
-    }
+    };
 
     const startRecordScrollingInterval = () => {
       recordScrollInterval.value = setInterval(() => {
@@ -502,12 +562,15 @@ const Dashboard = defineComponent({
           } else {
             recordContainer.value.scrollTop += 55.33;
           }
-          if (recordContainer.value.scrollTop + recordContainer.value.clientHeight >= recordContainer.value.scrollHeight) {
-            state.recordList.push(state.recordList[Math.floor(Math.random() * 10)])
+          if (
+            recordContainer.value.scrollTop + recordContainer.value.clientHeight >=
+            recordContainer.value.scrollHeight
+          ) {
+            state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
           }
         }
       }, 600);
-    }
+    };
 
     watch(mobileVersion, (newValue) => {
       if (newValue == "sm") {
@@ -515,7 +578,7 @@ const Dashboard = defineComponent({
         state.signupDialog = false;
         state.mobileDialog = false;
       }
-    })
+    });
 
     watch(mobileWidth, (value) => {
       clearInterval(luckyScrollInterval.value);
@@ -523,307 +586,356 @@ const Dashboard = defineComponent({
       state.recordList = [
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 20
+          amount: 20,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 12
+          amount: 12,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 7
+          amount: 7,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-            name: "Mines"
+            image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+              .href,
+            name: "Mines",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 12.17
+          amount: 12.17,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-            name: "Double"
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+              .href,
+            name: "Double",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 32
+          amount: 32,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-            name: "Crash"
+            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url)
+              .href,
+            name: "Crash",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 5
+          amount: 5,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-            name: "Crash"
+            image: new URL("@/assets/public/image/img_public_27.png", import.meta.url)
+              .href,
+            name: "Crash",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 13
+          amount: 13,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-            name: "Double"
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+              .href,
+            name: "Double",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 19
+          amount: 19,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-            name: "Double"
+            image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+              .href,
+            name: "Double",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 22.10
+          amount: 22.1,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-            name: "Dice"
+            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url)
+              .href,
+            name: "Dice",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 133
+          amount: 133,
         },
         {
           game: {
-            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-            name: "Dice"
+            image: new URL("@/assets/public/image/img_public_28.png", import.meta.url)
+              .href,
+            name: "Dice",
           },
           player: {
-            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-            name: "Ar***ra"
+            image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+              .href,
+            name: "Ar***ra",
           },
-          amount: 25
+          amount: 25,
         },
       ];
       startRecordScrollingInterval();
-    })
+    });
 
-    watch(historyToggleSwitch, (value) => {
-      if (value) {
-        state.recordList = [
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-              name: "Mines"
+    watch(
+      historyToggleSwitch,
+      (value) => {
+        if (value) {
+          state.recordList = [
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+                  .href,
+                name: "Mines",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 20,
             },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+                  .href,
+                name: "Mines",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 12,
             },
-            amount: 20
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-              name: "Mines"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+                  .href,
+                name: "Mines",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 7,
             },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_35.png", import.meta.url)
+                  .href,
+                name: "Mines",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 12.17,
             },
-            amount: 12
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-              name: "Mines"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+                  .href,
+                name: "Double",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 32,
             },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_27.png", import.meta.url)
+                  .href,
+                name: "Crash",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 5,
             },
-            amount: 7
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-              name: "Mines"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_27.png", import.meta.url)
+                  .href,
+                name: "Crash",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 13,
             },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+                  .href,
+                name: "Double",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 19,
             },
-            amount: 12.17
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-              name: "Double"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_26.png", import.meta.url)
+                  .href,
+                name: "Double",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 22.1,
             },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_28.png", import.meta.url)
+                  .href,
+                name: "Dice",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 133,
             },
-            amount: 32
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-              name: "Crash"
+            {
+              game: {
+                image: new URL("@/assets/public/image/img_public_28.png", import.meta.url)
+                  .href,
+                name: "Dice",
+              },
+              player: {
+                image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url)
+                  .href,
+                name: "Ar***ra",
+              },
+              amount: 25,
             },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
-            },
-            amount: 5
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-              name: "Crash"
-            },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
-            },
-            amount: 13
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-              name: "Double"
-            },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
-            },
-            amount: 19
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-              name: "Double"
-            },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
-            },
-            amount: 22.10
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-              name: "Dice"
-            },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
-            },
-            amount: 133
-          },
-          {
-            game: {
-              image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-              name: "Dice"
-            },
-            player: {
-              image: new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
-              name: "Ar***ra"
-            },
-            amount: 25
-          },
-        ];
-        winnerCheckboxColor.value = "#7782AA";
-        prizeCheckboxColor.value = "#ffffff";
-      } else {
-        winnerCheckboxColor.value = "#ffffff";
-        prizeCheckboxColor.value = "#7782AA";
-      }
-    }, { deep: true })
+          ];
+          winnerCheckboxColor.value = "#7782AA";
+          prizeCheckboxColor.value = "#ffffff";
+        } else {
+          winnerCheckboxColor.value = "#ffffff";
+          prizeCheckboxColor.value = "#7782AA";
+        }
+      },
+      { deep: true }
+    );
 
     const winnerTransform = (el: any) => {
       for (let node of el.children) {
-        node.setAttribute('fill', winnerCheckboxColor.value)
+        node.setAttribute("fill", winnerCheckboxColor.value);
         for (let subNode of node.children) {
-          subNode.setAttribute('fill', winnerCheckboxColor.value)
+          subNode.setAttribute("fill", winnerCheckboxColor.value);
         }
       }
-      return el
-    }
+      return el;
+    };
 
     const prizeTransform = (el: any) => {
       for (let node of el.children) {
-        node.setAttribute('fill', prizeCheckboxColor.value)
+        node.setAttribute("fill", prizeCheckboxColor.value);
         for (let subNode of node.children) {
-          subNode.setAttribute('fill', prizeCheckboxColor.value)
+          subNode.setAttribute("fill", prizeCheckboxColor.value);
         }
       }
-      return el
-    }
+      return el;
+    };
 
     onMounted(() => {
       // startLuckyScrollingInterval();
       startRecordScrollingInterval();
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
-    })
+    });
 
     onUnmounted(() => {
       clearInterval(luckyScrollInterval.value);
       clearInterval(recordScrollInterval.value);
-    })
+    });
 
     return {
       t,
       ...toRefs(state),
       mobileVersion,
       mobileWidth,
+      mailMenuShow,
       historyToggleSwitch,
       luckyContainer,
       recordContainer,
       winnerTransform,
       prizeTransform,
-      isNumeric
+      isNumeric,
     };
   },
 });
@@ -835,28 +947,54 @@ export default Dashboard;
   <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
     <!-- image carousel -->
 
-    <v-carousel cycle interval="6000" height="247" hide-delimiter-background :hide-delimiters="slides.length <= 1"
-      show-arrows="hover">
-
+    <v-carousel
+      cycle
+      interval="6000"
+      height="247"
+      hide-delimiter-background
+      :hide-delimiters="slides.length <= 1"
+      show-arrows="hover"
+    >
       <!-- prev, next button hide when slides array length is less than 2 -->
 
       <template v-slot:prev="{ props }">
-        <v-btn class="button-carousel text-none prev-btn-position" variant="elevated" icon="mdi-chevron-left"
-          @click="props.onClick" v-if="slides.length > 1 && mobileWidth > 600">
+        <v-btn
+          class="button-carousel text-none prev-btn-position"
+          variant="elevated"
+          icon="mdi-chevron-left"
+          @click="props.onClick"
+          v-if="slides.length > 1 && mobileWidth > 600"
+        >
         </v-btn>
       </template>
       <template v-slot:next="{ props }">
-        <v-btn class="button-carousel text-none next-btn-position" variant="elevated" icon="mdi-chevron-right"
-          @click="props.onClick" v-if="slides.length > 1 && mobileWidth > 600">
+        <v-btn
+          class="button-carousel text-none next-btn-position"
+          variant="elevated"
+          icon="mdi-chevron-right"
+          @click="props.onClick"
+          v-if="slides.length > 1 && mobileWidth > 600"
+        >
         </v-btn>
       </template>
       <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
         <v-sheet color="#31275C" height="100%" tile>
           <v-row align="center" justify="center" class="mx-2 relative">
-            <v-col v-for="(i, index) in 3" :key="index" cols="12" sm="6" md="6" lg="4" xl="4"
-              :class="mobileWidth < 600 ? 'px-0' : 'px-2'">
-              <img :src="slide[index]" class="slider-img-width"
-                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''" />
+            <v-col
+              v-for="(i, index) in 3"
+              :key="index"
+              cols="12"
+              sm="6"
+              md="6"
+              lg="4"
+              xl="4"
+              :class="mobileWidth < 600 ? 'px-0' : 'px-2'"
+            >
+              <img
+                :src="slide[index]"
+                class="slider-img-width"
+                :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
+              />
             </v-col>
           </v-row>
         </v-sheet>
@@ -865,9 +1003,18 @@ export default Dashboard;
 
     <!-- input for search -->
     <v-row class="mt-2" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
-      <v-text-field :placeholder="t('home.search')" class="form-textfield dark-textfield" variant="solo" hide-details
-        filled clearable density="compact" prepend-inner-icon="mdi-magnify" color="#7782AA"
-        :class="mobileWidth < 600 ? 'home-search-text-height' : ''" />
+      <v-text-field
+        :placeholder="t('home.search')"
+        class="form-textfield dark-textfield"
+        variant="solo"
+        hide-details
+        filled
+        clearable
+        density="compact"
+        prepend-inner-icon="mdi-magnify"
+        color="#7782AA"
+        :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
+      />
     </v-row>
 
     <!-- buttons for filter -->
@@ -913,20 +1060,37 @@ export default Dashboard;
       {{ t("home.original_games") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px" v-for="(item, index) in originalGames"
-        :key="index">
+      <div
+        style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
+        v-for="(item, index) in originalGames"
+        :key="index"
+      >
         <v-img :src="item" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-0" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-for="(item, index) in mOriginalGames"
-        :key="index">
+      <v-col
+        cols="4"
+        lg="2"
+        md="2"
+        sm="3"
+        class="px-1"
+        v-for="(item, index) in mOriginalGames"
+        :key="index"
+      >
         <v-img :src="item" class="original-game-img-width" />
       </v-col>
     </v-row>
-    <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3 mb-0' : 'mt-8 ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
-        :height="mobileWidth < 600 ? 41 : 48">
+    <v-row
+      class="justify-center"
+      :class="mobileWidth < 600 ? 'mt-6 mx-3 mb-0' : 'mt-8 ml-4'"
+    >
+      <v-btn
+        class="text-none more-btn-color"
+        variant="outlined"
+        :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48"
+      >
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -936,20 +1100,34 @@ export default Dashboard;
       {{ t("home.principal") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-        v-for="(principalItem, principalIndex) in principalGames" :key="principalIndex">
+      <div
+        style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
+        v-for="(principalItem, principalIndex) in principalGames"
+        :key="principalIndex"
+      >
         <v-img :src="principalItem" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1"
-        v-for="(principalItem, principalIndex) in mPrincipalGames" :key="principalIndex">
+      <v-col
+        cols="4"
+        lg="2"
+        md="2"
+        sm="3"
+        class="px-1"
+        v-for="(principalItem, principalIndex) in mPrincipalGames"
+        :key="principalIndex"
+      >
         <v-img :src="principalItem" class="original-game-img-width" />
       </v-col>
     </v-row>
     <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
-        :height="mobileWidth < 600 ? 41 : 48">
+      <v-btn
+        class="text-none more-btn-color"
+        variant="outlined"
+        :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48"
+      >
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -962,20 +1140,34 @@ export default Dashboard;
       {{ t("home.slots") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-        v-for="(slotItem, slotIndex) in slots" :key="slotIndex">
+      <div
+        style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
+        v-for="(slotItem, slotIndex) in slots"
+        :key="slotIndex"
+      >
         <v-img :src="slotItem" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-for="(slotItem, slotIndex) in mSlots"
-        :key="slotIndex">
+      <v-col
+        cols="4"
+        lg="2"
+        md="2"
+        sm="3"
+        class="px-1"
+        v-for="(slotItem, slotIndex) in mSlots"
+        :key="slotIndex"
+      >
         <v-img :src="slotItem" class="original-game-img-width" />
       </v-col>
     </v-row>
     <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
-        :height="mobileWidth < 600 ? 41 : 48">
+      <v-btn
+        class="text-none more-btn-color"
+        variant="outlined"
+        :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48"
+      >
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -985,20 +1177,34 @@ export default Dashboard;
       {{ t("home.live_casino") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-      <div style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-        v-for="(liveCasinoItem, liveCasinoIndex) in liveCasinos" :key="liveCasinoIndex">
+      <div
+        style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
+        v-for="(liveCasinoItem, liveCasinoIndex) in liveCasinos"
+        :key="liveCasinoIndex"
+      >
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </div>
     </v-row>
     <v-row class="mx-1 mt-2" v-else>
-      <v-col cols="4" lg="2" md="2" sm="3" class="px-1"
-        v-for="(liveCasinoItem, liveCasinoIndex) in mLiveCasinos" :key="liveCasinoIndex">
+      <v-col
+        cols="4"
+        lg="2"
+        md="2"
+        sm="3"
+        class="px-1"
+        v-for="(liveCasinoItem, liveCasinoIndex) in mLiveCasinos"
+        :key="liveCasinoIndex"
+      >
         <v-img :src="liveCasinoItem" class="original-game-img-width" />
       </v-col>
     </v-row>
     <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
-      <v-btn class="text-none more-btn-color" variant="outlined" :width="mobileWidth < 600 ? '100%' : 164"
-        :height="mobileWidth < 600 ? 41 : 48">
+      <v-btn
+        class="text-none more-btn-color"
+        variant="outlined"
+        :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48"
+      >
         {{ t("home.more") }}
       </v-btn>
     </v-row>
@@ -1008,30 +1214,45 @@ export default Dashboard;
       <v-col cols="12" md="6">
         <div class="d-flex align-center">
           <img src="@/assets/public/svg/icon_public_92.svg" />
-          <p class="text-700-20 white ml-3">{{ t('home.lucky_jackpot_text') }}</p>
+          <p class="text-700-20 white ml-3">{{ t("home.lucky_jackpot_text") }}</p>
         </div>
         <v-card color="#211F32" theme="dark" class="home-lucky-jackpot-height mt-4">
-          <v-card color="#29253C" theme="dark" height="64" class="mx-2 mt-2"
-            style="border-radius: 16px; background: #29253C; box-shadow: unset;">
+          <v-card
+            color="#29253C"
+            theme="dark"
+            height="64"
+            class="mx-2 mt-2"
+            style="border-radius: 16px; background: #29253c; box-shadow: unset"
+          >
             <v-row class="mx-3 my-2 align-center">
-              <v-col cols="4" class="text-700-16 gray">{{ t('home.rank_text') }}</v-col>
+              <v-col cols="4" class="text-700-16 gray">{{ t("home.rank_text") }}</v-col>
               <v-col cols="4" class="text-700-16 gray">
-                <p class="ml-2">{{ t('home.player_text') }}</p>
+                <p class="ml-2">{{ t("home.player_text") }}</p>
               </v-col>
-              <v-col cols="4" class="text-700-16 gray text-center">{{ t('home.profit_text') }}</v-col>
+              <v-col cols="4" class="text-700-16 gray text-center">{{
+                t("home.profit_text")
+              }}</v-col>
             </v-row>
           </v-card>
-          <div class="home-overflow-auto" ref="luckyContainer" style="overflow-y: auto;">
-            <v-row v-for="(item, index) in luckyJackpotList" :key="index" class="mx-4 mt-2 align-center">
+          <div class="home-overflow-auto" ref="luckyContainer" style="overflow-y: auto">
+            <v-row
+              v-for="(item, index) in luckyJackpotList"
+              :key="index"
+              class="mx-4 mt-2 align-center"
+            >
               <v-col cols="4" class="py-1">
                 <img :src="item.rank" v-if="!isNumeric(item.rank)" />
-                <p class="text-500-16 gray text-center" style="width: 27px;" v-else>{{ item.rank }}</p>
+                <p class="text-500-16 gray text-center" style="width: 27px" v-else>
+                  {{ item.rank }}
+                </p>
               </v-col>
               <v-col cols="4" class="d-flex align-center py-1">
                 <img :src="item.player.image" width="46" />
                 <p class="text-500-16 gray">{{ item.player.name }}</p>
               </v-col>
-              <v-col cols="4" class="py-1 text-500-16 color-01983A text-center">{{ item.profit }}</v-col>
+              <v-col cols="4" class="py-1 text-500-16 color-01983A text-center">{{
+                item.profit
+              }}</v-col>
             </v-row>
           </div>
         </v-card>
@@ -1039,21 +1260,32 @@ export default Dashboard;
       <v-col cols="12" md="6">
         <div class="d-flex align-center">
           <img src="@/assets/public/svg/icon_public_91.svg" />
-          <p class="text-700-20 white ml-3">{{ t('home.latest_record_text') }}</p>
+          <p class="text-700-20 white ml-3">{{ t("home.latest_record_text") }}</p>
         </div>
         <v-card color="#211F32" theme="dark" class="home-lucky-jackpot-height mt-4">
-          <v-card color="#29253C" theme="dark" height="64" class="mx-2 mt-2"
-            style="border-radius: 16px; background: #29253C; box-shadow: unset;">
+          <v-card
+            color="#29253C"
+            theme="dark"
+            height="64"
+            class="mx-2 mt-2"
+            style="border-radius: 16px; background: #29253c; box-shadow: unset"
+          >
             <v-row class="mx-3 my-2 align-center">
-              <v-col cols="4" class="text-700-16 gray">{{ t('home.game_text') }}</v-col>
+              <v-col cols="4" class="text-700-16 gray">{{ t("home.game_text") }}</v-col>
               <v-col cols="4" class="text-700-16 gray">
-                <p class="ml-2">{{ t('home.player_text') }}</p>
+                <p class="ml-2">{{ t("home.player_text") }}</p>
               </v-col>
-              <v-col cols="4" class="text-700-16 gray text-center">{{ t('home.amount_text') }}</v-col>
+              <v-col cols="4" class="text-700-16 gray text-center">{{
+                t("home.amount_text")
+              }}</v-col>
             </v-row>
           </v-card>
           <div class="home-overflow-auto" ref="recordContainer">
-            <v-row v-for="(item, index) in recordList" :key="index" class="mx-4 mt-2 align-center">
+            <v-row
+              v-for="(item, index) in recordList"
+              :key="index"
+              class="mx-4 mt-2 align-center"
+            >
               <v-col cols="4" class="py-1 d-flex align-center">
                 <img :src="item.game.image" />
                 <p class="text-500-16 gray text-center ml-2">{{ item.game.name }}</p>
@@ -1062,7 +1294,9 @@ export default Dashboard;
                 <img :src="item.player.image" width="46" />
                 <p class="text-500-16 gray">{{ item.player.name }}</p>
               </v-col>
-              <v-col cols="4" class="py-1 text-500-16 color-01983A text-center">{{ item.amount }}</v-col>
+              <v-col cols="4" class="py-1 text-500-16 color-01983A text-center">{{
+                item.amount
+              }}</v-col>
             </v-row>
           </div>
         </v-card>
@@ -1074,57 +1308,91 @@ export default Dashboard;
           <input type="checkbox" id="history-toggle" v-model="historyToggleSwitch" />
           <label for="history-toggle">
             <div class="winner">
-              <inline-svg src="src/assets/public/svg/icon_public_92.svg" width="20" height="20"
-                :transform-source="winnerTransform">
+              <inline-svg
+                src="icon_public_92"
+                width="20"
+                height="20"
+                :transform-source="winnerTransform"
+              >
               </inline-svg>
               <!-- <img src="@/assets/public/svg/icon_public_92.svg" width="20" /> -->
-              <P class="ml-1">{{ t('home.lucky_jackpot_text') }}</P>
+              <P class="ml-1">{{ t("home.lucky_jackpot_text") }}</P>
             </div>
             <div class="prize">
-              <inline-svg src="src/assets/public/svg/icon_public_91.svg" width="20" height="20"
-                :transform-source="prizeTransform">
+              <inline-svg
+                src="icon_public_91"
+                width="20"
+                height="20"
+                :transform-source="prizeTransform"
+              >
               </inline-svg>
               <!-- <img src="@/assets/public/svg/icon_public_91.svg" width="20" /> -->
-              <P class="ml-1">{{ t('home.latest_record_text') }}</P>
+              <P class="ml-1">{{ t("home.latest_record_text") }}</P>
             </div>
           </label>
         </div>
-        <v-card color="#211F32" theme="dark" height="500" class="mt-4 mx-2" v-if="!historyToggleSwitch">
+        <v-card
+          color="#211F32"
+          theme="dark"
+          height="500"
+          class="mt-4 mx-2"
+          v-if="!historyToggleSwitch"
+        >
           <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
             <v-row class="mx-3 my-2 align-center">
-              <v-col cols="3" class="text-700-14 gray py-0">{{ t('home.rank_text') }}</v-col>
+              <v-col cols="3" class="text-700-14 gray py-0">{{
+                t("home.rank_text")
+              }}</v-col>
               <v-col cols="5" class="text-700-14 gray py-0">
-                <p class="ml-2">{{ t('home.player_text') }}</p>
+                <p class="ml-2">{{ t("home.player_text") }}</p>
               </v-col>
-              <v-col cols="4" class="text-700-14 gray py-0">{{ t('home.profit_text') }}</v-col>
+              <v-col cols="4" class="text-700-14 gray py-0">{{
+                t("home.profit_text")
+              }}</v-col>
             </v-row>
           </v-card>
-          <div class="m-home-overflow-auto" ref="luckyContainer" style="overflow-y: auto;">
-            <v-row v-for="(item, index) in luckyJackpotList" :key="index" class="mx-4 mt-2 align-center">
+          <div class="m-home-overflow-auto" ref="luckyContainer" style="overflow-y: auto">
+            <v-row
+              v-for="(item, index) in luckyJackpotList"
+              :key="index"
+              class="mx-4 mt-2 align-center"
+            >
               <v-col cols="3" class="py-1">
                 <img :src="item.rank" v-if="!isNumeric(item.rank)" width="22" />
-                <p class="text-500-14 gray text-center" style="width: 27px;" v-else>{{ item.rank }}</p>
+                <p class="text-500-14 gray text-center" style="width: 27px" v-else>
+                  {{ item.rank }}
+                </p>
               </v-col>
               <v-col cols="5" class="d-flex align-center py-1">
                 <img :src="item.player.image" width="40" />
                 <p class="text-500-14 gray">{{ item.player.name }}</p>
               </v-col>
-              <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{ item.profit }}</v-col>
+              <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{
+                item.profit
+              }}</v-col>
             </v-row>
           </div>
         </v-card>
         <v-card color="#211F32" theme="dark" height="500" class="mt-4 mx-2" v-else>
           <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
             <v-row class="mx-3 my-2 align-center">
-              <v-col cols="4" class="text-700-14 gray py-0">{{ t('home.game_text') }}</v-col>
+              <v-col cols="4" class="text-700-14 gray py-0">{{
+                t("home.game_text")
+              }}</v-col>
               <v-col cols="4" class="text-700-14 gray py-0">
-                <p class="ml-2">{{ t('home.player_text') }}</p>
+                <p class="ml-2">{{ t("home.player_text") }}</p>
               </v-col>
-              <v-col cols="4" class="text-700-14 gray text-center py-0">{{ t('home.amount_text') }}</v-col>
+              <v-col cols="4" class="text-700-14 gray text-center py-0">{{
+                t("home.amount_text")
+              }}</v-col>
             </v-row>
           </v-card>
           <div class="m-home-overflow-auto" ref="recordContainer">
-            <v-row v-for="(item, index) in recordList" :key="index" class="mx-4 mt-1 align-center">
+            <v-row
+              v-for="(item, index) in recordList"
+              :key="index"
+              class="mx-4 mt-1 align-center"
+            >
               <v-col cols="4" class="py-1 d-flex align-center">
                 <img :src="item.game.image" width="22" />
                 <p class="text-500-14 gray text-center ml-2">{{ item.game.name }}</p>
@@ -1133,7 +1401,9 @@ export default Dashboard;
                 <img :src="item.player.image" width="40" />
                 <p class="text-500-14 gray">{{ item.player.name }}</p>
               </v-col>
-              <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{ item.amount }}</v-col>
+              <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{
+                item.amount
+              }}</v-col>
             </v-row>
           </div>
         </v-card>
@@ -1151,7 +1421,7 @@ export default Dashboard;
 
 .v-field__input::placeholder {
   opacity: unset !important;
-  color: #7782AA !important;
+  color: #7782aa !important;
   font-family: "Inter";
   font-size: 14px;
   font-style: normal;
@@ -1162,12 +1432,11 @@ export default Dashboard;
 .v-field__prepend-inner {
   .v-icon {
     opacity: unset !important;
-    color: #7782AA;
+    color: #7782aa;
   }
 }
 
 @media (max-width: 600px) {
-
   .home-search-text-height {
     height: 30px !important;
 
@@ -1177,7 +1446,7 @@ export default Dashboard;
 
     .v-field__input::placeholder {
       opacity: unset !important;
-      color: #7782AA !important;
+      color: #7782aa !important;
       font-family: "Inter";
       font-size: 10px;
       font-style: normal;
@@ -1192,9 +1461,7 @@ export default Dashboard;
     }
   }
 
-
   .lobby-btn-color {
-
     .v-btn__content {
       font-size: 12px !important;
       font-family: "Inter";
@@ -1202,7 +1469,6 @@ export default Dashboard;
   }
 
   .popular-btn-color {
-
     .v-btn__content {
       font-size: 12px !important;
       font-family: "Inter";
@@ -1232,7 +1498,7 @@ export default Dashboard;
 }
 
 .v-field {
-  color: white !important
+  color: white !important;
 }
 
 .prev-btn-position {
@@ -1293,7 +1559,6 @@ export default Dashboard;
   }
 }
 
-
 .popular-btn-color {
   background: #211f31 !important;
   color: #7782aa !important;
@@ -1317,9 +1582,7 @@ export default Dashboard;
     font-size: 14px;
   }
 
-
   .more-btn-color {
-
     .v-btn__content {
       font-size: 12px !important;
     }
@@ -1355,7 +1618,6 @@ export default Dashboard;
   }
 }
 
-
 // winner and prize toggle switch
 .history-toggle {
   margin-top: -20px;
@@ -1366,7 +1628,7 @@ export default Dashboard;
     position: relative;
     display: block;
     border-radius: 8px;
-    background: #211F31;
+    background: #211f31;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
     cursor: pointer;
     transition: 0.3s;
@@ -1397,7 +1659,7 @@ export default Dashboard;
       align-items: center;
       left: 154px;
       transition: 0.3s;
-      color: #7782AA;
+      color: #7782aa;
       font-size: 12px;
       font-style: normal;
       font-weight: 500;
@@ -1411,7 +1673,7 @@ export default Dashboard;
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #32CFEC;
+    background: #32cfec;
     border-radius: 8px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -1423,7 +1685,7 @@ export default Dashboard;
     visibility: hidden;
   }
 
-  input:checked+label:after {
+  input:checked + label:after {
     left: 274px;
     transform: translateX(-100%);
   }
@@ -1432,25 +1694,24 @@ export default Dashboard;
     width: 136px;
   }
 
-  input:checked+label .winner {
-    color: #7782AA;
+  input:checked + label .winner {
+    color: #7782aa;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
   }
 
-  input:checked+label .prize {
+  input:checked + label .prize {
     color: black;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
   }
-
 }
 
 .v-carousel__controls {
   .v-btn {
-    background-color: #7782AA !important;
+    background-color: #7782aa !important;
     width: 6px !important;
     height: 6px !important;
     margin-right: 6px !important;
@@ -1465,7 +1726,7 @@ export default Dashboard;
     width: 18px !important;
     height: 6px !important;
     border-radius: 24px !important;
-    background: var(--white-bg, #FFF) !important;
+    background: var(--white-bg, #fff) !important;
   }
 }
 </style>

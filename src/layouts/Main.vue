@@ -29,6 +29,7 @@ import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
 import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
 import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
 import MAccountDialog from "@/views/account/dialog/index.vue";
+import { mailStore } from "@/store/mail";
 import router from '@/router';
 
 const { t } = useI18n();
@@ -53,6 +54,11 @@ const mobileVersion = computed(() => {
 const mobileWidth = computed(() => {
   return width.value
 })
+
+const mailMenuShow = computed(() => {
+  const { getMailMenuShow } = storeToRefs(mailStore());
+  return getMailMenuShow.value;
+});
 
 // authentication dialog
 const signupDialog = ref<boolean>(false);
@@ -270,13 +276,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-main class="main-background" :class="mainBlurEffectShow ? 'main-bg-blur' : ''">
-
+  <v-main
+    class="main-background"
+    :class="mainBlurEffectShow ? 'main-bg-blur' : ''"
+    :style="{
+      height: mobileWidth < 600 && mailMenuShow ? '100vh' : 'unset',
+      overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'unset',
+    }"
+  >
     <!---------------------- Deposit Dialog ----------------------------------------------->
 
-    <v-dialog v-model="cashDialog" :width="mobileVersion == 'sm' ? '' : 471" :fullscreen="mobileVersion == 'sm'"
-      :scrim="mobileVersion == 'sm' ? false : true" :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : ''"
-      @click:outside="setCashDialogToggle(false)">
+    <v-dialog
+      v-model="cashDialog"
+      :width="mobileVersion == 'sm' ? '' : 471"
+      :fullscreen="mobileVersion == 'sm'"
+      :scrim="mobileVersion == 'sm' ? false : true"
+      :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : ''"
+      @click:outside="setCashDialogToggle(false)"
+    >
       <CashHeader v-if="mobileWidth > 600" />
       <MCashHeader v-else />
       <template v-if="withdrawDialog">
@@ -291,64 +308,112 @@ onMounted(() => {
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
-    <v-dialog v-model="mobileDialog" :fullscreen="mobileVersion == 'sm'" transition="dialog-top-transition"
-      class="mobile-dialog-toggle-height" v-if="mobileVersion == 'sm'">
+    <v-dialog
+      v-model="mobileDialog"
+      :fullscreen="mobileVersion == 'sm'"
+      transition="dialog-top-transition"
+      class="mobile-dialog-toggle-height"
+      v-if="mobileVersion == 'sm'"
+    >
       <MobileDialog :mobileDialogCheck="mobileDialogCheck" @switch="switchDialog" />
     </v-dialog>
-    <v-dialog v-model="signupDialog" :width="mobileVersion == 'sm' ? '' : 471" :fullscreen="mobileVersion == 'sm'"
+    <v-dialog
+      v-model="signupDialog"
+      :width="mobileVersion == 'sm' ? '' : 471"
+      :fullscreen="mobileVersion == 'sm'"
       :scrim="mobileVersion == 'sm' ? false : true"
-      :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'scale-transition'"
-      :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']" @click:outside="closeDialog('signup')">
+      :transition="
+        mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'scale-transition'
+      "
+      :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
+      @click:outside="closeDialog('signup')"
+    >
       <!------------  PC Version ------------>
-      <Signup v-if="mobileVersion != 'sm'" @close="closeDialog('signup')" @switch="switchDialog('signup')" />
+      <Signup
+        v-if="mobileVersion != 'sm'"
+        @close="closeDialog('signup')"
+        @switch="switchDialog('signup')"
+      />
       <!------------  Mobile Version ------------>
       <MSignup v-else @close="closeDialog('signup')" @switch="switchDialog('signup')" />
     </v-dialog>
-    <v-dialog v-model="loginDialog" :width="mobileVersion == 'sm' ? '' : 471" :fullscreen="mobileVersion == 'sm'"
+    <v-dialog
+      v-model="loginDialog"
+      :width="mobileVersion == 'sm' ? '' : 471"
+      :fullscreen="mobileVersion == 'sm'"
       :scrim="mobileVersion == 'sm' ? false : true"
-      :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'scale-transition'"
-      :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']" @click:outside="closeDialog('login')">
+      :transition="
+        mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'scale-transition'
+      "
+      :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
+      @click:outside="closeDialog('login')"
+    >
       <!------------  PC Version ------------>
-      <Login v-if="mobileVersion != 'sm'" @close="closeDialog('login')" @switch="switchDialog('login')" />
+      <Login
+        v-if="mobileVersion != 'sm'"
+        @close="closeDialog('login')"
+        @switch="switchDialog('login')"
+      />
       <!------------  Mobile Version ------------>
       <MLogin v-else @close="closeDialog('login')" @switch="switchDialog('login')" />
     </v-dialog>
-    <v-dialog v-model="signoutDialog" :width="mobileWidth < 600 ? 328 : 471"
-      @click:outside="closeDialog('signout')">
+    <v-dialog
+      v-model="signoutDialog"
+      :width="mobileWidth < 600 ? 328 : 471"
+      @click:outside="closeDialog('signout')"
+    >
       <Signout v-if="mobileVersion != 'sm'" @close="closeDialog('signout')" />
       <MSignout v-else @close="closeDialog('signout')" />
     </v-dialog>
 
     <!----------------------------------- refferal dialog --------------------------------->
 
-    <v-dialog v-model="refferalDialog" :width="mobileWidth < 600 ? '360' : '471'"
-      @click:outside="setRefferalDialogShow(false)">
+    <v-dialog
+      v-model="refferalDialog"
+      :width="mobileWidth < 600 ? '360' : '471'"
+      @click:outside="setRefferalDialogShow(false)"
+    >
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />
     </v-dialog>
 
     <!----------------------------------- login bonus dialog --------------------------------->
 
-    <v-dialog v-model="loginBonusDialog" :width="mobileWidth < 600 ? '340' : '471'"
-      @click:outside="setLoginBonusDialogVisible(false)">
-      <LoginBonusDialog v-if="mobileWidth > 600" @closeLoginBonusDialog="closeLoginBonusDialog" />
+    <v-dialog
+      v-model="loginBonusDialog"
+      :width="mobileWidth < 600 ? '340' : '471'"
+      @click:outside="setLoginBonusDialogVisible(false)"
+    >
+      <LoginBonusDialog
+        v-if="mobileWidth > 600"
+        @closeLoginBonusDialog="closeLoginBonusDialog"
+      />
       <MLoginBonusDialog v-else @closeLoginBonusDialog="closeLoginBonusDialog" />
     </v-dialog>
 
     <!----------------------------------- roulette bonus dialog --------------------------------->
 
-    <v-dialog v-model="rouletteBonusDialog" :width="mobileWidth < 600 ? '340' : '471'"
-      @click:outside="closeRouletteBonusDialog">
-      <RouletteBonusDialog v-if="mobileWidth > 600" @closeRouletteBonusDialog="closeRouletteBonusDialog" />
+    <v-dialog
+      v-model="rouletteBonusDialog"
+      :width="mobileWidth < 600 ? '340' : '471'"
+      @click:outside="closeRouletteBonusDialog"
+    >
+      <RouletteBonusDialog
+        v-if="mobileWidth > 600"
+        @closeRouletteBonusDialog="closeRouletteBonusDialog"
+      />
       <MRouletteBonusDialog v-else @closeRouletteBonusDialog="closeRouletteBonusDialog" />
     </v-dialog>
 
     <!----------------------------------- account dialog --------------------------------->
 
-
     <v-dialog v-model="accountDialog" width="312" @click:outside="accountDialogClose">
-      <MAccountDialog @mDialogHide="accountDialogClose" :avatar="userInfo.avatar" :nickName="userInfo.name"
-        @selectActiveIndex="selectActiveIndex" />
+      <MAccountDialog
+        @mDialogHide="accountDialogClose"
+        :avatar="userInfo.avatar"
+        :nickName="userInfo.name"
+        @selectActiveIndex="selectActiveIndex"
+      />
     </v-dialog>
 
     <!------------------------------ Main Page ------------------------------------------->
@@ -361,7 +426,7 @@ onMounted(() => {
 </template>
 <style lang="scss">
 .main-background {
-  background: #31275C;
+  background: #31275c;
 }
 
 .main-bg-blur {
@@ -392,18 +457,16 @@ onMounted(() => {
 @media (max-width: 600px) {
   .v-overlay__scrim {
     background: var(--background-color);
-    ;
   }
 
   .v-navigation-drawer__scrim {
     opacity: 0 !important;
     background: transparent !important;
   }
-
 }
 
-@media(max-width: 388px) {
-  .v-dialog>.v-overlay__content {
+@media (max-width: 388px) {
+  .v-dialog > .v-overlay__content {
     max-width: unset !important;
   }
 }

@@ -87,12 +87,254 @@ export const mailStore = defineStore({
                     content: "Accomplish"
                 }
             },
+            {
+                id: 5,
+                icon: new URL("@/assets/public/svg/icon_public_14.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-white",
+                    content: "Subscribe to notifications"
+                },
+                mail_content_2: {
+                    color: "text-color-gray",
+                    content: "Enable push notifications to receive exclusive bonuses!"
+                },
+                mail_rail_1: {
+                    color: "",
+                    content: ""
+                },
+                mail_rail_2: {
+                    color: "",
+                    content: ""
+                }
+            },
+            {
+                id: 6,
+                icon: new URL("@/assets/public/svg/icon_public_15.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-white",
+                    content: "Refer a friend"
+                },
+                mail_content_2: {
+                    color: "text-color-gray",
+                    content: "lnvite Friends, Earn $10 Per lnvite"
+                },
+                mail_rail_1: {
+                    color: "",
+                    content: ""
+                },
+                mail_rail_2: {
+                    color: "",
+                    content: ""
+                }
+            },
+            {
+                id: 7,
+                icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-gray",
+                    content: "Withdrawal Amount"
+                },
+                mail_content_2: {
+                    color: "money-color-white",
+                    content: "$100.00"
+                },
+                mail_rail_1: {
+                    color: "text-color-gray",
+                    content: "2023/1/29  17:50:36"
+                },
+                mail_rail_2: {
+                    color: "text-color-yellow",
+                    content: "ln processing..."
+                }
+            },
+            {
+                id: 8,
+                icon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-gray",
+                    content: "Withdrawal Amount"
+                },
+                mail_content_2: {
+                    color: "money-color-white",
+                    content: "$100.00"
+                },
+                mail_rail_1: {
+                    color: "text-color-gray",
+                    content: "2023/1/29  17:50:36"
+                },
+                mail_rail_2: {
+                    color: "text-color-green",
+                    content: "Accomplish"
+                }
+            },
+            {
+                id: 9,
+                icon: new URL("@/assets/public/svg/icon_public_14.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-white",
+                    content: "Subscribe to notifications"
+                },
+                mail_content_2: {
+                    color: "text-color-gray",
+                    content: "Enable push notifications to receive exclusive bonuses!"
+                },
+                mail_rail_1: {
+                    color: "",
+                    content: ""
+                },
+                mail_rail_2: {
+                    color: "",
+                    content: ""
+                }
+            },
+            {
+                id: 10,
+                icon: new URL("@/assets/public/svg/icon_public_15.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-white",
+                    content: "Refer a friend"
+                },
+                mail_content_2: {
+                    color: "text-color-gray",
+                    content: "lnvite Friends, Earn $10 Per lnvite"
+                },
+                mail_rail_1: {
+                    color: "",
+                    content: ""
+                },
+                mail_rail_2: {
+                    color: "",
+                    content: ""
+                }
+            },
+            {
+                id: 11,
+                icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-gray",
+                    content: "Withdrawal Amount"
+                },
+                mail_content_2: {
+                    color: "money-color-white",
+                    content: "$100.00"
+                },
+                mail_rail_1: {
+                    color: "text-color-gray",
+                    content: "2023/1/29  17:50:36"
+                },
+                mail_rail_2: {
+                    color: "text-color-yellow",
+                    content: "ln processing..."
+                }
+            },
+            {
+                id: 12,
+                icon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-gray",
+                    content: "Withdrawal Amount"
+                },
+                mail_content_2: {
+                    color: "money-color-white",
+                    content: "$100.00"
+                },
+                mail_rail_1: {
+                    color: "text-color-gray",
+                    content: "2023/1/29  17:50:36"
+                },
+                mail_rail_2: {
+                    color: "text-color-green",
+                    content: "Accomplish"
+                }
+            },
+            {
+                id: 13,
+                icon: new URL("@/assets/public/svg/icon_public_14.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-white",
+                    content: "Subscribe to notifications"
+                },
+                mail_content_2: {
+                    color: "text-color-gray",
+                    content: "Enable push notifications to receive exclusive bonuses!"
+                },
+                mail_rail_1: {
+                    color: "",
+                    content: ""
+                },
+                mail_rail_2: {
+                    color: "",
+                    content: ""
+                }
+            },
+            {
+                id: 14,
+                icon: new URL("@/assets/public/svg/icon_public_15.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-white",
+                    content: "Refer a friend"
+                },
+                mail_content_2: {
+                    color: "text-color-gray",
+                    content: "lnvite Friends, Earn $10 Per lnvite"
+                },
+                mail_rail_1: {
+                    color: "",
+                    content: ""
+                },
+                mail_rail_2: {
+                    color: "",
+                    content: ""
+                }
+            },
+            {
+                id: 15,
+                icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-gray",
+                    content: "Withdrawal Amount"
+                },
+                mail_content_2: {
+                    color: "money-color-white",
+                    content: "$100.00"
+                },
+                mail_rail_1: {
+                    color: "text-color-gray",
+                    content: "2023/1/29  17:50:36"
+                },
+                mail_rail_2: {
+                    color: "text-color-yellow",
+                    content: "ln processing..."
+                }
+            },
+            {
+                id: 16,
+                icon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
+                mail_content_1: {
+                    color: "text-color-gray",
+                    content: "Withdrawal Amount"
+                },
+                mail_content_2: {
+                    color: "money-color-white",
+                    content: "$100.00"
+                },
+                mail_rail_1: {
+                    color: "text-color-gray",
+                    content: "2023/1/29  17:50:36"
+                },
+                mail_rail_2: {
+                    color: "text-color-green",
+                    content: "Accomplish"
+                }
+            },
         ] as GetMailData[],
+        mailMenuShow: false as boolean
     }),
     getters: {
         getSuccess: (state) => state.success,
         getErrMessage: (state) => state.errMessage,
-        getMailList:  (state) => state.mailList,
+        getMailList: (state) => state.mailList,
+        getMailMenuShow: (state) => state.mailMenuShow,
     },
     actions: {
         setSuccess(success: boolean) {
@@ -103,6 +345,9 @@ export const mailStore = defineStore({
         },
         setMailList(mailItem: GetMailData) {
             this.mailList.unshift(mailItem);
+        },
+        setMailMenuShow(mailMenuShow: boolean) {
+            this.mailMenuShow = mailMenuShow;
         }
     }
 })

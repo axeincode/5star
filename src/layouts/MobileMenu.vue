@@ -16,6 +16,7 @@ const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setUserNavBarToggle } = appBarStore();
+const { setMailMenuShow } = mailStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -23,6 +24,7 @@ const mailCount = ref<number>(10);
 const navbarToggle = ref<boolean>(false);
 const mailNavigation = ref<boolean>(false);
 const mailMenuShow = ref<boolean>(false);
+const tempMailList = ref<Array<GetMailData>>([]);
 
 // pc or mobile screen switch
 
@@ -53,9 +55,22 @@ watch(navToggle, (newValue) => {
   navbarToggle.value = newValue;
 }, { deep: true })
 
-watch(mailMenuShow, (newValue) => {
+watch(mailMenuShow, async (newValue) => {
   setMainBlurEffectShow(newValue);
   setOverlayScrimShow(newValue);
+  setMailMenuShow(newValue);
+  if (newValue) {
+    for (const item of mailList.value) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          tempMailList.value.push(item);
+          resolve();
+        }, 400);
+      });
+    }
+  } else {
+    tempMailList.value = [];
+  }
 })
 
 const handleNavbarToggle = () => {
@@ -69,11 +84,16 @@ const handleNavbarToggle = () => {
 }
 
 const goHomePage = () => {
-  router.push({name: "Dashboard"});
+  router.push({ name: "Dashboard" });
+}
+
+const handleScroll = () => {
+  console.log("scroll");
 }
 
 onMounted(() => {
   mailCount.value = mailList.value.length
+  console.log(tempMailList.value.length);
 })
 </script>
 
@@ -93,7 +113,10 @@ onMounted(() => {
     </v-btn>
     <v-btn class="menu-text-color share-ripple-btn">
       <div class="circle-background"></div>
-      <img src="@/assets/public/svg/bg_public_22.svg" class="share-background-img-position" />
+      <img
+        src="@/assets/public/svg/bg_public_22.svg"
+        class="share-background-img-position"
+      />
       <img src="@/assets/public/image/img_public_19.png" class="share-img-position" />
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
@@ -105,7 +128,12 @@ onMounted(() => {
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>
-    <v-menu content-class="mobile-mail-menu" :scrim="true" v-model:model-value="mailMenuShow">
+    <v-menu
+      content-class="mobile-mail-menu"
+      :scrim="true"
+      v-model:model-value="mailMenuShow"
+      transition="slide-y-transition"
+    >
       <template v-slot:activator="{ props }">
         <v-btn class="menu-text-color" v-bind="props">
           <div class="relative">
@@ -117,40 +145,71 @@ onMounted(() => {
           </div>
         </v-btn>
       </template>
-      <v-list theme="dark" bg-color="transparent" class="px-2" :width="mobileWidth" style="box-shadow: none !important">
-        <v-list-item height="36">
+      <v-list
+        theme="dark"
+        bg-color="transparent"
+        class="px-2"
+        :height="tempMailList.length > 8 ? '448px' : ''"
+        :width="mobileWidth"
+        @scroll="handleScroll"
+        style="box-shadow: none !important"
+        :style="{ marginLeft: tempMailList.length > 8 ? '6px' : 'auto' }"
+      >
+        <v-list-item
+          height="36"
+          :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''"
+        >
           <v-list-item-title class="ml-2">
             <div class="mail-header-text">{{ t("mail_dialog.header_text") }}</div>
           </v-list-item-title>
         </v-list-item>
-        <v-list-item class="mail-item" :value="mailItem.mail_content_1.content" v-for="(mailItem, mailIndex) in mailList"
-          :key="mailIndex">
-          <template v-slot:prepend>
-            <img :src="mailItem.icon" width="20" />
-          </template>
-          <v-list-item-title class="ml-2" style="line-height: 18px">
-            <div :class="mailItem.mail_content_1.color">
-              {{ mailItem.mail_content_1.content }}
-            </div>
-            <div :class="mailItem.mail_content_2.color">
-              {{ mailItem.mail_content_2.content }}
-            </div>
-          </v-list-item-title>
-          <template v-slot:append>
-            <div :class="mailItem.mail_rail_1.color">
-              {{ mailItem.mail_rail_1.content }}
-            </div>
-            <div class="completion-area" :class="mailItem.mail_rail_2.color">
-              {{ mailItem.mail_rail_2.content }}
-            </div>
-          </template>
-        </v-list-item>
+        <template v-for="(mailItem, index) in tempMailList" :key="index">
+          <v-list-item
+            class="mail-item"
+            :value="mailItem.mail_content_1.content"
+            :class="index > 8 ? 'scale-mail-item' : ''"
+          >
+            <template v-slot:prepend>
+              <img :src="mailItem.icon" width="20" />
+            </template>
+            <v-list-item-title class="ml-2" style="line-height: 18px">
+              <div :class="mailItem.mail_content_1.color">
+                {{ mailItem.mail_content_1.content }}
+              </div>
+              <div :class="mailItem.mail_content_2.color">
+                {{ mailItem.mail_content_2.content }}
+              </div>
+            </v-list-item-title>
+            <template v-slot:append>
+              <div :class="mailItem.mail_rail_1.color">
+                {{ mailItem.mail_rail_1.content }}
+              </div>
+              <div class="completion-area" :class="mailItem.mail_rail_2.color">
+                {{ mailItem.mail_rail_2.content }}
+              </div>
+            </template>
+          </v-list-item>
+        </template>
       </v-list>
     </v-menu>
   </v-bottom-navigation>
 </template>
 
 <style lang="scss">
+@keyframes mailScaling {
+  0% {
+    transform: scale(0);
+  }
+
+  80% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .mobile-menu-index {
   z-index: 1009 !important;
   overflow: inherit !important;
@@ -180,13 +239,19 @@ onMounted(() => {
 .mobile-mail-menu {
   margin-left: auto !important;
   left: unset !important;
-  bottom: 90px;
+  bottom: 82px;
   top: unset !important;
 
   // background: transparent !important;
   // box-shadow: none !important;
   // border: none !important;
   // height: 340px !important;
+
+  .m-mail-menu-title {
+    position: fixed;
+    top: -36px;
+    z-index: 100000;
+  }
 
   .v-list-item-title {
     font-weight: 500;
@@ -248,6 +313,17 @@ onMounted(() => {
     background-color: #1c1929 !important;
     padding: 4px 8px !important;
     border-radius: 12px !important;
+    animation-name: scaling;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+  }
+
+  .scale-mail-item {
+    scale: 0.96;
+    transform: translateY(-43px);
+    z-index: -1;
+    opacity: 0.8;
   }
 }
 

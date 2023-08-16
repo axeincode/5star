@@ -9,6 +9,7 @@ import { loginBonusStore } from "@/store/loginBonus";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
+import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
 
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
@@ -47,7 +48,7 @@ const navBarToggle = computed(() => {
 })
 
 const openLoginBonusDialog = () => {
-  setLoginBonusDialogVisible(true);
+    setLoginBonusDialogVisible(true);
 }
 
 // language array
@@ -156,13 +157,15 @@ onMounted(() => {
                 <input type="checkbox" id="casino-toggle" v-model="casinoCheckBox" />
                 <label for="casino-toggle">
                     <div class="casino">
-                        <inline-svg src="src/assets/public/svg/icon_public_34.svg" width="24" height="24"
+                        <inline-svg :src="icon_public_34" width="24" height="24"
                             :transform-source="casinoTransform"></inline-svg>
+                        <!-- <img src="@/assets/public/svg/icon_public_34.svg" width="24" /> -->
                         <P class="text-700-14 ml-1">{{ t('navBar.casino') }}</P>
                     </div>
                     <div class="sport">
-                        <inline-svg src="src/assets/public/svg/icon_public_40.svg" width="24" height="24"
+                        <inline-svg :src="icon_public_40" width="24" height="24"
                             :transform-source="sportTransform"></inline-svg>
+                        <!-- <img src="@/assets/public/svg/icon_public_40.svg" width="24" /> -->
                         <P class="text-700-14 ml-1">{{ t('navBar.sport') }}</P>
                     </div>
                 </label>
@@ -179,8 +182,8 @@ onMounted(() => {
                 </v-row>
                 <v-row class="mx-2 ma-1">
                     <v-col cols="6" class="pa-1 relative">
-                        <v-list-item value="casino" class="ma-0 pa-0" height="48px" @click="openLoginBonusDialog" >
-                            <img src="@/assets/public/svg/bg_public_16.svg" class="img-width"/>
+                        <v-list-item value="casino" class="ma-0 pa-0" height="48px" @click="openLoginBonusDialog">
+                            <img src="@/assets/public/svg/bg_public_16.svg" class="img-width" />
                             <img src="@/assets/public/image/img_public_01.png" class="navbar-task-img-position"
                                 width="46" />
                             <p class="text-700-14 white navbar-task-text-position">{{ t('navBar.task_text') }}</p>
