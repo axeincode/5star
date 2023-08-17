@@ -50,6 +50,11 @@ export type GetUserInfoResponseData = {
     data: GetUserInfo
     message: string
 }
+export type GetUserEmailVerifyResponseData = {
+    code: number
+    time: int
+    message: string
+}
 export type GetUserAmountResponseData = {
     code: number
     data: GetUserAmount

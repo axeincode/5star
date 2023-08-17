@@ -18,6 +18,10 @@ export namespace NETWORK {
     static USER_EMAIL = '/user/email'; // update email
     static USER_PASSWORD = '/user/password'; // update password
     static USER_SUSPEND = '/user/suspend'; // suspend user
+    static USER_CHECK = '/user/check'; // user check
+    static USER_EMAIL_VERIFY = '/user/verifyemail'; // user email verify
+    static USER_DEPOSIT_CONFIG = '/user/depositcfg'; // get user deposit configuration
+    static USER_DEPOSIT_SUBMIT = '/user/depositsubmit'; // user deposit submit
   }
 
   //Listening events sent actively

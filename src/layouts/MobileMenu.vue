@@ -26,6 +26,8 @@ const mailNavigation = ref<boolean>(false);
 const mailMenuShow = ref<boolean>(false);
 const tempMailList = ref<Array<GetMailData>>([]);
 
+const prevScrollPos = ref<number>(0);
+
 // pc or mobile screen switch
 
 const mobileVersion = computed(() => {
@@ -87,8 +89,39 @@ const goHomePage = () => {
   router.push({ name: "Dashboard" });
 }
 
-const handleScroll = () => {
-  console.log("scroll");
+const handleScroll = (event: any) => {
+  const vList = document.querySelector('.mobile-mail-menu');
+
+  if (!vList) {
+    return;
+  }
+
+  const listItems = Array.from(vList.querySelectorAll('.v-list-item'));
+
+  const currentScrollPos = event.target.scrollTop;
+
+  listItems.forEach((listItem) => {
+    const rect = listItem.getBoundingClientRect();
+
+    // If the current scroll position is greater than the previous one, the scrollbar is going down
+    if (currentScrollPos > prevScrollPos.value) {
+      // console.log('Scrollbar is going down');
+      if (rect.top > 0 && rect.bottom < window.innerHeight - 85 && rect.bottom > window.innerHeight - 115) {
+        listItem.classList.remove('scale-mail-item');
+        // listItem.classList.add('animation-mail-item');
+      }
+    }
+    // Otherwise, the scrollbar is going up
+    else {
+      // console.log('Scrollbar is going up');
+      if (rect.bottom > window.innerHeight - 83) {
+        listItem.classList.add('scale-mail-item');
+        // listItem.classList.remove('animation-mail-item');
+      }
+    }
+  });
+
+  prevScrollPos.value = currentScrollPos;
 }
 
 onMounted(() => {
@@ -201,7 +234,21 @@ onMounted(() => {
     transform: scale(0);
   }
 
-  80% {
+  60% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes animationMailScaling {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
     transform: scale(1.2);
   }
 
@@ -313,7 +360,7 @@ onMounted(() => {
     background-color: #1c1929 !important;
     padding: 4px 8px !important;
     border-radius: 12px !important;
-    animation-name: scaling;
+    animation-name: mailScaling;
     animation-duration: 0.2s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
@@ -324,6 +371,14 @@ onMounted(() => {
     transform: translateY(-43px);
     z-index: -1;
     opacity: 0.8;
+    transition: scale 0.2s ease;
+  }
+
+  .animation-mail-item {
+    animation-name: animationMailScaling;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
   }
 }
 
