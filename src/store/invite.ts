@@ -1,21 +1,18 @@
 import { defineStore } from 'pinia'
 import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
-import type * as User from "@/interface/user";
+import type * as Invite from "@/interface/invite";
 
-export const userStore = defineStore({
-  id: 'user',
+export const inviteStore = defineStore({
+  id: 'invite',
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    userCheck: false as boolean,
-    verifyTime: 0 as number,
+    inviteItem: {} as Invite.InviteData
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
-    getUserCheck: (state) => state.userCheck,
-    getVerifyTime: (state) => state.verifyTime,
   },
   actions: {
     // set functions
@@ -25,38 +22,19 @@ export const userStore = defineStore({
     setErrorMessage(message: string) {
       this.errMessage = message
     },
-    setUserCheck(userCheck: boolean) {
-      this.userCheck = userCheck;
+    setInviteItem(inviteItem: Invite.InviteData) {
+      this.inviteItem = inviteItem;
     },
-    setVerifyTime(verifyTime: number) {
-      this.verifyTime = verifyTime;
-    },
-    // user check
-    async dispatchUserCheck() {
+    // user invite information
+    async dispatchUserInvite() {
       this.setSuccess(false);
-      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_CHECK;
+      const route: string = NETWORK.INVITE_PAGE.INVITE_INFO;
       const network: Network = Network.getInstance();
       // response call back function
-      const next = (response: User.GetUserInfoResponseData) => {
+      const next = (response: Invite.GetInviteResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.setUserCheck(true);
-        } else {
-          this.handleErr(response.code);
-        }
-      }
-      await network.sendMsg(route, {}, next, 1);
-    },
-    // user email verify
-    async dispatchUserEmailVerify() {
-      this.setSuccess(false);
-      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_EMAIL_VERIFY;
-      const network: Network = Network.getInstance();
-      // response call back function
-      const next = (response: User.GetUserEmailVerifyResponseData) => {
-        if (response.code == 200) {
-          this.setSuccess(true);
-          this.setVerifyTime(response.time);
+          this.setInviteItem(response.data);
         } else {
           this.handleErr(response.code);
         }

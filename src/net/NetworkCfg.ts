@@ -20,8 +20,23 @@ export namespace NETWORK {
     static USER_SUSPEND = '/user/suspend'; // suspend user
     static USER_CHECK = '/user/check'; // user check
     static USER_EMAIL_VERIFY = '/user/verifyemail'; // user email verify
-    static USER_DEPOSIT_CONFIG = '/user/depositcfg'; // get user deposit configuration
-    static USER_DEPOSIT_SUBMIT = '/user/depositsubmit'; // user deposit submit
+  }
+
+  // deposit api
+  export class DEPOSIT_PAGE {
+    static DEPOSIT_CONFIG = '/user/depositcfg'; // get user deposit configuration
+    static DEPOSIT_SUBMIT = '/user/depositsubmit'; // user deposit submit
+  }
+
+  // withdraw api
+  export class WITHDRAW_PAGE {
+    static WITHDRAWAL_CONFIG = '/user/withdrawalcfg'; // get user withdraw configuration
+    static WITHDRAWAL_SUBMIT = '/user/withdrawsubmit'; // user withdraw submit
+  }
+
+  // invite api
+  export class INVITE_PAGE {
+    static INVITE_INFO = '/user/invite'; // get user invite information
   }
 
   //Listening events sent actively

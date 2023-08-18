@@ -275,6 +275,7 @@ export type langType = {
     validation: {
       text_1: string
       text_2: string
+      text_3: string
     }
     personal_information: {
       header_text: string

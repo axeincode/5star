@@ -126,7 +126,7 @@ const Login = defineComponent({
     const handleEmailBlur = () => {
       // console.log("onblur")
       setTimeout(() => {
-        // state.mailCardHeight = 0;
+        state.mailCardHeight = 0;
       }, 100);
     };
 

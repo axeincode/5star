@@ -1,21 +1,21 @@
 import { defineStore } from 'pinia'
 import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
-import type * as User from "@/interface/user";
+import type * as Withdraw from "@/interface/withdraw";
 
-export const userStore = defineStore({
-  id: 'user',
+export const withdrawStore = defineStore({
+  id: 'withdraw',
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    userCheck: false as boolean,
-    verifyTime: 0 as number,
+    withdrawConfig: {} as any,
+    withdrawSubmit: {} as any,
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
-    getUserCheck: (state) => state.userCheck,
-    getVerifyTime: (state) => state.verifyTime,
+    getWithdrawCfg: (state) => state.withdrawConfig,
+    getWithdrawSubmit: (state) => state.withdrawSubmit,
   },
   actions: {
     // set functions
@@ -25,43 +25,43 @@ export const userStore = defineStore({
     setErrorMessage(message: string) {
       this.errMessage = message
     },
-    setUserCheck(userCheck: boolean) {
-      this.userCheck = userCheck;
+    setWithdrawCfg(withdrawConfig: any) {
+      this.withdrawConfig = withdrawConfig;
     },
-    setVerifyTime(verifyTime: number) {
-      this.verifyTime = verifyTime;
+    setWithdrawSubmit(withdrawSubmit: any) {
+      this.withdrawSubmit = withdrawSubmit;
     },
-    // user check
-    async dispatchUserCheck() {
+    // user withdraw configuration
+    async dispatchUserWithdrawCfg() {
       this.setSuccess(false);
-      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_CHECK;
+      const route: string = NETWORK.WITHDRAW_PAGE.WITHDRAWAL_CONFIG;
       const network: Network = Network.getInstance();
       // response call back function
-      const next = (response: User.GetUserInfoResponseData) => {
+      const next = (response: Withdraw.GetWithdrawResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.setUserCheck(true);
+          this.setWithdrawCfg(response.data);
         } else {
           this.handleErr(response.code);
         }
       }
-      await network.sendMsg(route, {}, next, 1);
+      await network.sendMsg(route, {}, next, 1, 4);
     },
-    // user email verify
-    async dispatchUserEmailVerify() {
+    // user withdraw configuration
+    async dispatchUserWithdrawSubmit(data: Withdraw.WithdrawItem) {
       this.setSuccess(false);
-      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_EMAIL_VERIFY;
+      const route: string = NETWORK.WITHDRAW_PAGE.WITHDRAWAL_SUBMIT;
       const network: Network = Network.getInstance();
       // response call back function
-      const next = (response: User.GetUserEmailVerifyResponseData) => {
+      const next = (response: Withdraw.SubmitWithdrawResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.setVerifyTime(response.time);
+          this.setWithdrawSubmit(response.data);
         } else {
           this.handleErr(response.code);
         }
       }
-      await network.sendMsg(route, {}, next, 1);
+      await network.sendMsg(route, data, next, 1);
     },
     // error handle function
     handleErr(code: number) {

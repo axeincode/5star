@@ -1,21 +1,21 @@
 import { defineStore } from 'pinia'
 import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
-import type * as User from "@/interface/user";
+import type * as Deposit from "@/interface/deposit";
 
-export const userStore = defineStore({
-  id: 'user',
+export const depositStore = defineStore({
+  id: 'deposit',
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    userCheck: false as boolean,
-    verifyTime: 0 as number,
+    depositConfig: {} as any,
+    depositSubmit: {} as any,
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
-    getUserCheck: (state) => state.userCheck,
-    getVerifyTime: (state) => state.verifyTime,
+    getDepositCfg: (state) => state.depositConfig,
+    getDepositSubmit: (state) => state.depositSubmit,
   },
   actions: {
     // set functions
@@ -25,43 +25,43 @@ export const userStore = defineStore({
     setErrorMessage(message: string) {
       this.errMessage = message
     },
-    setUserCheck(userCheck: boolean) {
-      this.userCheck = userCheck;
+    setDepositCfg(depositConfig: any) {
+      this.depositConfig = depositConfig;
     },
-    setVerifyTime(verifyTime: number) {
-      this.verifyTime = verifyTime;
+    setDepositSubmit(depositSubmit: any) {
+      this.depositSubmit = depositSubmit;
     },
-    // user check
-    async dispatchUserCheck() {
+    // user deposit configuration
+    async dispatchUserDepositCfg() {
       this.setSuccess(false);
-      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_CHECK;
+      const route: string = NETWORK.DEPOSIT_PAGE.DEPOSIT_CONFIG;
       const network: Network = Network.getInstance();
       // response call back function
-      const next = (response: User.GetUserInfoResponseData) => {
+      const next = (response: Deposit.GetDepositResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.setUserCheck(true);
+          this.setDepositCfg(response.data);
         } else {
           this.handleErr(response.code);
         }
       }
-      await network.sendMsg(route, {}, next, 1);
+      await network.sendMsg(route, {}, next, 1, 4);
     },
-    // user email verify
-    async dispatchUserEmailVerify() {
+    // user deposit configuration
+    async dispatchUserDepositSubmit(data: Deposit.DepositItem) {
       this.setSuccess(false);
-      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_EMAIL_VERIFY;
+      const route: string = NETWORK.DEPOSIT_PAGE.DEPOSIT_SUBMIT;
       const network: Network = Network.getInstance();
       // response call back function
-      const next = (response: User.GetUserEmailVerifyResponseData) => {
+      const next = (response: Deposit.SubmitDepositResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.setVerifyTime(response.time);
+          this.setDepositSubmit(response.data);
         } else {
           this.handleErr(response.code);
         }
       }
-      await network.sendMsg(route, {}, next, 1);
+      await network.sendMsg(route, data, next, 1);
     },
     // error handle function
     handleErr(code: number) {

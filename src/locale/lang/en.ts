@@ -272,11 +272,12 @@ export const lang: langType = {
   withdraw_dialog: {
     withdraw_currency: "Withdrawal Currency",
     withdraw_payment_method: "Withdraw to",
-    withdraw_amount: "Available Balance: R$ 108.88",
+    withdraw_amount: "Available Balance: R$ ",
     amount: "Amount",
     validation: {
       text_1: "Enter the amount you want to withdraw. ",
-      text_2: "Minimum 149, Maximum 588.88.",
+      text_2: "Minimum ",
+      text_3: "Maximum ",
     },
     personal_information: {
       header_text: "Enter your Pix details",
