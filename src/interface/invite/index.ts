@@ -13,8 +13,47 @@ export interface InviteData {
 
 }
 
+export interface PersonalInvitationInformation {
+    total_profit: string | number
+    invitation_bonus: string | number
+    bettion_commission: string | number
+    achievement_bonus: string | number
+    deposited_users: string | number
+    profit_today: {
+        profit: string | number
+        bettion_commission: string | number
+        invite_bonus: string | number
+    }
+    profit_week: {
+        profit: string | number
+        bettion_commission: string | number
+        invite_bonus: string | number
+    }
+    profit_month: {
+        profit: string | number
+        bettion_commission: string | number
+        invite_bonus: string | number
+    }
+}
+
+export interface InviteHistoryConfig {
+    list: Array<any>
+}
+
 export interface GetInviteResponse {
     code: number
     data: InviteData
+    message: string
+}
+
+export interface GetInviteSelfResponse {
+    code: number
+    data: PersonalInvitationInformation
+    message: string
+}
+
+export interface GetInviteHistoryResponse {
+    code: number
+    data: InviteHistoryConfig
     message: string
 }

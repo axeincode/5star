@@ -13,7 +13,7 @@ export interface GetPaymentItem {
     max: string | number
 }
 
-export interface GetPersonalInfo {
+export interface GetPixInfo {
     id: string
     first_name: string
     last_name: string

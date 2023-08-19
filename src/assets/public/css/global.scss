@@ -474,14 +474,9 @@
     }
 }
 
-.v-btn--disabled {
-    background-color: #353652 !important;
-    color: white !important;
-} 
-
 // button
 button {
-    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11) !important;
+    // box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11) !important;
     border-radius: 12px;
 
     .v-btn__content {

@@ -4,15 +4,20 @@ import moment from 'moment-timezone';
 import { appBarStore } from '@/store/appBar';
 import { authStore } from "@/store/auth";
 import { withdrawStore } from '@/store/withdraw';
+import { depositStore } from '@/store/deposit';
 import { mailStore } from '@/store/mail';
 import { type GetUserInfo } from "@/interface/user";
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
 import ValidationBox from '@/components/cash/withdraw/ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useI18n } from 'vue-i18n';
+import { ElNotification } from 'element-plus'
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
+import store from '@/store';
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -153,7 +158,7 @@ const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", imp
 
 const notificationText = ref<string>("");
 
-const isShowAmountValidaton = ref<boolean>(false);
+const isShowAmountValidation = ref<boolean>(false);
 
 const isDepositBtnReady = ref<boolean>(false);
 
@@ -163,6 +168,11 @@ const paymentMenuShow = ref<boolean>(false);
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value;
+})
+
+const pixInfo = computed(() => {
+  const { getPixInfo } = storeToRefs(depositStore());
+  return getPixInfo.value
 })
 
 const withdrawConfig = computed(() => {
@@ -206,64 +216,88 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
-  return Number(withdrawAmount.value) >= 149 && Number(withdrawAmount.value) <= 600;
+  // return Number(withdrawAmount.value) >= 149 && Number(withdrawAmount.value) <= 600;
+  return true;
 }
 
 const handleAmountInputFocus = (): void => {
   if (validateAmount()) {
-    isShowAmountValidaton.value = false;
+    isShowAmountValidation.value = false;
   } else {
-    isShowAmountValidaton.value = true;
+    isShowAmountValidation.value = true;
   }
 }
 
 const handleAmountInputChange = (): void => {
   if (validateAmount()) {
-    isShowAmountValidaton.value = false;
+    isShowAmountValidation.value = false;
   } else {
-    isShowAmountValidaton.value = true;
+    isShowAmountValidation.value = true;
   }
 }
 
 const handleAmountInputBlur = (): void => {
   // if (validateAmount()) {
-  isShowAmountValidaton.value = false;
+  isShowAmountValidation.value = false;
   // } else {
-  //     isShowAmountValidaton.value = true;
+  //     isShowAmountValidation.value = true;
   // }
 }
 
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(withdrawStore());
+  return getSuccess.value;
+})
+
+const errMessage = computed(() => {
+  const { getErrMessage } = storeToRefs(withdrawStore());
+  return getErrMessage.value
+})
+
 const handleWithdrawSubmit = async () => {
   await dispatchUserWithdrawSubmit({
-    id_number: userInfo.value.uid,
-    first_name: userInfo.value.first_name == "" ? "test" : userInfo.value.first_name,
-    last_name: userInfo.value.last_name == "" ? "test" : userInfo.value.last_name,
+    id_number: pixInfo.value.id,
+    first_name: pixInfo.value.first_name,
+    last_name: pixInfo.value.last_name,
     channels_id: selectedPaymentItem.value.id,
     amount: Number(withdrawAmount.value)
   })
-  let mailItem = {
-    id: 5,
-    icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
-    mail_content_1: {
-      color: "text-color-gray",
-      content: "Withdrawal Amount"
-    },
-    mail_content_2: {
-      color: "money-color-white",
-      content: "$" + Number(withdrawAmount.value).toFixed(2)
-    },
-    mail_rail_1: {
-      color: "text-color-gray",
-      content: moment().tz("Asia/Hong_Kong").format("YYYY/MM/DD HH:mm:ss")
-    },
-    mail_rail_2: {
-      color: "text-color-yellow",
-      content: "ln processing..."
+  if (success.value) {
+    ElNotification({
+      icon: SuccessIcon,
+      title: "deposited successfully!",
+      duration: 3000,
+    })
+    let mailItem = {
+      id: 5,
+      icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
+      mail_content_1: {
+        color: "text-color-gray",
+        content: "Withdrawal Amount"
+      },
+      mail_content_2: {
+        color: "money-color-white",
+        content: "$" + Number(withdrawAmount.value).toFixed(2)
+      },
+      mail_rail_1: {
+        color: "text-color-gray",
+        content: moment().tz("Asia/Hong_Kong").format("YYYY/MM/DD HH:mm:ss")
+      },
+      mail_rail_2: {
+        color: "text-color-yellow",
+        content: "ln processing..."
+      }
     }
+    setMailList(mailItem);
+    setWithdrawDialogToggle(false);
+    setCashDialogToggle(false);
+  } else {
+    ElNotification({
+      icon: WarningIcon,
+      title: errMessage.value,
+      duration: 3000,
+    })
   }
-  setMailList(mailItem);
-  setWithdrawDialogToggle(false);
-  setCashDialogToggle(false);
 }
 
 watch(withdrawAmount, (newValue) => {
@@ -272,7 +306,7 @@ watch(withdrawAmount, (newValue) => {
   } else {
     isDepositBtnReady.value = false;
   }
-  isShowAmountValidaton.value = !validateAmount();
+  isShowAmountValidation.value = !validateAmount();
 })
 
 onMounted(async () => {
@@ -401,11 +435,11 @@ onMounted(async () => {
           t('withdraw_dialog.validation.text_2') +
           selectedPaymentItem.min +
           ', ' +
-          t('withdraw_dialog.validation.text_2') +
+          t('withdraw_dialog.validation.text_3') +
           selectedPaymentItem.max +
           '.'
         "
-        v-if="isShowAmountValidaton"
+        v-if="isShowAmountValidation"
       />
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">

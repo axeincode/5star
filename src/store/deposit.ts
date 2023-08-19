@@ -10,12 +10,14 @@ export const depositStore = defineStore({
     errMessage: '' as string,
     depositConfig: {} as any,
     depositSubmit: {} as any,
+    pixInfo: {} as Deposit.GetPixInfo
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getDepositCfg: (state) => state.depositConfig,
     getDepositSubmit: (state) => state.depositSubmit,
+    getPixInfo: (state) => state.pixInfo,
   },
   actions: {
     // set functions
@@ -30,6 +32,9 @@ export const depositStore = defineStore({
     },
     setDepositSubmit(depositSubmit: any) {
       this.depositSubmit = depositSubmit;
+    },
+    setPixInfo(pixInfo: Deposit.GetPixInfo) {
+      this.pixInfo = pixInfo;
     },
     // user deposit configuration
     async dispatchUserDepositCfg() {
@@ -145,6 +150,11 @@ export const depositStore = defineStore({
         case 103010:
           // code === 103010 means wrong birthday format
           this.setErrorMessage('wrong birthday format');
+          break;
+        case 106003:
+          // code === 106003 means passed data exception
+          // this.setErrorMessage('传递的数据异常');
+          this.setErrorMessage('passed data exception');
           break;
       }
     },

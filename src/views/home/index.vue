@@ -1123,6 +1123,7 @@ export default Dashboard;
     </v-row>
     <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
       <v-btn
+        :ripple="false"
         class="text-none more-btn-color"
         variant="outlined"
         :width="mobileWidth < 600 ? '100%' : 164"

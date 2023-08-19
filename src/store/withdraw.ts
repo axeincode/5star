@@ -146,6 +146,11 @@ export const withdrawStore = defineStore({
           // code === 103010 means wrong birthday format
           this.setErrorMessage('wrong birthday format');
           break;
+        case 106001:
+          // code === 106001 means passed data exception
+          // this.setErrorMessage('传递的数据异常');
+          this.setErrorMessage('passed data exception');
+          break;
       }
     },
   }

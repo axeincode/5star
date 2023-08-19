@@ -5,14 +5,17 @@ import { authStore } from "@/store/auth";
 import { depositStore } from '@/store/deposit';
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
-import { type GetPersonalInfo } from '@/interface/deposit';
+import { type GetPixInfo } from '@/interface/deposit';
 import { type GetUserInfo } from "@/interface/user";
 import ValidationBox from '@/components/cash/deposit/ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
+import store from '@/store';
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -167,13 +170,18 @@ const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", imp
 
 const notificationText = ref<string>("");
 
-const isShowAmountValidaton = ref<boolean>(false);
+const isShowAmountValidation = ref<boolean>(false);
 
 const isDepositBtnReady = ref<boolean>(false);
 
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value;
+})
+
+const pixInfo = computed(() => {
+  const { getPixInfo } = storeToRefs(depositStore());
+  return getPixInfo.value
 })
 
 const depositConfig = computed(() => {
@@ -225,38 +233,61 @@ const validateAmount = (): boolean => {
 
 const handleAmountInputFocus = (): void => {
   if (validateAmount()) {
-    isShowAmountValidaton.value = false;
+    isShowAmountValidation.value = false;
   } else {
-    isShowAmountValidaton.value = true;
+    isShowAmountValidation.value = true;
   }
 }
 
 const handleAmountInputChange = (): void => {
   if (validateAmount()) {
-    isShowAmountValidaton.value = false;
+    isShowAmountValidation.value = false;
   } else {
-    isShowAmountValidaton.value = true;
+    isShowAmountValidation.value = true;
   }
 }
 
 const handleAmountInputBlur = (): void => {
   // if (validateAmount()) {
-  isShowAmountValidaton.value = false;
+  isShowAmountValidation.value = false;
   // } else {
-  //     isShowAmountValidaton.value = true;
+  //     isShowAmountValidation.value = true;
   // }
 }
 
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(depositStore());
+  return getSuccess.value
+})
+
+const errMessage = computed(() => {
+  const { getErrMessage } = storeToRefs(depositStore());
+  return getErrMessage.value
+})
+
 const handleDepositSubmit = async () => {
   await dispatchUserDepositSubmit({
-    id_number: userInfo.value.uid,
-    first_name: userInfo.value.first_name == "" ? "test" : userInfo.value.first_name,
-    last_name: userInfo.value.last_name == "" ? "test" : userInfo.value.last_name,
+    id_number: pixInfo.value.id,
+    first_name: pixInfo.value.first_name,
+    last_name: pixInfo.value.last_name,
     channels_id: selectedPaymentItem.value.id,
     amount: Number(depositAmount.value)
   })
-  setDepositDialogToggle(false);
-  setCashDialogToggle(false);
+  if (success.value) {
+    ElNotification({
+      icon: SuccessIcon,
+      title: "deposited successfully!",
+      duration: 3000,
+    })
+    setDepositDialogToggle(false);
+    setCashDialogToggle(false);
+  } else {
+    ElNotification({
+      icon: WarningIcon,
+      title: errMessage.value,
+      duration: 3000,
+    })
+  }
 }
 
 watch(bonusCheck, (newValue) => {
@@ -273,7 +304,7 @@ watch(depositAmount, (newValue) => {
   } else {
     isDepositBtnReady.value = false;
   }
-  isShowAmountValidaton.value = !validateAmount();
+  isShowAmountValidation.value = !validateAmount();
 })
 
 watch(depositToggleSwitch, (newValue) => {
@@ -431,7 +462,7 @@ onMounted(async () => {
         :onblur="handleAmountInputBlur"
         @input="handleAmountInputChange"
       />
-      <ValidationBox v-if="isShowAmountValidaton" />
+      <ValidationBox v-if="isShowAmountValidation" />
     </v-row>
     <div class="mt-0 mx-4 d-flex align-center">
       <div>

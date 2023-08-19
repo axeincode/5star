@@ -31,12 +31,15 @@ export namespace NETWORK {
   // withdraw api
   export class WITHDRAW_PAGE {
     static WITHDRAWAL_CONFIG = '/user/withdrawalcfg'; // get user withdraw configuration
-    static WITHDRAWAL_SUBMIT = '/user/withdrawsubmit'; // user withdraw submit
+    static WITHDRAWAL_SUBMIT = '/user/withdrawalsubmit'; // user withdraw submit
   }
 
   // invite api
   export class INVITE_PAGE {
     static INVITE_INFO = '/user/invite'; // get user invite information
+    static INVITER_AWARD = '/user/inviter/award'; // receive invitation achievement commission
+    static INVITE_SELF = '/user/invite/self'; // personal invitation information
+    static INVITE_HISTORY_CONFIG = '/user/invite/historycfg'; // invitation event commission record configuration
   }
 
   //Listening events sent actively

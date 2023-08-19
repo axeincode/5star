@@ -251,6 +251,7 @@ export class Network {
         if (code === undefined) {
           return Promise.reject(new Error('non-system interface'))
         } else {
+          return apiData;
           switch (code) {
             case 200:
               // code === 0 means no error
