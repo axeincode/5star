@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed } from "vue";
+import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import LoginHeader from "./Header.vue";
 import { authStore } from "@/store/auth";
@@ -46,6 +46,7 @@ const Login = defineComponent({
       mailCardHeight: 0,
       emailPartName: "",
       closeBtnHeight: 0,
+      closeBtnShow: false,
     });
 
     // computed variables
@@ -66,6 +67,19 @@ const Login = defineComponent({
       const { getErrMessage } = storeToRefs(authStore());
       return getErrMessage.value;
     });
+
+    const dialogCheckbox = computed(() => {
+      const { getDialogCheckbox } = storeToRefs(authStore());
+      return getDialogCheckbox.value;
+    });
+
+    watch(
+      dialogCheckbox,
+      (newValue) => {
+        state.closeBtnShow = false;
+      },
+      { deep: true }
+    );
 
     // forgot password function when password fogot
 
@@ -158,7 +172,10 @@ const Login = defineComponent({
     };
 
     onMounted(() => {
-      state.closeBtnHeight = 613 - window.innerHeight + 2;
+      state.closeBtnHeight = 613 - window.innerHeight + 1;
+      setTimeout(() => {
+        state.closeBtnShow = true;
+      }, 300);
     });
 
     return {
@@ -234,10 +251,10 @@ export default Login;
             >
           </v-list>
         </div>
-        <v-row class="mt-2 relative">
+        <div class="mt-6 relative pa-0">
           <v-text-field
             :label="t('signup.formPage.password')"
-            class="form-textfield dark-textfield"
+            class="form-textfield dark-textfield ma-0"
             variant="solo"
             density="comfortable"
             :type="isShowPassword ? 'text' : 'password'"
@@ -257,10 +274,10 @@ export default Login;
             @click="showPassword"
             width="16"
           />
-        </v-row>
-        <v-row>
+        </div>
+        <v-row class="mt-1">
           <p
-            class="ml-9 login-forget-passwrod-text"
+            class="ml-9 login-forget-passwrod-text text-400-12"
             @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD"
           >
             {{ t("login.formPage.forgetPassword") }}
@@ -423,6 +440,7 @@ export default Login;
       width="30"
       height="30"
       :style="{ top: closeBtnHeight + 'px' }"
+      v-if="closeBtnShow"
     >
       <img src="@/assets/public/svg/icon_public_10.svg" />
       <!-- <v-icon :color="currentPage !== PAGE_TYPE.LOGIN_FORM ? '#7782AA' : '#FFFFFF'">
@@ -481,8 +499,8 @@ export default Login;
 
 .m-disable-password {
   position: absolute;
-  top: 28px;
-  right: 27px;
+  top: 16px;
+  right: 16px;
   cursor: pointer;
 }
 

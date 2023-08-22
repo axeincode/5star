@@ -12,17 +12,33 @@ import {
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import GameProviders from "@/components/global/game_provider/index.vue";
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+// import { Carousel, Slide, Navigation } from "vue3-carousel";
 import icon_public_92 from "@/assets/public/svg/icon_public_92.svg";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
 import { mailStore } from "@/store/mail";
+import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
+
+import { Swiper, SwiperSlide } from "swiper/vue";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/virtual";
+// import Swiper core and required modules
+import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 
 const Dashboard = defineComponent({
   components: {
     GameProviders,
-    Carousel,
-    Slide,
+    // Carousel,
+    // Slide,
+    // Navigation,
+    Swiper,
+    SwiperSlide,
+    Virtual,
+    Autoplay,
+    Pagination,
     Navigation,
   },
   setup() {
@@ -36,42 +52,59 @@ const Dashboard = defineComponent({
       signoutDialog: false,
       mobileDialog: false,
       mobileDialogCheck: false,
+      carouselSlides: [
+        [
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        ],
+        [
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        ],
+        [
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        ],
+        [
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        ],
+        [
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        ],
+        [
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        ],
+        [
+          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        ],
+      ],
       slides: [
-        [
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        ],
-        [
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        ],
-        [
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-        ],
-        [
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        ],
-        [
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        ],
-        [
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-        ],
-        [
-          new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-          new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        ],
+        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        // new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
       ],
       originalGames: [
         new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
@@ -512,8 +545,15 @@ const Dashboard = defineComponent({
     const recordScrollInterval = ref<any>(null);
     const historyToggleSwitch = ref<boolean>(false);
 
+    const swiper = ref<any>(null);
+
     const winnerCheckboxColor = ref<string>("#ffffff");
     const prizeCheckboxColor = ref<string>("#7782AA");
+
+    const refferalAppBarShow = computed(() => {
+      const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+      return getRefferalAppBarShow.value;
+    });
 
     const mobileVersion = computed(() => {
       return name.value;
@@ -728,7 +768,10 @@ const Dashboard = defineComponent({
           amount: 25,
         },
       ];
-      startRecordScrollingInterval();
+      // startRecordScrollingInterval();
+      recordScrollInterval.value = setInterval(() => {
+        state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
+      }, 600);
     });
 
     watch(
@@ -910,13 +953,28 @@ const Dashboard = defineComponent({
       return el;
     };
 
+    const goToPrev = () => {
+      swiper.value.slidePrev();
+    };
+
+    const goToNext = () => {
+      swiper.value.slideNext();
+    };
+
+    const getSwiperRef = (swiperInstance: any) => {
+      swiper.value = swiperInstance;
+    };
+
     onMounted(() => {
       // startLuckyScrollingInterval();
-      startRecordScrollingInterval();
+      // startRecordScrollingInterval();
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
+      recordScrollInterval.value = setInterval(() => {
+        state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
+      }, 600);
     });
 
     onUnmounted(() => {
@@ -936,6 +994,13 @@ const Dashboard = defineComponent({
       winnerTransform,
       prizeTransform,
       isNumeric,
+      modules: [Pagination, Virtual, Autoplay, Navigation],
+      icon_public_92,
+      icon_public_91,
+      goToPrev,
+      goToNext,
+      getSwiperRef,
+      refferalAppBarShow,
     };
   },
 });
@@ -947,7 +1012,7 @@ export default Dashboard;
   <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
     <!-- image carousel -->
 
-    <v-carousel
+    <!-- <v-carousel
       cycle
       interval="6000"
       height="247"
@@ -955,8 +1020,6 @@ export default Dashboard;
       :hide-delimiters="slides.length <= 1"
       show-arrows="hover"
     >
-      <!-- prev, next button hide when slides array length is less than 2 -->
-
       <template v-slot:prev="{ props }">
         <v-btn
           class="button-carousel text-none prev-btn-position"
@@ -977,7 +1040,7 @@ export default Dashboard;
         >
         </v-btn>
       </template>
-      <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
+      <v-carousel-item v-for="(slide, slideIndex) in carouselSlides" :key="slideIndex">
         <v-sheet color="#31275C" height="100%" tile>
           <v-row align="center" justify="center" class="mx-2 relative">
             <v-col
@@ -999,7 +1062,74 @@ export default Dashboard;
           </v-row>
         </v-sheet>
       </v-carousel-item>
-    </v-carousel>
+    </v-carousel> -->
+
+    <div class="relative home-swiper" v-if="mobileWidth > 600">
+      <swiper
+        :modules="modules"
+        :slidesPerView="3"
+        :spaceBetween="16"
+        :centeredSlides="true"
+        :loop="true"
+        :pagination="{
+          el: '.swiper-pagination',
+          clickable: true,
+        }"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+        }"
+        :navigation="false"
+        :virtual="true"
+        class="mx-4"
+        style="border-radius: 8px; height: 225px"
+        @swiper="getSwiperRef"
+      >
+        <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
+          <img
+            :src="slide"
+            class="slider-img-width"
+            :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
+          />
+        </swiper-slide>
+      </swiper>
+
+      <div class="swiper-button-next" slot="button-next" @click="goToNext"></div>
+      <div class="swiper-button-prev" slot="button-prev" @click="goToPrev"></div>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </div>
+
+    <div class="relative m-home-swiper" :class="!refferalAppBarShow ? 'mt-2' : ''" v-else>
+      <swiper
+        :modules="modules"
+        :slidesPerView="1"
+        :spaceBetween="6"
+        :centeredSlides="true"
+        :loop="true"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+        }"
+        :pagination="{
+          el: '.swiper-pagination',
+          clickable: true,
+        }"
+        :navigation="false"
+        :virtual="true"
+        class="mx-2"
+        style="border-radius: 8px; height: 195px"
+        @swiper="getSwiperRef"
+      >
+        <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
+          <img
+            :src="slide"
+            class="m-slider-img-width"
+            :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
+          />
+        </swiper-slide>
+      </swiper>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </div>
 
     <!-- input for search -->
     <v-row class="mt-2" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
@@ -1235,6 +1365,7 @@ export default Dashboard;
               }}</v-col>
             </v-row>
           </v-card>
+
           <div class="home-overflow-auto" ref="luckyContainer" style="overflow-y: auto">
             <v-row
               v-for="(item, index) in luckyJackpotList"
@@ -1276,12 +1407,50 @@ export default Dashboard;
               <v-col cols="4" class="text-700-16 gray">
                 <p class="ml-2">{{ t("home.player_text") }}</p>
               </v-col>
-              <v-col cols="4" class="text-700-16 gray text-center">{{
-                t("home.amount_text")
-              }}</v-col>
+              <v-col cols="4" class="text-700-16 gray text-center">
+                {{ t("home.amount_text") }}
+              </v-col>
             </v-row>
           </v-card>
-          <div class="home-overflow-auto" ref="recordContainer">
+          <swiper
+            :direction="'vertical'"
+            :modules="modules"
+            :autoplay="{
+              delay: 600,
+              disableOnInteraction: false,
+            }"
+            :slidesPerView="10"
+            :spaceBetween="0"
+            :virtual="true"
+          >
+            <swiper-slide v-for="(item, index) in recordList" :key="index">
+              <v-row class="mx-4 mt-2 align-center">
+                <v-col
+                  cols="4"
+                  class="py-1 d-flex align-center"
+                  style="flex: -1 0 33.3333333333%"
+                >
+                  <img :src="item.game.image" />
+                  <p class="text-500-16 gray text-center ml-2">{{ item.game.name }}</p>
+                </v-col>
+                <v-col
+                  cols="4"
+                  class="d-flex align-center py-1"
+                  style="flex: -1 0 33.3333333333%"
+                >
+                  <img :src="item.player.image" width="46" />
+                  <p class="text-500-16 gray">{{ item.player.name }}</p>
+                </v-col>
+                <v-col
+                  cols="4"
+                  class="py-1 text-500-16 color-01983A text-center"
+                  style="flex: -1 0 33.3333333333%"
+                  >{{ item.amount }}</v-col
+                >
+              </v-row>
+            </swiper-slide>
+          </swiper>
+          <!-- <div class="home-overflow-auto" ref="recordContainer">
             <v-row
               v-for="(item, index) in recordList"
               :key="index"
@@ -1299,7 +1468,7 @@ export default Dashboard;
                 item.amount
               }}</v-col>
             </v-row>
-          </div>
+          </div> -->
         </v-card>
       </v-col>
     </v-row>
@@ -1310,7 +1479,7 @@ export default Dashboard;
           <label for="history-toggle">
             <div class="winner">
               <inline-svg
-                src="icon_public_92"
+                :src="icon_public_92"
                 width="20"
                 height="20"
                 :transform-source="winnerTransform"
@@ -1321,7 +1490,7 @@ export default Dashboard;
             </div>
             <div class="prize">
               <inline-svg
-                src="icon_public_91"
+                :src="icon_public_91"
                 width="20"
                 height="20"
                 :transform-source="prizeTransform"
@@ -1374,7 +1543,13 @@ export default Dashboard;
             </v-row>
           </div>
         </v-card>
-        <v-card color="#211F32" theme="dark" height="500" class="mt-4 mx-2" v-else>
+        <v-card
+          color="#211F32"
+          theme="dark"
+          height="500"
+          class="mt-4 mx-2 m-home-lucky-jackpot-height"
+          v-else
+        >
           <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
             <v-row class="mx-3 my-2 align-center">
               <v-col cols="4" class="text-700-14 gray py-0">{{
@@ -1388,7 +1563,35 @@ export default Dashboard;
               }}</v-col>
             </v-row>
           </v-card>
-          <div class="m-home-overflow-auto" ref="recordContainer">
+
+          <swiper
+            :direction="'vertical'"
+            :modules="modules"
+            :autoplay="{
+              delay: 600,
+              disableOnInteraction: false,
+            }"
+            :slidesPerView="10"
+            :spaceBetween="0"
+            :virtual="true"
+          >
+            <swiper-slide v-for="(item, index) in recordList" :key="index">
+              <v-row class="mx-4 mt-1 align-center">
+                <v-col cols="4" class="py-1 d-flex align-center">
+                  <img :src="item.game.image" width="22" />
+                  <p class="text-500-14 gray text-center ml-2">{{ item.game.name }}</p>
+                </v-col>
+                <v-col cols="4" class="d-flex align-center py-1">
+                  <img :src="item.player.image" width="40" />
+                  <p class="text-500-14 gray">{{ item.player.name }}</p>
+                </v-col>
+                <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{
+                  item.amount
+                }}</v-col>
+              </v-row>
+            </swiper-slide>
+          </swiper>
+          <!-- <div class="m-home-overflow-auto" ref="recordContainer">
             <v-row
               v-for="(item, index) in recordList"
               :key="index"
@@ -1406,7 +1609,7 @@ export default Dashboard;
                 item.amount
               }}</v-col>
             </v-row>
-          </div>
+          </div> -->
         </v-card>
       </v-col>
     </v-row>
@@ -1414,6 +1617,86 @@ export default Dashboard;
 </template>
 
 <style lang="scss">
+.home-swiper {
+  height: 247px;
+
+  .swiper-pagination-bullet-active {
+    width: 18px !important;
+    height: 6px !important;
+    border-radius: 24px !important;
+    background: var(--white-bg, #fff) !important;
+  }
+
+  .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    background: #7782aa;
+    border-radius: 6px;
+    opacity: 1;
+  }
+
+  .swiper-pagination {
+    bottom: -8px !important;
+  }
+
+  .swiper-button-next {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: black;
+    border-radius: 4px;
+    right: 3px;
+    opacity: 0.7;
+    z-index: 2;
+  }
+
+  .swiper-button-prev {
+    width: 32px;
+    height: 32px;
+    background: black;
+    border-radius: 4px;
+    left: -0px;
+    opacity: 0.7;
+    z-index: 2;
+  }
+
+  .swiper-button-prev:after,
+  .swiper-button-next:after {
+    font-family: swiper-icons;
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+    font-size: 14px;
+    font-weight: 900;
+    color: white;
+  }
+}
+
+.m-home-swiper {
+  height: 208px;
+
+  .swiper-pagination-bullet-active {
+    width: 18px !important;
+    height: 6px !important;
+    border-radius: 24px !important;
+    background: var(--white-bg, #fff) !important;
+  }
+
+  .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    background: #7782aa;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 2px) !important;
+  }
+
+  .swiper-pagination {
+    bottom: -12px !important;
+  }
+}
+
 .home-overflow-auto {
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -1483,13 +1766,42 @@ export default Dashboard;
   height: 450px;
 }
 
+.m-home-lucky-jackpot-height {
+  .swiper-wrapper {
+    height: 450px;
+
+    .swiper-slide {
+      .v-col-4 {
+        flex-basis: 0;
+        flex-grow: 1;
+      }
+    }
+  }
+}
+
 .home-lucky-jackpot-height {
   height: 640px;
+
+  .swiper-wrapper {
+    height: 568px;
+
+    .swiper-slide {
+      .v-col-4 {
+        flex-basis: 0;
+        flex-grow: 1;
+      }
+    }
+  }
 }
 
 .slider-img-width {
   width: 100%;
   height: 225px;
+}
+
+.m-slider-img-width {
+  width: 100%;
+  height: 195px;
 }
 
 .slider-img-width:active {

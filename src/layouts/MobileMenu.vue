@@ -8,6 +8,10 @@ import { type GetMailData } from '@/interface/mail';
 import { useDisplay } from 'vuetify'
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
+import icon_public_81 from "@/assets/public/svg/icon_public_81.svg";
+import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
+import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
+import icon_public_55 from "@/assets/public/svg/icon_public_55.svg";
 const { t } = useI18n();
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -22,9 +26,19 @@ const { setMailMenuShow } = mailStore();
 const mailCount = ref<number>(10);
 // navbar toggle
 const navbarToggle = ref<boolean>(false);
+const sportBtnActive = ref<boolean>(false);
+const casinoBtnActive = ref<boolean>(false);
+const mailBtnActive = ref<boolean>(false);
 const mailNavigation = ref<boolean>(false);
 const mailMenuShow = ref<boolean>(false);
 const tempMailList = ref<Array<GetMailData>>([]);
+
+const menuIconColor = ref<string>("#7782AA");
+const casinoIconColor = ref<string>('#7782AA');
+const sportIconColor = ref<string>('#7782AA');
+const mailIconColor = ref<string>('#7782AA');
+
+const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
 
 const prevScrollPos = ref<number>(0);
 
@@ -58,8 +72,22 @@ watch(navToggle, (newValue) => {
 }, { deep: true })
 
 watch(mailMenuShow, async (newValue) => {
-  setMainBlurEffectShow(newValue);
-  setOverlayScrimShow(newValue);
+  if (newValue) {
+    sportBtnActive.value = false
+    casinoBtnActive.value = false;
+    navbarToggle.value = false;
+    setUserNavBarToggle(false);
+    setMainBlurEffectShow(false);
+    setNavBarToggle(navbarToggle.value)
+    menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+    casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+    sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+    mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+    setTimeout(() => {
+      setMainBlurEffectShow(newValue);
+      setOverlayScrimShow(newValue);
+    }, 200)
+  }
   setMailMenuShow(newValue);
   if (newValue) {
     for (const item of mailList.value) {
@@ -67,7 +95,7 @@ watch(mailMenuShow, async (newValue) => {
         setTimeout(() => {
           tempMailList.value.push(item);
           resolve();
-        }, 400);
+        }, 100);
       });
     }
   } else {
@@ -77,16 +105,71 @@ watch(mailMenuShow, async (newValue) => {
 
 const handleNavbarToggle = () => {
   navbarToggle.value = !navbarToggle.value
+  mailMenuShow.value = false;
+  casinoBtnActive.value = false;
+  sportBtnActive.value = false
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
 }
 
 const goHomePage = () => {
+  casinoBtnActive.value = !casinoBtnActive.value
+  mailMenuShow.value = false;
+  sportBtnActive.value = false
   router.push({ name: "Dashboard" });
+  navbarToggle.value = false;
+  setUserNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
+  }, 200);
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+}
+
+const goToSportPage = () => {
+  sportBtnActive.value = !sportBtnActive.value
+  mailMenuShow.value = false;
+  casinoBtnActive.value = false;
+  navbarToggle.value = false;
+  setUserNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
+  }, 200);
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+}
+
+const goToSharePage = () => {
+  sportBtnActive.value = false
+  mailMenuShow.value = false;
+  casinoBtnActive.value = false;
+  navbarToggle.value = false;
+  setUserNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
+  }, 200);
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
 }
 
 const handleScroll = (event: any) => {
@@ -124,6 +207,46 @@ const handleScroll = (event: any) => {
   prevScrollPos.value = currentScrollPos;
 }
 
+const menuSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', menuIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', menuIconColor.value)
+    }
+  }
+  return el
+}
+
+const casinoSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', casinoIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', casinoIconColor.value)
+    }
+  }
+  return el
+}
+
+const sportSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', sportIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', sportIconColor.value)
+    }
+  }
+  return el
+}
+
+const mailSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', mailIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', mailIconColor.value)
+    }
+  }
+  return el
+}
+
 onMounted(() => {
   mailCount.value = mailList.value.length
   console.log(tempMailList.value.length);
@@ -132,36 +255,52 @@ onMounted(() => {
 
 <template>
   <v-bottom-navigation bg-color="#000000" grow class="mobile-menu-index">
-    <v-btn class="menu-text-color" @click="handleNavbarToggle">
-      <img src="@/assets/public/svg/icon_public_81.svg" width="20" height="20" />
+    <v-btn class="menu-text-color" @click="handleNavbarToggle" :ripple="false">
+      <inline-svg
+        :src="icon_public_81"
+        width="20"
+        height="20"
+        :transform-source="menuSvgTransform"
+      ></inline-svg>
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.menu") }}
       </div>
     </v-btn>
     <v-btn class="menu-text-color" @click="goHomePage">
-      <img src="@/assets/public/svg/icon_public_34.svg" width="20" height="20" />
+      <inline-svg
+        :src="icon_public_34"
+        width="20"
+        height="20"
+        :transform-source="casinoSvgTransform"
+      ></inline-svg>
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.casino") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color share-ripple-btn">
+    <v-btn class="menu-text-color share-ripple-btn" @click="goToSharePage">
       <div class="circle-background"></div>
       <img
         src="@/assets/public/svg/bg_public_22.svg"
         class="share-background-img-position"
       />
-      <img src="@/assets/public/image/img_public_19.png" class="share-img-position" />
+      <img :src="shareIcon" class="share-img-position" />
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color">
-      <img src="@/assets/public/svg/icon_public_40.svg" width="20" />
+    <v-btn class="menu-text-color" @click="goToSportPage">
+      <inline-svg
+        :src="icon_public_40"
+        width="20"
+        height="20"
+        :transform-source="sportSvgTransform"
+      ></inline-svg>
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>
     <v-menu
+      class="m-mail-menu-overlay"
       content-class="mobile-mail-menu"
       :scrim="true"
       v-model:model-value="mailMenuShow"
@@ -170,7 +309,12 @@ onMounted(() => {
       <template v-slot:activator="{ props }">
         <v-btn class="menu-text-color" v-bind="props">
           <div class="relative">
-            <img src="@/assets/public/svg/icon_public_55.svg" width="20" />
+            <inline-svg
+              :src="icon_public_55"
+              width="20"
+              height="20"
+              :transform-source="mailSvgTransform"
+            ></inline-svg>
             <p class="chat-box-text">{{ mailCount }}</p>
           </div>
           <div class="text-600-12">
@@ -260,6 +404,20 @@ onMounted(() => {
 .mobile-menu-index {
   z-index: 1009 !important;
   overflow: inherit !important;
+
+  .v-btn--active {
+    .v-btn__content {
+      color: #6742ec;
+    }
+  }
+}
+
+.m-mail-menu-overlay {
+  bottom: 80px !important;
+
+  .v-overlay__scrim {
+    bottom: 80px !important;
+  }
 }
 
 .menu-text-color {

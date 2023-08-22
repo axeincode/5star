@@ -12,6 +12,7 @@ export const authStore = defineStore({
     success: false as boolean,
     errMessage: '' as string,
     authModalType: '' as string,
+    dialogCheckbox: false as boolean,
     token: NetworkData.getInstance().getToken() as string | undefined,
     userInfo: {
       uid: "User6696608024",
@@ -38,7 +39,8 @@ export const authStore = defineStore({
     getAuthModalType: (state) => state.authModalType,
     getToken: (state) => state.token,
     getUserInfo: (state) => state.userInfo,
-    getUserAmount: (state) => state.userAmount
+    getUserAmount: (state) => state.userAmount,
+    getDialogCheckbox: (state) => state.dialogCheckbox,
   },
   actions: {
     // set functions
@@ -91,6 +93,9 @@ export const authStore = defineStore({
     },
     setUserAmount(userAmount: User.GetUserAmount) {
       this.userAmount = userAmount;
+    },
+    setDialogCheckbox(dialogCheckbox: boolean) {
+      this.dialogCheckbox = dialogCheckbox;
     },
     // dipatch login
     async dispatchSignIn(msg: SignIn.SigninRequestData) {

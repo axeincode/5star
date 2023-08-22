@@ -40,6 +40,7 @@ export namespace NETWORK {
     static INVITER_AWARD = '/user/inviter/award'; // receive invitation achievement commission
     static INVITE_SELF = '/user/invite/self'; // personal invitation information
     static INVITE_HISTORY_CONFIG = '/user/invite/historycfg'; // invitation event commission record configuration
+    static INVITE_HISTORY = '/user/invite/history' // 
   }
 
   //Listening events sent actively

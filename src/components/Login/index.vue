@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs, computed } from "vue";
+import { defineComponent, reactive, ref, toRefs, computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import LoginHeader from "./Header.vue";

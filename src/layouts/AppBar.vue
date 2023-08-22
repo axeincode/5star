@@ -148,7 +148,7 @@ watch(mobileWidth, (newValue: number) => {
   }
 
   if (newValue < 600) {
-    currencyMenuWidth.value = (window.innerWidth - 30) + "px";
+    currencyMenuWidth.value = (window.innerWidth - 20) + "px";
   }
 })
 
@@ -301,7 +301,7 @@ const refferalDialogShow = () => {
 
 onMounted(async () => {
   if (mobileWidth.value < 600) {
-    currencyMenuWidth.value = (window.innerWidth - 30) + "px";
+    currencyMenuWidth.value = (window.innerWidth - 20) + "px";
   }
   setAuthModalType("");
   mailCount.value = mailList.value.length
@@ -358,6 +358,7 @@ onMounted(async () => {
                     offset="20"
                     v-model:model-value="currencyMenuShow"
                     class="currency-menu"
+                    transition="slide-y-transition"
                   >
                     <template v-slot:activator="{ props }">
                       <div
@@ -425,6 +426,7 @@ onMounted(async () => {
                     offset="20"
                     v-model:model-value="currencyMenuShow"
                     class="m-currency-menu"
+                    transition="slide-y-transition"
                   >
                     <template v-slot:activator="{ props }">
                       <div
@@ -844,8 +846,7 @@ onMounted(async () => {
 
 .m-currency-menu {
   .v-overlay__content {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    left: 10px !important;
   }
 
   .v-overlay__content::after {
