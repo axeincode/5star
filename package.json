@@ -21,6 +21,7 @@
     "pinia": "^2.0.0",
     "roboto-fontface": "*",
     "socket.io-client": "^4.6.1",
+    "swiper": "^10.2.0",
     "vue": "^3.2.0",
     "vue-i18n": "^9.2.2",
     "vue-inline-svg": "^3.1.2",
