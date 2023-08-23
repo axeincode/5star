@@ -165,7 +165,7 @@ const handleLoginBonus = (day: number) => {
           </div>
         </v-col>
       </v-row>
-      <v-row class="mt-6 mx-2">
+      <v-row class="mt-5 mx-2">
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
@@ -290,7 +290,7 @@ const handleLoginBonus = (day: number) => {
           </div>
         </v-col>
       </v-row>
-      <v-row class="mt-6 mx-2">
+      <v-row class="mt-5 mx-2">
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
@@ -375,45 +375,44 @@ const handleLoginBonus = (day: number) => {
           </div>
         </v-col>
       </v-row>
-      <v-row class="mt-7 mx-1 align-center">
-        <v-col cols="2" class="pa-0 ma-0">
-          <v-btn class="m-left-login-bonus-button" icon="true" height="30" width="30">
-            <v-icon color="#FFFFFF">mdi-chevron-left</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="8" class="pa-0 ma-0">
-          <p class="text-center" style="line-height: normal">
-            <Font class="text-900-10 white">{{
-              t("vip.login_bonus.footer_text_1")
-            }}</Font>
-            <Font class="text-900-10 purple">R$20 </Font>
-            <Font class="text-900-10 white">{{
-              t("vip.login_bonus.footer_text_2")
-            }}</Font>
-            <Font class="text-900-10 purple">{{
-              t("vip.login_bonus.footer_text_3")
-            }}</Font>
-          </p>
-          <p class="text-center" style="line-height: normal">
-            <Font class="text-900-10 white">{{
-              t("vip.login_bonus.footer_text_4")
-            }}</Font>
-          </p>
-        </v-col>
-        <v-col cols="2" class="pa-0 ma-0 text-right">
-          <v-btn class="m-left-login-bonus-button" icon="true" height="30" width="30">
-            <v-icon color="#FFFFFF">mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
     </div>
+    <v-row class="m-login-bonus-footer mx-0 align-center">
+      <v-col cols="2" class="pa-0 ma-0">
+        <v-btn class="m-left-login-bonus-button" icon="true" height="32" width="32">
+          <v-icon color="#FFFFFF">mdi-chevron-left</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="8" class="pa-0 ma-0">
+        <p class="text-center" style="line-height: normal">
+          <Font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_1") }}</Font>
+          <Font class="text-900-10 purple">R$20 </Font>
+          <Font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_2") }}</Font>
+          <Font class="text-900-10 purple">{{ t("vip.login_bonus.footer_text_3") }}</Font>
+        </p>
+        <p class="text-center" style="line-height: normal">
+          <Font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_4") }}</Font>
+        </p>
+      </v-col>
+      <v-col cols="2" class="pa-0 ma-0 text-right">
+        <v-btn class="m-left-login-bonus-button" icon="true" height="32" width="32">
+          <v-icon color="#FFFFFF">mdi-chevron-right</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <style lang="scss">
+.m-login-bonus-footer {
+  position: absolute;
+  bottom: 34px;
+  width: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .m-login-bonus-dialog-container {
   width: 340px;
-  height: 494px;
+  height: 428px;
   border-radius: 16px;
   background: #29263c;
   position: relative;
@@ -435,10 +434,10 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-agent-img {
   position: absolute;
-  top: -72px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 297px;
+  top: -95px;
+  left: 15px;
+  width: 281px;
+  height: 186px;
 }
 
 .m-login-bonus-body {
@@ -447,7 +446,7 @@ const handleLoginBonus = (day: number) => {
   left: 50%;
   transform: translateX(-50%);
   width: 320px;
-  height: 422px;
+  height: 338px;
   border-radius: 14px;
   background: #211f31;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -456,7 +455,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-checkout-bg {
   width: 94px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: #29263c;
 
@@ -466,7 +465,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-checkout-bg-1 {
   width: 195px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: #29263c;
 
@@ -476,7 +475,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-bg-1 {
   width: 94px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: linear-gradient(180deg, #c6428b 0%, #f08734 100%);
   /* Button Shadow */
@@ -487,7 +486,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-bg-2 {
   width: 94px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: linear-gradient(180deg, #2087e8 0%, #0e4987 100%);
 
@@ -499,7 +498,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-bg-3 {
   width: 94px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: linear-gradient(180deg, #9419f0 0%, #275798 100%);
 
@@ -511,7 +510,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-bg-4 {
   width: 94px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: linear-gradient(180deg, #2087e8 0%, #0e4987 100%);
 
@@ -545,7 +544,7 @@ const handleLoginBonus = (day: number) => {
 
 .m-login-bonus-card-bg-5 {
   width: 195px;
-  height: 115px;
+  height: 90px;
   border-radius: 6px;
   background: linear-gradient(180deg, #9419f0 0%, #275798 100%);
   cursor: pointer;

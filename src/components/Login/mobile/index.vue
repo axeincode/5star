@@ -6,11 +6,18 @@ import { authStore } from "@/store/auth";
 import Notification from "@/components/global/notification/index.vue";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
+import { useDisplay } from "vuetify";
+import { ElNotification } from "element-plus";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 
 const Login = defineComponent({
   components: {
     LoginHeader,
     Notification,
+    ElNotification,
+    SuccessIcon,
+    WarningIcon,
   },
   emits: ["close", "switch"],
   setup(props, { emit }) {
@@ -20,6 +27,7 @@ const Login = defineComponent({
     const { dispatchUserProfile } = authStore();
     const { setAuthModalType } = authStore();
     const { setToken } = authStore();
+    const { width } = useDisplay();
 
     // initiate component state
     const state = reactive({
@@ -47,6 +55,12 @@ const Login = defineComponent({
       emailPartName: "",
       closeBtnHeight: 0,
       closeBtnShow: false,
+      containerHeight: 0,
+      bodyHeight: 0,
+    });
+
+    const mobileWidth = computed(() => {
+      return width.value;
     });
 
     // computed variables
@@ -84,12 +98,17 @@ const Login = defineComponent({
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
-      state.notificationShow = !state.notificationShow;
-      state.checkIcon = new URL(
-        "@/assets/public/svg/icon_public_18.svg",
-        import.meta.url
-      ).href;
-      state.notificationText = t("login.forgotPasswordPage.notification");
+      ElNotification({
+        icon: SuccessIcon,
+        title: t("login.forgotPasswordPage.notification"),
+        duration: 3000,
+      });
+      // state.notificationShow = !state.notificationShow;
+      // state.checkIcon = new URL(
+      //   "@/assets/public/svg/icon_public_18.svg",
+      //   import.meta.url
+      // ).href;
+      // state.notificationText = t("login.forgotPasswordPage.notification");
     };
 
     // methods
@@ -109,25 +128,36 @@ const Login = defineComponent({
         uid: state.formData.emailAddress,
         password: state.formData.password,
       });
+
       if (success.value) {
         await dispatchUserProfile();
-        state.notificationShow = !state.notificationShow;
-        state.checkIcon = new URL(
-          "@/assets/public/svg/icon_public_18.svg",
-          import.meta.url
-        ).href;
-        state.notificationText = t("login.submit_result.success_text");
+        ElNotification({
+          icon: SuccessIcon,
+          title: t("login.submit_result.success_text"),
+          duration: 3000,
+        });
+        // state.notificationShow = !state.notificationShow;
+        // state.checkIcon = new URL(
+        //   "@/assets/public/svg/icon_public_18.svg",
+        //   import.meta.url
+        // ).href;
+        // state.notificationText = t("login.submit_result.success_text");
         setTimeout(() => {
           setAuthModalType("");
           emit("close");
-        }, 1000);
+        }, 3000);
       } else {
-        state.notificationShow = !state.notificationShow;
-        state.checkIcon = new URL(
-          "@/assets/public/svg/icon_public_17.svg",
-          import.meta.url
-        ).href;
-        state.notificationText = t("login.submit_result.err_text");
+        ElNotification({
+          icon: WarningIcon,
+          title: t("login.submit_result.err_text"),
+          duration: 3000,
+        });
+        // state.notificationShow = !state.notificationShow;
+        // state.checkIcon = new URL(
+        //   "@/assets/public/svg/icon_public_17.svg",
+        //   import.meta.url
+        // ).href;
+        // state.notificationText = t("login.submit_result.err_text");
       }
 
       state.loading = false;
@@ -171,11 +201,22 @@ const Login = defineComponent({
       }, 100);
     };
 
+    watch(
+      mobileWidth,
+      (newValue) => {
+        state.containerHeight = window.innerHeight - 54;
+        state.bodyHeight = window.innerHeight - 194;
+      },
+      { deep: true }
+    );
+
     onMounted(() => {
-      state.closeBtnHeight = 613 - window.innerHeight + 1;
-      setTimeout(() => {
-        state.closeBtnShow = true;
-      }, 300);
+      // state.closeBtnHeight = 613 - window.innerHeight + 1;
+      state.containerHeight = window.innerHeight - 54;
+      state.bodyHeight = window.innerHeight - 194;
+      // setTimeout(() => {
+      //   state.closeBtnShow = true;
+      // }, 300);
     });
 
     return {
@@ -196,11 +237,16 @@ export default Login;
 </script>
 
 <template>
-  <div class="m-login-container">
+  <div class="m-login-container" :style="{ height: containerHeight + 'px' }">
     <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" />
     <div
       class="m-login-body px-6"
-      :class="currentPage == PAGE_TYPE.FORGOT_PASSWORD ? 'm-login-body-height' : ''"
+      :style="{
+        height:
+          currentPage == PAGE_TYPE.FORGOT_PASSWORD
+            ? containerHeight + 'px'
+            : bodyHeight + 'px',
+      }"
     >
       <!-- SIGN UP FORM  -->
       <v-form v-if="currentPage === PAGE_TYPE.LOGIN_FORM" ref="form" class="full-width">
@@ -439,7 +485,6 @@ export default Login;
       @click="$emit('close')"
       width="30"
       height="30"
-      :style="{ top: closeBtnHeight + 'px' }"
       v-if="closeBtnShow"
     >
       <img src="@/assets/public/svg/icon_public_10.svg" />
@@ -462,7 +507,7 @@ export default Login;
   left: 50%;
   transform: translateX(-50%);
   background: #211f31;
-  width: 328px;
+  width: calc(100% - 48px);
   border-radius: 16px;
   z-index: 200;
   overflow: hidden;
@@ -475,7 +520,7 @@ export default Login;
   left: 50%;
   transform: translateX(-50%);
   background: #211f31;
-  width: 328px;
+  width: calc(100% - 48px);
   border-radius: 16px;
   z-index: 200;
   overflow: hidden;
@@ -542,7 +587,7 @@ export default Login;
   box-shadow: none !important;
   background-color: transparent !important;
   position: absolute !important;
-  top: 5px;
+  top: -53px;
   right: 5px;
 }
 

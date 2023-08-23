@@ -5,7 +5,6 @@ import { authStore } from "@/store/auth";
 import { depositStore } from '@/store/deposit';
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
-import { type GetPersonalInfo } from '@/interface/deposit';
 import { type GetUserInfo } from "@/interface/user";
 import ValidationBox from '@/components/cash/deposit/ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";

@@ -69,6 +69,7 @@ watch(mailList, (newValue) => {
 
 watch(navToggle, (newValue) => {
   navbarToggle.value = newValue;
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
 }, { deep: true })
 
 watch(mailMenuShow, async (newValue) => {
@@ -87,6 +88,10 @@ watch(mailMenuShow, async (newValue) => {
       setMainBlurEffectShow(newValue);
       setOverlayScrimShow(newValue);
     }, 200)
+  } else {
+    setMainBlurEffectShow(newValue);
+    setOverlayScrimShow(newValue);
+    mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
   }
   setMailMenuShow(newValue);
   if (newValue) {
@@ -262,7 +267,10 @@ onMounted(() => {
         height="20"
         :transform-source="menuSvgTransform"
       ></inline-svg>
-      <div class="pt-1 text-600-12">
+      <div
+        class="pt-1 text-600-12"
+        :style="{ color: navbarToggle ? '#6742ec' : '#7782AA' }"
+      >
         {{ t("mobile_menu.menu") }}
       </div>
     </v-btn>
@@ -317,7 +325,7 @@ onMounted(() => {
             ></inline-svg>
             <p class="chat-box-text">{{ mailCount }}</p>
           </div>
-          <div class="text-600-12">
+          <div class="text-600-12" :style="{ color: mailIconColor }">
             {{ t("mobile_menu.mail") }}
           </div>
         </v-btn>

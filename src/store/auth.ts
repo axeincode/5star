@@ -13,6 +13,8 @@ export const authStore = defineStore({
     errMessage: '' as string,
     authModalType: '' as string,
     dialogCheckbox: false as boolean,
+    authDialogVisible: false as boolean,
+    signUpForm: false as boolean,
     token: NetworkData.getInstance().getToken() as string | undefined,
     userInfo: {
       uid: "User6696608024",
@@ -41,6 +43,8 @@ export const authStore = defineStore({
     getUserInfo: (state) => state.userInfo,
     getUserAmount: (state) => state.userAmount,
     getDialogCheckbox: (state) => state.dialogCheckbox,
+    getAuthDialogVisible: (state) => state.authDialogVisible,
+    getSignUpForm: (state) => state.signUpForm
   },
   actions: {
     // set functions
@@ -96,6 +100,12 @@ export const authStore = defineStore({
     },
     setDialogCheckbox(dialogCheckbox: boolean) {
       this.dialogCheckbox = dialogCheckbox;
+    },
+    setAuthDialogVisible(authDialogVisible: boolean) {
+      this.authDialogVisible = authDialogVisible;
+    },
+    setSignUpForm(signUpForm: boolean) {
+      this.signUpForm = signUpForm;
     },
     // dipatch login
     async dispatchSignIn(msg: SignIn.SigninRequestData) {

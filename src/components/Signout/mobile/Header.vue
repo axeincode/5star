@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { ref, toRefs, watch, onMounted } from "vue";
+import { ref, toRefs, watch, onMounted, onUnmounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { authStore } from "@/store/auth";
+import { storeToRefs } from "pinia";
 
 type dialogType = "login" | "signup" | "signout";
 
 const { setDialogCheckbox } = authStore();
+const { setAuthDialogVisible } = authStore();
 
 const props = defineProps<{ mobileDialogCheck: boolean }>();
 const emit = defineEmits<{
@@ -16,6 +18,7 @@ const { t } = useI18n();
 const dialogCheckBox = ref<boolean>(false);
 const mobileDialogSwitch = ref<boolean>(false);
 const closeBtnShow = ref<boolean>(true);
+const dialogVisible = ref<boolean>(false);
 
 const handleCheckBox = (): void => {
   console.log(dialogCheckBox.value);
@@ -30,22 +33,28 @@ watch(
   dialogCheckBox,
   (newValue) => {
     setDialogCheckbox(newValue);
-    closeBtnShow.value = true;
-    setTimeout(() => {
-      closeBtnShow.value = false;
-    }, 10000);
   },
   { deep: true }
 );
+
+const authDialogVisible = computed(() => {
+  const { getAuthDialogVisible } = storeToRefs(authStore());
+  return getAuthDialogVisible.value;
+});
+
+const closeDialog = () => {
+  setAuthDialogVisible(!authDialogVisible.value);
+};
 
 onMounted(() => {
   dialogCheckBox.value = mobileDialogCheck.value;
   setTimeout(() => {
     mobileDialogSwitch.value = true;
   }, 100);
-  setTimeout(() => {
-    closeBtnShow.value = false;
-  }, 200);
+});
+
+onUnmounted(() => {
+  // setAuthDialogVisible(false);
 });
 </script>
 
@@ -76,6 +85,7 @@ onMounted(() => {
       height="30"
       style="top: 1px"
       v-if="closeBtnShow"
+      @click="closeDialog"
     >
       <img src="@/assets/public/svg/icon_public_10.svg" />
     </v-btn>

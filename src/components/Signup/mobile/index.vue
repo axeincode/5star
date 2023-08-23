@@ -11,16 +11,22 @@ import {
 import { useI18n } from "vue-i18n";
 import ValidationBox from "@/components/Signup/ValidationBox.vue";
 import SignupHeader from "@/components/Signup/mobile/Header.vue";
-import { useDisplay } from "vuetify/lib/framework.mjs";
+import { useDisplay } from "vuetify";
 import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
+import { ElNotification } from "element-plus";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 
 const MSignup = defineComponent({
   components: {
     ValidationBox,
     SignupHeader,
     Notification,
+    ElNotification,
+    SuccessIcon,
+    WarningIcon,
   },
   emits: ["close", "switch"],
   setup(props, { emit }) {
@@ -29,6 +35,8 @@ const MSignup = defineComponent({
     const { name } = useDisplay();
     const { dispatchSignUp } = authStore();
     const { dispatchUserProfile } = authStore();
+    const { setSignUpForm } = authStore();
+    const { width } = useDisplay();
 
     // initiate component state
     const state = reactive({
@@ -79,11 +87,17 @@ const MSignup = defineComponent({
       notificationText: t("signup.submit_result.success_text"),
       closeBtnHeight: 0,
       closeBtnShow: false,
+      containerHeight: 0,
+      bodyHeight: 0,
     });
 
     const showPassword = () => {
       state.isShowPassword = !state.isShowPassword;
     };
+
+    const mobileWidth = computed(() => {
+      return width.value;
+    });
 
     // computed variables
     const isFormDataReady = computed(
@@ -230,28 +244,57 @@ const MSignup = defineComponent({
       state.loading = false;
       if (success.value) {
         await dispatchUserProfile();
-        state.notificationShow = !state.notificationShow;
-        state.checkIcon = new URL(
-          "@/assets/public/svg/icon_public_18.svg",
-          import.meta.url
-        ).href;
-        state.notificationText = t("signup.submit_result.success_text");
+        ElNotification({
+          icon: SuccessIcon,
+          title: t("signup.submit_result.success_text"),
+          duration: 3000,
+        });
+        // state.notificationShow = !state.notificationShow;
+        // state.checkIcon = new URL(
+        //   "@/assets/public/svg/icon_public_18.svg",
+        //   import.meta.url
+        // ).href;
+        // state.notificationText = t("signup.submit_result.success_text");
         setTimeout(() => {
           emit("close");
-        }, 1000);
+        }, 3000);
       } else {
-        state.notificationShow = !state.notificationShow;
-        state.checkIcon = new URL(
-          "@/assets/public/svg/icon_public_17.svg",
-          import.meta.url
-        ).href;
-        state.notificationText = errMessage.value;
+        ElNotification({
+          icon: WarningIcon,
+          title: errMessage.value,
+          duration: 3000,
+        });
+        // state.notificationShow = !state.notificationShow;
+        // state.checkIcon = new URL(
+        //   "@/assets/public/svg/icon_public_17.svg",
+        //   import.meta.url
+        // ).href;
+        // state.notificationText = errMessage.value;
       }
     };
 
     const handleUsernameSubmit = (): void => {
       console.log("user name submit!");
     };
+
+    const dialogVisible = computed(() => {
+      const { getAuthDialogVisible } = storeToRefs(authStore());
+      return getAuthDialogVisible.value;
+    });
+
+    watch(
+      dialogVisible,
+      (newValue) => {
+        console.log(state.currentPage);
+        if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
+          state.currentPage = state.PAGE_TYPE.CONFIRM_CANCEL;
+        } else {
+          setSignUpForm(false);
+          emit("close");
+        }
+      },
+      { deep: true }
+    );
 
     const closeDialog = (): void => {
       if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
@@ -290,11 +333,28 @@ const MSignup = defineComponent({
       }, 100);
     };
 
+    const cancelConfirm = () => {
+      setSignUpForm(false);
+      emit("close");
+    };
+
+    watch(
+      mobileWidth,
+      (newValue) => {
+        state.containerHeight = window.innerHeight - 54;
+        state.bodyHeight = window.innerHeight - 203;
+      },
+      { deep: true }
+    );
+
     onMounted(() => {
-      state.closeBtnHeight = 613 - window.innerHeight + 1;
-      setTimeout(() => {
-        state.closeBtnShow = true;
-      }, 300);
+      // state.closeBtnHeight = 613 - window.innerHeight + 1;
+      state.containerHeight = window.innerHeight - 54;
+      state.bodyHeight = window.innerHeight - 203;
+      setSignUpForm(true);
+      // setTimeout(() => {
+      //   state.closeBtnShow = true;
+      // }, 300);
     });
 
     onBeforeUnmount(() => {
@@ -325,6 +385,7 @@ const MSignup = defineComponent({
       handleEmailChange,
       handleEmailFocus,
       mergeEmail,
+      cancelConfirm,
     };
   },
 });
@@ -333,9 +394,14 @@ export default MSignup;
 </script>
 
 <template>
-  <div class="m-signup-container">
+  <div class="m-signup-container" :style="{ height: containerHeight + 'px' }">
     <SignupHeader v-if="currentPage !== PAGE_TYPE.DISPLAY_NAME" />
-    <div class="m-signup-body px-6">
+    <div
+      class="m-signup-body px-6"
+      :style="{
+        height: bodyHeight + 'px',
+      }"
+    >
       <!-- SIGN UP FORM  -->
       <v-form v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" ref="form" class="full-width">
         <div class="relative mt-10 pa-0">
@@ -524,7 +590,7 @@ export default MSignup;
             class="ma-3 button-dark m-signup-cancel-btn"
             width="-webkit-fill-available"
             height="48px"
-            @click="$emit('close')"
+            @click="cancelConfirm"
           >
             {{ t("signup.confirmCancelPage.cancel") }}
           </v-btn>
@@ -633,7 +699,7 @@ export default MSignup;
       @click="closeDialog"
       width="30"
       height="30"
-      :style="{ top: closeBtnHeight + 'px' }"
+      style="top: -53px; visibility: hidden"
       v-if="closeBtnShow"
     >
       <img src="@/assets/public/svg/icon_public_10.svg" />
@@ -744,7 +810,7 @@ export default MSignup;
   left: 50%;
   transform: translateX(-50%);
   background: #211f31;
-  width: 328px;
+  width: 100%;
   border-radius: 16px;
   z-index: 200;
   overflow: hidden;

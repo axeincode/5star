@@ -141,8 +141,8 @@ const navDrawerScroll = () => {
 const openLoginBonusDialog = () => {
     setLoginBonusDialogVisible(true);
     setNavBarToggle(false);
-    // setOverlayScrimShow(true);
-    // setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
+    setMainBlurEffectShow(true);
 }
 
 const openRouletteBonusDialog = () => {
@@ -162,6 +162,7 @@ onMounted(() => {
     temporary
     expand-on-hover
     :scrim-opacity="0.6"
+    :touchless="true"
     class="nav-background pb-100"
     :width="192"
     v-model="drawer"
@@ -283,6 +284,7 @@ onMounted(() => {
                 offset="10"
                 content-class="m-original-dropdown"
                 v-model:model-value="originalMenu"
+                transition="slide-x-transition"
               >
                 <template v-slot:activator="{ props }">
                   <v-list-item
@@ -371,6 +373,7 @@ onMounted(() => {
           offset="16"
           content-class="m-language-dropdown"
           v-model:model-value="languageMenu"
+          transition="slide-x-transition"
         >
           <template v-slot:activator="{ props }">
             <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
@@ -772,12 +775,14 @@ onMounted(() => {
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;
-  border-top-width: 4px;
-  border-bottom-width: 4px;
+  border-top-width: 6px;
+  border-bottom-width: 6px;
 }
 
 :deep(.m-language-dropdown) {
   left: 208px !important;
+  --v-overlay-anchor-origin: none !important;
+  transform-origin: unset !important;
 }
 
 :deep(.m-language-dropdown:after) {
@@ -791,8 +796,8 @@ onMounted(() => {
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;
-  border-top-width: 4px;
-  border-bottom-width: 4px;
+  border-top-width: 6px;
+  border-bottom-width: 6px;
 }
 
 .m-navbar-free-money-img-position {

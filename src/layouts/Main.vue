@@ -60,6 +60,11 @@ const mailMenuShow = computed(() => {
   return getMailMenuShow.value;
 });
 
+const signUpForm = computed(() => {
+  const { getSignUpForm } = storeToRefs(authStore());
+  return getSignUpForm.value
+})
+
 // authentication dialog
 const signupDialog = ref<boolean>(false);
 const signoutDialog = ref<boolean>(false);
@@ -71,6 +76,11 @@ const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
 // methods
 const closeDialog = (type: dialogType) => {
+  console.log(signUpForm.value);
+  if (mobileWidth.value < 600 && type == "signup" && signUpForm.value) {
+    console.log("ok");
+    return;
+  }
   if (type === "login") {
     loginDialog.value = false;
   } else if (type == "signup") {
@@ -179,8 +189,8 @@ const loginBonusDialogVisible = computed(() => {
 
 watch(loginBonusDialogVisible, (newValue) => {
   loginBonusDialog.value = newValue;
-  // setOverlayScrimShow(newValue)
-  // setMainBlurEffectShow(newValue);
+  setOverlayScrimShow(newValue)
+  setMainBlurEffectShow(newValue);
 }, { deep: true })
 
 const closeLoginBonusDialog = () => {
@@ -328,6 +338,7 @@ onMounted(() => {
       "
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('signup')"
+      persistent
     >
       <!------------  PC Version ------------>
       <Signup
@@ -348,6 +359,7 @@ onMounted(() => {
       "
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('login')"
+      persistent
     >
       <!------------  PC Version ------------>
       <Login
@@ -384,6 +396,7 @@ onMounted(() => {
       v-model="loginBonusDialog"
       :width="mobileWidth < 600 ? '340' : '471'"
       @click:outside="setLoginBonusDialogVisible(false)"
+      :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
     >
       <LoginBonusDialog
         v-if="mobileWidth > 600"
@@ -426,6 +439,14 @@ onMounted(() => {
   </v-main>
 </template>
 <style lang="scss">
+.m-login-bonus-dialog {
+  .v-overlay__scrim {
+    // opacity: 1 !important;
+    // background: unset !important;
+    // -webkit-backdrop-filter: saturate(180%) blur(4px);
+    // backdrop-filter: saturate(180%) blur(4px);
+  }
+}
 .main-background {
   background: #31275c;
 }
