@@ -42,6 +42,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
 const { setAuthModalType } = authStore();
+const { setNickNameDialogVisible } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
@@ -73,13 +74,22 @@ const loginDialog = ref<boolean>(false);
 const mobileDialog = ref<boolean>(false);
 const mobileDialogCheck = ref<boolean>(false);
 const accountDialog = ref<boolean>(false);
-const nickNameDialog = ref<boolean>(true);
+const nickNameDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
 const authDialogVisible = computed(() => {
   const { getAuthDialogVisible } = storeToRefs(authStore());
   return getAuthDialogVisible.value;
 });
+
+const nickNameDialogVisible = computed(() => {
+  const { getNickNameDialogVisible } = storeToRefs(authStore());
+  return getNickNameDialogVisible.value
+})
+
+watch(nickNameDialogVisible, (newValue) => {
+  nickNameDialog.value = newValue;
+})
 
 // methods
 const closeDialog = (type: dialogType) => {
@@ -98,7 +108,7 @@ const closeDialog = (type: dialogType) => {
 };
 
 const closeNickNameDialog = () => {
-  nickNameDialog.value = false;
+  setNickNameDialogVisible(false);
 }
 
 const switchDialog = (type: dialogType): void => {

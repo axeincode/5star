@@ -15,6 +15,7 @@ export const authStore = defineStore({
     dialogCheckbox: false as boolean,
     authDialogVisible: false as boolean,
     signUpForm: false as boolean,
+    nickNameDialogVisible: false as boolean,
     token: NetworkData.getInstance().getToken() as string | undefined,
     userInfo: {
       uid: "User6696608024",
@@ -44,7 +45,8 @@ export const authStore = defineStore({
     getUserAmount: (state) => state.userAmount,
     getDialogCheckbox: (state) => state.dialogCheckbox,
     getAuthDialogVisible: (state) => state.authDialogVisible,
-    getSignUpForm: (state) => state.signUpForm
+    getSignUpForm: (state) => state.signUpForm,
+    getNickNameDialogVisible: (state) => state.nickNameDialogVisible
   },
   actions: {
     // set functions
@@ -106,6 +108,9 @@ export const authStore = defineStore({
     },
     setSignUpForm(signUpForm: boolean) {
       this.signUpForm = signUpForm;
+    },
+    setNickNameDialogVisible (nickNameDialogVisible: boolean) {
+      this.nickNameDialogVisible = nickNameDialogVisible;
     },
     // dipatch login
     async dispatchSignIn(msg: SignIn.SigninRequestData) {

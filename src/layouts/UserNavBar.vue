@@ -44,120 +44,124 @@ const notificationText = ref<string>('Successful replication');
 
 // logged in user info
 const user = ref<GetUserData>({
-    id: "User6696608024",
-    avatar: new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
-    name: "Little Planes",
-    grade_level: "Bronze",
-    grade: "VIP 4",
-    wallet: 515.25,
-    currency: "R$",
+  id: "User6696608024",
+  avatar: new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
+  name: "Little Planes",
+  grade_level: "Bronze",
+  grade: "VIP 4",
+  wallet: 515.25,
+  currency: "R$",
 });
 
 const userNavBarToggle = computed(() => {
-    const { getUserNavBarToggle } = storeToRefs(appBarStore());
-    return getUserNavBarToggle.value;
+  const { getUserNavBarToggle } = storeToRefs(appBarStore());
+  return getUserNavBarToggle.value;
 });
 
 const refferalAppBarShow = computed(() => {
-    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
-    return getRefferalAppBarShow.value;
+  const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+  return getRefferalAppBarShow.value;
 })
 
 const mobileVersion = computed(() => {
-    return name.value
+  return name.value
 });
 
 const mobileWidth: any = computed(() => {
-    return width.value;
+  return width.value;
 })
 
 const depositDialogShow = () => {
-    setDepositDialogToggle(true);
-    setCashDialogToggle(true);
-    setUserNavBarToggle(false);
+  setDepositDialogToggle(true);
+  setCashDialogToggle(true);
+  setUserNavBarToggle(false);
 }
 
 const withdrawDialogShow = () => {
-    setWithdrawDialogToggle(true);
-    setCashDialogToggle(true);
-    setUserNavBarToggle(false);
+  setWithdrawDialogToggle(true);
+  setCashDialogToggle(true);
+  setUserNavBarToggle(false);
 }
 
 const showSignoutDialog = () => {
-    setAuthModalType("signout");
-    setUserNavBarToggle(false);
-    setOverlayScrimShow(false);
+  setAuthModalType("signout");
+  setUserNavBarToggle(false);
+  setOverlayScrimShow(false);
 }
 
 const goBonusPage = () => {
-    router.push({ name: 'Bonuses And Transactions' });
-    setBonusTabIndex(0);
-    setUserNavBarToggle(false);
+  router.push({ name: 'Bonuses And Transactions' });
+  setBonusTabIndex(0);
+  setUserNavBarToggle(false);
 }
 
 const goTransactionPage = () => {
-    router.push({ name: 'Bonuses And Transactions' });
-    setBonusTabIndex(1);
-    setTransactionTab(t('transaction.tab.transactions'));
-    setUserNavBarToggle(false);
+  router.push({ name: 'Bonuses And Transactions' });
+  setBonusTabIndex(1);
+  setTransactionTab(t('transaction.tab.transactions'));
+  setUserNavBarToggle(false);
 }
 
 const goDepositPage = () => {
-    router.push({ name: 'Bonuses And Transactions' });
-    setBonusTabIndex(1);
-    setTransactionTab(t('transaction.tab.transactions'));
-    setUserNavBarToggle(false);
+  router.push({ name: 'Bonuses And Transactions' });
+  setBonusTabIndex(1);
+  setTransactionTab(t('transaction.tab.transactions'));
+  setUserNavBarToggle(false);
 }
 
 const goWithdrawPage = () => {
-    router.push({ name: 'Bonuses And Transactions' });
-    setBonusTabIndex(1);
-    setTransactionTab(t('transaction.tab.withdrawal'));
-    setUserNavBarToggle(false);
+  router.push({ name: 'Bonuses And Transactions' });
+  setBonusTabIndex(1);
+  setTransactionTab(t('transaction.tab.withdrawal'));
+  setUserNavBarToggle(false);
 }
 
 const goGameHistoryPage = () => {
-    router.push({ name: 'Bonuses And Transactions' });
-    setBonusTabIndex(1);
-    setTransactionTab(t('transaction.tab.game_history'));
-    setUserNavBarToggle(false);
+  router.push({ name: 'Bonuses And Transactions' });
+  setBonusTabIndex(1);
+  setTransactionTab(t('transaction.tab.game_history'));
+  setUserNavBarToggle(false);
 }
 
 const refferalDialogShow = () => {
-    setRefferalDialogShow(true);
-    setUserNavBarToggle(false);
+  setRefferalDialogShow(true);
+  setUserNavBarToggle(false);
 }
 
 const goAccountPage = () => {
-    accountPageShow.value = true;
-    setAccountDialogShow(true);
-    // router.push({ name: 'Account' })
-    setMainBlurEffectShow(drawer.value);
-    setOverlayScrimShow(drawer.value);
-    setUserNavBarToggle(false);
+  accountPageShow.value = true;
+  setAccountDialogShow(true);
+  // router.push({ name: 'Account' })
+  setMainBlurEffectShow(drawer.value);
+  setOverlayScrimShow(drawer.value);
+  setUserNavBarToggle(false);
+}
+
+const goVIPPage = () => {
+  router.push({name: "VIP"})
 }
 
 watch(userNavBarToggle, (newValue) => {
-    drawer.value = newValue;
+  drawer.value = newValue;
 })
 
 watch(drawer, (newValue: boolean) => {
-    setUserNavBarToggle(newValue);
+  setUserNavBarToggle(newValue);
   setMailMenuShow(newValue);
-    if (!newValue && !accountPageShow.value) {
-        setMainBlurEffectShow(false);
-    }
-    accountPageShow.value = false;
-    if (newValue) {
-        setMainBlurEffectShow(true);
-        setOverlayScrimShow(true);
-    }
+  if (!newValue && !accountPageShow.value) {
+    setMainBlurEffectShow(false);
+  }
+  accountPageShow.value = false;
+  if (newValue) {
+    setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
+  }
 })
 
 watch(mobileWidth, (newValue: number) => {
-    if (newValue > 600) {
-        setUserNavBarToggle(false);
-    }
+  if (newValue > 600) {
+    setUserNavBarToggle(false);
+  }
 })
 </script>
 
@@ -173,7 +177,7 @@ watch(mobileWidth, (newValue: number) => {
     <template v-slot:prepend>
       <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
     </template>
-    <v-list density="compact" nav>
+    <v-list class="mobile-nav" density="compact" nav>
       <v-list-item class="m-user-item">
         <template v-slot:prepend>
           <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
@@ -209,7 +213,7 @@ watch(mobileWidth, (newValue: number) => {
             <div class="text-800-10 color-F9BC01">{{ user.grade }}</div>
           </div>
         </template>
-        <v-list-item-title class="ml-2">
+        <v-list-item-title class="ml-2" @click="goVIPPage">
           <div class="deposit-progress-bg">
             <div class="d-flex">
               <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
@@ -499,6 +503,12 @@ watch(mobileWidth, (newValue: number) => {
     background: #1c1929 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 20px !important;
+  }
+}
+
+.mobile-nav {
+  .v-list-item__overlay {
+    opacity: 0 !important;
   }
 }
 </style>

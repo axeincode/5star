@@ -37,6 +37,7 @@ const MSignup = defineComponent({
     const { dispatchUserProfile } = authStore();
     const { setSignUpForm } = authStore();
     const { setDialogCheckbox } = authStore();
+    const { setNickNameDialogVisible } = authStore();
     const { width } = useDisplay();
 
     // initiate component state
@@ -229,19 +230,21 @@ const MSignup = defineComponent({
 
     // handle form submit
     const handleSignupFormSubmit = async () => {
-      // state.currentPage = state.PAGE_TYPE.DISPLAY_NAME;
-      console.log("sign up form submit!");
+      setSignUpForm(false);
+      emit("close");
+      setNickNameDialogVisible(true);
+
       state.loading = true;
-      await dispatchSignUp({
-        uid: state.formData.emailAddress,
-        password: state.formData.password,
-        referral_code: state.formData.promoCode,
-        browser: "",
-        device: "",
-        model: "",
-        brand: "",
-        imei: "",
-      });
+      // await dispatchSignUp({
+      //   uid: state.formData.emailAddress,
+      //   password: state.formData.password,
+      //   referral_code: state.formData.promoCode,
+      //   browser: "",
+      //   device: "",
+      //   model: "",
+      //   brand: "",
+      //   imei: "",
+      // });
       state.loading = false;
       if (success.value) {
         await dispatchUserProfile();
@@ -250,13 +253,16 @@ const MSignup = defineComponent({
           title: t("signup.submit_result.success_text"),
           duration: 3000,
         });
+        setTimeout(() => {
+          setSignUpForm(false);
+          emit("close");
+        }, 3000);
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_18.svg",
         //   import.meta.url
         // ).href;
         // state.notificationText = t("signup.submit_result.success_text");
-        state.currentPage = state.PAGE_TYPE.DISPLAY_NAME;
       } else {
         if (errMessage.value == "Registering an existing account is abnormal") {
           state.currentPage = state.PAGE_TYPE.ALREADY_REGISTERED;
@@ -288,7 +294,6 @@ const MSignup = defineComponent({
     watch(
       dialogVisible,
       (newValue) => {
-        console.log(state.currentPage);
         if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
           state.currentPage = state.PAGE_TYPE.CONFIRM_CANCEL;
         } else {

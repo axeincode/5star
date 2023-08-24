@@ -528,7 +528,7 @@ onMounted(async () => {
                   :src="user.avatar"
                   width="44"
                   height="44"
-                  class="mr-0"
+                  class="mr-0 original-game-img-avatar"
                   style="margin-top: 2px"
                 />
               </div>
@@ -1298,5 +1298,10 @@ onMounted(async () => {
   top: 18px;
   left: 50%;
   transform: translateX(-50%);
+}
+.original-game-img-avatar:active {
+  transform: scale(0.9);
+  filter: brightness(80%);
+  transition-duration: 0.28s;
 }
 </style>
