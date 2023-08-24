@@ -431,6 +431,10 @@ const tabSelect = ref(false);
 
 const isMouseClick = ref(false);
 
+const handleSelectVIPTab = (item: string) => {
+  selectedVIPTab.value = item
+}
+
 const handleVIPTab = () => {
     isMouseClick.value = true;
     vipSlidePosition.value = true;
@@ -510,14 +514,22 @@ onMounted(() => {
 
 <template>
   <div class="m-vip-container mb-0">
-    <div class="m-vip-body">
-      <Carousel :itemsToShow="1.2" :wrapAround="true" :transition="500">
+    <div class="m-vip-body" :style="{ paddingTop: refferalAppBarShow ? '40px' : '44px' }">
+      <Carousel
+        :itemsToShow="1.2"
+        :wrapAround="true"
+        :transition="500"
+        class="m-vip-carousel"
+        :style="{
+          margin: refferalAppBarShow ? '0px 10px !important' : '10px !important',
+        }"
+      >
         <Slide v-for="(item, index) in vipItems" :key="index">
           <div class="m-vip-carousel-body">
-            <div class="text-800-16 white text-center mt-2">
+            <div class="text-800-16 white text-center mt-4">
               {{ t("vip.slider.title_text") }}
             </div>
-            <v-row class="full-height mx-2">
+            <v-row class="full-height mx-2 mt-0">
               <v-col cols="3" class="text-center">
                 <img src="@/assets/vip/image/img_vip_02.png" width="49" />
                 <p class="text-800-14 yellow">{{ item.vipGrade }}</p>
@@ -538,13 +550,13 @@ onMounted(() => {
                   <div>
                     <v-progress-linear
                       v-model="item.vipRate"
-                      height="16"
+                      height="19"
                       class="deposit-progress"
                     >
                     </v-progress-linear>
                   </div>
                 </div>
-                <div class="deposit-progress-bg mt-4">
+                <div class="deposit-progress-bg mt-2">
                   <div class="d-flex mx-4 align-center">
                     <div class="text-500-9 white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
@@ -559,7 +571,7 @@ onMounted(() => {
                   <div>
                     <v-progress-linear
                       v-model="depositRate"
-                      height="16"
+                      height="19"
                       class="wager-progress"
                     >
                     </v-progress-linear>
@@ -578,18 +590,13 @@ onMounted(() => {
           :style="{ height: vipSlidePosition ? '88px' : 'unset' }"
           :class="vipSlidePosition ? 'pt-8' : ''"
         >
-          <v-slide-group-item
-            v-for="(item, index) in vipTabs"
-            :key="index"
-            v-slot="{ isSelected, toggle }"
-            :value="item"
-          >
+          <v-slide-group-item v-for="(item, index) in vipTabs" :key="index" :value="item">
             <v-btn
               class="ma-2 text-none m-transaction-tab-btn"
-              :class="isSelected ? 'black' : 'text-gray'"
-              :color="isSelected ? '#32CFEC' : 'transparent'"
-              @click="toggle"
+              :class="selectedVIPTab == item ? 'black' : 'text-gray'"
+              :color="selectedVIPTab == item ? '#32CFEC' : 'transparent'"
               :width="mobileWidth < 600 ? 100 : 150"
+              @click="handleSelectVIPTab(item)"
             >
               {{ item }}
             </v-btn>
@@ -1454,6 +1461,8 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss">
+.m-vip-carousel {
+}
 .m-vip-container {
   margin: -47px 0px;
   background: #211f31;
@@ -1751,6 +1760,7 @@ onMounted(() => {
 }
 
 .m-transaction-tab-btn {
+  box-shadow: none !important;
   .v-btn__content {
     text-align: center;
     font-size: 12px;

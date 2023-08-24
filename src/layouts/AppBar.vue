@@ -239,7 +239,7 @@ const showUserNavBar = (): void => {
   setTimeout(() => {
     setUserNavBarToggle(userNavBarToggle.value);
     setMainBlurEffectShow(userNavBarToggle.value);
-  }, 200)
+  }, 10)
 }
 
 watch(userNavToggle, (newValue) => {

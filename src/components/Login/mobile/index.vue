@@ -55,7 +55,7 @@ const Login = defineComponent({
       emailPartName: "",
       closeBtnHeight: 0,
       closeBtnShow: false,
-      containerHeight: 0,
+      containerHeight: 0 as number | undefined,
       bodyHeight: 0,
     });
 
@@ -211,9 +211,10 @@ const Login = defineComponent({
     );
 
     onMounted(() => {
-      // state.closeBtnHeight = 613 - window.innerHeight + 1;
-      state.containerHeight = window.innerHeight - 54;
-      state.bodyHeight = window.innerHeight - 194;
+      if (window.visualViewport?.height != undefined) {
+        state.containerHeight = window.visualViewport?.height - 54;
+        state.bodyHeight = window.innerHeight - 194;
+      }
       // setTimeout(() => {
       //   state.closeBtnShow = true;
       // }, 300);

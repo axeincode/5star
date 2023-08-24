@@ -6,6 +6,7 @@ import { refferalStore } from '@/store/refferal';
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { appBarStore } from "@/store/appBar";
 import { authStore } from "@/store/auth";
+import { mailStore } from "@/store/mail";
 import { storeToRefs } from "pinia";
 import { useDisplay } from 'vuetify';
 import { useRouter } from "vue-router";
@@ -22,6 +23,7 @@ const { setCashDialogToggle } = appBarStore();
 const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
 const { setRefferalDialogShow } = refferalStore();
+const { setMailMenuShow } = mailStore();
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -141,6 +143,7 @@ watch(userNavBarToggle, (newValue) => {
 
 watch(drawer, (newValue: boolean) => {
     setUserNavBarToggle(newValue);
+  setMailMenuShow(newValue);
     if (!newValue && !accountPageShow.value) {
         setMainBlurEffectShow(false);
     }

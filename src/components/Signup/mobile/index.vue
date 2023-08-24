@@ -36,6 +36,7 @@ const MSignup = defineComponent({
     const { dispatchSignUp } = authStore();
     const { dispatchUserProfile } = authStore();
     const { setSignUpForm } = authStore();
+    const { setDialogCheckbox } = authStore();
     const { width } = useDisplay();
 
     // initiate component state
@@ -223,7 +224,7 @@ const MSignup = defineComponent({
     };
 
     const handleClickConfirmButton = (): void => {
-      state.currentPage = state.PAGE_TYPE.DISPLAY_NAME;
+      emit("switch", "login");
     };
 
     // handle form submit
@@ -255,15 +256,17 @@ const MSignup = defineComponent({
         //   import.meta.url
         // ).href;
         // state.notificationText = t("signup.submit_result.success_text");
-        setTimeout(() => {
-          emit("close");
-        }, 3000);
+        state.currentPage = state.PAGE_TYPE.DISPLAY_NAME;
       } else {
-        ElNotification({
-          icon: WarningIcon,
-          title: errMessage.value,
-          duration: 3000,
-        });
+        if (errMessage.value == "Registering an existing account is abnormal") {
+          state.currentPage = state.PAGE_TYPE.ALREADY_REGISTERED;
+        } else {
+          ElNotification({
+            icon: WarningIcon,
+            title: errMessage.value,
+            duration: 3000,
+          });
+        }
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_17.svg",
@@ -300,6 +303,7 @@ const MSignup = defineComponent({
       if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
         state.currentPage = state.PAGE_TYPE.CONFIRM_CANCEL;
       } else {
+        setSignUpForm(false);
         emit("close");
       }
     };
@@ -348,9 +352,10 @@ const MSignup = defineComponent({
     );
 
     onMounted(() => {
-      // state.closeBtnHeight = 613 - window.innerHeight + 1;
-      state.containerHeight = window.innerHeight - 54;
-      state.bodyHeight = window.innerHeight - 203;
+      if (window.visualViewport?.height != undefined) {
+        state.containerHeight = window.visualViewport?.height - 54;
+        state.bodyHeight = window.innerHeight - 194;
+      }
       setSignUpForm(true);
       // setTimeout(() => {
       //   state.closeBtnShow = true;
@@ -600,7 +605,7 @@ export default MSignup;
       <!-- Already registered notification -->
       <div v-if="currentPage == PAGE_TYPE.ALREADY_REGISTERED" class="full-width">
         <v-row>
-          <p class="m-label-text-md slate-gray center full-width pl-12 pr-12">
+          <p class="m-label-text-md slate-gray center full-width px-8">
             {{ t("signup.alreadyRegisterPage.title") }}
           </p>
         </v-row>
@@ -621,6 +626,7 @@ export default MSignup;
             width="-webkit-fill-available"
             height="48px"
             autocapitalize="off"
+            @click="closeDialog"
           >
             {{ t("signup.alreadyRegisterPage.cancel") }}
           </v-btn>
@@ -762,7 +768,7 @@ export default MSignup;
 }
 
 .m-label-text-md {
-  margin-top: 132px;
+  margin-top: 142px;
   font-weight: 600;
   font-size: 16px;
   font-family: "Inter";

@@ -118,7 +118,7 @@ const handleNavbarToggle = () => {
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
-  }, 200);
+  }, 10);
   menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";

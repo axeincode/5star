@@ -17,6 +17,7 @@ import MCashHeader from "@/components/cash/header/mobile/index.vue";
 import CashHeader from "@/components/cash/header/index.vue";
 import Signup from "@/components/Signup/index.vue";
 import MSignup from "@/components/Signup/mobile/index.vue";
+import MNickName from "@/components/Signup/mobile/NickName.vue";
 import Login from "@/components/Login/index.vue";
 import MLogin from "@/components/Login/mobile/index.vue";
 import Signout from "@/components/Signout/index.vue";
@@ -72,13 +73,17 @@ const loginDialog = ref<boolean>(false);
 const mobileDialog = ref<boolean>(false);
 const mobileDialogCheck = ref<boolean>(false);
 const accountDialog = ref<boolean>(false);
+const nickNameDialog = ref<boolean>(true);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
+
+const authDialogVisible = computed(() => {
+  const { getAuthDialogVisible } = storeToRefs(authStore());
+  return getAuthDialogVisible.value;
+});
 
 // methods
 const closeDialog = (type: dialogType) => {
-  console.log(signUpForm.value);
   if (mobileWidth.value < 600 && type == "signup" && signUpForm.value) {
-    console.log("ok");
     return;
   }
   if (type === "login") {
@@ -91,6 +96,10 @@ const closeDialog = (type: dialogType) => {
   mobileDialog.value = false;
   setAuthModalType("");
 };
+
+const closeNickNameDialog = () => {
+  nickNameDialog.value = false;
+}
 
 const switchDialog = (type: dialogType): void => {
   if (type === "login") {
@@ -319,6 +328,7 @@ onMounted(() => {
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
+    <!-------------------------------      LOGIN     ------------------------------------>
     <v-dialog
       v-model="mobileDialog"
       :fullscreen="mobileVersion == 'sm'"
@@ -340,15 +350,16 @@ onMounted(() => {
       @click:outside="closeDialog('signup')"
       persistent
     >
-      <!------------  PC Version ------------>
       <Signup
         v-if="mobileVersion != 'sm'"
         @close="closeDialog('signup')"
         @switch="switchDialog('signup')"
       />
-      <!------------  Mobile Version ------------>
       <MSignup v-else @close="closeDialog('signup')" @switch="switchDialog('signup')" />
     </v-dialog>
+
+    <!-------------------------------      SIGNUP     ------------------------------------>
+
     <v-dialog
       v-model="loginDialog"
       :width="mobileVersion == 'sm' ? '' : 471"
@@ -361,15 +372,28 @@ onMounted(() => {
       @click:outside="closeDialog('login')"
       persistent
     >
-      <!------------  PC Version ------------>
       <Login
         v-if="mobileVersion != 'sm'"
         @close="closeDialog('login')"
         @switch="switchDialog('login')"
       />
-      <!------------  Mobile Version ------------>
-      <MLogin v-else @close="closeDialog('login')" @switch="switchDialog('login')" />
+      <MLogin v-else @switch="switchDialog('login')" />
     </v-dialog>
+
+    <!-------------------------------      NICKNAME     ------------------------------------>
+
+    <v-dialog
+      v-model="nickNameDialog"
+      width="320"
+      :scrim="true"
+      transition="scale-transition"
+      @click:outside="closeNickNameDialog"
+    >
+      <MNickName @close="closeNickNameDialog" />
+    </v-dialog>
+
+    <!-------------------------------      SIGNOUT     ------------------------------------>
+
     <v-dialog
       v-model="signoutDialog"
       :width="mobileWidth < 600 ? 328 : 471"
@@ -447,27 +471,29 @@ onMounted(() => {
     // backdrop-filter: saturate(180%) blur(4px);
   }
 }
+
 .main-background {
   background: #31275c;
 }
 
 .main-bg-blur {
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
+  // filter: blur(4px);
+  // -webkit-filter: blur(4px);
+  filter: saturate(180%) blur(4px);
+  -webkit-filter: saturate(180%) blur(4px);
 }
 
 .mobile-dialog-toggle-height {
   height: 40px !important;
-  position: absolute !important;
   margin: 0 !important;
   bottom: unset !important;
   top: 0 !important;
 }
 
 .mobile-login-dialog-position {
-  position: absolute !important;
+  position: sticky !important;
   margin: 0 !important;
-  height: 624px !important;
+  height: 0px !important;
   bottom: 0 !important;
   top: unset !important;
 }

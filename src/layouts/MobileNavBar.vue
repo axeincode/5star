@@ -7,6 +7,7 @@ import { useDisplay } from 'vuetify'
 import { appBarStore } from "@/store/appBar";
 import { loginBonusStore } from "@/store/loginBonus";
 import { refferalStore } from "@/store/refferal";
+import { mailStore } from "@/store/mail";
 import { storeToRefs } from "pinia";
 
 const { setNavBarToggle } = appBarStore();
@@ -15,6 +16,8 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
+const { setRefferalDialogShow } = refferalStore();
+const { setMailMenuShow } = mailStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -28,132 +31,138 @@ const navDrawer = ref<any>(null);
 const { name, width } = useDisplay()
 
 const mobileVersion = computed(() => {
-    return name.value
+  return name.value
 });
 
 const mobileWidth = computed(() => {
-    return width.value
+  return width.value
 })
 
 const refferalAppBarShow = computed(() => {
-    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
-    return getRefferalAppBarShow.value
+  const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+  return getRefferalAppBarShow.value
 })
 
 const navBarToggle = computed(() => {
-    const { getNavBarToggle } = storeToRefs(appBarStore());
-    return getNavBarToggle.value
+  const { getNavBarToggle } = storeToRefs(appBarStore());
+  return getNavBarToggle.value
 })
 
 const loginBonusDialog = computed(() => {
-    const { getLoginBonusDialogVisible } = storeToRefs(loginBonusStore());
-    return getLoginBonusDialogVisible.value;
+  const { getLoginBonusDialogVisible } = storeToRefs(loginBonusStore());
+  return getLoginBonusDialogVisible.value;
 })
 
 const rouletteBonusDialog = computed(() => {
-    const { getRouletteBonusDialogVisible } = storeToRefs(loginBonusStore());
-    return getRouletteBonusDialogVisible.value;
+  const { getRouletteBonusDialogVisible } = storeToRefs(loginBonusStore());
+  return getRouletteBonusDialogVisible.value;
 })
 
 // language array
 const langItems = ref<Array<string>>([
-    t('navBar.language.english'),
-    t('navBar.language.portuguese'),
-    t('navBar.language.espanola')
+  t('navBar.language.english'),
+  t('navBar.language.portuguese'),
+  t('navBar.language.espanola')
 ])
 
 // game original data array
 const gameOriginalItems = ref<Array<GetGameOriginalData>>([
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
-        name: "SlotsSlotsSlots"
-    }
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_21.svg", import.meta.url).href,
+    name: "SlotsSlotsSlots"
+  }
 ])
 
 watch(drawer, (newValue: boolean) => {
-    setNavBarToggle(newValue);
-    if (!newValue && !rouletteBonusDialog.value) {
-        setMainBlurEffectShow(false);
-        setOverlayScrimShow(false);
-    }
-    if (newValue) {
-        setMainBlurEffectShow(true);
-        setOverlayScrimShow(true);
-    }
+  setNavBarToggle(newValue);
+  setMailMenuShow(newValue);
+  if (!newValue && !rouletteBonusDialog.value) {
+    setMainBlurEffectShow(false);
+    setOverlayScrimShow(false);
+  }
+  if (newValue) {
+    setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
+  }
 })
 
 watch(navBarToggle, (newValue) => {
-    drawer.value = newValue;
-    if (mobileWidth.value < 600 && newValue) {
-        setRightBarToggle(false);
-    }
+  drawer.value = newValue;
+  if (mobileWidth.value < 600 && newValue) {
+    setRightBarToggle(false);
+  }
 })
 
 const handleLanguageDropdown = (item: string) => {
-    language.value = item;
-    switch (item) {
-        case t('navBar.language.english'):
-            setLang("en");
-            break;
-        case t('navBar.language.portuguese'):
-            setLang("pt");
-            break;
-        case t('navBar.language.espanola'):
-            setLang("es");
-            break;
-    }
+  language.value = item;
+  switch (item) {
+    case t('navBar.language.english'):
+      setLang("en");
+      break;
+    case t('navBar.language.portuguese'):
+      setLang("pt");
+      break;
+    case t('navBar.language.espanola'):
+      setLang("es");
+      break;
+  }
 }
 
 window.addEventListener('scroll', function () {
-    originalMenu.value = false;
-    languageMenu.value = false;
+  originalMenu.value = false;
+  languageMenu.value = false;
 });
 
 const navDrawerScroll = () => {
-    originalMenu.value = false;
-    languageMenu.value = false;
+  originalMenu.value = false;
+  languageMenu.value = false;
 }
 
 const openLoginBonusDialog = () => {
-    setLoginBonusDialogVisible(true);
-    setNavBarToggle(false);
-    setOverlayScrimShow(true);
-    setMainBlurEffectShow(true);
+  setLoginBonusDialogVisible(true);
+  setNavBarToggle(false);
+  setOverlayScrimShow(true);
+  setMainBlurEffectShow(true);
 }
 
 const openRouletteBonusDialog = () => {
-    setRouletteBonusDialogVisible(true);
-    setNavBarToggle(false);
-    setOverlayScrimShow(true);
-    setMainBlurEffectShow(true);
+  setRouletteBonusDialogVisible(true);
+  setNavBarToggle(false);
+  setOverlayScrimShow(true);
+  setMainBlurEffectShow(true);
+}
+const openRefferalDialogShow = () => {
+  setOverlayScrimShow(false);
+  setRefferalDialogShow(true)
+  setNavBarToggle(false);
 }
 
 onMounted(() => {
-    drawer.value = mobileWidth.value < 1280 ? false : true;
+  drawer.value = mobileWidth.value < 1280 ? false : true;
 })
 </script>
 
@@ -240,7 +249,7 @@ onMounted(() => {
         </v-card>
       </v-list>
       <v-list density="compact" nav class="px-0">
-        <v-list-item class="ma-0 pa-0">
+        <v-list-item class="ma-0 pa-0" @click="openRefferalDialogShow">
           <img src="@/assets/public/image/img_public_18.png" class="m-earn-free-img" />
           <img
             src="@/assets/public/image/img_public_17.png"

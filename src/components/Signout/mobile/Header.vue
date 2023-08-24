@@ -93,7 +93,7 @@ onUnmounted(() => {
 </template>
 <style lang="scss">
 .mobile-dialog-container {
-  position: absolute !important;
+  position: sticky !important;
   top: 0px;
   height: 40px;
   width: 100%;
@@ -177,8 +177,7 @@ onUnmounted(() => {
   }
 
   input:checked + label:after {
-    left: 158px;
-    transform: translateX(-100%);
+    left: 83px;
   }
 
   label:active:after {
