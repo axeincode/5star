@@ -13,11 +13,13 @@ import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import icon_public_60 from "@/assets/public/svg/icon_public_60.svg";
 import icon_public_65 from "@/assets/public/svg/icon_public_65.svg";
 
+
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
 const { setPixInfo } = depositStore();
 
 const cashToggleSwitch = ref<boolean>(false);
@@ -51,6 +53,7 @@ const mobileWidth = computed(() => {
 
 const handlePersonalInfoToggle = (): void => {
     personalInfoToggle.value = !personalInfoToggle.value;
+    // setMainBlurEffectShow(personalInfoToggle.value == true? true : false);
 }
 
 const handleConfirmValidation = (): void => {
@@ -119,6 +122,7 @@ const validateCPF = (cpf: string) => {
 
 
 const handlePixInfoSubmit = (): void => {
+  if (isPersonalBtnReady.value) {
     setPixInfo(pixInfoItem.value);
     confirmValidation.value = true;
     // notificationText.value = t('deposit_dialog.personal_information.confirm_success_text');
@@ -129,6 +133,7 @@ const handlePixInfoSubmit = (): void => {
         title: t('deposit_dialog.personal_information.confirm_success_text'),
         duration: 3000,
     })
+  }
 }
 
 const depositDialogToggle = computed(() => {
@@ -145,12 +150,14 @@ watch(cashToggleSwitch, (newValue) => {
     if (newValue) {
         setWithdrawDialogToggle(true);
         setDepositDialogToggle(false);
+        setMainBlurEffectShow(false);
 
         depositCheckboxColor.value = "#7782AA";
         withdrawCheckboxColor.value = "#ffffff";
     } else {
         setWithdrawDialogToggle(false);
         setDepositDialogToggle(true);
+        setMainBlurEffectShow(false);
 
         depositCheckboxColor.value = "#ffffff";
         withdrawCheckboxColor.value = "#7782AA";
@@ -165,6 +172,7 @@ watch(pixInfoMenuShow, (value) => {
         isPersonalBtnReady.value = false;
         confirmValidation.value = false;
     }
+    setMainBlurEffectShow(pixInfoMenuShow.value == true ? true: false)
 })
 
 const depositTransform = (el: any) => {
@@ -199,8 +207,11 @@ onMounted(() => {
         offset="-5"
         :close-on-content-click="false"
         content-class="m-personal-info-menu"
-        transition="slide-y-transition"
         v-model:model-value="pixInfoMenuShow"
+        :transition="{
+          enterActiveClass: 'my-enter-active-class',
+          leaveActiveClass: 'my-leave-active-class',
+        }"
       >
         <template v-slot:activator="{ props }">
           <v-btn
@@ -307,8 +318,8 @@ onMounted(() => {
           <v-list-item class="text-center">
             <v-btn
               class="mx-16 mt-2 mb-6 m-personal-confirm-btn"
+              :class="isPersonalBtnReady ? 'personal-btn-ready' : ''"
               height="48px"
-              :disabled="!isPersonalBtnReady"
               :onclick="handlePixInfoSubmit"
             >
               {{ t("deposit_dialog.personal_information.confirm_text") }}
@@ -589,14 +600,14 @@ onMounted(() => {
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        color: #4a4567 !important;
+        color: #7782aa !important;
       }
 
       .v-label.v-field-label--floating {
         --v-field-label-scale: 0.75em;
         font-size: var(--v-field-label-scale);
         max-width: 100%;
-        color: #4a4567 !important;
+        color: #7782aa !important;
       }
     }
   }
@@ -634,6 +645,24 @@ onMounted(() => {
     background-image: url("@/assets/public/svg/icon_public_52.svg");
     background-repeat: no-repeat;
     background-size: 18px;
+  }
+}
+@media (max-width: 600px) {
+  .my-enter-active-class {
+    transform: translateY(0);
+  }
+
+  .my-leave-active-class {
+    transform: translateY(0);
+  }
+
+  .personal-btn-ready {
+    background: #32cfec;
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+    .v-btn__content {
+      color: #000000;
+    }
   }
 }
 </style>

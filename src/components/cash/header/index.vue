@@ -11,6 +11,7 @@ const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
 
 const cashToggleSwitch = ref<boolean>(false);
 
@@ -104,13 +105,17 @@ watch(cashToggleSwitch, (newValue) => {
     if (newValue) {
         setWithdrawDialogToggle(true);
         setDepositDialogToggle(false);
+        setOverlayScrimShow(false);
     } else {
         setWithdrawDialogToggle(false);
         setDepositDialogToggle(true);
+        setOverlayScrimShow(false);
     }
 })
 
 watch(pixInfoMenuShow, (value) => {
+  setOverlayScrimShow(pixInfoMenuShow.value == true ? true: false)
+
     if (pixInfoItem.value.id != "" && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
         isPersonalBtnReady.value = true;
         confirmValidation.value = true;
@@ -150,7 +155,11 @@ onMounted(() => {
       <v-menu
         :close-on-content-click="false"
         content-class="personal-menu"
-        transition="slide-y-transition"
+        :transition="{
+          enterActiveClass: 'my-enter-active-class',
+          leaveActiveClass: 'my-leave-active-class',
+        }"
+        v-model:model-value="pixInfoMenuShow"
       >
         <template v-slot:activator="{ props }">
           <v-btn
@@ -167,7 +176,10 @@ onMounted(() => {
                 />
               </div>
             </div>
-            <v-icon class="header-mdi-icon">mdi-chevron-right</v-icon>
+            <v-icon class="header-mdi-icon" v-if="!pixInfoMenuShow"
+              >mdi-chevron-right</v-icon
+            >
+            <v-icon class="header-mdi-icon" v-else>mdi-chevron-down</v-icon>
           </v-btn>
         </template>
         <v-list theme="dark" bg-color="#29253C" class="px-2" width="471">
@@ -235,10 +247,10 @@ onMounted(() => {
           </v-list-item>
           <v-list-item>
             <v-btn
-              class="mx-16 mt-2 mb-6 button-bright text-none"
+              class="mx-16 mt-2 mb-6 text-none m-personal-confirm-btn"
+              :class="isPersonalBtnReady ? 'personal-btn-ready' : ''"
               width="-webkit-fill-available"
               height="50px"
-              :disabled="!isPersonalBtnReady || confirmValidation"
               :onclick="handlePixInfoSubmit"
             >
               {{ t("deposit_dialog.personal_information.confirm_text") }}
@@ -286,7 +298,7 @@ onMounted(() => {
 
   .deposit-header-btn {
     width: 100px !important;
-    height: 60px !important;
+    height: 80px !important;
     background: #29253c !important;
     box-shadow: none !important;
     border: none !important;
@@ -412,6 +424,7 @@ onMounted(() => {
 }
 
 .personal-menu {
+  border-radius: 0 0 16px 16px !important;
   .personal-info-key-position {
     position: absolute;
     top: 28px;
@@ -460,5 +473,39 @@ onMounted(() => {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.my-enter-active-class {
+  transform: translateY(0);
+}
+
+.my-leave-active-class {
+  transform: translateY(0);
+}
+.m-personal-confirm-btn {
+  text-align: center;
+  width: 176px;
+  border-radius: 16px;
+  background: #353652;
+
+  /* Button Shadow */
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+  .v-btn__content {
+    color: #fff;
+    text-align: center;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21.78px;
+  }
+}
+.personal-btn-ready {
+  background: #32cfec;
+  /* Button Shadow */
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+  .v-btn__content {
+    color: #000000;
+  }
 }
 </style>
