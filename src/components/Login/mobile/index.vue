@@ -124,6 +124,8 @@ const Login = defineComponent({
       //     emit('close');
       // }, 1000)
 
+      // return;
+
       await dispatchSignIn({
         uid: state.formData.emailAddress,
         password: state.formData.password,
@@ -577,6 +579,11 @@ export default Login;
   width: 100%;
   height: 473px;
   z-index: 2000;
+  overflow-y: auto;
+}
+
+.m-login-body::-webkit-scrollbar {
+  width: 0px;
 }
 
 .m-login-body-height {

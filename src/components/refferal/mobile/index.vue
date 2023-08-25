@@ -221,6 +221,7 @@ onMounted(() => {
 .m-refferal-container {
   border-radius: 16px;
   height: 594px;
+  overflow-y: auto;
 
   .m-refferal-animation-container {
     background: #2e274c;
@@ -298,14 +299,7 @@ onMounted(() => {
   }
 }
 
-::-webkit-scrollbar {
-  width: 15px;
-}
-
-::-webkit-scrollbar-thumb {
-  border: 5px solid transparent;
-  background-clip: padding-box;
-  border-radius: 15px;
-  background-color: #414968;
+.m-refferal-container::-webkit-scrollbar {
+  width: 0px;
 }
 </style>

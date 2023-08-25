@@ -37,6 +37,7 @@ const menuIconColor = ref<string>("#7782AA");
 const casinoIconColor = ref<string>('#7782AA');
 const sportIconColor = ref<string>('#7782AA');
 const mailIconColor = ref<string>('#7782AA');
+const mailListHeight = ref<number>(0);
 
 const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
 
@@ -255,6 +256,7 @@ const mailSvgTransform = (el: any) => {
 onMounted(() => {
   mailCount.value = mailList.value.length
   console.log(tempMailList.value.length);
+  mailListHeight.value = window.innerHeight - 219
 })
 </script>
 
@@ -334,7 +336,7 @@ onMounted(() => {
         theme="dark"
         bg-color="transparent"
         class="px-2"
-        :height="tempMailList.length > 8 ? '448px' : ''"
+        :height="tempMailList.length > 8 ? mailListHeight + 'px' : ''"
         :width="mobileWidth"
         @scroll="handleScroll"
         style="box-shadow: none !important"

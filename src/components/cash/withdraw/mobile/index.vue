@@ -459,7 +459,7 @@ onMounted(async () => {
     <v-row class="mt-4 mx-6 text-400-10 gray">
       {{ t("withdraw_dialog.text_4") }}
     </v-row>
-    <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
+    <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2 mt-10">
       {{ t("withdraw_dialog.other_text") }}
     </v-row>
     <div class="m-deposit-btn-position">
@@ -482,10 +482,14 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+.mobile-withdraw-container::-webkit-scrollbar {
+  width: 0px;
+}
 // container
 .mobile-withdraw-container {
   background-color: #211f31;
   height: 100%;
+  overflow-y: auto;
 
   .deposit-card-height {
     height: 48px;

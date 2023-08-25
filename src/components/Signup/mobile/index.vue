@@ -102,6 +102,7 @@ const MSignup = defineComponent({
       closeBtnShow: false,
       containerHeight: 0,
       bodyHeight: 0,
+      overflow: false,
     });
 
     const showPassword = () => {
@@ -368,12 +369,26 @@ const MSignup = defineComponent({
       { deep: true }
     );
 
+    const handleResize = () => {
+      if (window.visualViewport?.height != undefined) {
+        if (window.visualViewport.height < 667) {
+          state.overflow = true;
+        } else {
+          state.overflow = false;
+        }
+      }
+    };
+
     onMounted(() => {
       if (window.visualViewport?.height != undefined) {
         state.containerHeight = window.visualViewport?.height - 54;
         state.bodyHeight = window.innerHeight - 194;
+        if (window.visualViewport.height < 667) {
+          state.overflow = true;
+        }
       }
       setSignUpForm(true);
+      window.addEventListener("resize", handleResize);
       // setTimeout(() => {
       //   state.closeBtnShow = true;
       // }, 300);
@@ -416,7 +431,10 @@ export default MSignup;
 </script>
 
 <template>
-  <div class="m-signup-container" :style="{ height: containerHeight + 'px' }">
+  <div
+    class="m-signup-container"
+    :style="{ height: containerHeight + 'px', overflowY: overflow ? 'auto' : 'unset' }"
+  >
     <SignupHeader v-if="currentPage !== PAGE_TYPE.DISPLAY_NAME" />
     <div
       class="m-signup-body px-6"
@@ -868,15 +886,19 @@ export default MSignup;
 // mobile dialog contaier
 .m-signup-container {
   border-radius: 26px 26px 0px 0px;
-  // background: linear-gradient(0deg, #F08734 0%, #C6428B 100%), #5904D9;
   position: absolute;
   bottom: 0;
   height: 613px;
   width: 100%;
+  background: var(--bg-2-e-274-c, #2e274c);
 
   .v-field--variant-solo {
     background: transparent !important;
   }
+}
+
+.m-signup-container::-webkit-scrollbar {
+  width: 0px;
 }
 
 // wrapper
@@ -887,6 +909,11 @@ export default MSignup;
   bottom: 0px;
   width: 100%;
   height: 464px;
+  // overflow-y: auto;
+}
+
+.m-signup-body::-webkit-scrollbar {
+  width: 0px;
 }
 
 // close modal button

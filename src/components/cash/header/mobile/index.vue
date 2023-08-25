@@ -133,7 +133,7 @@ const handlePixInfoSubmit = (): void => {
         title: t('deposit_dialog.personal_information.confirm_success_text'),
         duration: 3000,
     })
-  }    
+  }
 }
 
 const depositDialogToggle = computed(() => {
@@ -191,6 +191,7 @@ const withdrawTransform = (el: any) => {
 
 
 onMounted(() => {
+    setMainBlurEffectShow(false);
     if (depositDialogToggle.value) {
         cashToggleSwitch.value = false;
     }
@@ -210,9 +211,8 @@ onMounted(() => {
         v-model:model-value="pixInfoMenuShow"
         :transition="{
           enterActiveClass: 'my-enter-active-class',
-          leaveActiveClass: 'my-leave-active-class'
+          leaveActiveClass: 'my-leave-active-class',
         }"
-
       >
         <template v-slot:activator="{ props }">
           <v-btn
@@ -601,14 +601,14 @@ onMounted(() => {
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        color: #7782AA !important;
+        color: #7782aa !important;
       }
 
       .v-label.v-field-label--floating {
         --v-field-label-scale: 0.75em;
         font-size: var(--v-field-label-scale);
         max-width: 100%;
-        color: #7782AA !important;
+        color: #7782aa !important;
       }
     }
   }
@@ -658,12 +658,11 @@ onMounted(() => {
   }
 
   .personal-btn-ready {
-    background: #32CFEC;
+    background: #32cfec;
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     .v-btn__content {
       color: #000000;
-
     }
   }
 }

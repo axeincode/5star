@@ -526,9 +526,9 @@ onMounted(async () => {
               <div class="user-item" value="user dropdown" @click="showUserNavBar">
                 <img
                   :src="user.avatar"
-                  width="44"
+                  width="40"
                   class="mr-0 original-game-img-avatar"
-                  style="margin-top: 10px"
+                  style="margin-top: 8px"
                 />
               </div>
             </div>

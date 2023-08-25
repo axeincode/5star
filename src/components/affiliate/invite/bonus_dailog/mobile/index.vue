@@ -181,6 +181,12 @@ const emit = defineEmits<{ (e: 'close'): void }>()
     height: 570px;
     background: linear-gradient(360deg, #29263F 0%, #4A32AA 100%) !important;
     border-radius: 16px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.m-bonus-dialog-container::-webkit-scrollbar {
+    width: 0px;
 }
 
 // close modal button

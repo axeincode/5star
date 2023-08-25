@@ -157,7 +157,7 @@ onMounted(() => {
         content-class="personal-menu"
         :transition="{
           enterActiveClass: 'my-enter-active-class',
-          leaveActiveClass: 'my-leave-active-class'
+          leaveActiveClass: 'my-leave-active-class',
         }"
         v-model:model-value="pixInfoMenuShow"
       >
@@ -176,8 +176,10 @@ onMounted(() => {
                 />
               </div>
             </div>
-            <v-icon class="header-mdi-icon" v-if="!pixInfoMenuShow" >mdi-chevron-right</v-icon>
-            <v-icon class="header-mdi-icon" v-else >mdi-chevron-down</v-icon>
+            <v-icon class="header-mdi-icon" v-if="!pixInfoMenuShow"
+              >mdi-chevron-right</v-icon
+            >
+            <v-icon class="header-mdi-icon" v-else>mdi-chevron-down</v-icon>
           </v-btn>
         </template>
         <v-list theme="dark" bg-color="#29253C" class="px-2" width="471">
@@ -246,7 +248,7 @@ onMounted(() => {
           <v-list-item>
             <v-btn
               class="mx-16 mt-2 mb-6 text-none m-personal-confirm-btn"
-              :class="isPersonalBtnReady ? 'personal-btn-ready' :''"
+              :class="isPersonalBtnReady ? 'personal-btn-ready' : ''"
               width="-webkit-fill-available"
               height="50px"
               :onclick="handlePixInfoSubmit"
@@ -422,7 +424,7 @@ onMounted(() => {
 }
 
 .personal-menu {
-  border-radius: 0 0 16px 16px!important;
+  border-radius: 0 0 16px 16px !important;
   .personal-info-key-position {
     position: absolute;
     top: 28px;
@@ -499,12 +501,11 @@ onMounted(() => {
   }
 }
 .personal-btn-ready {
-  background: #32CFEC;
+  background: #32cfec;
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
     color: #000000;
-
   }
 }
 </style>
