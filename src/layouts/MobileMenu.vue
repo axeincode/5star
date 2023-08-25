@@ -418,6 +418,9 @@ onMounted(() => {
       color: #6742ec;
     }
   }
+  button:active:enabled {
+    transform: none !important;
+  }
 }
 
 .m-mail-menu-overlay {

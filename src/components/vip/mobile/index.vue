@@ -22,73 +22,73 @@ const descriptionTab = ref<string>("VIP2")
 const vipSlideClass = ref<string>("");
 
 const refferalAppBarShow = computed(() => {
-    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
-    return getRefferalAppBarShow.value;
+  const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+  return getRefferalAppBarShow.value;
 })
 
 
 
 const vipItems = ref<Array<GetVIPData>>([
-    {
-        id: 1,
-        totalDepositAmount: 10000,
-        currentDepositAmount: 5642,
-        totalWagerAmount: 10000,
-        currentWagerAmount: 5642,
-        vipGrade: "VIP 1",
-        vipRate: 56,
-    },
-    {
-        id: 2,
-        totalDepositAmount: 10000,
-        currentDepositAmount: 5642,
-        totalWagerAmount: 10000,
-        currentWagerAmount: 5642,
-        vipGrade: "VIP 2",
-        vipRate: 56,
-    },
-    {
-        id: 3,
-        totalDepositAmount: 10000,
-        currentDepositAmount: 5642,
-        totalWagerAmount: 10000,
-        currentWagerAmount: 5642,
-        vipGrade: "VIP 3",
-        vipRate: 56,
-    },
-    {
-        id: 4,
-        totalDepositAmount: 10000,
-        currentDepositAmount: 5642,
-        totalWagerAmount: 10000,
-        currentWagerAmount: 5642,
-        vipGrade: "VIP 4",
-        vipRate: 56,
-    },
-    {
-        id: 5,
-        totalDepositAmount: 10000,
-        currentDepositAmount: 5642,
-        totalWagerAmount: 10000,
-        currentWagerAmount: 5642,
-        vipGrade: "VIP 5",
-        vipRate: 56,
-    }
+  {
+    id: 1,
+    totalDepositAmount: 10000,
+    currentDepositAmount: 5642,
+    totalWagerAmount: 10000,
+    currentWagerAmount: 5642,
+    vipGrade: "VIP 1",
+    vipRate: 56,
+  },
+  {
+    id: 2,
+    totalDepositAmount: 10000,
+    currentDepositAmount: 5642,
+    totalWagerAmount: 10000,
+    currentWagerAmount: 5642,
+    vipGrade: "VIP 2",
+    vipRate: 56,
+  },
+  {
+    id: 3,
+    totalDepositAmount: 10000,
+    currentDepositAmount: 5642,
+    totalWagerAmount: 10000,
+    currentWagerAmount: 5642,
+    vipGrade: "VIP 3",
+    vipRate: 56,
+  },
+  {
+    id: 4,
+    totalDepositAmount: 10000,
+    currentDepositAmount: 5642,
+    totalWagerAmount: 10000,
+    currentWagerAmount: 5642,
+    vipGrade: "VIP 4",
+    vipRate: 56,
+  },
+  {
+    id: 5,
+    totalDepositAmount: 10000,
+    currentDepositAmount: 5642,
+    totalWagerAmount: 10000,
+    currentWagerAmount: 5642,
+    vipGrade: "VIP 5",
+    vipRate: 56,
+  }
 ])
 
 const vipTabs = ref<Array<string>>([
-    t('vip.all_bonus_text'),
-    t('vip.cash_back_text'),
-    t('vip.super_carousel_text'),
-    t('vip.welfare_task'),
+  t('vip.all_bonus_text'),
+  t('vip.cash_back_text'),
+  t('vip.super_carousel_text'),
+  t('vip.welfare_task'),
 ])
 
 const vipDescriptionItems = ref([
-    "VIP1",
-    "VIP2",
-    "VIP3",
-    "VIP4",
-    "VIP5",
+  "VIP1",
+  "VIP2",
+  "VIP3",
+  "VIP4",
+  "VIP5",
 ])
 
 const selectedVIPDescriptionIndex = ref<number>(1);
@@ -96,168 +96,168 @@ const selectedVIPDescriptionIndex = ref<number>(1);
 const selectedVIPTab = ref<string>(t('vip.all_bonus_text'));
 
 const spinItems = ref<Array<GetSpinData>>([
-    {
-        id: 1,
-        image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 2,
-        image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 3,
-        image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 4,
-        image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 5,
-        image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 6,
-        image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 7,
-        image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 8,
-        image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 9,
-        image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 10,
-        image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 11,
-        image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 12,
-        image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 13,
-        image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 14,
-        image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    },
-    {
-        id: 15,
-        image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
-        title: "Free Spins Hot Fiesta",
-        content: "Free Spins on our Hot Fiesta game, Good luck!"
-    }
+  {
+    id: 1,
+    image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 2,
+    image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 3,
+    image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 4,
+    image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 5,
+    image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 6,
+    image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 7,
+    image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 8,
+    image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 9,
+    image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 10,
+    image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 11,
+    image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 12,
+    image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 13,
+    image: new URL("@/assets/vip/image/game_1046_2.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 14,
+    image: new URL("@/assets/vip/image/game_1046_1.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  },
+  {
+    id: 15,
+    image: new URL("@/assets/vip/image/game_1046_3.png", import.meta.url).href,
+    title: "Free Spins Hot Fiesta",
+    content: "Free Spins on our Hot Fiesta game, Good luck!"
+  }
 ])
 
 const vipMissionItems = ref([
-    {
-        type: 1,
-    },
-    {
-        type: 2,
-        totalRate: 10,
-        currentRate: 3,
-        missionRate: 30,
-        time: "23:23:45"
-    },
-    {
-        type: 3,
-        totalRate: 10,
-        currentRate: 10,
-        missionRate: 100,
-        time: "23:23:45"
-    },
-    {
-        type: 4,
-    },
-    {
-        type: 5,
-    },
-    {
-        type: 1,
-    },
-    {
-        type: 2,
-        totalRate: 10,
-        currentRate: 3,
-        missionRate: 30,
-        time: "23:23:45"
-    },
-    {
-        type: 3,
-        totalRate: 10,
-        currentRate: 10,
-        missionRate: 100,
-        time: "23:23:45"
-    },
-    {
-        type: 4,
-    },
-    {
-        type: 5,
-    },
-    {
-        type: 1,
-    },
-    {
-        type: 2,
-        totalRate: 10,
-        currentRate: 3,
-        missionRate: 30,
-        time: "23:23:45"
-    },
-    {
-        type: 3,
-        totalRate: 10,
-        currentRate: 10,
-        missionRate: 100,
-        time: "23:23:45"
-    },
-    {
-        type: 4,
-    },
-    {
-        type: 5,
-    },
+  {
+    type: 1,
+  },
+  {
+    type: 2,
+    totalRate: 10,
+    currentRate: 3,
+    missionRate: 30,
+    time: "23:23:45"
+  },
+  {
+    type: 3,
+    totalRate: 10,
+    currentRate: 10,
+    missionRate: 100,
+    time: "23:23:45"
+  },
+  {
+    type: 4,
+  },
+  {
+    type: 5,
+  },
+  {
+    type: 1,
+  },
+  {
+    type: 2,
+    totalRate: 10,
+    currentRate: 3,
+    missionRate: 30,
+    time: "23:23:45"
+  },
+  {
+    type: 3,
+    totalRate: 10,
+    currentRate: 10,
+    missionRate: 100,
+    time: "23:23:45"
+  },
+  {
+    type: 4,
+  },
+  {
+    type: 5,
+  },
+  {
+    type: 1,
+  },
+  {
+    type: 2,
+    totalRate: 10,
+    currentRate: 3,
+    missionRate: 30,
+    time: "23:23:45"
+  },
+  {
+    type: 3,
+    totalRate: 10,
+    currentRate: 10,
+    missionRate: 100,
+    time: "23:23:45"
+  },
+  {
+    type: 4,
+  },
+  {
+    type: 5,
+  },
 ])
 
 const spinCardHeight1 = ref<number | undefined>(556)
@@ -279,91 +279,91 @@ const selectedIndex = ref<number>(0);
 const vipSlidePosition = ref<boolean>(false);
 
 const handleCarouselChange = (index: number): void => {
-    selectedIndex.value = index;
+  selectedIndex.value = index;
 }
 
 const nextDescription = () => {
-    selectedVIPDescriptionIndex.value = (selectedVIPDescriptionIndex.value + 1) % vipDescriptionItems.value.length;
-    descriptionTab.value = vipDescriptionItems.value[selectedVIPDescriptionIndex.value];
+  selectedVIPDescriptionIndex.value = (selectedVIPDescriptionIndex.value + 1) % vipDescriptionItems.value.length;
+  descriptionTab.value = vipDescriptionItems.value[selectedVIPDescriptionIndex.value];
 }
 
 const prevDescription = () => {
-    selectedVIPDescriptionIndex.value = (vipDescriptionItems.value.length + selectedVIPDescriptionIndex.value - 1) % vipDescriptionItems.value.length;
-    descriptionTab.value = vipDescriptionItems.value[selectedVIPDescriptionIndex.value];
+  selectedVIPDescriptionIndex.value = (vipDescriptionItems.value.length + selectedVIPDescriptionIndex.value - 1) % vipDescriptionItems.value.length;
+  descriptionTab.value = vipDescriptionItems.value[selectedVIPDescriptionIndex.value];
 }
 
 const rightBarToggle = computed(() => {
-    const { getRightBarToggle } = storeToRefs(appBarStore());
-    return getRightBarToggle.value;
+  const { getRightBarToggle } = storeToRefs(appBarStore());
+  return getRightBarToggle.value;
 })
 
 const mobileWidth: any = computed(() => {
-    return width.value;
+  return width.value;
 })
 
 watch(rightBarToggle, (newValue) => {
-    if (mobileWidth.value > 1280) {
-        if (newValue) {
-            vipWidth.value = "vip-container";
-        } else {
-            vipWidth.value = "vip-container-1";
-        }
+  if (mobileWidth.value > 1280) {
+    if (newValue) {
+      vipWidth.value = "vip-container";
     } else {
-        vipWidth.value = "m-vip-container";
+      vipWidth.value = "vip-container-1";
     }
+  } else {
+    vipWidth.value = "m-vip-container";
+  }
 })
 
 watch(mobileWidth, (newValue: number) => {
-    spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
-    vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
+  spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
+  vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
 })
 
 watch(selectedVIPTab, (newValue: string) => {
-    // console.log(newValue)
+  // console.log(newValue)
 }, { deep: true })
 
 watch(vipSlidePosition, (newValue: boolean) => {
-    if (newValue && refferalAppBarShow.value) {
-        vipSlideClass.value = "m-vip-slide-position"
-    } else if (newValue && !refferalAppBarShow.value) {
-        vipSlideClass.value = "m-vip-slide-position-1"
-    } else {
-        vipSlideClass.value = "";
-    }
+  if (newValue && refferalAppBarShow.value) {
+    vipSlideClass.value = "m-vip-slide-position"
+  } else if (newValue && !refferalAppBarShow.value) {
+    vipSlideClass.value = "m-vip-slide-position-1"
+  } else {
+    vipSlideClass.value = "";
+  }
 })
 
 watch(refferalAppBarShow, (newValue: boolean) => {
-    if (vipSlidePosition.value && newValue) {
-        vipSlideClass.value = "m-vip-slide-position"
-    } else if (vipSlidePosition.value && !newValue) {
-        vipSlideClass.value = "m-vip-slide-position-1"
-    } else {
-        vipSlideClass.value = "";
-    }
+  if (vipSlidePosition.value && newValue) {
+    vipSlideClass.value = "m-vip-slide-position"
+  } else if (vipSlidePosition.value && !newValue) {
+    vipSlideClass.value = "m-vip-slide-position-1"
+  } else {
+    vipSlideClass.value = "";
+  }
 })
 
 watch(spinCardShow, (value) => {
-    if (!value) {
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const spinRect = spinElement.value.getBoundingClientRect().top;
-        const spinPosition = spinRect - bodyRect;
-        window.scrollTo({
-            top: spinPosition,
-            behavior: 'smooth'
-        });
-    }
+  if (!value) {
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const spinRect = spinElement.value.getBoundingClientRect().top;
+    const spinPosition = spinRect - bodyRect;
+    window.scrollTo({
+      top: spinPosition,
+      behavior: 'smooth'
+    });
+  }
 })
 
 watch(missionCardShow, (value) => {
-    if (!value) {
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const vipRect = vipElement.value.getBoundingClientRect().top;
-        const vipPosition = vipRect - bodyRect;
-        window.scrollTo({
-            top: vipPosition,
-            behavior: 'smooth'
-        });
-    }
+  if (!value) {
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const vipRect = vipElement.value.getBoundingClientRect().top;
+    const vipPosition = vipRect - bodyRect;
+    window.scrollTo({
+      top: vipPosition,
+      behavior: 'smooth'
+    });
+  }
 })
 
 const cashbackElement = ref<any | null>(null);
@@ -380,51 +380,51 @@ const benefitElement = ref<any | null>(null);
 
 const handleWindowScroll = () => {
 
-    const cashPosition = cashbackElement.value?.getBoundingClientRect().top;
+  const cashPosition = cashbackElement.value?.getBoundingClientRect().top;
 
-    const slidePosition = slideElement.value?.getBoundingClientRect().top;
+  const slidePosition = slideElement.value?.getBoundingClientRect().top;
 
-    const rewardPosition = rewardElement.value?.getBoundingClientRect().top;
+  const rewardPosition = rewardElement.value?.getBoundingClientRect().top;
 
-    const spinPosition = spinElement.value?.getBoundingClientRect().top;
+  const spinPosition = spinElement.value?.getBoundingClientRect().top;
 
-    const vipPosition = vipElement.value?.getBoundingClientRect().top;
+  const vipPosition = vipElement.value?.getBoundingClientRect().top;
 
-    const benefitPosition = benefitElement.value?.getBoundingClientRect().top;
+  const benefitPosition = benefitElement.value?.getBoundingClientRect().top;
 
-    if (slidePosition < 116) {
-        vipSlidePosition.value = true;
+  if (slidePosition < 116) {
+    vipSlidePosition.value = true;
+  }
+
+  if (!isMouseClick.value) {
+
+    tabSelect.value = false;
+
+    if (rewardPosition < 175) {
+      selectedVIPTab.value = t('vip.all_bonus_text');
     }
 
-    if (!isMouseClick.value) {
-
-        tabSelect.value = false;
-
-        if (rewardPosition < 170) {
-            selectedVIPTab.value = t('vip.all_bonus_text');
-        }
-
-        if (cashPosition < 170) {
-            selectedVIPTab.value = t('vip.cash_back_text');
-        }
-
-        if (spinPosition < 170) {
-            selectedVIPTab.value = t('vip.super_carousel_text');
-        }
-
-        if (vipPosition < 170) {
-            selectedVIPTab.value = t('vip.welfare_task');
-        }
-
-        // if (benefitPosition < 170) {
-        //     selectedVIPTab.value = t('vip.all_bonus_text');
-        // }
-
-        if (window.scrollY < 1) {
-            vipSlidePosition.value = false;
-        }
-
+    if (cashPosition < 175) {
+      selectedVIPTab.value = t('vip.cash_back_text');
     }
+
+    if (spinPosition < 175) {
+      selectedVIPTab.value = t('vip.super_carousel_text');
+    }
+
+    if (vipPosition < 175) {
+      selectedVIPTab.value = t('vip.welfare_task');
+    }
+
+    // if (benefitPosition < 175) {
+    //     selectedVIPTab.value = t('vip.all_bonus_text');
+    // }
+
+    if (window.scrollY < 1) {
+      vipSlidePosition.value = false;
+    }
+
+  }
 }
 
 const tabSelect = ref(false);
@@ -432,83 +432,65 @@ const tabSelect = ref(false);
 const isMouseClick = ref(false);
 
 const handleSelectVIPTab = (item: string) => {
-  selectedVIPTab.value = item
-}
+  // selectedVIPTab.value = item
+  // isMouseClick.value = true;
+  vipSlidePosition.value = true;
+  tabSelect.value = true;
+  const offset = 174;
+  const bodyRect = document.body.getBoundingClientRect().top;
+  setTimeout(() => {
+    switch (item) {
+      case t('vip.all_bonus_text'):
+        // rewardElement.value.scrollIntoView({
+        //     behavior: 'smooth',
+        //     block: 'start',
+        //     inline: 'nearest',
+        // });
+        const rewardRect = rewardElement.value.getBoundingClientRect().top;
+        const rewardPosition = rewardRect - bodyRect - offset;
+        window.scrollTo({
+          top: rewardPosition,
+          behavior: 'smooth'
+        });
+        break;
+      case t('vip.cash_back_text'):
+        const cashRect = cashbackElement.value.getBoundingClientRect().top;
+        const cashPosition = cashRect - bodyRect - offset;
+        window.scrollTo({
+          top: cashPosition,
+          behavior: 'smooth'
+        });
+        break;
+      case t('vip.super_carousel_text'):
+        const spinRect = spinElement.value.getBoundingClientRect().top;
+        const spinPosition = spinRect - bodyRect - offset;
+        window.scrollTo({
+          top: spinPosition,
+          behavior: 'smooth'
+        });
+        break;
+      case t('vip.welfare_task'):
+        const vipRect = vipElement.value.getBoundingClientRect().top;
+        const vipPosition = vipRect - bodyRect - offset;
+        window.scrollTo({
+          top: vipPosition,
+          behavior: 'smooth'
+        });
+        break;
+    }
 
-const handleVIPTab = () => {
-    isMouseClick.value = true;
-    vipSlidePosition.value = true;
-    tabSelect.value = true;
-    const offset = 174;
-    const bodyRect = document.body.getBoundingClientRect().top;
-    setTimeout(() => {
-        switch (selectedVIPTab.value) {
-            case t('vip.all_bonus_text'):
-                // rewardElement.value.scrollIntoView({
-                //     behavior: 'smooth',
-                //     block: 'start',
-                //     inline: 'nearest',
-                // });
-                const rewardRect = rewardElement.value.getBoundingClientRect().top;
-                const rewardPosition = rewardRect - bodyRect - offset;
-                window.scrollTo({
-                    top: rewardPosition,
-                    behavior: 'smooth'
-                });
-                break;
-            case t('vip.cash_back_text'):
-                // cashbackElement.value.scrollIntoView({
-                //     behavior: 'smooth',
-                //     block: 'start',
-                //     inline: 'nearest',
-                // });
-                const cashRect = cashbackElement.value.getBoundingClientRect().top;
-                const cashPosition = cashRect - bodyRect - offset;
-                window.scrollTo({
-                    top: cashPosition,
-                    behavior: 'smooth'
-                });
-                break;
-            case t('vip.super_carousel_text'):
-                // spinElement.value.scrollIntoView({
-                //     behavior: 'smooth',
-                //     block: 'start',
-                //     inline: 'nearest',
-                // });
-                const spinRect = spinElement.value.getBoundingClientRect().top;
-                const spinPosition = spinRect - bodyRect - offset;
-                window.scrollTo({
-                    top: spinPosition,
-                    behavior: 'smooth'
-                });
-                break;
-            case t('vip.welfare_task'):
-                // vipElement.value.scrollIntoView({
-                //     behavior: 'smooth',
-                //     block: 'start',
-                //     inline: 'nearest',
-                // });
-                const vipRect = vipElement.value.getBoundingClientRect().top;
-                const vipPosition = vipRect - bodyRect - offset;
-                window.scrollTo({
-                    top: vipPosition,
-                    behavior: 'smooth'
-                });
-                break;
-        }
+  }, 10);
 
-    }, 10);
-
-    setTimeout(() => {
-        isMouseClick.value = false;
-    }, 2000)
+  setTimeout(() => {
+    isMouseClick.value = false;
+  }, 2000)
 }
 
 window.addEventListener('scroll', handleWindowScroll);
 
 onMounted(() => {
-    spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
-    vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
+  spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
+  vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
 })
 </script>
 
@@ -583,7 +565,7 @@ onMounted(() => {
         </Slide>
       </Carousel>
 
-      <div class="mt-4" :class="vipSlideClass" ref="slideElement" @click="handleVIPTab">
+      <div class="mt-4" :class="vipSlideClass" ref="slideElement">
         <v-slide-group
           v-model="selectedVIPTab"
           show-arrows
@@ -1463,6 +1445,7 @@ onMounted(() => {
 <style lang="scss">
 .m-vip-carousel {
 }
+
 .m-vip-container {
   margin: -47px 0px;
   background: #211f31;
@@ -1761,6 +1744,7 @@ onMounted(() => {
 
 .m-transaction-tab-btn {
   box-shadow: none !important;
+
   .v-btn__content {
     text-align: center;
     font-size: 12px;

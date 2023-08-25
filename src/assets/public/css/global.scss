@@ -499,6 +499,12 @@ button {
     }
 }
 
+
+button:active:enabled {
+    transform: scale(0.95);
+    filter: brightness(80%);
+}
+
 .button-bright {
     background-color: #32CFEC !important;
     color: black !important;

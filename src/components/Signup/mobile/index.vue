@@ -80,7 +80,18 @@ const MSignup = defineComponent({
         t("signup.displayNamePage.validation.username.items[0]"),
         t("signup.displayNamePage.validation.username.items[1]"),
       ],
-      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
+      slides: [
+        new URL("@/assets/public/image/ua_public_01.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_02.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_03.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_05.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_06.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_07.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_08.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_09.png", import.meta.url).href,
+        new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
+      ],
       loading: false,
       mailCardHeight: 0,
       emailPartName: "",
@@ -230,21 +241,21 @@ const MSignup = defineComponent({
 
     // handle form submit
     const handleSignupFormSubmit = async () => {
-      setSignUpForm(false);
-      emit("close");
-      setNickNameDialogVisible(true);
+      // setSignUpForm(false);
+      // emit("close");
+      // setNickNameDialogVisible(true);
 
       state.loading = true;
-      // await dispatchSignUp({
-      //   uid: state.formData.emailAddress,
-      //   password: state.formData.password,
-      //   referral_code: state.formData.promoCode,
-      //   browser: "",
-      //   device: "",
-      //   model: "",
-      //   brand: "",
-      //   imei: "",
-      // });
+      await dispatchSignUp({
+        uid: state.formData.emailAddress,
+        password: state.formData.password,
+        referral_code: state.formData.promoCode,
+        browser: "",
+        device: "",
+        model: "",
+        brand: "",
+        imei: "",
+      });
       state.loading = false;
       if (success.value) {
         await dispatchUserProfile();
@@ -256,6 +267,7 @@ const MSignup = defineComponent({
         setTimeout(() => {
           setSignUpForm(false);
           emit("close");
+          setNickNameDialogVisible(true);
         }, 3000);
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
@@ -659,11 +671,7 @@ export default MSignup;
               ></v-btn>
             </template>
             <v-carousel-item v-for="(slide, i) in slides" :key="i">
-              <img
-                src="@/assets/public/image/ua_public_01.png"
-                width="123"
-                style="margin-top: 20px"
-              />
+              <img :src="slide" width="123" style="margin-top: 20px" />
             </v-carousel-item>
           </v-carousel>
         </v-row>
@@ -848,11 +856,6 @@ export default MSignup;
 
 .m-signup-btn:hover:enabled {
   background: #0cb6fa;
-}
-
-button:active:enabled {
-  // transform: scale(0.95);
-  // filter: brightness(80%);
 }
 
 .m-disable-password {

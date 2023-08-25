@@ -343,7 +343,7 @@ onMounted(async () => {
       </v-btn> -->
     </v-toolbar-title>
     <div v-if="token != undefined">
-      <div class="d-flex">
+      <div class="d-flex align-center">
         <v-menu offset="10" class="deposit-menu">
           <template v-slot:activator="{ props }">
             <v-card
@@ -416,7 +416,7 @@ onMounted(async () => {
             <v-card
               color="#211F31"
               theme="dark"
-              class="mt-2 m-user-card-height"
+              class="m-user-card-height"
               style="border-radius: 8px"
               v-else
             >
@@ -527,9 +527,8 @@ onMounted(async () => {
                 <img
                   :src="user.avatar"
                   width="44"
-                  height="44"
                   class="mr-0 original-game-img-avatar"
-                  style="margin-top: 2px"
+                  style="margin-top: 10px"
                 />
               </div>
             </div>
@@ -621,9 +620,9 @@ onMounted(async () => {
               <template v-slot:prepend>
                 <img src="@/assets/public/svg/icon_public_59.svg" />
               </template>
-              <v-list-item-title class="ml-2">{{
-                t("appBar.account")
-              }}</v-list-item-title>
+              <v-list-item-title class="ml-2">
+                {{ t("appBar.account") }}
+              </v-list-item-title>
             </v-list-item>
             <v-list-item class="user-item" value="deposit" @click="depositDialogShow">
               <template v-slot:prepend>
@@ -954,6 +953,9 @@ onMounted(async () => {
 
   .app-bar-height {
     height: 60px !important;
+    .v-toolbar__content {
+      height: 60px !important;
+    }
   }
 }
 
@@ -1299,6 +1301,7 @@ onMounted(async () => {
   left: 50%;
   transform: translateX(-50%);
 }
+
 .original-game-img-avatar:active {
   transform: scale(0.9);
   filter: brightness(80%);

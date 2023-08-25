@@ -387,7 +387,7 @@ onMounted(() => {
         @close="closeDialog('login')"
         @switch="switchDialog('login')"
       />
-      <MLogin v-else @switch="switchDialog('login')" />
+      <MLogin v-else @close="closeDialog('login')" @switch="switchDialog('login')" />
     </v-dialog>
 
     <!-------------------------------      NICKNAME     ------------------------------------>
