@@ -152,6 +152,11 @@ const depositAmountList = ref<Array<string>>([
   '19999',
 ])
 
+const mainBlurEffectShow = computed(() => {
+  const { getMainBlurEffectShow } = storeToRefs(appBarStore());
+  return getMainBlurEffectShow.value
+})
+
 const depositToggleSwitch = ref<boolean>(false);
 
 const depositAmountUnit = ref<string>("R$");
@@ -323,7 +328,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mobile-deposit-container">
+  <div class="mobile-deposit-container" :class="mainBlurEffectShow ? 'main-bg-blur' : ''">
     <v-row class="mt-6 mx-6 text-400-12 gray">
       {{ t("deposit_dialog.deposit_currency") }}
     </v-row>
@@ -635,5 +640,12 @@ onMounted(async () => {
   // width: 370px !important;
   margin: auto;
   height: 290px !important;
+}
+
+.main-bg-blur {
+  // filter: blur(4px);
+  // -webkit-filter: blur(4px);
+  filter: saturate(180%) blur(4px);
+  -webkit-filter: saturate(180%) blur(4px);
 }
 </style>

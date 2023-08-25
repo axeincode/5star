@@ -285,9 +285,16 @@ watch(depositToggleSwitch, (newValue) => {
 onMounted(async () => {
   await dispatchUserDepositCfg();
 })
+
+const overlayScrimShow = computed(() => {
+  const { getOverlayScrimShow } = storeToRefs(appBarStore());
+  return getOverlayScrimShow.value;
+})
+
 </script>
 
 <template>
+  <div :class="overlayScrimShow ? 'deposit-overlay-show' : 'deposit-overlay-hide'" class="deposit-overlay"></div>
   <div class="deposit-container">
     <v-row class="mt-6 ml-16 deposit-text">
       {{ t("deposit_dialog.deposit_currency") }}
@@ -552,5 +559,21 @@ onMounted(async () => {
   width: 370px !important;
   margin: auto;
   height: 440px !important;
+}
+.deposit-overlay {
+  width: 100%;
+  height: 700px;
+  background-color: black;
+  position: fixed;
+  z-index: 9999;
+  opacity: 40%;
+  border-radius: 16px;
+  margin-top: 80px;
+}
+.deposit-overlay-show {
+  display: block;
+}
+.deposit-overlay-hide {
+  display: none;
 }
 </style>

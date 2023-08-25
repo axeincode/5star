@@ -180,6 +180,11 @@ const withdrawConfig = computed(() => {
   return getWithdrawCfg.value
 })
 
+const mainBlurEffectShow = computed(() => {
+  const { getMainBlurEffectShow } = storeToRefs(appBarStore());
+  return getMainBlurEffectShow.value
+})
+
 watch(withdrawConfig, (newValue) => {
   paymentList.value = [];
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
@@ -315,7 +320,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mobile-withdraw-container">
+  <div class="mobile-withdraw-container" :class="mainBlurEffectShow ? 'main-bg-blur' : ''">
     <v-row class="mt-6 mx-6 text-400-12 gray">
       {{ t("withdraw_dialog.withdraw_currency") }}
     </v-row>
@@ -604,5 +609,12 @@ onMounted(async () => {
     font-weight: 700;
     line-height: normal;
   }
+}
+
+.main-bg-blur {
+  // filter: blur(4px);
+  // -webkit-filter: blur(4px);
+  filter: saturate(180%) blur(4px);
+  -webkit-filter: saturate(180%) blur(4px);
 }
 </style>

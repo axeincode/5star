@@ -272,9 +272,16 @@ watch(withdrawAmount, (newValue) => {
 onMounted(async () => {
   await dispatchUserWithdrawCfg();
 })
+
+const overlayScrimShow = computed(() => {
+  const { getOverlayScrimShow } = storeToRefs(appBarStore());
+  return getOverlayScrimShow.value;
+})
+
 </script>
 
 <template>
+  <div :class="overlayScrimShow ? 'deposit-overlay-show' : 'deposit-overlay-hide'" class="deposit-overlay"></div>
   <div class="withdraw-container">
     <v-row class="mt-6 ml-16 deposit-text">
       {{ t("withdraw_dialog.withdraw_currency") }}
