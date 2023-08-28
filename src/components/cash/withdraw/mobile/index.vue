@@ -26,6 +26,7 @@ const { setCashDialogToggle } = appBarStore();
 const { setMailList } = mailStore();
 const { dispatchUserWithdrawCfg } = withdrawStore();
 const { dispatchUserWithdrawSubmit } = withdrawStore();
+import router from '@/router';
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
@@ -270,7 +271,7 @@ const handleWithdrawSubmit = async () => {
   if (success.value) {
     ElNotification({
       icon: SuccessIcon,
-      title: "deposited successfully!",
+      title: "Successful withdrawal of funds",
       duration: 3000,
     })
     let mailItem = {
@@ -296,6 +297,7 @@ const handleWithdrawSubmit = async () => {
     setMailList(mailItem);
     setWithdrawDialogToggle(false);
     setCashDialogToggle(false);
+    router.push({ name: "Dashboard" })
   } else {
     ElNotification({
       icon: WarningIcon,

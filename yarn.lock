@@ -1732,6 +1732,11 @@
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.5.tgz"
   "version" "0.14.5"
 
+"vue-demi@^0.12.5":
+  "integrity" "sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q=="
+  "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.12.5.tgz"
+  "version" "0.12.5"
+
 "vue-demi@>=0.14.5":
   "integrity" "sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA=="
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.5.tgz"
@@ -1765,6 +1770,11 @@
   "resolved" "https://registry.npmjs.org/vue-inline-svg/-/vue-inline-svg-3.1.2.tgz"
   "version" "3.1.2"
 
+"vue-lazyload@^3.0.0":
+  "integrity" "sha512-h2keL/Rj550dLgesgOtXJS9qOiSMmuJNeVlfNAYV1/IYwOQYaWk5mFJlwRxmZDK9YC5gECcFLYYj7z1lKSf9ug=="
+  "resolved" "https://registry.npmjs.org/vue-lazyload/-/vue-lazyload-3.0.0.tgz"
+  "version" "3.0.0"
+
 "vue-router@^4.0.0":
   "integrity" "sha512-nW28EeifEp8Abc5AfmAShy5ZKGsGzjcnZ3L1yc2DYUo+MqbBClrRP9yda3dIekM4I50/KnEwo1wkBLf7kHH5Cw=="
   "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.2.1.tgz"
@@ -1789,7 +1799,7 @@
     "@volar/vue-typescript" "1.6.5"
     "semver" "^7.3.8"
 
-"vue@^2.6.14 || ^3.3.0", "vue@^3", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@3.3.4":
+"vue@^2.0.0 || >=3.0.0", "vue@^2.6.14 || ^3.3.0", "vue@^3", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@3.3.4":
   "integrity" "sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"
   "version" "3.3.4"
@@ -1804,6 +1814,13 @@
   "integrity" "sha512-86vUkNPBzL2PVuR9w6hUsI90ccFjLp+K8cSFpRTISf+SjUQY3fMHc5CFF5MUL62v1xYYm27zEBmQupO9VQx9Kw=="
   "resolved" "https://registry.npmjs.org/vue3-carousel/-/vue3-carousel-0.3.1.tgz"
   "version" "0.3.1"
+
+"vue3-lazyload@^0.3.8":
+  "integrity" "sha512-UiJHRT7mzry102WbhtrRgJh+f8Z8u4Z+H1RU4dvPmQeq7wFSDFxZB9iJOWGihH2FscXN/8rMGLDOQJAmjwqpCg=="
+  "resolved" "https://registry.npmjs.org/vue3-lazyload/-/vue3-lazyload-0.3.8.tgz"
+  "version" "0.3.8"
+  dependencies:
+    "vue-demi" "^0.12.5"
 
 "vuetify@^3.0.0", "vuetify@^3.0.0-beta.4":
   "integrity" "sha512-HuLIydRkigGIfqDbwEjFw5LEtWCw8lV4K1isMv/7vAt8n5fns+8kKqVnktIQkfzSxQgPD6Lve/58j4dEKA/vTA=="

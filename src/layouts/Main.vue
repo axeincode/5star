@@ -160,7 +160,7 @@ watch(authModalType, (newValue: string) => {
 });
 
 // deposit dialog
-const depositDialog = ref<boolean>(true);
+const depositDialog = ref<boolean>(false);
 const depositDialogToggle = computed(() => {
   const { getDepositDialogToggle } = storeToRefs(appBarStore());
   return getDepositDialogToggle.value;
@@ -187,6 +187,10 @@ const cashDialogToggle = computed(() => {
 })
 watch(cashDialogToggle, (newValue) => {
   cashDialog.value = newValue;
+})
+
+watch(cashDialog, (newValue) => {
+  console.log(cashDialog)
 })
 
 // refferal dialog
@@ -302,6 +306,9 @@ onMounted(() => {
     overlayScrimBackground.value = "rgb(var(--v-theme-on-surface))";
   }
   document.documentElement.style.setProperty('--background-color', overlayScrimBackground.value);
+  setCashDialogToggle(false);
+  setDepositDialogToggle(false);
+  setWithdrawDialogToggle(false);
 })
 </script>
 
@@ -316,13 +323,61 @@ onMounted(() => {
   >
     <!---------------------- Deposit Dialog ----------------------------------------------->
 
+    
     <v-dialog
       v-model="cashDialog"
-      :width="mobileVersion == 'sm' ? '' : 471"
-      :fullscreen="mobileVersion == 'sm'"
-      :scrim="mobileVersion == 'sm' ? false : true"
-      :transition="mobileVersion == 'sm' ? 'dialog-bottom-transition' : ''"
+      :width="''"
+      :fullscreen="true"
+      :scrim="false"
+      :transition="'dialog-top-transition'"
       @click:outside="setCashDialogToggle(false)"
+      v-if = "mobileVersion == 'sm'"
+    >
+      <MCashHeader/>
+      
+      
+    </v-dialog>
+
+    <v-dialog
+      v-model="withdrawDialog"
+      :width="''"
+      :fullscreen="true"
+      :scrim="false"
+      :transition="'dialog-bottom-transition'"
+      style = "top: 60px;"
+      persistent
+      v-if = "mobileVersion == 'sm'"
+    >
+      <template v-if="withdrawDialog">
+        <Withdraw v-if="mobileWidth > 600" />
+        <MWithdraw v-else />
+      </template>
+    </v-dialog>
+
+    <v-dialog
+      v-model="depositDialog"
+      :width="''"
+      :fullscreen="true"
+      :scrim="false"
+      :transition="'dialog-bottom-transition'"
+      style = "top: 60px;"
+      persistent
+      v-if = "mobileVersion == 'sm'"
+    >
+      <template v-if="depositDialog">
+        <Deposit v-if="mobileWidth > 600" />
+        <MDeposit v-else />
+      </template>
+    </v-dialog>
+
+    <v-dialog
+      v-model="cashDialog"
+      :width="471"
+      :fullscreen="false"
+      :scrim="true"
+      :transition="''"
+      @click:outside="setCashDialogToggle(false)"
+      v-if = "mobileVersion != 'sm'"
     >
       <CashHeader v-if="mobileWidth > 600" />
       <MCashHeader v-else />
@@ -335,6 +390,7 @@ onMounted(() => {
         <MDeposit v-else />
       </template>
     </v-dialog>
+
 
     <!-----------------------Authentication Dialog --------------------------------------->
 

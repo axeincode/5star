@@ -101,9 +101,11 @@ const formsList = ref<Array<any>>([
             class="bg-color-211F31 mt-2 m-collapse-body"
             v-for="(item, index) in bonusList"
             :key="index"
+            :ripple="false"
           >
             <v-expansion-panel-title
               :class="[item.type == 'Failure' ? 'failure-title' : 'completion-title']"
+              :ripple="false"
             >
               <template v-slot:default="{ expanded }">
                 <v-row no-gutters class="align-center">
@@ -200,7 +202,11 @@ const formsList = ref<Array<any>>([
                   {{ t("bonus.super_bonus_text") }}
                 </v-col>
                 <v-col cols="4" class="text-right pt-0">
-                  <img src="@/assets/public/svg/icon_public_53.svg" width="20" />
+                  <img
+                    src="@/assets/public/svg/icon_public_53.svg"
+                    width="20"
+                    class="m-bonus-expansion-help-img"
+                  />
                 </v-col>
               </v-row>
               <v-table class="m-forms-bonus-table-bg text-400-10">
@@ -244,6 +250,14 @@ const formsList = ref<Array<any>>([
   </v-row>
 </template>
 <style lang="scss">
+.v-expansion-panel-title__overlay {
+  opacity: 0 !important;
+}
+.m-bonus-expansion-help-img:active {
+  scale: 0.95;
+  filter: brightness(80%);
+  transition: scale 0.2s;
+}
 .m-bonus-card-body {
   // height: 700px;
   overflow-y: auto;

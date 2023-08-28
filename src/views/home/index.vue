@@ -1208,7 +1208,12 @@ export default Dashboard;
         v-for="(item, index) in mOriginalGames"
         :key="index"
       >
-        <v-img :src="item" class="original-game-img-width" />
+        <img
+          v-lazy="item"
+          alt="Lazy loaded image"
+          :data-src="item"
+          class="original-game-img-width"
+        />
       </v-col>
     </v-row>
     <v-row

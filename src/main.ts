@@ -20,11 +20,36 @@ import 'element-plus/dist/index.css';
 
 import InlineSvg from 'vue-inline-svg';
 
+import Vue3Lazyload from 'vue3-lazyload'
+
+import VueLazyload from 'vue-lazyload'
+
+import loadingIcon from "@/assets/loading.svg";
+
 const app = createApp(App)
 
 registerPlugins(app)
 
 app.use(i18n)
+
+app.use(Vue3Lazyload, {    
+  loading: loadingIcon,
+  error: '',
+  lifecycle: {
+    loading: (el) => {
+      console.log('loading', el)
+    },
+    error: (el) => {
+      console.log('error', el)
+    },
+    loaded: (el) => {
+      console.log('loaded', el)
+    }
+  },
+  delay: 500
+});
+
+// app.use(VueLazyload);
 
 app.component('inline-svg', InlineSvg);
 
