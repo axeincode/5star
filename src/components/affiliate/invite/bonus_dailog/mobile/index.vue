@@ -1,13 +1,19 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { appBarStore } from "@/store/appBar";
 
+const { setMainBlurEffectShow } = appBarStore();
 const { t } = useI18n();
 const emit = defineEmits<{ (e: 'close'): void }>()
+
+const handleClose = () => {
+    emit('close');
+}
 </script>
 <template>
     <div class="m-bonus-dialog-container">
-        <v-btn class="close-button" icon="true" @click="emit('close')" width="30" height="30">
+        <v-btn class="close-button" icon="true" @click="handleClose" width="30" height="30">
             <img src="@/assets/public/svg/icon_public_10.svg"/>
             <!-- <v-icon color="#FFFFFF">
                 mdi-close

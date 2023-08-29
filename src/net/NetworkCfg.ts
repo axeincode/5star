@@ -43,6 +43,13 @@ export namespace NETWORK {
     static INVITE_HISTORY = '/user/invite/history' // 
   }
 
+  // game api
+  export class GAME_INFO {
+    static GAME_CATEGORY = '/games/categories'; // get game category
+    static GAME_SEARCH = '/games/search'; // game search
+    static GAME_ENTER = '/user/enter/game'; // game enter
+  }
+
   //Listening events sent actively
   export class UNSOLICITED {}
 }

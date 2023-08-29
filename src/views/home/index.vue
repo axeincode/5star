@@ -17,6 +17,7 @@ import icon_public_92 from "@/assets/public/svg/icon_public_92.svg";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
 import { mailStore } from "@/store/mail";
 import { refferalStore } from "@/store/refferal";
+import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -44,6 +45,9 @@ const Dashboard = defineComponent({
   setup() {
     const { t } = useI18n();
     const { name, width } = useDisplay();
+    const { dispatchGameCategories } = gameStore();
+    const { dispatchGameSearch } = gameStore();
+    const { dispatchGameEnter } = gameStore();
 
     // initiate component state
     const state = reactive({
@@ -550,6 +554,9 @@ const Dashboard = defineComponent({
     const winnerCheckboxColor = ref<string>("#ffffff");
     const prizeCheckboxColor = ref<string>("#7782AA");
 
+    const currentPage = ref<number>(1);
+    const limit = ref<number>(10);
+
     const refferalAppBarShow = computed(() => {
       const { getRefferalAppBarShow } = storeToRefs(refferalStore());
       return getRefferalAppBarShow.value;
@@ -566,6 +573,21 @@ const Dashboard = defineComponent({
     const mailMenuShow = computed(() => {
       const { getMailMenuShow } = storeToRefs(mailStore());
       return getMailMenuShow.value;
+    });
+
+    const gameCategories = computed(() => {
+      const { getGameCategories } = storeToRefs(gameStore());
+      return getGameCategories.value;
+    });
+
+    const gameSearchList = computed(() => {
+      const { getGameSearchList } = storeToRefs(gameStore());
+      return getGameSearchList.value;
+    });
+
+    const enterGameItem = computed(() => {
+      const { getEnterGameItem } = storeToRefs(gameStore());
+      return getEnterGameItem.value;
     });
 
     const isNumeric = (value: any) => {
@@ -965,7 +987,12 @@ const Dashboard = defineComponent({
       swiper.value = swiperInstance;
     };
 
-    onMounted(() => {
+    const handleEnterGame = async (id: number) => {
+      await dispatchGameEnter({ id });
+      console.log(enterGameItem.value.weburl);
+    };
+
+    onMounted(async () => {
       // startLuckyScrollingInterval();
       // startRecordScrollingInterval();
       window.scrollTo({
@@ -975,6 +1002,25 @@ const Dashboard = defineComponent({
       recordScrollInterval.value = setInterval(() => {
         state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
       }, 600);
+      await dispatchGameCategories("?type=lobby");
+      gameCategories.value.map(async (item) => {
+        await dispatchGameSearch(
+          "?game_categories_slug=" +
+            item.name +
+            "&page=" +
+            currentPage.value +
+            "&limit=" +
+            limit.value
+        );
+        gameSearchList.value.map((item) => {
+          item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+        });
+        item.games = gameSearchList.value;
+      });
+
+      setTimeout(() => {
+        console.log(gameCategories.value);
+      }, 2000);
     });
 
     onUnmounted(() => {
@@ -1001,6 +1047,9 @@ const Dashboard = defineComponent({
       goToNext,
       getSwiperRef,
       refferalAppBarShow,
+      gameCategories,
+      handleEnterGame,
+      enterGameItem,
     };
   },
 });
@@ -1009,7 +1058,13 @@ export default Dashboard;
 </script>
 
 <template>
-  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
+  <div v-if="enterGameItem.weburl != ''">
+    <iframe
+      :src="enterGameItem.weburl"
+      style="width: 100%; height: calc(100vh - 200px)"
+    ></iframe>
+  </div>
+  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'" v-else>
     <!-- image carousel -->
 
     <!-- <v-carousel
@@ -1185,8 +1240,53 @@ export default Dashboard;
       </template>
     </v-row>
 
+    <!-- game list -->
+    <template v-for="(item, index) in gameCategories" :key="index">
+      <v-row class="ml-4 mt-6 mb-1 original_game_text">
+        {{ item.name }}
+      </v-row>
+      <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
+        <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
+          <div
+            style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
+            v-if="gameIndex < 7"
+          >
+            <v-img :src="gameItem.image" class="original-game-img-width" />
+          </div>
+        </template>
+      </v-row>
+      <v-row class="mx-1 mt-0" v-else>
+        <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
+          <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-if="gameIndex < 6">
+            <img
+              v-lazy="gameItem.image"
+              alt="Lazy loaded image"
+              :data-src="gameItem.image"
+              class="original-game-img-width"
+              @click="handleEnterGame(gameItem.id)"
+            />
+          </v-col>
+        </template>
+      </v-row>
+      <v-row
+        class="justify-center"
+        :class="mobileWidth < 600 ? 'mt-6 mx-3 mb-0' : 'mt-8 ml-4'"
+        v-if="Number(item.game_count) > 6"
+      >
+        <v-btn
+          class="text-none more-btn-color"
+          variant="outlined"
+          :width="mobileWidth < 600 ? '100%' : 164"
+          :height="mobileWidth < 600 ? 41 : 48"
+        >
+          {{ t("home.more") }}
+        </v-btn>
+      </v-row>
+    </template>
+
     <!-- original games -->
-    <v-row class="ml-4 mt-6 mb-1 original_game_text">
+
+    <!-- <v-row class="ml-4 mt-6 mb-1 original_game_text">
       {{ t("home.original_games") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
@@ -1228,10 +1328,11 @@ export default Dashboard;
       >
         {{ t("home.more") }}
       </v-btn>
-    </v-row>
+    </v-row> -->
 
     <!-- principal games -->
-    <v-row class="ml-4 mt-7 mb-0 original_game_text">
+
+    <!-- <v-row class="ml-4 mt-7 mb-0 original_game_text">
       {{ t("home.principal") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
@@ -1266,13 +1367,15 @@ export default Dashboard;
       >
         {{ t("home.more") }}
       </v-btn>
-    </v-row>
+    </v-row> -->
 
     <!-------------------- game providers -------------->
+
     <GameProviders />
 
     <!-------------------- slot games -------------->
-    <v-row class="ml-4 mt-6 mb-2 original_game_text">
+
+    <!-- <v-row class="ml-4 mt-6 mb-2 original_game_text">
       {{ t("home.slots") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
@@ -1306,10 +1409,11 @@ export default Dashboard;
       >
         {{ t("home.more") }}
       </v-btn>
-    </v-row>
+    </v-row> -->
 
     <!-------------------- live casino games -------------->
-    <v-row class="ml-4 mt-6 mb-2 original_game_text">
+
+    <!-- <v-row class="ml-4 mt-6 mb-2 original_game_text">
       {{ t("home.live_casino") }}
     </v-row>
     <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
@@ -1343,7 +1447,7 @@ export default Dashboard;
       >
         {{ t("home.more") }}
       </v-btn>
-    </v-row>
+    </v-row> -->
 
     <!--------------------- Game History ---------------------->
     <v-row class="mx-2 mt-6" v-if="mobileWidth > 600">

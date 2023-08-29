@@ -263,64 +263,67 @@ onMounted(() => {
     <v-row class="justify-center mt-10 premiums-text">
         {{ t('affiliate.invite.premiums_text') }}
     </v-row>
-    <v-card class="invite-right-card-bg mt-5 mx-3 pa-3 py-5">
+    <v-card class="invite-right-card-bg mt-5 mx-3">
         <v-row>
-            <v-col cols="12" md="4" lg="4">
-                <v-row class="align-center">
-                    <v-col cols="5" class="text-center">
-                        <img src="@/assets/public/image/img_public_07.png" width="100" height="70" />
-                    </v-col>
-                    <v-col cols="7">
-                        <div class="invitation-bonus-text">{{ t('affiliate.invite.invitation_bonus') }}</div>
-                        <div class="invitation-bonus-text-1">{{ invitationBonusItem.cash }}</div>
-                        <div class="invitation-bonus-text-2">{{ invitationBonusItem.content }}</div>
-                    </v-col>
-                </v-row>
-                <v-row :class="[mobileWidth < 600 ? 'mx-1' : 'mx-1']">
-                    <v-table class="invitation-bonus-table-bg" theme="dark">
-                        <tbody class="invite-url-title">
-                            <tr v-for="(item, index) in invitationBonusList" :key="index">
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.content }}</td>
-                                <td class="invitation-bonus-cash-text">{{ item.cash }}</td>
-                            </tr>
-                        </tbody>
-                    </v-table>
-                </v-row>
-            </v-col>
-            <v-col cols="12" md="4" lg="4">
-                <v-row class="align-center">
-                    <v-col cols="5" class="text-center">
-                        <img src="@/assets/public/image/img_public_03.png" width="100" height="70" />
-                    </v-col>
-                    <v-col cols="7">
-                        <div class="invitation-bonus-text">{{ t('affiliate.invite.betting_commision') }}</div>
-                        <div class="invitation-bonus-text-1">{{ bettingCommissionItem.cash }}</div>
-                        <div class="invitation-bonus-text-2">{{ bettingCommissionItem.content }}</div>
-                    </v-col>
-                </v-row>
-                <v-row :class="[mobileWidth < 600 ? 'mx-1' : 'mx-1']">
-                    <v-table class="invitation-bonus-table-bg" theme="dark">
-                        <tbody class="invite-url-title">
-                            <tr v-for="(item, index) in invitationBonusList" :key="index">
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.content }}</td>
-                                <td class="invitation-bonus-cash-text">{{ item.cash }}</td>
-                            </tr>
-                        </tbody>
-                    </v-table>
-                </v-row>
-            </v-col>
-            <v-col cols="12" md="4" lg="4" class="text-center">
-                <p class="premiums-text">{{ t('affiliate.invite.how_does_work') }}</p>
-                <p class="invite-partner-text mt-4">{{ t('affiliate.invite.invitation_bonus') }}</p>
-                <div class="mt-4">
-                    <span class="invite-how-text-1">{{ t('affiliate.invite.how_does_content_1') }}</span>
-                    <span class="invite-how-text-2">$12</span>
-                    <span class="invite-how-text-1">{{ t('affiliate.invite.how_does_content_2') }}</span>
+            <div style = "display: flex; padding: 30px 20px 0px 20px;">
+                <v-col cols="12" md="4" lg="4">
+                    <v-row class="align-center">
+                        <v-col cols="5" class="text-center">
+                            <img src="@/assets/public/image/img_public_07.png" width="100" height="70" />
+                        </v-col>
+                        <v-col cols="7">
+                            <div class="invitation-bonus-text">{{ t('affiliate.invite.invitation_bonus') }}</div>
+                            <div class="invitation-bonus-text-1">{{ invitationBonusItem.cash }}</div>
+                            <div class="invitation-bonus-text-2">{{ invitationBonusItem.content }}</div>
+                        </v-col>
+                    </v-row>
+                    <v-row :class="[mobileWidth < 600 ? 'mx-1' : 'mx-1']">
+                        <v-table class="invitation-bonus-table-bg" theme="dark">
+                            <tbody class="invite-url-title">
+                                <tr v-for="(item, index) in invitationBonusList" :key="index">
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.content }}</td>
+                                    <td class="invitation-bonus-cash-text">{{ item.cash }}</td>
+                                </tr>
+                            </tbody>
+                        </v-table>
+                    </v-row>
+                </v-col>
+                <v-col cols="12" md="4" lg="4">
+                    <v-row class="align-center">
+                        <v-col cols="5" class="text-center">
+                            <img src="@/assets/public/image/img_public_03.png" width="100" height="70" />
+                        </v-col>
+                        <v-col cols="7">
+                            <div class="invitation-bonus-text">{{ t('affiliate.invite.betting_commision') }}</div>
+                            <div class="invitation-bonus-text-1">{{ bettingCommissionItem.cash }}</div>
+                            <div class="invitation-bonus-text-2">{{ bettingCommissionItem.content }}</div>
+                        </v-col>
+                    </v-row>
+                    <v-row :class="[mobileWidth < 600 ? 'mx-1' : 'mx-1']">
+                        <v-table class="invitation-bonus-table-bg" theme="dark">
+                            <tbody class="invite-url-title">
+                                <tr v-for="(item, index) in invitationBonusList" :key="index">
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.content }}</td>
+                                    <td class="invitation-bonus-cash-text">{{ item.cash }}</td>
+                                </tr>
+                            </tbody>
+                        </v-table>
+                    </v-row>
+                </v-col>
+                <div class="text-center" style="margin-top: 16px!important;">
+                    <p class="premiums-text">{{ t('affiliate.invite.how_does_work') }}</p>
+                    <p class="invite-partner-text mt-4">{{ t('affiliate.invite.invitation_bonus') }}</p>
+                    <div class="mt-4">
+                        <span class="invite-how-text-1">{{ t('affiliate.invite.how_does_content_1') }}</span>
+                        <span class="invite-how-text-2">$12</span>
+                        <span class="invite-how-text-1">{{ t('affiliate.invite.how_does_content_2') }}</span>
+                    </div>
+                    <img src="@/assets/affiliate/invite/image/img_agent_01.png"  style = "margin-top: 60px!important;"/>
                 </div>
-                <img src="@/assets/affiliate/invite/image/img_agent_01.png" class="mt-4" />
-            </v-col>
+            </div>
+            
         </v-row>
     </v-card>
     <v-card color="#29253C" class="mt-5 mx-3 pa-3 py-5">
@@ -506,7 +509,7 @@ onMounted(() => {
     <v-card class="invite-footer-card-bg mt-5 mx-3 pa-3 py-5">
         <v-row class="mx-1 align-center">
             <v-col cols="12" md="6" lg="6" class="d-flex align-center justify-center">
-                <img src="@/assets/affiliate/invite/image/img_agent_03.png" class="mt-10"
+                <img src="@/assets/affiliate/invite/image/img_agent_03.png" class="mt-10 invite-img-3"
                     style="width: 100%; max-width: 400px;" />
             </v-col>
             <v-col cols="12" md="6" lg="6">
@@ -779,4 +782,9 @@ onMounted(() => {
     background: #211F31 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 20px !important;
-}</style>
+}
+.invite-img-3 {
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+</style>
