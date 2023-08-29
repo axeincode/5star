@@ -1059,10 +1059,7 @@ export default Dashboard;
 
 <template>
   <div v-if="enterGameItem.weburl != ''">
-    <iframe
-      :src="enterGameItem.weburl"
-      style="width: 100%; height: calc(100vh - 200px)"
-    ></iframe>
+    <iframe :src="enterGameItem.weburl" class="home-game-frame-area"> </iframe>
   </div>
   <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'" v-else>
     <!-- image carousel -->
@@ -1251,7 +1248,11 @@ export default Dashboard;
             style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
             v-if="gameIndex < 7"
           >
-            <v-img :src="gameItem.image" class="original-game-img-width" />
+            <v-img
+              :src="gameItem.image"
+              class="original-game-img-width"
+              @click="handleEnterGame(gameItem.id)"
+            />
           </div>
         </template>
       </v-row>
@@ -1726,6 +1727,12 @@ export default Dashboard;
 </template>
 
 <style lang="scss">
+.home-game-frame-area {
+  width: 95%;
+  margin: 40px;
+  height: calc(100vh - 200px);
+}
+
 .home-swiper {
   height: 247px;
 
