@@ -991,14 +991,14 @@ const Dashboard = defineComponent({
     };
 
     const handleEnterGame = async (id: number, name: string) => {
-      await dispatchGameEnter({ id });
+      // await dispatchGameEnter({ id });
       let replaceName = name.replace(/ /g, "-");
-      if (success.value) {
-        if (mobileWidth.value < 600) {
-          setMailMenuShow(true);
-        }
-        router.push(`/game/${replaceName}`);
+      // if (success.value) {
+      if (mobileWidth.value < 600) {
+        setMailMenuShow(true);
       }
+      router.push(`/game/${id}/${replaceName}`);
+      // }
     };
 
     onMounted(async () => {

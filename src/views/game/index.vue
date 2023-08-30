@@ -13,10 +13,13 @@ import "swiper/css/navigation";
 import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const { setMailMenuShow } = mailStore();
+const { dispatchGameEnter } = gameStore();
+const route = useRoute();
 
 const luckyJackpotList = ref<Array<any>>([
   {
@@ -328,6 +331,7 @@ const recordList = ref<Array<any>>([
   },
 ]);
 const recordScrollInterval = ref<any>(null);
+const frameShow = ref<boolean>(false);
 
 const modules = [Pagination, Virtual, Autoplay, Navigation];
 
@@ -344,11 +348,24 @@ const isNumeric = (value: any) => {
   return /^-?\d+$/.test(value);
 };
 
-onMounted(() => {
+const handleIframeLoad = () => {
+  if (enterGameItem.value.weburl != "") {
+    frameShow.value = true;
+  }
+};
+
+onMounted(async () => {
+  setTimeout(() => {
+    if (mobileWidth.value < 600) {
+      setMailMenuShow(true);
+    }
+  }, 1000);
   recordScrollInterval.value = setInterval(() => {
     recordList.value.push(recordList.value[Math.floor(Math.random() * 10)]);
   }, 600);
+  await dispatchGameEnter({ id: route.params.id });
 });
+
 onUnmounted(() => {
   setMailMenuShow(false);
 });
@@ -356,12 +373,37 @@ onUnmounted(() => {
 <template>
   <div class="game-body" v-if="mobileWidth < 600">
     <div class="m-game-frame-body">
-      <iframe :src="enterGameItem.weburl" class="home-game-frame-area"></iframe>
+      <div class="m-loading-container relative" v-if="!frameShow">
+        <div class="loading-body">
+          <div class="dot-0"></div>
+          <div class="dot-1"></div>
+          <div class="dot-0"></div>
+        </div>
+      </div>
+      <iframe
+        v-else
+        ref="frame"
+        :src="enterGameItem.weburl"
+        class="home-game-frame-area"
+        @load="handleIframeLoad"
+      ></iframe>
     </div>
   </div>
   <div class="game-body" v-else>
     <div class="game-frame-body">
-      <iframe :src="enterGameItem.weburl" class="home-game-frame-area"></iframe>
+      <div class="loading-container relative" v-if="!frameShow">
+        <div class="loading-body">
+          <div class="dot-0"></div>
+          <div class="dot-1"></div>
+          <div class="dot-0"></div>
+        </div>
+      </div>
+      <iframe
+        v-else
+        :src="enterGameItem.weburl"
+        class="home-game-frame-area"
+        @load="handleIframeLoad"
+      ></iframe>
     </div>
     <!--------------------- Game History ---------------------->
     <v-row class="mx-6 mt-6">
@@ -479,6 +521,34 @@ onUnmounted(() => {
   </div>
 </template>
 <style lang="scss">
+@keyframes expandAnimation {
+  0% {
+    scale: 1.3;
+  }
+
+  50% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 1.3;
+  }
+}
+
+@keyframes expandReverseAnimation {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 1.2;
+  }
+
+  100% {
+    scale: 0.8;
+  }
+}
+
 .game-body {
   width: 100%;
 
@@ -492,6 +562,40 @@ onUnmounted(() => {
       width: 100%;
       height: calc(100vh - 300px);
     }
+
+    .loading-container {
+      border: none;
+      margin-top: 20px;
+      width: 100%;
+      height: 200px;
+
+      .loading-body {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .dot-0 {
+          width: 10px;
+          height: 10px;
+          background: #12ff76;
+          border-radius: 10px;
+          margin-right: 8px;
+          animation: expandAnimation 0.6s 0.1s ease-in infinite;
+        }
+
+        .dot-1 {
+          width: 16px;
+          height: 16px;
+          background: #12ff76;
+          border-radius: 16px;
+          margin-right: 8px;
+          animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+        }
+      }
+    }
   }
 
   .m-game-frame-body {
@@ -504,6 +608,44 @@ onUnmounted(() => {
       opacity: 1;
       z-index: 20000000;
       overflow: unset;
+    }
+
+    .m-loading-container {
+      position: absolute;
+      top: 0px;
+      border: none;
+      width: 100%;
+      height: 100vh;
+      opacity: 1;
+      z-index: 20000000;
+      background: #31275c;
+
+      .loading-body {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .dot-0 {
+          width: 10px;
+          height: 10px;
+          background: #12ff76;
+          border-radius: 10px;
+          margin-right: 8px;
+          animation: expandAnimation 0.6s 0.1s ease-in infinite;
+        }
+
+        .dot-1 {
+          width: 16px;
+          height: 16px;
+          background: #12ff76;
+          border-radius: 16px;
+          margin-right: 8px;
+          animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+        }
+      }
     }
   }
 }

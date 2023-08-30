@@ -14,7 +14,7 @@ export interface Search {
 }
 
 export interface GameEnterBody {
-    id: number
+    id: any
 }
 
 export interface GameEnterResponse {

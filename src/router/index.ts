@@ -57,7 +57,7 @@ const routes = [
     ],
   },
   {
-    path: '/game/:name?',
+    path: '/game/:id?/:name?',
     component: () => import('@/layouts/index.vue'),
     children: [
       {
