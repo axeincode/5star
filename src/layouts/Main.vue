@@ -297,6 +297,10 @@ watch(accountDialogVisible, (value: boolean) => {
   accountDialog.value = value
 }, { deep: true })
 
+watch(mailMenuShow, (value) => {
+  console.log(value);
+})
+
 // mounted
 
 onMounted(() => {
@@ -323,7 +327,6 @@ onMounted(() => {
   >
     <!---------------------- Deposit Dialog ----------------------------------------------->
 
-    
     <v-dialog
       v-model="cashDialog"
       :width="''"
@@ -331,11 +334,9 @@ onMounted(() => {
       :scrim="false"
       :transition="'dialog-top-transition'"
       @click:outside="setCashDialogToggle(false)"
-      v-if = "mobileVersion == 'sm'"
+      v-if="mobileVersion == 'sm'"
     >
-      <MCashHeader/>
-      
-      
+      <MCashHeader />
     </v-dialog>
 
     <v-dialog
@@ -344,9 +345,9 @@ onMounted(() => {
       :fullscreen="true"
       :scrim="false"
       :transition="'dialog-bottom-transition'"
-      style = "top: 60px;"
+      style="top: 60px"
       persistent
-      v-if = "mobileVersion == 'sm'"
+      v-if="mobileVersion == 'sm'"
     >
       <template v-if="withdrawDialog">
         <Withdraw v-if="mobileWidth > 600" />
@@ -360,9 +361,9 @@ onMounted(() => {
       :fullscreen="true"
       :scrim="false"
       :transition="'dialog-bottom-transition'"
-      style = "top: 60px;"
+      style="top: 60px"
       persistent
-      v-if = "mobileVersion == 'sm'"
+      v-if="mobileVersion == 'sm'"
     >
       <template v-if="depositDialog">
         <Deposit v-if="mobileWidth > 600" />
@@ -377,7 +378,7 @@ onMounted(() => {
       :scrim="true"
       :transition="''"
       @click:outside="setCashDialogToggle(false)"
-      v-if = "mobileVersion != 'sm'"
+      v-if="mobileVersion != 'sm'"
     >
       <CashHeader v-if="mobileWidth > 600" />
       <MCashHeader v-else />
@@ -390,7 +391,6 @@ onMounted(() => {
         <MDeposit v-else />
       </template>
     </v-dialog>
-
 
     <!-----------------------Authentication Dialog --------------------------------------->
 

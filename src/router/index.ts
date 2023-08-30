@@ -56,6 +56,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/game/:name?',
+    component: () => import('@/layouts/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Game',
+        component: () => import('@/views/game/index.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

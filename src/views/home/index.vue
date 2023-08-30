@@ -19,6 +19,7 @@ import { mailStore } from "@/store/mail";
 import { refferalStore } from "@/store/refferal";
 import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
@@ -48,6 +49,8 @@ const Dashboard = defineComponent({
     const { dispatchGameCategories } = gameStore();
     const { dispatchGameSearch } = gameStore();
     const { dispatchGameEnter } = gameStore();
+    const { setMailMenuShow } = mailStore();
+    const router = useRouter();
 
     // initiate component state
     const state = reactive({
@@ -585,9 +588,9 @@ const Dashboard = defineComponent({
       return getGameSearchList.value;
     });
 
-    const enterGameItem = computed(() => {
-      const { getEnterGameItem } = storeToRefs(gameStore());
-      return getEnterGameItem.value;
+    const success = computed(() => {
+      const { getSuccess } = storeToRefs(gameStore());
+      return getSuccess.value;
     });
 
     const isNumeric = (value: any) => {
@@ -987,9 +990,15 @@ const Dashboard = defineComponent({
       swiper.value = swiperInstance;
     };
 
-    const handleEnterGame = async (id: number) => {
+    const handleEnterGame = async (id: number, name: string) => {
       await dispatchGameEnter({ id });
-      console.log(enterGameItem.value.weburl);
+      let replaceName = name.replace(/ /g, "-");
+      if (success.value) {
+        if (mobileWidth.value < 600) {
+          setMailMenuShow(true);
+        }
+        router.push(`/game/${replaceName}`);
+      }
     };
 
     onMounted(async () => {
@@ -1049,7 +1058,6 @@ const Dashboard = defineComponent({
       refferalAppBarShow,
       gameCategories,
       handleEnterGame,
-      enterGameItem,
     };
   },
 });
@@ -1058,10 +1066,7 @@ export default Dashboard;
 </script>
 
 <template>
-  <div v-if="enterGameItem.weburl != ''">
-    <iframe :src="enterGameItem.weburl" class="home-game-frame-area"> </iframe>
-  </div>
-  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'" v-else>
+  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
     <!-- image carousel -->
 
     <!-- <v-carousel
@@ -1251,7 +1256,7 @@ export default Dashboard;
             <v-img
               :src="gameItem.image"
               class="original-game-img-width"
-              @click="handleEnterGame(gameItem.id)"
+              @click="handleEnterGame(gameItem.id, gameItem.name)"
             />
           </div>
         </template>
@@ -1264,7 +1269,7 @@ export default Dashboard;
               alt="Lazy loaded image"
               :data-src="gameItem.image"
               class="original-game-img-width"
-              @click="handleEnterGame(gameItem.id)"
+              @click="handleEnterGame(gameItem.id, gameItem.name)"
             />
           </v-col>
         </template>
@@ -1727,12 +1732,6 @@ export default Dashboard;
 </template>
 
 <style lang="scss">
-.home-game-frame-area {
-  width: 95%;
-  margin: 40px;
-  height: calc(100vh - 200px);
-}
-
 .home-swiper {
   height: 247px;
 
@@ -1837,6 +1836,10 @@ export default Dashboard;
 }
 
 @media (max-width: 600px) {
+  .home-game-frame-area {
+    margin-top: 0px;
+  }
+
   .home-search-text-height {
     height: 30px !important;
 
