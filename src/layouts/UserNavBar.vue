@@ -72,6 +72,7 @@ const mobileWidth: any = computed(() => {
 })
 
 const depositDialogShow = () => {
+  setMainBlurEffectShow(true);
   setDepositDialogToggle(true);
   setCashDialogToggle(true);
   setUserNavBarToggle(false);
@@ -204,7 +205,7 @@ watch(mobileWidth, (newValue: number) => {
           </div>
         </template>
       </v-list-item>
-      <v-list-item class="m-user-item">
+      <v-list-item class="m-user-item"  @click="goVIPPage">
         <template v-slot:prepend>
           <div>
             <div style="height: 30px">
@@ -213,7 +214,7 @@ watch(mobileWidth, (newValue: number) => {
             <div class="text-800-10 color-F9BC01">{{ user.grade }}</div>
           </div>
         </template>
-        <v-list-item-title class="ml-2" @click="goVIPPage">
+        <v-list-item-title class="ml-2">
           <div class="deposit-progress-bg">
             <div class="d-flex">
               <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
@@ -464,12 +465,12 @@ watch(mobileWidth, (newValue: number) => {
 }
 
 .m-user-item {
-  padding: 4px 8px !important;
+  padding: 10px 10px !important;
   border-radius: 12px !important;
 
   .v-list-item-title {
     font-weight: 600;
-    font-size: 10px;
+    font-size: 12px!important;
     color: #7782aa;
   }
 }
@@ -509,6 +510,16 @@ watch(mobileWidth, (newValue: number) => {
 .mobile-nav {
   .v-list-item__overlay {
     opacity: 0 !important;
+  }
+}
+.m-user-item1 {
+  padding-top: 9px!important;
+  padding-bottom: 9px!important;
+  border-radius: 12px !important;
+
+  .v-list-item-title {
+    font-weight: 600;
+    font-size: 12px!important;
   }
 }
 </style>

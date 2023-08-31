@@ -8,6 +8,9 @@ import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const emit = defineEmits<{ (e: 'userDialogHide'): void, (e: 'submitNickName', name: string): void }>()
@@ -84,6 +87,7 @@ const handleNickNameChange = () => {
 }
 
 const submitNickName = async () => {
+    console.log('>>>>>>>>>>>>>')
     loading.value = true;
     await dispatchUpdateUserInfo({
         name: nickName.value
@@ -92,6 +96,11 @@ const submitNickName = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
         notificationText.value = "Nickname updated successfully!"
+        ElNotification({
+            icon: SuccessIcon,
+            title: "Nickname updated successfully!",
+            duration: 3000,
+        })
         setTimeout(() => {
             loading.value = false;
             emit("submitNickName", nickName.value);
@@ -102,6 +111,12 @@ const submitNickName = async () => {
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
         notificationText.value = errMessage.value;
         loading.value = false;
+        
+        ElNotification({
+            icon: WarningIcon,
+            title: errMessage.value,
+            duration: 3000,
+        })
     }
 }
 </script>
@@ -128,7 +143,6 @@ const submitNickName = async () => {
         <v-btn class="m-account-dialog-close-btn" icon="true" @click="emit('userDialogHide')" width="30" height="30">
             <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
         </v-btn>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
     </div>
 </template>
 
@@ -177,5 +191,39 @@ const submitNickName = async () => {
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
+}
+@media (max-width: 600px) {
+  .el-notification {
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px !important;
+    right: 0px !important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #181522);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  .el-notification__title {
+    color: var(--sec-text, #7782aa);
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: left;
+  }
+
+  .el-notification__closeBtn svg {
+    display: none;
+  }
+
+  .el-notification__closeBtn {
+    top: 22px !important;
+    background-image: url("@/assets/public/svg/icon_public_52.svg");
+    background-repeat: no-repeat;
+    background-size: 18px;
+  }
 }
 </style>

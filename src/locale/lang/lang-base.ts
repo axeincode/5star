@@ -185,12 +185,13 @@ export type langType = {
   }
   home: {
     search: string
-    button: {
-      lobby: string
-      popular: string
+    button: {      
+      all_game: string
+      favorite: string
+      original_game: string
+      pg_soft: string
       slots: string
       live_casino: string
-      blue_originals: string
     }
     original_games: string
     more: string

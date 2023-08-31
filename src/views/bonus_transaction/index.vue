@@ -133,14 +133,14 @@ onMounted(() => {
 .affiliate-container-1 {
     margin: -20px 40px;
     background: #211F31;
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     border-radius: 8px;
 }
 
 .m-affiliate-container {
     margin: -60px 0px;
     background: #211F31;
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     border-radius: 8px;
 }
 
@@ -217,7 +217,7 @@ onMounted(() => {
         align-items: center;
         background: #29253C;
         height: 64px;
-        margin: 8px;
+        margin: 16px 16px 10px 16px;
         box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
         border-radius: 8px;
         font-weight: 400;

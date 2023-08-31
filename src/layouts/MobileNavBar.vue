@@ -265,7 +265,7 @@ onMounted(() => {
         <v-list-group value="Casino">
           <template v-slot:activator="{ props }">
             <v-list-item
-              class="m-avatar-img"
+              class="m-avatar-img m-user-item1"
               v-bind="props"
               prepend-avatar="@/assets/public/svg/icon_public_34.svg"
               :title="t('navBar.casino')"
@@ -314,6 +314,7 @@ onMounted(() => {
                     class="m-avatar-img"
                     :prepend-avatar="item.icon"
                     :title="item.name"
+                    style="font-size: 11px!important; font-weight: 500!important;"
                   >
                   </v-list-item>
                 </v-list>
@@ -336,7 +337,7 @@ onMounted(() => {
       </v-list>
       <v-list>
         <v-list-item
-          class="m-avatar-img"
+          class="m-avatar-img m-user-item1"
           prepend-avatar="@/assets/public/svg/icon_public_40.svg"
           :title="t('navBar.sport')"
         ></v-list-item>
@@ -344,7 +345,7 @@ onMounted(() => {
       <v-divider class="divider"></v-divider>
       <v-list>
         <v-list-item
-          class="m-avatar-img"
+          class="m-avatar-img m-user-item1"
           prepend-avatar="@/assets/public/svg/icon_public_41.svg"
           :title="t('navBar.menu_item_1.promotions')"
         ></v-list-item>
@@ -356,14 +357,14 @@ onMounted(() => {
           :to="{ name: 'VIP' }"
         ></v-list-item>
         <v-list-item
-          class="m-avatar-img"
+          class="m-avatar-img m-user-item1"
           prepend-avatar="@/assets/public/svg/icon_public_43.svg"
           :title="t('navBar.menu_item_1.affiliate')"
           router
           :to="{ name: 'Affiliate' }"
         ></v-list-item>
         <v-list-item
-          class="m-avatar-img"
+          class="m-avatar-img m-user-item1"
           prepend-avatar="@/assets/public/svg/icon_public_44.svg"
           :title="t('navBar.menu_item_1.blog')"
         ></v-list-item>
@@ -371,7 +372,7 @@ onMounted(() => {
       <v-divider class="divider"></v-divider>
       <v-list>
         <v-list-item
-          class="m-avatar-img"
+          class="m-avatar-img m-user-item1"
           prepend-avatar="@/assets/public/svg/icon_public_45.svg"
           :title="t('navBar.live_support')"
         ></v-list-item>
@@ -380,7 +381,7 @@ onMounted(() => {
         <v-menu
           location="center"
           offset="16"
-          content-class="m-language-dropdown"
+          content-class="m-language-dropdown m-user-item1"
           v-model:model-value="languageMenu"
           transition="slide-x-transition"
         >
@@ -633,7 +634,7 @@ onMounted(() => {
 
   :deep(.v-list-item-title) {
     font-weight: 500;
-    font-size: 10px;
+    font-size: 11px;
     color: #7782aa;
   }
 

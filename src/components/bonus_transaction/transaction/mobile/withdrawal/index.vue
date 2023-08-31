@@ -96,46 +96,75 @@ const mobileWidth = computed(() => {
 })
 </script>
 <template>
-    <v-row class="mx-2 mt-1 m-forms-bonus-table">
-        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="600px">
+    <v-row class="mx-2 mt-1 m-forms-bonus-table1">
+        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="600px" style = "padding: 16px;">
             <thead class="forms-table-header">
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">
-                        {{ t('transaction.transactions.date') }}
+                        <div class="forms-table-border0" >
+                            <div style = "width: 50px; margin-left: 16px; margin-right: 20px;">
+                                {{ t('transaction.transactions.date') }}
+                            </div>
+                        </div>
+                        
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.transactions.id') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 130px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.id') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div>{{ t('transaction.transactions.type') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 60px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.type') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.transactions.amount') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 130px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.amount') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div>{{ t('transaction.game_history.status') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.status') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.transactions.note') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.note') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px;">
-                        {{ t('transaction.withdraw.action') }}
+                        <div class="forms-table-border2" >
+                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.withdraw.action') }}
+                            </div>
+                        </div>
                     </th>
                 </tr>
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-10">{{ item.date }}</td>
-                    <td class="text-400-10" style="min-width: 130px;">{{ item.id }}</td>
-                    <td class="text-400-10">{{ item.type }}</td>
-                    <td class="text-400-10 color-D42763" style="min-width: 130px;">{{ item.amount }}</td>
+                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
+                    <td class="text-400-10" style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">{{ item.id }}</td>
+                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
+                    <td class="text-400-10 color-D42763" style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">{{ item.amount }}</td>
                     <td class="text-400-10" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''"
-                        style="min-width: 130px;">
+                        style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">
                         {{ item.status }}
                     </td>
-                    <td class="text-400-10" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''">{{ item.note }}
+                    <td class="text-400-10" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}
                     </td>
-                    <td class="text-400-10">
+                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">
                         <v-btn class="ma-2 button-bright text-none withdraw-refund-btn" rounded v-if="item.actionType == 1">
                             {{ t('transaction.withdraw.refund') }}
                         </v-btn>
@@ -147,12 +176,14 @@ const mobileWidth = computed(() => {
             </tbody>
         </v-table>
     </v-row>
-    <v-row class="ma-2 justify-end">
-        <v-col cols="4" class="d-flex justify-start">
+    <v-row class="m-bonus-transaction-table3">
+        <v-col cols="4" class="d-flex " style = "margin-left: -12px; margin-top:4px;">
             <img src="@/assets/public/svg/icon_public_53.svg" width="24" />
         </v-col>
-        <v-col cols="8" class="d-flex justify-end">
-            <Pagination />
+        <v-col cols="8" class="d-flex" style="padding-right: 6px;">
+            <div style="width: 100%;">
+                <Pagination />
+            </div>
         </v-col>
     </v-row>
 </template>
@@ -164,7 +195,7 @@ const mobileWidth = computed(() => {
     width: 100% !important;
 }
 
-.m-forms-bonus-table {
+.m-forms-bonus-table1 {
 
     .v-table.v-table--fixed-header>.v-table__wrapper>table>thead>tr>th {
         background: #414968;
@@ -188,10 +219,16 @@ const mobileWidth = computed(() => {
         text-align: center;
     }
 
-    .forms-table-border {
-        padding: 0px 20px;
+    .forms-table-border0 {
+        border-right: 1px solid #000000 !important;
+    }
+
+    .forms-table-border1 {
         border-left: 1px solid #000000 !important;
         border-right: 1px solid #000000 !important;
+    }
+    .forms-table-border2 {
+        border-left: 1px solid #000000 !important;
     }
 
     .forms-table-border-right {
@@ -210,5 +247,10 @@ const mobileWidth = computed(() => {
         }
     }
 
+}
+.m-bonus-transaction-table3 {
+    margin-left: 12px;
+    margin-top: 16px!important;
+    margin-bottom: 8px;
 }
 </style>

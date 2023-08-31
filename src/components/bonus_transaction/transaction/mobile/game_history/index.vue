@@ -3,6 +3,7 @@ import { ref, computed, h, shallowRef, watch } from 'vue';
 import Pagination from '@/components/global/pagination/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+import router from '@/router';
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -80,69 +81,115 @@ window.addEventListener('scroll', function () {
 const mobileWidth = computed(() => {
     return width.value
 })
+
+const handleGameLink = (game) => {
+    console.log(game)
+    // router.push({name: 'Dashboard'});
+}
 </script>
 <template>
-    <v-row class="mx-2 mt-1 m-forms-bonus-table">
-        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header>
-            <thead class="forms-table-header">
+    <v-row class="mx-2 mt-1 m-forms-bonus-table1">        
+        <v-table class="m-forms-bonus-table-bg1" theme="dark" fixed-header height="600px" style = "padding: 16px 16px 16px 16px;">
+            <thead class="forms-table-header1" style="border-radius: 0px!important;">
                 <tr>
-                    <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">
-                        {{ t('transaction.game_history.game') }}
+                    <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px; ">
+                        <div class="forms-table-border0" >
+                            <div style = "width: 40px; margin-left: 16px; margin-right: 20px;">
+                                {{ t('transaction.game_history.game') }}
+                                
+                            </div>
+                        </div>
+                        
+                    </th>
+                    <th class="text-700-12 black text-center" >
+                        <div class="forms-table-border1" >
+                            <div style="width: 50px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.date') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.game_history.date') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style="width: 130px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.amount') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div>{{ t('transaction.game_history.amount') }}</div>
+                        <div class="forms-table-border1">
+                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.multilier') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.game_history.multilier') }}</div>
+                        <div class="forms-table-border1">
+                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.betId') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div>{{ t('transaction.game_history.betId') }}</div>
-                    </th>
-                    <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.game_history.status') }}</div>
+                        <div class="forms-table-border1">
+                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.status') }}                            
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px;">
-                        {{ t('transaction.game_history.profit') }}
+                        <div class="forms-table-border2">
+                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.profit') }}
+                            </div>
+                        </div>
+                        
                     </th>
                 </tr>
             </thead>
             <tbody class="text-400-10 text-center">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td>{{ item.game }}</td>
-                    <td>{{ item.date }}</td>
-                    <td class="d-flex align-center justify-center" style="min-width: 130px;">
-                        <div style="width: 16px; height: 16px; background: #414968; border-radius: 20px;">
-                            <el-tooltip placement="top" effect="customized">
-                                <template #content>
-                                    <v-list-item v-for="(item, index) in tootipList" :key="index" class="text-400-12 gray"
-                                        style="min-height: 26px !important;">
-                                        <v-list-item-title class="text-400-12">ID: {{ item.id }}</v-list-item-title>
-                                        <template v-slot:append>
-                                            <div class="ml-10 text-400-12">{{ item.cash }}</div>
-                                        </template>
-                                    </v-list-item>
-                                </template>
-                                <!-- <img src="@/assets/public/svg/icon_public_50.svg" width="20" /> -->
-                                <v-icon>mdi-chevron-up</v-icon>
-                            </el-tooltip>
-                        </div>
-                        <div class="ml-1">{{ item.amount }}</div>
+                    <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;">
+                        <v-btn
+                            class="m-bonus-transaction-table-btn"
+                            @click="handleGameLink(item.game)"
+                            >
+                            {{ item.game }}
+                        </v-btn>
                     </td>
-                    <td>{{ item.multilier }}</td>
-                    <td>{{ item.betId }}</td>
-                    <td>{{ item.status }}</td>
-                    <td :class="item.status == 'win' ? 'color-01983A' : 'color-D42763'" style="min-width: 130px;">
+                    <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;" >{{ item.date }}</td>
+                    <td style = "padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;" >
+                        <div class=" d-flex align-center justify-center" >
+                            <div  style="width: 16px; height: 16px; background: #414968; border-radius: 20px; ">
+                                <el-tooltip placement="top" effect="customized"  style="margin:10px!important;">
+                                    <template #content>
+                                        <v-list-item v-for="(item, index) in tootipList" :key="index" class="m-bonus-transaction-tooltip-body gray"
+                                            style="min-height: 26px !important;">
+                                            <v-list-item-title class="m-bonus-transaction-tooltip">ID: {{ item.id }}</v-list-item-title>
+                                            <template v-slot:append>
+                                                <div class="m-bonus-transaction-tooltip" style="margin-left: 54px;">{{ item.cash }}</div>
+                                            </template>
+                                        </v-list-item>
+                                    </template>
+                                    <!-- <img src="@/assets/public/svg/icon_public_50.svg" width="20" /> -->
+                                    <v-icon>mdi-chevron-up</v-icon>
+                                </el-tooltip>
+                            </div>
+                            <div class="ml-1">{{ item.amount }}</div>
+                        </div>
+                        
+                    </td>
+                    <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;" >{{ item.multilier }}</td>
+                    <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;" >{{ item.betId }}</td>
+                    <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;" >{{ item.status }}</td>
+                    <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;"  :class="item.status == 'win' ? 'color-01983A' : 'color-D42763'">
                         {{ item.profit }}
                     </td>
                 </tr>
             </tbody>
         </v-table>
     </v-row>
-    <v-row class="ma-2">
-        <v-col cols="6" md="4" lg="4" class="d-flex justify-start px-0">
+    <v-row class="m-bonus-transaction-table ">
+        <v-col cols="6" md="4" lg="4" class="d-flex" style = "margin-left: -12px; margin-top:4px;">
             <v-menu offset="12" class="m-game-menu" v-model:model-value="gameMenuShow">
                 <template v-slot:activator="{ props }">
                     <v-card color="#1C1929" theme="dark" style="height: 32px;" class="m-bonus-game-card">
@@ -165,33 +212,39 @@ const mobileWidth = computed(() => {
                 </v-list>
             </v-menu>
         </v-col>
-        <v-col cols="6" md="8" lg="8" class="d-flex justify-end">
-            <Pagination />
+        <v-col cols="6" md="8" lg="8" class="d-flex" style="padding-right: 6px;">
+            <div style="width: 100%;">
+                <Pagination />
+            </div>
         </v-col>
     </v-row>
+
+    
 </template>
 <style lang="scss">
-.m-forms-bonus-table-bg {
+.m-forms-bonus-table-bg1 {
     background: #1C1929 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-    border-radius: 12px !important;
+    // border-radius: 12px !important;
     width: 100% !important;
 }
 
-.m-forms-bonus-table {
-
+.m-forms-bonus-table1 {
+    border-radius: 12px !important;
+    .v-table__wrapper {
+        border-radius: 0px!important;
+    }
     .v-table.v-table--fixed-header>.v-table__wrapper>table>thead>tr>th {
         background: #414968;
         height: 46px !important;
     }
-
+    .v-table > .v-table__wrapper > table > tbody > tr > td, .v-table > .v-table__wrapper > table > tbody > tr > th, .v-table > .v-table__wrapper > table > thead > tr > td, .v-table > .v-table__wrapper > table > thead > tr > th, .v-table > .v-table__wrapper > table > tfoot > tr > td, .v-table > .v-table__wrapper > table > tfoot > tr > th
+    {
+        padding: 0px!important;
+    }
     .v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>td,
     .v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>th {
         border-bottom: 1px solid #414968;
-    }
-
-    .forms-table-header {
-        border-radius: 8px !important;
     }
 
     .forms-table-body {
@@ -202,14 +255,24 @@ const mobileWidth = computed(() => {
         text-align: center;
     }
 
-    .forms-table-border {
-        padding: 0px 20px;
+    .forms-table-border0 {
+        border-right: 1px solid #000000 !important;
+    }
+
+    .forms-table-border1 {
         border-left: 1px solid #000000 !important;
         border-right: 1px solid #000000 !important;
+    }
+    .forms-table-border2 {
+        border-left: 1px solid #000000 !important;
     }
 
 }
 
+.m-bonus-transaction-table-body-cells{
+    padding-top: 21px!important;
+    padding-bottom: 21px!important;
+}
 .m-game-menu {
     .v-overlay__content::after {
         content: "";
@@ -241,7 +304,7 @@ const mobileWidth = computed(() => {
 }
 
 .el-popper.is-customized {
-    padding: 6px 12px;
+    padding: 15px 20px;
     background: #29253C;
     border-radius: 10px;
 }
@@ -260,4 +323,39 @@ const mobileWidth = computed(() => {
     background: var(--bg-51-c-1929, #1C1929);
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }
+.v-pagination__list {
+    justify-content: right!important;
+}
+.m-bonus-transaction-table {
+    margin-left: 12px;
+    margin-top: 16px!important;
+    margin-bottom: 8px;
+}
+
+.m-bonus-transaction-tooltip-body{
+    padding:0px!important;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    .m-bonus-transaction-tooltip{
+        font-size: 12px;
+        font-weight: 400;
+        font-family: 'Inter';
+    }
+}
+.m-bonus-transaction-table-btn{
+    background-color: transparent;
+    box-shadow: none;
+    .v-btn__content{
+        text-transform: none;
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+.m-bonus-transaction-table-body-cells {
+    .v-btn--elevated:hover, .v-btn--elevated:focus {
+        box-shadow: none;
+    }
+}
+
+
 </style>

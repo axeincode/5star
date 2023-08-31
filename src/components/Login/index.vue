@@ -400,6 +400,11 @@ export default Login;
 .login-body {
   margin: 0px !important;
   padding: 48px;
+  
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+  }
 }
 
 // close modal button
@@ -454,4 +459,6 @@ export default Login;
 .text-large {
   font-size: 32px !important;
 }
+
+
 </style>

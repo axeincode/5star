@@ -145,12 +145,14 @@ const mobileWidth = computed(() => {
             </tbody>
         </v-table>
     </v-row>
-    <v-row class="ma-4 justify-end">
-        <v-col cols="4" class="d-flex justify-start">
+    <v-row class="ma-4 mx-2">
+        <v-col cols="4" class="d-flex" style="margin-left: -10px!important;">
             <img src="@/assets/public/svg/icon_public_53.svg" width="24"/>
         </v-col>
-        <v-col cols="8" class="d-flex justify-end">
-            <Pagination />
+        <v-col cols="8" class="d-flex" style="margin-left: 10px!important; padding-right: 0px!important; padding-left: 0px!important;">
+            <div style="float: right!important; width: 100%;">
+                <Pagination style="float: right;"/>
+            </div>
         </v-col>
     </v-row>
 </template>

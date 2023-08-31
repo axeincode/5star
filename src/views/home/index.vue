@@ -15,6 +15,12 @@ import GameProviders from "@/components/global/game_provider/index.vue";
 // import { Carousel, Slide, Navigation } from "vue3-carousel";
 import icon_public_92 from "@/assets/public/svg/icon_public_92.svg";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
+import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
+import icon_public_36 from "@/assets/public/svg/icon_public_36.svg";
+import icon_public_37 from "@/assets/public/svg/icon_public_37.svg";
+import icon_public_95 from "@/assets/public/svg/icon_public_95.svg";
+import icon_public_38 from "@/assets/public/svg/icon_public_38.svg";
+import icon_public_39 from "@/assets/public/svg/icon_public_39.svg";
 import { mailStore } from "@/store/mail";
 import { refferalStore } from "@/store/refferal";
 import { gameStore } from "@/store/game";
@@ -551,14 +557,22 @@ const Dashboard = defineComponent({
     const recordContainer = ref<HTMLElement | null>(null);
     const recordScrollInterval = ref<any>(null);
     const historyToggleSwitch = ref<boolean>(false);
+    const selectedGameFilterBtn = ref<string>(t("home.button.all_game"));
 
     const swiper = ref<any>(null);
 
     const winnerCheckboxColor = ref<string>("#ffffff");
     const prizeCheckboxColor = ref<string>("#7782AA");
 
+    const gameFilterIconColor1 = ref<string>("#ffffff");
+    const gameFilterIconColor2 = ref<string>("#7782AA");
+    const gameFilterIconColor3 = ref<string>("#7782AA");
+    const gameFilterIconColor4 = ref<string>("#7782AA");
+    const gameFilterIconColor5 = ref<string>("#7782AA");
+    const gameFilterIconColor6 = ref<string>("#7782AA");
+
     const currentPage = ref<number>(1);
-    const limit = ref<number>(10);
+    const limit = ref<number>(8);
 
     const refferalAppBarShow = computed(() => {
       const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -958,6 +972,61 @@ const Dashboard = defineComponent({
       { deep: true }
     );
 
+    const gameTransform1 = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute("fill", gameFilterIconColor1.value);
+        for (let subNode of node.children) {
+          subNode.setAttribute("fill", gameFilterIconColor1.value);
+        }
+      }
+      return el;
+    };
+
+    const gameTransform2 = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute("fill", gameFilterIconColor2.value);
+        for (let subNode of node.children) {
+          subNode.setAttribute("fill", gameFilterIconColor2.value);
+        }
+      }
+      return el;
+    };
+
+    const gameTransform3 = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute("fill", gameFilterIconColor3.value);
+        for (let subNode of node.children) {
+          subNode.setAttribute("fill", gameFilterIconColor3.value);
+        }
+      }
+      return el;
+    };
+
+    const gameTransform4 = (el: any) => {
+      el.children[0].setAttribute("fill", gameFilterIconColor4.value);
+      return el;
+    };
+
+    const gameTransform5 = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute("fill", gameFilterIconColor5.value);
+        for (let subNode of node.children) {
+          subNode.setAttribute("fill", gameFilterIconColor5.value);
+        }
+      }
+      return el;
+    };
+
+    const gameTransform6 = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute("fill", gameFilterIconColor6.value);
+        for (let subNode of node.children) {
+          subNode.setAttribute("fill", gameFilterIconColor6.value);
+        }
+      }
+      return el;
+    };
+
     const winnerTransform = (el: any) => {
       for (let node of el.children) {
         node.setAttribute("fill", winnerCheckboxColor.value);
@@ -1001,6 +1070,81 @@ const Dashboard = defineComponent({
       // }
     };
 
+    const handleGameFilterBtn = (gamFilterBtn: string) => {
+      selectedGameFilterBtn.value = gamFilterBtn;
+      switch (selectedGameFilterBtn.value) {
+        case t("home.button.all_game"):
+          gameFilterIconColor1.value = "#FFFFFF";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          break;
+        case t("home.button.favorite"):
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#FFFFFF";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          break;
+        case t("home.button.original_game"):
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#FFFFFF";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          break;
+        case t("home.button.pg_soft"):
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#FFFFFF";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          break;
+        case t("home.button.slots"):
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#FFFFFF";
+          gameFilterIconColor6.value = "#7782AA";
+          break;
+        case t("home.button.live_casino"):
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#FFFFFF";
+          break;
+      }
+    };
+
+    const handleMoreGame = async (name: string, page_no: number) => {
+      let new_page_no = page_no + 1;
+      await dispatchGameSearch(
+        "?game_categories_slug=" +
+          name +
+          "&page=" +
+          currentPage.value +
+          "&limit=" +
+          limit.value * new_page_no
+      );
+      gameSearchList.value.map((item) => {
+        item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+      });
+      gameCategories.value.map((item) => {
+        if (item.name == name) {
+          item.games = gameSearchList.value;
+          item.page_no = new_page_no;
+        }
+      });
+    };
+
     onMounted(async () => {
       // startLuckyScrollingInterval();
       // startRecordScrollingInterval();
@@ -1024,6 +1168,7 @@ const Dashboard = defineComponent({
         gameSearchList.value.map((item) => {
           item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
         });
+        item.page_no = 1;
         item.games = gameSearchList.value;
       });
 
@@ -1052,12 +1197,27 @@ const Dashboard = defineComponent({
       modules: [Pagination, Virtual, Autoplay, Navigation],
       icon_public_92,
       icon_public_91,
+      icon_public_34,
+      icon_public_36,
+      icon_public_37,
+      icon_public_95,
+      icon_public_38,
+      icon_public_39,
       goToPrev,
       goToNext,
       getSwiperRef,
       refferalAppBarShow,
       gameCategories,
       handleEnterGame,
+      selectedGameFilterBtn,
+      handleGameFilterBtn,
+      gameTransform1,
+      gameTransform2,
+      gameTransform3,
+      gameTransform4,
+      gameTransform5,
+      gameTransform6,
+      handleMoreGame,
     };
   },
 });
@@ -1189,7 +1349,7 @@ export default Dashboard;
     </div>
 
     <!-- input for search -->
-    <v-row class="mt-2" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
+    <v-row class="mt-2 home-search-bar" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
       <v-text-field
         :placeholder="t('home.search')"
         class="form-textfield dark-textfield"
@@ -1205,53 +1365,314 @@ export default Dashboard;
     </v-row>
 
     <!-- buttons for filter -->
-    <v-row :class="[mobileVersion == 'sm' ? 'mx-0' : 'mx-4']">
+    <v-row :class="[mobileVersion == 'sm' ? 'mx-2' : 'mx-4']">
       <template v-if="mobileVersion != 'sm'">
-        <v-btn class="mr-2 my-2 text-none lobby-btn-color" width="150" height="48">
-          {{ t("home.button.lobby") }}
-        </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
-          {{ t("home.button.popular") }}
-        </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
-          {{ t("home.button.slots") }}
-        </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
-          {{ t("home.button.live_casino") }}
-        </v-btn>
-        <v-btn class="mr-2 my-2 text-none popular-btn-color" width="150" height="48">
-          {{ t("home.button.blue_originals") }}
-        </v-btn>
+        <v-slide-group
+          class="mt-2"
+          show-arrows
+          style="
+            touch-action: none;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+            background: none !important;
+          "
+        >
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="159"
+              height="48"
+              :class="
+                selectedGameFilterBtn == t('home.button.all_game')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.all_game'))"
+            >
+              <inline-svg
+                :src="icon_public_34"
+                width="24"
+                height="24"
+                class="mr-2"
+                :transform-source="gameTransform1"
+              >
+              </inline-svg>
+              {{ t("home.button.all_game") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="144"
+              height="48"
+              :class="
+                selectedGameFilterBtn == t('home.button.favorite')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.favorite'))"
+            >
+              <inline-svg
+                :src="icon_public_36"
+                width="24"
+                height="24"
+                class="mr-2"
+                :transform-source="gameTransform2"
+              ></inline-svg>
+              {{ t("home.button.favorite") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="191"
+              height="48"
+              :class="
+                selectedGameFilterBtn == t('home.button.original_game')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.original_game'))"
+            >
+              <inline-svg
+                :src="icon_public_37"
+                width="24"
+                height="24"
+                class="mr-2"
+                :transform-source="gameTransform3"
+              ></inline-svg>
+              {{ t("home.button.original_game") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="134"
+              height="48"
+              :class="
+                selectedGameFilterBtn == t('home.button.pg_soft')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.pg_soft'))"
+            >
+              <inline-svg
+                :src="icon_public_95"
+                width="24"
+                height="24"
+                class="mr-2"
+                :transform-source="gameTransform4"
+              ></inline-svg>
+              {{ t("home.button.pg_soft") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="120"
+              height="48"
+              :class="
+                selectedGameFilterBtn == t('home.button.slots')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.slots'))"
+            >
+              <inline-svg
+                :src="icon_public_38"
+                width="24"
+                height="24"
+                class="mr-2"
+                :transform-source="gameTransform5"
+              ></inline-svg>
+              {{ t("home.button.slots") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="171"
+              height="48"
+              :class="
+                selectedGameFilterBtn == t('home.button.live_casino')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.live_casino'))"
+            >
+              <inline-svg
+                :src="icon_public_39"
+                width="24"
+                height="24"
+                class="mr-2"
+                :transform-source="gameTransform6"
+              ></inline-svg>
+              {{ t("home.button.live_casino") }}
+            </v-btn>
+          </v-slide-group-item>
+        </v-slide-group>
       </template>
       <template v-else>
-        <v-col cols="4" class="px-1">
-          <v-btn class="mr-2 my-2 text-none lobby-btn-color" width="160">
-            {{ t("home.button.lobby") }}
-          </v-btn>
-        </v-col>
-        <v-col cols="4" class="px-1">
-          <v-btn class="mr-2 my-2 text-none popular-btn-color" width="160">
-            {{ t("home.button.popular") }}
-          </v-btn>
-        </v-col>
-        <v-col cols="4" class="px-1">
-          <v-btn class="mr-2 my-2 text-none popular-btn-color" width="160">
-            {{ t("home.button.slots") }}
-          </v-btn>
-        </v-col>
+        <v-slide-group
+          class="mt-4"
+          show-arrows
+          style="
+            touch-action: none;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+            background: none !important;
+          "
+        >
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="112"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.all_game')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.all_game'))"
+            >
+              <inline-svg
+                :src="icon_public_34"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform1"
+              >
+              </inline-svg>
+              {{ t("home.button.all_game") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="112"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.favorite')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.favorite'))"
+            >
+              <inline-svg
+                :src="icon_public_36"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform2"
+              ></inline-svg>
+              {{ t("home.button.favorite") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="136"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.original_game')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.original_game'))"
+            >
+              <inline-svg
+                :src="icon_public_37"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform3"
+              ></inline-svg>
+              {{ t("home.button.original_game") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="112"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.pg_soft')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.pg_soft'))"
+            >
+              <inline-svg
+                :src="icon_public_95"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform4"
+              ></inline-svg>
+              {{ t("home.button.pg_soft") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="112"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.slots')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.slots'))"
+            >
+              <inline-svg
+                :src="icon_public_38"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform5"
+              ></inline-svg>
+              {{ t("home.button.slots") }}
+            </v-btn>
+          </v-slide-group-item>
+          <v-slide-group-item>
+            <v-btn
+              class="mr-6 text-none"
+              width="112"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.live_casino')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.live_casino'))"
+            >
+              <inline-svg
+                :src="icon_public_39"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform6"
+              ></inline-svg>
+              {{ t("home.button.live_casino") }}
+            </v-btn>
+          </v-slide-group-item>
+        </v-slide-group>
       </template>
     </v-row>
 
     <!-- game list -->
     <template v-for="(item, index) in gameCategories" :key="index">
-      <v-row class="ml-4 mt-6 mb-1 original_game_text">
+      <v-row
+        class="ml-4 mb-1 original_game_text"
+        :class="mobileWidth > 600 ? ' mt-12' : ' mt-10'"
+      >
         {{ item.name }}
       </v-row>
       <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
         <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
           <div
-            style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-            v-if="gameIndex < 7"
+            style="flex: 0 0 14.2857%; max-width: 14.2857%; padding: 0px 8px 8px 0px"
+            v-if="gameIndex < 7 * item.page_no"
           >
             <v-img
               :src="gameItem.image"
@@ -1263,7 +1684,14 @@ export default Dashboard;
       </v-row>
       <v-row class="mx-1 mt-0" v-else>
         <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
-          <v-col cols="4" lg="2" md="2" sm="3" class="px-1" v-if="gameIndex < 6">
+          <v-col
+            cols="4"
+            lg="2"
+            md="2"
+            sm="3"
+            class="px-1"
+            v-if="gameIndex < 6 * item.page_no"
+          >
             <img
               v-lazy="gameItem.image"
               alt="Lazy loaded image"
@@ -1277,13 +1705,17 @@ export default Dashboard;
       <v-row
         class="justify-center"
         :class="mobileWidth < 600 ? 'mt-6 mx-3 mb-0' : 'mt-8 ml-4'"
-        v-if="Number(item.game_count) > 6"
+        v-if="
+          (mobileWidth < 600 && Number(item.game_count) > 6) ||
+          (mobileWidth > 600 && Number(item.game_count) > 7)
+        "
       >
         <v-btn
           class="text-none more-btn-color"
           variant="outlined"
           :width="mobileWidth < 600 ? '100%' : 164"
           :height="mobileWidth < 600 ? 41 : 48"
+          @click="handleMoreGame(item.name, item.page_no)"
         >
           {{ t("home.more") }}
         </v-btn>
@@ -1732,6 +2164,14 @@ export default Dashboard;
 </template>
 
 <style lang="scss">
+.home-body {
+  .v-slide-group__prev,
+  .v-slide-group__next {
+    color: white !important;
+    display: none;
+  }
+}
+
 .home-swiper {
   height: 247px;
 
@@ -1836,6 +2276,22 @@ export default Dashboard;
 }
 
 @media (max-width: 600px) {
+  .btn-211f31 {
+    border-radius: 10px !important;
+
+    .v-btn__content {
+      font-size: 12px;
+    }
+  }
+
+  .button-bright {
+    border-radius: 10px !important;
+
+    .v-btn__content {
+      font-size: 12px;
+    }
+  }
+
   .home-game-frame-area {
     margin-top: 0px;
   }
@@ -1981,9 +2437,7 @@ export default Dashboard;
 }
 
 .lobby-btn-color {
-  background: #32cfec !important;
-  color: #000000 !important;
-  // width: 160px !important;
+  border-radius: 12px !important;
 
   .v-btn__content {
     font-weight: 700 !important;
@@ -1992,13 +2446,15 @@ export default Dashboard;
 }
 
 .popular-btn-color {
-  background: #211f31 !important;
-  color: #7782aa !important;
-  width: 160px !important;
+  border-radius: 12px !important;
 
   .v-btn__content {
-    font-weight: 700 !important;
+    text-align: center;
+    font-family: Inter;
     font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 }
 
@@ -2011,7 +2467,8 @@ export default Dashboard;
 
 @media (max-width: 600px) {
   .original_game_text {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 800;
   }
 
   .more-btn-color {
@@ -2159,6 +2616,12 @@ export default Dashboard;
     height: 6px !important;
     border-radius: 24px !important;
     background: var(--white-bg, #fff) !important;
+  }
+}
+
+.home-search-bar {
+  .form-textfield .v-field__overlay {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 </style>

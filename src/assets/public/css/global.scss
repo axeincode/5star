@@ -506,7 +506,9 @@ button:active:enabled {
 }
 
 .button-bright {
-    background-color: #32CFEC !important;
+    background: var(--Primary-Button-32CFEC, #32CFEC) !important;
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
     color: black !important;
 }
 
@@ -527,6 +529,12 @@ button:active:enabled {
 .button-black {
     background-color: #1C1929 !important;
     color: white !important;
+}
+
+.btn-211f31 {    
+  background: var(--Text-Box-1-211F31, #211f31) !important;
+  /* Text Box */
+  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
 }
 
 .button-purple {

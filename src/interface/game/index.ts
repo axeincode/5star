@@ -4,6 +4,7 @@ export interface Category {
     name: string
     slug: string
     games: Array<Search>
+    page_no: number
 }
 
 export interface Search {

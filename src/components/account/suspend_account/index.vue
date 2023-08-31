@@ -34,7 +34,7 @@ const confirmDailogShow = () => {
         <v-row class="mx-6 mt-5 text-400-14 text-gray">
             {{ t('account.suspend_account.help_text') }}
         </v-row>
-        <v-row class="mx-6 mt-10">
+        <v-row class="mx-6 mt-10 ">
             <v-col cols="2"></v-col>
             <v-col cols="8">
                 <v-text-field :label="t('account.suspend_account.duration_text')" class="form-textfield dark-textfield"
@@ -71,6 +71,12 @@ const confirmDailogShow = () => {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: 10px solid #211F31;
+}
+.suspend-account-body{
+    .form-textfield div.v-field__field {
+        box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+    }
 }
 
 .suspend-menu {

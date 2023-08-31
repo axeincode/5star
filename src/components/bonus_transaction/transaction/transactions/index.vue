@@ -127,8 +127,10 @@ const mobileWidth = computed(() => {
             </tbody>
         </v-table>
     </v-row>
-    <v-row class="ma-4 justify-end">
-        <Pagination />
+    <v-row class="justify-end" style="margin: 16px 8px 16px 16px!important; padding-right: 0px!important; padding-left: 0px!important;">
+        <div style="float: right!important; width: 100%;">
+            <Pagination style="float: right;"/>
+        </div>
     </v-row>
 </template>
 <style lang="scss">

@@ -29,30 +29,30 @@ const mobileWidth = computed(() => {
     <!-------------------- footer bar -------------->
     <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-7'">
       <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
-        <div class="footer-title" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">
+        <div class="footer-title" :class="mobileWidth > 600 ? 'ml-10' : 'ml-2'">
           {{ t("home.footer.game.title") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">
+        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-2'">
           {{ t("home.footer.game.menu_1") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">
+        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-2'">
           {{ t("home.footer.game.menu_2") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">
+        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-2'">
           {{ t("home.footer.game.menu_3") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-4'">
+        <div class="footer-text-1" :class="mobileWidth > 600 ? 'ml-10' : 'ml-2'">
           {{ t("home.footer.game.menu_4") }}
         </div>
       </v-col>
       <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
-        <div class="footer-title" :class="mobileWidth < 600 ? 'ml-4' : ''">
+        <div class="footer-title" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.title") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-4' : ''">
+        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.menu_1") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-4' : ''">
+        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.menu_2") }}
         </div>
       </v-col>
@@ -182,12 +182,12 @@ const mobileWidth = computed(() => {
 @media (max-width: 600px) {
   .footer-title {
     margin-bottom: 14px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .footer-text-1 {
     margin-bottom: 16px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
   }
 }

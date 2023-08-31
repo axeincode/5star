@@ -329,6 +329,7 @@ onMounted(() => {
 
     <v-dialog
       v-model="cashDialog"
+      class="cash-header-dialog"
       :width="''"
       :fullscreen="true"
       :scrim="false"
@@ -524,11 +525,33 @@ onMounted(() => {
 
     <router-view />
 
+    <el-backtop :right="16" :bottom="70">
+      <div class="m-back-top relative">
+        <img src="@/assets/public/svg/icon_public_94.svg" class="m-back-icon-position" />
+      </div>
+    </el-backtop>
+
     <!-------------------------------- Footer Tab ----------------------------------------->
     <Footer />
   </v-main>
 </template>
 <style lang="scss">
+.m-back-top {
+  width: 44px;
+  height: 44px;
+  background: #d42763;
+  border-radius: 44px;
+  filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
+  .m-back-icon-position {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .m-login-bonus-dialog {
   .v-overlay__scrim {
     // opacity: 1 !important;

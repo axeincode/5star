@@ -103,10 +103,21 @@ const handlePixInfoSubmit = (): void => {
 
 watch(cashToggleSwitch, (newValue) => {
     if (newValue) {
+        pixInfoItem.value.id = "";
+        pixInfoItem.value.first_name = "";
+        pixInfoItem.value.last_name = "";
+        console.log('11111')
+        isPersonalBtnReady.value = false;
+        confirmValidation.value = false;
         setWithdrawDialogToggle(true);
         setDepositDialogToggle(false);
         setOverlayScrimShow(false);
     } else {
+        pixInfoItem.value.id = "";
+        pixInfoItem.value.first_name = "";
+        pixInfoItem.value.last_name = "";
+        isPersonalBtnReady.value = false;
+        confirmValidation.value = false;
         setWithdrawDialogToggle(false);
         setDepositDialogToggle(true);
         setOverlayScrimShow(false);
@@ -445,6 +456,15 @@ onMounted(() => {
 
   .v-input--horizontal .v-input__append {
     margin-inline-start: 0px !important;
+  }
+
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
+
+  }
+
+  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
+      background: transparent;
   }
 }
 

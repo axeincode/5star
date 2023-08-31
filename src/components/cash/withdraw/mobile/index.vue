@@ -181,9 +181,9 @@ const withdrawConfig = computed(() => {
   return getWithdrawCfg.value
 })
 
-const mainBlurEffectShow = computed(() => {
-  const { getMainBlurEffectShow } = storeToRefs(appBarStore());
-  return getMainBlurEffectShow.value
+const depositBlurEffectShow = computed(() => {
+  const { getDepositBlurEffectShow } = storeToRefs(appBarStore());
+  return getDepositBlurEffectShow.value
 })
 
 watch(withdrawConfig, (newValue) => {
@@ -322,7 +322,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mobile-withdraw-container" :class="mainBlurEffectShow ? 'main-bg-blur' : ''">
+  <div class="mobile-withdraw-container" :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''">
     <v-row class="mt-6 mx-6 text-400-12 gray">
       {{ t("withdraw_dialog.withdraw_currency") }}
     </v-row>
@@ -466,10 +466,10 @@ onMounted(async () => {
     </v-row>
     <div class="m-deposit-btn-position">
       <v-btn
-        class="ma-3 button-bright m-deposit-btn"
+        class="ma-3 m-deposit-btn"
+        :class=" isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
-        :disabled="!isDepositBtnReady"
         :onclick="handleWithdrawSubmit"
       >
         {{ t("withdraw_dialog.withdraw_btn_text") }}
@@ -489,6 +489,14 @@ onMounted(async () => {
 }
 // container
 .mobile-withdraw-container {
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
+
+  }
+
+  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
+      background: transparent;
+  }
   background-color: #211f31;
   height: 100%;
   overflow-y: auto;
@@ -607,7 +615,13 @@ onMounted(async () => {
 }
 
 .m-deposit-btn {
+    text-align: center;
+    background: #353652;
+
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
+    color: #fff;
     text-align: center;
     font-family: Inter;
     font-size: 14px;
@@ -617,10 +631,19 @@ onMounted(async () => {
   }
 }
 
-.main-bg-blur {
-  // filter: blur(4px);
-  // -webkit-filter: blur(4px);
-  filter: saturate(180%) blur(4px);
-  -webkit-filter: saturate(180%) blur(4px);
+.m-deposit-btn-ready {
+    background: #32cfec;
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+    .v-btn__content {
+      color: #000000;
+    }
+}
+
+.deposit-bg-blur {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+  // filter: saturate(180%) blur(4px);
+  // -webkit-filter: saturate(180%) blur(4px);
 }
 </style>

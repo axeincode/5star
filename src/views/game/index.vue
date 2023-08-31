@@ -355,11 +355,15 @@ const handleIframeLoad = () => {
 };
 
 onMounted(async () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   setTimeout(() => {
     if (mobileWidth.value < 600) {
       setMailMenuShow(true);
     }
-  }, 1000);
+  }, 300);
   recordScrollInterval.value = setInterval(() => {
     recordList.value.push(recordList.value[Math.floor(Math.random() * 10)]);
   }, 600);
@@ -381,9 +385,9 @@ onUnmounted(() => {
         </div>
       </div>
       <iframe
-        v-else
         ref="frame"
         :src="enterGameItem.weburl"
+        :style="{ height: frameShow ? '100vh' : '0px' }"
         class="home-game-frame-area"
         @load="handleIframeLoad"
       ></iframe>
@@ -399,9 +403,9 @@ onUnmounted(() => {
         </div>
       </div>
       <iframe
-        v-else
         :src="enterGameItem.weburl"
         class="home-game-frame-area"
+        :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
         @load="handleIframeLoad"
       ></iframe>
     </div>
@@ -560,38 +564,42 @@ onUnmounted(() => {
       border: none;
       margin-top: 20px;
       width: 100%;
-      height: calc(100vh - 300px);
+      height: 100vh;
+      border-radius: 16px;
+      box-shadow: 0px 2px 4px -1px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)),
+        0px 4px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)),
+        0px 1px 10px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
     }
 
     .loading-container {
       border: none;
       margin-top: 20px;
       width: 100%;
-      height: 200px;
+      height: 100vh;
 
       .loading-body {
         display: flex;
         align-items: center;
         position: absolute;
-        top: 50%;
+        top: 43%;
         left: 50%;
         transform: translateX(-50%);
 
         .dot-0 {
-          width: 10px;
-          height: 10px;
+          width: 16px;
+          height: 16px;
           background: #12ff76;
           border-radius: 10px;
-          margin-right: 8px;
+          margin: 0px 4px;
           animation: expandAnimation 0.6s 0.1s ease-in infinite;
         }
 
         .dot-1 {
-          width: 16px;
-          height: 16px;
+          width: 24px;
+          height: 24px;
           background: #12ff76;
           border-radius: 16px;
-          margin-right: 8px;
+          margin: 0px 4px;
           animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
         }
       }
@@ -624,7 +632,7 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         position: absolute;
-        top: 50%;
+        top: 48%;
         left: 50%;
         transform: translateX(-50%);
 
@@ -633,7 +641,7 @@ onUnmounted(() => {
           height: 10px;
           background: #12ff76;
           border-radius: 10px;
-          margin-right: 8px;
+          margin: 0px 4px;
           animation: expandAnimation 0.6s 0.1s ease-in infinite;
         }
 
@@ -642,7 +650,7 @@ onUnmounted(() => {
           height: 16px;
           background: #12ff76;
           border-radius: 16px;
-          margin-right: 8px;
+          margin: 0px 4px;
           animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
         }
       }

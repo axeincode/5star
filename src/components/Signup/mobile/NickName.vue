@@ -140,7 +140,7 @@ watch(selectedAvatarItem, (value) => {
         {{ t("signup.displayNamePage.title") }}
       </p>
     </div>
-    <div class="mx-5 mt-2 relative">
+    <div class="mx-5 mt-2 relative m-display-name-input">
       <v-text-field
         :label="t('signup.displayNamePage.username')"
         class="form-textfield dark-textfield ma-0"
@@ -229,6 +229,16 @@ watch(selectedAvatarItem, (value) => {
     top: 190px;
     left: 50%;
     transform: translateX(-50%);
+  }
+  .m-display-name-input {
+    .form-textfield div.v-field__field {
+      box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
+
+    }
+    
+    .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
+        background: transparent;
+    }
   }
 }
 </style>

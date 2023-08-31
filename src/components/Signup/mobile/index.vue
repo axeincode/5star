@@ -447,7 +447,7 @@ export default MSignup;
         <div class="relative mt-10 pa-0">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
-            class="form-textfield dark-textfield ma-0"
+            class="form-textfield dark-textfield ma-0 m-text-field"
             variant="solo"
             density="comfortable"
             v-model="formData.emailAddress"
@@ -698,7 +698,7 @@ export default MSignup;
             {{ t("signup.displayNamePage.title") }}
           </p>
         </v-row>
-        <v-row class="mt-4 relative">
+        <v-row class="mt-4 relative m-display-name-input">
           <v-text-field
             :label="t('signup.displayNamePage.username')"
             class="form-textfield dark-textfield"
@@ -910,6 +910,17 @@ export default MSignup;
   width: 100%;
   height: 464px;
   // overflow-y: auto;
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+  }
+}
+
+.m-display-name-input {
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+  }
 }
 
 .m-signup-body::-webkit-scrollbar {

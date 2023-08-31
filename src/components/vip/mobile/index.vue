@@ -1281,7 +1281,7 @@ onMounted(() => {
                       </div>
                     </v-col>
                     <v-col cols="6">
-                      <div class="d-flex justify-center">
+                      <div class="d-flex justify-start">
                         <div>
                           <p class="text-500-12 text-gray">
                             {{ t("vip.benifit_description_body.text_8") }}
@@ -1320,7 +1320,7 @@ onMounted(() => {
                       </div>
                     </v-col>
                     <v-col cols="6">
-                      <div class="d-flex justify-center">
+                      <div class="d-flex justify-start">
                         <div>
                           <p class="text-500-12 text-gray">
                             {{ t("vip.benifit_description_body.text_12") }}
@@ -1339,7 +1339,7 @@ onMounted(() => {
                         </div>
                       </div>
                     </v-col>
-                    <v-col cols="6" class="d-flex justify-center">
+                    <v-col cols="6" class="d-flex justify-start">
                       <div>
                         <p class="text-500-12 text-gray">
                           {{ t("vip.benifit_description_body.text_14") }}

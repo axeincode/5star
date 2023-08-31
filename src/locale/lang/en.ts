@@ -188,11 +188,12 @@ export const lang: langType = {
   home: {
     search: "Search Games Or Providers",
     button: {
-      lobby: "Lobby",
-      popular: "Popular",
+      all_game: "All Games",
+      favorite: "Favorite",
+      original_game: "Original Game",
+      pg_soft: "PGsoft",
       slots: "Slots",
       live_casino: "Live Casino",
-      blue_originals: "Blue Originals",
     },
     original_games: "Original Games",
     more: "Load more",

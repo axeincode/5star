@@ -75,6 +75,15 @@ const confirmDailogShow = () => {
         background: #1C1929 !important;
     }
 
+    .form-textfield div.v-field__field {
+        box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+    }
+    
+    .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
+        background: transparent;
+    }
+
     .m-suspend-confirm-btn {
         .v-btn__content {
             text-align: center;

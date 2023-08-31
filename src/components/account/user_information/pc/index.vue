@@ -231,6 +231,8 @@ const handleVerifyCode = () => {
 
 .user-info-item {
     height: 56px !important;
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+
 }
 
 .account-edit-btn {

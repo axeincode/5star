@@ -549,12 +549,12 @@ export default Signup;
             </v-carousel-item>
           </v-carousel>
         </v-row>
-        <v-row class="mt-4 mb-2">
+        <v-row class="mt-4 mb-2 ">
           <p class="label-text-lg white full-width center">
             {{ t("signup.displayNamePage.title") }}
           </p>
         </v-row>
-        <v-row class="mt-4 relative">
+        <v-row class="mt-4 relative display-name-input">
           <v-text-field
             :label="t('signup.displayNamePage.username')"
             class="form-textfield dark-textfield"
@@ -646,6 +646,17 @@ export default Signup;
 .signup-body {
   margin: 0px !important;
   padding: 48px;
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+  }
+}
+
+.display-name-input {
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+  }
 }
 
 // close modal button

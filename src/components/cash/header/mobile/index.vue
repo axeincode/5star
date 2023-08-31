@@ -20,6 +20,7 @@ const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
+const { setDepositBlurEffectShow } = appBarStore();
 const { setPixInfo } = depositStore();
 
 const cashToggleSwitch = ref<boolean>(false);
@@ -98,6 +99,7 @@ const cashDialogShow = () => {
     setCashDialogToggle(false);
     setDepositDialogToggle(false);
     setWithdrawDialogToggle(false);
+    setMainBlurEffectShow(false);
 }
 
 const validateCPF = (cpf: string) => {
@@ -148,16 +150,30 @@ const withdrawDialogToggle = computed(() => {
 
 watch(cashToggleSwitch, (newValue) => {
     if (newValue) {
+        pixInfoItem.value.id = "";
+        pixInfoItem.value.first_name = "";
+        pixInfoItem.value.last_name = "";
+        console.log('11111')
+        isPersonalBtnReady.value = false;
+        confirmValidation.value = false;
         setWithdrawDialogToggle(true);
         setDepositDialogToggle(false);
-        setMainBlurEffectShow(false);
+        setMainBlurEffectShow(true);
+        setDepositBlurEffectShow(false);
 
         depositCheckboxColor.value = "#7782AA";
         withdrawCheckboxColor.value = "#ffffff";
     } else {
+        pixInfoItem.value.id = "";
+        pixInfoItem.value.first_name = "";
+        pixInfoItem.value.last_name = "";
+        console.log('11111')
+        isPersonalBtnReady.value = false;
+        confirmValidation.value = false;
         setWithdrawDialogToggle(false);
         setDepositDialogToggle(true);
-        setMainBlurEffectShow(false);
+        setMainBlurEffectShow(true);
+        setDepositBlurEffectShow(false);
 
         depositCheckboxColor.value = "#ffffff";
         withdrawCheckboxColor.value = "#7782AA";
@@ -172,7 +188,7 @@ watch(pixInfoMenuShow, (value) => {
         isPersonalBtnReady.value = false;
         confirmValidation.value = false;
     }
-    setMainBlurEffectShow(pixInfoMenuShow.value == true ? true: false)
+    setDepositBlurEffectShow(pixInfoMenuShow.value == true ? true: false)
 })
 
 const depositTransform = (el: any) => {
@@ -203,7 +219,7 @@ onMounted(() => {
 
 <template>
   <div class="mobile-cash-header">
-    <div class="m-header d-flex align-center relative">
+    <div class="d-flex align-center relative" :class="pixInfoMenuShow ? 'm-header-dropped' : 'm-header'">
       <v-menu
         offset="-5"
         :close-on-content-click="false"
@@ -389,6 +405,13 @@ onMounted(() => {
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     height: 60px;
   }
+  .m-header-dropped {
+    text-align: center;
+    border-radius: 0px;
+    background: #29253c;
+    /* Button Shadow */
+    height: 60px;
+  }
 
   .m-deposit-header-btn {
     width: 70px !important;
@@ -396,6 +419,7 @@ onMounted(() => {
     background: #29253c !important;
     box-shadow: none !important;
     border: none !important;
+    border-radius: 25px;
   }
 
   .header-mdi-icon {
@@ -549,7 +573,8 @@ onMounted(() => {
     color: #fff;
     text-align: center;
     font-family: Inter;
-    font-size: 14px;
+    font-size: 14px!important;
+    text-transform: none;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -560,11 +585,19 @@ onMounted(() => {
   .v-input__append {
     width: 0px !important;
   }
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
+
+  }
+
+  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
+      background: transparent;
+  }
 }
 
 .m-personal-info-menu {
   left: unset !important;
-  top: 50px !important;
+  top: 56px !important;
   border-radius: 0px 0px 25px 25px !important;
 
   .personal-info-key-position {
@@ -587,6 +620,9 @@ onMounted(() => {
 
   .v-input--horizontal .v-input__append {
     margin-inline-start: 0px !important;
+  }
+  .v-list{
+    box-shadow: none!important;;
   }
 }
 
@@ -665,5 +701,9 @@ onMounted(() => {
       color: #000000;
     }
   }
+  .cash-header-dialog1 {
+    z-index: 2440!important;
+  }
 }
+
 </style>

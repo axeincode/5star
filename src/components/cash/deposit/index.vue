@@ -450,6 +450,14 @@ const overlayScrimShow = computed(() => {
 <style lang="scss">
 // container
 .deposit-container {
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
+
+  }
+
+  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
+      background: transparent;
+  }
   background-color: #211f31;
   height: 700px;
   border-radius: 0px 0px 16px 16px;

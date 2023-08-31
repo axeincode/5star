@@ -566,7 +566,7 @@ export default Login;
   width: 100%;
 
   .v-field--variant-solo {
-    background: transparent !important;
+    background: transparent !important; 
   }
 }
 
@@ -580,6 +580,10 @@ export default Login;
   height: 473px;
   z-index: 2000;
   overflow-y: auto;
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
+
+  }
 }
 
 .m-login-body::-webkit-scrollbar {

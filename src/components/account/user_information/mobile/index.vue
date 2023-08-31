@@ -90,7 +90,7 @@ const handleVerifyCode = () => {
 <template>
     <div class="relative">
         <v-row class="mx-4 mt-4 text-700-12 text-white">
-            {{ t('account.menu.user_info_text') }}
+            {{ t('account.menu.user_info_text') }}asdfasd
         </v-row>
         <v-row class="mx-3 mt-6">
             <v-col cols="12" class="pa-0">
@@ -230,6 +230,7 @@ const handleVerifyCode = () => {
 
 .m-user-info-item {
     height: 40px !important;
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }
 
 .m-account-edit-btn {

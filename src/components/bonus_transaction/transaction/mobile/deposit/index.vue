@@ -71,44 +71,70 @@ const mobileWidth = computed(() => {
 })
 </script>
 <template>
-    <v-row class="mx-2 mt-1 m-forms-bonus-table">
-        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="600px">
+    <v-row class="mx-2 mt-1 m-forms-bonus-table1">
+        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="600px" style = "padding: 16px;">
             <thead class="forms-table-header">
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">
-                        {{ t('transaction.transactions.date') }}
+                        <div class="forms-table-border0" >
+                            <div style = "width: 50px; margin-left: 16px; margin-right: 20px;">
+                                {{ t('transaction.transactions.date') }}
+                            </div>
+                        </div>
+                        
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.transactions.id') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 130px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.id') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border-right">{{ t('transaction.transactions.type') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 60px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.type') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div>{{ t('transaction.transactions.amount') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.amount') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center">
-                        <div class="forms-table-border">{{ t('transaction.game_history.status') }}</div>
+                        <div class="forms-table-border1" >
+                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.game_history.status') }}
+                            </div>
+                        </div>
                     </th>
                     <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px;">
-                        {{ t('transaction.transactions.note') }}
+                        <div class="forms-table-border2" >
+                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                                {{ t('transaction.transactions.note') }}
+                            </div>
+                        </div>
+                        
                     </th>
                 </tr>
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-10 text-center">{{ item.date }}</td>
-                    <td class="text-400-10 text-center" style="min-width: 130px;">{{ item.id }}</td>
-                    <td class="text-400-10 text-center" style="padding-right: 30px !important;">{{ item.type }}</td>
-                    <td class="text-400-10 text-center color-01983A" style="min-width: 130px;">{{ item.amount }}</td>
-                    <td class="text-400-10 text-center" :class="item.status != 'Complete' ? 'color-01983A' : ''">{{ item.status }}</td>
-                    <td class="text-400-10 text-center">{{ item.note }}</td>
+                    <td class="text-400-10 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
+                    <td class="text-400-10 text-center" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.id }}</td>
+                    <td class="text-400-10 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
+                    <td class="text-400-10 text-center color-01983A" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.amount }}</td>
+                    <td class="text-400-10 text-center" :class="item.status == 'Complete' ? 'color-01983A' : ''" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.status }}</td>
+                    <td class="text-400-10 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}</td>
                 </tr>
             </tbody>
         </v-table>
     </v-row>
-    <v-row class="ma-4 justify-end">
-        <Pagination />
+    <v-row class="m-bonus-transaction-table2">
+        <Pagination style = "margin-top:4px;"/>
     </v-row>
 </template>
 <style lang="scss">
@@ -119,8 +145,7 @@ const mobileWidth = computed(() => {
     width: 100% !important;
 }
 
-.m-forms-bonus-table {
-
+.m-forms-bonus-table1 {
     .v-table.v-table--fixed-header>.v-table__wrapper>table>thead>tr>th {
         background: #414968;
         height: 46px !important;
@@ -143,10 +168,16 @@ const mobileWidth = computed(() => {
         text-align: center;
     }
 
-    .forms-table-border {
-        padding: 0px 20px;
+    .forms-table-border0 {
+        border-right: 1px solid #000000 !important;
+    }
+
+    .forms-table-border1 {
         border-left: 1px solid #000000 !important;
         border-right: 1px solid #000000 !important;
+    }
+    .forms-table-border2 {
+        border-left: 1px solid #000000 !important;
     }
 
     .forms-table-border-right {
@@ -154,5 +185,11 @@ const mobileWidth = computed(() => {
         border-right: 1px solid #000000 !important;
     }
 
+}
+.m-bonus-transaction-table2 {
+    float: right;
+    margin-right: 4px;
+    margin-top: 20px!important;
+    margin-bottom: 20px;
 }
 </style>
