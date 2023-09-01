@@ -195,6 +195,11 @@ export const lang: langType = {
       slots: "Slots",
       live_casino: "Live Casino",
     },
+    search_dialog: {
+      text_1: "Recommended for you",
+      text_2: "No results",
+      text_3: "Search requires at least 3 characters"
+    },
     original_games: "Original Games",
     more: "Load more",
     principal: "Principal",

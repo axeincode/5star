@@ -26,6 +26,8 @@ import { refferalStore } from "@/store/refferal";
 import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import Search from "@/views/home/components/Search.vue";
+import MSearch from "@/views/home/components/mobile/Search.vue";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
@@ -48,6 +50,8 @@ const Dashboard = defineComponent({
     Autoplay,
     Pagination,
     Navigation,
+    Search,
+    MSearch,
   },
   setup() {
     const { t } = useI18n();
@@ -558,6 +562,7 @@ const Dashboard = defineComponent({
     const recordScrollInterval = ref<any>(null);
     const historyToggleSwitch = ref<boolean>(false);
     const selectedGameFilterBtn = ref<string>(t("home.button.all_game"));
+    const searchDialogShow = ref<boolean>(false);
 
     const swiper = ref<any>(null);
 
@@ -1145,6 +1150,15 @@ const Dashboard = defineComponent({
       });
     };
 
+    const handleSearchInputFocus = () => {
+      searchDialogShow.value = true;
+      setMailMenuShow(true);
+    };
+
+    watch(searchDialogShow, (value) => {
+      setMailMenuShow(value);
+    });
+
     onMounted(async () => {
       // startLuckyScrollingInterval();
       // startRecordScrollingInterval();
@@ -1218,6 +1232,8 @@ const Dashboard = defineComponent({
       gameTransform5,
       gameTransform6,
       handleMoreGame,
+      handleSearchInputFocus,
+      searchDialogShow,
     };
   },
 });
@@ -1227,6 +1243,16 @@ export default Dashboard;
 
 <template>
   <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
+    <v-navigation-drawer
+      v-model="searchDialogShow"
+      location="top"
+      temporary
+      :style="{ height: 'unset', top: '0px', zIndex: 300000, background: 'unset' }"
+      v-if="mobileWidth < 600"
+    >
+      <MSearch />
+    </v-navigation-drawer>
+
     <!-- image carousel -->
 
     <!-- <v-carousel
@@ -1361,6 +1387,7 @@ export default Dashboard;
         prepend-inner-icon="mdi-magnify"
         color="#7782AA"
         :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
+        :onfocus="handleSearchInputFocus"
       />
     </v-row>
 
@@ -2164,7 +2191,41 @@ export default Dashboard;
 </template>
 
 <style lang="scss">
+@keyframes expandAnimation {
+  0% {
+    scale: 1.3;
+  }
+
+  50% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 1.3;
+  }
+}
+
+@keyframes expandReverseAnimation {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 1.2;
+  }
+
+  100% {
+    scale: 0.8;
+  }
+}
 .home-body {
+  .v-navigation-drawer__scrim {
+    background: black !important;
+    opacity: 0.8 !important;
+  }
+  .v-navigation-drawer--top {
+    border: none;
+  }
   .v-slide-group__prev,
   .v-slide-group__next {
     color: white !important;

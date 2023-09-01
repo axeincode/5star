@@ -193,6 +193,11 @@ export type langType = {
       slots: string
       live_casino: string
     }
+    search_dialog : {
+      text_1: string
+      text_2: string
+      text_3: string
+    }
     original_games: string
     more: string
     principal: string
