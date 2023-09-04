@@ -43,7 +43,7 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   max: 588.88
 })
 
-const currencyList = ref<Array<GetCurrencyItem>>([
+const currencyTemplateList = [
   {
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
     name: "BRL",
@@ -79,7 +79,9 @@ const currencyList = ref<Array<GetCurrencyItem>>([
     name: "COP",
     value: 0
   },
-])
+]
+
+const currencyList = ref<Array<GetCurrencyItem>>([])
 
 const paymentList = ref<Array<GetPaymentItem>>([
   {
@@ -201,6 +203,13 @@ const depositConfig = computed(() => {
   return getDepositCfg.value
 })
 
+const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
+  return arr.filter((obj: any) => {
+    const objValues = obj[key];
+    return valueArr.every((value: any) => objValues.includes(value));
+  });
+};
+
 watch(depositConfig, (newValue) => {
   paymentList.value = [];
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
@@ -213,7 +222,10 @@ watch(depositConfig, (newValue) => {
       max: item.max
     })
   })
-  console.log(newValue["list"])
+  const keyArray = Object.keys(newValue["cfg"]);
+  const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
+  currencyList.value  = filteredObjects;
+  selectedPaymentItem.value = paymentList.value[0];
   depositAmountList.value = newValue["list"];
 }, { deep: true });
 
@@ -341,13 +353,22 @@ watch(depositToggleSwitch, (newValue) => {
   }
 })
 
+watch(currencyMenuShow, (value) => {
+  if (currencyMenuShow.value && currencyList.value.length < 2) {
+    currencyMenuShow.value = false
+  }
+})
+
 onMounted(async () => {
   await dispatchUserDepositCfg();
 })
 </script>
 
 <template>
-  <div class="mobile-deposit-container" :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''">
+  <div
+    class="mobile-deposit-container"
+    :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
+  >
     <v-row class="mt-6 mx-6 text-400-12 gray">
       {{ t("deposit_dialog.deposit_currency") }}
     </v-row>
@@ -388,9 +409,9 @@ onMounted(async () => {
           <template v-slot:prepend>
             <img :src="currencyItem.icon" width="20" />
           </template>
-          <v-list-item-title class="ml-2 text-400-12">{{
-            currencyItem.name
-          }}</v-list-item-title>
+          <v-list-item-title class="ml-2 text-400-12">
+            {{ currencyItem.name }}
+          </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -468,8 +489,10 @@ onMounted(async () => {
           @click="handleDepositAmount(depositAmountItem)"
         >
           {{ depositAmountUnit }} {{ depositAmountItem }}
-          <div class="m-deposit-amount-area" v-if="!bonusCheck" ></div>
-          <div class="m-deposit-amount-rate-text" v-if="!bonusCheck" >{{ depositRate }}</div>
+          <div class="m-deposit-amount-area" v-if="!bonusCheck"></div>
+          <div class="m-deposit-amount-rate-text" v-if="!bonusCheck">
+            {{ depositRate }}
+          </div>
         </v-btn>
       </v-col>
     </v-row>
@@ -486,7 +509,17 @@ onMounted(async () => {
         :onblur="handleAmountInputBlur"
         @input="handleAmountInputChange"
       />
-      <ValidationBox v-if="isShowAmountValidation" />
+      <ValidationBox
+        v-if="isShowAmountValidation"
+        :validationText2="
+          t('withdraw_dialog.validation.text_2') +
+          selectedPaymentItem.min +
+          ', ' +
+          t('withdraw_dialog.validation.text_3') +
+          selectedPaymentItem.max +
+          '.'
+        "
+      />
     </v-row>
     <div class="mt-0 mx-4 d-flex align-center">
       <div>
@@ -503,7 +536,7 @@ onMounted(async () => {
     <div class="m-deposit-btn-position">
       <v-btn
         class="ma-3 m-deposit-btn"
-        :class=" isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
+        :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
         :onclick="handleDepositSubmit"
@@ -532,12 +565,12 @@ onMounted(async () => {
 // container
 .mobile-deposit-container {
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 
-  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
-      background: transparent;
+  .form-textfield div.v-field--variant-solo,
+  .v-field--variant-solo-filled {
+    background: transparent;
   }
   background-color: #211f31;
   height: 100%;
@@ -614,11 +647,11 @@ onMounted(async () => {
   }
 
   .m-deposit-btn {
-      text-align: center;
-      background: #353652;
+    text-align: center;
+    background: #353652;
 
-      /* Button Shadow */
-      box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     .v-btn__content {
       color: #fff;
       text-align: center;
@@ -693,8 +726,8 @@ onMounted(async () => {
 }
 
 .deposit-bg-blur {
-  filter: blur(4px)!important;
-  -webkit-filter: blur(4px)!important;
+  filter: blur(4px) !important;
+  -webkit-filter: blur(4px) !important;
   // filter: saturate(180%) blur(4px);
   // -webkit-filter: saturate(180%) blur(4px);
 }

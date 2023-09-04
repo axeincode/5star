@@ -8,6 +8,7 @@ import { appBarStore } from "@/store/appBar";
 import { loginBonusStore } from "@/store/loginBonus";
 import { refferalStore } from "@/store/refferal";
 import { mailStore } from "@/store/mail";
+import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
 
 const { setNavBarToggle } = appBarStore();
@@ -18,6 +19,7 @@ const { setRouletteBonusDialogVisible } = loginBonusStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setMailMenuShow } = mailStore();
+const { setSearchGameDialogShow } = gameStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -115,6 +117,9 @@ watch(navBarToggle, (newValue) => {
   if (mobileWidth.value < 600 && newValue) {
     setRightBarToggle(false);
   }
+  if (mobileWidth.value < 600) {
+    setSearchGameDialogShow(newValue);
+  }
 })
 
 const handleLanguageDropdown = (item: string) => {
@@ -175,6 +180,7 @@ onMounted(() => {
     class="nav-background pb-100"
     :width="192"
     v-model="drawer"
+    style="z-index: 1008"
   >
     <template v-slot:prepend>
       <v-list-item
@@ -314,7 +320,7 @@ onMounted(() => {
                     class="m-avatar-img"
                     :prepend-avatar="item.icon"
                     :title="item.name"
-                    style="font-size: 11px!important; font-weight: 500!important;"
+                    style="font-size: 11px !important; font-weight: 500 !important"
                   >
                   </v-list-item>
                 </v-list>

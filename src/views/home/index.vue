@@ -612,6 +612,11 @@ const Dashboard = defineComponent({
       return getSuccess.value;
     });
 
+    const searchGameDialogShow = computed(() => {
+      const { getSearchGameDialogShow } = storeToRefs(gameStore());
+      return getSearchGameDialogShow.value;
+    });
+
     const isNumeric = (value: any) => {
       return /^-?\d+$/.test(value);
     };
@@ -976,6 +981,10 @@ const Dashboard = defineComponent({
       },
       { deep: true }
     );
+
+    watch(searchGameDialogShow, (value) => {
+      searchDialogShow.value = false;
+    });
 
     const gameTransform1 = (el: any) => {
       for (let node of el.children) {
@@ -1721,7 +1730,6 @@ export default Dashboard;
           >
             <img
               v-lazy="gameItem.image"
-              alt="Lazy loaded image"
               :data-src="gameItem.image"
               class="original-game-img-width"
               @click="handleEnterGame(gameItem.id, gameItem.name)"

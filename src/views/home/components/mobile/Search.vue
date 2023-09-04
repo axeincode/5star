@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
+import { useDisplay } from "vuetify";
 import { ref, computed, watch, onMounted } from "vue";
+import { gameStore } from "@/store/game";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
 import "swiper/css";
@@ -11,6 +13,7 @@ import "swiper/css/virtual";
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 
 const { t } = useI18n();
+const { width } = useDisplay();
 const searchText = ref<string>("");
 const searchLoading = ref<boolean>(false);
 
@@ -29,6 +32,14 @@ const slides = ref<Array<any>>([
   new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
 ]);
 
+const searchResults = ref<Array<any>>([]);
+
+const searchContainerHeight = ref<number>(590);
+
+const mobileWidth = computed(() => {
+  return width.value;
+});
+
 const goToPrev = () => {
   swiper.value.slidePrev();
 };
@@ -46,7 +57,24 @@ const handleSearchInput = () => {
     searchLoading.value = true;
     setTimeout(() => {
       searchLoading.value = false;
+      searchResults.value = [
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+      ];
     }, 2000);
+  }
+};
+
+const handleResize = () => {
+  if (window.visualViewport?.height != undefined) {
+    searchContainerHeight.value = window.visualViewport.height;
+    console.log(searchContainerHeight);
   }
 };
 
@@ -58,11 +86,18 @@ watch(
   { deep: true }
 );
 
-onMounted(() => {});
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
 </script>
 
 <template>
-  <div class="m-home-search-body">
+  <div
+    class="m-home-search-body"
+    :style="{
+      height: searchContainerHeight >= 590 ? 'unset' : searchContainerHeight - 80 + 'px',
+    }"
+  >
     <div class="pt-3">
       <v-text-field
         :placeholder="t('home.search')"
@@ -87,11 +122,49 @@ onMounted(() => {});
       </div>
     </div>
     <div class="m-home-search-result pt-8 text-center" v-else>
-      <img src="@/assets/public/image/img_public_20.png" />
-      <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">
-        {{ t("home.search_dialog.text_2") }}
-      </p>
-      <p class="text-400-12 gray">{{ t("home.search_dialog.text_3") }}</p>
+      <div v-if="searchResults.length == 0">
+        <img src="@/assets/public/image/img_public_20.png" />
+        <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">
+          {{ t("home.search_dialog.text_2") }}
+        </p>
+        <p class="text-400-12 gray" v-else>{{ t("home.search_dialog.text_3") }}</p>
+      </div>
+      <div v-else>
+        <div class="d-flex justify-between align-center mx-3">
+          <p class="text-700-14 white">{{ t("home.search_dialog.text_4") }}</p>
+          <p class="text-600-10 gray">
+            {{ t("home.search_dialog.text_5") }}
+            <font class="text-600-10 color-32CFEC">8</font>
+            {{ t("home.search_dialog.text_6") }}
+          </p>
+        </div>
+        <v-row class="mx-2 my-4">
+          <template v-for="(item, index) in searchResults" :key="index">
+            <v-col cols="4" class="py-0 px-1" v-if="index < 3">
+              <img
+                :src="item"
+                style="width: 100%"
+                v-lazy="item"
+                :data-src="item"
+                class="m-home-search-game"
+              />
+            </v-col>
+          </template>
+        </v-row>
+        <v-row
+          class="justify-center"
+          :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'"
+        >
+          <v-btn
+            class="text-none more-btn-color"
+            variant="outlined"
+            width="100%"
+            height="41"
+          >
+            {{ t("home.more") }}
+          </v-btn>
+        </v-row>
+      </div>
     </div>
     <div class="m-home-search-swiper-title mt-9">
       <p class="ml-3 text-700-14 white">{{ t("home.search_dialog.text_1") }}</p>
@@ -124,10 +197,27 @@ onMounted(() => {});
 </template>
 
 <style lang="scss">
+.m-home-search-body::-webkit-scrollbar {
+  width: 0px;
+}
+
 .m-home-search-body {
   width: 100%;
   border-radius: 0px 0px 30px 30px;
   background: var(--Text-Box-1-211F31, #211f31);
+  overflow-y: auto;
+
+  .m-home-search-game:active {
+    transform: scale(0.9);
+    filter: brightness(80%);
+    transition-duration: 0.28s;
+  }
+
+  .m-home-search-swiper-img:active {
+    transform: scale(0.9);
+    filter: brightness(80%);
+    transition-duration: 0.28s;
+  }
 
   .form-textfield div.v-field.v-field--appended {
     border-radius: 10px;

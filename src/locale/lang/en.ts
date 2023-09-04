@@ -198,7 +198,10 @@ export const lang: langType = {
     search_dialog: {
       text_1: "Recommended for you",
       text_2: "No results",
-      text_3: "Search requires at least 3 characters"
+      text_3: "Search requires at least 3 characters",
+      text_4: "Original Games",
+      text_5: "About",
+      text_6: "results",
     },
     original_games: "Original Games",
     more: "Load more",
@@ -260,7 +263,8 @@ export const lang: langType = {
     amount: "Amount",
     validation: {
       text_1: "Enter the amount you want to deposit.",
-      text_2: "Minimum 20, Maximum 100000."
+      text_2: "Minimum ",
+      text_3: "Maximum ",
     },
     check_text: "Not participating in promotional activities",
     other_text: "0.00% fee,R$20.00+R$20.00 bonus into your account",
@@ -294,11 +298,13 @@ export const lang: langType = {
       confirm_success_text: "Successfully submitted, need to modify please contact customer service",
       confirm_warning_text: "Please contact customer service to make changes"
     },
-    text_1: "Withdrawal fee: 2.5%.",
+    text_1: "Withdrawal fee: ",
+    text_1_1: "%.",
     text_2: "Free monthly withdrawal amount: 100",
     text_3: "Withdrawal hours: 11:00 - 19:00.",
     text_4: "Payout time: from 5 minutes to 24 hours.",
-    other_text: "2.5% fee,R$19.5 into your account",
+    other_text: "% fee,R$",
+    other_text_1: " into your account",
     withdraw_btn_text: "WITHDRAW",
     withdraw_warning_text: "Excess of withdrawable amount",
   },

@@ -16,14 +16,16 @@ export const gameStore = defineStore({
             provider: "",
             reserve: "",
             weburl: ""
-        } as Game.GameEnterResponse
+        } as Game.GameEnterResponse,
+        searchGameDialogShow: false as boolean,
     }),
     getters: {
         getSuccess: (state) => state.success,
         getErrMessage: (state) => state.errMessage,
         getGameCategories: (state) => state.gameCategories,
         getGameSearchList: (state) => state.gameSearchList,
-        getEnterGameItem: (state) => state.enterGameItem
+        getEnterGameItem: (state) => state.enterGameItem,
+        getSearchGameDialogShow: (state) => state.searchGameDialogShow
     },
     actions: {
         // set functions
@@ -41,6 +43,9 @@ export const gameStore = defineStore({
         },
         setGameEnterItem(enterGameItem: Game.GameEnterResponse) {
             this.enterGameItem = enterGameItem;
+        },
+        setSearchGameDialogShow(searchGameDialogShow: boolean) {
+            this.searchGameDialogShow = searchGameDialogShow;
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {

@@ -27,6 +27,14 @@
     color: #1ACB51;
 }
 
+.color-32CFEC {
+    color: #32CFEC;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
 .transparent {
     background-color: transparent !important;
 }
@@ -531,10 +539,10 @@ button:active:enabled {
     color: white !important;
 }
 
-.btn-211f31 {    
-  background: var(--Text-Box-1-211F31, #211f31) !important;
-  /* Text Box */
-  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+.btn-211f31 {
+    background: var(--Text-Box-1-211F31, #211f31) !important;
+    /* Text Box */
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
 }
 
 .button-purple {

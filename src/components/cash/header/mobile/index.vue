@@ -2,12 +2,14 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { appBarStore } from '@/store/appBar';
 import { depositStore } from '@/store/deposit';
+import { authStore } from "@/store/auth";
 import { type GetPixInfo } from '@/interface/deposit';
 import Notification from "@/components/global/notification/index.vue";
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
 import { ElNotification } from 'element-plus'
+import { type GetUserInfo } from "@/interface/user";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import icon_public_60 from "@/assets/public/svg/icon_public_60.svg";
@@ -41,85 +43,85 @@ const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", imp
 const notificationText = ref<string>("");
 
 const pixInfoItem = ref<GetPixInfo>({
-    id: "",
-    first_name: "",
-    last_name: ""
+  id: "",
+  first_name: "",
+  last_name: ""
 })
 
 const isPersonalBtnReady = ref<boolean>(false);
 
 const mobileWidth = computed(() => {
-    return width.value
+  return width.value
 })
 
 const handlePersonalInfoToggle = (): void => {
-    personalInfoToggle.value = !personalInfoToggle.value;
-    // setMainBlurEffectShow(personalInfoToggle.value == true? true : false);
+  personalInfoToggle.value = !personalInfoToggle.value;
+  // setMainBlurEffectShow(personalInfoToggle.value == true? true : false);
 }
 
 const handleConfirmValidation = (): void => {
-    if (confirmValidation.value) {
-        // notificationText.value = t('deposit_dialog.personal_information.confirm_warning_text');
-        // checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
-        // notificationShow.value = !notificationShow.value;
-        ElNotification({
-            icon: WarningIcon,
-            title: t('deposit_dialog.personal_information.confirm_warning_text'),
-            duration: 3000,
-        })
-    }
+  if (confirmValidation.value) {
+    // notificationText.value = t('deposit_dialog.personal_information.confirm_warning_text');
+    // checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
+    // notificationShow.value = !notificationShow.value;
+    ElNotification({
+      icon: WarningIcon,
+      title: t('deposit_dialog.personal_information.confirm_warning_text'),
+      duration: 3000,
+    })
+  }
 }
 
 const handlePixInfoID = (): void => {
-    console.log(validateCPF(pixInfoItem.value.id));
-    if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
-        isPersonalBtnReady.value = true;
-    } else {
-        isPersonalBtnReady.value = false;
-    }
+  console.log(validateCPF(pixInfoItem.value.id));
+  if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+  }
 }
 
 const handlePixInfoFirstName = (): void => {
-    if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
-        isPersonalBtnReady.value = true;
-    } else {
-        isPersonalBtnReady.value = false;
-    }
+  if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+  }
 }
 
 const handlePixInfoLastName = (): void => {
-    if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
-        isPersonalBtnReady.value = true;
-    } else {
-        isPersonalBtnReady.value = false;
-    }
+  if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+  }
 }
 
 const cashDialogShow = () => {
-    setCashDialogToggle(false);
-    setDepositDialogToggle(false);
-    setWithdrawDialogToggle(false);
-    setMainBlurEffectShow(false);
+  setCashDialogToggle(false);
+  setDepositDialogToggle(false);
+  setWithdrawDialogToggle(false);
+  setMainBlurEffectShow(false);
 }
 
 const validateCPF = (cpf: string) => {
-    cpf = cpf.replace(/[^\d]+/g, '');
-    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-        return false;
-    }
-    var sum = 0;
-    for (var i = 0; i < 9; i++) {
-        sum += parseInt(cpf.charAt(i)) * (10 - i);
-    }
-    var rest = sum % 11;
-    var digit1 = (rest < 2) ? 0 : (11 - rest);
-    sum = 0;
-    for (var i = 0; i < 10; i++) {
-        sum += parseInt(cpf.charAt(i)) * (11 - i);
-    }
-    rest = sum % 11;
-    var digit2 = (rest < 2) ? 0 : (11 - rest);
-    return (digit1 === parseInt(cpf.charAt(9)) && digit2 === parseInt(cpf.charAt(10)));
+  cpf = cpf.replace(/[^\d]+/g, '');
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+    return false;
+  }
+  var sum = 0;
+  for (var i = 0; i < 9; i++) {
+    sum += parseInt(cpf.charAt(i)) * (10 - i);
+  }
+  var rest = sum % 11;
+  var digit1 = (rest < 2) ? 0 : (11 - rest);
+  sum = 0;
+  for (var i = 0; i < 10; i++) {
+    sum += parseInt(cpf.charAt(i)) * (11 - i);
+  }
+  rest = sum % 11;
+  var digit2 = (rest < 2) ? 0 : (11 - rest);
+  return (digit1 === parseInt(cpf.charAt(9)) && digit2 === parseInt(cpf.charAt(10)));
 }
 
 
@@ -131,95 +133,115 @@ const handlePixInfoSubmit = (): void => {
     // checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
     // notificationShow.value = !notificationShow.value;
     ElNotification({
-        icon: SuccessIcon,
-        title: t('deposit_dialog.personal_information.confirm_success_text'),
-        duration: 3000,
+      icon: SuccessIcon,
+      title: t('deposit_dialog.personal_information.confirm_success_text'),
+      duration: 3000,
     })
+    setTimeout(() => {
+      pixInfoMenuShow.value = false;
+    }, 2000)
   }
 }
 
+const userInfo = computed((): GetUserInfo => {
+  const { getUserInfo } = storeToRefs(authStore());
+  pixInfoItem.value.id = getUserInfo.value.id_number;
+  pixInfoItem.value.first_name = getUserInfo.value.first_name;
+  pixInfoItem.value.last_name = getUserInfo.value.last_name;
+  return getUserInfo.value;
+})
+
+watch(userInfo, (value) => {
+  pixInfoItem.value.id = value.id_number;
+  pixInfoItem.value.first_name = value.first_name;
+  pixInfoItem.value.last_name = value.last_name;
+})
+
 const depositDialogToggle = computed(() => {
-    const { getDepositDialogToggle } = storeToRefs(appBarStore());
-    return getDepositDialogToggle.value
+  const { getDepositDialogToggle } = storeToRefs(appBarStore());
+  return getDepositDialogToggle.value
 })
 
 const withdrawDialogToggle = computed(() => {
-    const { getWithdrawDialogToggle } = storeToRefs(appBarStore());
-    return getWithdrawDialogToggle.value
+  const { getWithdrawDialogToggle } = storeToRefs(appBarStore());
+  return getWithdrawDialogToggle.value
 })
 
 watch(cashToggleSwitch, (newValue) => {
-    if (newValue) {
-        pixInfoItem.value.id = "";
-        pixInfoItem.value.first_name = "";
-        pixInfoItem.value.last_name = "";
-        console.log('11111')
-        isPersonalBtnReady.value = false;
-        confirmValidation.value = false;
-        setWithdrawDialogToggle(true);
-        setDepositDialogToggle(false);
-        setMainBlurEffectShow(true);
-        setDepositBlurEffectShow(false);
+  if (newValue) {
+    pixInfoItem.value.id = "";
+    pixInfoItem.value.first_name = "";
+    pixInfoItem.value.last_name = "";
+    console.log('11111')
+    isPersonalBtnReady.value = false;
+    confirmValidation.value = false;
+    setWithdrawDialogToggle(true);
+    setDepositDialogToggle(false);
+    setMainBlurEffectShow(true);
+    setDepositBlurEffectShow(false);
 
-        depositCheckboxColor.value = "#7782AA";
-        withdrawCheckboxColor.value = "#ffffff";
-    } else {
-        pixInfoItem.value.id = "";
-        pixInfoItem.value.first_name = "";
-        pixInfoItem.value.last_name = "";
-        console.log('11111')
-        isPersonalBtnReady.value = false;
-        confirmValidation.value = false;
-        setWithdrawDialogToggle(false);
-        setDepositDialogToggle(true);
-        setMainBlurEffectShow(true);
-        setDepositBlurEffectShow(false);
+    depositCheckboxColor.value = "#7782AA";
+    withdrawCheckboxColor.value = "#ffffff";
+  } else {
+    pixInfoItem.value.id = "";
+    pixInfoItem.value.first_name = "";
+    pixInfoItem.value.last_name = "";
+    console.log('11111')
+    isPersonalBtnReady.value = false;
+    confirmValidation.value = false;
+    setWithdrawDialogToggle(false);
+    setDepositDialogToggle(true);
+    setMainBlurEffectShow(true);
+    setDepositBlurEffectShow(false);
 
-        depositCheckboxColor.value = "#ffffff";
-        withdrawCheckboxColor.value = "#7782AA";
-    }
+    depositCheckboxColor.value = "#ffffff";
+    withdrawCheckboxColor.value = "#7782AA";
+  }
 }, { deep: true });
 
 watch(pixInfoMenuShow, (value) => {
-    if (pixInfoItem.value.id != "" && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
-        isPersonalBtnReady.value = true;
-        confirmValidation.value = true;
-    } else {
-        isPersonalBtnReady.value = false;
-        confirmValidation.value = false;
-    }
-    setDepositBlurEffectShow(pixInfoMenuShow.value == true ? true: false)
+  if (pixInfoItem.value.id != "" && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+    confirmValidation.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+    confirmValidation.value = false;
+  }
+  setDepositBlurEffectShow(pixInfoMenuShow.value == true ? true : false)
 })
 
 const depositTransform = (el: any) => {
-    for (let node of el.children) {
-        node.setAttribute('fill', depositCheckboxColor.value)
-    }
-    return el
+  for (let node of el.children) {
+    node.setAttribute('fill', depositCheckboxColor.value)
+  }
+  return el
 }
 
 const withdrawTransform = (el: any) => {
-    for (let node of el.children) {
-        node.setAttribute('fill', withdrawCheckboxColor.value)
-    }
-    return el
+  for (let node of el.children) {
+    node.setAttribute('fill', withdrawCheckboxColor.value)
+  }
+  return el
 }
 
 
 onMounted(() => {
-    setMainBlurEffectShow(false);
-    if (depositDialogToggle.value) {
-        cashToggleSwitch.value = false;
-    }
-    if (withdrawDialogToggle.value) {
-        cashToggleSwitch.value = true;
-    }
+  setMainBlurEffectShow(false);
+  if (depositDialogToggle.value) {
+    cashToggleSwitch.value = false;
+  }
+  if (withdrawDialogToggle.value) {
+    cashToggleSwitch.value = true;
+  }
 })
 </script>
 
 <template>
   <div class="mobile-cash-header">
-    <div class="d-flex align-center relative" :class="pixInfoMenuShow ? 'm-header-dropped' : 'm-header'">
+    <div
+      class="d-flex align-center relative"
+      :class="pixInfoMenuShow ? 'm-header-dropped' : 'm-header'"
+    >
       <v-menu
         offset="-5"
         :close-on-content-click="false"
@@ -379,9 +401,6 @@ onMounted(() => {
         height="30"
       >
         <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
-        <!-- <v-icon color="#7782AA">
-                    mdi-close
-                </v-icon> -->
       </v-btn>
     </div>
     <Notification
@@ -405,6 +424,7 @@ onMounted(() => {
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     height: 60px;
   }
+
   .m-header-dropped {
     text-align: center;
     border-radius: 0px;
@@ -573,7 +593,7 @@ onMounted(() => {
     color: #fff;
     text-align: center;
     font-family: Inter;
-    font-size: 14px!important;
+    font-size: 14px !important;
     text-transform: none;
     font-style: normal;
     font-weight: 700;
@@ -585,13 +605,14 @@ onMounted(() => {
   .v-input__append {
     width: 0px !important;
   }
-  .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
 
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 
-  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
-      background: transparent;
+  .form-textfield div.v-field--variant-solo,
+  .v-field--variant-solo-filled {
+    background: transparent;
   }
 }
 
@@ -621,8 +642,9 @@ onMounted(() => {
   .v-input--horizontal .v-input__append {
     margin-inline-start: 0px !important;
   }
-  .v-list{
-    box-shadow: none!important;;
+
+  .v-list {
+    box-shadow: none !important;
   }
 }
 
@@ -684,6 +706,7 @@ onMounted(() => {
     background-size: 18px;
   }
 }
+
 @media (max-width: 600px) {
   .my-enter-active-class {
     transform: translateY(0);
@@ -697,13 +720,14 @@ onMounted(() => {
     background: #32cfec;
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
     .v-btn__content {
       color: #000000;
     }
   }
+
   .cash-header-dialog1 {
-    z-index: 2440!important;
+    z-index: 2440 !important;
   }
 }
-
 </style>

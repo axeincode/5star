@@ -197,6 +197,9 @@ export type langType = {
       text_1: string
       text_2: string
       text_3: string
+      text_4: string
+      text_5: string
+      text_6: string
     }
     original_games: string
     more: string
@@ -259,6 +262,7 @@ export type langType = {
     validation: {
       text_1: string
       text_2: string
+      text_3: string
     }
     check_text: string
     other_text: string
@@ -293,10 +297,12 @@ export type langType = {
       confirm_warning_text: string
     }
     text_1: string
+    text_1_1: string
     text_2: string
     text_3: string
     text_4: string
     other_text: string
+    other_text_1: string
     withdraw_btn_text: string
     withdraw_warning_text: string
   }

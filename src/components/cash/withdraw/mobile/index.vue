@@ -42,7 +42,7 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   max: 588.88
 })
 
-const currencyList = ref<Array<GetCurrencyItem>>([
+const currencyTemplateList = [
   {
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
     name: "BRL",
@@ -78,7 +78,9 @@ const currencyList = ref<Array<GetCurrencyItem>>([
     name: "COP",
     value: 0
   },
-])
+]
+
+const currencyList = ref<Array<GetCurrencyItem>>([])
 
 const paymentList = ref<Array<GetPaymentItem>>([
   {
@@ -151,6 +153,8 @@ const withdrawAmount = ref<string>("")
 
 const availableAmount = ref<number>(108.88);
 
+const feeRate = ref<number>(2.5);
+
 const validationText2 = ref<string>("")
 
 const notificationShow = ref<boolean>(false);
@@ -186,6 +190,13 @@ const depositBlurEffectShow = computed(() => {
   return getDepositBlurEffectShow.value
 })
 
+const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
+  return arr.filter((obj: any) => {
+    const objValues = obj[key];
+    return valueArr.every((value: any) => objValues.includes(value));
+  });
+};
+
 watch(withdrawConfig, (newValue) => {
   paymentList.value = [];
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
@@ -198,7 +209,12 @@ watch(withdrawConfig, (newValue) => {
       max: item.max
     })
   })
+  const keyArray = Object.keys(newValue["cfg"]);
+  const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
+  currencyList.value = filteredObjects;
+  selectedPaymentItem.value = paymentList.value[0];
   availableAmount.value = newValue["availabe_balance"];
+  feeRate.value = withdrawConfig.value["fee"]["rate"];
 }, { deep: true });
 
 const handleSelectCurrency = (item: GetCurrencyItem) => {
@@ -222,8 +238,7 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
-  // return Number(withdrawAmount.value) >= 149 && Number(withdrawAmount.value) <= 600;
-  return true;
+  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(withdrawConfig.value["availabe_balance"]);
 }
 
 const handleAmountInputFocus = (): void => {
@@ -316,13 +331,22 @@ watch(withdrawAmount, (newValue) => {
   isShowAmountValidation.value = !validateAmount();
 })
 
+watch(currencyMenuShow, (value) => {
+  if (currencyMenuShow.value && currencyList.value.length < 2) {
+    currencyMenuShow.value = false
+  }
+})
+
 onMounted(async () => {
   await dispatchUserWithdrawCfg();
 })
 </script>
 
 <template>
-  <div class="mobile-withdraw-container" :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''">
+  <div
+    class="mobile-withdraw-container"
+    :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
+  >
     <v-row class="mt-6 mx-6 text-400-12 gray">
       {{ t("withdraw_dialog.withdraw_currency") }}
     </v-row>
@@ -450,7 +474,7 @@ onMounted(async () => {
       />
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">
-      {{ t("withdraw_dialog.text_1") }}
+      {{ t("withdraw_dialog.text_1") }}{{ feeRate }}{{ t("withdraw_dialog.text_1_1") }}
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">
       {{ t("withdraw_dialog.text_2") }}
@@ -461,13 +485,17 @@ onMounted(async () => {
     <v-row class="mt-4 mx-6 text-400-10 gray">
       {{ t("withdraw_dialog.text_4") }}
     </v-row>
-    <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2 mt-10">
-      {{ t("withdraw_dialog.other_text") }}
+    <v-row
+      class="m-deposit-footer-text-position text-600-10 white justify-center mx-2 mt-10"
+    >
+      {{ feeRate }} {{ t("withdraw_dialog.other_text") }}
+      {{ Number(withdrawAmount) * (1 - Number(feeRate)) }}
+      {{ t("withdraw_dialog.other_text_1") }}
     </v-row>
     <div class="m-deposit-btn-position">
       <v-btn
         class="ma-3 m-deposit-btn"
-        :class=" isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
+        :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
         :onclick="handleWithdrawSubmit"
@@ -487,16 +515,18 @@ onMounted(async () => {
 .mobile-withdraw-container::-webkit-scrollbar {
   width: 0px;
 }
+
 // container
 .mobile-withdraw-container {
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 
-  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
-      background: transparent;
+  .form-textfield div.v-field--variant-solo,
+  .v-field--variant-solo-filled {
+    background: transparent;
   }
+
   background-color: #211f31;
   height: 100%;
   overflow-y: auto;
@@ -615,11 +645,12 @@ onMounted(async () => {
 }
 
 .m-deposit-btn {
-    text-align: center;
-    background: #353652;
+  text-align: center;
+  background: #353652;
 
-    /* Button Shadow */
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+  /* Button Shadow */
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
   .v-btn__content {
     color: #fff;
     text-align: center;
@@ -632,12 +663,13 @@ onMounted(async () => {
 }
 
 .m-deposit-btn-ready {
-    background: #32cfec;
-    /* Button Shadow */
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-    .v-btn__content {
-      color: #000000;
-    }
+  background: #32cfec;
+  /* Button Shadow */
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+  .v-btn__content {
+    color: #000000;
+  }
 }
 
 .deposit-bg-blur {

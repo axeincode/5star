@@ -53,6 +53,11 @@ const user = ref<GetUserData>({
   currency: "R$",
 });
 
+const userInfo = computed(() => {
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value
+})
+
 const userNavBarToggle = computed(() => {
   const { getUserNavBarToggle } = storeToRefs(appBarStore());
   return getUserNavBarToggle.value;
@@ -184,7 +189,7 @@ watch(mobileWidth, (newValue: number) => {
           <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
         </template>
         <v-list-item-title class="ml-2 text-600-10"
-          >{{ t("appBar.id") }}: {{ user.id }}</v-list-item-title
+          >{{ t("appBar.id") }}: {{ userInfo.uid }}</v-list-item-title
         >
         <template v-slot:append>
           <div
@@ -205,7 +210,7 @@ watch(mobileWidth, (newValue: number) => {
           </div>
         </template>
       </v-list-item>
-      <v-list-item class="m-user-item"  @click="goVIPPage">
+      <v-list-item class="m-user-item" @click="goVIPPage">
         <template v-slot:prepend>
           <div>
             <div style="height: 30px">
@@ -470,7 +475,7 @@ watch(mobileWidth, (newValue: number) => {
 
   .v-list-item-title {
     font-weight: 600;
-    font-size: 12px!important;
+    font-size: 12px !important;
     color: #7782aa;
   }
 }
@@ -513,13 +518,13 @@ watch(mobileWidth, (newValue: number) => {
   }
 }
 .m-user-item1 {
-  padding-top: 9px!important;
-  padding-bottom: 9px!important;
+  padding-top: 9px !important;
+  padding-bottom: 9px !important;
   border-radius: 12px !important;
 
   .v-list-item-title {
     font-weight: 600;
-    font-size: 12px!important;
+    font-size: 12px !important;
   }
 }
 </style>
