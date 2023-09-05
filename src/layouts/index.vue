@@ -1,40 +1,45 @@
-
 <script lang="ts" setup>
 import { ref, computed } from "vue";
-import NavBarLayout from './NavBar.vue';
-import MNavBarLayout from './MobileNavBar.vue';
-import UserNavBarLayout from './UserNavBar.vue';
-import RightBarLayout from './RightBar.vue';
-import AppBarLayout from './AppBar.vue'
-import MainLayout from './Main.vue'
-import MobileMenuLayout from './MobileMenu.vue';
-import RefferalLayout from './RefferalBar.vue';
-import { useDisplay } from 'vuetify';
-import { refferalStore } from '@/store/refferal';
+import NavBarLayout from "./NavBar.vue";
+import MNavBarLayout from "./MobileNavBar.vue";
+import UserNavBarLayout from "./UserNavBar.vue";
+import RightBarLayout from "./RightBar.vue";
+import AppBarLayout from "./AppBar.vue";
+import MainLayout from "./Main.vue";
+import MobileMenuLayout from "./MobileMenu.vue";
+import RefferalLayout from "./RefferalBar.vue";
+import { useDisplay } from "vuetify";
+import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
+import { appBarStore } from "@/store/appBar";
 
 const { width } = useDisplay();
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
-  return getRefferalAppBarShow.value
-})
+  return getRefferalAppBarShow.value;
+});
 
 const mobileWidth = computed(() => {
-  return width.value
-})
+  return width.value;
+});
+
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
 
 const handleScroll = () => {
   console.log("scroll");
-}
+};
 </script>
 
 <template>
-  <v-app>
+  <v-app :class="fixPositionShow ? 'appbar-position-fix' : ''">
     <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />
-      <NavBarLayout v-if="mobileWidth > 600" />
-      <MNavBarLayout v-else />
+    <NavBarLayout v-if="mobileWidth > 600" />
+    <MNavBarLayout v-else />
     <UserNavBarLayout />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
@@ -42,4 +47,9 @@ const handleScroll = () => {
   </v-app>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.appbar-position-fix {
+  overflow: hidden !important;
+  position: fixed !important;
+}
+</style>

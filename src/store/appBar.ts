@@ -16,6 +16,7 @@ export const appBarStore = defineStore({
     overlayScrimShow: false as boolean,
     accountDialogShow: false as boolean,
     depositBlurEffectShow: false as boolean,
+    fixPositionEnable: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -30,6 +31,7 @@ export const appBarStore = defineStore({
     getOverlayScrimShow: (state) => state.overlayScrimShow,
     getAccountDialogShow: (state) => state.accountDialogShow,
     getDepositBlurEffectShow: (state) => state.depositBlurEffectShow,
+    getFixPositionEnable: (state) => state.fixPositionEnable,
   },
   actions: {
     setSuccess(success: boolean) {
@@ -67,6 +69,9 @@ export const appBarStore = defineStore({
     },
     setDepositBlurEffectShow(depositBlurEffectShow: boolean) {
       this.depositBlurEffectShow = depositBlurEffectShow;
+    },
+    setFixPositionEnable(fixPositionEnable: boolean) {
+      this.fixPositionEnable = fixPositionEnable;
     },
   }
 })
