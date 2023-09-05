@@ -77,6 +77,8 @@ const selectedVipLevel = ref<VipLevel>({
   },
   SigninAward: [],
   tasks_max: 0,
+  deposit_rate: 0,
+  bet_rate: 0
 });
 
 const userInfo = computed(() => {

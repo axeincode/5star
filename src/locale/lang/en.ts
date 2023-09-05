@@ -528,10 +528,10 @@ export const lang: langType = {
     cash_back_text: "Cashback",
     super_carousel_text: "Super Carousel",
     welfare_task: "Welfare Tasks",
-    reward_text: "Reward available for ",
+    reward_text: "Reward available for VIP",
     reward_card_1: {
       daily_free_bonus_text: "Daily Free Bonuses",
-      text_1: "Free spin times*1",
+      text_1: "Free spin times*",
       text_2: "Available at "
     },
     reward_card_2: {

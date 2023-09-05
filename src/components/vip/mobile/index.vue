@@ -6,9 +6,11 @@ import { appBarStore } from "@/store/appBar";
 import { refferalStore } from '@/store/refferal';
 import { type GetVIPData } from "@/interface/vip";
 import { type GetSpinData } from "@/interface/vip";
+import icon_public_11 from "@/assets/public/svg/icon_public_11.svg";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { vipStore } from "@/store/vip";
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -19,14 +21,16 @@ const depositRate = ref<number>(56);
 const spinCardItem = ref<any | null>(null)
 const missionCardItem = ref<any | null>(null)
 const descriptionTab = ref<string>("VIP2")
+const rewardTab = ref<any>(0);
 const vipSlideClass = ref<string>("");
+const currentSlide = ref<any>(0);
+const vipSwitchValue = ref<any>(0);
+const vipSwitch = ref<boolean>(false);
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
   return getRefferalAppBarShow.value;
 })
-
-
 
 const vipItems = ref<Array<GetVIPData>>([
   {
@@ -260,6 +264,28 @@ const vipMissionItems = ref([
   },
 ])
 
+const vipLevels = computed(() => {
+  const { getVipLevels } = storeToRefs(vipStore());
+  getVipLevels.value.map(item => {
+    if (item.deposit_exp != 0) {
+      item.deposit_rate = vipInfo.value.deposit_exp
+    } else {
+      item.deposit_rate = 0;
+    }
+    if (item.bet_exp != 0) {
+      item.bet_rate = vipInfo.value.bet_exp
+    } else {
+      item.bet_rate = 0;
+    }
+  })
+  return getVipLevels.value
+})
+
+const vipInfo = computed(() => {
+  const { getVipInfo } = storeToRefs(vipStore());
+  return getVipInfo.value
+})
+
 const spinCardHeight1 = ref<number | undefined>(556)
 
 // spin card height when spin card item show totally
@@ -277,6 +303,8 @@ const missionCardShow = ref<boolean>(false);
 const selectedIndex = ref<number>(0);
 
 const vipSlidePosition = ref<boolean>(false);
+
+const vipSwitchPosition = ref<number>(0);
 
 const handleCarouselChange = (index: number): void => {
   selectedIndex.value = index;
@@ -364,6 +392,11 @@ watch(missionCardShow, (value) => {
       behavior: 'smooth'
     });
   }
+})
+
+watch(currentSlide, (value) => {
+  vipSwitchValue.value = value;
+  rewardTab.value = value;
 })
 
 const cashbackElement = ref<any | null>(null);
@@ -486,6 +519,23 @@ const handleSelectVIPTab = (item: string) => {
   }, 2000)
 }
 
+const handleVipSwitchLeft = () => {
+  vipSwitch.value = true;
+  currentSlide.value = (currentSlide.value - 1 + 10) % 10;
+  rewardTab.value = (rewardTab.value - 1 + 10) % 10;
+}
+
+const handleVipSwitchRight = () => {
+  vipSwitch.value = true;
+  currentSlide.value = (currentSlide.value + 1 + 10) % 10;
+  rewardTab.value = (rewardTab.value + 1 + 10) % 10;
+}
+
+const arrowSwitchTransform = (el: any) => {
+  el.children[0].children[0].setAttribute('fill', '#1C1929')
+  return el;
+}
+
 window.addEventListener('scroll', handleWindowScroll);
 
 onMounted(() => {
@@ -496,8 +546,32 @@ onMounted(() => {
 
 <template>
   <div class="m-vip-container mb-0">
+    <div class="m-vip-switch">
+      <div class="m-vip-switch-left" @click="handleVipSwitchLeft">
+        <inline-svg
+          :src="icon_public_11"
+          width="16"
+          height="16"
+          style="transform: rotate(-180deg)"
+          :transform-source="arrowSwitchTransform"
+        >
+        </inline-svg>
+      </div>
+      <p class="text-700-16 white">VIP{{ vipSwitchValue }}</p>
+      <div class="m-vip-switch-right" @click="handleVipSwitchRight">
+        <inline-svg
+          :src="icon_public_11"
+          width="16"
+          height="16"
+          :transform-source="arrowSwitchTransform"
+          style="margin-left: 1.5px"
+        >
+        </inline-svg>
+      </div>
+    </div>
     <div class="m-vip-body" :style="{ paddingTop: refferalAppBarShow ? '40px' : '44px' }">
       <Carousel
+        v-model="currentSlide"
         :itemsToShow="1.2"
         :wrapAround="true"
         :transition="500"
@@ -506,15 +580,84 @@ onMounted(() => {
           margin: refferalAppBarShow ? '0px 10px !important' : '10px !important',
         }"
       >
-        <Slide v-for="(item, index) in vipItems" :key="index">
+        <Slide v-for="(item, index) in vipLevels" :key="index">
           <div class="m-vip-carousel-body">
             <div class="text-800-16 white text-center mt-4">
               {{ t("vip.slider.title_text") }}
             </div>
             <v-row class="full-height mx-2 mt-0">
               <v-col cols="3" class="text-center">
-                <img src="@/assets/vip/image/img_vip_02.png" width="49" />
-                <p class="text-800-14 yellow">{{ item.vipGrade }}</p>
+                <img
+                  src="@/assets/vip/image/img_vip_01.png"
+                  width="49"
+                  v-if="item.level == 0"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_01.png"
+                  width="49"
+                  v-if="item.level == 1"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_02.png"
+                  width="49"
+                  v-if="item.level == 2"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_03.png"
+                  width="49"
+                  v-if="item.level == 3"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_04.png"
+                  width="49"
+                  v-if="item.level == 4"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_05.png"
+                  width="49"
+                  v-if="item.level == 5"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_06.png"
+                  width="49"
+                  v-if="item.level == 6"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_07.png"
+                  width="49"
+                  v-if="item.level == 7"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_08.png"
+                  width="49"
+                  v-if="item.level == 8"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_09.png"
+                  width="49"
+                  v-if="item.level == 9"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_10.png"
+                  width="49"
+                  v-if="item.level == 10"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_11.png"
+                  width="49"
+                  v-if="item.level == 11"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_12.png"
+                  width="49"
+                  v-if="item.level == 12"
+                />
+                <img
+                  src="@/assets/vip/image/img_vip_13.png"
+                  width="49"
+                  v-if="item.level == 13"
+                />
+                <p class="text-800-14 yellow">VIP {{ item.level }}</p>
               </v-col>
               <v-col cols="9">
                 <div class="deposit-progress-bg">
@@ -522,16 +665,16 @@ onMounted(() => {
                     <div class="text-500-9 white">{{ t("appBar.deposit") }}</div>
                     <div class="ml-auto">
                       <Font class="text-800-8 text-gray"
-                        >R$ {{ item.currentDepositAmount }} /
+                        >R$ {{ vipInfo.deposit_exp }} /
                       </Font>
                       <Font color="#F9BC01" class="text-800-8"
-                        >R$ {{ item.totalDepositAmount }}</Font
+                        >R$ {{ item.deposit_exp }}</Font
                       >
                     </div>
                   </div>
                   <div>
                     <v-progress-linear
-                      v-model="item.vipRate"
+                      v-model="item.deposit_rate"
                       height="19"
                       class="deposit-progress"
                     >
@@ -543,16 +686,16 @@ onMounted(() => {
                     <div class="text-500-9 white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
                       <Font class="text-800-8 text-gray"
-                        >R$ {{ item.currentWagerAmount }} /
+                        >R$ {{ vipInfo.bet_exp }} /
                       </Font>
                       <Font color="#623AEC" class="text-800-8"
-                        >R$ {{ item.totalWagerAmount }}</Font
+                        >R$ {{ item.bet_exp }}</Font
                       >
                     </div>
                   </div>
                   <div>
                     <v-progress-linear
-                      v-model="depositRate"
+                      v-model="item.bet_rate"
                       height="19"
                       class="wager-progress"
                     >
@@ -587,146 +730,155 @@ onMounted(() => {
       </div>
 
       <!------------------------- vip reward ----------------------------->
-      <div
-        class="reward-body mx-2"
-        ref="rewardElement"
-        :class="tabSelect ? 'mt-15' : 'mt-2'"
-      >
-        <div class="text-800-14 white pt-4 mx-4">
-          {{ t("vip.reward_text") }} {{ vipItems[selectedIndex].vipGrade }}
-        </div>
-        <v-row class="mt-2 justify-center pb-2 mx-2">
-          <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-            <div class="m-reward-card text-center">
-              <div class="text-800-10 yellow pt-4">
-                {{ t("vip.reward_card_1.daily_free_bonus_text") }}
-              </div>
-              <div class="mt-4">
-                <img src="@/assets/public/image/img_public_02.png" width="40" />
-              </div>
-              <div class="mt-4 text-600-9 white">
-                {{ t("vip.reward_card_1.text_1") }}
-              </div>
-              <div class="mt-2 mx-4">
-                <v-btn
-                  class="text-none button-dark m-button-dark"
-                  width="-webkit-fill-available"
-                  height="28px"
-                >
-                  {{ t("vip.receive_btn_text") }}
-                </v-btn>
-              </div>
-              <div class="mt-2 text-400-9 white">
-                {{ t("vip.reward_card_1.text_2") }}<Font class="yellow">21:23:22</Font>
-              </div>
+      <v-window v-model="rewardTab">
+        <v-window-item
+          v-for="(item, index) in vipLevels"
+          :key="index"
+          :value="item.level"
+        >
+          <div
+            class="reward-body mx-2"
+            ref="rewardElement"
+            :class="tabSelect ? 'mt-15' : 'mt-2'"
+          >
+            <div class="text-800-14 white pt-4 mx-4">
+              {{ t("vip.reward_text") }} {{ item.level }}
             </div>
-          </v-col>
-          <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-            <div class="m-reward-card text-center">
-              <div class="text-800-10 yellow pt-4">
-                {{ t("vip.reward_card_2.vip_week_gift_text") }}
-              </div>
-              <div class="mt-4 d-flex justify-center align-center">
-                <img src="@/assets/public/image/img_public_02.png" width="40" />
-                <img
-                  src="@/assets/public/image/img_public_09.png"
-                  class="ml-4"
-                  width="39"
-                  height="27"
-                />
-              </div>
-              <div class="mt-2 text-600-9 white">
-                {{ t("vip.reward_card_2.text_1") }}
-              </div>
-              <div class="text-600-9 white">
-                {{ t("vip.reward_card_2.text_2") }}
-              </div>
-              <div class="mt-2 mx-4">
-                <v-btn
-                  class="text-none button-dark m-button-dark"
-                  width="-webkit-fill-available"
-                  height="28px"
-                >
-                  {{ t("vip.receive_btn_text") }}
-                </v-btn>
-              </div>
-              <div class="mt-2 text-400-9 white">
-                {{ t("vip.reward_card_2.text_3") }}<Font class="yellow">3</Font
-                >{{ t("vip.reward_card_2.text_4") }}
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-            <div class="m-reward-card text-center">
-              <div class="text-800-10 yellow pt-4">
-                {{ t("vip.reward_card_3.vip_month_gift_text") }}
-              </div>
-              <div class="mt-4 d-flex justify-center align-center">
-                <img src="@/assets/public/image/img_public_02.png" width="40" />
-                <img
-                  src="@/assets/public/image/img_public_09.png"
-                  class="ml-4"
-                  width="39"
-                  height="27"
-                />
-              </div>
-              <div class="mt-2 text-600-9 white">
-                {{ t("vip.reward_card_3.text_1") }}
-              </div>
-              <div class="text-600-9 white">
-                {{ t("vip.reward_card_3.text_2") }}
-              </div>
-              <div class="mt-2 mx-4">
-                <v-btn
-                  class="text-none button-dark m-button-dark"
-                  width="-webkit-fill-available"
-                  height="28px"
-                >
-                  {{ t("vip.receive_btn_text") }}
-                </v-btn>
-              </div>
-              <div class="mt-2 text-400-9 white">
-                {{ t("vip.reward_card_3.text_3") }}<Font class="yellow">3</Font
-                >{{ t("vip.reward_card_3.text_4") }}
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-            <div class="m-reward-card text-center">
-              <div class="text-800-10 yellow pt-4">
-                {{ t("vip.reward_card_4.vip_upgrage_gift_text") }}
-              </div>
-              <div class="mt-4 d-flex justify-center align-center">
-                <img src="@/assets/public/image/img_public_02.png" width="40" />
-                <img
-                  src="@/assets/public/image/img_public_09.png"
-                  class="ml-4"
-                  width="39"
-                  height="27"
-                />
-              </div>
-              <div class="mt-2 text-600-9 white">
-                {{ t("vip.reward_card_4.text_1") }}
-              </div>
-              <div class="text-600-9 white">
-                {{ t("vip.reward_card_4.text_2") }}
-              </div>
-              <div class="mt-2 mx-4">
-                <v-btn
-                  class="text-none button-dark m-button-dark"
-                  width="-webkit-fill-available"
-                  height="28px"
-                >
-                  {{ t("vip.receive_btn_text") }}
-                </v-btn>
-              </div>
-              <div class="mt-2 text-400-9 white">
-                {{ t("vip.reward_card_4.text_3") }}
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-      </div>
+            <v-row class="mt-2 justify-center pb-2 mx-2">
+              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                <div class="m-reward-card text-center">
+                  <div class="text-800-10 yellow pt-4">
+                    {{ t("vip.reward_card_1.daily_free_bonus_text") }}
+                  </div>
+                  <div class="mt-4">
+                    <img src="@/assets/public/image/img_public_02.png" width="40" />
+                  </div>
+                  <div class="mt-4 text-600-9 white">
+                    {{ t("vip.reward_card_1.text_1") }} {{ item.free_spins_times }}
+                  </div>
+                  <div class="mt-2 mx-4">
+                    <v-btn
+                      class="text-none button-dark m-button-dark"
+                      width="-webkit-fill-available"
+                      height="28px"
+                    >
+                      {{ t("vip.receive_btn_text") }}
+                    </v-btn>
+                  </div>
+                  <div class="mt-2 text-400-9 white">
+                    {{ t("vip.reward_card_1.text_2")
+                    }}<Font class="yellow">21:23:22</Font>
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                <div class="m-reward-card text-center">
+                  <div class="text-800-10 yellow pt-4">
+                    {{ t("vip.reward_card_2.vip_week_gift_text") }}
+                  </div>
+                  <div class="mt-4 d-flex justify-center align-center">
+                    <img src="@/assets/public/image/img_public_02.png" width="40" />
+                    <img
+                      src="@/assets/public/image/img_public_09.png"
+                      class="ml-4"
+                      width="39"
+                      height="27"
+                    />
+                  </div>
+                  <div class="mt-2 text-600-9 white">
+                    {{ t("vip.reward_card_2.text_1") }}
+                  </div>
+                  <div class="text-600-9 white">
+                    {{ t("vip.reward_card_2.text_2") }}
+                  </div>
+                  <div class="mt-2 mx-4">
+                    <v-btn
+                      class="text-none button-dark m-button-dark"
+                      width="-webkit-fill-available"
+                      height="28px"
+                    >
+                      {{ t("vip.receive_btn_text") }}
+                    </v-btn>
+                  </div>
+                  <div class="mt-2 text-400-9 white">
+                    {{ t("vip.reward_card_2.text_3") }}<Font class="yellow">3</Font
+                    >{{ t("vip.reward_card_2.text_4") }}
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                <div class="m-reward-card text-center">
+                  <div class="text-800-10 yellow pt-4">
+                    {{ t("vip.reward_card_3.vip_month_gift_text") }}
+                  </div>
+                  <div class="mt-4 d-flex justify-center align-center">
+                    <img src="@/assets/public/image/img_public_02.png" width="40" />
+                    <img
+                      src="@/assets/public/image/img_public_09.png"
+                      class="ml-4"
+                      width="39"
+                      height="27"
+                    />
+                  </div>
+                  <div class="mt-2 text-600-9 white">
+                    {{ t("vip.reward_card_3.text_1") }}
+                  </div>
+                  <div class="text-600-9 white">
+                    {{ t("vip.reward_card_3.text_2") }}
+                  </div>
+                  <div class="mt-2 mx-4">
+                    <v-btn
+                      class="text-none button-dark m-button-dark"
+                      width="-webkit-fill-available"
+                      height="28px"
+                    >
+                      {{ t("vip.receive_btn_text") }}
+                    </v-btn>
+                  </div>
+                  <div class="mt-2 text-400-9 white">
+                    {{ t("vip.reward_card_3.text_3") }}<Font class="yellow">3</Font
+                    >{{ t("vip.reward_card_3.text_4") }}
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                <div class="m-reward-card text-center">
+                  <div class="text-800-10 yellow pt-4">
+                    {{ t("vip.reward_card_4.vip_upgrage_gift_text") }}
+                  </div>
+                  <div class="mt-4 d-flex justify-center align-center">
+                    <img src="@/assets/public/image/img_public_02.png" width="40" />
+                    <img
+                      src="@/assets/public/image/img_public_09.png"
+                      class="ml-4"
+                      width="39"
+                      height="27"
+                    />
+                  </div>
+                  <div class="mt-2 text-600-9 white">
+                    {{ t("vip.reward_card_4.text_1") }}
+                  </div>
+                  <div class="text-600-9 white">
+                    {{ t("vip.reward_card_4.text_2") }}
+                  </div>
+                  <div class="mt-2 mx-4">
+                    <v-btn
+                      class="text-none button-dark m-button-dark"
+                      width="-webkit-fill-available"
+                      height="28px"
+                    >
+                      {{ t("vip.receive_btn_text") }}
+                    </v-btn>
+                  </div>
+                  <div class="mt-2 text-400-9 white">
+                    {{ t("vip.reward_card_4.text_3") }}
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+        </v-window-item>
+      </v-window>
 
       <!---------------------------- cashback bonus --------------------------------->
       <div
@@ -1443,6 +1595,47 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss">
+.m-vip-switch {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translatex(-50%);
+  width: 180px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  padding: 12px;
+  justify-content: space-between;
+  align-items: center;
+
+  .m-vip-switch-left {
+    width: 18px;
+    height: 18px;
+    border-radius: 23px;
+    background: #fff;
+  }
+
+  .m-vip-switch-left:active {
+    transform: scale(0.95);
+    filter: brightness(80%);
+  }
+
+  .m-vip-switch-right {
+    width: 18px;
+    height: 18px;
+    border-radius: 23px;
+    background: #fff;
+  }
+
+  .m-vip-switch-right:active {
+    transform: scale(0.95);
+    filter: brightness(80%);
+  }
+}
+
 .m-vip-carousel {
 }
 

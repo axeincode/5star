@@ -536,6 +536,10 @@ onMounted(() => {
   </v-main>
 </template>
 <style lang="scss">
+.el-backtop {
+  width: 44px;
+  height: 44px;
+}
 .m-back-top {
   width: 44px;
   height: 44px;

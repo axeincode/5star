@@ -49,6 +49,8 @@ export interface VipLevel {
     },
     SigninAward: Array<number>,
     tasks_max: number,
+    deposit_rate: number,
+    bet_rate: number
 }
 
 export interface GetVipInfoResponse {    
