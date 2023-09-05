@@ -51,17 +51,19 @@ const handleMenu = (index: number) => {
             {{ nickName }}
         </v-row>
         <v-row class="mx-1 mt-2">
-            <v-col cols="12" class="m-account-menu px-1">
+            <v-col cols="12" class="m-account-menu m-account-dialog-menu-body">
                 <v-list theme="dark">
                     <template v-for="(item, index) in menuList" :key="index">
                         <v-divider class="m-account-divider"></v-divider>
                         <v-list-item :value="item" @click="handleMenu(index)">
                             <v-list-item-title>
-                                <div class="text-700-12 text-gray" style="line-height: 20px;">
-                                    {{ item.title }}
-                                </div>
-                                <div class="text-400-10 text-gray" style="line-height: 20px;">
-                                    {{ item.content }}
+                                <div class="m-account-dialog-menu-item">
+                                    <div class="text-700-12 text-gray" style="line-height: 20px;">
+                                        {{ item.title }}
+                                    </div>
+                                    <div class="text-400-10 text-gray" style="line-height: 20px;">
+                                        {{ item.content }}
+                                    </div>
                                 </div>
                             </v-list-item-title>
                         </v-list-item>
@@ -80,6 +82,7 @@ const handleMenu = (index: number) => {
     height: 384px;
 
     .m-account-avatar-position {
+        width: 116px;
         position: absolute;
         top: -50px;
         left: 50%;
@@ -93,6 +96,17 @@ const handleMenu = (index: number) => {
         position: absolute !important;
         top: 8px;
         right: 8px;
+    }
+    .m-account-dialog-menu-body {
+        max-height: 200px;
+        .v-list-item {
+            margin-left: -12px;
+        }
+    }
+    .m-account-dialog-menu-item {
+        min-height: 43px;
+        // margin-top: 1px;
+        // margin-bottom: 1px;
     }
 }
 

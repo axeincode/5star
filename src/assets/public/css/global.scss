@@ -1,3 +1,14 @@
+/* 禁用手机浏览器的自动缩放 */
+input,
+textarea {
+    font-size: 16px;
+    /* 设置合适的字体大小 */
+    text-size-adjust: 100%;
+    /* 禁用自动缩放 */
+    -webkit-text-size-adjust: 100%;
+    /* 适用于WebKit浏览器（如Safari） */
+}
+
 // color
 .purple {
     color: #637BF9 !important;

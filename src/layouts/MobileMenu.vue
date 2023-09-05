@@ -412,7 +412,7 @@ onMounted(() => {
 }
 
 .mobile-menu-index {
-  z-index: 1009 !important;
+  z-index: 2009 !important;
   overflow: inherit !important;
 
   .v-btn--active {

@@ -7,6 +7,9 @@ import { useDisplay } from 'vuetify';
 import { authStore } from "@/store/auth";
 import { storeToRefs } from 'pinia';
 import Notification from "@/components/global/notification/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -67,6 +70,13 @@ const updateEmail = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
         notificationText.value = "Email updated successfully!"
+        if (notificationShow.value) {
+            ElNotification({
+                icon: SuccessIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         setTimeout(() => {
             loading.value = false;
             emit("submitEmail", email.value);
@@ -76,6 +86,13 @@ const updateEmail = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
         notificationText.value = errMessage.value;
+        if (notificationShow.value) {
+            ElNotification({
+                icon: WarningIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         loading.value = false;
     }
 }
@@ -102,7 +119,7 @@ const updateEmail = async () => {
                 {{ t('account.save_text') }}
             </v-btn>
         </v-row>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+        <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
     </div>
 </template>
 
@@ -117,5 +134,38 @@ const updateEmail = async () => {
         background-color: #353652 !important;
         color: white !important;
     }
+}
+
+.el-notification {
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px !important;
+    right: 0px !important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #181522);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+}
+
+.el-notification__title {
+    color: var(--sec-text, #7782aa);
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: left;
+}
+
+.el-notification__closeBtn svg {
+    display: none;
+}
+
+.el-notification__closeBtn {
+    top: 22px !important;
+    background-image: url("@/assets/public/svg/icon_public_52.svg");
+    background-repeat: no-repeat;
+    background-size: 18px;
 }
 </style>

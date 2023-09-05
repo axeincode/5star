@@ -18,6 +18,7 @@ import { ElNotification } from 'element-plus'
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
 import store from '@/store';
+
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();

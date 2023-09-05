@@ -745,11 +745,11 @@ export default MSignup;
             </v-icon> -->
     </v-btn>
   </div>
-  <Notification
+  <!-- <Notification
     :notificationShow="notificationShow"
     :notificationText="notificationText"
     :checkIcon="checkIcon"
-  />
+  /> -->
 </template>
 
 <style lang="scss">

@@ -13,6 +13,9 @@ import EditEmail from "@/components/account/user_information/dialog/EditEmail.vu
 import MEditEmail from "@/components/account/user_information/dialog/mobile/MEditEmail.vue";
 import Notification from "@/components/global/notification/index.vue";
 import { appBarStore } from "@/store/appBar";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -41,6 +44,13 @@ const notificationText = ref<string>(t('account.phone_warning_text'));
 
 const handlePhonNumber = () => {
     notificationShow.value = !notificationShow.value;
+    if (notificationShow.value) {
+        ElNotification({
+            icon: WarningIcon,
+            title: notificationText.value,
+            duration: 3000,
+        })
+    }
 }
 
 const editNicknameDialogShow = () => {
@@ -206,7 +216,7 @@ const handleVerifyCode = () => {
                 <MEditEmail v-if="editEmailDialog" @userDialogHide="userDialogHide" />
             </template>
         </v-dialog>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+        <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
     </div>
 </template>
 

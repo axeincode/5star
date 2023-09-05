@@ -8,6 +8,9 @@ import { type GetBettingCommissionData } from "@/interface/affiliate/invite"
 import Notification from "@/components/global/notification/index.vue";
 import BonusDialog from "./bonus_dailog/index.vue";
 import MBonusDialog from "./bonus_dailog/mobile/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -153,6 +156,13 @@ const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", imp
 const inviteUrlCopy = () => {
     notificationText.value = "Successful replication"
     notificationShow.value = !notificationShow.value;
+    if (notificationShow.value) {
+        ElNotification({
+            icon: SuccessIcon,
+            title: notificationText.value,
+            duration: 3000,
+        })
+    }
 }
 
 window.addEventListener('scroll', function () {
@@ -520,7 +530,7 @@ onMounted(() => {
             </v-col>
         </v-row>
     </v-card>
-    <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+    <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
 </template>
 <style lang="scss">
 .invite-partner-text {

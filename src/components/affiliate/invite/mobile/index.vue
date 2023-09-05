@@ -11,6 +11,8 @@ import MBonusDialog from "./../bonus_dailog/mobile/index.vue";
 import { appBarStore } from "@/store/appBar";
 import { inviteStore } from '@/store/invite';
 import { storeToRefs } from 'pinia';
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
@@ -175,6 +177,13 @@ watch(slider, (newValue) => {
 const inviteUrlCopy = () => {
     notificationText.value = "Successful replication"
     notificationShow.value = !notificationShow.value;
+    if(notificationShow.value) {
+      ElNotification({
+        icon: SuccessIcon,
+        title: notificationText.value,
+        duration: 3000,
+      })
+    }
 }
 
 const closeBonusDialog = () => {
@@ -690,11 +699,11 @@ onMounted(async () => {
       </v-col>
     </v-row>
   </v-card>
-  <Notification
+  <!-- <Notification
     :notificationShow="notificationShow"
     :notificationText="notificationText"
     :checkIcon="checkIcon"
-  />
+  /> -->
 </template>
 <style lang="scss">
 .m-prev-btn-position {

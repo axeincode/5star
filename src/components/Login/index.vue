@@ -5,6 +5,9 @@ import { useI18n } from "vue-i18n";
 import LoginHeader from "./Header.vue";
 import { authStore } from "@/store/auth";
 import Notification from "@/components/global/notification/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const Login = defineComponent({
   components: {
@@ -68,12 +71,18 @@ const Login = defineComponent({
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
-      state.notificationShow = !state.notificationShow;
-      state.checkIcon = new URL(
-        "@/assets/public/svg/icon_public_18.svg",
-        import.meta.url
-      ).href;
-      state.notificationText = t("login.forgotPasswordPage.notification");
+      // state.notificationShow = !state.notificationShow;
+      // state.checkIcon = new URL(
+      //   "@/assets/public/svg/icon_public_18.svg",
+      //   import.meta.url
+      // ).href;
+      // state.notificationText = t("login.forgotPasswordPage.notification");
+
+      ElNotification({
+        icon: SuccessIcon,
+        title: t("login.forgotPasswordPage.notification"),
+        duration: 3000,
+      });
     };
 
     // methods
@@ -95,23 +104,35 @@ const Login = defineComponent({
       });
       if (success.value) {
         await dispatchUserProfile();
-        state.notificationShow = !state.notificationShow;
-        state.checkIcon = new URL(
-          "@/assets/public/svg/icon_public_18.svg",
-          import.meta.url
-        ).href;
-        state.notificationText = t("login.submit_result.success_text");
+        // state.notificationShow = !state.notificationShow;
+        // state.checkIcon = new URL(
+        //   "@/assets/public/svg/icon_public_18.svg",
+        //   import.meta.url
+        // ).href;
+        // state.notificationText = t("login.submit_result.success_text");
+
+        ElNotification({
+          icon: SuccessIcon,
+          title: t("login.submit_result.success_text"),
+          duration: 3000,
+        });
         setTimeout(() => {
           setAuthModalType("");
           emit("close");
         }, 1000);
       } else {
-        state.notificationShow = !state.notificationShow;
-        state.checkIcon = new URL(
-          "@/assets/public/svg/icon_public_17.svg",
-          import.meta.url
-        ).href;
-        state.notificationText = t("login.submit_result.err_text");
+        // state.notificationShow = !state.notificationShow;
+        // state.checkIcon = new URL(
+        //   "@/assets/public/svg/icon_public_17.svg",
+        //   import.meta.url
+        // ).href;
+        // state.notificationText = t("login.submit_result.err_text");
+
+        ElNotification({
+          icon: WarningIcon,
+          title: t("login.submit_result.err_text"),
+          duration: 3000,
+        });
       }
 
       state.loading = false;

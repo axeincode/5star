@@ -12,6 +12,9 @@ import { storeToRefs } from "pinia";
 import { useDisplay } from 'vuetify';
 import { useRouter } from "vue-router";
 import Notification from "@/components/global/notification/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { VipLevel } from "@/interface/vip";
 
 const { setAuthModalType } = authStore();
@@ -203,6 +206,13 @@ watch(mobileWidth, (newValue: number) => {
   }
 })
 
+const handleNotifyShow = () => {
+  ElNotification({
+    icon: SuccessIcon,
+    title: notificationText.value,
+    duration: 3000,
+  });
+}
 watch(vipLevels, (value) => {
   value.map(item => {
     if (item.level == vipInfo.value.level) {
@@ -247,7 +257,7 @@ onMounted(async () => {
           <div
             style="width: 22px; height: 22px; border-radius: 4px; background: #353652"
             class="relative"
-            @click="notificationShow = !notificationShow"
+            @click="handleNotifyShow"
           >
             <img
               src="@/assets/public/svg/icon_public_71.svg"

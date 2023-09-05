@@ -7,6 +7,9 @@ import { useDisplay } from 'vuetify';
 import { authStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import Notification from "@/components/global/notification/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -45,6 +48,13 @@ const submitSuspend = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
         notificationText.value = errMessage.value;
+        if (notificationShow.value) {
+            ElNotification({
+                icon: WarningIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         loading.value = false;
     }
 }
@@ -77,7 +87,7 @@ const submitSuspend = async () => {
                 </v-btn>
             </div>
         </v-row>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+        <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
     </div>
 </template>
 

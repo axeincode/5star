@@ -4,6 +4,9 @@ import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { refferalStore } from '@/store/refferal';
 import Notification from "@/components/global/notification/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -27,7 +30,12 @@ const copyToClipboard = () => {
     navigator.clipboard.writeText(siteUrl.value).then(
         () => {
             console.log('Copied to clipboard!');
-            notificationShow.value = !notificationShow.value;
+            // notificationShow.value = !notificationShow.value;
+            ElNotification({
+                icon: SuccessIcon,
+                title: notificationText.value,
+                duration: 3000,
+            });
             // setRefferalDialogShow(false);
         },
         (error) => {

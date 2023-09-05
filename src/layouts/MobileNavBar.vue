@@ -180,7 +180,6 @@ onMounted(() => {
     class="nav-background pb-100"
     :width="192"
     v-model="drawer"
-    style="z-index: 1008"
   >
     <template v-slot:prepend>
       <v-list-item

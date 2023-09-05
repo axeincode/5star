@@ -7,6 +7,9 @@ import { useDisplay } from 'vuetify';
 import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from 'pinia';
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -47,6 +50,13 @@ const updatePhone = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
         notificationText.value = "Phone updated successfully!"
+        if (notificationShow.value) {
+            ElNotification({
+                icon: SuccessIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         setTimeout(() => {
             loading.value = false;
             emit("submitPhone", phone.value);
@@ -56,6 +66,13 @@ const updatePhone = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
         notificationText.value = errMessage.value;
+        if (notificationShow.value) {
+            ElNotification({
+                icon: WarningIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         loading.value = false;
     }
 }
@@ -74,7 +91,7 @@ const updatePhone = async () => {
                 {{ t('account.save_text') }}
             </v-btn>
         </v-row>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+        <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
     </div>
 </template>
 

@@ -4,6 +4,8 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { refferalStore } from "@/store/refferal";
 import Notification from "@/components/global/notification/index.vue";
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -32,6 +34,11 @@ const copyToClipboard = () => {
   navigator.clipboard.writeText(siteUrl.value).then(
     () => {
       console.log("Copied to clipboard!");
+      ElNotification({
+          icon: SuccessIcon,
+          title: notificationText.value,
+          duration: 3000,
+      })
       notificationShow.value = !notificationShow.value;
       // setRefferalDialogShow(false);
     },
@@ -181,11 +188,11 @@ onMounted(() => {
         </div>
       </template>
     </div>
-    <Notification
+    <!-- <Notification
       :notificationShow="notificationShow"
       :notificationText="notificationText"
       :checkIcon="checkIcon"
-    />
+    /> -->
   </div>
 </template>
 
@@ -224,6 +231,9 @@ onMounted(() => {
   overflow-y: auto;
 
   .m-refferal-animation-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 328px;
     background: #2e274c;
     border-radius: 16px;
     height: 333px;

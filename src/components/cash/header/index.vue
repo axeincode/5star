@@ -12,6 +12,9 @@ const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const cashToggleSwitch = ref<boolean>(false);
 
@@ -51,6 +54,13 @@ const handleConfirmValidation = (): void => {
         notificationText.value = t('deposit_dialog.personal_information.confirm_warning_text');
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
         notificationShow.value = !notificationShow.value;
+        if (notificationShow.value) {
+            ElNotification({
+                icon: WarningIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
     }
 }
 
@@ -99,6 +109,13 @@ const handlePixInfoSubmit = (): void => {
     notificationText.value = t('deposit_dialog.personal_information.confirm_success_text');
     checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
     notificationShow.value = !notificationShow.value;
+    if (notificationShow.value) {
+      ElNotification({
+        icon: SuccessIcon,
+        title: notificationText.value,
+        duration: 3000,
+      })
+    }
 }
 
 watch(cashToggleSwitch, (newValue) => {
@@ -286,11 +303,11 @@ onMounted(() => {
         <v-icon color="#7782AA"> mdi-close </v-icon>
       </v-btn>
     </div>
-    <Notification
+    <!-- <Notification
       :notificationShow="notificationShow"
       :notificationText="notificationText"
       :checkIcon="checkIcon"
-    />
+    /> -->
   </div>
 </template>
 

@@ -49,7 +49,7 @@ const handleLoginBonus = (day: number) => {
                 </v-col>
                 <v-col cols="4" class="pa-0 d-flex justify-center">
                     <div class="login-bonus-card-checkout-bg relative" v-if="loginBonusItem.signin_day >= 2">
-                        <p class="text-900-18 gray login-bonus-text-position">{{ t('vip.login_bonus.day_2_text') }}</p>
+                        <p class="text-900-18 gray login-bonus-text-position">{{ t('vip.login_bonus.day_2_text') }}aaaa</p>
                         <img src="@/assets/public/svg/icon_public_18.svg" class="login-bonus-card-cash-position"
                             width="40" />
                         <p class="text-900-18 gray login-bonus-card-money-position">$ {{ loginBonusItem.award[1] }}</p>

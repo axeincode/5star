@@ -7,6 +7,9 @@ import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
+import { ElNotification } from 'element-plus'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -101,6 +104,13 @@ const submitPassword = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
         notificationText.value = "Password updated successfully!"
+        if (notificationShow.value) {
+            ElNotification({
+                icon: SuccessIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         setTimeout(() => {
             loading.value = false;
             emit("submitPassword", newPassword.value);
@@ -110,6 +120,13 @@ const submitPassword = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
         notificationText.value = errMessage.value;
+        if (notificationShow.value) {
+            ElNotification({
+                icon: WarningIcon,
+                title: notificationText.value,
+                duration: 3000,
+            })
+        }
         loading.value = false;
     }
 }
@@ -159,7 +176,7 @@ const submitPassword = async () => {
         <v-btn class="m-account-dialog-close-btn" icon="true" @click="emit('userDialogHide')" width="30" height="30">
             <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
         </v-btn>
-        <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+        <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
     </div>
 </template>
 
@@ -194,6 +211,11 @@ const submitPassword = async () => {
             font-weight: 700;
             line-height: normal;
         }
+    }
+    
+    .m-disable-password {
+        top: 39%!important;
+        right: 20px!important;
     }
 }
 
