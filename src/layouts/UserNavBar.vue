@@ -7,10 +7,12 @@ import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { appBarStore } from "@/store/appBar";
 import { authStore } from "@/store/auth";
 import { mailStore } from "@/store/mail";
+import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
 import { useDisplay } from 'vuetify';
 import { useRouter } from "vue-router";
 import Notification from "@/components/global/notification/index.vue";
+import { VipLevel } from "@/interface/vip";
 
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
@@ -24,6 +26,8 @@ const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setMailMenuShow } = mailStore();
+const { dispatchVipInfo } = vipStore();
+const { dispatchVipLevels } = vipStore();
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -32,9 +36,9 @@ const router = useRouter();
 
 const drawer = ref<boolean>(false);
 
-const depositRate = ref<number>(56);
+const depositRate = ref<number>(0);
 
-const wagerRate = ref<number>(56);
+const wagerRate = ref<number>(0);
 
 const accountPageShow = ref<boolean>(false);
 
@@ -53,9 +57,38 @@ const user = ref<GetUserData>({
   currency: "R$",
 });
 
+const selectedVipLevel = ref<VipLevel>({
+  level: 0,
+  protection_conditions: 0,
+  deposit_exp: 0,
+  bet_exp: 0,
+  free_spins_times: 0,
+  upgrade_award: 0,
+  week_award: 0,
+  month_award: 0,
+  free_withdrawals: 0,
+  free_withdrawals_times: 0,
+  withdrawal_fee: 0,
+  bet_award_rate: {
+    casino: 0,
+  },
+  SigninAward: [],
+  tasks_max: 0,
+});
+
 const userInfo = computed(() => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value
+})
+
+const vipInfo = computed(() => {
+  const { getVipInfo } = storeToRefs(vipStore());
+  return getVipInfo.value
+})
+
+const vipLevels = computed(() => {
+  const { getVipLevels } = storeToRefs(vipStore());
+  return getVipLevels.value
 })
 
 const userNavBarToggle = computed(() => {
@@ -144,7 +177,7 @@ const goAccountPage = () => {
 }
 
 const goVIPPage = () => {
-  router.push({name: "VIP"})
+  router.push({ name: "VIP" })
 }
 
 watch(userNavBarToggle, (newValue) => {
@@ -168,6 +201,25 @@ watch(mobileWidth, (newValue: number) => {
   if (newValue > 600) {
     setUserNavBarToggle(false);
   }
+})
+
+watch(vipLevels, (value) => {
+  value.map(item => {
+    if (item.level == vipInfo.value.level) {
+      selectedVipLevel.value = item;
+      if (item.deposit_exp != 0) {
+        depositRate.value = vipInfo.value.deposit_exp / item.deposit_exp;
+      }
+      if (item.bet_exp != 0) {
+        wagerRate.value = vipInfo.value.bet_exp / item.bet_exp;
+      }
+    }
+  })
+})
+
+onMounted(async () => {
+  await dispatchVipInfo();
+  await dispatchVipLevels();
 })
 </script>
 
@@ -216,7 +268,7 @@ watch(mobileWidth, (newValue: number) => {
             <div style="height: 30px">
               <img src="@/assets/app_bar/image/img_vip_02.png" width="22" />
             </div>
-            <div class="text-800-10 color-F9BC01">{{ user.grade }}</div>
+            <div class="text-800-10 color-F9BC01 text-center">{{ vipInfo.level }}</div>
           </div>
         </template>
         <v-list-item-title class="ml-2">
@@ -224,7 +276,8 @@ watch(mobileWidth, (newValue: number) => {
             <div class="d-flex">
               <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
               <div class="ml-auto text-800-8">
-                <Font>R$ 5642</Font> / <Font color="#F9BC01">R$ 10000</Font>
+                <Font>R$ {{ vipInfo.deposit_exp }}</Font> /
+                <Font color="#F9BC01">R$ {{ selectedVipLevel.deposit_exp }}</Font>
               </div>
             </div>
             <div>
@@ -240,7 +293,8 @@ watch(mobileWidth, (newValue: number) => {
             <div class="d-flex">
               <div class="white text-500-8">{{ t("appBar.wager") }}</div>
               <div class="ml-auto text-800-8">
-                <Font>R$ 5642</Font> / <Font color="#623AEC">R$ 10000</Font>
+                <Font>R$ {{ vipInfo.bet_exp }}</Font> /
+                <Font color="#623AEC">R$ {{ selectedVipLevel.bet_exp }}</Font>
               </div>
             </div>
             <div>
@@ -517,6 +571,7 @@ watch(mobileWidth, (newValue: number) => {
     opacity: 0 !important;
   }
 }
+
 .m-user-item1 {
   padding-top: 9px !important;
   padding-bottom: 9px !important;

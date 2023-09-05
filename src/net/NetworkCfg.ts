@@ -50,6 +50,12 @@ export namespace NETWORK {
     static GAME_ENTER = '/user/enter/game'; // game enter
   }
 
+  // vip api
+  export class VIP_INFO {
+    static USER_VIP_INFO = '/user/vipinfo'; // vip info
+    static USER_VIP_LEVEL = '/viplevels'; // vip levels
+  }
+
   //Listening events sent actively
   export class UNSOLICITED {}
 }
