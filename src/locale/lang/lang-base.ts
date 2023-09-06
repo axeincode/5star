@@ -266,6 +266,7 @@ export type langType = {
     }
     check_text: string
     other_text: string
+    other_text_1: string
     deposit_btn_text: string
     personal_information: {
       header_text: string

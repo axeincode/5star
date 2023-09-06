@@ -26,6 +26,8 @@ import VueLazyload from 'vue-lazyload'
 
 import loadingIcon from "@/assets/loading.svg";
 
+import "vue-progressive-image/dist/style.css";
+
 const app = createApp(App)
 
 registerPlugins(app)

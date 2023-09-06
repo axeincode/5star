@@ -3,7 +3,9 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { setLang } from "@/locale/index";
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
 import { appBarStore } from "@/store/appBar";
+import { socketStore } from "@/store/socket";
 import { refferalStore } from '@/store/refferal';
 import { loginBonusStore } from "@/store/loginBonus";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
@@ -29,7 +31,9 @@ const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
-const {setMailMenuShow} = mailStore();
+const { setMailMenuShow } = mailStore();
+const { dispatchUserBalance } = userStore();
+const { dispatchSocketConnect } = socketStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -74,6 +78,11 @@ const token = computed(() => {
 const userInfo = computed(() => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value
+})
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value
 })
 
 const rightBarToggle = computed(() => {
@@ -245,6 +254,10 @@ const showUserNavBar = (): void => {
   }, 10)
 }
 
+watch(userBalance, (value) => {
+  selectedCurrencyItem.value.value = value.amount
+})
+
 watch(userNavToggle, (newValue) => {
   console.log(navBarToggle.value);
   userNavBarToggle.value = newValue;
@@ -319,6 +332,8 @@ onMounted(async () => {
   }
   if (token.value != undefined) {
     await dispatchUserProfile();
+    await dispatchUserBalance();
+    await dispatchSocketConnect();
   }
 });
 </script>
@@ -1322,5 +1337,4 @@ onMounted(async () => {
   filter: saturate(180%) blur(4px);
   -webkit-filter: saturate(180%) blur(4px);
 }
-
 </style>

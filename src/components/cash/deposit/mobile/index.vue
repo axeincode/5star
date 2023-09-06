@@ -168,9 +168,9 @@ const depositToggleSwitch = ref<boolean>(false);
 
 const depositAmountUnit = ref<string>("R$");
 
-const depositRate = ref<string>("+100");
+const depositRate = ref<number>(0);
 
-const depositAmount = ref<string>("")
+const depositAmount = ref<string | number>(0)
 
 const bonusCheck = ref<boolean>(false);
 
@@ -224,7 +224,7 @@ watch(depositConfig, (newValue) => {
   })
   const keyArray = Object.keys(newValue["cfg"]);
   const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
-  currencyList.value  = filteredObjects;
+  currencyList.value = filteredObjects;
   selectedPaymentItem.value = paymentList.value[0];
   depositAmountList.value = newValue["list"];
 }, { deep: true });
@@ -296,9 +296,8 @@ const handleDepositSubmit = async () => {
     first_name: pixInfo.value.first_name,
     last_name: pixInfo.value.last_name,
     channels_id: selectedPaymentItem.value.id,
-    amount: Number(depositAmount.value)
+    amount: depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * ( 1 + Number(depositRate.value))).toFixed(2))
   })
-  console.log('---------success')
   console.log(success)
   if (success.value) {
     ElNotification({
@@ -331,12 +330,31 @@ watch(bonusCheck, (newValue) => {
 })
 
 watch(depositAmount, (newValue) => {
+  alert
   if (validateAmount()) {
     isDepositBtnReady.value = true;
   } else {
     isDepositBtnReady.value = false;
   }
   isShowAmountValidation.value = !validateAmount();
+  if (depositConfig.value["bonus"][0]["type"] == 0) {
+    if (depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"] && depositConfig.value["bonus"][0]["award"] < depositConfig.value["bonus"][0]["max"]) {
+      depositRate.value = depositConfig.value["bonus"][0]["award"]
+    } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["award"]) {
+      depositRate.value = depositConfig.value["bonus"][0]["min"];
+    } else if (depositConfig.value["bonus"][0]["max"] == 0 && depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"]) {
+      depositRate.value = depositConfig.value["bonus"][0]["award"]
+    }
+  } else if (depositConfig.value["bonus"][0]["type"] == 1) {
+    const bonus = Number(depositAmount.value) * Number(depositConfig.value["bonus"][0]["rate"]);
+    if (bonus > depositConfig.value["bonus"][0]["min"] && bonus < depositConfig.value["bonus"][0]["max"]) {
+      depositRate.value = depositConfig.value["bonus"][0]["rate"]
+    } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == bonus) {
+      depositRate.value = depositConfig.value["bonus"][0]["rate"]
+    } else if (depositConfig.value["bonus"][0]["max"] == 0 && bonus > depositConfig.value["bonus"][0]["min"]) {
+      depositRate.value = depositConfig.value["bonus"][0]["rate"]
+    }
+  }
 })
 
 watch(depositToggleSwitch, (newValue) => {
@@ -489,9 +507,10 @@ onMounted(async () => {
           @click="handleDepositAmount(depositAmountItem)"
         >
           {{ depositAmountUnit }} {{ depositAmountItem }}
-          <div class="m-deposit-amount-area" v-if="!bonusCheck"></div>
-          <div class="m-deposit-amount-rate-text" v-if="!bonusCheck">
-            {{ depositRate }}
+          <div class="m-deposit-amount-area" v-if="depositRate != 0 && !bonusCheck">
+            <div class="m-deposit-amount-rate-text">
+              {{ depositRate.toFixed(2) }}
+            </div>
           </div>
         </v-btn>
       </v-col>
@@ -530,8 +549,16 @@ onMounted(async () => {
       </p>
       <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
     </div>
-    <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
-      {{ t("deposit_dialog.other_text") }}
+    <v-row
+      class="m-deposit-footer-text-position text-600-10 white justify-center mx-2"
+      v-if="depositRate != 0"
+    >
+      {{ t("deposit_dialog.other_text") }} R${{ depositAmount }} + R${{
+        depositConfig["bonus"][0]["type"] == 0
+          ? depositRate
+          : (Number(depositAmount) * depositRate).toFixed(2)
+      }}
+      {{ t("deposit_dialog.other_text_1") }}
     </v-row>
     <div class="m-deposit-btn-position">
       <v-btn
@@ -572,6 +599,7 @@ onMounted(async () => {
   .v-field--variant-solo-filled {
     background: transparent;
   }
+
   background-color: #211f31;
   height: 100%;
 
@@ -652,6 +680,7 @@ onMounted(async () => {
 
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
     .v-btn__content {
       color: #fff;
       text-align: center;
@@ -667,10 +696,12 @@ onMounted(async () => {
     background: #32cfec;
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
     .v-btn__content {
       color: #000000;
     }
   }
+
   .dark-textfield .v-field__field {
     background-color: #1c1929 !important;
   }

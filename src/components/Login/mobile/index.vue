@@ -3,6 +3,8 @@ import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import LoginHeader from "./Header.vue";
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
+import { socketStore } from "@/store/socket";
 import Notification from "@/components/global/notification/index.vue";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
@@ -26,7 +28,9 @@ const Login = defineComponent({
     const { dispatchSignIn } = authStore();
     const { dispatchUserProfile } = authStore();
     const { setAuthModalType } = authStore();
+    const { dispatchUserBalance } = userStore();
     const { setToken } = authStore();
+    const { dispatchSocketConnect } = socketStore();
     const { width } = useDisplay();
 
     // initiate component state
@@ -133,6 +137,8 @@ const Login = defineComponent({
 
       if (success.value) {
         await dispatchUserProfile();
+        await dispatchUserBalance();
+        await dispatchSocketConnect();
         ElNotification({
           icon: SuccessIcon,
           title: t("login.submit_result.success_text"),
@@ -566,7 +572,7 @@ export default Login;
   width: 100%;
 
   .v-field--variant-solo {
-    background: transparent !important; 
+    background: transparent !important;
   }
 }
 
@@ -581,8 +587,7 @@ export default Login;
   z-index: 2000;
   overflow-y: auto;
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 

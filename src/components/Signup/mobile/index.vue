@@ -14,6 +14,8 @@ import SignupHeader from "@/components/Signup/mobile/Header.vue";
 import { useDisplay } from "vuetify";
 import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
+import { socketStore } from "@/store/socket";
 import { storeToRefs } from "pinia";
 import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
@@ -38,6 +40,8 @@ const MSignup = defineComponent({
     const { setSignUpForm } = authStore();
     const { setDialogCheckbox } = authStore();
     const { setNickNameDialogVisible } = authStore();
+    const { dispatchUserBalance } = userStore();
+    const { dispatchSocketConnect } = socketStore();
     const { width } = useDisplay();
 
     // initiate component state
@@ -260,6 +264,8 @@ const MSignup = defineComponent({
       state.loading = false;
       if (success.value) {
         await dispatchUserProfile();
+        await dispatchUserBalance();
+        await dispatchSocketConnect();
         ElNotification({
           icon: SuccessIcon,
           title: t("signup.submit_result.success_text"),
@@ -909,17 +915,16 @@ export default MSignup;
   bottom: 0px;
   width: 100%;
   height: 464px;
+
   // overflow-y: auto;
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 
 .m-display-name-input {
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 

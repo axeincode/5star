@@ -42,6 +42,11 @@ export interface UpdatePassword {
     now_password: string
     new_password: string
 }
+export interface GetUserBalance {
+    amount: number,
+    currency: string,
+    availabe_balance: number,
+}
 export interface UpdateSuspendUser {
     time: number
 }
@@ -50,9 +55,14 @@ export type GetUserInfoResponseData = {
     data: GetUserInfo
     message: string
 }
+export type GetUserBalanceResponseData = {
+    code: number
+    data: GetUserBalance
+    message: string
+}
 export type GetUserEmailVerifyResponseData = {
     code: number
-    time: int
+    time: number
     message: string
 }
 export type GetUserAmountResponseData = {

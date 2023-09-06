@@ -4,10 +4,12 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import LoginHeader from "./Header.vue";
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
 import Notification from "@/components/global/notification/index.vue";
-import { ElNotification } from 'element-plus'
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
-import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { ElNotification } from "element-plus";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { socketStore } from "@/store/socket";
 
 const Login = defineComponent({
   components: {
@@ -22,6 +24,8 @@ const Login = defineComponent({
     const { dispatchUserProfile } = authStore();
     const { setAuthModalType } = authStore();
     const { setToken } = authStore();
+    const { dispatchUserBalance } = userStore();
+    const { dispatchSocketConnect } = socketStore();
 
     // initiate component state
     const state = reactive({
@@ -104,6 +108,8 @@ const Login = defineComponent({
       });
       if (success.value) {
         await dispatchUserProfile();
+        await dispatchUserBalance();
+        await dispatchSocketConnect();
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_18.svg",
@@ -421,10 +427,9 @@ export default Login;
 .login-body {
   margin: 0px !important;
   padding: 48px;
-  
-  .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
 
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 
@@ -480,6 +485,4 @@ export default Login;
 .text-large {
   font-size: 32px !important;
 }
-
-
 </style>

@@ -28,6 +28,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import Search from "@/views/home/components/Search.vue";
 import MSearch from "@/views/home/components/mobile/Search.vue";
+import { ProgressiveImage } from "vue-progressive-image";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
@@ -52,6 +53,7 @@ const Dashboard = defineComponent({
     Navigation,
     Search,
     MSearch,
+    ProgressiveImage,
   },
   setup() {
     const { t } = useI18n();
@@ -1164,6 +1166,39 @@ const Dashboard = defineComponent({
       setMailMenuShow(true);
     };
 
+    // Function to fetch and cache the image
+    const loadImageAndCache = async (url: string) => {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      // Store the image in cache storage
+      // Assuming you have already initialized the cache with `caches.open('myCache')`
+      const cache = await caches.open("myCache");
+      await cache.put(url, new Response(blob));
+
+      // Display the image in your Vue component
+      // Assuming you have a `data` property called `cachedImageUrl`
+      console.log(URL.createObjectURL(blob));
+    };
+
+    // Function to fetch images from cache
+    const fetchCachedImages = async () => {
+      const cache = await caches.open("myCache"); // Assuming you've named your cache as 'myCache'
+      const cachedRequests = await cache.keys();
+
+      const imageUrls = [];
+
+      // Iterate through the cached requests
+      for (const request of cachedRequests) {
+        if (request.url.endsWith(".jpg") || request.url.endsWith(".png")) {
+          // If the request matches image file extensions, add its URL to the array
+          imageUrls.push(request.url);
+        }
+      }
+
+      console.log(imageUrls);
+    };
+
     watch(searchDialogShow, (value) => {
       setMailMenuShow(value);
     });
@@ -1728,12 +1763,18 @@ export default Dashboard;
             class="px-1"
             v-if="gameIndex < 6 * item.page_no"
           >
-            <img
+            <ProgressiveImage
+              :src="gameItem.image"
+              lazy-placeholder
+              blur="30"
+              delay="500"
+            />
+            <!-- <img
               v-lazy="gameItem.image"
               :data-src="gameItem.image"
               class="original-game-img-width"
               @click="handleEnterGame(gameItem.id, gameItem.name)"
-            />
+            /> -->
           </v-col>
         </template>
       </v-row>
@@ -2226,14 +2267,21 @@ export default Dashboard;
     scale: 0.8;
   }
 }
+
 .home-body {
+  .v-progressive-image {
+    background: transparent !important;
+  }
+
   .v-navigation-drawer__scrim {
     background: black !important;
     opacity: 0.8 !important;
   }
+
   .v-navigation-drawer--top {
     border: none;
   }
+
   .v-slide-group__prev,
   .v-slide-group__next {
     color: white !important;

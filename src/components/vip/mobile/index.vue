@@ -588,7 +588,7 @@ onMounted(() => {
             <v-row class="full-height mx-2 mt-0">
               <v-col cols="3" class="text-center">
                 <img
-                  src="@/assets/vip/image/img_vip_01.png"
+                  src="@/assets/vip/image/img_vip_00.png"
                   width="49"
                   v-if="item.level == 0"
                 />

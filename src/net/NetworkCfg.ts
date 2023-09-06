@@ -14,6 +14,7 @@ export namespace NETWORK {
   export class PERSONAL_INFO_PAGE {
     static USER_AMOUNT = 'user/amount'; // get user amount
     static USER_INFO = '/user/info'; // get user profile
+    static USER_BALANCE = '/user/balance'; // get user balance
     static USER_CHANGE = '/user/change'; // update user info
     static USER_EMAIL = '/user/email'; // update email
     static USER_PASSWORD = '/user/password'; // update password
@@ -54,6 +55,11 @@ export namespace NETWORK {
   export class VIP_INFO {
     static USER_VIP_INFO = '/user/vipinfo'; // vip info
     static USER_VIP_LEVEL = '/viplevels'; // vip levels
+  }
+
+  // websocket api
+  export class WEB_SOCKET {
+    static SOCKET_CONNECT = '/user/connect/websocket'
   }
 
   //Listening events sent actively

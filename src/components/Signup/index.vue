@@ -5,11 +5,13 @@ import ValidationBox from "@/components/Signup/ValidationBox.vue";
 import SignupHeader from "@/components/Signup/Header.vue";
 import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
-import { ElNotification } from 'element-plus'
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
-import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { ElNotification } from "element-plus";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { socketStore } from "@/store/socket";
 
 const Signup = defineComponent({
   components: {
@@ -24,6 +26,8 @@ const Signup = defineComponent({
     const { name } = useDisplay();
     const { dispatchSignUp } = authStore();
     const { dispatchUserProfile } = authStore();
+    const { dispatchUserBalance } = userStore();
+    const { dispatchSocketConnect } = socketStore();
 
     // initiate component state
     const state = reactive({
@@ -210,6 +214,8 @@ const Signup = defineComponent({
       state.loading = false;
       if (success.value) {
         await dispatchUserProfile();
+        await dispatchUserBalance();
+        await dispatchSocketConnect();
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_18.svg",
@@ -218,11 +224,11 @@ const Signup = defineComponent({
         // state.notificationText = t("signup.submit_result.success_text");
 
         ElNotification({
-            icon: SuccessIcon,
-            title: t("signup.submit_result.success_text"),
-            duration: 3000,
-        })
-        
+          icon: SuccessIcon,
+          title: t("signup.submit_result.success_text"),
+          duration: 3000,
+        });
+
         setTimeout(() => {
           emit("close");
         }, 1000);
@@ -235,11 +241,10 @@ const Signup = defineComponent({
         // state.notificationText = errMessage.value;
 
         ElNotification({
-            icon: WarningIcon,
-            title: errMessage.value,
-            duration: 3000,
-        })
-        
+          icon: WarningIcon,
+          title: errMessage.value,
+          duration: 3000,
+        });
       }
     };
 
@@ -566,7 +571,7 @@ export default Signup;
             </v-carousel-item>
           </v-carousel>
         </v-row>
-        <v-row class="mt-4 mb-2 ">
+        <v-row class="mt-4 mb-2">
           <p class="label-text-lg white full-width center">
             {{ t("signup.displayNamePage.title") }}
           </p>
@@ -663,16 +668,15 @@ export default Signup;
 .signup-body {
   margin: 0px !important;
   padding: 48px;
-  .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
 
+  .form-textfield div.v-field__field {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 
 .display-name-input {
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 

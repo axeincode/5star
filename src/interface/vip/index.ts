@@ -53,13 +53,13 @@ export interface VipLevel {
     bet_rate: number
 }
 
-export interface GetVipInfoResponse {    
+export type GetVipInfoResponse = {    
     code: number
     data: VipInfo
     message: string
 }
 
-export interface GetVipLevelResponse {
+export type GetVipLevelResponse = {
     code: number
     data: Array<VipLevel>
     message: string

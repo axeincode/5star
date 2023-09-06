@@ -267,7 +267,8 @@ export const lang: langType = {
       text_3: "Maximum ",
     },
     check_text: "Not participating in promotional activities",
-    other_text: "0.00% fee,R$20.00+R$20.00 bonus into your account",
+    other_text: "0.00% fee,",
+    other_text_1: " bonus into your account",
     deposit_btn_text: "DEPOSIT",
     personal_information: {
       header_text: "Enter your Pix details",
