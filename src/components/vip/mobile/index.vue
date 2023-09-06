@@ -347,7 +347,8 @@ watch(mobileWidth, (newValue: number) => {
 })
 
 watch(selectedVIPTab, (newValue: string) => {
-  // console.log(newValue)
+  console.log(':::::::::::::::::::')
+  console.log(newValue)
 }, { deep: true })
 
 watch(vipSlidePosition, (newValue: boolean) => {

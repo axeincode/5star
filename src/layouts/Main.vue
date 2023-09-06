@@ -39,6 +39,8 @@ const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
+const { setHeaderBlurEffectShow } = appBarStore();
+const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
 const { setAuthModalType } = authStore();
@@ -219,6 +221,8 @@ watch(loginBonusDialogVisible, (newValue) => {
 const closeLoginBonusDialog = () => {
   setLoginBonusDialogVisible(false);
   setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
 }
 
 // roulette bonus dialog
@@ -233,6 +237,8 @@ watch(rouletteBonusDialogVisible, (newValue) => {
 const closeRouletteBonusDialog = () => {
   setRouletteBonusDialogVisible(false);
   setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
 }
 
 // main blur effect
@@ -247,7 +253,6 @@ const overlayScrimShow = computed(() => {
   return getOverlayScrimShow.value;
 })
 watch(overlayScrimShow, (newValue) => {
-  console.log(newValue);
   if (newValue) {
     overlayScrimBackground.value = "transparent";
   } else {
@@ -279,6 +284,8 @@ const accountDialogVisible = computed(() => {
 const accountDialogClose = () => {
   accountDialog.value = false;
   setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
   setOverlayScrimShow(false);
   setAccountDialogShow(false);
 }
@@ -288,6 +295,8 @@ const selectActiveIndex = (index: number) => {
   selectedMenuItem.value = menuList.value[index];
   accountDialog.value = false;
   setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
   setOverlayScrimShow(false);
   setAccountDialogShow(false);
   router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
@@ -300,6 +309,21 @@ watch(accountDialogVisible, (value: boolean) => {
 watch(mailMenuShow, (value) => {
   console.log(value);
 })
+
+const closeReferDialog = () => {
+  setRefferalDialogShow(false);
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+setMenuBlurEffectShow(false);
+  setOverlayScrimShow(false);
+}
+
+const depositBlurEffectShow = computed(() => {
+  const { getDepositBlurEffectShow } = storeToRefs(appBarStore());
+  return getDepositBlurEffectShow.value
+})
+
+
 
 // mounted
 
@@ -342,6 +366,7 @@ onMounted(() => {
 
     <v-dialog
       v-model="withdrawDialog"
+      :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
       :width="''"
       :fullscreen="true"
       :scrim="false"
@@ -358,6 +383,7 @@ onMounted(() => {
 
     <v-dialog
       v-model="depositDialog"
+      :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
       :width="''"
       :fullscreen="true"
       :scrim="false"
@@ -475,7 +501,7 @@ onMounted(() => {
     <v-dialog
       v-model="refferalDialog"
       :width="mobileWidth < 600 ? '360' : '471'"
-      @click:outside="setRefferalDialogShow(false)"
+      @click:outside="closeReferDialog"
     >
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />
@@ -611,4 +637,17 @@ onMounted(() => {
     max-width: unset !important;
   }
 }
+
+.m-deposit-dialog{
+  .v-overlay__content {
+    transform: none!important;
+  } 
+}
+
+// .m-withdraw-dialog{
+//   .v-overlay__content {
+//     transform: none!important;
+//   } 
+// }
+
 </style>

@@ -35,6 +35,15 @@ const formsList = ref<Array<any>>([
         status: "loss",
         profit: "- R$ 300000000.00"
     },
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
 ])
 
 const gameList = ref<Array<string>>([
@@ -88,7 +97,7 @@ const mobileWidth = computed(() => {
 </script>
 <template>
     <v-row class="mx-2 mt-4">
-        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header>
+        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header height="700px">
             <thead class="forms-table-header">
                 <tr>
                     <th class="forms-table-header-text" style="border-radius: 8px 0px 0px 8px;">
@@ -119,7 +128,7 @@ const mobileWidth = computed(() => {
                     <td>{{ item.game }}</td>
                     <td>{{ item.date }}</td>
                     <td class="d-flex align-center justify-center">
-                        <div style="width: 20px; height: 20px; background: #414968; border-radius: 20px; position: relative;">
+                        <div style="width: 20px; height: 20px; background: #414968; border-radius: 20px; position: relative;" v-if="item.amount">
                             <el-tooltip placement="top" effect="customized">
                                 <template #content>
                                     <v-list-item v-for="(item, index) in tootipList" :key="index" class="text-400-16 gray">

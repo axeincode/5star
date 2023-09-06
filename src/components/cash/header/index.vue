@@ -123,7 +123,6 @@ watch(cashToggleSwitch, (newValue) => {
         pixInfoItem.value.id = "";
         pixInfoItem.value.first_name = "";
         pixInfoItem.value.last_name = "";
-        console.log('11111')
         isPersonalBtnReady.value = false;
         confirmValidation.value = false;
         setWithdrawDialogToggle(true);

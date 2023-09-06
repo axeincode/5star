@@ -12,6 +12,8 @@ import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
+import ParticipatingDialog from "@/components/cash/deposit/ParticipatingDialog.vue";
+
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
@@ -20,6 +22,8 @@ const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+
+const promotionDialogVisible = ref<boolean>(false);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
@@ -257,16 +261,18 @@ const handleDepositSubmit = async () => {
   setCashDialogToggle(false);
 }
 
+const handleParticipate = () => {
+  promotionDialogVisible.value = false
+}
+
 watch(bonusCheck, (newValue) => {
-    if (newValue && validateAmount()) {
-        isDepositBtnReady.value = true;
-    } else {
-        isDepositBtnReady.value = false;
-    }
+  if (newValue) {
+    promotionDialogVisible.value = newValue
+  }
 })
 
 watch(depositAmount, (newValue) => {
-    if (bonusCheck.value && validateAmount()) {
+    if (validateAmount()) {
         isDepositBtnReady.value = true;
     } else {
         isDepositBtnReady.value = false;
@@ -399,8 +405,8 @@ const overlayScrimShow = computed(() => {
           @click="handleDepositAmount(depositAmountItem)"
         >
           {{ depositAmountUnit }} {{ depositAmountItem }}
-          <div class="deposit-amount-area"></div>
-          <div class="deposit-amount-rate-text">{{ depositRate }}</div>
+          <div class="deposit-amount-area" v-if="!bonusCheck"></div>
+          <div class="deposit-amount-rate-text" v-if="!bonusCheck">{{ depositRate }}</div>
         </v-btn>
       </v-col>
     </v-row>
@@ -446,6 +452,10 @@ const overlayScrimShow = computed(() => {
       :notificationText="notificationText"
       :checkIcon="checkIcon"
     />
+
+    <v-dialog v-model="promotionDialogVisible" width="326" content-class="m-promotion-dialog-position" @click:outside="handleParticipate">
+        <ParticipatingDialog @promotionDialogHide="handleParticipate" />
+    </v-dialog>
   </div>
 </template>
 

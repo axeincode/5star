@@ -89,6 +89,10 @@ const formsList = ref<Array<any>>([
         note: "Payment Approved",
         actionType: 3
     },
+    {},
+    {},
+    {},
+    {},
 ])
 
 const mobileWidth = computed(() => {
@@ -97,7 +101,7 @@ const mobileWidth = computed(() => {
 </script>
 <template>
     <v-row class="mx-2 mt-4">
-        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header height="600px">
+        <v-table class="forms-bonus-table-bg" theme="dark" fixed-header height="700px">
             <thead class="forms-table-header">
                 <tr>
                     <th class="forms-table-header-text" style="border-radius: 8px 0px 0px 8px;">
@@ -147,7 +151,11 @@ const mobileWidth = computed(() => {
     </v-row>
     <v-row class="ma-4 mx-2">
         <v-col cols="4" class="d-flex" style="margin-left: -10px!important;">
-            <img src="@/assets/public/svg/icon_public_53.svg" width="24"/>
+            <v-btn icon width="24" height="24" class="withdraw-info-icon">
+                <v-icon>
+                    <img src="@/assets/public/svg/icon_public_53.svg" />
+                </v-icon>
+            </v-btn>
         </v-col>
         <v-col cols="8" class="d-flex" style="margin-left: 10px!important; padding-right: 0px!important; padding-left: 0px!important;">
             <div style="float: right!important; width: 100%;">
@@ -158,6 +166,7 @@ const mobileWidth = computed(() => {
 </template>
 <style lang="scss">
 .forms-bonus-table-bg {
+    height: 700px;
     background: #1C1929 !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 12px !important;
@@ -202,5 +211,9 @@ const mobileWidth = computed(() => {
         font-weight: 600;
         font-size: 16px !important;
     }
+}
+.withdraw-info-icon{
+    background: transparent!important;
+    box-shadow: none!important;;
 }
 </style>

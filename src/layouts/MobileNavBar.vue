@@ -20,6 +20,9 @@ const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setMailMenuShow } = mailStore();
 const { setSearchGameDialogShow } = gameStore();
+const { setHeaderBlurEffectShow } = appBarStore();
+const { setMenuBlurEffectShow } = appBarStore();
+
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -152,6 +155,8 @@ const openLoginBonusDialog = () => {
   setNavBarToggle(false);
   setOverlayScrimShow(true);
   setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
 }
 
 const openRouletteBonusDialog = () => {
@@ -159,6 +164,8 @@ const openRouletteBonusDialog = () => {
   setNavBarToggle(false);
   setOverlayScrimShow(true);
   setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
 }
 const openRefferalDialogShow = () => {
   setOverlayScrimShow(false);

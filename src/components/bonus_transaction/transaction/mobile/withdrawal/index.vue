@@ -102,7 +102,7 @@ const mobileWidth = computed(() => {
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">
                         <div class="forms-table-border0" >
-                            <div style = "width: 50px; margin-left: 16px; margin-right: 20px;">
+                            <div style = "width: 50px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.date') }}
                             </div>
                         </div>
@@ -110,42 +110,42 @@ const mobileWidth = computed(() => {
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 130px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 60px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.id') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 60px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 50px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.type') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 130px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 100px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.amount') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 90px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.game_history.status') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 90px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.transactions.note') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px;">
                         <div class="forms-table-border2" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 90px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.withdraw.action') }}
                             </div>
                         </div>
@@ -154,17 +154,17 @@ const mobileWidth = computed(() => {
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
-                    <td class="text-400-10" style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">{{ item.id }}</td>
-                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
-                    <td class="text-400-10 color-D42763" style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">{{ item.amount }}</td>
-                    <td class="text-400-10" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''"
+                    <td class="text-400-12" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
+                    <td class="text-400-12" style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 60px;">{{ item.id }}</td>
+                    <td class="text-400-12" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
+                    <td class="text-400-12 color-D42763" style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">{{ item.amount }}</td>
+                    <td class="text-400-12" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''"
                         style="padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;">
                         {{ item.status }}
                     </td>
-                    <td class="text-400-10" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}
+                    <td class="text-400-12" :class="item.status == 'In Processing' ? 'color-F9BC01' : ''" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}
                     </td>
-                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">
+                    <td class="text-400-12" style = "padding-top:21px!important; padding-bottom: 21px!important;">
                         <v-btn class="ma-2 button-bright text-none withdraw-refund-btn" rounded v-if="item.actionType == 1">
                             {{ t('transaction.withdraw.refund') }}
                         </v-btn>
@@ -178,7 +178,13 @@ const mobileWidth = computed(() => {
     </v-row>
     <v-row class="m-bonus-transaction-table3">
         <v-col cols="4" class="d-flex " style = "margin-left: -12px; margin-top:4px;">
-            <img src="@/assets/public/svg/icon_public_53.svg" width="24" />
+            <v-btn icon width="24" height="24" class="m-withdraw-info-icon">
+                <v-icon>
+                    <img src="@/assets/public/svg/icon_public_53.svg" />
+
+                </v-icon>
+
+            </v-btn>
         </v-col>
         <v-col cols="8" class="d-flex" style="padding-right: 6px;">
             <div style="width: 100%;">
@@ -252,5 +258,9 @@ const mobileWidth = computed(() => {
     margin-left: 12px;
     margin-top: 16px!important;
     margin-bottom: 8px;
+}
+.m-withdraw-info-icon{
+    background: transparent!important;
+    box-shadow: none!important;;
 }
 </style>

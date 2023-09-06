@@ -253,6 +253,12 @@ const mailSvgTransform = (el: any) => {
   return el
 }
 
+// menu blur effect
+const menuBlurEffectShow = computed(() => {
+  const { getMenuBlurEffectShow } = storeToRefs(appBarStore());
+  return getMenuBlurEffectShow.value
+})
+
 onMounted(() => {
   mailCount.value = mailList.value.length
   console.log(tempMailList.value.length);
@@ -261,7 +267,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-bottom-navigation bg-color="#000000" grow class="mobile-menu-index">
+  <v-bottom-navigation bg-color="#000000" grow class="mobile-menu-index" :class="menuBlurEffectShow ? 'menu-bg-blur' :''">
     <v-btn class="menu-text-color" @click="handleNavbarToggle" :ripple="false">
       <inline-svg
         :src="icon_public_81"
@@ -578,5 +584,11 @@ onMounted(() => {
   .v-ripple__container {
     opacity: 0 !important;
   }
+}
+.menu-bg-blur {
+  // filter: blur(4px);
+  // -webkit-filter: blur(4px);
+  filter: saturate(180%) blur(4px);
+  -webkit-filter: saturate(180%) blur(4px);
 }
 </style>

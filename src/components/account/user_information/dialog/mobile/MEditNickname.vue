@@ -87,7 +87,6 @@ const handleNickNameChange = () => {
 }
 
 const submitNickName = async () => {
-    console.log('>>>>>>>>>>>>>')
     loading.value = true;
     await dispatchUpdateUserInfo({
         name: nickName.value

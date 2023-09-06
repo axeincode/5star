@@ -153,7 +153,7 @@ const Login = defineComponent({
         setTimeout(() => {
           setAuthModalType("");
           emit("close");
-        }, 3000);
+        }, 100);
       } else {
         ElNotification({
           icon: WarningIcon,

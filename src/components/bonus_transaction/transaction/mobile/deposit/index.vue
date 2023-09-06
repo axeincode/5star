@@ -85,35 +85,35 @@ const mobileWidth = computed(() => {
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 130px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 60px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.id') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 60px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 50px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.type') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 100px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.amount') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 90px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.game_history.status') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px;">
                         <div class="forms-table-border2" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 90px; margin-left: 16px; margin-right: 16px;">
                                 {{ t('transaction.transactions.note') }}
                             </div>
                         </div>
@@ -123,12 +123,12 @@ const mobileWidth = computed(() => {
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-10 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
-                    <td class="text-400-10 text-center" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.id }}</td>
-                    <td class="text-400-10 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
-                    <td class="text-400-10 text-center color-01983A" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.amount }}</td>
-                    <td class="text-400-10 text-center" :class="item.status == 'Complete' ? 'color-01983A' : ''" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.status }}</td>
-                    <td class="text-400-10 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}</td>
+                    <td class="text-400-12 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
+                    <td class="text-400-12 text-center" style="min-width: 60px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.id }}</td>
+                    <td class="text-400-12 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
+                    <td class="text-400-12 text-center color-01983A" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.amount }}</td>
+                    <td class="text-400-12 text-center" :class="item.status == 'Complete' ? 'color-01983A' : ''" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.status }}</td>
+                    <td class="text-400-12 text-center" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}</td>
                 </tr>
             </tbody>
         </v-table>

@@ -679,4 +679,7 @@ onMounted(async () => {
   // filter: saturate(180%) blur(4px);
   // -webkit-filter: saturate(180%) blur(4px);
 }
+.v-dialog--persistent .v-dialog__content {
+  transform: none !important;
+}
 </style>

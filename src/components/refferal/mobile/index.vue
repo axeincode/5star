@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { appBarStore } from '@/store/appBar';
 import { refferalStore } from "@/store/refferal";
 import Notification from "@/components/global/notification/index.vue";
 import { ElNotification } from 'element-plus'
@@ -10,6 +11,10 @@ import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 const { t } = useI18n();
 const { width } = useDisplay();
 const { setRefferalDialogShow } = refferalStore();
+const { setMainBlurEffectShow } = appBarStore();
+const { setHeaderBlurEffectShow } = appBarStore();
+const { setMenuBlurEffectShow } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
 
 const invitedUser = ref<number>(28560);
 const earnMoney = ref<number>(85601479);
@@ -56,6 +61,14 @@ const showMainDialog = () => {
 const showDescriptionDialog = () => {
   descriptionVisible.value = true;
 };
+
+const closeReferDialog = () => {
+  setRefferalDialogShow(false);
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+setMenuBlurEffectShow(false);
+  setOverlayScrimShow(false);
+}
 
 onMounted(() => {
   setTimeout(() => {
@@ -155,7 +168,7 @@ onMounted(() => {
           <v-btn
             class="m-close-button"
             icon="true"
-            @click="setRefferalDialogShow(false)"
+            @click="closeReferDialog"
             width="30"
             height="30"
           >

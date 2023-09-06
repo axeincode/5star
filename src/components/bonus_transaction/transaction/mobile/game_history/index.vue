@@ -36,6 +36,10 @@ const formsList = ref<Array<any>>([
         status: "loss",
         profit: "- R$ 300000000.00"
     },
+    {},
+    {},
+    {},
+    {},
 ])
 
 const gameList = ref<Array<string>>([
@@ -117,21 +121,21 @@ const handleGameLink = (game) => {
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1">
-                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style="width: 90px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.game_history.multilier') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1">
-                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style="width: 100px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.game_history.betId') }}
                             </div>
                         </div>
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1">
-                            <div style="width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style="width: 90px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.game_history.status') }}                            
                             </div>
                         </div>
@@ -146,7 +150,7 @@ const handleGameLink = (game) => {
                     </th>
                 </tr>
             </thead>
-            <tbody class="text-400-10 text-center">
+            <tbody class="text-400-12 text-center">
                 <tr v-for="(item, index) in formsList" :key="index">
                     <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;">
                         <v-btn
@@ -159,7 +163,7 @@ const handleGameLink = (game) => {
                     <td class="m-bonus-transaction-table-body-cells" style = "padding-top:21px!important; padding-bottom: 21px!important;" >{{ item.date }}</td>
                     <td style = "padding-top:21px!important; padding-bottom: 21px!important; min-width: 130px;" >
                         <div class=" d-flex align-center justify-center" >
-                            <div  style="width: 16px; height: 16px; background: #414968; border-radius: 20px; ">
+                            <div  style="width: 16px; height: 16px; background: #414968; border-radius: 20px; " v-if="item.amount">
                                 <el-tooltip placement="top" effect="customized"  style="margin:10px!important;">
                                     <template #content>
                                         <v-list-item v-for="(item, index) in tootipList" :key="index" class="m-bonus-transaction-tooltip-body gray"

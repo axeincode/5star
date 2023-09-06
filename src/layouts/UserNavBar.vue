@@ -24,6 +24,8 @@ const { setWithdrawDialogToggle } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
+const { setHeaderBlurEffectShow } = appBarStore();
+const { setMenuBlurEffectShow } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
@@ -44,6 +46,8 @@ const depositRate = ref<number>(0);
 const wagerRate = ref<number>(0);
 
 const accountPageShow = ref<boolean>(false);
+
+const referPageShow = ref<boolean>(false);
 
 const notificationShow = ref<boolean>(false);
 const checkIcon = ref<string>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
@@ -116,6 +120,8 @@ const mobileWidth: any = computed(() => {
 
 const depositDialogShow = () => {
   setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
   setDepositDialogToggle(true);
   setCashDialogToggle(true);
   setUserNavBarToggle(false);
@@ -167,8 +173,13 @@ const goGameHistoryPage = () => {
   setUserNavBarToggle(false);
 }
 
-const refferalDialogShow = () => {
+const handleRefferalDialogShow = () => {
+  referPageShow.value = true;
   setRefferalDialogShow(true);
+  setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
+  setOverlayScrimShow(drawer.value);
   setUserNavBarToggle(false);
 }
 
@@ -177,6 +188,8 @@ const goAccountPage = () => {
   setAccountDialogShow(true);
   // router.push({ name: 'Account' })
   setMainBlurEffectShow(drawer.value);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
   setOverlayScrimShow(drawer.value);
   setUserNavBarToggle(false);
 }
@@ -192,10 +205,11 @@ watch(userNavBarToggle, (newValue) => {
 watch(drawer, (newValue: boolean) => {
   setUserNavBarToggle(newValue);
   setMailMenuShow(newValue);
-  if (!newValue && !accountPageShow.value) {
+  if (!newValue && !accountPageShow.value && !referPageShow.value) {
     setMainBlurEffectShow(false);
   }
   accountPageShow.value = false;
+  referPageShow.value = false;
   if (newValue) {
     setMainBlurEffectShow(true);
     setOverlayScrimShow(true);
@@ -368,7 +382,7 @@ onMounted(async () => {
         class="m-user-item refer-friend-background"
         height="36"
         value="refer_friend"
-        @click="refferalDialogShow"
+        @click="handleRefferalDialogShow"
       >
         <template v-slot:prepend>
           <img src="@/assets/public/svg/icon_public_64.svg" width="18" />

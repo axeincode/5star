@@ -80,6 +80,7 @@ const formsList = ref<Array<any>>([
         note: "",
         balance: "R$ 300000000.00"
     },
+    
 ])
 
 const mobileWidth = computed(() => {
@@ -114,7 +115,7 @@ const mobileWidth = computed(() => {
                     </th>
                     <th class="text-700-12 black text-center">
                         <div class="forms-table-border1" >
-                            <div style = "width: 120px; margin-left: 20px; margin-right: 20px;">
+                            <div style = "width: 60px; margin-left: 20px; margin-right: 20px;">
                                 {{ t('transaction.transactions.id') }}
                             </div>
                         </div>
@@ -137,15 +138,15 @@ const mobileWidth = computed(() => {
             </thead>
             <tbody class="forms-table-body">
                 <tr v-for="(item, index) in formsList" :key="index">
-                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
-                    <td class="text-400-10" style="min-width: 160px; padding-top:21px!important; padding-bottom: 21px!important;"
+                    <td class="text-400-12" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.date }}</td>
+                    <td class="text-400-12" style="min-width: 160px; padding-top:21px!important; padding-bottom: 21px!important;"
                         :class="item.type != 'Game Bet' && item.type != 'Withdrawal PIX' ? 'color-01983A' : 'color-D42763'">
                         {{ item.amount }}
                     </td>
-                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
-                    <td class="text-400-10" style="min-width: 160px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.id }}</td>
-                    <td class="text-400-10" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}</td>
-                    <td class="text-400-10" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.balance }}</td>
+                    <td class="text-400-12" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.type }}</td>
+                    <td class="text-400-12" style="min-width: 60px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.id }}</td>
+                    <td class="text-400-12" style = "padding-top:21px!important; padding-bottom: 21px!important;">{{ item.note }}</td>
+                    <td class="text-400-12" style="min-width: 130px; padding-top:21px!important; padding-bottom: 21px!important;">{{ item.balance }}</td>
                 </tr>
             </tbody>
         </v-table>
