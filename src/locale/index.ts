@@ -12,7 +12,7 @@ export function loadLang() {
 }
 
 export const i18n = createI18n({
-  // globalInjection: true,
+  globalInjection: true,
   legacy: false,
   locale: localStorage.getItem('lang') || 'en',
   fallbackLocale: 'en',

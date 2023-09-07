@@ -26,19 +26,24 @@ export interface GameEnterResponse {
     weburl: string
 }
 
-export interface GetGameCategoriesResponse {
+export interface GameSearchResponse {
+    list: Array<Search>
+    total: number
+}
+
+export type GetGameCategoriesResponse = {
     code: number
     data: Array<Category>
     messsage: string
 }
 
-export interface GetGameSearchResponse {
+export type GetGameSearchResponse = {
     code: number
-    data: Array<Search>
+    data: GameSearchResponse
     message: string
 }
 
-export interface GetGameEnterResponse {
+export type GetGameEnterResponse = {
     code: number
     data: GameEnterResponse
     message: string

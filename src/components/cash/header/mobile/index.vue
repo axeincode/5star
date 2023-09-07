@@ -148,11 +148,21 @@ const handlePixInfoSubmit = (): void => {
   }
 }
 
+const pixInfoToggle = computed(() => {
+  const { getPixInfoToggle } = storeToRefs(depositStore());
+  return getPixInfoToggle.value
+})
+
+watch(pixInfoToggle, (value) => {
+  pixInfoMenuShow.value = value;
+})
+
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   pixInfoItem.value.id = getUserInfo.value.id_number;
   pixInfoItem.value.first_name = getUserInfo.value.first_name;
   pixInfoItem.value.last_name = getUserInfo.value.last_name;
+  setPixInfo(pixInfoItem.value);
   return getUserInfo.value;
 })
 
@@ -160,6 +170,7 @@ watch(userInfo, (value) => {
   pixInfoItem.value.id = value.id_number;
   pixInfoItem.value.first_name = value.first_name;
   pixInfoItem.value.last_name = value.last_name;
+  setPixInfo(pixInfoItem.value);
 })
 
 const depositDialogToggle = computed(() => {
@@ -174,9 +185,9 @@ const withdrawDialogToggle = computed(() => {
 
 watch(cashToggleSwitch, (newValue) => {
   if (newValue) {
-    pixInfoItem.value.id = "";
-    pixInfoItem.value.first_name = "";
-    pixInfoItem.value.last_name = "";
+    // pixInfoItem.value.id = "";
+    // pixInfoItem.value.first_name = "";
+    // pixInfoItem.value.last_name = "";
     isPersonalBtnReady.value = false;
     confirmValidation.value = false;
     setWithdrawDialogToggle(true);
@@ -189,9 +200,9 @@ watch(cashToggleSwitch, (newValue) => {
     depositCheckboxColor.value = "#7782AA";
     withdrawCheckboxColor.value = "#ffffff";
   } else {
-    pixInfoItem.value.id = "";
-    pixInfoItem.value.first_name = "";
-    pixInfoItem.value.last_name = "";
+    // pixInfoItem.value.id = "";
+    // pixInfoItem.value.first_name = "";
+    // pixInfoItem.value.last_name = "";
     isPersonalBtnReady.value = false;
     confirmValidation.value = false;
     setWithdrawDialogToggle(false);
@@ -312,7 +323,7 @@ onMounted(() => {
               class="form-textfield dark-textfield"
               variant="solo"
               density="comfortable"
-              :disabled="confirmValidation"
+              :disabled="userInfo.id_number != ''"
               append-icon="mdi"
               color="#7782AA"
               v-model="pixInfoItem.id"
@@ -336,7 +347,7 @@ onMounted(() => {
               append-icon="mdi"
               color="#7782AA"
               v-model="pixInfoItem.first_name"
-              :disabled="confirmValidation"
+              :disabled="userInfo.first_name != ''"
               @input="handlePixInfoFirstName"
               @mousedown="handleConfirmValidation"
             />
@@ -353,7 +364,7 @@ onMounted(() => {
               append-icon="mdi"
               color="#7782AA"
               v-model="pixInfoItem.last_name"
-              :disabled="confirmValidation"
+              :disabled="userInfo.last_name != ''"
               @input="handlePixInfoLastName"
             >
             </v-text-field>
@@ -387,7 +398,7 @@ onMounted(() => {
             >
             </inline-svg>
             <!-- <img src="@/assets/public/svg/icon_public_60.svg" width="18" /> -->
-            <P class="text-700-10 ml-1">{{ t("appBar.deposit") }}</P>
+            <p class="text-700-10 ml-1">{{ t("appBar.deposit") }}</p>
           </div>
           <div class="withdraw">
             <inline-svg
@@ -398,7 +409,7 @@ onMounted(() => {
             >
             </inline-svg>
             <!-- <img src="@/assets/public/svg/icon_public_65.svg" width="18" /> -->
-            <P class="text-700-10 ml-1">{{ t("appBar.withdraw") }}</P>
+            <p class="text-700-10 ml-1">{{ t("appBar.withdraw") }}</p>
           </div>
         </label>
       </div>
@@ -714,6 +725,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 18px;
   }
+
   .el-notification {
     align-items: center !important;
     z-index: 1000000000 !important;
@@ -766,6 +778,5 @@ onMounted(() => {
       color: #000000;
     }
   }
-
 }
 </style>

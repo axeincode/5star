@@ -78,12 +78,10 @@ export class NetworkData {
    */
   public setToken(token: string): void {
     Cookies.set(CacheKey.TOKEN, token, { expires: 2 })
-    // console.log(Cookies.get(CacheKey.TOKEN));
   }
 
   /** Get current token */
   public getToken(): string | undefined {
-    console.log(Cookies.get(CacheKey.TOKEN))
     return Cookies.get(CacheKey.TOKEN)
   }
 

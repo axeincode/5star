@@ -15,8 +15,10 @@ import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
+import router from '@/router';
+import MParticipatingDialog from "@/components/cash/deposit/mobile/MParticipatingDialog.vue";
 import store from '@/store';
-import MParticipatingDialog  from "@/components/cash/deposit/mobile/MParticipatingDialog.vue";
+import { load } from 'webfontloader';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -30,7 +32,7 @@ const { setDepositBlurEffectShow } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
-import router from '@/router';
+const { setPixInfoToggle } = depositStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
@@ -177,6 +179,8 @@ const depositAmount = ref<string | number>(0)
 
 const bonusCheck = ref<boolean>(false);
 
+const loading = ref<boolean>(false);
+
 const promotionDialogVisible = ref<boolean>(false);
 
 const notificationShow = ref<boolean>(false);
@@ -196,6 +200,10 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
+watch(userInfo, (value) => {
+
+})
+
 const pixInfo = computed(() => {
   const { getPixInfo } = storeToRefs(depositStore());
   return getPixInfo.value
@@ -204,6 +212,11 @@ const pixInfo = computed(() => {
 const depositConfig = computed(() => {
   const { getDepositCfg } = storeToRefs(depositStore());
   return getDepositCfg.value
+})
+
+const depositSubmit = computed(() => {
+  const { getDepositSubmit } = storeToRefs(depositStore());
+  return getDepositSubmit.value
 })
 
 const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
@@ -256,7 +269,7 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
-  return Number(depositAmount.value) >= 20 && Number(depositAmount.value) <= 100000;
+  return Number(depositAmount.value) >= Number(selectedPaymentItem.value.min) && Number(depositAmount.value) <= Number(selectedPaymentItem.value.max);
 }
 
 const handleAmountInputFocus = (): void => {
@@ -294,17 +307,24 @@ const errMessage = computed(() => {
 })
 
 const handleDepositSubmit = async () => {
+  if (pixInfo.value.id == '' || pixInfo.value.id == undefined) {
+    setPixInfoToggle(true);
+    return;
+  }
+  loading.value = true
   await dispatchUserDepositSubmit({
     id_number: pixInfo.value.id,
     first_name: pixInfo.value.first_name,
     last_name: pixInfo.value.last_name,
     channels_id: selectedPaymentItem.value.id,
-    amount: depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * ( 1 + Number(depositRate.value))).toFixed(2))
+    amount: depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
   })
+  loading.value = false;
   if (success.value) {
+    window.open(depositSubmit.value.url, '_blank');
     ElNotification({
       icon: SuccessIcon,
-      title: "Successfully submitted, need to modify please contact customer service",
+      title: "Successfully submitted",
       duration: 3000,
     })
     setDepositDialogToggle(false);
@@ -332,7 +352,6 @@ watch(bonusCheck, (newValue) => {
 })
 
 watch(depositAmount, (newValue) => {
-  alert
   if (validateAmount()) {
     isDepositBtnReady.value = true;
   } else {
@@ -548,9 +567,15 @@ onMounted(async () => {
     </v-row>
     <div class="mt-0 mx-4 d-flex align-center">
       <div>
-        <v-checkbox hide-details icon class="amount-checkbox" v-model="bonusCheck" label="Not participating in promotional activities"/>
+        <v-checkbox
+          hide-details
+          icon
+          class="amount-checkbox"
+          v-model="bonusCheck"
+          label="Not participating in promotional activities"
+        />
       </div>
-      
+
       <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
     </div>
     <v-row
@@ -570,13 +595,19 @@ onMounted(async () => {
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
+        :loading="loading"
         :onclick="handleDepositSubmit"
       >
         {{ t("deposit_dialog.deposit_btn_text") }}
       </v-btn>
     </div>
-    <v-dialog v-model="promotionDialogVisible" width="326" content-class="m-promotion-dialog-position" @click:outside="handleParticipate">
-        <MParticipatingDialog @promotionDialogHide="handleParticipate" />
+    <v-dialog
+      v-model="promotionDialogVisible"
+      width="326"
+      content-class="m-promotion-dialog-position"
+      @click:outside="handleParticipate"
+    >
+      <MParticipatingDialog @promotionDialogHide="handleParticipate" />
     </v-dialog>
   </div>
 </template>
@@ -704,8 +735,8 @@ onMounted(async () => {
   }
 
   .amount-checkbox .v-input--selection-controls__ripple {
-    padding: 16px!important;
-    border:1px solid yellow!important;;
+    padding: 16px !important;
+    border: 1px solid yellow !important;
   }
 
   .amount-checkbox {
@@ -762,23 +793,24 @@ onMounted(async () => {
     // -webkit-filter: saturate(180%) blur(4px);
   }
 }
+
 .amount-checkbox {
   .v-label {
-    color: #7782AA !important;
+    color: #7782aa !important;
     // background: rgba(119, 130, 170, 1);
     font-weight: 400;
-    font-size: 10px!important;
+    font-size: 10px !important;
     font-family: "Inter";
     opacity: 1;
   }
 }
+
 .m-promotion-dialog-position {
-    z-index: 2550;
-    // top: -20px !important;
+  z-index: 2550;
+  // top: -20px !important;
 }
 
 .v-dialog--persistent .v-dialog__content {
   transform: none !important;
 }
-
 </style>

@@ -4,6 +4,6 @@ export interface GetUserData {
     name: string
     grade_level: string
     grade: string
-    wallet: number
+    wallet: number | string
     currency: string
 }

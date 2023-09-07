@@ -1,7 +1,7 @@
 import { EXITTYPE, NetworkData, SENDTYPE } from './NetworkData'
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { get } from "lodash-es"
-import { io, Socket } from 'socket.io-client'
+import { createWebSocket } from '@/plugins/socket'
 
 /**
  * Event Object
@@ -29,7 +29,7 @@ export class Network {
 
   private sendCount: { [key: number]: number } = {}
 
-  private socket: Socket = io()
+  private socket: any = null;
 
   private service: any
 
@@ -61,9 +61,6 @@ export class Network {
   public async sendMsg(route: string, msg: any, next: Function, type: SENDTYPE = SENDTYPE.SOCKET, requestType: SENDTYPE = SENDTYPE.POST) {
     // Build a contract structure
     let msgData = this.msgParsing(route, msg, type)
-
-    console.log(msgData);
-
     switch (type) {
       case SENDTYPE.HTTP:
         switch (requestType) {
@@ -118,7 +115,7 @@ export class Network {
 
   //send websocket
   public socketReq(route: string, msg: any, callBack?: Function) {
-    this.socket.emit(route, msg)
+    // this.socket.emit(route, msg)
   }
 
   /**
@@ -127,10 +124,28 @@ export class Network {
    * @param port
    * @param connectcb
    */
-  public connect(connectFuc?: Function) {
-    this.socket.on('connection', () => {
+  public connect(route: string) {
+    this.socket = createWebSocket(route);
+    this.socket.onopen = this.handleOpen;
+    this.socket.onmessage = this.handleMessage;
+    this.socket.onerror = this.handleError;
+    this.socket.onclose = this.handleClose;
+  }
 
-    })
+  private handleOpen() {
+    console.log('WebSocket connection established');
+  }
+
+  private handleMessage(event: MessageEvent) {
+    console.log('Received message:', event.data);
+  }
+
+  private handleError(event: Event) {
+    console.error('WebSocket error:', event);
+  }
+
+  private handleClose(event: CloseEvent) {
+    console.log('WebSocket connection closed:', event);
   }
 
   /**
@@ -141,12 +156,8 @@ export class Network {
   private connectConnector(event_type: string, event: MessageEvent | CloseEvent | Event | any) {
     switch (event_type) {
       case 'emit':
-        this.socket.emit(event)
         break
       case 'on':
-        this.socket.on(event, () => {
-
-        })
         break
     }
   }
@@ -156,9 +167,7 @@ export class Network {
    * @param event
    */
   private kicked() {
-    this.socket.on('disconnect', () => {
-      console.log('socket disconnected')
-    })
+    this.socket.onclose = this.handleClose;
   }
 
   /**
@@ -170,7 +179,7 @@ export class Network {
    * websocket disconnect
    */
   public disconnect() {
-    this.socket.emit('forceDisconnect')
+    this.socket.onclose = this.handleClose
   }
 
   /**

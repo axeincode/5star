@@ -1150,12 +1150,12 @@ const Dashboard = defineComponent({
           "&limit=" +
           limit.value * new_page_no
       );
-      gameSearchList.value.map((item) => {
+      gameSearchList.value.list.map((item) => {
         item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
       });
       gameCategories.value.map((item) => {
         if (item.name == name) {
-          item.games = gameSearchList.value;
+          item.games = gameSearchList.value.list;
           item.page_no = new_page_no;
         }
       });
@@ -1223,16 +1223,12 @@ const Dashboard = defineComponent({
             "&limit=" +
             limit.value
         );
-        gameSearchList.value.map((item) => {
+        gameSearchList.value.list.map((item) => {
           item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
         });
         item.page_no = 1;
-        item.games = gameSearchList.value;
+        item.games = gameSearchList.value.list;
       });
-
-      setTimeout(() => {
-        console.log(gameCategories.value);
-      }, 2000);
     });
 
     onUnmounted(() => {
@@ -1768,6 +1764,7 @@ export default Dashboard;
               lazy-placeholder
               blur="30"
               delay="500"
+              @click="handleEnterGame(gameItem.id, gameItem.name)"
             />
             <!-- <img
               v-lazy="gameItem.image"
@@ -2120,7 +2117,7 @@ export default Dashboard;
               >
               </inline-svg>
               <!-- <img src="@/assets/public/svg/icon_public_91.svg" width="20" /> -->
-              <P class="ml-1">{{ t("home.latest_record_text") }}</P>
+              <p class="ml-1">{{ t("home.latest_record_text") }}</p>
             </div>
           </label>
         </div>

@@ -1,8 +1,9 @@
-import VueSocketIO from 'vue-3-socket.io';
+import Cookies from "js-cookie";
+import CacheKey from "@/constants/cacheKey";
 
-const socket = new VueSocketIO({
-  debug: true,
-  connection: import.meta.env.VITE_SOCKET_URL,
-})
-
-export default socket;
+export const createWebSocket = (route: string) => {
+  const socket = new WebSocket(`${import.meta.env.VITE_SOKET_URL}${route}?token=${Cookies.get(
+    CacheKey.TOKEN
+  )}`)
+  return socket;
+}

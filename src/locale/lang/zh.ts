@@ -58,7 +58,7 @@ export const lang: langType = {
       },
       alreadyAccount: "Already have an account? ",
       signIn: "Sign in",
-      button: "SIGN UP",
+      button: "Sign up",
       divider: "OR",
     },
     confirmCancelPage: {
@@ -116,7 +116,7 @@ export const lang: langType = {
     text_1: "Don’t forgot to check out our huge selection of promotions!",
     text_2: "Are you sure you want to logout?",
     text_3: "Don’t forgot to check out our huge selection of casino and sports promotions before you leave!",
-    button: "Log Out"
+    button: "LogOut"
   },
   navBar: {
     casino: 'CASINO',
@@ -137,7 +137,7 @@ export const lang: langType = {
     casino_sub_menu: {
       recently_played: 'Recently Played',
       favorites: 'Favorites',
-      game_originals: 'Game Originals',
+      game_originals: 'BLUEGAME Originals',
       slots: 'Slots',
       live_casino: 'Live Casino',
     },
@@ -188,11 +188,20 @@ export const lang: langType = {
   home: {
     search: "Search Games Or Providers",
     button: {
-      lobby: "Lobby",
-      popular: "Popular",
+      all_game: "All Games",
+      favorite: "Favorite",
+      original_game: "Original Game",
+      pg_soft: "PGsoft",
       slots: "Slots",
       live_casino: "Live Casino",
-      blue_originals: "Blue Originals",
+    },
+    search_dialog: {
+      text_1: "Recommended for you",
+      text_2: "No results",
+      text_3: "Search requires at least 3 characters",
+      text_4: "Original Games",
+      text_5: "About",
+      text_6: "results",
     },
     original_games: "Original Games",
     more: "Load more",
@@ -254,10 +263,12 @@ export const lang: langType = {
     amount: "Amount",
     validation: {
       text_1: "Enter the amount you want to deposit.",
-      text_2: "Minimum 20, Maximum 100000."
+      text_2: "Minimum ",
+      text_3: "Maximum ",
     },
     check_text: "Not participating in promotional activities",
-    other_text: "0.00% fee,R$20.00+R$20.00 bonus into your account",
+    other_text: "0.00% fee,",
+    other_text_1: " bonus into your account",
     deposit_btn_text: "DEPOSIT",
     personal_information: {
       header_text: "Enter your Pix details",
@@ -272,11 +283,12 @@ export const lang: langType = {
   withdraw_dialog: {
     withdraw_currency: "Withdrawal Currency",
     withdraw_payment_method: "Withdraw to",
-    withdraw_amount: "Available Balance: R$ 108.88",
+    withdraw_amount: "Available Balance: R$ ",
     amount: "Amount",
     validation: {
       text_1: "Enter the amount you want to withdraw. ",
-      text_2: "Minimum 149, Maximum 588.88.",
+      text_2: "Minimum ",
+      text_3: "Maximum ",
     },
     personal_information: {
       header_text: "Enter your Pix details",
@@ -287,11 +299,13 @@ export const lang: langType = {
       confirm_success_text: "Successfully submitted, need to modify please contact customer service",
       confirm_warning_text: "Please contact customer service to make changes"
     },
-    text_1: "Withdrawal fee: 2.5%.",
+    text_1: "Withdrawal fee: ",
+    text_1_1: "%.",
     text_2: "Free monthly withdrawal amount: 100",
     text_3: "Withdrawal hours: 11:00 - 19:00.",
     text_4: "Payout time: from 5 minutes to 24 hours.",
-    other_text: "2.5% fee,R$19.5 into your account",
+    other_text: "% fee,R$",
+    other_text_1: " into your account",
     withdraw_btn_text: "WITHDRAW",
     withdraw_warning_text: "Excess of withdrawable amount",
   },
@@ -348,6 +362,7 @@ export const lang: langType = {
       }
     },
     statistics: {
+      receive_btn_text: "Receive",
       total_profit_text: "TOTAL PROFIT",
       mobile_profit_title: "PREMIUMS ISSUED SO FAR",
       text_1: "You receive a commission for every bet you invite users to make, win or lose.",
@@ -448,6 +463,7 @@ export const lang: langType = {
       phone_text: "Phone",
       current_pwd_text: "Current Password",
     },
+    back_text: "Back",
     edit_text: "Edit",
     save_text: "Save",
     exist_validation_text: "This nickname already exists, please enter a new one",
@@ -513,10 +529,10 @@ export const lang: langType = {
     cash_back_text: "Cashback",
     super_carousel_text: "Super Carousel",
     welfare_task: "Welfare Tasks",
-    reward_text: "Reward available for ",
+    reward_text: "Reward available for VIP",
     reward_card_1: {
       daily_free_bonus_text: "Daily Free Bonuses",
-      text_1: "Free spin times*1",
+      text_1: "Free spin times*",
       text_2: "Available at "
     },
     reward_card_2: {
@@ -548,8 +564,8 @@ export const lang: langType = {
       text_5: "Next Level VIP ",
       text_7: "Yesterday’s CASHBACK Bonus",
       text_8: "Historical cumulative CASHBACK bonuses",
-      text_9: "CASHBACK bonus collection records",
-      text_10: "",
+      text_9: "CASHBACK",
+      text_10: " bonus collection records",
       text_11: "Original Games",
       text_12: "SLOT",
       text_13: "SPORTS",
@@ -611,6 +627,7 @@ export const lang: langType = {
       day_5_text: "DAY 5",
       day_6_text: "DAY 6",
       day_7_text: "DAY 7",
+      day_8_text: "DAY ∞ ",
       footer_text_1: "If you recharge ",
       footer_text_2: "within ",
       footer_text_3: "7 days",

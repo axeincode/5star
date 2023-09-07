@@ -1,19 +1,18 @@
 <script lang="ts" setup>
-import { io } from "socket.io-client";
 import { ref, onMounted } from "vue";
+import { createWebSocket } from "@/plugins/socket";
 
 onMounted(() => {
-  const wss = new WebSocket(
-    import.meta.env.VITE_SOKET_URL +
-      "/user/connect/websocket?authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTY0OTQzNzgsImlkIjoiMzI5ODg3MDM3Mzk2MzM2NzciLCJvcmlnX2lhdCI6MTY5MzkwMjM3OH0.HtM4ela723m5Inzs5bz-aqGPzcHcLhALlTNl2PQUDxU"
-  );
-  wss.onopen = function () {
-    console.log("connect");
-  };
-  wss.onerror = function (error) {
-    console.error("WebSocket error:", error);
-  };
-  // const socket = io(import.meta.env.VITE_SOKET_URL + "/user/connect/websocket");
+  // const socket = createWebSocket("user");
+  // socket.onopen = function () {
+  //   console.log("connected");
+  // };
+  // socket.onmessage = function (event) {
+  //   console.log(event);
+  // };
+  // socket.onerror = function (error) {
+  //   console.error("WebSocket Error:", error);
+  // };
 });
 </script>
 

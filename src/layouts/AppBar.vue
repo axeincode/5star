@@ -52,7 +52,7 @@ const user = ref<GetUserData>({
   name: "Little Planes",
   grade_level: "Bronze",
   grade: "VIP 4",
-  wallet: 515.25,
+  wallet: "R$515.25",
   currency: "R$",
 });
 
@@ -83,6 +83,11 @@ const userInfo = computed(() => {
 const userBalance = computed(() => {
   const { getUserBalance } = storeToRefs(userStore());
   return getUserBalance.value
+})
+
+const socketBalance = computed(() => {
+  const { getSocketBalance } = storeToRefs(socketStore());
+  return getSocketBalance.value
 })
 
 const rightBarToggle = computed(() => {
@@ -170,6 +175,16 @@ watch(currencyMenuShow, (value: boolean) => {
   }
 })
 
+const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
+  const fomarttedAmount = currency.toLocaleString(locale, {
+    style: "currency",
+    currency: currencyUnit,
+    // minimumFractionDigits: 2,
+    // maximumSignificantDigits: 2,
+  })
+  return fomarttedAmount
+}
+
 const toggleLanguage = () => {
   currentLanguage.value = currentLanguage.value === "en" ? "zh" : "en";
 };
@@ -241,7 +256,9 @@ const currencyList = ref<Array<GetCurrencyItem>>([
 const handleSelectCurrency = (item: GetCurrencyItem) => {
   selectedCurrencyItem.value = item;
   user.value.currency = item.name
-  user.value.wallet = item.value
+  const locale = 'pt-BR';
+  const currencyUnit = item.name
+  user.value.wallet = formatCurrency(Number(item.value),locale, currencyUnit);
 }
 
 const showUserNavBar = (): void => {
@@ -255,7 +272,17 @@ const showUserNavBar = (): void => {
 }
 
 watch(userBalance, (value) => {
-  selectedCurrencyItem.value.value = value.amount
+  const locale = 'pt-BR';
+  const currencyUnit = "BRL"
+  user.value.wallet = formatCurrency(Number(value.amount),locale, currencyUnit);
+  user.value.currency = value.currency
+})
+
+watch(socketBalance, (value) => {
+  const locale = 'pt-BR';
+  const currencyUnit = "BRL";
+  user.value.wallet = formatCurrency(Number(value.bal),locale, currencyUnit);
+  user.value.currency = value.cur
 })
 
 watch(userNavToggle, (newValue) => {
@@ -345,7 +372,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-app-bar app dark :color="color" :class="[appBarWidth, (headerBlurEffectShow ? 'header-bg-blur' :'')]" class="app-bar-height">
+  <v-app-bar
+    app
+    dark
+    :color="color"
+    :class="[appBarWidth, headerBlurEffectShow ? 'header-bg-blur' : '']"
+    class="app-bar-height"
+  >
     <v-app-bar-nav-icon
       @click.stop="setNavBarToggle(true)"
       v-if="!navBarToggle && mobileWidth > 600"
@@ -394,7 +427,7 @@ onMounted(async () => {
                         v-bind="props"
                         style="height: 40px"
                       >
-                        <p class="mr-1">{{ user.currency }}</p>
+                        <!-- <p class="mr-1">{{ user.currency }}</p> -->
                         <p class="mr-2">{{ user.wallet }}</p>
                         <img src="@/assets/public/svg/icon_public_50.svg" class="mr-2" />
                       </div>
@@ -462,7 +495,7 @@ onMounted(async () => {
                         v-bind="props"
                         style="height: 40px"
                       >
-                        <p class="mr-1 text-700-12">{{ user.currency }}</p>
+                        <!-- <p class="mr-1 text-700-12">{{ user.currency }}</p> -->
                         <p class="text-700-12">{{ user.wallet }}</p>
                         <img
                           src="@/assets/public/svg/icon_public_50.svg"

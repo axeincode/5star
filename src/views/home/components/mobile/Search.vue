@@ -2,42 +2,53 @@
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { ref, computed, watch, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { Search } from "@/interface/game";
 import { gameStore } from "@/store/game";
+import { mailStore } from "@/store/mail";
+import { ProgressiveImage } from "vue-progressive-image";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/virtual";
 // import Swiper core and required modules
-import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
+import { Pagination } from "swiper/modules";
+import store from "@/store";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const router = useRouter();
+const { dispatchGameSearch } = gameStore();
+const { setMailMenuShow } = mailStore();
 const searchText = ref<string>("");
 const searchLoading = ref<boolean>(false);
+const page_no = ref<number>(1);
+const currentPage = ref<number>(1);
+const limit = ref<number>(10);
 
 const swiper = ref<any>(null);
 
-const modules = [Pagination, Virtual, Autoplay, Navigation];
+const modules = [Pagination];
 
-const slides = ref<Array<any>>([
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-]);
+const searchedGameList = ref<Array<Search>>([]);
 
-const searchResults = ref<Array<any>>([]);
+const recommendedGameList = ref<Array<Search>>([]);
 
 const searchContainerHeight = ref<number>(590);
 
 const mobileWidth = computed(() => {
   return width.value;
+});
+
+const gameSearchList = computed(() => {
+  const { getGameSearchList } = storeToRefs(gameStore());
+  return getGameSearchList.value;
+});
+
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(gameStore());
+  return getSuccess.value;
 });
 
 const goToPrev = () => {
@@ -52,22 +63,29 @@ const getSwiperRef = (swiperInstance: any) => {
   swiper.value = swiperInstance;
 };
 
-const handleSearchInput = () => {
+const handleEnterGame = async (id: number, name: string) => {
+  let replaceName = name.replace(/ /g, "-");
+  if (mobileWidth.value < 600) {
+    setMailMenuShow(true);
+  }
+  router.push(`/game/${id}/${replaceName}`);
+};
+
+const handleSearchInput = async () => {
   if (searchText.value.length >= 3) {
     searchLoading.value = true;
-    setTimeout(() => {
-      searchLoading.value = false;
-      searchResults.value = [
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-      ];
-    }, 2000);
+    await dispatchGameSearch(
+      `?game_categories_slug=${searchText.value}&page=${currentPage.value}&limit=${
+        limit.value * page_no.value
+      }`
+    );
+    searchLoading.value = false;
+    if (success.value) {
+      searchedGameList.value = gameSearchList.value.list;
+      searchedGameList.value.map((item) => {
+        item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+      });
+    }
   }
 };
 
@@ -86,8 +104,17 @@ watch(
   { deep: true }
 );
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener("resize", handleResize);
+  await dispatchGameSearch(
+    `?game_categories_slug=recommend&page=${currentPage.value}&limit=${
+      limit.value * page_no.value
+    }`
+  );
+  recommendedGameList.value = gameSearchList.value.list;
+  recommendedGameList.value.map((item) => {
+    item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+  });
 });
 </script>
 
@@ -122,7 +149,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="m-home-search-result pt-8 text-center" v-else>
-      <div v-if="searchResults.length == 0">
+      <div v-if="searchedGameList.length == 0">
         <img src="@/assets/public/image/img_public_20.png" />
         <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">
           {{ t("home.search_dialog.text_2") }}
@@ -134,19 +161,19 @@ onMounted(() => {
           <p class="text-700-14 white">{{ t("home.search_dialog.text_4") }}</p>
           <p class="text-600-10 gray">
             {{ t("home.search_dialog.text_5") }}
-            <font class="text-600-10 color-32CFEC">8</font>
+            <font class="text-600-10 color-32CFEC">{{ searchedGameList.length }}</font>
             {{ t("home.search_dialog.text_6") }}
           </p>
         </div>
         <v-row class="mx-2 my-4">
-          <template v-for="(item, index) in searchResults" :key="index">
+          <template v-for="(item, index) in searchedGameList" :key="index">
             <v-col cols="4" class="py-0 px-1" v-if="index < 3">
-              <img
-                :src="item"
-                style="width: 100%"
-                v-lazy="item"
-                :data-src="item"
-                class="m-home-search-game"
+              <ProgressiveImage
+                :src="item.image"
+                lazy-placeholder
+                blur="30"
+                delay="500"
+                @click="handleEnterGame(item.id, item.name)"
               />
             </v-col>
           </template>
@@ -176,20 +203,20 @@ onMounted(() => {
         :modules="modules"
         :slidesPerView="3"
         :spaceBetween="8"
-        :centeredSlides="true"
-        :loop="true"
-        :autoplay="{
-          delay: 10000000,
-          disableOnInteraction: false,
-        }"
-        :navigation="false"
-        :virtual="true"
         class="mx-3"
         style="height: auto"
         @swiper="getSwiperRef"
       >
-        <SwiperSlide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
-          <img :src="slide" class="m-home-search-swiper-img" />
+        <SwiperSlide
+          v-for="(gameItem, index) in recommendedGameList"
+          :key="index"
+          :virtualIndex="index"
+        >
+          <img
+            :src="gameItem.image"
+            class="m-home-search-swiper-img"
+            @click="handleEnterGame(gameItem.id, gameItem.name)"
+          />
         </SwiperSlide>
       </Swiper>
     </div>

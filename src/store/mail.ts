@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { type GetMailData } from '@/interface/mail'
+import { handleException } from './exception';
 
 export const mailStore = defineStore({
     id: 'mail',

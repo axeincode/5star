@@ -290,11 +290,11 @@ onMounted(() => {
         <label for="deposit-toggle">
           <div class="deposit">
             <img src="@/assets/public/svg/icon_public_60.svg" />
-            <P>{{ t("appBar.deposit") }}</P>
+            <p>{{ t("appBar.deposit") }}</p>
           </div>
           <div class="withdraw">
             <img src="@/assets/public/svg/icon_public_65.svg" />
-            <P>{{ t("appBar.withdraw") }}</P>
+            <p>{{ t("appBar.withdraw") }}</p>
           </div>
         </label>
       </div>
@@ -475,12 +475,12 @@ onMounted(() => {
   }
 
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 
-  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
-      background: transparent;
+  .form-textfield div.v-field--variant-solo,
+  .v-field--variant-solo-filled {
+    background: transparent;
   }
 }
 

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { handleException } from './exception';
 
 export const loginBonusStore = defineStore({
   id: 'loginBonus',
