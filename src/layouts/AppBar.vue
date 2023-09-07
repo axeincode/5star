@@ -315,6 +315,12 @@ const refferalDialogShow = () => {
   setUserNavBarToggle(false);
 }
 
+// header blur effect
+const headerBlurEffectShow = computed(() => {
+  const { getHeaderBlurEffectShow } = storeToRefs(appBarStore());
+  return getHeaderBlurEffectShow.value
+})
+
 onMounted(async () => {
   if (mobileWidth.value < 600) {
     currencyMenuWidth.value = (window.innerWidth - 20) + "px";
@@ -339,7 +345,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-app-bar app dark :color="color" :class="appBarWidth" class="app-bar-height">
+  <v-app-bar app dark :color="color" :class="[appBarWidth, (headerBlurEffectShow ? 'header-bg-blur' :'')]" class="app-bar-height">
     <v-app-bar-nav-icon
       @click.stop="setNavBarToggle(true)"
       v-if="!navBarToggle && mobileWidth > 600"
@@ -1331,7 +1337,7 @@ onMounted(async () => {
   transition-duration: 0.28s;
 }
 
-.appbar-bg-blur {
+.header-bg-blur {
   // filter: blur(4px);
   // -webkit-filter: blur(4px);
   filter: saturate(180%) blur(4px);

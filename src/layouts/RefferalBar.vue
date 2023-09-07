@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
 import { useDisplay } from 'vuetify';
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -18,6 +19,12 @@ const elevateOnScroll = ref<boolean>(true);
 const mobileWidth = computed((): number => {
     return width.value
 })
+
+const headerBlurEffectShow = computed(() => {
+  const { getHeaderBlurEffectShow } = storeToRefs(appBarStore());
+  return getHeaderBlurEffectShow.value
+})
+
 const openRefferalDialogShow = () => {
     setOverlayScrimShow(false);
     setRefferalDialogShow(true)
@@ -25,7 +32,7 @@ const openRefferalDialogShow = () => {
 </script>
 
 <template>
-    <v-app-bar app class="refferal-app-bar-background justify-center" density="compact" :inverted-scroll="invertedScroll"
+    <v-app-bar app class="refferal-app-bar-background justify-center" :class="headerBlurEffectShow ? 'header-bg-blur' : ''"  density="compact" :inverted-scroll="invertedScroll"
         :elevate-on-scroll="elevateOnScroll">
         <v-toolbar-title class="d-flex align-center justify-center">
             <p class="white" :class="mobileWidth < 600 ? 'text-500-10' : 'text-700-16'">
@@ -86,4 +93,12 @@ const openRefferalDialogShow = () => {
         }
     }
 }
+
+.header-bg-blur {
+  // filter: blur(4px);
+  // -webkit-filter: blur(4px);
+  filter: saturate(180%) blur(4px);
+  -webkit-filter: saturate(180%) blur(4px);
+}
+
 </style>
