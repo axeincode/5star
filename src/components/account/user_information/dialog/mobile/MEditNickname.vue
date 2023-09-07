@@ -148,6 +148,9 @@ const submitNickName = async () => {
 <style lang="scss">
 // account dialog container
 .m-user-container {
+    .form-textfield div.v-field__field {
+        box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+    }
     border-radius: 20px;
     background: #29253C;
     height: 422px;

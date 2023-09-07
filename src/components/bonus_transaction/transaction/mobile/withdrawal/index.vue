@@ -97,7 +97,7 @@ const mobileWidth = computed(() => {
 </script>
 <template>
     <v-row class="mx-2 mt-1 m-forms-bonus-table1">
-        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="600px" style = "padding: 16px;">
+        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="660px" style = "padding: 16px;">
             <thead class="forms-table-header">
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">

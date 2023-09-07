@@ -93,7 +93,7 @@ const handleGameLink = (game) => {
 </script>
 <template>
     <v-row class="mx-2 mt-1 m-forms-bonus-table1">        
-        <v-table class="m-forms-bonus-table-bg1" theme="dark" fixed-header height="600px" style = "padding: 16px 16px 16px 16px;">
+        <v-table class="m-forms-bonus-table-bg1" theme="dark" fixed-header height="660px" style = "padding: 16px 16px 16px 16px;">
             <thead class="forms-table-header1" style="border-radius: 0px!important;">
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px; ">
@@ -175,7 +175,7 @@ const handleGameLink = (game) => {
                                         </v-list-item>
                                     </template>
                                     <!-- <img src="@/assets/public/svg/icon_public_50.svg" width="20" /> -->
-                                    <v-icon>mdi-chevron-up</v-icon>
+                                    <v-icon style="top:-2px;left:-1px;">mdi-chevron-up</v-icon>
                                 </el-tooltip>
                             </div>
                             <div class="ml-1">{{ item.amount }}</div>

@@ -675,18 +675,20 @@ onMounted(() => {
     .v-field__field {
       .v-label.v-field-label {
         font-family: "Inter";
-        font-size: 10px;
+        font-size: 10px!important;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
         color: #7782aa !important;
+        opacity: 1!important;
       }
 
       .v-label.v-field-label--floating {
         --v-field-label-scale: 0.75em;
-        font-size: var(--v-field-label-scale);
+        font-size: 10px!important;
         max-width: 100%;
         color: #7782aa !important;
+        opacity: 1!important;
       }
     }
   }
