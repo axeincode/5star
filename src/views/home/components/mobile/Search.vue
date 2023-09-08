@@ -20,18 +20,21 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const router = useRouter();
 const { dispatchGameSearch } = gameStore();
+const { setGameSearchList } = gameStore();
 const { setMailMenuShow } = mailStore();
 const searchText = ref<string>("");
 const searchLoading = ref<boolean>(false);
 const page_no = ref<number>(1);
 const currentPage = ref<number>(1);
-const limit = ref<number>(10);
+const limit = ref<number>(4);
 
 const swiper = ref<any>(null);
 
 const modules = [Pagination];
 
 const searchedGameList = ref<Array<Search>>([]);
+
+const searchedGameCount = ref<number>(0);
 
 const recommendedGameList = ref<Array<Search>>([]);
 
@@ -75,7 +78,34 @@ const handleSearchInput = async () => {
   if (searchText.value.length >= 3) {
     searchLoading.value = true;
     await dispatchGameSearch(
-      `?game_categories_slug=${searchText.value}&page=${currentPage.value}&limit=${
+      `?search=${searchText.value}&page=${currentPage.value}&limit=${
+        limit.value * page_no.value
+      }`
+    );
+    searchLoading.value = false;
+    // if (success.value) {
+    searchedGameCount.value = gameSearchList.value.total;
+    searchedGameList.value = gameSearchList.value.list;
+    searchedGameList.value.map((item) => {
+      item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+    });
+    // }
+  }
+};
+
+const handleResize = () => {
+  if (window.visualViewport?.height != undefined) {
+    searchContainerHeight.value = window.visualViewport.height;
+    console.log(searchContainerHeight);
+  }
+};
+
+const handleMoreGame = async () => {
+  page_no.value += 1;
+  if (searchText.value.length >= 3) {
+    searchLoading.value = true;
+    await dispatchGameSearch(
+      `?search=${searchText.value}&page=${currentPage.value}&limit=${
         limit.value * page_no.value
       }`
     );
@@ -89,17 +119,15 @@ const handleSearchInput = async () => {
   }
 };
 
-const handleResize = () => {
-  if (window.visualViewport?.height != undefined) {
-    searchContainerHeight.value = window.visualViewport.height;
-    console.log(searchContainerHeight);
-  }
-};
-
 watch(
   searchText,
   (value) => {
     if (value == null) searchText.value = "";
+    if (searchText.value == "") {
+      page_no.value = 1;
+      setGameSearchList({});
+      searchedGameList.value = [];
+    }
   },
   { deep: true }
 );
@@ -112,9 +140,11 @@ onMounted(async () => {
     }`
   );
   recommendedGameList.value = gameSearchList.value.list;
-  recommendedGameList.value.map((item) => {
-    item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
-  });
+  if (recommendedGameList.value.length > 0) {
+    recommendedGameList.value.map((item) => {
+      item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+    });
+  }
 });
 </script>
 
@@ -123,6 +153,7 @@ onMounted(async () => {
     class="m-home-search-body"
     :style="{
       height: searchContainerHeight >= 590 ? 'unset' : searchContainerHeight - 80 + 'px',
+      maxHeight: '643px',
     }"
   >
     <div class="pt-3">
@@ -161,13 +192,13 @@ onMounted(async () => {
           <p class="text-700-14 white">{{ t("home.search_dialog.text_4") }}</p>
           <p class="text-600-10 gray">
             {{ t("home.search_dialog.text_5") }}
-            <font class="text-600-10 color-32CFEC">{{ searchedGameList.length }}</font>
+            <font class="text-600-10 color-32CFEC">{{ searchedGameCount }}</font>
             {{ t("home.search_dialog.text_6") }}
           </p>
         </div>
         <v-row class="mx-2 my-4">
           <template v-for="(item, index) in searchedGameList" :key="index">
-            <v-col cols="4" class="py-0 px-1" v-if="index < 3">
+            <v-col cols="4" class="py-0 px-1" v-if="index < 3 * page_no">
               <ProgressiveImage
                 :src="item.image"
                 lazy-placeholder
@@ -187,6 +218,8 @@ onMounted(async () => {
             variant="outlined"
             width="100%"
             height="41"
+            v-if="searchedGameCount > 3 && searchedGameCount > 3 * page_no"
+            @click="handleMoreGame()"
           >
             {{ t("home.more") }}
           </v-btn>

@@ -49,6 +49,8 @@ export namespace NETWORK {
     static GAME_CATEGORY = '/games/categories'; // get game category
     static GAME_SEARCH = '/games/search'; // game search
     static GAME_ENTER = '/user/enter/game'; // game enter
+    static USER_GAME = '/user/games'; // user game
+    static FAVORITE_GAME = '/user/setup/game' // favorite game
   }
 
   // vip api

@@ -18,6 +18,12 @@ export interface GameEnterBody {
     id: any
 }
 
+export interface GameUserBody {
+    game_categories_slug: string
+    page: number
+    limit: number
+}
+
 export interface GameEnterResponse {
     method: string
     parames: string

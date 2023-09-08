@@ -75,10 +75,43 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setGameSearchList(response.data);
                 } else {
+                    this.setGameSearchList({list: [], total: 0});
                     this.setErrorMessage(handleException(response.code));
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
+        },
+        // user game api
+        async dispatchUserGame(data: Game.GameUserBody) {
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.USER_GAME;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Game.GetGameSearchResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setGameSearchList(response.data);
+                } else {
+                    this.setGameSearchList({list: [], total: 0});
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, data, next, 1, 4);
+        },
+        // favorite game api
+        async dispatchFavoriteGame(data: any) {
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.FAVORITE_GAME;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: any) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
         },
         // game enter api
         async dispatchGameEnter(data: Game.GameEnterBody) {

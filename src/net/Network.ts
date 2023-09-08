@@ -107,7 +107,7 @@ export class Network {
     return this.request({
       url: route,
       method: 'GET',
-      data
+      params: data
     }).then((response: any) => {
       next(response);
     })

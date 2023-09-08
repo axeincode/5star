@@ -190,6 +190,7 @@ export const lang: langType = {
     button: {
       all_game: "All Games",
       favorite: "Favorite",
+      recently_played: "Recently Played",
       original_game: "Original Game",
       pg_soft: "PGsoft",
       slots: "Slots",
@@ -205,6 +206,9 @@ export const lang: langType = {
     },
     original_games: "Original Games",
     more: "Load more",
+    more_text_1: "Displaying ",
+    more_text_2: " of ",
+    more_text_3: " games",
     principal: "Principal",
     game_providers: "GAME Providers",
     slots: "Slots",

@@ -188,6 +188,7 @@ export type langType = {
     button: {      
       all_game: string
       favorite: string
+      recently_played: string
       original_game: string
       pg_soft: string
       slots: string
@@ -203,6 +204,9 @@ export type langType = {
     }
     original_games: string
     more: string
+    more_text_1: string
+    more_text_2: string
+    more_text_3: string
     principal: string
     game_providers: string
     slots: string
