@@ -17,16 +17,16 @@ const userName = ref<string>("");
 const isShowUsernameValidation = ref<boolean>(false);
 const selectedAvatarItem = ref<number>(1);
 const slides = ref<Array<string>>([
-  new URL("@/assets/public/image/ua_public_01_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_02_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_03_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_04_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_05_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_06_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_07_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_08_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_09_2x.png", import.meta.url).href,
-  new URL("@/assets/public/image/ua_public_10_2x.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_01.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_02.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_03.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_04.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_05.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_06.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_07.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_08.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_09.png", import.meta.url).href,
+  new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
 ]);
 const userNameValidationStrList = ref<Array<string>>([
   t("signup.displayNamePage.validation.username.items[0]"),
