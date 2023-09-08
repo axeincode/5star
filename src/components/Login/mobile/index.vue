@@ -12,6 +12,7 @@ import { useDisplay } from "vuetify";
 import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useToast } from "vue-toastification";
 
 const Login = defineComponent({
   components: {
@@ -102,10 +103,18 @@ const Login = defineComponent({
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
-      ElNotification({
-        icon: SuccessIcon,
-        title: t("login.forgotPasswordPage.notification"),
-        duration: 3000,
+      const toast = useToast();
+      toast.success( t("login.forgotPasswordPage.notification"), { 
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
       });
       // state.notificationShow = !state.notificationShow;
       // state.checkIcon = new URL(
@@ -139,10 +148,18 @@ const Login = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
-        ElNotification({
-          icon: SuccessIcon,
-          title: t("login.submit_result.success_text"),
-          duration: 3000,
+        const toast = useToast();
+        toast.success( t("login.submit_result.success_text"), { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: SuccessIcon,
+            rtl: false,
         });
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
@@ -155,10 +172,18 @@ const Login = defineComponent({
           emit("close");
         }, 100);
       } else {
-        ElNotification({
-          icon: WarningIcon,
-          title: t("login.submit_result.err_text"),
-          duration: 3000,
+        const toast = useToast();
+        toast.success( t("login.submit_result.err_text"), { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: WarningIcon,
+            rtl: false,
         });
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(

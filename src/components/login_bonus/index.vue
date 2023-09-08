@@ -282,7 +282,7 @@ const handleLoginBonus = (day: number) => {
     width: 133px;
     height: 150px;
     border-radius: 6px;
-    background: linear-gradient(180deg, #9419F0 0%, #275798 100%);
+    background: linear-gradient(180deg, #2087E8 0%, #0E4987 100%);
 
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);

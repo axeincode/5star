@@ -19,6 +19,7 @@ import router from '@/router';
 import MParticipatingDialog from "@/components/cash/deposit/mobile/MParticipatingDialog.vue";
 import store from '@/store';
 import { load } from 'webfontloader';
+import { useToast } from "vue-toastification";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -322,20 +323,36 @@ const handleDepositSubmit = async () => {
   loading.value = false;
   if (success.value) {
     window.open(depositSubmit.value.url, '_blank');
-    ElNotification({
-      icon: SuccessIcon,
-      title: "Successfully submitted",
-      duration: 3000,
-    })
+    const toast = useToast();
+    toast.success("Successfully submitted", { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+    });
     setDepositDialogToggle(false);
     setCashDialogToggle(false);
     router.push({ name: "Dashboard" })
   } else {
-    ElNotification({
-      icon: WarningIcon,
-      title: errMessage.value,
-      duration: 3000,
-    })
+    const toast = useToast();
+    toast.success(errMessage.value, { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: WarningIcon,
+        rtl: false,
+    });
   }
 }
 

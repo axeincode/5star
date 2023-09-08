@@ -16,6 +16,7 @@ import { appBarStore } from "@/store/appBar";
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -47,11 +48,19 @@ const notificationText = ref<string>(t('account.phone_warning_text'));
 const handlePhonNumber = () => {
     notificationShow.value = !notificationShow.value;
     if (notificationShow.value) {
-        ElNotification({
+        const toast = useToast();
+        toast.success(notificationText.value, { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
             icon: WarningIcon,
-            title: notificationText.value,
-            duration: 3000,
-        })
+            rtl: false,
+        });
     }
 }
 

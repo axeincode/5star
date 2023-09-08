@@ -18,6 +18,7 @@ import { ElNotification } from 'element-plus'
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
 import store from '@/store';
+import { useToast } from "vue-toastification";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -285,11 +286,19 @@ const handleWithdrawSubmit = async () => {
     amount: Number(withdrawAmount.value)
   })
   if (success.value) {
-    ElNotification({
-      icon: SuccessIcon,
-      title: "Successful withdrawal of funds",
-      duration: 3000,
-    })
+    const toast = useToast();
+    toast.success("Successful withdrawal of funds", { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+    });
     let mailItem = {
       id: 5,
       icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
@@ -315,11 +324,19 @@ const handleWithdrawSubmit = async () => {
     setCashDialogToggle(false);
     router.push({ name: "Dashboard" })
   } else {
-    ElNotification({
-      icon: WarningIcon,
-      title: errMessage.value,
-      duration: 3000,
-    })
+    const toast = useToast();
+    toast.success(errMessage.value, { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: WarningIcon,
+        rtl: false,
+    });
   }
 }
 

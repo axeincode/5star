@@ -10,6 +10,7 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { socketStore } from "@/store/socket";
+import { useToast } from "vue-toastification";
 
 const Login = defineComponent({
   components: {
@@ -82,10 +83,18 @@ const Login = defineComponent({
       // ).href;
       // state.notificationText = t("login.forgotPasswordPage.notification");
 
-      ElNotification({
-        icon: SuccessIcon,
-        title: t("login.forgotPasswordPage.notification"),
-        duration: 3000,
+      const toast = useToast();
+      toast.success(t("login.forgotPasswordPage.notification"), { 
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
       });
     };
 
@@ -117,10 +126,18 @@ const Login = defineComponent({
         // ).href;
         // state.notificationText = t("login.submit_result.success_text");
 
-        ElNotification({
-          icon: SuccessIcon,
-          title: t("login.submit_result.success_text"),
-          duration: 3000,
+        const toast = useToast();
+        toast.success(t("login.submit_result.success_text"), { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: SuccessIcon,
+            rtl: false,
         });
         setTimeout(() => {
           setAuthModalType("");
@@ -134,10 +151,18 @@ const Login = defineComponent({
         // ).href;
         // state.notificationText = t("login.submit_result.err_text");
 
-        ElNotification({
-          icon: WarningIcon,
-          title: t("login.submit_result.err_text"),
-          duration: 3000,
+        const toast = useToast();
+        toast.success( t("login.submit_result.err_text"), { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: WarningIcon,
+            rtl: false,
         });
       }
 

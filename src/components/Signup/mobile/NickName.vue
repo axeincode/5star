@@ -7,6 +7,7 @@ import { authStore } from "@/store/auth";
 import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const emit = defineEmits<{ (e: "close"): void }>();
@@ -81,17 +82,33 @@ const submitNickName = async () => {
     avatar: selectedAvatarItem.value,
   });
   if (success.value) {
-    ElNotification({
-      icon: SuccessIcon,
-      message: "added name successfully!",
-      duration: 3000,
+    const toast = useToast();
+    toast.success( "added name successfully!", { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
     });
     emit("close");
   } else {
-    ElNotification({
-      icon: WarningIcon,
-      message: errMessage.value,
-      duration: 3000,
+    const toast = useToast();
+    toast.success( errMessage.value, { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: WarningIcon,
+        rtl: false,
     });
   }
 };

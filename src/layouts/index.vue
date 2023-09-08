@@ -53,11 +53,20 @@ const handleScroll = () => {
   position: fixed !important;
 }
 
-.el-notification {
+.Vue-Toastification__container {
+    right: 0!important;
+    left: unset!important;;
+    width: 290px!important;
+    margin-right: 37px;
+    height: 60px!important;
+    flex-direction: unset!important;
+}
+.Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
     top: 70px !important;
     right: 0px !important;
+    width: 290px!important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;
@@ -65,7 +74,7 @@ const handleScroll = () => {
     box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
-.el-notification__title {
+.Vue-Toastification__toast-body {
     color: var(--sec-text, #7782aa);
     font-family: Inter;
     font-size: 10px;
@@ -75,15 +84,13 @@ const handleScroll = () => {
     text-align: left;
 }
 
-.el-notification__closeBtn svg {
-    display: none;
-}
-
-.el-notification__closeBtn {
+.Vue-Toastification__close-button{
     top: 22px !important;
     background-image: url("@/assets/public/svg/icon_public_52.svg");
     background-repeat: no-repeat;
     background-size: 18px;
+    color: transparent;
+    opacity: 1;
 }
 </style>
 

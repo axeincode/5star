@@ -7,6 +7,7 @@ import Notification from "@/components/global/notification/index.vue";
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -31,10 +32,18 @@ const copyToClipboard = () => {
         () => {
             console.log('Copied to clipboard!');
             // notificationShow.value = !notificationShow.value;
-            ElNotification({
+            const toast = useToast();
+            toast.success( notificationText.value, { 
+                timeout: 3000,
+                closeOnClick: false,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
                 icon: SuccessIcon,
-                title: notificationText.value,
-                duration: 3000,
+                rtl: false,
             });
             // setRefferalDialogShow(false);
         },

@@ -15,6 +15,7 @@ const { setOverlayScrimShow } = appBarStore();
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { useToast } from "vue-toastification";
 
 const cashToggleSwitch = ref<boolean>(false);
 
@@ -55,11 +56,19 @@ const handleConfirmValidation = (): void => {
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
         notificationShow.value = !notificationShow.value;
         if (notificationShow.value) {
-            ElNotification({
+            const toast = useToast();
+            toast.success(notificationText.value, { 
+                timeout: 3000,
+                closeOnClick: false,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
                 icon: WarningIcon,
-                title: notificationText.value,
-                duration: 3000,
-            })
+                rtl: false,
+            });
         }
     }
 }
@@ -110,11 +119,19 @@ const handlePixInfoSubmit = (): void => {
     checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
     notificationShow.value = !notificationShow.value;
     if (notificationShow.value) {
-      ElNotification({
-        icon: SuccessIcon,
-        title: notificationText.value,
-        duration: 3000,
-      })
+        const toast = useToast();
+        toast.success(notificationText.value, { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: SuccessIcon,
+            rtl: false,
+        });
     }
 }
 

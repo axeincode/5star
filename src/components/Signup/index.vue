@@ -12,6 +12,7 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { socketStore } from "@/store/socket";
+import { useToast } from "vue-toastification";
 
 const Signup = defineComponent({
   components: {
@@ -222,11 +223,18 @@ const Signup = defineComponent({
         //   import.meta.url
         // ).href;
         // state.notificationText = t("signup.submit_result.success_text");
-
-        ElNotification({
-          icon: SuccessIcon,
-          title: t("signup.submit_result.success_text"),
-          duration: 3000,
+        const toast = useToast();
+        toast.success( t("signup.submit_result.success_text"), { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: SuccessIcon,
+            rtl: false,
         });
 
         setTimeout(() => {
@@ -240,10 +248,18 @@ const Signup = defineComponent({
         // ).href;
         // state.notificationText = errMessage.value;
 
-        ElNotification({
-          icon: WarningIcon,
-          title: errMessage.value,
-          duration: 3000,
+        const toast = useToast();
+        toast.success( errMessage.value, { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: WarningIcon,
+            rtl: false,
         });
       }
     };

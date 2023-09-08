@@ -7,6 +7,7 @@ import { refferalStore } from "@/store/refferal";
 import Notification from "@/components/global/notification/index.vue";
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -39,11 +40,19 @@ const copyToClipboard = () => {
   navigator.clipboard.writeText(siteUrl.value).then(
     () => {
       console.log("Copied to clipboard!");
-      ElNotification({
+      const toast = useToast();
+      toast.success( notificationText.value, { 
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
           icon: SuccessIcon,
-          title: notificationText.value,
-          duration: 3000,
-      })
+          rtl: false,
+      });
       notificationShow.value = !notificationShow.value;
       // setRefferalDialogShow(false);
     },

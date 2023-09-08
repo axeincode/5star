@@ -11,6 +11,7 @@ import { storeToRefs } from 'pinia';
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const emit = defineEmits<{ (e: 'userDialogHide'): void, (e: 'submitNickName', name: string): void }>()
@@ -95,11 +96,19 @@ const submitNickName = async () => {
         notificationShow.value = !notificationShow.value;
         checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
         notificationText.value = "Nickname updated successfully!"
-        ElNotification({
+        const toast = useToast();
+        toast.success("Nickname updated successfully!", { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
             icon: SuccessIcon,
-            title: "Nickname updated successfully!",
-            duration: 3000,
-        })
+            rtl: false,
+        });
         setTimeout(() => {
             loading.value = false;
             emit("submitNickName", nickName.value);
@@ -111,11 +120,20 @@ const submitNickName = async () => {
         notificationText.value = errMessage.value;
         loading.value = false;
         
-        ElNotification({
+        const toast = useToast();
+        toast.success(errMessage.value, { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
             icon: WarningIcon,
-            title: errMessage.value,
-            duration: 3000,
-        })
+            rtl: false,
+        });
+        
     }
 }
 </script>
@@ -195,19 +213,71 @@ const submitNickName = async () => {
     z-index: 100;
 }
 @media (max-width: 600px) {
-  .el-notification {
+  
+    .Vue-Toastification__container {
+        right: 0!important;
+        left: unset!important;;
+        width: 290px!important;
+        margin-right: 37px;
+        height: 60px!important;
+        flex-direction: unset!important;
+    }
+    .Vue-Toastification__toast {
+        align-items: center !important;
+        z-index: 1000000000 !important;
+        top: 70px !important;
+        right: 0px !important;
+        width: 290px!important;
+        height: 60px;
+        border: none;
+        border-radius: 16px 0px 0px 16px;
+        background: var(--bg-2, #181522);
+        box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+    }
+
+    .Vue-Toastification__toast-body {
+        color: var(--sec-text, #7782aa);
+        font-family: Inter;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-align: left;
+    }
+
+    .Vue-Toastification__close-button{
+        top: 22px !important;
+        background-image: url("@/assets/public/svg/icon_public_52.svg");
+        background-repeat: no-repeat;
+        background-size: 18px;
+        color: transparent;
+        opacity: 1;
+    }
+}
+
+
+.Vue-Toastification__container {
+    right: 0!important;
+    left: unset!important;;
+    width: 290px!important;
+    margin-right: 37px;
+    height: 60px!important;
+    flex-direction: unset!important;
+}
+.Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
     top: 70px !important;
     right: 0px !important;
+    width: 290px!important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;
     background: var(--bg-2, #181522);
     box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
-  }
+}
 
-  .el-notification__title {
+.Vue-Toastification__toast-body {
     color: var(--sec-text, #7782aa);
     font-family: Inter;
     font-size: 10px;
@@ -215,50 +285,14 @@ const submitNickName = async () => {
     font-weight: 500;
     line-height: normal;
     text-align: left;
-  }
+}
 
-  .el-notification__closeBtn svg {
-    display: none;
-  }
-
-  .el-notification__closeBtn {
+.Vue-Toastification__close-button{
     top: 22px !important;
     background-image: url("@/assets/public/svg/icon_public_52.svg");
     background-repeat: no-repeat;
     background-size: 18px;
-  }
-}
-
-.el-notification {
-    align-items: center !important;
-    z-index: 1000000000 !important;
-    top: 70px !important;
-    right: 0px !important;
-    height: 60px;
-    border: none;
-    border-radius: 16px 0px 0px 16px;
-    background: var(--bg-2, #181522);
-    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
-}
-
-.el-notification__title {
-    color: var(--sec-text, #7782aa);
-    font-family: Inter;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-align: left;
-}
-
-.el-notification__closeBtn svg {
-    display: none;
-}
-
-.el-notification__closeBtn {
-    top: 22px !important;
-    background-image: url("@/assets/public/svg/icon_public_52.svg");
-    background-repeat: no-repeat;
-    background-size: 18px;
+    color: transparent;
+    opacity: 1;
 }
 </style>

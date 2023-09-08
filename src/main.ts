@@ -28,6 +28,11 @@ import loadingIcon from "@/assets/loading.svg";
 
 import "vue-progressive-image/dist/style.css";
 
+import Toast, { POSITION, PluginOptions } from "vue-toastification";
+
+import "vue-toastification/dist/index.css";
+
+
 const app = createApp(App)
 
 registerPlugins(app)
@@ -56,5 +61,20 @@ app.use(Vue3Lazyload, {
 app.component('inline-svg', InlineSvg);
 
 app.use(ElementPlus)
+
+const options: PluginOptions = {
+  position: POSITION.TOP_RIGHT,
+  timeout: 2000,
+  closeOnClick: false,
+  pauseOnFocusLoss: false,
+  pauseOnHover: false,
+  draggable: false,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: "button",
+  rtl: false,
+};
+
+app.use(Toast, options);
 
 app.mount('#app')

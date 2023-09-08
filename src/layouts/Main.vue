@@ -219,10 +219,12 @@ watch(loginBonusDialogVisible, (newValue) => {
 }, { deep: true })
 
 const closeLoginBonusDialog = () => {
+
   setLoginBonusDialogVisible(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
+
 }
 
 // roulette bonus dialog
@@ -235,10 +237,12 @@ watch(rouletteBonusDialogVisible, (newValue) => {
   rouletteBonusDialog.value = newValue;
 })
 const closeRouletteBonusDialog = () => {
+
   setRouletteBonusDialogVisible(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
+  
 }
 
 // main blur effect
@@ -512,7 +516,7 @@ onMounted(() => {
     <v-dialog
       v-model="loginBonusDialog"
       :width="mobileWidth < 600 ? '340' : '471'"
-      @click:outside="setLoginBonusDialogVisible(false)"
+      @click:outside="closeLoginBonusDialog"
       :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
     >
       <LoginBonusDialog

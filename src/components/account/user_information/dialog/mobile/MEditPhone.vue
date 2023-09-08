@@ -9,6 +9,7 @@ import { storeToRefs } from 'pinia';
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -50,11 +51,19 @@ const updatePhone = async () => {
         checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
         notificationText.value = "Phone updated successfully!"
         if (notificationShow.value) {
-            ElNotification({
+            const toast = useToast();
+            toast.success(notificationText.value, { 
+                timeout: 3000,
+                closeOnClick: false,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
                 icon: SuccessIcon,
-                title: notificationText.value,
-                duration: 3000,
-            })
+                rtl: false,
+            });
         }
         setTimeout(() => {
             loading.value = false;
@@ -66,11 +75,19 @@ const updatePhone = async () => {
         checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href
         notificationText.value = errMessage.value;
         if (notificationShow.value) {
-            ElNotification({
+            const toast = useToast();
+            toast.success(notificationText.value, { 
+                timeout: 3000,
+                closeOnClick: false,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
                 icon: WarningIcon,
-                title: notificationText.value,
-                duration: 3000,
-            })
+                rtl: false,
+            });
         }
         loading.value = false;
     }

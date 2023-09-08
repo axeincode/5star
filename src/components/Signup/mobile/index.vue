@@ -20,6 +20,7 @@ import { storeToRefs } from "pinia";
 import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useToast } from "vue-toastification";
 
 const MSignup = defineComponent({
   components: {
@@ -266,10 +267,18 @@ const MSignup = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
-        ElNotification({
-          icon: SuccessIcon,
-          title: t("signup.submit_result.success_text"),
-          duration: 3000,
+        const toast = useToast();
+        toast.success( t("signup.submit_result.success_text"), { 
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: SuccessIcon,
+            rtl: false,
         });
         setTimeout(() => {
           setSignUpForm(false);
@@ -286,10 +295,18 @@ const MSignup = defineComponent({
         if (errMessage.value == "Registering an existing account is abnormal") {
           state.currentPage = state.PAGE_TYPE.ALREADY_REGISTERED;
         } else {
-          ElNotification({
-            icon: WarningIcon,
-            title: errMessage.value,
-            duration: 3000,
+          const toast = useToast();
+          toast.success( errMessage.value, { 
+              timeout: 3000,
+              closeOnClick: false,
+              pauseOnFocusLoss: false,
+              pauseOnHover: false,
+              draggable: false,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: WarningIcon,
+              rtl: false,
           });
         }
         // state.notificationShow = !state.notificationShow;

@@ -11,8 +11,9 @@ import MBonusDialog from "./../bonus_dailog/mobile/index.vue";
 import { appBarStore } from "@/store/appBar";
 import { inviteStore } from '@/store/invite';
 import { storeToRefs } from 'pinia';
-import { ElNotification } from 'element-plus'
+import { ElNotification, getPositionDataWithUnit } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
@@ -181,11 +182,19 @@ const inviteUrlCopy = () => {
     notificationText.value = "Successful replication"
     notificationShow.value = !notificationShow.value;
     if(notificationShow.value) {
-      ElNotification({
+      const toast = useToast();
+      toast.success(notificationText.value, { 
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
         icon: SuccessIcon,
-        title: notificationText.value,
-        duration: 3000,
-      })
+        rtl: false,
+      });
     }
 }
 
@@ -1067,5 +1076,44 @@ onMounted(async () => {
 }
 .m-invite-img-3{
   margin-bottom: -20px;
+}
+.Vue-Toastification__container {
+  right: 0!important;
+  left: unset!important;;
+  width: 290px!important;
+  margin-right: 37px;
+  height: 60px!important;
+  flex-direction: unset!important;
+}
+.Vue-Toastification__toast {
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px !important;
+    right: 0px !important;
+    width: 290px!important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #181522);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+}
+
+.Vue-Toastification__toast-body {
+  color: var(--sec-text, #7782aa);
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
+}
+
+.Vue-Toastification__close-button{
+  top: 22px !important;
+  background-image: url("@/assets/public/svg/icon_public_52.svg");
+  background-repeat: no-repeat;
+  background-size: 18px;
+  color: transparent;
+  opacity: 1;
 }
 </style>

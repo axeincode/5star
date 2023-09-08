@@ -16,6 +16,7 @@ import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { VipLevel } from "@/interface/vip";
+import { useToast } from "vue-toastification";
 
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
@@ -223,10 +224,18 @@ watch(mobileWidth, (newValue: number) => {
 })
 
 const handleNotifyShow = () => {
-  ElNotification({
-    icon: SuccessIcon,
-    title: notificationText.value,
-    duration: 3000,
+  const toast = useToast();
+  toast.success( notificationText.value, { 
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
   });
 }
 watch(vipLevels, (value) => {
