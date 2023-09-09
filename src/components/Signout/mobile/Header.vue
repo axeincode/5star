@@ -111,12 +111,10 @@ onUnmounted(() => {
 }
 
 .mobile-dialog-toggle {
-
   margin-top: 4px;
   margin-bottom: 4px;
 
   label {
-
     width: 200px;
     height: 40px;
     position: relative;
@@ -138,7 +136,6 @@ onUnmounted(() => {
     }
 
     .login {
-      
       left: 36px;
       transition: 0.3s;
       color: black;
@@ -151,7 +148,6 @@ onUnmounted(() => {
     }
 
     .register {
-
       left: 125px;
       transition: 0.3s;
       color: #7782aa;

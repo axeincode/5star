@@ -2,11 +2,11 @@
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import { appBarStore } from '@/store/appBar';
+import { appBarStore } from "@/store/appBar";
 import { refferalStore } from "@/store/refferal";
 import Notification from "@/components/global/notification/index.vue";
-import { ElNotification } from 'element-plus'
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import { ElNotification } from "element-plus";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
@@ -41,17 +41,17 @@ const copyToClipboard = () => {
     () => {
       console.log("Copied to clipboard!");
       const toast = useToast();
-      toast.success( notificationText.value, { 
-          timeout: 3000,
-          closeOnClick: false,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          draggable: false,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: SuccessIcon,
-          rtl: false,
+      toast.success(notificationText.value, {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
       });
       notificationShow.value = !notificationShow.value;
       // setRefferalDialogShow(false);
@@ -77,7 +77,7 @@ const closeReferDialog = () => {
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
   setOverlayScrimShow(false);
-}
+};
 
 onMounted(() => {
   setTimeout(() => {

@@ -221,7 +221,7 @@ watch(refferalDialogVisible, (newValue) => {
       setHeaderBlurEffectShow(true);
       setMenuBlurEffectShow(true);
     }, 10);
-    
+
   }
 }, { deep: true });
 
@@ -262,7 +262,7 @@ const closeRouletteBonusDialog = () => {
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
-  
+
 }
 
 // main blur effect
@@ -664,16 +664,15 @@ onMounted(() => {
   }
 }
 
-.m-deposit-dialog{
+.m-deposit-dialog {
   .v-overlay__content {
-    transform: none!important;
-  } 
+    transform: none !important;
+  }
 }
 
 // .m-withdraw-dialog{
 //   .v-overlay__content {
 //     transform: none!important;
-//   } 
+//   }
 // }
-
 </style>

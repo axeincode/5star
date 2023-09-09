@@ -83,32 +83,32 @@ const submitNickName = async () => {
   });
   if (success.value) {
     const toast = useToast();
-    toast.success( "added name successfully!", { 
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: SuccessIcon,
-        rtl: false,
+    toast.success("added name successfully!", {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
     });
     emit("close");
   } else {
     const toast = useToast();
-    toast.success( errMessage.value, { 
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: WarningIcon,
-        rtl: false,
+    toast.success(errMessage.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
     });
   }
 };
@@ -249,12 +249,12 @@ watch(selectedAvatarItem, (value) => {
   }
   .m-display-name-input {
     .form-textfield div.v-field__field {
-      box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
-
+      box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
     }
-    
-    .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
-        background: transparent;
+
+    .form-textfield div.v-field--variant-solo,
+    .v-field--variant-solo-filled {
+      background: transparent;
     }
   }
 }
