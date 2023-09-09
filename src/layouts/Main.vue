@@ -176,6 +176,12 @@ const depositDialogToggle = computed(() => {
   const { getDepositDialogToggle } = storeToRefs(appBarStore());
   return getDepositDialogToggle.value;
 })
+
+const depositWithdrawToggle = computed(() => {
+  const { getDepositWithdrawToggle } = storeToRefs(appBarStore());
+  return getDepositWithdrawToggle.value;
+})
+
 watch(depositDialogToggle, (newValue) => {
   depositDialog.value = newValue;
 })
@@ -394,7 +400,7 @@ onMounted(() => {
       :width="''"
       :fullscreen="true"
       :scrim="false"
-      :transition="'dialog-bottom-transition'"
+      :transition="depositWithdrawToggle?'dialog-bottom-transition':''"
       style="top: 60px"
       persistent
       v-if="mobileVersion == 'sm'"
@@ -411,14 +417,14 @@ onMounted(() => {
       :width="''"
       :fullscreen="true"
       :scrim="false"
-      :transition="'dialog-bottom-transition'"
+      :transition="depositWithdrawToggle?'dialog-bottom-transition':''"
       style="top: 60px"
       persistent
       v-if="mobileVersion == 'sm'"
     >
       <template v-if="depositDialog">
         <Deposit v-if="mobileWidth > 600" />
-        <MDeposit v-else />
+        <MDeposit class="m-deposit-sub-dialog" v-else />
       </template>
     </v-dialog>
 
@@ -612,8 +618,8 @@ onMounted(() => {
   .v-overlay__scrim {
     // opacity: 1 !important;
     // background: unset !important;
-    // -webkit-backdrop-filter: saturate(180%) blur(4px);
-    // backdrop-filter: saturate(180%) blur(4px);
+    // -webkit-backdrop-filter: saturate(180%) blur(3px);
+    // backdrop-filter: saturate(180%) blur(3px);
   }
 }
 
@@ -622,10 +628,10 @@ onMounted(() => {
 }
 
 .main-bg-blur {
-  // filter: blur(4px);
-  // -webkit-filter: blur(4px);
-  filter: saturate(180%) blur(4px);
-  -webkit-filter: saturate(180%) blur(4px);
+  // filter: blur(3px);
+  // -webkit-filter: blur(3px);
+  filter: saturate(180%) blur(3px);
+  -webkit-filter: saturate(180%) blur(3px);
 }
 
 .mobile-dialog-toggle-height {
@@ -666,8 +672,9 @@ onMounted(() => {
 
 .m-deposit-dialog {
   .v-overlay__content {
-    transform: none !important;
+    transform: none!important;
   }
+  // top: 53px!important; 
 }
 
 // .m-withdraw-dialog{

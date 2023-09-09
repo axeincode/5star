@@ -586,9 +586,9 @@ onMounted(() => {
   }
 }
 .menu-bg-blur {
-  // filter: blur(4px);
-  // -webkit-filter: blur(4px);
-  filter: saturate(180%) blur(4px);
-  -webkit-filter: saturate(180%) blur(4px);
+  // filter: blur(3px);
+  // -webkit-filter: blur(3px);
+  filter: saturate(180%) blur(3px);
+  -webkit-filter: saturate(180%) blur(3px);
 }
 </style>

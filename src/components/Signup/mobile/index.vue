@@ -267,24 +267,25 @@ const MSignup = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
-        const toast = useToast();
-        toast.success( t("signup.submit_result.success_text"), { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: SuccessIcon,
-            rtl: false,
-        });
+        
         setTimeout(() => {
           setSignUpForm(false);
           emit("close");
           setNickNameDialogVisible(true);
-        }, 3000);
+          const toast = useToast();
+          toast.success( t("signup.submit_result.success_text"), { 
+              timeout: 3000,
+              closeOnClick: false,
+              pauseOnFocusLoss: false,
+              pauseOnHover: false,
+              draggable: false,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: SuccessIcon,
+              rtl: false,
+          });
+        }, 500);
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_18.svg",

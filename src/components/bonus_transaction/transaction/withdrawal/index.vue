@@ -3,6 +3,8 @@ import { ref, computed, watch } from 'vue';
 import Pagination from '@/components/global/pagination/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+import { appBarStore } from "@/store/appBar";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -97,7 +99,13 @@ const formsList = ref<Array<any>>([
 
 const mobileWidth = computed(() => {
     return width.value
-})
+});
+
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
+
 </script>
 <template>
     <v-row class="mx-2 mt-4">

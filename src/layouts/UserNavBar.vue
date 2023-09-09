@@ -34,6 +34,7 @@ const { setRefferalDialogShow } = refferalStore();
 const { setMailMenuShow } = mailStore();
 const { dispatchVipInfo } = vipStore();
 const { dispatchVipLevels } = vipStore();
+const { setDepositWithdrawToggle } = appBarStore();
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -120,6 +121,7 @@ const mobileWidth: any = computed(() => {
 })
 
 const depositDialogShow = () => {
+  setDepositWithdrawToggle(true);
   setMainBlurEffectShow(true);
   setHeaderBlurEffectShow(true);
   setMenuBlurEffectShow(true);
@@ -303,7 +305,7 @@ onMounted(async () => {
             <div style="height: 30px">
               <img src="@/assets/app_bar/image/img_vip_02.png" width="22" />
             </div>
-            <div class="text-800-10 color-F9BC01 text-center">{{ vipInfo.level }}</div>
+            <div class="text-800-10 color-F9BC01 text-center">VIP {{ vipInfo.level }}</div>
           </div>
         </template>
         <v-list-item-title class="ml-2">

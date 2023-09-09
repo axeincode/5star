@@ -4,6 +4,8 @@ import Pagination from '@/components/global/pagination/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import router from '@/router';
+import { appBarStore } from "@/store/appBar";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -89,11 +91,17 @@ const mobileWidth = computed(() => {
 const handleGameLink = (game) => {
     console.log(game)
     // router.push({name: 'Dashboard'});
-}
+};
+
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
+
 </script>
 <template>
     <v-row class="mx-2 mt-1 m-forms-bonus-table1">        
-        <v-table class="m-forms-bonus-table-bg1" theme="dark" fixed-header height="660px" style = "padding: 16px 16px 16px 16px;">
+        <v-table class="m-forms-bonus-table-bg1" :class="fixPositionShow ? 'table-position-overflow' : ''" theme="dark" fixed-header height="660px" style = "padding: 16px 16px 16px 16px;">
             <thead class="forms-table-header1" style="border-radius: 0px!important;">
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px; ">
@@ -361,5 +369,10 @@ const handleGameLink = (game) => {
     }
 }
 
+.table-position-overflow {
+  .v-table__wrapper {
+    overflow: hidden!important;
+  }
+}
 
 </style>

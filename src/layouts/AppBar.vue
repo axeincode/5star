@@ -35,6 +35,7 @@ const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setMailMenuShow } = mailStore();
 const { dispatchUserBalance } = userStore();
 const { dispatchSocketConnect } = socketStore();
+const { setDepositWithdrawToggle } = appBarStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -212,6 +213,7 @@ const showSignoutDialog = () => {
 }
 
 const depositDialogShow = () => {
+  setDepositWithdrawToggle(true);
   setNavBarToggle(false);
   setUserNavBarToggle(false);
   setDepositDialogToggle(true);
@@ -1414,9 +1416,9 @@ onMounted(async () => {
 }
 
 .header-bg-blur {
-  // filter: blur(4px);
-  // -webkit-filter: blur(4px);
-  filter: saturate(180%) blur(4px);
-  -webkit-filter: saturate(180%) blur(4px);
+  // filter: blur(3px);
+  // -webkit-filter: blur(3px);
+  filter: saturate(180%) blur(3px);
+  -webkit-filter: saturate(180%) blur(3px);
 }
 </style>

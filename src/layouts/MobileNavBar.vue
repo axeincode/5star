@@ -277,28 +277,31 @@ onMounted(() => {
         <v-list-group value="Casino">
           <template v-slot:activator="{ props }">
             <v-list-item
-              class="m-avatar-img m-user-item1"
+              class="m-avatar-img m-user-item1 m-nav-menu"
               v-bind="props"
               prepend-avatar="@/assets/public/svg/icon_public_34.svg"
               :title="t('navBar.casino')"
               link
               value="casino"
               :height="40"
+              style="margin-bottom: -16px!important; margin-top: -8px!important; padding-left: 10px;"
             ></v-list-item>
           </template>
           <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px">
             <v-list>
               <v-list-item
-                class="m-casino-sub-img"
+                class="m-casino-sub-img m-nav-sub-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_35.svg"
                 :title="t('navBar.casino_sub_menu.recently_played')"
                 value="recently played"
+                style="margin-bottom: -4px!important; margin-top: -4px!important;"
               ></v-list-item>
               <v-list-item
-                class="m-casino-sub-img"
+                class="m-casino-sub-img m-nav-sub-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_36.svg"
                 :title="t('navBar.casino_sub_menu.favorites')"
                 value="favorites"
+                style="margin-bottom: -4px!important; margin-top: -4px!important;"
               ></v-list-item>
               <v-menu
                 location="center"
@@ -310,11 +313,12 @@ onMounted(() => {
                 <template v-slot:activator="{ props }">
                   <v-list-item
                     v-bind="props"
-                    class="m-casino-sub-img"
+                    class="m-casino-sub-img m-nav-sub-menu"
                     prepend-avatar="@/assets/public/svg/icon_public_37.svg"
                     :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
                     :title="t('navBar.casino_sub_menu.game_originals')"
                     value="game originals"
+                    style="margin-bottom: -4px!important; margin-top: -4px!important;"
                   >
                   </v-list-item>
                 </template>
@@ -323,7 +327,7 @@ onMounted(() => {
                     v-for="(item, i) in gameOriginalItems"
                     :key="i"
                     :value="item.name"
-                    class="m-avatar-img"
+                    class="m-avatar-img m-nav-sub-menu"
                     :prepend-avatar="item.icon"
                     :title="item.name"
                     style="font-size: 11px !important; font-weight: 500 !important"
@@ -332,16 +336,18 @@ onMounted(() => {
                 </v-list>
               </v-menu>
               <v-list-item
-                class="m-casino-sub-img"
+                class="m-casino-sub-img m-nav-sub-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_38.svg"
                 :title="t('navBar.casino_sub_menu.slots')"
                 value="slots"
+                style="margin-bottom: -4px!important; margin-top: -4px!important;"
               ></v-list-item>
               <v-list-item
-                class="m-casino-sub-img"
+                class="m-casino-sub-img m-nav-sub-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_39.svg"
                 :title="t('navBar.casino_sub_menu.live_casino')"
                 value="live casino"
+                style="margin-bottom: -4px!important; margin-top: -4px!important;"
               ></v-list-item>
             </v-list>
           </v-card>
@@ -349,44 +355,50 @@ onMounted(() => {
       </v-list>
       <v-list>
         <v-list-item
-          class="m-avatar-img m-user-item1"
+          class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_40.svg"
           :title="t('navBar.sport')"
+          style="margin-bottom: -8px!important; padding-left: 10px;"
         ></v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
         <v-list-item
-          class="m-avatar-img m-user-item1"
+          class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_41.svg"
           :title="t('navBar.menu_item_1.promotions')"
+          style="margin-bottom: -4px!important; margin-top: -8px!important; padding-left: 10px;"
         ></v-list-item>
         <v-list-item
-          class="m-vip-club"
+          class="m-vip-club m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_42.svg"
           :title="t('navBar.menu_item_1.vip_club')"
+          style="margin-bottom: -4px!important; margin-top: -4px!important; padding-left: 10px;"
           router
           :to="{ name: 'VIP' }"
         ></v-list-item>
         <v-list-item
-          class="m-avatar-img m-user-item1"
+          class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_43.svg"
           :title="t('navBar.menu_item_1.affiliate')"
+          style="margin-bottom: -4px!important; margin-top: -4px!important; padding-left: 10px;"
           router
           :to="{ name: 'Affiliate' }"
         ></v-list-item>
         <v-list-item
-          class="m-avatar-img m-user-item1"
+          class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_44.svg"
           :title="t('navBar.menu_item_1.blog')"
+          style="margin-bottom: -8px!important; margin-top: -4px!important; padding-left: 10px;"
         ></v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
         <v-list-item
-          class="m-avatar-img m-user-item1"
+          class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_45.svg"
           :title="t('navBar.live_support')"
+          style="margin-bottom: -8px!important; margin-top: -4px!important; padding-left: 10px;"
         ></v-list-item>
       </v-list>
       <v-list>
@@ -401,7 +413,7 @@ onMounted(() => {
             <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
               <v-list-item
                 v-bind="props"
-                class="m-casino-sub-img"
+                class="m-casino-sub-img  m-nav-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_57.svg"
                 :title="language"
                 :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
@@ -412,14 +424,14 @@ onMounted(() => {
           <v-list theme="dark" bg-color="#211F31" width="166" class="text-center">
             <v-list-item
               :title="t('navBar.language.title')"
-              class="m-avatar-img"
+              class="m-avatar-img m-nav-sub-menu"
             ></v-list-item>
             <v-divider></v-divider>
             <v-list-item
               v-for="(item, i) in langItems"
               :key="i"
               :value="item"
-              class="m-avatar-img"
+              class="m-avatar-img m-nav-sub-menu"
               @click="handleLanguageDropdown(item)"
               :class="language == item ? 'nav-lang-selected-item' : ''"
             >
@@ -602,7 +614,7 @@ onMounted(() => {
 
   :deep(.v-list-item-title) {
     font-weight: 700;
-    font-size: 10px;
+    font-size: 12px!important;
     color: #7782aa;
   }
 
@@ -624,7 +636,7 @@ onMounted(() => {
 
   :deep(.v-list-item-title) {
     font-weight: 700;
-    font-size: 10px;
+    font-size: 12px;
     color: #f9bc01;
   }
 
@@ -646,7 +658,7 @@ onMounted(() => {
 
   :deep(.v-list-item-title) {
     font-weight: 500;
-    font-size: 11px;
+    font-size: 12px;
     color: #7782aa;
   }
 
@@ -868,5 +880,28 @@ onMounted(() => {
   position: absolute;
   left: 37px;
   top: 21px;
+}
+.m-nav-menu {
+  :deep(.v-list-item-title) {
+    font-size: 12px!important;
+    font-weight: 700!important;
+  }
+  :deep(.v-avatar) {
+    margin-right: 10px!important;
+  }
+}
+.m-nav-sub-menu {
+  :deep(.v-list-item-title) {
+    font-size: 11px!important;
+    font-weight: 500!important;
+    width: max-content;
+  }
+  :deep(.v-avatar) {
+    margin-right: 6px!important;
+  }
+}
+.m-user-item1{
+  padding-top:0px!important;
+  padding-bottom:0px!important;
 }
 </style>

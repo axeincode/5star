@@ -8,6 +8,7 @@ import moment from "moment-timezone";
 import { refferalStore } from "@/store/refferal";
 import { inviteStore } from "@/store/invite";
 import { storeToRefs } from "pinia";
+import { appBarStore } from "@/store/appBar";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -147,6 +148,12 @@ const inviteHistoryConfig = computed(() => {
 onMounted(async () => {
   await dispatchInviteHistoryCfg();
 });
+
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
+
 </script>
 <template>
   <v-row class="mt-4 mx-4">
@@ -233,8 +240,8 @@ onMounted(async () => {
       </v-list>
     </v-menu>
   </v-row>
-  <v-row class="mx-2 mt-6 m-forms-bonus-table">
-    <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header>
+  <v-row class="mx-2 mt-6 m-forms-bonus-table" >
+    <v-table class="m-forms-bonus-table-bg" :class="fixPositionShow ? 'table-position-overflow' : ''" theme="dark" fixed-header>
       <thead class="forms-table-header">
         <tr>
           <th class="m-forms-table-header-text" style="border-radius: 43px 0px 0px 43px">
@@ -314,6 +321,12 @@ onMounted(async () => {
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 12px !important;
   width: 100% !important;
+}
+
+.table-position-overflow {
+  .v-table__wrapper {
+    overflow: hidden!important;
+  }
 }
 
 .m-forms-bonus-table {

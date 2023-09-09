@@ -29,6 +29,7 @@ const { setCashDialogToggle } = appBarStore();
 const { setMailList } = mailStore();
 const { dispatchUserWithdrawCfg } = withdrawStore();
 const { dispatchUserWithdrawSubmit } = withdrawStore();
+const { setDepositWithdrawToggle } = appBarStore();
 const { dispatchUserBalance } = userStore();
 import router from '@/router';
 
@@ -381,6 +382,7 @@ watch(currencyMenuShow, (value) => {
 })
 
 onMounted(async () => {
+  setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();
   await dispatchUserBalance();
 })
@@ -725,10 +727,10 @@ onMounted(async () => {
 }
 
 .deposit-bg-blur {
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
-  // filter: saturate(180%) blur(4px);
-  // -webkit-filter: saturate(180%) blur(4px);
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  // filter: saturate(180%) blur(3px);
+  // -webkit-filter: saturate(180%) blur(3px);
 }
 
 .v-dialog--persistent .v-dialog__content {

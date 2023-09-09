@@ -19,6 +19,8 @@ export const appBarStore = defineStore({
     fixPositionEnable: false as boolean,
     headerBlurEffectShow: false as boolean,
     menuBlurEffectShow: false as boolean,
+    depositHeaderBlurEffectShow: false as boolean,
+    depositWithdrawToggle: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -36,6 +38,9 @@ export const appBarStore = defineStore({
     getFixPositionEnable: (state) => state.fixPositionEnable,
     getHeaderBlurEffectShow: (state) => state.headerBlurEffectShow,
     getMenuBlurEffectShow: (state) => state.menuBlurEffectShow,
+    getDepositHeaderBlurEffectShow: (state) => state.depositHeaderBlurEffectShow,
+    getDepositWithdrawToggle: (state) => state.depositWithdrawToggle,
+    
   },
   actions: {
     setSuccess(success: boolean) {
@@ -82,6 +87,12 @@ export const appBarStore = defineStore({
     },
     setMenuBlurEffectShow(menuBlurEffectShow: boolean) {
       this.menuBlurEffectShow = menuBlurEffectShow;
+    },
+    setDepositHeaderBlurEffectShow(depositHeaderBlurEffectShow: boolean) {
+      this.depositHeaderBlurEffectShow = depositHeaderBlurEffectShow;
+    },
+    setDepositWithdrawToggle(depositWithdrawToggle: boolean) {
+      this.depositWithdrawToggle = depositWithdrawToggle;
     },
   }
 })

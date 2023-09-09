@@ -3,6 +3,8 @@ import { ref, computed, watch } from 'vue';
 import Pagination from '@/components/global/pagination/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+import { appBarStore } from "@/store/appBar";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -85,11 +87,17 @@ const formsList = ref<Array<any>>([
 
 const mobileWidth = computed(() => {
     return width.value
-})
+});
+
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
+
 </script>
 <template>
     <v-row class="mx-2 mt-1 m-forms-bonus-table1">
-        <v-table class="m-forms-bonus-table-bg" theme="dark" fixed-header height="660px" style = "padding: 16px;">
+        <v-table class="m-forms-bonus-table-bg" :class="fixPositionShow ? 'table-position-overflow' : ''" theme="dark" fixed-header height="660px" style = "padding: 16px;">
             <thead class="forms-table-header">
                 <tr>
                     <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px;">
@@ -206,4 +214,11 @@ const mobileWidth = computed(() => {
     margin-top: 20px!important;
     margin-bottom: 20px;
 }
+
+.table-position-overflow {
+  .v-table__wrapper {
+    overflow: hidden!important;
+  }
+}
+
 </style>

@@ -184,7 +184,7 @@ const inviteUrlCopy = () => {
     if(notificationShow.value) {
       const toast = useToast();
       toast.success(notificationText.value, { 
-        timeout: 3000,
+        timeout: 5000,
         closeOnClick: false,
         pauseOnFocusLoss: false,
         pauseOnHover: false,
@@ -1083,14 +1083,14 @@ onMounted(async () => {
   width: 290px!important;
   margin-right: 37px;
   height: 60px!important;
-  flex-direction: unset!important;
+  //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
     top: 70px !important;
-    right: 0px !important;
-    width: 290px!important;
+    right: -20px !important;
+    width: 330px!important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;

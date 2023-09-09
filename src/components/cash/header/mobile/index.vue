@@ -194,6 +194,11 @@ const depositDialogToggle = computed(() => {
   return getDepositDialogToggle.value
 })
 
+const depositHeaderBlurEffectShow = computed(() => {
+  const { getDepositHeaderBlurEffectShow } = storeToRefs(appBarStore());
+  return getDepositHeaderBlurEffectShow.value
+})
+
 const withdrawDialogToggle = computed(() => {
   const { getWithdrawDialogToggle } = storeToRefs(appBarStore());
   return getWithdrawDialogToggle.value
@@ -275,7 +280,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mobile-cash-header">
+  <div class="mobile-cash-header" :class="depositHeaderBlurEffectShow? 'm-deposit-header-bg-blur' : ''">
     <div
       class="d-flex align-center relative"
       :class="pixInfoMenuShow ? 'm-header-dropped' : 'm-header'"
@@ -714,12 +719,12 @@ onMounted(() => {
 
 @media (max-width: 600px) {
   .Vue-Toastification__container {
-    right: 0 !important;
-    left: unset !important;
-    width: 290px !important;
-    margin-right: 37px;
-    height: 60px !important;
-    flex-direction: unset !important;
+      right: 0!important;
+      left: unset!important;;
+      width: 290px!important;
+      margin-right: 37px;
+      height: 60px!important;
+      //flex-direction: unset!important;
   }
   .Vue-Toastification__toast {
     align-items: center !important;
@@ -773,4 +778,14 @@ onMounted(() => {
     }
   }
 }
+
+.m-deposit-header-bg-blur {
+  // filter: blur(3px);
+  // -webkit-filter: blur(3px);
+  filter: saturate(180%) blur(3px);
+  -webkit-filter: saturate(180%) blur(3px);
+  height: 70px!important;
+}
+
+
 </style>

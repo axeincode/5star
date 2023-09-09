@@ -4,6 +4,8 @@ import Pagination from '@/components/global/pagination/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import moment from "moment-timezone";
+import { storeToRefs } from "pinia";
+import { appBarStore } from "@/store/appBar";
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -127,6 +129,12 @@ window.addEventListener('scroll', function () {
 const mobileWidth = computed(() => {
     return width.value
 })
+
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
+
 </script>
 <template>
     <v-row class="mt-6 justify-end mx-6">

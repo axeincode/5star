@@ -144,7 +144,7 @@ const submitSuspend = async () => {
   width: 290px!important;
   margin-right: 37px;
   height: 60px!important;
-  flex-direction: unset!important;
+  //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
     align-items: center !important;
