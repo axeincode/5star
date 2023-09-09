@@ -71,6 +71,8 @@ const searchedGameList = ref<Array<Search>>([]);
 
 const searchedGameCount = ref<number>(0);
 
+const searchRef = ref<HTMLElement | undefined>(undefined);
+
 const recommendedGameList = ref<Array<Search>>([]);
 
 const props = defineProps<{ searchDialogShow: boolean }>();
@@ -230,6 +232,11 @@ watch(
 );
 
 watch(searchDialogShow, (value) => {
+  if (value) {
+    if (searchRef.value != undefined) {
+      searchRef.value.focus();
+    }
+  }
   if (!value && searchText.value != "") {
     setSearchTextList(searchText.value);
     searchText.value = "";
@@ -243,6 +250,9 @@ watch(searchDialogShow, (value) => {
 });
 
 onMounted(async () => {
+  if (searchRef.value != undefined) {
+    searchRef.value.focus();
+  }
   window.addEventListener("resize", handleResize);
   await dispatchGameSearch(
     `?game_categories_slug=recommend&page=${currentPage.value}&limit=${
@@ -268,6 +278,7 @@ onMounted(async () => {
   >
     <div class="pt-3">
       <v-text-field
+        ref="searchRef"
         :placeholder="t('home.search')"
         class="form-textfield dark-textfield"
         variant="solo"
