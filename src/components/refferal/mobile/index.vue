@@ -75,7 +75,7 @@ const closeReferDialog = () => {
   setRefferalDialogShow(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
-setMenuBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
   setOverlayScrimShow(false);
 }
 
@@ -298,8 +298,8 @@ onMounted(() => {
     box-shadow: none !important;
     background-color: transparent !important;
     position: absolute !important;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 15px;
 
     .v-icon {
       font-size: 24px;

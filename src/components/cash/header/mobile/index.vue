@@ -504,7 +504,7 @@ onMounted(() => {
 
     label {
       width: 196px;
-      height: 32px;
+      height: 40px;
       position: relative;
       display: block;
       background: #211f31;
@@ -550,7 +550,7 @@ onMounted(() => {
     label:after {
       content: "";
       width: 96px;
-      height: 28px;
+      height: 36px;
       position: absolute;
       top: 2px;
       left: 2px;

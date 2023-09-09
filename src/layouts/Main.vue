@@ -48,6 +48,9 @@ const { setNickNameDialogVisible } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
+const { setUserNavBarToggle } = appBarStore();
+const { setMailMenuShow } = mailStore();
+const { setNavBarToggle } = appBarStore();
 
 type dialogType = "login" | "signup" | "signout";
 
@@ -103,6 +106,9 @@ const closeDialog = (type: dialogType) => {
   } else if (type == "signup") {
     signupDialog.value = false;
   } else {
+    setMainBlurEffectShow(false);
+    setHeaderBlurEffectShow(false);
+    setMenuBlurEffectShow(false);
     signoutDialog.value = false;
   }
   mobileDialog.value = false;
@@ -156,6 +162,9 @@ watch(authModalType, (newValue: string) => {
   } else if (newValue == "signout") {
     signoutDialog.value = true;
     mobileDialog.value = false;
+    setMainBlurEffectShow(true);
+    setHeaderBlurEffectShow(true);
+    setMenuBlurEffectShow(true);
   } else {
     mobileDialog.value = false;
   }
@@ -203,6 +212,17 @@ const refferalDialogVisible = computed(() => {
 })
 watch(refferalDialogVisible, (newValue) => {
   refferalDialog.value = newValue;
+  if(refferalDialog.value && mobileWidth.value <600) {
+    setUserNavBarToggle(false);
+    setNavBarToggle(false);
+    setMailMenuShow(false);
+    setTimeout(() => {
+      setMainBlurEffectShow(true);
+      setHeaderBlurEffectShow(true);
+      setMenuBlurEffectShow(true);
+    }, 10);
+    
+  }
 }, { deep: true });
 
 // login bonus dialog
@@ -318,7 +338,7 @@ const closeReferDialog = () => {
   setRefferalDialogShow(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
-setMenuBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
   setOverlayScrimShow(false);
 }
 
@@ -494,6 +514,7 @@ onMounted(() => {
     <v-dialog
       v-model="signoutDialog"
       :width="mobileWidth < 600 ? 328 : 471"
+      :scrim="false"
       @click:outside="closeDialog('signout')"
     >
       <Signout v-if="mobileVersion != 'sm'" @close="closeDialog('signout')" />
@@ -505,6 +526,7 @@ onMounted(() => {
     <v-dialog
       v-model="refferalDialog"
       :width="mobileWidth < 600 ? '360' : '471'"
+      :scrim="mobileVersion == 'sm' ? false : true"
       @click:outside="closeReferDialog"
     >
       <RefferalDialog v-if="mobileWidth > 600" />

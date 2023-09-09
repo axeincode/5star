@@ -177,8 +177,8 @@ onMounted(() => {
       box-shadow: none !important;
       background-color: transparent !important;
       position: absolute !important;
-      top: 5px;
-      right: 5px;
+      top: 8px;
+      right: 8px;
     }
 
     .v-field--variant-solo {

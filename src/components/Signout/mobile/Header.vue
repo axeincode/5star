@@ -95,25 +95,30 @@ onUnmounted(() => {
 .mobile-dialog-container {
   position: sticky !important;
   top: 0px;
-  height: 40px;
+  height: 48px;
   width: 100%;
 }
 
 .mobile-dialog-width {
-  width: 240px;
+  width: 280px;
   background: #2e274c;
   margin: auto;
   height: 100%;
-  border-radius: 0px 0px 40px 40px;
+  border-radius: 0px 0px 32px 32px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .mobile-dialog-toggle {
+
+  margin-top: 4px;
+  margin-bottom: 4px;
+
   label {
-    width: 160px;
-    height: 32px;
+
+    width: 200px;
+    height: 40px;
     position: relative;
     display: block;
     background: #211f31;
@@ -129,11 +134,12 @@ onUnmounted(() => {
       display: flex;
       align-items: center;
       font-weight: 700;
-      font-size: 10px;
+      font-size: 12px;
     }
 
     .login {
-      left: 26px;
+      
+      left: 36px;
       transition: 0.3s;
       color: black;
 
@@ -145,7 +151,8 @@ onUnmounted(() => {
     }
 
     .register {
-      left: 104px;
+
+      left: 125px;
       transition: 0.3s;
       color: #7782aa;
 
@@ -158,8 +165,8 @@ onUnmounted(() => {
 
   label:after {
     content: "";
-    width: 74px;
-    height: 28px;
+    width: 98px;
+    height: 36px;
     position: absolute;
     top: 2px;
     left: 2px;
@@ -177,7 +184,7 @@ onUnmounted(() => {
   }
 
   input:checked + label:after {
-    left: 83px;
+    left: 100px;
   }
 
   label:active:after {

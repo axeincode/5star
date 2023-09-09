@@ -68,7 +68,7 @@ export default SignupHeader
         top: -14px;
         right: 0px;
         width: 258px;
-        height: 186px;
+        height: 169px;
     }
 
     .signup-logo-title-1-position {
