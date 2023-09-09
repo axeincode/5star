@@ -561,6 +561,7 @@ onUnmounted(() => {
     margin: auto;
 
     .home-game-frame-area {
+      background: #31275c;
       border: none;
       margin-top: 20px;
       width: 100%;
@@ -608,6 +609,7 @@ onUnmounted(() => {
 
   .m-game-frame-body {
     .home-game-frame-area {
+      background: #31275c;
       position: absolute;
       top: 0px;
       border: none;

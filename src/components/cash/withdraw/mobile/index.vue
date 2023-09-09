@@ -3,6 +3,7 @@ import { ref, computed, watch, onMounted } from 'vue';
 import moment from 'moment-timezone';
 import { appBarStore } from '@/store/appBar';
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
 import { withdrawStore } from '@/store/withdraw';
 import { depositStore } from '@/store/deposit';
 import { mailStore } from '@/store/mail';
@@ -28,6 +29,7 @@ const { setCashDialogToggle } = appBarStore();
 const { setMailList } = mailStore();
 const { dispatchUserWithdrawCfg } = withdrawStore();
 const { dispatchUserWithdrawSubmit } = withdrawStore();
+const { dispatchUserBalance } = userStore();
 import router from '@/router';
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
@@ -177,6 +179,11 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value
+})
+
 const pixInfo = computed(() => {
   const { getPixInfo } = storeToRefs(depositStore());
   return getPixInfo.value
@@ -199,6 +206,10 @@ const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
   });
 };
 
+watch(userBalance, (value) => {
+  availableAmount.value = value["availabe_balance"];
+})
+
 watch(withdrawConfig, (newValue) => {
   paymentList.value = [];
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
@@ -215,7 +226,6 @@ watch(withdrawConfig, (newValue) => {
   const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
   currencyList.value = filteredObjects;
   selectedPaymentItem.value = paymentList.value[0];
-  availableAmount.value = newValue["availabe_balance"];
   feeRate.value = withdrawConfig.value["fee"]["rate"];
 }, { deep: true });
 
@@ -232,7 +242,6 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
       max: item.max
     })
   })
-  availableAmount.value = withdrawConfig.value["availabe_balance"];
 }
 
 const handleSelectPayment = (item: GetPaymentItem) => {
@@ -278,6 +287,22 @@ const errMessage = computed(() => {
 })
 
 const handleWithdrawSubmit = async () => {
+  if (Number(withdrawAmount.value) == 0 || Number(userBalance.value.availabe_balance) == 0) {
+    const toast = useToast();
+    toast.success('Your current cash withdrawal amount is insufficient', {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
+    return;
+  }
   await dispatchUserWithdrawSubmit({
     id_number: pixInfo.value.id,
     first_name: pixInfo.value.first_name,
@@ -287,17 +312,17 @@ const handleWithdrawSubmit = async () => {
   })
   if (success.value) {
     const toast = useToast();
-    toast.success("Successful withdrawal of funds", { 
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: SuccessIcon,
-        rtl: false,
+    toast.success("Successful withdrawal of funds", {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
     });
     let mailItem = {
       id: 5,
@@ -325,17 +350,17 @@ const handleWithdrawSubmit = async () => {
     router.push({ name: "Dashboard" })
   } else {
     const toast = useToast();
-    toast.success(errMessage.value, { 
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: WarningIcon,
-        rtl: false,
+    toast.success(errMessage.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
     });
   }
 }
@@ -350,13 +375,14 @@ watch(withdrawAmount, (newValue) => {
 })
 
 watch(currencyMenuShow, (value) => {
-  if (currencyMenuShow.value && currencyList.value.length < 2) {
-    currencyMenuShow.value = false
-  }
+  // if (currencyMenuShow.value && currencyList.value.length < 2) {
+  //   currencyMenuShow.value = false
+  // }
 })
 
 onMounted(async () => {
   await dispatchUserWithdrawCfg();
+  await dispatchUserBalance();
 })
 </script>
 
@@ -438,7 +464,7 @@ onMounted(async () => {
         </v-card>
       </template>
       <v-list theme="dark" bg-color="#181522">
-        <v-row class="m-payment-width-370">
+        <v-row class="m-payment-width-370 px-1">
           <v-col
             cols="6"
             v-for="(paymentItem, paymentIndex) in paymentList"
@@ -481,18 +507,26 @@ onMounted(async () => {
       />
       <ValidationBox
         :validationText2="
-          t('withdraw_dialog.validation.text_2') +
-          selectedPaymentItem.min +
-          ', ' +
-          t('withdraw_dialog.validation.text_3') +
-          selectedPaymentItem.max +
-          '.'
+          availableAmount == 0
+            ? t('withdraw_dialog.validation.text_2') +
+              0 +
+              ', ' +
+              t('withdraw_dialog.validation.text_3') +
+              availableAmount +
+              '.'
+            : t('withdraw_dialog.validation.text_2') +
+              selectedPaymentItem.min +
+              ', ' +
+              t('withdraw_dialog.validation.text_3') +
+              availableAmount +
+              '.'
         "
         v-if="isShowAmountValidation"
       />
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">
-      {{ t("withdraw_dialog.text_1") }}{{ feeRate }}{{ t("withdraw_dialog.text_1_1") }}
+      {{ t("withdraw_dialog.text_1") }}{{ feeRate * 100
+      }}{{ t("withdraw_dialog.text_1_1") }}
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">
       {{ t("withdraw_dialog.text_2") }}
@@ -506,7 +540,7 @@ onMounted(async () => {
     <v-row
       class="m-deposit-footer-text-position text-600-10 white justify-center mx-2 mt-10"
     >
-      {{ feeRate }} {{ t("withdraw_dialog.other_text") }}
+      {{ feeRate * 100 }} {{ t("withdraw_dialog.other_text") }}
       {{ Number(withdrawAmount) * (1 - Number(feeRate)) }}
       {{ t("withdraw_dialog.other_text_1") }}
     </v-row>
@@ -696,6 +730,7 @@ onMounted(async () => {
   // filter: saturate(180%) blur(4px);
   // -webkit-filter: saturate(180%) blur(4px);
 }
+
 .v-dialog--persistent .v-dialog__content {
   transform: none !important;
 }

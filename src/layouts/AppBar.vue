@@ -179,7 +179,7 @@ watch(currencyMenuShow, (value: boolean) => {
         setFixPositionEnable(true);
         setMainBlurEffectShow(true);
       }, 10)
-      
+
     } else {
       setFixPositionEnable(false);
     }
@@ -272,9 +272,31 @@ const currencyList = ref<Array<GetCurrencyItem>>([
 const handleSelectCurrency = (item: GetCurrencyItem) => {
   selectedCurrencyItem.value = item;
   user.value.currency = item.name
-  const locale = 'pt-BR';
   const currencyUnit = item.name
-  user.value.wallet = formatCurrency(Number(item.value),locale, currencyUnit);
+  let locale = 'pt-BR';
+  switch (currencyUnit) {
+    case "BRL":
+      locale = 'pt-BR';
+      break;
+    case "PHP":
+      locale = 'en-PH';
+      break;
+    case "PEN":
+      locale = 'en-PE';
+      break;
+    case "MXN":
+      locale = 'en-MX';
+      break;
+    case "CLP":
+      locale = 'es-CL';
+      break;
+    case "USD":
+      locale = 'en-US';
+    case "COP":
+      locale = 'es-CO';
+      break;
+  }
+  user.value.wallet = formatCurrency(Number(item.value), locale, currencyUnit);
 }
 
 const showUserNavBar = (): void => {
@@ -290,14 +312,19 @@ const showUserNavBar = (): void => {
 watch(userBalance, (value) => {
   const locale = 'pt-BR';
   const currencyUnit = "BRL"
-  user.value.wallet = formatCurrency(Number(value.amount),locale, currencyUnit);
+  user.value.wallet = formatCurrency(Number(value.amount), locale, currencyUnit);
   user.value.currency = value.currency
+  currencyList.value.map(item => {
+    if (item.name == "BRL") {
+      item.value = Number(value.amount)
+    }
+  })
 })
 
 watch(socketBalance, (value) => {
   const locale = 'pt-BR';
   const currencyUnit = "BRL";
-  user.value.wallet = formatCurrency(Number(value.bal),locale, currencyUnit);
+  user.value.wallet = formatCurrency(Number(value.bal), locale, currencyUnit);
   user.value.currency = value.cur
 })
 

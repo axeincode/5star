@@ -203,6 +203,7 @@ export const lang: langType = {
       text_4: "Original Games",
       text_5: "About",
       text_6: "results",
+      search_history: "Search History",
     },
     original_games: "Original Games",
     more: "Load more",

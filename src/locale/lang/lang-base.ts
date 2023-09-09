@@ -201,6 +201,7 @@ export type langType = {
       text_4: string
       text_5: string
       text_6: string
+      search_history: string
     }
     original_games: string
     more: string

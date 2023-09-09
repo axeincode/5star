@@ -187,6 +187,7 @@ const promotionDialogVisible = ref<boolean>(false);
 const notificationShow = ref<boolean>(false);
 const currencyMenuShow = ref<boolean>(false);
 const paymentMenuShow = ref<boolean>(false);
+const bonusAmount = ref<number>(0);
 
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
@@ -244,6 +245,7 @@ watch(depositConfig, (newValue) => {
   currencyList.value = filteredObjects;
   selectedPaymentItem.value = paymentList.value[0];
   depositAmountList.value = newValue["list"];
+  bonusAmount.value = newValue["bonus"][0]["type"] == 0 ? Number(newValue["bonus"][0].award) : Number(newValue["bonus"][0].rate) * 100
 }, { deep: true });
 
 const handleDepositAmount = (amount: string) => {
@@ -308,6 +310,7 @@ const errMessage = computed(() => {
 })
 
 const handleDepositSubmit = async () => {
+  if (Number(depositAmount.value) == 0) return;
   if (pixInfo.value.id == '' || pixInfo.value.id == undefined) {
     setPixInfoToggle(true);
     return;
@@ -324,73 +327,104 @@ const handleDepositSubmit = async () => {
   if (success.value) {
     window.open(depositSubmit.value.url, '_blank');
     const toast = useToast();
-    toast.success("Successfully submitted", { 
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: SuccessIcon,
-        rtl: false,
+    toast.success("Successfully submitted", {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
     });
     setDepositDialogToggle(false);
     setCashDialogToggle(false);
     router.push({ name: "Dashboard" })
   } else {
     const toast = useToast();
-    toast.success(errMessage.value, { 
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: WarningIcon,
-        rtl: false,
+    toast.success(errMessage.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
     });
   }
 }
 
-const handleParticipate = () => {
+const handleParticipate = (type: string) => {
+  if (type == "ok") {
+    bonusCheck.value = true;
+    depositRate.value = 0
+  } else {
+    bonusCheck.value = false;
+  }
   promotionDialogVisible.value = false
 }
 
 watch(bonusCheck, (newValue) => {
-  console.log(newValue)
   if (newValue) {
     promotionDialogVisible.value = newValue
-
+  } else {
+    if (depositConfig.value["bonus"][0]["type"] == 0) {
+      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["award"]
+      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["award"]
+      }
+    } else if (depositConfig.value["bonus"][0]["type"] == 1) {
+      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      }
+    }
   }
 })
 
 watch(depositAmount, (newValue) => {
+  depositRate.value = 0
   if (validateAmount()) {
     isDepositBtnReady.value = true;
   } else {
     isDepositBtnReady.value = false;
   }
   isShowAmountValidation.value = !validateAmount();
-  if (depositConfig.value["bonus"][0]["type"] == 0) {
-    if (depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"] && depositConfig.value["bonus"][0]["award"] < depositConfig.value["bonus"][0]["max"]) {
-      depositRate.value = depositConfig.value["bonus"][0]["award"]
-    } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["award"]) {
-      depositRate.value = depositConfig.value["bonus"][0]["min"];
-    } else if (depositConfig.value["bonus"][0]["max"] == 0 && depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"]) {
-      depositRate.value = depositConfig.value["bonus"][0]["award"]
-    }
-  } else if (depositConfig.value["bonus"][0]["type"] == 1) {
-    const bonus = Number(depositAmount.value) * Number(depositConfig.value["bonus"][0]["rate"]);
-    if (bonus > depositConfig.value["bonus"][0]["min"] && bonus < depositConfig.value["bonus"][0]["max"]) {
-      depositRate.value = depositConfig.value["bonus"][0]["rate"]
-    } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == bonus) {
-      depositRate.value = depositConfig.value["bonus"][0]["rate"]
-    } else if (depositConfig.value["bonus"][0]["max"] == 0 && bonus > depositConfig.value["bonus"][0]["min"]) {
-      depositRate.value = depositConfig.value["bonus"][0]["rate"]
+  if (!bonusCheck.value) {
+    if (depositConfig.value["bonus"][0]["type"] == 0) {
+      // if (depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"] && depositConfig.value["bonus"][0]["award"] < depositConfig.value["bonus"][0]["max"]) {
+      //   depositRate.value = depositConfig.value["bonus"][0]["award"]
+      // } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["award"]) {
+      //   depositRate.value = depositConfig.value["bonus"][0]["min"];
+      // } else if (depositConfig.value["bonus"][0]["max"] == 0 && depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"]) {
+      //   depositRate.value = depositConfig.value["bonus"][0]["award"]
+      // }
+      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["award"]
+      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["award"]
+      }
+    } else if (depositConfig.value["bonus"][0]["type"] == 1) {
+      // const bonus = Number(depositAmount.value) * Number(depositConfig.value["bonus"][0]["rate"]);
+      // if (bonus > depositConfig.value["bonus"][0]["min"] && bonus < depositConfig.value["bonus"][0]["max"]) {
+      //   depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      // } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == bonus) {
+      //   depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      // } else if (depositConfig.value["bonus"][0]["max"] == 0 && bonus > depositConfig.value["bonus"][0]["min"]) {
+      //   depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      // }
+      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
+        depositRate.value = depositConfig.value["bonus"][0]["rate"]
+      }
     }
   }
 })
@@ -414,9 +448,9 @@ watch(depositToggleSwitch, (newValue) => {
 })
 
 watch(currencyMenuShow, (value) => {
-  if (currencyMenuShow.value && currencyList.value.length < 2) {
-    currencyMenuShow.value = false
-  }
+  // if (currencyMenuShow.value && currencyList.value.length < 2) {
+  //   currencyMenuShow.value = false
+  // }
 })
 
 onMounted(async () => {
@@ -502,7 +536,7 @@ onMounted(async () => {
         </v-card>
       </template>
       <v-list theme="dark" bg-color="#181522">
-        <v-row class="m-payment-width-370">
+        <v-row class="m-payment-width-370 px-1">
           <v-col
             cols="6"
             v-for="(paymentItem, paymentIndex) in paymentList"
@@ -549,9 +583,18 @@ onMounted(async () => {
           @click="handleDepositAmount(depositAmountItem)"
         >
           {{ depositAmountUnit }} {{ depositAmountItem }}
-          <div class="m-deposit-amount-area" v-if="depositRate != 0 && !bonusCheck">
+          <div
+            class="m-deposit-amount-area"
+            v-if="
+              !bonusCheck &&
+              ((Number(depositAmountItem) >= Number(depositConfig['bonus'][0]['min']) &&
+                Number(depositAmountItem) <= Number(depositConfig['bonus'][0]['max'])) ||
+                (Number(depositAmountItem) >= Number(depositConfig['bonus'][0]['min']) &&
+                  Number(depositConfig['bonus'][0]['max']) == 0))
+            "
+          >
             <div class="m-deposit-amount-rate-text">
-              {{ depositRate.toFixed(2) }}
+              {{ depositConfig["bonus"][0].type == 0 ? bonusAmount : bonusAmount + "%" }}
             </div>
           </div>
         </v-btn>
@@ -595,12 +638,9 @@ onMounted(async () => {
 
       <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
     </div>
-    <v-row
-      class="m-deposit-footer-text-position text-600-10 white justify-center mx-2"
-      v-if="depositRate != 0"
-    >
-      {{ t("deposit_dialog.other_text") }} R${{ depositAmount }} + R${{
-        depositConfig["bonus"][0]["type"] == 0
+    <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
+      R${{ depositAmount }} + R${{
+        depositConfig["bonus"][0]["type"] == 0 && depositConfig["bonus"] != undefined
           ? depositRate
           : (Number(depositAmount) * depositRate).toFixed(2)
       }}
@@ -707,8 +747,9 @@ onMounted(async () => {
 
   .m-deposit-amount-rate-text {
     position: absolute;
-    top: 1px;
-    right: 8px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 8px;
     font-weight: 400;
     color: #ffffff;
@@ -797,9 +838,8 @@ onMounted(async () => {
 }
 
 .m-payment-width-370 {
-  // width: 370px !important;
   margin: auto;
-  height: 290px !important;
+  max-height: 290px !important;
 }
 
 @media (max-width: 600px) {

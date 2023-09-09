@@ -1,36 +1,71 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted, toRefs } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { Search } from "@/interface/game";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
 import { ProgressiveImage } from "vue-progressive-image";
+import img_public_42 from "@/assets/public/image/img_public_42.png";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
-import store from "@/store";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const router = useRouter();
 const { dispatchGameSearch } = gameStore();
 const { setGameSearchList } = gameStore();
+const { removeAllSearchTextList } = gameStore();
+const { removeSearchTextList } = gameStore();
+const { setSearchTextList } = gameStore();
 const { setMailMenuShow } = mailStore();
 const searchText = ref<string>("");
 const searchLoading = ref<boolean>(false);
 const page_no = ref<number>(1);
 const currentPage = ref<number>(1);
+const moreCurrentPage = ref<number>(1);
 const limit = ref<number>(4);
 
 const swiper = ref<any>(null);
 
 const modules = [Pagination];
+
+const testGames = [
+  new URL("@/assets/home/image/img_pg_01.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_pg_02.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_pg_03.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_pg_04.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_pg_05.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_pg_06.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_pg_07.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_02.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_03.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_04.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_05.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_06.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_og_07.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_01.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_02.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_03.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_04.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_05.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_06.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_slots_07.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_01.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_02.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_03.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_04.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_05.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_06.png", import.meta.url).href,
+  new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
+];
 
 const searchedGameList = ref<Array<Search>>([]);
 
@@ -38,10 +73,19 @@ const searchedGameCount = ref<number>(0);
 
 const recommendedGameList = ref<Array<Search>>([]);
 
+const props = defineProps<{ searchDialogShow: boolean }>();
+
+const { searchDialogShow } = toRefs(props);
+
 const searchContainerHeight = ref<number>(590);
 
 const mobileWidth = computed(() => {
   return width.value;
+});
+
+const searchHistoryKeywords = computed(() => {
+  const { getSearchTextList } = storeToRefs(gameStore());
+  return getSearchTextList.value;
 });
 
 const gameSearchList = computed(() => {
@@ -67,6 +111,14 @@ const getSwiperRef = (swiperInstance: any) => {
 };
 
 const handleEnterGame = async (id: number, name: string) => {
+  setSearchTextList(searchText.value);
+  searchText.value = "";
+  page_no.value = 1;
+  setGameSearchList({
+    list: [],
+    total: 0,
+  });
+  searchedGameList.value = [];
   let replaceName = name.replace(/ /g, "-");
   if (mobileWidth.value < 600) {
     setMailMenuShow(true);
@@ -87,9 +139,16 @@ const handleSearchInput = async () => {
     searchedGameCount.value = gameSearchList.value.total;
     searchedGameList.value = gameSearchList.value.list;
     searchedGameList.value.map((item) => {
-      item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+      item.image = testGames[Math.floor(Math.random() * 7)];
     });
     // }
+  } else {
+    page_no.value = 1;
+    setGameSearchList({
+      list: [],
+      total: 0,
+    });
+    searchedGameList.value = [];
   }
 };
 
@@ -102,6 +161,33 @@ const handleResize = () => {
 
 const handleMoreGame = async () => {
   page_no.value += 1;
+  moreCurrentPage.value += 1;
+  if (searchText.value.length >= 3) {
+    searchLoading.value = true;
+    await dispatchGameSearch(
+      `?search=${searchText.value}&page=${moreCurrentPage.value}&limit=${limit.value}`
+    );
+    searchLoading.value = false;
+    if (success.value) {
+      searchedGameList.value = [...searchedGameList.value, ...gameSearchList.value.list];
+      searchedGameList.value.map((item) => {
+        item.image = testGames[Math.floor(Math.random() * 28)];
+      });
+    }
+  }
+};
+
+const handleRemoveSearchKeyword = (index: number) => {
+  // searchHistoryKeywords.value.splice(index, 1);
+  removeSearchTextList(index);
+};
+
+const removeAllSearchKeyword = () => {
+  removeAllSearchTextList();
+};
+
+const handleSearchGame = async (keyword: string) => {
+  searchText.value = keyword;
   if (searchText.value.length >= 3) {
     searchLoading.value = true;
     await dispatchGameSearch(
@@ -110,12 +196,20 @@ const handleMoreGame = async () => {
       }`
     );
     searchLoading.value = false;
-    if (success.value) {
-      searchedGameList.value = gameSearchList.value.list;
-      searchedGameList.value.map((item) => {
-        item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
-      });
-    }
+    // if (success.value) {
+    searchedGameCount.value = gameSearchList.value.total;
+    searchedGameList.value = gameSearchList.value.list;
+    searchedGameList.value.map((item) => {
+      item.image = testGames[Math.floor(Math.random() * 7)];
+    });
+    // }
+  } else {
+    page_no.value = 1;
+    setGameSearchList({
+      list: [],
+      total: 0,
+    });
+    searchedGameList.value = [];
   }
 };
 
@@ -125,12 +219,28 @@ watch(
     if (value == null) searchText.value = "";
     if (searchText.value == "") {
       page_no.value = 1;
-      setGameSearchList({});
+      setGameSearchList({
+        list: [],
+        total: 0,
+      });
       searchedGameList.value = [];
     }
   },
   { deep: true }
 );
+
+watch(searchDialogShow, (value) => {
+  if (!value && searchText.value != "") {
+    setSearchTextList(searchText.value);
+    searchText.value = "";
+    page_no.value = 1;
+    setGameSearchList({
+      list: [],
+      total: 0,
+    });
+    searchedGameList.value = [];
+  }
+});
 
 onMounted(async () => {
   window.addEventListener("resize", handleResize);
@@ -142,7 +252,7 @@ onMounted(async () => {
   recommendedGameList.value = gameSearchList.value.list;
   if (recommendedGameList.value.length > 0) {
     recommendedGameList.value.map((item) => {
-      item.image = new URL("@/assets/home/image/img_og_01.png", import.meta.url).href;
+      item.image = testGames[Math.floor(Math.random() * 28)];
     });
   }
 });
@@ -181,11 +291,48 @@ onMounted(async () => {
     </div>
     <div class="m-home-search-result pt-8 text-center" v-else>
       <div v-if="searchedGameList.length == 0">
-        <img src="@/assets/public/image/img_public_20.png" />
+        <img
+          src="@/assets/public/image/img_public_20.png"
+          v-if="searchText.length >= 3 && searchText != ''"
+        />
         <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">
           {{ t("home.search_dialog.text_2") }}
         </p>
         <p class="text-400-12 gray" v-else>{{ t("home.search_dialog.text_3") }}</p>
+        <div
+          class="mx-3 mt-4"
+          style="display: flex; justify-content: space-between"
+          v-if="searchHistoryKeywords.length > 0"
+        >
+          <p class="text-700-14 white">{{ t("home.search_dialog.search_history") }}</p>
+          <div class="m-home-search-history-remove" @click="removeAllSearchKeyword">
+            <img src="@/assets/public/svg/icon_public_82.svg" style="margin-top: 6px" />
+          </div>
+        </div>
+        <div
+          class="d-flex mx-3 mt-4"
+          style="gap: 6px; flex-wrap: wrap"
+          v-if="searchHistoryKeywords.length > 0"
+        >
+          <div
+            class="m-home-search-history-text"
+            v-for="(keyword, index) in searchHistoryKeywords"
+            :key="index"
+          >
+            <font @click="handleSearchGame(keyword)"> {{ keyword }}</font>
+            <span
+              class="m-home-search-history-word-remove"
+              v-if="index + 1 == searchHistoryKeywords.length"
+              @click="handleRemoveSearchKeyword(index)"
+            >
+              <img
+                src="@/assets/public/svg/icon_public_52.svg"
+                width="9"
+                class="m-home-search-history-word-remove-icon-position"
+              />
+            </span>
+          </div>
+        </div>
       </div>
       <div v-else>
         <div class="d-flex justify-between align-center mx-3">
@@ -202,6 +349,7 @@ onMounted(async () => {
               <ProgressiveImage
                 :src="item.image"
                 lazy-placeholder
+                :placeholder-src="img_public_42"
                 blur="30"
                 delay="500"
                 @click="handleEnterGame(item.id, item.name)"
@@ -226,7 +374,7 @@ onMounted(async () => {
         </v-row>
       </div>
     </div>
-    <div class="m-home-search-swiper-title mt-9">
+    <div class="m-home-search-swiper-title mt-8">
       <p class="ml-3 text-700-14 white">{{ t("home.search_dialog.text_1") }}</p>
       <div class="swiper-button-next" slot="button-next" @click="goToNext"></div>
       <div class="swiper-button-prev" slot="button-prev" @click="goToPrev"></div>
@@ -257,8 +405,83 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+@keyframes opacityAnimation {
+  0% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .m-home-search-body::-webkit-scrollbar {
   width: 0px;
+}
+
+.v-progressive-image-placeholder {
+  animation: opacityAnimation 0.8s ease-in infinite;
+}
+
+.m-home-search-history-word-remove {
+  position: absolute;
+  top: 0px;
+  right: -10px;
+  width: 15px;
+  height: 28px;
+  border-radius: 0px 6px 6px 0px;
+  background: var(--Text-Dark-Black-000000, #000);
+
+  /* Button Primary */
+  box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11);
+
+  .m-home-search-history-word-remove-icon-position {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.m-home-search-history-text {
+  position: relative;
+  padding: 6px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: var(--Secondary-Button-353652, #353652);
+
+  /* Button Shadow */
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+  color: var(--Sec-Text-7782AA, #7782aa);
+  text-align: center;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.m-home-search-history-text:active {
+  transform: scale(0.9);
+  filter: brightness(80%);
+  transition-duration: 0.28s;
+}
+
+.m-home-search-history-remove {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  background: var(--Secondary-Button-353652, #353652);
+  /* Button Shadow */
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+}
+
+.m-home-search-history-remove:active {
+  transform: scale(0.9);
+  filter: brightness(80%);
+  transition-duration: 0.28s;
 }
 
 .m-home-search-body {
@@ -355,6 +578,18 @@ onMounted(async () => {
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     z-index: 2;
+  }
+
+  .swiper-button-next:active {
+    transform: scale(0.9);
+    filter: brightness(80%);
+    transition-duration: 0.28s;
+  }
+
+  .swiper-button-prev:active {
+    transform: scale(0.9);
+    filter: brightness(80%);
+    transition-duration: 0.28s;
   }
 
   .swiper-button-prev {

@@ -68,7 +68,7 @@ const handleConfirmValidation = (): void => {
     // checkIcon.value = new URL("@/assets/public/svg/icon_public_17.svg", import.meta.url).href;
     // notificationShow.value = !notificationShow.value;
     const toast = useToast();
-    toast.success(t('deposit_dialog.personal_information.confirm_warning_text'), { 
+    toast.success(t('deposit_dialog.personal_information.confirm_warning_text'), {
         timeout: 3000,
         closeOnClick: false,
         pauseOnFocusLoss: false,
@@ -146,7 +146,7 @@ const handlePixInfoSubmit = (): void => {
     // checkIcon.value = new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
     // notificationShow.value = !notificationShow.value;
     const toast = useToast();
-    toast.success(t('deposit_dialog.personal_information.confirm_success_text'), { 
+    toast.success(t('deposit_dialog.personal_information.confirm_success_text'), {
         timeout: 3000,
         closeOnClick: false,
         pauseOnFocusLoss: false,
@@ -206,6 +206,7 @@ watch(cashToggleSwitch, (newValue) => {
     // pixInfoItem.value.last_name = "";
     isPersonalBtnReady.value = false;
     confirmValidation.value = false;
+
     setWithdrawDialogToggle(true);
     setDepositDialogToggle(false);
     setMainBlurEffectShow(true);
@@ -221,6 +222,7 @@ watch(cashToggleSwitch, (newValue) => {
     // pixInfoItem.value.last_name = "";
     isPersonalBtnReady.value = false;
     confirmValidation.value = false;
+
     setWithdrawDialogToggle(false);
     setDepositDialogToggle(true);
     setMainBlurEffectShow(true);
@@ -691,20 +693,20 @@ onMounted(() => {
     .v-field__field {
       .v-label.v-field-label {
         font-family: "Inter";
-        font-size: 10px!important;
+        font-size: 10px !important;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
         color: #7782aa !important;
-        opacity: 1!important;
+        opacity: 1 !important;
       }
 
       .v-label.v-field-label--floating {
         --v-field-label-scale: 0.75em;
-        font-size: 10px!important;
+        font-size: 10px !important;
         max-width: 100%;
         color: #7782aa !important;
-        opacity: 1!important;
+        opacity: 1 !important;
       }
     }
   }
@@ -712,43 +714,43 @@ onMounted(() => {
 
 @media (max-width: 600px) {
   .Vue-Toastification__container {
-      right: 0!important;
-      left: unset!important;;
-      width: 290px!important;
-      margin-right: 37px;
-      height: 60px!important;
-      flex-direction: unset!important;
+    right: 0 !important;
+    left: unset !important;
+    width: 290px !important;
+    margin-right: 37px;
+    height: 60px !important;
+    flex-direction: unset !important;
   }
   .Vue-Toastification__toast {
-      align-items: center !important;
-      z-index: 1000000000 !important;
-      top: 70px !important;
-      right: 0px !important;
-      width: 290px!important;
-      height: 60px;
-      border: none;
-      border-radius: 16px 0px 0px 16px;
-      background: var(--bg-2, #181522);
-      box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px !important;
+    right: 0px !important;
+    width: 290px !important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #181522);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
   }
 
   .Vue-Toastification__toast-body {
-      color: var(--sec-text, #7782aa);
-      font-family: Inter;
-      font-size: 10px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-      text-align: left;
+    color: var(--sec-text, #7782aa);
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: left;
   }
 
-  .Vue-Toastification__close-button{
-      top: 22px !important;
-      background-image: url("@/assets/public/svg/icon_public_52.svg");
-      background-repeat: no-repeat;
-      background-size: 18px;
-      color: transparent;
-      opacity: 1;
+  .Vue-Toastification__close-button {
+    top: 22px !important;
+    background-image: url("@/assets/public/svg/icon_public_52.svg");
+    background-repeat: no-repeat;
+    background-size: 18px;
+    color: transparent;
+    opacity: 1;
   }
 }
 

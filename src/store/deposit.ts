@@ -9,7 +9,11 @@ export const depositStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    depositConfig: {} as any,
+    depositConfig: {
+      bonus: [{
+        type: 0
+      }]
+    } as any,
     depositSubmit: {} as any,
     pixInfo: {} as Deposit.GetPixInfo,
     pixInfoToggle: false as boolean,

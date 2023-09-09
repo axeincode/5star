@@ -19,6 +19,7 @@ export const gameStore = defineStore({
             weburl: ""
         } as Game.GameEnterResponse,
         searchGameDialogShow: false as boolean,
+        searchTextList: [] as Array<string>
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -26,7 +27,8 @@ export const gameStore = defineStore({
         getGameCategories: (state) => state.gameCategories,
         getGameSearchList: (state) => state.gameSearchList,
         getEnterGameItem: (state) => state.enterGameItem,
-        getSearchGameDialogShow: (state) => state.searchGameDialogShow
+        getSearchGameDialogShow: (state) => state.searchGameDialogShow,
+        getSearchTextList: (state) => state.searchTextList
     },
     actions: {
         // set functions
@@ -47,6 +49,18 @@ export const gameStore = defineStore({
         },
         setSearchGameDialogShow(searchGameDialogShow: boolean) {
             this.searchGameDialogShow = searchGameDialogShow;
+        },
+        setSearchTextList(searchText: string) {
+            let sameSearchText = this.searchTextList.filter(item => item == searchText)
+            if (sameSearchText.length == 0) {
+                this.searchTextList.push(searchText);
+            }
+        },
+        removeSearchTextList(index: number) {
+            this.searchTextList.splice(index, 1);
+        },
+        removeAllSearchTextList() {
+            this.searchTextList = [];
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {
@@ -75,7 +89,7 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setGameSearchList(response.data);
                 } else {
-                    this.setGameSearchList({list: [], total: 0});
+                    this.setGameSearchList({ list: [], total: 0 });
                     this.setErrorMessage(handleException(response.code));
                 }
             }
@@ -92,7 +106,7 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setGameSearchList(response.data);
                 } else {
-                    this.setGameSearchList({list: [], total: 0});
+                    this.setGameSearchList({ list: [], total: 0 });
                     this.setErrorMessage(handleException(response.code));
                 }
             }
