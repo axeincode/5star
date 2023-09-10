@@ -143,7 +143,7 @@ const submitNickName = async () => {
     <div class="m-user-container">
         <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
         <v-row class="relative ma-2" style="margin-top: 110px !important;">
-            <v-text-field :label="t('account.item.nick_name_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.item.nick_name_text')" class="form-textfield dark-textfield m-account-nickname-edit" variant="solo"
                 density="comfortable" v-model="nickName" :onfocus="handleNickNameInputFocus"
                 :onChange="handleNickNameChange" :onblur="handleNickNameInputBlur" />
             <ValidationBox v-if="isShowNicknameValidation" :title="t('signup.displayNamePage.validation.username.title')"
@@ -294,5 +294,29 @@ const submitNickName = async () => {
     background-size: 18px;
     color: transparent;
     opacity: 1;
+}
+
+.m-account-nickname-edit {
+    transform-origin: top !important;
+
+    .v-field__field {
+      .v-label.v-field-label {
+        font-family: "Inter";
+        font-size: 12px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+
+      .v-label.v-field-label--floating {
+        --v-field-label-scale: 0.75em;
+        font-size: 10px !important;
+        max-width: 100%;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+    }
 }
 </style>

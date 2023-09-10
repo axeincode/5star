@@ -103,6 +103,7 @@ const Login = defineComponent({
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
+      console.log('???????????????????????')
       const toast = useToast();
       toast.success( t("login.forgotPasswordPage.notification"), { 
           timeout: 3000,
@@ -116,6 +117,7 @@ const Login = defineComponent({
           icon: SuccessIcon,
           rtl: false,
       });
+      state.currentPage = state.PAGE_TYPE.LOGIN_FORM;
       // state.notificationShow = !state.notificationShow;
       // state.checkIcon = new URL(
       //   "@/assets/public/svg/icon_public_18.svg",
@@ -258,6 +260,7 @@ const Login = defineComponent({
       ...toRefs(state),
       isFormDataReady,
       handleLoginFormSubmit,
+      handleForgotPassword,
       showPassword,
       handleEmailBlur,
       handleEmailChange,
@@ -287,7 +290,7 @@ export default Login;
         <v-row class="relative mt-8">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
-            class="form-textfield dark-textfield"
+            class="form-textfield dark-textfield m-login-email"
             variant="solo"
             density="comfortable"
             v-model="formData.emailAddress"
@@ -334,7 +337,7 @@ export default Login;
         <div class="mt-6 relative pa-0">
           <v-text-field
             :label="t('signup.formPage.password')"
-            class="form-textfield dark-textfield ma-0"
+            class="form-textfield dark-textfield ma-0 m-login-password"
             variant="solo"
             density="comfortable"
             :type="isShowPassword ? 'text' : 'password'"
@@ -426,7 +429,7 @@ export default Login;
         <v-row class="relative mt-8">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
-            class="form-textfield dark-textfield"
+            class="form-textfield dark-textfield m-login-forgot"
             variant="solo"
             density="comfortable"
             v-model="formData.emailAddress"
@@ -476,7 +479,7 @@ export default Login;
             width="-webkit-fill-available"
             height="48"
             autocapitalize="off"
-            @click="notificationShow = !notificationShow"
+            @click="handleForgotPassword"
           >
             {{ t("login.forgotPasswordPage.submit") }}
           </v-btn>
@@ -579,7 +582,7 @@ export default Login;
 .m-disable-password {
   position: absolute;
   top: 16px;
-  right: 16px;
+  right: 24px;
   cursor: pointer;
 }
 
@@ -676,5 +679,77 @@ export default Login;
 
 .text-large {
   font-size: 32px !important;
+}
+
+.m-login-email {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.m-login-password {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.m-login-forgot {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
 }
 </style>

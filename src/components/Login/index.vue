@@ -96,6 +96,7 @@ const Login = defineComponent({
           icon: SuccessIcon,
           rtl: false,
       });
+      state.currentPage = state.PAGE_TYPE.LOGIN_FORM;
     };
 
     // methods

@@ -8,6 +8,8 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
+import img_public_42 from "@/assets/public/image/img_public_42.png";
+import { ProgressiveImage } from "vue-progressive-image";
 
 const { t } = useI18n();
 const emit = defineEmits<{ (e: "close"): void }>();
@@ -147,8 +149,15 @@ watch(selectedAvatarItem, (value) => {
             @click="props.onClick"
           ></v-btn>
         </template>
-        <v-carousel-item v-for="(slide, i) in slides" :key="i">
-          <img :src="slide" width="123" style="margin-top: 20px" />
+        <v-carousel-item class="m-signup-displayname-img" v-for="(slide, i) in slides" :key="i">
+          <ProgressiveImage
+            :placeholder-src="img_public_42"
+            :src="slide"
+            blur="30"
+            style="margin-top: 20px; background: transparent; border-radius: 80px;"
+            custom-class="m-signup-displayname-img"
+          />
+          <!-- <img :src="slide" width="123" style="margin-top: 20px" /> -->
         </v-carousel-item>
       </v-carousel>
     </div>
@@ -160,7 +169,7 @@ watch(selectedAvatarItem, (value) => {
     <div class="mx-5 mt-2 relative m-display-name-input">
       <v-text-field
         :label="t('signup.displayNamePage.username')"
-        class="form-textfield dark-textfield ma-0"
+        class="form-textfield dark-textfield ma-0 m-signup-displayname"
         variant="solo"
         density="comfortable"
         v-model="userName"
@@ -256,6 +265,38 @@ watch(selectedAvatarItem, (value) => {
     .v-field--variant-solo-filled {
       background: transparent;
     }
+  }
+}
+
+.m-signup-displayname {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
+}
+.m-signup-displayname-img {
+  // width: 80px!important;
+  // height: 80px!important;
+  .v-progressive-image-placeholder {
+    width: 60px;
+    height: 60px;
   }
 }
 </style>

@@ -94,6 +94,12 @@ const nickNameDialogVisible = computed(() => {
 
 watch(nickNameDialogVisible, (newValue) => {
   nickNameDialog.value = newValue;
+  if (newValue) {
+    setMainBlurEffectShow(true);
+    setOverlayScrimShow(true);
+    setHeaderBlurEffectShow(true)
+    setMenuBlurEffectShow(true);
+  }
 })
 
 // methods
@@ -116,6 +122,10 @@ const closeDialog = (type: dialogType) => {
 };
 
 const closeNickNameDialog = () => {
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
+  setOverlayScrimShow(false);
   setNickNameDialogVisible(false);
 }
 

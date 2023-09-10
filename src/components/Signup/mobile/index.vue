@@ -471,7 +471,7 @@ export default MSignup;
         <div class="relative mt-10 pa-0">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
-            class="form-textfield dark-textfield ma-0 m-text-field"
+            class="form-textfield dark-textfield ma-0 m-text-field m-signup-email"
             variant="solo"
             density="comfortable"
             v-model="formData.emailAddress"
@@ -529,7 +529,7 @@ export default MSignup;
         <div class="mt-6 relative pa-0">
           <v-text-field
             :label="t('signup.formPage.password')"
-            class="form-textfield dark-textfield ma-0"
+            class="form-textfield dark-textfield ma-0 m-signup-password"
             variant="solo"
             density="comfortable"
             :type="isShowPassword ? 'text' : 'password'"
@@ -560,7 +560,7 @@ export default MSignup;
         <v-row class="mt-2">
           <v-text-field
             :label="t('signup.formPage.promoCode')"
-            class="form-textfield normal-textfield"
+            class="form-textfield normal-textfield m-signup-promo"
             variant="solo"
             density="comfortable"
             v-model="formData.promoCode"
@@ -903,7 +903,7 @@ export default MSignup;
 .m-disable-password {
   position: absolute;
   top: 16px;
-  right: 16px;
+  right: 24px;
   cursor: pointer;
 }
 
@@ -1050,5 +1050,77 @@ export default MSignup;
 // carousel
 .carousel-container {
   width: 100%;
+}
+
+.m-signup-email {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.m-signup-password {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.m-signup-promo {
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
 }
 </style>

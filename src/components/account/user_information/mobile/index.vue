@@ -207,7 +207,7 @@ const handleVerifyCode = () => {
                                         <div class="text-600-12 text-gray">{{ userInfo.phone }}</div>
                                     </v-list-item-title>
                                     <template v-slot:append>
-                                        <v-btn class="account-edit-btn" @click="handlePhonNumber">
+                                        <v-btn class="m-account-edit-btn" @click="handlePhonNumber">
                                             <img src="@/assets/public/svg/icon_public_12.svg" width="16" />
                                         </v-btn>
                                     </template>
@@ -265,13 +265,15 @@ const handleVerifyCode = () => {
 .m-account-edit-btn {
     background: transparent !important;
     box-shadow: none !important;
+    min-width: auto!important;
 
     .v-btn__content {
         font-weight: 400;
-        font-size: 10px;
+        font-size: 12px;
         color: #7782AA;
     }
 }
+
 
 .user-pwd-spacing {
     letter-spacing: 2px;

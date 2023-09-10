@@ -12,11 +12,11 @@ export const mailStore = defineStore({
                 id: 1,
                 icon: new URL("@/assets/public/svg/icon_public_14.svg", import.meta.url).href,
                 mail_content_1: {
-                    color: "text-color-white",
+                    color: "text-color-white text-500-12",
                     content: "Subscribe to notifications"
                 },
                 mail_content_2: {
-                    color: "text-color-gray",
+                    color: "text-color-gray text-500-10",
                     content: "Enable push notifications to receive exclusive bonuses!"
                 },
                 mail_rail_1: {
@@ -32,11 +32,11 @@ export const mailStore = defineStore({
                 id: 2,
                 icon: new URL("@/assets/public/svg/icon_public_15.svg", import.meta.url).href,
                 mail_content_1: {
-                    color: "text-color-white",
+                    color: "text-color-white text-500-12",
                     content: "Refer a friend"
                 },
                 mail_content_2: {
-                    color: "text-color-gray",
+                    color: "text-color-gray text-500-10",
                     content: "lnvite Friends, Earn $10 Per lnvite"
                 },
                 mail_rail_1: {
@@ -52,19 +52,19 @@ export const mailStore = defineStore({
                 id: 3,
                 icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
                 mail_content_1: {
-                    color: "text-color-gray",
+                    color: "text-color-gray text-500-12",
                     content: "Withdrawal Amount"
                 },
                 mail_content_2: {
-                    color: "money-color-white",
+                    color: "money-color-white text-700-16",
                     content: "$100.00"
                 },
                 mail_rail_1: {
-                    color: "text-color-gray",
+                    color: "text-color-gray text-500-10",
                     content: "2023/1/29  17:50:36"
                 },
                 mail_rail_2: {
-                    color: "text-color-yellow",
+                    color: "text-color-yellow text-600-10",
                     content: "ln processing..."
                 }
             },
@@ -72,19 +72,19 @@ export const mailStore = defineStore({
                 id: 4,
                 icon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
                 mail_content_1: {
-                    color: "text-color-gray",
+                    color: "text-color-gray text-500-12",
                     content: "Withdrawal Amount"
                 },
                 mail_content_2: {
-                    color: "money-color-white",
+                    color: "money-color-white text-700-16",
                     content: "$100.00"
                 },
                 mail_rail_1: {
-                    color: "text-color-gray",
+                    color: "text-color-gray text-500-10",
                     content: "2023/1/29  17:50:36"
                 },
                 mail_rail_2: {
-                    color: "text-color-green",
+                    color: "text-color-green text-600-10",
                     content: "Accomplish"
                 }
             },

@@ -365,7 +365,7 @@ onMounted(() => {
             <template v-slot:prepend>
               <img :src="mailItem.icon" width="20" />
             </template>
-            <v-list-item-title class="ml-2" style="line-height: 18px">
+            <v-list-item-title class="ml-4" style="line-height: 18px">
               <div :class="mailItem.mail_content_1.color">
                 {{ mailItem.mail_content_1.content }}
               </div>
@@ -478,8 +478,6 @@ onMounted(() => {
   }
 
   .v-list-item-title {
-    font-weight: 500;
-    font-size: 12px;
     color: #7782aa;
   }
 
@@ -489,8 +487,6 @@ onMounted(() => {
   }
 
   .mail-header-text {
-    font-weight: 700;
-    font-size: 14px;
     color: #ffffff;
   }
 
@@ -501,33 +497,23 @@ onMounted(() => {
   }
 
   .text-color-gray {
-    font-weight: 500;
-    font-size: 9px;
     color: #7782aa;
   }
 
   .text-color-white {
-    font-weight: 500;
-    font-size: 10px;
     color: #ffffff;
   }
 
   .money-color-white {
-    font-weight: 800;
-    font-size: 12px;
     color: #ffffff;
   }
 
   .text-color-yellow {
-    font-weight: 600;
-    font-size: 8px;
     color: #f9bc01;
     padding: 3px 0px;
   }
 
   .text-color-green {
-    font-weight: 600;
-    font-size: 8px;
     color: #01983a;
     padding: 3px 0px;
   }
@@ -535,7 +521,7 @@ onMounted(() => {
   .mail-item {
     margin-top: 4px !important;
     background-color: #1c1929 !important;
-    padding: 4px 8px !important;
+    padding: 14px 20px !important;
     border-radius: 12px !important;
     animation-name: mailScaling;
     animation-duration: 0.2s;

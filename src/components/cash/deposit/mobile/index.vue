@@ -373,9 +373,10 @@ const handleDepositSubmit = async () => {
       }
       depositAmountWithCurrency.value = formatCurrency(Number(depositAmountWithBonus.value), locale, selectedCurrencyItem.value.name);
       codeUrl.value = depositSubmit.value.code_url;
-      setOverlayScrimShow(true);
-      setDepositHeaderBlurEffectShow(true);
-      setDepositBlurEffectShow(true);
+      setMainBlurEffectShow(false);
+      setOverlayScrimShow(false);
+      setDepositHeaderBlurEffectShow(false);
+      setDepositBlurEffectShow(false);
       setTimeout(() => {
         depositInfoDialogVisible.value = true;
       }, 10)

@@ -120,11 +120,11 @@ const updateEmail = async () => {
     <div class="m-user-container">
         <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
         <v-row class="mt-6 relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
-            <v-text-field :label="t('account.item.email_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.item.email_text')" class="form-textfield dark-textfield m-account-email-edit-address" variant="solo"
                 density="comfortable" v-model="email" />
         </v-row>
         <v-row class="relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
-            <v-text-field :label="t('account.password.current_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.password.current_text')" class="form-textfield dark-textfield m-account-email-edit-password" variant="solo"
                 density="comfortable" :type="isShowCurrentPassword ? 'text' : 'password'" v-model="password" />
             <img v-if="isShowCurrentPassword" src="@/assets/public/svg/icon_public_07.svg" class="m-disable-password"
                 @click="showCurrentPassword" width="16" />
@@ -193,5 +193,53 @@ const updateEmail = async () => {
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
+}
+
+.m-account-email-edit-address {
+    transform-origin: top !important;
+
+    .v-field__field {
+      .v-label.v-field-label {
+        font-family: "Inter";
+        font-size: 12px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+
+      .v-label.v-field-label--floating {
+        --v-field-label-scale: 0.75em;
+        font-size: 10px !important;
+        max-width: 100%;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+    }
+}
+
+.m-account-email-edit-password {
+    transform-origin: top !important;
+
+    .v-field__field {
+      .v-label.v-field-label {
+        font-family: "Inter";
+        font-size: 12px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+
+      .v-label.v-field-label--floating {
+        --v-field-label-scale: 0.75em;
+        font-size: 10px !important;
+        max-width: 100%;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+    }
 }
 </style>

@@ -376,6 +376,7 @@ const handleWithdrawSubmit = async () => {
   }
 }
 
+
 watch(withdrawAmount, (newValue) => {
   if (validateAmount()) {
     isDepositBtnReady.value = true;

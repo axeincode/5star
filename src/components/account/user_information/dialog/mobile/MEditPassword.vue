@@ -154,7 +154,7 @@ const submitPassword = async () => {
     <div class="m-user-container">
         <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
         <v-row class="mt-4 relative" :class="mobileWidth < 600 ? 'mx-2' : 'mx-10'">
-            <v-text-field :label="t('account.password.current_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.password.current_text')" class="form-textfield dark-textfield m-account-password-edit-current" variant="solo"
                 density="comfortable" v-model="currentPassword" :type="isShowCurrentPassword ? 'text' : 'password'"
                 :onblur="handleCurrentPasswordInputBlur" />
             <img v-if="isShowCurrentPassword" src="@/assets/public/svg/icon_public_07.svg" class="m-disable-password"
@@ -163,7 +163,7 @@ const submitPassword = async () => {
                 width="16" />
         </v-row>
         <v-row class="mt-4 relative" :class="mobileWidth < 600 ? 'mx-2' : 'mx-10'">
-            <v-text-field :label="t('account.password.new_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.password.new_text')" class="form-textfield dark-textfield m-account-password-edit-new" variant="solo"
                 density="comfortable" v-model="newPassword" :onfocus="handleNewPasswordInputFocus"
                 :type="isShowNewPassword ? 'text' : 'password'" :onblur="handleNewPasswordInputBlur" />
             <img v-if="isShowNewPassword" src="@/assets/public/svg/icon_public_07.svg" class="m-disable-password"
@@ -174,7 +174,7 @@ const submitPassword = async () => {
                 :descriptionList="passwordValidationStrList" :validationList="passwordValidationList" />
         </v-row>
         <v-row class="mt-4 relative" :class="mobileWidth < 600 ? 'mx-2' : 'mx-10'">
-            <v-text-field :label="t('account.password.repeat_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.password.repeat_text')" class="form-textfield dark-textfield m-account-password-edit-repeat" variant="solo"
                 density="comfortable" v-model="repeatPassword" :onfocus="handleRepeatPasswordInputFocus"
                 :type="isShowRepeatPassword ? 'text' : 'password'" :onblur="handleRepeatPasswordInputBlur" />
             <img v-if="isShowRepeatPassword" src="@/assets/public/svg/icon_public_07.svg" class="m-disable-password"
@@ -235,7 +235,7 @@ const submitPassword = async () => {
     
     .m-disable-password {
         top: 39%!important;
-        right: 20px!important;
+        right: 34px!important;
     }
 }
 
@@ -250,5 +250,77 @@ const submitPassword = async () => {
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
+}
+
+.m-account-password-edit-current {
+    transform-origin: top !important;
+
+    .v-field__field {
+      .v-label.v-field-label {
+        font-family: "Inter";
+        font-size: 12px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+
+      .v-label.v-field-label--floating {
+        --v-field-label-scale: 0.75em;
+        font-size: 10px !important;
+        max-width: 100%;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+    }
+}
+
+.m-account-password-edit-new {
+    transform-origin: top !important;
+
+    .v-field__field {
+      .v-label.v-field-label {
+        font-family: "Inter";
+        font-size: 12px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+
+      .v-label.v-field-label--floating {
+        --v-field-label-scale: 0.75em;
+        font-size: 10px !important;
+        max-width: 100%;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+    }
+}
+
+.m-account-password-edit-repeat {
+    transform-origin: top !important;
+
+    .v-field__field {
+      .v-label.v-field-label {
+        font-family: "Inter";
+        font-size: 12px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+
+      .v-label.v-field-label--floating {
+        --v-field-label-scale: 0.75em;
+        font-size: 10px !important;
+        max-width: 100%;
+        color: #7782aa !important;
+        opacity: 1 !important;
+      }
+    }
 }
 </style>
