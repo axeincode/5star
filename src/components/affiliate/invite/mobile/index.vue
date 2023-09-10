@@ -183,7 +183,7 @@ const inviteUrlCopy = () => {
     notificationShow.value = !notificationShow.value;
     if(notificationShow.value) {
       const toast = useToast();
-      toast.success(notificationText.value, { 
+      toast.success(notificationText.value, {
         timeout: 5000,
         closeOnClick: false,
         pauseOnFocusLoss: false,
@@ -307,7 +307,13 @@ onMounted(async () => {
                     width="16"
                   />
                 </template>
-                <v-list theme="dark" bg-color="#211F31" class="px-2" :width="mobileWidth > 600 ? 471 : mobileWidth-30" style="margin: 0px 2px 0px -15px;">
+                <v-list
+                  theme="dark"
+                  bg-color="#211F31"
+                  class="px-2"
+                  :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
+                  style="margin: 0px 2px 0px -15px"
+                >
                   <v-list-item class="pt-4">
                     <div class="text-center text-400-12 gray">
                       {{ t("affiliate.invite.help_text_1") }}
@@ -403,7 +409,7 @@ onMounted(async () => {
         <img
           src="@/assets/affiliate/invite/image/img_agent_01.png"
           class="mt-4"
-          style="margin-bottom: -27px!important;"
+          style="margin-bottom: -27px !important"
           width="228"
         />
       </v-col>
@@ -420,7 +426,11 @@ onMounted(async () => {
         width="16"
       />
     </v-row>
-    <v-dialog v-model="bonusDialog" :width="mobileWidth < 600 ? 328 : 471" @click:outside="closeBonusDialog">
+    <v-dialog
+      v-model="bonusDialog"
+      :width="mobileWidth < 600 ? 328 : 471"
+      @click:outside="closeBonusDialog"
+    >
       <BonusDialog @close="closeBonusDialog" v-if="mobileWidth > 600" />
       <MBonusDialog @close="closeBonusDialog" v-else />
     </v-dialog>
@@ -613,7 +623,13 @@ onMounted(async () => {
             width="16"
           />
         </template>
-        <v-list theme="dark" bg-color="#211F31" class="px-2" :width="mobileWidth > 600 ? 471 : mobileWidth-30" style="margin: 0px 8px 0px 3px;">
+        <v-list
+          theme="dark"
+          bg-color="#211F31"
+          class="px-2"
+          :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
+          style="margin: 0px 8px 0px 3px"
+        >
           <v-list-item class="pt-4">
             <div class="text-center text-400-12 gray">
               {{ t("affiliate.invite.help_text_2") }}
@@ -679,7 +695,7 @@ onMounted(async () => {
               v-model="slider"
               color="#32CFEC"
               class="align-center"
-              rounded = rounded-xl
+              rounded="rounded-xl"
               :max="max"
               :min="min"
               hide-details
@@ -761,10 +777,9 @@ onMounted(async () => {
   .v-slider-thumb__surface::before {
     visibility: hidden;
   }
-  .v-slider-thumb--pressed > div{
+  .v-slider-thumb--pressed > div {
     background-color: #32cfec;
   }
-  
 }
 
 .m-next-btn-position {
@@ -797,7 +812,6 @@ onMounted(async () => {
 }
 
 .m-invite-url-copy-btn {
-  flex-shrink: 0;
   border-radius: 4px;
   background: var(--secondary-button-353652, #353652);
 }
@@ -1074,28 +1088,28 @@ onMounted(async () => {
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 20px !important;
 }
-.m-invite-img-3{
+.m-invite-img-3 {
   margin-bottom: -20px;
 }
 .Vue-Toastification__container {
-  right: 0!important;
-  left: unset!important;;
-  width: 290px!important;
+  right: 0 !important;
+  left: unset !important;
+  width: 290px !important;
   margin-right: 37px;
-  height: 60px!important;
+  height: 60px !important;
   //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
-    align-items: center !important;
-    z-index: 1000000000 !important;
-    top: 70px !important;
-    right: -20px !important;
-    width: 330px!important;
-    height: 60px;
-    border: none;
-    border-radius: 16px 0px 0px 16px;
-    background: var(--bg-2, #181522);
-    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+  align-items: center !important;
+  z-index: 1000000000 !important;
+  top: 70px !important;
+  right: -20px !important;
+  width: 330px !important;
+  height: 60px;
+  border: none;
+  border-radius: 16px 0px 0px 16px;
+  background: var(--bg-2, #181522);
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
 .Vue-Toastification__toast-body {
@@ -1108,7 +1122,7 @@ onMounted(async () => {
   text-align: left;
 }
 
-.Vue-Toastification__close-button{
+.Vue-Toastification__close-button {
   top: 22px !important;
   background-image: url("@/assets/public/svg/icon_public_52.svg");
   background-repeat: no-repeat;

@@ -17,6 +17,7 @@ import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import router from '@/router';
 import MParticipatingDialog from "@/components/cash/deposit/mobile/MParticipatingDialog.vue";
+import MDepositInfoDialog from "@/components/cash/deposit/mobile/MDepositInfoDialog.vue";
 import store from '@/store';
 import { load } from 'webfontloader';
 import { useToast } from "vue-toastification";
@@ -182,11 +183,19 @@ const depositRate = ref<number>(0);
 
 const depositAmount = ref<string | number>(0)
 
+const depositAmountWithCurrency = ref<string>("");
+
+const depositAmountWithBonus = ref<string | number>(0);
+
 const bonusCheck = ref<boolean>(false);
+
+const codeUrl = ref<string>('00020126890014BR.GOV.BCB.PIX2567api-pix.bancobs2.com.br/spi/v2/cdbd7c5c-0465-41da-bf4f-2abc393011ec520400005303986540510.305802BR5908PAGSMILE6014Belo Horizonte61083038040362070503***63044D55');
 
 const loading = ref<boolean>(false);
 
 const promotionDialogVisible = ref<boolean>(false);
+
+const depositInfoDialogVisible = ref<boolean>(false);
 
 const notificationShow = ref<boolean>(false);
 const currencyMenuShow = ref<boolean>(false);
@@ -271,6 +280,14 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
   })
 }
 
+const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
+  const fomarttedAmount = currency.toLocaleString(locale, {
+    style: "currency",
+    currency: currencyUnit,
+  })
+  return fomarttedAmount
+}
+
 const handleSelectPayment = (item: GetPaymentItem) => {
   selectedPaymentItem.value = item;
 }
@@ -329,6 +346,41 @@ const handleDepositSubmit = async () => {
   })
   loading.value = false;
   if (success.value) {
+    if (depositSubmit.value.code_url != "") {
+      depositAmountWithBonus.value = depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
+      let locale = 'pt-BR';
+      switch (selectedCurrencyItem.value.name) {
+        case "BRL":
+          locale = 'pt-BR';
+          break;
+        case "PHP":
+          locale = 'en-PH';
+          break;
+        case "PEN":
+          locale = 'en-PE';
+          break;
+        case "MXN":
+          locale = 'en-MX';
+          break;
+        case "CLP":
+          locale = 'es-CL';
+          break;
+        case "USD":
+          locale = 'en-US';
+        case "COP":
+          locale = 'es-CO';
+          break;
+      }
+      depositAmountWithCurrency.value = formatCurrency(Number(depositAmountWithBonus.value), locale, selectedCurrencyItem.value.name);
+      codeUrl.value = depositSubmit.value.code_url;
+      setOverlayScrimShow(true);
+      setDepositHeaderBlurEffectShow(true);
+      setDepositBlurEffectShow(true);
+      setTimeout(() => {
+        depositInfoDialogVisible.value = true;
+      }, 10)
+      return;
+    }
     window.open(depositSubmit.value.url, '_blank');
     const toast = useToast();
     toast.success("Successfully submitted", {
@@ -345,6 +397,9 @@ const handleDepositSubmit = async () => {
     });
     setDepositDialogToggle(false);
     setCashDialogToggle(false);
+    setMainBlurEffectShow(false);
+    setHeaderBlurEffectShow(false);
+    setMenuBlurEffectShow(false);
     router.push({ name: "Dashboard" })
   } else {
     const toast = useToast();
@@ -362,7 +417,7 @@ const handleDepositSubmit = async () => {
     });
   }
 }
-  
+
 const handleParticipate = (type: string) => {
   if (type == "ok") {
     bonusCheck.value = true;
@@ -370,11 +425,19 @@ const handleParticipate = (type: string) => {
   } else {
     bonusCheck.value = false;
   }
-  
+
   setDepositBlurEffectShow(false);
   setDepositHeaderBlurEffectShow(false);
   setTimeout(() => {
     promotionDialogVisible.value = false
+  }, 10);
+}
+
+const handleDepositInformation = () => {
+  setDepositBlurEffectShow(false);
+  setDepositHeaderBlurEffectShow(false);
+  setTimeout(() => {
+    depositInfoDialogVisible.value = false
   }, 10);
 }
 
@@ -392,8 +455,6 @@ watch(bonusCheck, (newValue) => {
     setTimeout(() => {
       promotionDialogVisible.value = newValue;
     }, 10)
-    
-
   } else {
     if (depositConfig.value["bonus"][0]["type"] == 0) {
       if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
@@ -478,7 +539,36 @@ watch(currencyMenuShow, (value) => {
 onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
-  
+
+  // setOverlayScrimShow(true);
+  // setDepositHeaderBlurEffectShow(true);
+  // setDepositBlurEffectShow(true);
+  // setTimeout(() => {let locale = 'pt-BR';
+  //     switch (selectedCurrencyItem.value.name) {
+  //       case "BRL":
+  //         locale = 'pt-BR';
+  //         break;
+  //       case "PHP":
+  //         locale = 'en-PH';
+  //         break;
+  //       case "PEN":
+  //         locale = 'en-PE';
+  //         break;
+  //       case "MXN":
+  //         locale = 'en-MX';
+  //         break;
+  //       case "CLP":
+  //         locale = 'es-CL';
+  //         break;
+  //       case "USD":
+  //         locale = 'en-US';
+  //       case "COP":
+  //         locale = 'es-CO';
+  //         break;
+  //     }
+  //     depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
+  //   depositInfoDialogVisible.value = true;
+  // }, 10)
 })
 </script>
 
@@ -690,6 +780,21 @@ onMounted(async () => {
     >
       <MParticipatingDialog @promotionDialogHide="handleParticipate" />
     </v-dialog>
+    <v-dialog
+      v-model="depositInfoDialogVisible"
+      width="328"
+      content-class="m-deposit-info-dialog-position"
+      @click:outside="handleDepositInformation"
+    >
+      <MDepositInfoDialog
+        :selectedPaymentItem="selectedPaymentItem"
+        :selectedCurrencyItem="selectedCurrencyItem"
+        :depositAmountWithBonus="depositAmountWithBonus"
+        :depositAmountWithCurrency="depositAmountWithCurrency"
+        :codeUrl="codeUrl"
+        @depositInfoDialogClose="handleDepositInformation"
+      />
+    </v-dialog>
   </div>
 </template>
 
@@ -889,6 +994,10 @@ onMounted(async () => {
 .m-promotion-dialog-position {
   z-index: 2550;
   // top: -20px !important;
+}
+
+.m-deposit-info-dialog-position {
+  z-index: 2550;
 }
 
 .v-dialog--persistent .v-dialog__content {

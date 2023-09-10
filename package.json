@@ -19,6 +19,7 @@
     "lodash-es": "^4.17.21",
     "moment-timezone": "^0.5.43",
     "pinia": "^2.0.0",
+    "qrcode.vue": "^3.4.1",
     "roboto-fontface": "*",
     "socket.io-client": "^4.6.1",
     "swiper": "^10.2.0",

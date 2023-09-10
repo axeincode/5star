@@ -25,6 +25,9 @@ const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
+const { setHeaderBlurEffectShow } = appBarStore();
+const { setMenuBlurEffectShow } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { setMailList } = mailStore();
 const { dispatchUserWithdrawCfg } = withdrawStore();
@@ -164,6 +167,8 @@ const validationText2 = ref<string>("")
 
 const notificationShow = ref<boolean>(false);
 
+const loading = ref<boolean>(false);
+
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
 const notificationText = ref<string>("");
@@ -250,7 +255,7 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
-  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(withdrawConfig.value["availabe_balance"]);
+  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
 }
 
 const handleAmountInputFocus = (): void => {
@@ -304,6 +309,7 @@ const handleWithdrawSubmit = async () => {
     });
     return;
   }
+  loading.value = true
   await dispatchUserWithdrawSubmit({
     id_number: pixInfo.value.id,
     first_name: pixInfo.value.first_name,
@@ -311,6 +317,7 @@ const handleWithdrawSubmit = async () => {
     channels_id: selectedPaymentItem.value.id,
     amount: Number(withdrawAmount.value)
   })
+  loading.value = false;
   if (success.value) {
     const toast = useToast();
     toast.success("Successful withdrawal of funds", {
@@ -348,6 +355,9 @@ const handleWithdrawSubmit = async () => {
     setMailList(mailItem);
     setWithdrawDialogToggle(false);
     setCashDialogToggle(false);
+    setMainBlurEffectShow(false);
+    setHeaderBlurEffectShow(false);
+    setMenuBlurEffectShow(false);
     router.push({ name: "Dashboard" })
   } else {
     const toast = useToast();
@@ -552,6 +562,7 @@ onMounted(async () => {
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
+        :loading="loading"
         :onclick="handleWithdrawSubmit"
       >
         {{ t("withdraw_dialog.withdraw_btn_text") }}

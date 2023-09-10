@@ -362,7 +362,7 @@ onMounted(async () => {
                 lazy-placeholder
                 :placeholder-src="img_public_42"
                 blur="30"
-                delay="500"
+                delay="1000"
                 @click="handleEnterGame(item.id, item.name)"
               />
             </v-col>
@@ -430,9 +430,22 @@ onMounted(async () => {
   width: 0px;
 }
 
-.v-progressive-image-placeholder {
-  animation: opacityAnimation 0.8s ease-in infinite;
+.v-progressive-image-loading:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 46px;
+  background-image: url("@/assets/public/image/img_public_42.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation: opacityAnimation 0.6s ease-in infinite;
 }
+
+// .v-progressive-image-placeholder {
+//   animation: opacityAnimation 0.8s ease-in infinite;
+// }
 
 .m-home-search-history-word-remove {
   position: absolute;

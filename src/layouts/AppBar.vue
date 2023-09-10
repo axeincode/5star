@@ -194,8 +194,6 @@ const formatCurrency = (currency: number, locale: string, currencyUnit: string) 
   const fomarttedAmount = currency.toLocaleString(locale, {
     style: "currency",
     currency: currencyUnit,
-    // minimumFractionDigits: 2,
-    // maximumSignificantDigits: 2,
   })
   return fomarttedAmount
 }

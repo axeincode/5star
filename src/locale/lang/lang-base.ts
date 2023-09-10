@@ -260,6 +260,14 @@ export type langType = {
     mail: string
   }
   deposit_dialog: {
+    deposit_info: {
+      text_1: string
+      text_2: string
+      text_3: string
+      text_4: string
+      text_5: string
+      text_6: string
+    }
     deposit_currency: string
     choose_payment_method: string
     deposit_amount: string

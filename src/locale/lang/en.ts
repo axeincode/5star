@@ -262,6 +262,14 @@ export const lang: langType = {
     mail: "Mail"
   },
   deposit_dialog: {
+    deposit_info: {
+      text_1: "Deposit Information",
+      text_2: "1. Scan the QR code bellow in the PIX app",
+      text_3: "2. Complete the deposit with your bank",
+      text_4: "3. Your ",
+      text_5: " balance and any applicabledeposit bonus will be credited",
+      text_6: "COPY PIX CODE"
+    },
     deposit_currency: "Deposit Currency",
     choose_payment_method: "Choose a Payment Method",
     deposit_amount: "Deposit amount",

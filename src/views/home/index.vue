@@ -608,6 +608,7 @@ const Dashboard = defineComponent({
     const selectedGameFilterBtn = ref<string>(t("home.button.all_game"));
     const searchDialogShow = ref<boolean>(false);
     const filterTabText = ref<string>("lobby");
+    const gameGroupBtnList = ref<Array<any>>([]);
     const selectedCategoryName = ref<string>("");
 
     const swiper = ref<any>(null);
@@ -1170,7 +1171,7 @@ const Dashboard = defineComponent({
           gameFilterIconColor7.value = "#7782AA";
           filterTabText.value = "lobby";
           break;
-        case t("home.button.favorite"):
+        case "favorite":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#FFFFFF";
           gameFilterIconColor3.value = "#7782AA";
@@ -1181,7 +1182,7 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "favorite";
           break;
-        case t("home.button.recently_played"):
+        case "history":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#FFFFFF";
@@ -1192,7 +1193,7 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "history";
           break;
-        case t("home.button.original_game"):
+        case "original":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -1203,7 +1204,7 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "original";
           break;
-        case t("home.button.pg_soft"):
+        case "pgsoft":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -1212,9 +1213,9 @@ const Dashboard = defineComponent({
           gameFilterIconColor6.value = "#7782AA";
           gameFilterIconColor7.value = "#7782AA";
           filterTabText.value = "paging";
-          selectedCategoryName.value = "PGslot";
+          selectedCategoryName.value = "pgsoft";
           break;
-        case t("home.button.slots"):
+        case "slot":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -1225,7 +1226,7 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "slot";
           break;
-        case t("home.button.live_casino"):
+        case "live":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -1386,6 +1387,30 @@ const Dashboard = defineComponent({
       recordScrollInterval.value = setInterval(() => {
         state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
       }, 600);
+      await dispatchGameCategories("?type=paging");
+      gameGroupBtnList.value = gameCategories.value;
+      gameGroupBtnList.value.map((item) => {
+        switch (item.slug) {
+          case "favorite":
+            item.tranfromFunctionName = "gameTransform2";
+            break;
+          case "history":
+            item.tranfromFunctionName = "gameTransform3";
+            break;
+          case "original":
+            item.tranfromFunctionName = "gameTransform4";
+            break;
+          case "pgsoft":
+            item.tranfromFunctionName = "gameTransform5";
+            break;
+          case "slot":
+            item.tranfromFunctionName = "gameTransform6";
+            break;
+          case "live":
+            item.tranfromFunctionName = "gameTransform7";
+            break;
+        }
+      });
       await dispatchGameCategories(`?type=${filterTabText.value}`);
       allGames.value = gameCategories.value;
       gameCategories.value.map(async (item) => {
@@ -1456,6 +1481,7 @@ const Dashboard = defineComponent({
       selectedCategoryName,
       favoriteIconTransform,
       cancelFavoriteGame,
+      gameGroupBtnList,
     };
   },
 });
@@ -1831,7 +1857,70 @@ export default Dashboard;
                 {{ t("home.button.all_game") }}
               </v-btn>
             </v-slide-group-item>
-            <v-slide-group-item>
+            <v-slide-group-item v-for="(item, index) in gameGroupBtnList" :key="index">
+              <v-btn
+                class="mr-3 text-none"
+                width="136"
+                height="36"
+                :class="
+                  selectedGameFilterBtn == item.slug
+                    ? 'black button-bright'
+                    : 'text-gray btn-211f31'
+                "
+                @click="handleGameFilterBtn(item.slug)"
+              >
+                <inline-svg
+                  :src="item.image"
+                  width="18"
+                  height="18"
+                  style="margin-right: 6px"
+                  :transform-source="gameTransform2"
+                  v-if="item.tranfromFunctionName == 'gameTransform2'"
+                ></inline-svg>
+                <inline-svg
+                  :src="item.image"
+                  width="18"
+                  height="18"
+                  style="margin-right: 6px"
+                  :transform-source="gameTransform3"
+                  v-if="item.tranfromFunctionName == 'gameTransform3'"
+                ></inline-svg>
+                <inline-svg
+                  :src="item.image"
+                  width="18"
+                  height="18"
+                  style="margin-right: 6px"
+                  :transform-source="gameTransform4"
+                  v-if="item.tranfromFunctionName == 'gameTransform4'"
+                ></inline-svg>
+                <inline-svg
+                  :src="item.image"
+                  width="18"
+                  height="18"
+                  style="margin-right: 6px"
+                  :transform-source="gameTransform5"
+                  v-if="item.tranfromFunctionName == 'gameTransform5'"
+                ></inline-svg>
+                <inline-svg
+                  :src="item.image"
+                  width="18"
+                  height="18"
+                  style="margin-right: 6px"
+                  :transform-source="gameTransform6"
+                  v-if="item.tranfromFunctionName == 'gameTransform6'"
+                ></inline-svg>
+                <inline-svg
+                  :src="item.image"
+                  width="18"
+                  height="18"
+                  style="margin-right: 6px"
+                  :transform-source="gameTransform7"
+                  v-if="item.tranfromFunctionName == 'gameTransform7'"
+                ></inline-svg>
+                {{ item.name }}
+              </v-btn>
+            </v-slide-group-item>
+            <!-- <v-slide-group-item>
               <v-btn
                 class="mr-3 text-none"
                 width="112"
@@ -1962,7 +2051,7 @@ export default Dashboard;
                 ></inline-svg>
                 {{ t("home.button.live_casino") }}
               </v-btn>
-            </v-slide-group-item>
+            </v-slide-group-item> -->
           </v-slide-group>
         </template>
       </v-row>
@@ -1992,11 +2081,10 @@ export default Dashboard;
               v-if="gameIndex < 7 * item.page_no"
             >
               <ProgressiveImage
-                :placeholder-src="img_public_42"
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
-                delay="500"
+                delay="2000"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
                 style="max-width: unset"
               />
@@ -2024,10 +2112,9 @@ export default Dashboard;
             >
               <ProgressiveImage
                 :src="gameItem.image"
-                :placeholder-src="img_public_42"
                 lazy-placeholder
                 blur="30"
-                delay="500"
+                delay="2000"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
               />
               <!-- <img
@@ -2053,20 +2140,22 @@ export default Dashboard;
           "
         >
           <div style="width: 100%" class="text-center">
-            <p class="text-700-14 gray text-center" v-if="mobileWidth < 600">
-              {{ t("home.more_text_1") }}
-              <font color="white">{{ 6 * item.page_no }}</font>
-              {{ t("home.more_text_2") }}
-              <font color="white">{{ item.game_count }}</font>
-              {{ t("home.more_text_3") }}
-            </p>
-            <p class="text-700-18 gray text-center" v-else>
-              {{ t("home.more_text_1") }}
-              <font color="white">{{ 7 * item.page_no }}</font>
-              {{ t("home.more_text_2") }}
-              <font color="white">{{ item.game_count }}</font>
-              {{ t("home.more_text_3") }}
-            </p>
+            <template v-if="selectedGameFilterBtn != t('home.button.all_game')">
+              <p class="text-700-14 gray text-center" v-if="mobileWidth < 600">
+                {{ t("home.more_text_1") }}
+                <font color="white">{{ 6 * item.page_no }}</font>
+                {{ t("home.more_text_2") }}
+                <font color="white">{{ item.game_count }}</font>
+                {{ t("home.more_text_3") }}
+              </p>
+              <p class="text-700-18 gray text-center" v-else>
+                {{ t("home.more_text_1") }}
+                <font color="white">{{ 7 * item.page_no }}</font>
+                {{ t("home.more_text_2") }}
+                <font color="white">{{ item.game_count }}</font>
+                {{ t("home.more_text_3") }}
+              </p>
+            </template>
             <v-btn
               class="text-none more-btn-color mt-5 text-center"
               variant="outlined"
@@ -2084,7 +2173,7 @@ export default Dashboard;
         :key="otherIndex"
         v-else
       >
-        <template v-if="otherGameItem.name == selectedCategoryName">
+        <template v-if="otherGameItem.slug == selectedCategoryName">
           <v-row
             class="ml-4 mr-2 mt-2 pt-8"
             v-if="mobileWidth > 600"
@@ -2111,10 +2200,9 @@ export default Dashboard;
               >
                 <ProgressiveImage
                   :src="gameItem.image"
-                  :placeholder-src="img_public_42"
                   lazy-placeholder
                   blur="30"
-                  delay="500"
+                  delay="2000"
                   @click="handleEnterGame(gameItem.id, gameItem.name)"
                 />
                 <div
@@ -2166,10 +2254,9 @@ export default Dashboard;
               >
                 <ProgressiveImage
                   :src="gameItem.image"
-                  :placeholder-src="img_public_42"
                   lazy-placeholder
                   blur="30"
-                  delay="500"
+                  delay="5000"
                   @click="handleEnterGame(gameItem.id, gameItem.name)"
                 />
                 <div
@@ -2212,7 +2299,7 @@ export default Dashboard;
               otherGameItem.games.length > 0
             "
           >
-            <div class="text-center">
+            <div class="text-center" style="width: 100%">
               <p class="text-700-14 gray text-center" v-if="mobileWidth < 600">
                 {{ t("home.more_text_1") }}
                 <font color="white">{{ 6 * otherGameItem.page_no }}</font>
@@ -2721,6 +2808,7 @@ export default Dashboard;
   0% {
     opacity: 0.4;
   }
+
   100% {
     opacity: 1;
   }
@@ -2776,25 +2864,34 @@ export default Dashboard;
   }
 
   .v-progressive-image-loading:before {
-    background: unset;
-  }
-
-  .v-progressive-image-placeholder {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 68px;
-    height: 64px;
-    animation: opacityAnimation 0.8s ease-in infinite;
-    filter: unset;
+    width: 48px;
+    height: 46px;
+    background-image: url("@/assets/public/image/img_public_42.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: opacityAnimation 0.6s ease-in infinite;
   }
 
+  // .v-progressive-image-placeholder {
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   width: 68px;
+  //   height: 64px;
+  //   animation: opacityAnimation 0.6s ease-in infinite;
+  //   filter: unset;
+  // }
+
   @media (max-width: 600px) {
-    .v-progressive-image-placeholder {
-      width: 48px;
-      height: 46px;
-    }
+    // .v-progressive-image-placeholder {
+    //   width: 48px;
+    //   height: 46px;
+    // }
 
     .v-progressive-image {
       border-radius: 8px 32px;
