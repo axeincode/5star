@@ -11,12 +11,14 @@ export const withdrawStore = defineStore({
     errMessage: '' as string,
     withdrawConfig: {} as any,
     withdrawSubmit: {} as any,
+    withdrawHistoryItem: {} as Withdraw.WithdrawalHistoryResponse
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getWithdrawCfg: (state) => state.withdrawConfig,
     getWithdrawSubmit: (state) => state.withdrawSubmit,
+    getWithdrawHistoryItem: (state) => state.withdrawHistoryItem
   },
   actions: {
     // set functions
@@ -31,6 +33,9 @@ export const withdrawStore = defineStore({
     },
     setWithdrawSubmit(withdrawSubmit: any) {
       this.withdrawSubmit = withdrawSubmit;
+    },
+    setWithdrawHistoryItem(withdrawHistoryItem: Withdraw.WithdrawalHistoryResponse) {
+      this.withdrawHistoryItem = withdrawHistoryItem
     },
     // user withdraw configuration
     async dispatchUserWithdrawCfg() {
@@ -64,5 +69,36 @@ export const withdrawStore = defineStore({
       }
       await network.sendMsg(route, data, next, 1);
     },
+    // user withdrawal history api response
+    async dispatchWithdrawalHistory(data: any) {
+      this.setSuccess(false);
+      const route: string = NETWORK.WITHDRAW_PAGE.WITHDRAWAL_HISTORY;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Withdraw.GetWithdrawalHistoryResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setWithdrawHistoryItem(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
+    // user withdrawal history api response
+    async dispatchWithdrawalRefund(data: any) {
+      this.setSuccess(false);
+      const route: string = NETWORK.WITHDRAW_PAGE.WITHDRAWAL_REFUND;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Withdraw.GetWithdrawalHistoryResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    }
   }
 })

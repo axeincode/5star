@@ -616,6 +616,8 @@ const Dashboard = defineComponent({
     const winnerCheckboxColor = ref<string>("#ffffff");
     const prizeCheckboxColor = ref<string>("#7782AA");
 
+    const whiteColor = ref<string>("#ffffff");
+
     const gameFilterIconColor1 = ref<string>("#ffffff");
     const gameFilterIconColor2 = ref<string>("#7782AA");
     const gameFilterIconColor3 = ref<string>("#7782AA");
@@ -629,6 +631,8 @@ const Dashboard = defineComponent({
     const currentPage = ref<number>(1);
     const moreGameCurrentPage = ref<number>(1);
     const limit = ref<number>(8);
+
+    const moreLoading = ref<boolean>(false);
 
     const refferalAppBarShow = computed(() => {
       const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -1135,6 +1139,21 @@ const Dashboard = defineComponent({
       return el;
     };
 
+    const iconTransform = (el: any) => {
+      for (let node of el.children) {
+        node.setAttribute("fill", whiteColor.value);
+        for (let subNode of node.children) {
+          subNode.setAttribute("fill", whiteColor.value);
+        }
+      }
+      return el;
+    };
+
+    const pgIconTransform = (el: any) => {
+      el.children[0].setAttribute("fill", whiteColor.value);
+      return el;
+    };
+
     const goToPrev = () => {
       swiper.value.slidePrev();
     };
@@ -1288,6 +1307,7 @@ const Dashboard = defineComponent({
     const handleMoreGame = async (slug: string, page_no: number) => {
       let new_page_no = page_no + 1;
       moreGameCurrentPage.value += 1;
+      moreLoading.value = true;
       if (slug == "favorite" || slug == "history") {
         await dispatchUserGame({
           game_categories_slug: selectedCategoryName.value,
@@ -1304,6 +1324,7 @@ const Dashboard = defineComponent({
             limit.value
         );
       }
+      moreLoading.value = false;
       gameSearchList.value.list.map((item) => {
         item.image = state.testGames[Math.floor(Math.random() * 28)];
       });
@@ -1482,6 +1503,9 @@ const Dashboard = defineComponent({
       favoriteIconTransform,
       cancelFavoriteGame,
       gameGroupBtnList,
+      iconTransform,
+      pgIconTransform,
+      moreLoading,
     };
   },
 });
@@ -2063,10 +2087,28 @@ export default Dashboard;
         v-if="selectedGameFilterBtn == t('home.button.all_game')"
       >
         <v-row
-          class="ml-4 mb-1 original_game_text"
+          class="ml-4 mb-1 original_game_text align-center"
           :class="mobileWidth > 600 ? ' mt-12' : ' mt-10'"
           v-if="item.games.length > 0"
         >
+          <inline-svg
+            :src="item.image"
+            width="18"
+            height="18"
+            style="margin-right: 6px"
+            :transform-source="iconTransform"
+            v-if="item.slug != 'pgsoft'"
+          >
+          </inline-svg>
+          <inline-svg
+            :src="item.image"
+            width="18"
+            height="18"
+            style="margin-right: 6px"
+            :transform-source="pgIconTransform"
+            v-else
+          >
+          </inline-svg>
           {{ item.name }}
         </v-row>
         <v-row class="ml-4 mr-2 mt-2 mb-0" v-if="mobileWidth > 600">
@@ -2084,7 +2126,6 @@ export default Dashboard;
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
-                delay="2000"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
                 style="max-width: unset"
               />
@@ -2114,7 +2155,6 @@ export default Dashboard;
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
-                delay="2000"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
               />
               <!-- <img
@@ -2163,7 +2203,12 @@ export default Dashboard;
               :height="mobileWidth < 600 ? 41 : 48"
               @click="handleMoreGame(item.slug, item.page_no)"
             >
-              {{ t("home.more") }}
+              <div v-if="!moreLoading">{{ t("home.more") }}</div>
+              <div class="loading-body" v-else>
+                <div class="dot-0"></div>
+                <div class="dot-1"></div>
+                <div class="dot-0"></div>
+              </div>
             </v-btn>
           </div>
         </v-row>
@@ -2202,7 +2247,6 @@ export default Dashboard;
                   :src="gameItem.image"
                   lazy-placeholder
                   blur="30"
-                  delay="2000"
                   @click="handleEnterGame(gameItem.id, gameItem.name)"
                 />
                 <div
@@ -2256,7 +2300,6 @@ export default Dashboard;
                   :src="gameItem.image"
                   lazy-placeholder
                   blur="30"
-                  delay="5000"
                   @click="handleEnterGame(gameItem.id, gameItem.name)"
                 />
                 <div
@@ -2321,7 +2364,12 @@ export default Dashboard;
                 :height="mobileWidth < 600 ? 41 : 48"
                 @click="handleMoreGame(otherGameItem.slug, otherGameItem.page_no)"
               >
-                {{ t("home.more") }}
+                <div v-if="!moreLoading">{{ t("home.more") }}</div>
+                <div class="loading-body" v-else>
+                  <div class="dot-0"></div>
+                  <div class="dot-1"></div>
+                  <div class="dot-0"></div>
+                </div>
               </v-btn>
             </div>
           </v-row>
@@ -2809,6 +2857,22 @@ export default Dashboard;
     opacity: 0.4;
   }
 
+  20% {
+    opacity: 0.5;
+  }
+
+  40% {
+    opacity: 0.6;
+  }
+
+  60% {
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 0.9;
+  }
+
   100% {
     opacity: 1;
   }
@@ -2816,6 +2880,35 @@ export default Dashboard;
 
 .v-progressive-image-main {
   width: 100%;
+}
+
+.more-btn-color {
+  .loading-body {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .dot-0 {
+      width: 10px;
+      height: 10px;
+      background: #12ff76;
+      border-radius: 10px;
+      margin: 0px 4px;
+      animation: expandAnimation 0.6s 0.1s ease-in infinite;
+    }
+
+    .dot-1 {
+      width: 16px;
+      height: 16px;
+      background: #12ff76;
+      border-radius: 16px;
+      margin: 0px 4px;
+      animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+    }
+  }
 }
 
 .home-favorite-icon {

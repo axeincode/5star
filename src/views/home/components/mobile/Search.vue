@@ -31,7 +31,7 @@ const page_no = ref<number>(1);
 const currentPage = ref<number>(1);
 const moreCurrentPage = ref<number>(1);
 const limit = ref<number>(4);
-
+const moreLoading = ref<boolean>(false);
 const swiper = ref<any>(null);
 
 const modules = [Pagination];
@@ -162,6 +162,7 @@ const handleResize = () => {
 };
 
 const handleMoreGame = async () => {
+  moreLoading.value = true;
   page_no.value += 1;
   moreCurrentPage.value += 1;
   if (searchText.value.length >= 3) {
@@ -169,6 +170,7 @@ const handleMoreGame = async () => {
     await dispatchGameSearch(
       `?search=${searchText.value}&page=${moreCurrentPage.value}&limit=${limit.value}`
     );
+    moreLoading.value = false;
     searchLoading.value = false;
     if (success.value) {
       searchedGameList.value = [...searchedGameList.value, ...gameSearchList.value.list];
@@ -362,7 +364,6 @@ onMounted(async () => {
                 lazy-placeholder
                 :placeholder-src="img_public_42"
                 blur="30"
-                delay="1000"
                 @click="handleEnterGame(item.id, item.name)"
               />
             </v-col>
@@ -380,7 +381,12 @@ onMounted(async () => {
             v-if="searchedGameCount > 3 && searchedGameCount > 3 * page_no"
             @click="handleMoreGame()"
           >
-            {{ t("home.more") }}
+            <div v-if="!moreLoading">{{ t("home.more") }}</div>
+            <div class="loading-body" v-else>
+              <div class="dot-0"></div>
+              <div class="dot-1"></div>
+              <div class="dot-0"></div>
+            </div>
           </v-btn>
         </v-row>
       </div>
@@ -556,6 +562,35 @@ onMounted(async () => {
     font-style: normal;
     font-weight: 400 !important;
     line-height: normal;
+  }
+
+  .more-btn-color {
+    .loading-body {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .dot-0 {
+        width: 10px;
+        height: 10px;
+        background: #12ff76;
+        border-radius: 10px;
+        margin: 0px 4px;
+        animation: expandAnimation 0.6s 0.1s ease-in infinite;
+      }
+
+      .dot-1 {
+        width: 16px;
+        height: 16px;
+        background: #12ff76;
+        border-radius: 16px;
+        margin: 0px 4px;
+        animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+      }
+    }
   }
 
   .m-search-loading-container {

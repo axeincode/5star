@@ -17,6 +17,7 @@ export const depositStore = defineStore({
     depositSubmit: {} as any,
     pixInfo: {} as Deposit.GetPixInfo,
     pixInfoToggle: false as boolean,
+    depositHistoryItem: {} as Deposit.DepositHistoryResponse
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -24,7 +25,8 @@ export const depositStore = defineStore({
     getDepositCfg: (state) => state.depositConfig,
     getDepositSubmit: (state) => state.depositSubmit,
     getPixInfo: (state) => state.pixInfo,
-    getPixInfoToggle: (state) => state.pixInfoToggle
+    getPixInfoToggle: (state) => state.pixInfoToggle,
+    getDepositHistoryItem: (state) => state.depositHistoryItem
   },
   actions: {
     // set functions
@@ -45,6 +47,9 @@ export const depositStore = defineStore({
     },
     setPixInfoToggle(pixInfoToggle: boolean) {
       this.pixInfoToggle = pixInfoToggle
+    },
+    setDepositHistoryItem(depositHistoryItem: Deposit.DepositHistoryResponse) {
+      this.depositHistoryItem = depositHistoryItem
     },
     // user deposit configuration
     async dispatchUserDepositCfg() {
@@ -72,6 +77,22 @@ export const depositStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
           this.setDepositSubmit(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
+    // user deposit configuration
+    async dispatchUserDepositHistory(data: any) {
+      this.setSuccess(false);
+      const route: string = NETWORK.DEPOSIT_PAGE.DEPOSIT_HISTORY;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Deposit.GetDepositHistoryResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setDepositHistoryItem(response.data);
         } else {
           this.setErrorMessage(handleException(response.code));
         }

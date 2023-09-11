@@ -33,8 +33,28 @@ export interface DepositItem {
     amount: string | number
 }
 
+export interface DepositHistoryItem {
+    id: number
+    created_at: number
+    type: string
+    amount: string
+    status: number
+    note: string
+}
+
+export interface DepositHistoryResponse {
+    total_pages: number
+    record: Array<DepositHistoryItem>
+}
+
 export interface SubmitDepositResponse {
     code: number
     data: any
+    message: string
+}
+
+export type GetDepositHistoryResponse = {
+    code: number
+    data: DepositHistoryResponse
     message: string
 }

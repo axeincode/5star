@@ -27,12 +27,15 @@ export namespace NETWORK {
   export class DEPOSIT_PAGE {
     static DEPOSIT_CONFIG = '/user/depositcfg'; // get user deposit configuration
     static DEPOSIT_SUBMIT = '/user/depositsubmit'; // user deposit submit
+    static DEPOSIT_HISTORY = '/user/deposithistory'; // user deposit history
   }
 
   // withdraw api
   export class WITHDRAW_PAGE {
     static WITHDRAWAL_CONFIG = '/user/withdrawalcfg'; // get user withdraw configuration
     static WITHDRAWAL_SUBMIT = '/user/withdrawalsubmit'; // user withdraw submit
+    static WITHDRAWAL_HISTORY = '/user/withdrawalhistory'; // withdrawal history
+    static WITHDRAWAL_REFUND = '/user/withdrawalrefund'; // withdrawal history
   }
 
   // invite api
