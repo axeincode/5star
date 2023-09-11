@@ -48,7 +48,7 @@ const confirmDailogShow = () => {
             {{ t('account.suspend_account.help_text') }}
         </v-row>
         <v-row class="mx-4 mt-10">
-            <v-text-field :label="t('account.suspend_account.duration_text')" class="form-textfield dark-textfield"
+            <v-text-field :label="t('account.suspend_account.duration_text')" class="form-textfield dark-textfield m-account-suspend-text"
                 variant="solo" density="comfortable" v-model="suspendDate" />
         </v-row>
         <v-row class="mx-6 mt-2 text-400-12 text-gray justify-center">
@@ -106,5 +106,29 @@ const confirmDailogShow = () => {
 
     // top: -20px !important;
 
+}
+
+.m-account-suspend-text {
+    transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
 }
 </style>

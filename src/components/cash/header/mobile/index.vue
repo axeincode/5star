@@ -698,7 +698,7 @@ onMounted(() => {
     .v-field__field {
       .v-label.v-field-label {
         font-family: "Inter";
-        font-size: 10px !important;
+        font-size: 12px !important;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
@@ -731,7 +731,7 @@ onMounted(() => {
     z-index: 1000000000 !important;
     top: 70px !important;
     right: 0px !important;
-    width: 290px !important;
+    width: 330px !important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;

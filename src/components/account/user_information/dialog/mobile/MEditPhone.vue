@@ -97,7 +97,7 @@ const updatePhone = async () => {
 <template>
     <div class="user-container">
         <v-row class="mt-10 relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
-            <v-text-field :label="t('account.item.phone_text')" class="form-textfield dark-textfield" variant="solo"
+            <v-text-field :label="t('account.item.phone_text')" class="form-textfield dark-textfield m-account-edit-phone" variant="solo"
                 density="comfortable" v-model="phone" />
         </v-row>
         <v-row class="mt-10" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
@@ -123,6 +123,29 @@ const updatePhone = async () => {
     .v-btn--disabled {
         background-color: #353652 !important;
         color: white !important;
+    }
+}
+.m-account-edit-phone {
+    transform-origin: top !important;
+
+    .v-field__field {
+        .v-label.v-field-label {
+            font-family: "Inter";
+            font-size: 12px !important;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            color: #7782aa !important;
+            opacity: 1 !important;
+        }
+
+        .v-label.v-field-label--floating {
+            --v-field-label-scale: 0.75em;
+            font-size: 10px !important;
+            max-width: 100%;
+            color: #7782aa !important;
+            opacity: 1 !important;
+        }
     }
 }
 </style>

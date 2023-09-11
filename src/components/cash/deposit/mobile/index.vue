@@ -718,7 +718,7 @@ onMounted(async () => {
     <v-row class="mt-4 mx-1 relative">
       <v-text-field
         :label="`${t('deposit_dialog.amount')}(${selectedCurrencyItem.name})`"
-        class="form-textfield dark-textfield"
+        class="form-textfield dark-textfield m-deposit-amount-text"
         variant="solo"
         density="comfortable"
         color="#7782AA"
@@ -1003,5 +1003,29 @@ onMounted(async () => {
 
 .v-dialog--persistent .v-dialog__content {
   transform: none !important;
+}
+
+.m-deposit-amount-text{
+  transform-origin: top !important;
+
+  .v-field__field {
+    .v-label.v-field-label {
+      font-family: "Inter";
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+
+    .v-label.v-field-label--floating {
+      --v-field-label-scale: 0.75em;
+      font-size: 10px !important;
+      max-width: 100%;
+      color: #7782aa !important;
+      opacity: 1 !important;
+    }
+  }
 }
 </style>

@@ -227,7 +227,7 @@ const submitNickName = async () => {
         z-index: 1000000000 !important;
         top: 70px !important;
         right: 0px !important;
-        width: 290px!important;
+        width: 330px !important;
         height: 60px;
         border: none;
         border-radius: 16px 0px 0px 16px;
@@ -269,7 +269,7 @@ const submitNickName = async () => {
     z-index: 1000000000 !important;
     top: 70px !important;
     right: 0px !important;
-    width: 290px!important;
+    width: 330px !important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;

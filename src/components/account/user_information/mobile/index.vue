@@ -124,7 +124,7 @@ const handleVerifyCode = () => {
         <v-row class="mx-3 mt-6">
             <v-col cols="12" class="pa-0">
                 <v-card color="#1C1929" theme="dark" class="m-user-info-item">
-                    <v-list-item style="height: 100%;">
+                    <v-list-item style="height: 100%; top:-3px!important;">
                         <v-list-item-title class="ml-2" style="line-height: 18px;">
                             <div class="text-400-10 text-gray">{{ t('account.item.nick_name_text') }}</div>
                             <div class="text-600-12">{{ userInfo.name }}</div>
@@ -141,7 +141,7 @@ const handleVerifyCode = () => {
         <v-row class="mx-3 mt-8">
             <v-col cols="12" class="pa-0">
                 <v-card color="#1C1929" theme="dark" class="m-user-info-item">
-                    <v-list-item style="height: 100%;">
+                    <v-list-item style="height: 100%; top:-3px!important;">
                         <v-list-item-title class="ml-2" style="line-height: 18px;">
                             <div class="text-400-10 text-gray">{{ t('account.item.email_text') }}</div>
                             <div class="text-600-12">{{ userInfo.email }}</div>
@@ -166,7 +166,7 @@ const handleVerifyCode = () => {
         <v-row class="mx-3 mt-8">
             <v-col cols="12" class="pa-0">
                 <v-card color="#1C1929" theme="dark" class="m-user-info-item">
-                    <v-list-item style="height: 100%;">
+                    <v-list-item style="height: 100%; top:-3px!important;">
                         <v-list-item-title class="ml-2" style="line-height: 18px;">
                             <div class="text-400-10 text-gray">{{ t('account.item.current_pwd_text') }}</div>
                             <div class="text-600-12 user-pwd-spacing">***************</div>
@@ -186,7 +186,7 @@ const handleVerifyCode = () => {
                     <v-row>
                         <v-col cols="4" lg="3">
                             <v-card color="#1C1929" theme="dark" class="m-user-info-item">
-                                <v-list-item :value="t('account.item.area_text')" class="text-center" style="height: 100%;">
+                                <v-list-item :value="t('account.item.area_text')" class="text-center" style="height: 100%; top:-3px!important;">
                                     <v-list-item-title style="line-height: 18px;">
                                         <div class="text-400-10 text-gray">
                                             {{ t('account.item.area_text') }}
@@ -202,7 +202,7 @@ const handleVerifyCode = () => {
                         </v-col>
                         <v-col cols="8" lg="9" class="pl-0">
                             <v-card color="#1C1929" theme="dark" class="m-user-info-item">
-                                <v-list-item style="height: 100%;">
+                                <v-list-item style="height: 100%; top:-3px!important;">
                                     <v-list-item-title class="ml-2">
                                         <div class="text-600-12 text-gray">{{ userInfo.phone }}</div>
                                     </v-list-item-title>
@@ -291,5 +291,46 @@ const handleVerifyCode = () => {
         line-height: 17px;
         color: #6842EC;
     }
+}
+
+
+.Vue-Toastification__container {
+  right: 0!important;
+  left: unset!important;;
+  width: 290px!important;
+  margin-right: 37px;
+  height: 60px!important;
+  //flex-direction: unset!important;
+}
+.Vue-Toastification__toast {
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px !important;
+    right: 0px !important;
+    width: 330px !important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #181522);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+}
+
+.Vue-Toastification__toast-body {
+  color: var(--sec-text, #7782aa);
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
+}
+
+.Vue-Toastification__close-button{
+  top: 22px !important;
+  background-image: url("@/assets/public/svg/icon_public_52.svg");
+  background-repeat: no-repeat;
+  background-size: 18px;
+  color: transparent;
+  opacity: 1;
 }
 </style>
