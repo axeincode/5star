@@ -1375,7 +1375,7 @@ const Dashboard = defineComponent({
 
       // Display the image in your Vue component
       // Assuming you have a `data` property called `cachedImageUrl`
-      console.log(URL.createObjectURL(blob));
+      // console.log(URL.createObjectURL(blob));
     };
 
     // Function to fetch images from cache
@@ -1393,7 +1393,7 @@ const Dashboard = defineComponent({
         }
       }
 
-      console.log(imageUrls);
+      return imageUrls;
     };
 
     watch(searchDialogShow, (value) => {
@@ -1401,6 +1401,9 @@ const Dashboard = defineComponent({
     });
 
     onMounted(async () => {
+      state.testGames.map(async (url) => {
+        await loadImageAndCache(url);
+      });
       // startLuckyScrollingInterval();
       // startRecordScrollingInterval();
       window.scrollTo({
@@ -1446,9 +1449,13 @@ const Dashboard = defineComponent({
             limit.value
         );
         if (gameSearchList.value.list.length > 0) {
-          gameSearchList.value.list.map((item) => {
-            item.image = state.testGames[Math.floor(Math.random() * 28)];
-          });
+          await Promise.all(
+            gameSearchList.value.list.map(async (item) => {
+              // item.image = state.testGames[Math.floor(Math.random() * 28)];
+              let images: any = await fetchCachedImages();
+              item.image = images[Math.floor(Math.random() * 28)];
+            })
+          );
         }
         item.page_no = 1;
         item.games = gameSearchList.value.list;
@@ -2964,6 +2971,7 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
+    height: 160px;
   }
 
   .v-progressive-image-loading:before {
