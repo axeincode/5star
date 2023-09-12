@@ -2220,12 +2220,12 @@ export default Dashboard;
               :height="mobileWidth < 600 ? 41 : 48"
               @click="handleMoreGame(item.slug, item.page_no, index)"
             >
-              <div v-if="!moreLoading">{{ t("home.more") }}</div>
               <div class="loading-body" v-if="moreLoading && index == moreIndex">
                 <div class="dot-0"></div>
                 <div class="dot-1"></div>
                 <div class="dot-0"></div>
               </div>
+              <div v-else>{{ t("home.more") }}</div>
             </v-btn>
           </div>
         </v-row>
