@@ -67,6 +67,7 @@ const MSignup = defineComponent({
         password: "",
         promoCode: "",
         isAgreed: false,
+        visible: false,
       },
       userName: "",
       isShowPassword: false,
@@ -251,6 +252,33 @@ const MSignup = defineComponent({
       // emit("close");
       // setNickNameDialogVisible(true);
 
+      if (!validateEmail()) {
+        state.isShowEmailValidaton = true;
+        return;
+      }
+
+      if (!validatePassword()) {
+        state.isShowPasswordValidation = true;
+        return;
+      }
+
+      if (!state.formData.isAgreed) {
+        const toast = useToast();
+        toast.success(t("signup.formPage.agree_alert_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
+        });
+        return;
+      }
+
       state.loading = true;
       await dispatchSignUp({
         uid: state.formData.emailAddress,
@@ -267,25 +295,22 @@ const MSignup = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
-        
-        setTimeout(() => {
-          setSignUpForm(false);
-          emit("close");
-          setNickNameDialogVisible(true);
-          const toast = useToast();
-          toast.success( t("signup.submit_result.success_text"), { 
-              timeout: 3000,
-              closeOnClick: false,
-              pauseOnFocusLoss: false,
-              pauseOnHover: false,
-              draggable: false,
-              showCloseButtonOnHover: false,
-              hideProgressBar: true,
-              closeButton: "button",
-              icon: SuccessIcon,
-              rtl: false,
-          });
-        }, 500);
+        setSignUpForm(false);
+        emit("close");
+        setNickNameDialogVisible(true);
+        const toast = useToast();
+        toast.success(t("signup.submit_result.success_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
+        });
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_18.svg",
@@ -297,17 +322,17 @@ const MSignup = defineComponent({
           state.currentPage = state.PAGE_TYPE.ALREADY_REGISTERED;
         } else {
           const toast = useToast();
-          toast.success( errMessage.value, { 
-              timeout: 3000,
-              closeOnClick: false,
-              pauseOnFocusLoss: false,
-              pauseOnHover: false,
-              draggable: false,
-              showCloseButtonOnHover: false,
-              hideProgressBar: true,
-              closeButton: "button",
-              icon: WarningIcon,
-              rtl: false,
+          toast.success(errMessage.value, {
+            timeout: 3000,
+            closeOnClick: false,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            draggable: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: WarningIcon,
+            rtl: false,
           });
         }
         // state.notificationShow = !state.notificationShow;
@@ -585,11 +610,11 @@ export default MSignup;
         </div>
         <v-row>
           <v-btn
-            class="mt-8 mx-3 m-signup-btn"
+            class="mt-8 mx-3"
+            :class="isFormDataReady ? 'm-signup-btn' : 'm-signup-disabled-btn'"
             width="-webkit-fill-available"
             height="48px"
             :loading="loading"
-            :disabled="!isFormDataReady"
             :onclick="handleSignupFormSubmit"
           >
             {{ t("signup.formPage.button") }}
@@ -805,7 +830,7 @@ export default MSignup;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: var(--v-field-label-scale);
       max-width: 100%;
     }
@@ -878,11 +903,6 @@ export default MSignup;
   transition: height 0.3s ease-out;
 }
 
-.m-signup-btn:disabled {
-  background: #353652;
-  cursor: default;
-}
-
 .m-signup-btn {
   background: #32cfec;
 
@@ -898,6 +918,22 @@ export default MSignup;
 
 .m-signup-btn:hover:enabled {
   background: #0cb6fa;
+}
+
+.m-signup-disabled-btn {
+  border-radius: 12px;
+  background: var(--Secondary-Button, #353652);
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+  .v-btn__content {
+    color: #ffffff;
+    text-align: center;
+    font-family: "Inter";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
 }
 
 .m-disable-password {
@@ -1067,7 +1103,7 @@ export default MSignup;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;
@@ -1091,7 +1127,7 @@ export default MSignup;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;
@@ -1115,7 +1151,7 @@ export default MSignup;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;

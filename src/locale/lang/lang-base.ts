@@ -54,6 +54,7 @@ export type langType = {
         bold: string,
         suffix: string,
       },
+      agree_alert_text: string
       alreadyAccount: string,
       signIn: string,
       button: string,

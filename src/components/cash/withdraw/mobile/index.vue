@@ -741,15 +741,13 @@ onMounted(async () => {
 .deposit-bg-blur {
   filter: blur(3px);
   -webkit-filter: blur(3px);
-  // filter: saturate(180%) blur(3px);
-  // -webkit-filter: saturate(180%) blur(3px);
 }
 
 .v-dialog--persistent .v-dialog__content {
   transform: none !important;
 }
 
-.m-withdraw-amount-text{
+.m-withdraw-amount-text {
   transform-origin: top !important;
 
   .v-field__field {
@@ -764,7 +762,7 @@ onMounted(async () => {
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;
@@ -772,5 +770,4 @@ onMounted(async () => {
     }
   }
 }
-
 </style>

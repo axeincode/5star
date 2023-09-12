@@ -696,7 +696,7 @@ export default Login;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;
@@ -720,7 +720,7 @@ export default Login;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;
@@ -744,7 +744,7 @@ export default Login;
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;

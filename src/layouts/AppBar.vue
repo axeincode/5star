@@ -1414,9 +1414,9 @@ onMounted(async () => {
 }
 
 .header-bg-blur {
-  // filter: blur(3px);
-  // -webkit-filter: blur(3px);
-  filter: saturate(180%) blur(3px);
-  -webkit-filter: saturate(180%) blur(3px);
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  // filter: saturate(180%) blur(3px);
+  // -webkit-filter: saturate(180%) blur(3px);
 }
 </style>

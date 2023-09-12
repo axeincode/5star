@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import ValidationBox from "@/components/Signup/ValidationBox.vue";
 import { storeToRefs } from "pinia";
@@ -10,6 +10,14 @@ import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 import img_public_42 from "@/assets/public/image/img_public_42.png";
 import { ProgressiveImage } from "vue-progressive-image";
+import { Swiper, SwiperSlide } from "swiper/vue";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+// import Swiper core and required modules
+import { Pagination } from "swiper/modules";
+
+const modules = [Pagination];
 
 const { t } = useI18n();
 const emit = defineEmits<{ (e: "close"): void }>();
@@ -34,6 +42,7 @@ const userNameValidationStrList = ref<Array<string>>([
   t("signup.displayNamePage.validation.username.items[0]"),
   t("signup.displayNamePage.validation.username.items[1]"),
 ]);
+const swiper = ref<any>(null);
 
 const closeDialog = () => {
   emit("close");
@@ -78,6 +87,18 @@ const handleOnUserNameInputBlur = (): void => {
   isShowUsernameValidation.value = false;
 };
 
+const goToPrev = () => {
+  swiper.value.slidePrev();
+};
+
+const goToNext = () => {
+  swiper.value.slideNext();
+};
+
+const getSwiperRef = (swiperInstance: any) => {
+  swiper.value = swiperInstance;
+};
+
 const submitNickName = async () => {
   await dispatchUpdateUserInfo({
     name: userName.value,
@@ -115,8 +136,10 @@ const submitNickName = async () => {
   }
 };
 
-watch(selectedAvatarItem, (value) => {
-  console.log(value);
+onMounted(() => {
+  swiper.value.on("slideChange", () => {
+    selectedAvatarItem.value = swiper.value.activeIndex;
+  });
 });
 </script>
 
@@ -125,48 +148,34 @@ watch(selectedAvatarItem, (value) => {
     <img src="@/assets/public/image/bg_public_05.png" class="m-header-img" />
     <img src="@/assets/public/image/bg_public_01.png" class="m-body-img" />
     <div class="m-nickname-circle"></div>
-    <div class="m-nickname-carousel-container mt-4">
-      <v-carousel
-        height="400"
-        show-arrows
-        hide-delimiters
-        class="carousel"
+    <div class="m-nickname-swiper-container mt-10">
+      <Swiper
         v-model="selectedAvatarItem"
+        :modules="modules"
+        class="mx-80"
+        style="height: 130px"
+        :loop="true"
+        @swiper="getSwiperRef"
       >
-        <template v-slot:prev="{ props }">
-          <v-btn
-            class="m-nickname-carousel-btn ma-2"
-            variant="text"
-            icon="mdi-chevron-left"
-            @click="props.onClick"
-          ></v-btn>
-        </template>
-        <template v-slot:next="{ props }">
-          <v-btn
-            class="m-nickname-carousel-btn ma-2"
-            variant="text"
-            icon="mdi-chevron-right"
-            @click="props.onClick"
-          ></v-btn>
-        </template>
-        <v-carousel-item class="m-signup-displayname-img" v-for="(slide, i) in slides" :key="i">
+        <SwiperSlide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
           <ProgressiveImage
-            :placeholder-src="img_public_42"
             :src="slide"
             blur="30"
-            style="margin-top: 20px; background: transparent; border-radius: 80px;"
             custom-class="m-signup-displayname-img"
           />
-          <!-- <img :src="slide" width="123" style="margin-top: 20px" /> -->
-        </v-carousel-item>
-      </v-carousel>
+        </SwiperSlide>
+      </Swiper>
+    </div>
+    <div class="m-nickname-avatar-btn">
+      <div class="swiper-button-next" slot="button-next" @click="goToNext"></div>
+      <div class="swiper-button-prev" slot="button-prev" @click="goToPrev"></div>
     </div>
     <div class="m-nickname-displayname">
       <p class="text-700-16 white full-width center">
         {{ t("signup.displayNamePage.title") }}
       </p>
     </div>
-    <div class="mx-5 mt-2 relative m-display-name-input">
+    <div class="mx-5 mt-16 relative m-display-name-input">
       <v-text-field
         :label="t('signup.displayNamePage.username')"
         class="form-textfield dark-textfield ma-0 m-signup-displayname"
@@ -211,6 +220,56 @@ watch(selectedAvatarItem, (value) => {
   width: 320px;
   height: 471px;
 
+  .swiper-slide {
+    text-align: center;
+  }
+
+  .m-nickname-avatar-btn {
+    position: absolute;
+    top: 112px;
+    left: 63%;
+    z-index: 2000;
+
+    .swiper-button-next {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      right: -63px;
+      top: 0px;
+    }
+
+    .swiper-button-next:active {
+      transform: scale(0.9);
+      filter: brightness(80%);
+      transition-duration: 0.28s;
+    }
+
+    .swiper-button-prev:active {
+      transform: scale(0.9);
+      filter: brightness(80%);
+      transition-duration: 0.28s;
+    }
+
+    .swiper-button-prev {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      left: -146px;
+      top: 0px;
+    }
+
+    .swiper-button-prev:after,
+    .swiper-button-next:after {
+      font-family: swiper-icons;
+      text-transform: none !important;
+      letter-spacing: 0;
+      font-variant: initial;
+      font-size: 10px;
+      font-weight: 900;
+      color: white;
+    }
+  }
+
   .m-header-img {
     position: absolute;
     top: 0px;
@@ -250,12 +309,14 @@ watch(selectedAvatarItem, (value) => {
   }
 
   .m-nickname-displayname {
-    position: absolute;
     width: 320px;
-    top: 190px;
+    position: absolute;
+    top: 176px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1;
   }
+
   .m-display-name-input {
     .form-textfield div.v-field__field {
       box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
@@ -283,7 +344,7 @@ watch(selectedAvatarItem, (value) => {
     }
 
     .v-label.v-field-label--floating {
-      --v-field-label-scale: 0.75em;
+      --v-field-label-scale: 0.88em;
       font-size: 10px !important;
       max-width: 100%;
       color: #7782aa !important;
@@ -291,12 +352,13 @@ watch(selectedAvatarItem, (value) => {
     }
   }
 }
+
+.v-progressive-image {
+  background: transparent !important;
+}
+
 .m-signup-displayname-img {
-  // width: 80px!important;
-  // height: 80px!important;
-  .v-progressive-image-placeholder {
-    width: 60px;
-    height: 60px;
-  }
+  width: 123px !important;
+  height: 123px !important;
 }
 </style>

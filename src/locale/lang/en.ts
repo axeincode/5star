@@ -56,6 +56,7 @@ export const lang: langType = {
         bold: "User Agreement & confirm ",
         suffix: "I am at least 18 years old",
       },
+      agree_alert_text: "Agree to follow the terms",
       alreadyAccount: "Already have an account? ",
       signIn: "Sign in",
       button: "Sign up",
