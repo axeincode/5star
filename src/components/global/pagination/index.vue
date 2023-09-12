@@ -5,6 +5,8 @@ import { useDisplay } from "vuetify";
 
 const props = defineProps<{ length: number }>();
 
+const emit = defineEmits<{ (e: "handlePrev"): void; (e: "handleNext"): void }>();
+
 const { length } = toRefs(props);
 
 const pageNo = ref(1);
@@ -15,6 +17,14 @@ const totalVisible = ref<number>(3);
 const mobileWidth = computed(() => {
   return width.value;
 });
+
+const handlePrev = () => {
+  emit("handlePrev");
+};
+
+const handleNext = () => {
+  emit("handleNext");
+};
 
 onMounted(() => {
   if (mobileWidth.value > 600) {
@@ -28,6 +38,8 @@ onMounted(() => {
   <v-pagination
     v-model="pageNo"
     :length="length"
+    @next="handleNext"
+    @prev="handlePrev"
     :total-visible="totalVisible"
     rounded="circle"
   ></v-pagination>

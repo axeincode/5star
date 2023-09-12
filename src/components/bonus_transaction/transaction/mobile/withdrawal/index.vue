@@ -76,8 +76,22 @@ const refundWithdrawalSubmit = async (id: number, index: number) => {
     }
 }
 
+const handleNext = async () => {
+    await dispatchWithdrawalHistory({
+      page_size: pageSize.value,
+      start_time: withdrawHistoryItem.value.record[0].created_at,
+    });
+}
+
+const handlePrev = async () => {
+    await dispatchWithdrawalHistory({
+      page_size: pageSize.value,
+      end_time: withdrawHistoryItem.value.record[withdrawHistoryItem.value.record.length - 1].created_at,
+    });
+}
+
 watch(withdrawHistoryItem, (value) => {
-    paginationLength.value = Math.ceil(value.total_pages / pageSize.value)
+    paginationLength.value = withdrawHistoryItem.value.total_pages
 })
 
 onMounted(async () => { });
@@ -241,7 +255,11 @@ onMounted(async () => { });
     </v-col>
     <v-col cols="8" class="d-flex" style="padding-right: 6px">
       <div style="width: 100%">
-        <Pagination :length="paginationLength" />
+        <Pagination
+          :length="paginationLength"
+          @handlePrev="handlePrev"
+          @handleNext="handleNext"
+        />
       </div>
     </v-col>
   </v-row>
