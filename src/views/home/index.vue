@@ -1401,9 +1401,11 @@ const Dashboard = defineComponent({
     });
 
     onMounted(async () => {
-      state.testGames.map(async (url) => {
-        await loadImageAndCache(url);
-      });
+      await Promise.all(
+        state.testGames.map(async (url) => {
+          await loadImageAndCache(url);
+        })
+      );
       // startLuckyScrollingInterval();
       // startRecordScrollingInterval();
       window.scrollTo({
@@ -1439,27 +1441,29 @@ const Dashboard = defineComponent({
       });
       await dispatchGameCategories(`?type=${filterTabText.value}`);
       allGames.value = gameCategories.value;
-      gameCategories.value.map(async (item) => {
-        await dispatchGameSearch(
-          "?game_categories_slug=" +
-            item.slug +
-            "&page=" +
-            currentPage.value +
-            "&limit=" +
-            limit.value
-        );
-        if (gameSearchList.value.list.length > 0) {
-          await Promise.all(
-            gameSearchList.value.list.map(async (item) => {
-              // item.image = state.testGames[Math.floor(Math.random() * 28)];
-              let images: any = await fetchCachedImages();
-              item.image = images[Math.floor(Math.random() * 28)];
-            })
+      await Promise.all(
+        gameCategories.value.map(async (item) => {
+          await dispatchGameSearch(
+            "?game_categories_slug=" +
+              item.slug +
+              "&page=" +
+              currentPage.value +
+              "&limit=" +
+              limit.value
           );
-        }
-        item.page_no = 1;
-        item.games = gameSearchList.value.list;
-      });
+          if (gameSearchList.value.list.length > 0) {
+            await Promise.all(
+              gameSearchList.value.list.map(async (item) => {
+                item.image = state.testGames[Math.floor(Math.random() * 28)];
+                let images: any = await fetchCachedImages();
+                item.image = images[Math.floor(Math.random() * 28)];
+              })
+            );
+          }
+          item.page_no = 1;
+          item.games = gameSearchList.value.list;
+        })
+      );
     });
 
     onUnmounted(() => {

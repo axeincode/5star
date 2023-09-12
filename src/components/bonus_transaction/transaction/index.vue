@@ -64,22 +64,30 @@ const touchless = () => {
 };
 
 watch(selectedTab, async (value) => {
-  if (value == t("transaction.tab.withdrawal")) {
-    await dispatchWithdrawalHistory({
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-  } else if ((value = t("transaction.tab.deposit"))) {
-    await dispatchUserDepositHistory({
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-  }
+  // if (value == t("transaction.tab.withdrawal")) {
+  //   await dispatchWithdrawalHistory({
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  // } else if ((value = t("transaction.tab.deposit"))) {
+  //   await dispatchUserDepositHistory({
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  // }
 });
 
 onMounted(async () => {
   selectedTab.value =
     transactionTab.value == "" ? selectedTab.value : transactionTab.value;
+  await dispatchUserDepositHistory({
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
+  });
+  await dispatchWithdrawalHistory({
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
+  });
 });
 </script>
 <template>

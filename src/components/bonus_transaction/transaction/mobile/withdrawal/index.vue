@@ -17,16 +17,16 @@ const { dispatchWithdrawalHistory } = withdrawStore();
 const { dispatchWithdrawalRefund } = withdrawStore();
 
 const withdrawalStatus = [
-    "Pending",
-    "Processing",
-    "Success",
-    "Failed",
-    "Waiting for manual processing. action",
+  "Pending",
+  "Processing",
+  "Success",
+  "Failed",
+  "Waiting for manual processing. action",
 ]
 
 const props = defineProps<{
-    pageSize: number;
-    withdrawHistoryItem: WithdrawalHistoryResponse;
+  pageSize: number;
+  withdrawHistoryItem: WithdrawalHistoryResponse;
 }>();
 
 const { pageSize, withdrawHistoryItem } = toRefs(props);
@@ -37,64 +37,66 @@ const loading = ref<boolean>(false);
 const loadingIndex = ref<number>(0)
 
 const success = computed(() => {
-    const { getSuccess } = storeToRefs(withdrawStore());
-    return getSuccess.value
+  const { getSuccess } = storeToRefs(withdrawStore());
+  return getSuccess.value
 })
 
 const mobileWidth = computed(() => {
-    return width.value;
+  return width.value;
 });
 
 const fixPositionShow = computed(() => {
-    const { getFixPositionEnable } = storeToRefs(appBarStore());
-    return getFixPositionEnable.value;
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
 });
 
 const refundWithdrawalSubmit = async (id: number, index: number) => {
-    loadingIndex.value = index;
-    loading.value = true;
-    await dispatchWithdrawalRefund({ id });
-    loading.value = false
-    if (success.value) {
-        const toast = useToast();
-        toast.success("Successfully Refunded", {
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: SuccessIcon,
-            rtl: false,
-        });
-        await dispatchWithdrawalHistory({
-            page_size: pageSize.value,
-            start_time: Math.ceil(moment().valueOf() / 1000),
-        });
-    }
+  loadingIndex.value = index;
+  loading.value = true;
+  await dispatchWithdrawalRefund({ id });
+  loading.value = false
+  if (success.value) {
+    const toast = useToast();
+    toast.success("Successfully Refunded", {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
+    });
+    await dispatchWithdrawalHistory({
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+  }
 }
 
 const handleNext = async () => {
-    await dispatchWithdrawalHistory({
-      page_size: pageSize.value,
-      start_time: withdrawHistoryItem.value.record[0].created_at,
-    });
+  await dispatchWithdrawalHistory({
+    page_size: pageSize.value,
+    start_time: withdrawHistoryItem.value.record[withdrawHistoryItem.value.record.length - 1].created_at,
+  });
 }
 
 const handlePrev = async () => {
-    await dispatchWithdrawalHistory({
-      page_size: pageSize.value,
-      end_time: withdrawHistoryItem.value.record[withdrawHistoryItem.value.record.length - 1].created_at,
-    });
+  await dispatchWithdrawalHistory({
+    page_size: pageSize.value,
+    end_time: withdrawHistoryItem.value.record[0].created_at,
+  });
 }
 
 watch(withdrawHistoryItem, (value) => {
-    paginationLength.value = withdrawHistoryItem.value.total_pages
+  paginationLength.value = withdrawHistoryItem.value.total_pages
 })
 
-onMounted(async () => { });
+onMounted(async () => {
+  paginationLength.value = withdrawHistoryItem.value.total_pages
+});
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
