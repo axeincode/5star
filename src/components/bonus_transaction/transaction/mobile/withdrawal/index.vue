@@ -7,7 +7,7 @@ import { appBarStore } from "@/store/appBar";
 import { withdrawStore } from "@/store/withdraw";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
-import { type WithdrawalHistoryResponse } from "@/interface/withdraw";
+import { WithdrawalHistoryItem, type WithdrawalHistoryResponse } from "@/interface/withdraw";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 
@@ -35,6 +35,9 @@ const paginationLength = ref<number>(0);
 
 const loading = ref<boolean>(false);
 const loadingIndex = ref<number>(0)
+const startIndex = ref<number>(0);
+const endIndex = ref<number>(8);
+const currentList = ref<Array<WithdrawalHistoryItem>>([]);
 
 const success = computed(() => {
   const { getSuccess } = storeToRefs(withdrawStore());
@@ -76,18 +79,28 @@ const refundWithdrawalSubmit = async (id: number, index: number) => {
   }
 }
 
-const handleNext = async () => {
-  await dispatchWithdrawalHistory({
-    page_size: pageSize.value,
-    start_time: withdrawHistoryItem.value.record[withdrawHistoryItem.value.record.length - 1].created_at,
-  });
+const handleNext = async (page_no: number) => {
+  startIndex.value = (page_no - 1) * pageSize.value;
+  endIndex.value = startIndex.value + pageSize.value;
+  currentList.value = withdrawHistoryItem.value.record.slice(startIndex.value, endIndex.value);
+  if (currentList.value.length == 0) {
+    await dispatchWithdrawalHistory({
+      page_size: pageSize.value,
+      start_time: withdrawHistoryItem.value.record[withdrawHistoryItem.value.record.length - 1].created_at,
+    });
+  }
 }
 
-const handlePrev = async () => {
-  await dispatchWithdrawalHistory({
-    page_size: pageSize.value,
-    end_time: withdrawHistoryItem.value.record[0].created_at,
-  });
+const handlePrev = async (page_no: number) => {
+  startIndex.value = (page_no - 1) * pageSize.value;
+  endIndex.value = startIndex.value + pageSize.value;
+  currentList.value = withdrawHistoryItem.value.record.slice(startIndex.value, endIndex.value);
+  if (currentList.value.length == 0) {
+    await dispatchWithdrawalHistory({
+      page_size: pageSize.value,
+      end_time: withdrawHistoryItem.value.record[0].created_at,
+    });
+  }
 }
 
 watch(withdrawHistoryItem, (value) => {
@@ -167,7 +180,10 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody class="forms-table-body">
-        <tr v-for="(item, index) in withdrawHistoryItem.record" :key="index">
+        <tr
+          v-for="(item, index) in withdrawHistoryItem.record.slice(startIndex, endIndex)"
+          :key="index"
+        >
           <td
             class="text-400-12"
             style="padding-top: 21px !important; padding-bottom: 21px !important"

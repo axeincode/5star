@@ -11,7 +11,10 @@ export const withdrawStore = defineStore({
     errMessage: '' as string,
     withdrawConfig: {} as any,
     withdrawSubmit: {} as any,
-    withdrawHistoryItem: {} as Withdraw.WithdrawalHistoryResponse
+    withdrawHistoryItem: {
+      total_pages: 0,
+      record: []
+    } as Withdraw.WithdrawalHistoryResponse
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -35,7 +38,11 @@ export const withdrawStore = defineStore({
       this.withdrawSubmit = withdrawSubmit;
     },
     setWithdrawHistoryItem(withdrawHistoryItem: Withdraw.WithdrawalHistoryResponse) {
-      this.withdrawHistoryItem = withdrawHistoryItem
+      this.withdrawHistoryItem.record = [...this.withdrawHistoryItem.record, ...withdrawHistoryItem.record]
+      this.withdrawHistoryItem.total_pages = withdrawHistoryItem.total_pages;
+      // withdrawHistoryItem.record.map(item => {
+      //   this.withdrawHistoryItem.record.push(item);
+      // })
     },
     // user withdraw configuration
     async dispatchUserWithdrawCfg() {

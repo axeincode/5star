@@ -5,7 +5,10 @@ import { useDisplay } from "vuetify";
 
 const props = defineProps<{ length: number }>();
 
-const emit = defineEmits<{ (e: "handlePrev"): void; (e: "handleNext"): void }>();
+const emit = defineEmits<{
+  (e: "handlePrev", pageNo: number): void;
+  (e: "handleNext", pageNo: number): void;
+}>();
 
 const { length } = toRefs(props);
 
@@ -19,11 +22,11 @@ const mobileWidth = computed(() => {
 });
 
 const handlePrev = () => {
-  emit("handlePrev");
+  emit("handlePrev", pageNo.value);
 };
 
 const handleNext = () => {
-  emit("handleNext");
+  emit("handleNext", pageNo.value);
 };
 
 onMounted(() => {

@@ -628,6 +628,7 @@ const Dashboard = defineComponent({
     const gameFilterIconColor7 = ref<string>("#7782AA");
 
     const allGames = ref<Array<Game.Category>>([]);
+    const pagingGames = ref<Array<Game.Category>>([]);
 
     const currentPage = ref<number>(1);
     const moreGameCurrentPage = ref<number>(1);
@@ -1169,14 +1170,11 @@ const Dashboard = defineComponent({
     };
 
     const handleEnterGame = async (id: number, name: string) => {
-      // await dispatchGameEnter({ id });
       let replaceName = name.replace(/ /g, "-");
-      // if (success.value) {
       if (mobileWidth.value < 600) {
         setMailMenuShow(true);
       }
       router.push(`/game/${id}/${replaceName}`);
-      // }
     };
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
@@ -1260,21 +1258,18 @@ const Dashboard = defineComponent({
           break;
       }
 
-      await dispatchGameCategories(`?type=${filterTabText.value}`);
-
-      allGames.value = gameCategories.value;
-
       if (
-        selectedGameFilterBtn.value == t("home.button.favorite") ||
-        selectedGameFilterBtn.value == t("home.button.recently_played")
+        selectedCategoryName.value == "favorite" ||
+        selectedCategoryName.value == "history"
       ) {
+        console.log(selectedGameFilterBtn.value);
         await dispatchUserGame({
           game_categories_slug: selectedCategoryName.value,
           page: currentPage.value,
           limit: limit.value,
         });
-        gameCategories.value.map(async (item) => {
-          if (item.name == selectedCategoryName.value) {
+        pagingGames.value.map(async (item) => {
+          if (item.slug == selectedCategoryName.value) {
             if (gameSearchList.value.list.length > 0) {
               gameSearchList.value.list.map((item) => {
                 item.image = state.testGames[Math.floor(Math.random() * 28)];
@@ -1285,28 +1280,15 @@ const Dashboard = defineComponent({
             item.game_count = gameSearchList.value.total;
           }
         });
-      } else {
-        gameCategories.value.map(async (item) => {
-          await dispatchGameSearch(
-            "?game_categories_slug=" +
-              item.slug +
-              "&page=" +
-              currentPage.value +
-              "&limit=" +
-              limit.value
-          );
-          if (gameSearchList.value.list.length > 0) {
-            gameSearchList.value.list.map((item) => {
-              item.image = state.testGames[Math.floor(Math.random() * 28)];
-            });
-          }
-          item.page_no = 1;
-          item.games = gameSearchList.value.list;
-        });
       }
     };
 
-    const handleMoreGame = async (slug: string, page_no: number, index: number) => {
+    const handleMoreGame = async (
+      slug: string,
+      page_no: number,
+      index: number,
+      gamFilterBtn: string
+    ) => {
       let new_page_no = page_no + 1;
       moreGameCurrentPage.value += 1;
       moreLoading.value = true;
@@ -1331,12 +1313,21 @@ const Dashboard = defineComponent({
       gameSearchList.value.list.map((item) => {
         item.image = state.testGames[Math.floor(Math.random() * 28)];
       });
-      gameCategories.value.map((item) => {
-        if (item.slug == slug) {
-          item.games = [...item.games, ...gameSearchList.value.list];
-          item.page_no = new_page_no;
-        }
-      });
+      if (gamFilterBtn == t("home.button.all_game")) {
+        allGames.value.map((item) => {
+          if (item.slug == slug) {
+            item.games = [...item.games, ...gameSearchList.value.list];
+            item.page_no = new_page_no;
+          }
+        });
+      } else {
+        pagingGames.value.map((item) => {
+          if (item.slug == slug) {
+            item.games = [...item.games, ...gameSearchList.value.list];
+            item.page_no = new_page_no;
+          }
+        });
+      }
     };
 
     const cancelFavoriteGame = async (id: string | number, page_no: number) => {
@@ -1351,8 +1342,7 @@ const Dashboard = defineComponent({
       gameSearchList.value.list.map((item) => {
         item.image = state.testGames[Math.floor(Math.random() * 28)];
       });
-      console.log(gameSearchList.value);
-      gameCategories.value.map((item) => {
+      pagingGames.value.map((item) => {
         if (item.name == selectedCategoryName.value) {
           item.games = gameSearchList.value.list;
         }
@@ -1364,52 +1354,12 @@ const Dashboard = defineComponent({
       setMailMenuShow(true);
     };
 
-    // Function to fetch and cache the image
-    const loadImageAndCache = async (url: string) => {
-      const response = await fetch(url);
-      const blob = await response.blob();
-
-      // Store the image in cache storage
-      // Assuming you have already initialized the cache with `caches.open('myCache')`
-      const cache = await caches.open("myCache");
-      await cache.put(url, new Response(blob));
-
-      // Display the image in your Vue component
-      // Assuming you have a `data` property called `cachedImageUrl`
-      // console.log(URL.createObjectURL(blob));
-    };
-
-    // Function to fetch images from cache
-    const fetchCachedImages = async () => {
-      const cache = await caches.open("myCache"); // Assuming you've named your cache as 'myCache'
-      const cachedRequests = await cache.keys();
-
-      const imageUrls = [];
-
-      // Iterate through the cached requests
-      for (const request of cachedRequests) {
-        if (request.url.endsWith(".jpg") || request.url.endsWith(".png")) {
-          // If the request matches image file extensions, add its URL to the array
-          imageUrls.push(request.url);
-        }
-      }
-
-      return imageUrls;
-    };
-
     watch(searchDialogShow, (value) => {
       setMailMenuShow(value);
     });
 
     onMounted(async () => {
       loading.value = true;
-      await Promise.all(
-        state.testGames.map(async (url) => {
-          await loadImageAndCache(url);
-        })
-      );
-      // startLuckyScrollingInterval();
-      // startRecordScrollingInterval();
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -1441,31 +1391,55 @@ const Dashboard = defineComponent({
             break;
         }
       });
-      await dispatchGameCategories(`?type=${filterTabText.value}`);
-      allGames.value = gameCategories.value;
+      pagingGames.value = gameCategories.value;
       await Promise.all(
-        gameCategories.value.map(async (item) => {
-          await dispatchGameSearch(
-            "?game_categories_slug=" +
-              item.slug +
-              "&page=" +
-              currentPage.value +
-              "&limit=" +
-              limit.value
-          );
-          if (gameSearchList.value.list.length > 0) {
-            await Promise.all(
-              gameSearchList.value.list.map(async (item) => {
-                item.image = state.testGames[Math.floor(Math.random() * 28)];
-                let images: any = await fetchCachedImages();
-                item.image = images[Math.floor(Math.random() * 28)];
-              })
+        pagingGames.value.map(async (item) => {
+          if (item.slug == "favorite" || item.slug == "history") {
+            await dispatchUserGame({
+              game_categories_slug: item.slug,
+              page: currentPage.value,
+              limit: limit.value,
+            });
+          } else {
+            await dispatchGameSearch(
+              "?game_categories_slug=" +
+                item.slug +
+                "&page=" +
+                currentPage.value +
+                "&limit=" +
+                limit.value
             );
+          }
+          if (gameSearchList.value.list.length > 0) {
+            gameSearchList.value.list.map((item) => {
+              item.image = state.testGames[Math.floor(Math.random() * 28)];
+            });
           }
           item.page_no = 1;
           item.games = gameSearchList.value.list;
+          item.game_count = gameSearchList.value.total;
         })
       );
+      await dispatchGameCategories(`?type=${filterTabText.value}`);
+      allGames.value = gameCategories.value;
+      allGames.value.map(async (item) => {
+        await dispatchGameSearch(
+          "?game_categories_slug=" +
+            item.slug +
+            "&page=" +
+            currentPage.value +
+            "&limit=" +
+            limit.value
+        );
+        if (gameSearchList.value.list.length > 0) {
+          gameSearchList.value.list.map(async (item) => {
+            item.image = state.testGames[Math.floor(Math.random() * 28)];
+          });
+        }
+        item.page_no = 1;
+        item.games = gameSearchList.value.list;
+      });
+
       loading.value = false;
     });
 
@@ -1524,6 +1498,8 @@ const Dashboard = defineComponent({
       moreLoading,
       moreIndex,
       loading,
+      allGames,
+      pagingGames,
     };
   },
 });
@@ -2107,7 +2083,7 @@ export default Dashboard;
 
       <!-- game list -->
       <template
-        v-for="(item, index) in gameCategories"
+        v-for="(item, index) in allGames"
         :key="index"
         v-if="selectedGameFilterBtn == t('home.button.all_game')"
       >
@@ -2229,7 +2205,9 @@ export default Dashboard;
               variant="outlined"
               :width="mobileWidth < 600 ? '100%' : 164"
               :height="mobileWidth < 600 ? 41 : 48"
-              @click="handleMoreGame(item.slug, item.page_no, index)"
+              @click="
+                handleMoreGame(item.slug, item.page_no, index, selectedGameFilterBtn)
+              "
             >
               <div class="loading-body" v-if="moreLoading && index == moreIndex">
                 <div class="dot-0"></div>
@@ -2242,7 +2220,7 @@ export default Dashboard;
         </v-row>
       </template>
       <template
-        v-for="(otherGameItem, otherIndex) in gameCategories"
+        v-for="(otherGameItem, otherIndex) in pagingGames"
         :key="otherIndex"
         v-else
       >
@@ -2393,7 +2371,12 @@ export default Dashboard;
                 :width="mobileWidth < 600 ? '100%' : 164"
                 :height="mobileWidth < 600 ? 41 : 48"
                 @click="
-                  handleMoreGame(otherGameItem.slug, otherGameItem.page_no, otherIndex)
+                  handleMoreGame(
+                    otherGameItem.slug,
+                    otherGameItem.page_no,
+                    otherIndex,
+                    selectedGameFilterBtn
+                  )
                 "
               >
                 <div v-if="!moreLoading">{{ t("home.more") }}</div>
@@ -2918,6 +2901,7 @@ export default Dashboard;
   height: 100vh;
   position: relative;
   overflow-y: hidden;
+
   .loading-body {
     display: flex;
     align-items: center;
