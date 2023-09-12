@@ -633,6 +633,7 @@ const Dashboard = defineComponent({
     const limit = ref<number>(8);
 
     const moreLoading = ref<boolean>(false);
+    const moreIndex = ref<number>(0);
 
     const refferalAppBarShow = computed(() => {
       const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -1304,10 +1305,11 @@ const Dashboard = defineComponent({
       }
     };
 
-    const handleMoreGame = async (slug: string, page_no: number) => {
+    const handleMoreGame = async (slug: string, page_no: number, index: number) => {
       let new_page_no = page_no + 1;
       moreGameCurrentPage.value += 1;
       moreLoading.value = true;
+      moreIndex.value = index;
       if (slug == "favorite" || slug == "history") {
         await dispatchUserGame({
           game_categories_slug: selectedCategoryName.value,
@@ -1506,6 +1508,7 @@ const Dashboard = defineComponent({
       iconTransform,
       pgIconTransform,
       moreLoading,
+      moreIndex,
     };
   },
 });
@@ -2090,7 +2093,7 @@ export default Dashboard;
           class="ml-4 original_game_text"
           :class="mobileWidth > 600 ? ' mt-12' : ' mt-7'"
           v-if="item.games.length > 0"
-          style = "margin-bottom: 6px!important;"
+          style="margin-bottom: 6px !important"
         >
           <inline-svg
             :src="item.image"
@@ -2204,10 +2207,10 @@ export default Dashboard;
               variant="outlined"
               :width="mobileWidth < 600 ? '100%' : 164"
               :height="mobileWidth < 600 ? 41 : 48"
-              @click="handleMoreGame(item.slug, item.page_no)"
+              @click="handleMoreGame(item.slug, item.page_no, index)"
             >
               <div v-if="!moreLoading">{{ t("home.more") }}</div>
-              <div class="loading-body" v-else>
+              <div class="loading-body" v-if="moreLoading && index == moreIndex">
                 <div class="dot-0"></div>
                 <div class="dot-1"></div>
                 <div class="dot-0"></div>
@@ -2367,10 +2370,12 @@ export default Dashboard;
                 variant="outlined"
                 :width="mobileWidth < 600 ? '100%' : 164"
                 :height="mobileWidth < 600 ? 41 : 48"
-                @click="handleMoreGame(otherGameItem.slug, otherGameItem.page_no)"
+                @click="
+                  handleMoreGame(otherGameItem.slug, otherGameItem.page_no, otherIndex)
+                "
               >
                 <div v-if="!moreLoading">{{ t("home.more") }}</div>
-                <div class="loading-body" v-else>
+                <div class="loading-body" v-if="moreLoading && otherIndex == moreIndex">
                   <div class="dot-0"></div>
                   <div class="dot-1"></div>
                   <div class="dot-0"></div>
@@ -3303,6 +3308,7 @@ export default Dashboard;
   color: #ffffff;
   font-weight: 700;
   font-size: 22px;
+  align-items: center;
 }
 
 @media (max-width: 600px) {
