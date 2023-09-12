@@ -610,6 +610,7 @@ const Dashboard = defineComponent({
     const filterTabText = ref<string>("lobby");
     const gameGroupBtnList = ref<Array<any>>([]);
     const selectedCategoryName = ref<string>("");
+    const loading = ref<boolean>(false);
 
     const swiper = ref<any>(null);
 
@@ -1401,6 +1402,7 @@ const Dashboard = defineComponent({
     });
 
     onMounted(async () => {
+      loading.value = true;
       await Promise.all(
         state.testGames.map(async (url) => {
           await loadImageAndCache(url);
@@ -1464,6 +1466,7 @@ const Dashboard = defineComponent({
           item.games = gameSearchList.value.list;
         })
       );
+      loading.value = false;
     });
 
     onUnmounted(() => {
@@ -1520,6 +1523,7 @@ const Dashboard = defineComponent({
       pgIconTransform,
       moreLoading,
       moreIndex,
+      loading,
     };
   },
 });
@@ -1528,7 +1532,14 @@ export default Dashboard;
 </script>
 
 <template>
-  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'">
+  <div class="m-home-loading" v-if="loading">
+    <div class="loading-body">
+      <div class="dot-0"></div>
+      <div class="dot-1"></div>
+      <div class="dot-0"></div>
+    </div>
+  </div>
+  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'" v-else>
     <v-navigation-drawer
       v-model="searchDialogShow"
       location="top"
@@ -2901,6 +2912,38 @@ export default Dashboard;
 
 .v-progressive-image-main {
   width: 100%;
+}
+
+.m-home-loading {
+  height: 100vh;
+  position: relative;
+  overflow-y: hidden;
+  .loading-body {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .dot-0 {
+      width: 10px;
+      height: 10px;
+      background: #12ff76;
+      border-radius: 10px;
+      margin: 0px 4px;
+      animation: expandAnimation 0.6s 0.1s ease-in infinite;
+    }
+
+    .dot-1 {
+      width: 16px;
+      height: 16px;
+      background: #12ff76;
+      border-radius: 16px;
+      margin: 0px 4px;
+      animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+    }
+  }
 }
 
 .more-btn-color {
