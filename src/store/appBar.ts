@@ -21,6 +21,7 @@ export const appBarStore = defineStore({
     menuBlurEffectShow: false as boolean,
     depositHeaderBlurEffectShow: false as boolean,
     depositWithdrawToggle: false as boolean,
+    bonusDashboardDialogVisible: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -40,6 +41,8 @@ export const appBarStore = defineStore({
     getMenuBlurEffectShow: (state) => state.menuBlurEffectShow,
     getDepositHeaderBlurEffectShow: (state) => state.depositHeaderBlurEffectShow,
     getDepositWithdrawToggle: (state) => state.depositWithdrawToggle,
+    getBonusDashboardDialogVisible: (state) => state.bonusDashboardDialogVisible,
+    
     
   },
   actions: {
@@ -93,6 +96,9 @@ export const appBarStore = defineStore({
     },
     setDepositWithdrawToggle(depositWithdrawToggle: boolean) {
       this.depositWithdrawToggle = depositWithdrawToggle;
+    },
+    setBonusDashboardDialogVisible(bonusDashboardDialogVisible: boolean) {
+      this.bonusDashboardDialogVisible = bonusDashboardDialogVisible;
     },
   }
 })

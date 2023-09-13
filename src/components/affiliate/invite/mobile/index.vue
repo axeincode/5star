@@ -1091,25 +1091,26 @@ onMounted(async () => {
 .m-invite-img-3 {
   margin-bottom: -20px;
 }
+
 .Vue-Toastification__container {
-  right: 0 !important;
-  left: unset !important;
-  width: 290px !important;
+  right: 0!important;
+  left: unset!important;;
+  width: 290px!important;
   margin-right: 37px;
-  height: 60px !important;
+  height: 60px!important;
   //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
-  align-items: center !important;
-  z-index: 1000000000 !important;
-  top: 70px !important;
-  right: -20px !important;
-  width: 330px !important;
-  height: 60px;
-  border: none;
-  border-radius: 16px 0px 0px 16px;
-  background: var(--bg-2, #181522);
-  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px;
+    right: -20px !important;
+    width: 320px !important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #181522);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
 .Vue-Toastification__toast-body {
@@ -1122,7 +1123,7 @@ onMounted(async () => {
   text-align: left;
 }
 
-.Vue-Toastification__close-button {
+.Vue-Toastification__close-button{
   top: 22px !important;
   background-image: url("@/assets/public/svg/icon_public_52.svg");
   background-repeat: no-repeat;

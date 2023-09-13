@@ -36,6 +36,7 @@ const { setMailMenuShow } = mailStore();
 const { dispatchUserBalance } = userStore();
 const { dispatchSocketConnect } = socketStore();
 const { setDepositWithdrawToggle } = appBarStore();
+const { setBonusDashboardDialogVisible } = appBarStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -175,7 +176,8 @@ watch(currencyMenuShow, (value: boolean) => {
       setUserNavBarToggle(false);
       setMainBlurEffectShow(false);
       setNavBarToggle(false);
-      setMailMenuShow(false)
+      setMailMenuShow(false);
+      setBonusDashboardDialogVisible(false);
       setTimeout(() => {
         setFixPositionEnable(true);
         setMainBlurEffectShow(true);
@@ -302,6 +304,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
 const showUserNavBar = (): void => {
   userNavBarToggle.value = !userNavBarToggle.value
   setNavBarToggle(false)
+  setBonusDashboardDialogVisible(false);
   setMainBlurEffectShow(false);
   setTimeout(() => {
     setUserNavBarToggle(userNavBarToggle.value);

@@ -214,20 +214,21 @@ const submitNickName = async () => {
 }
 @media (max-width: 600px) {
   
+    
     .Vue-Toastification__container {
-        right: 0!important;
-        left: unset!important;;
-        width: 290px!important;
-        margin-right: 37px;
-        height: 60px!important;
-        //flex-direction: unset!important;
+    right: 0!important;
+    left: unset!important;;
+    width: 290px!important;
+    margin-right: 37px;
+    height: 60px!important;
+    //flex-direction: unset!important;
     }
     .Vue-Toastification__toast {
         align-items: center !important;
         z-index: 1000000000 !important;
-        top: 70px !important;
-        right: 0px !important;
-        width: 330px !important;
+        top: 70px;
+        right: -20px !important;
+        width: 320px !important;
         height: 60px;
         border: none;
         border-radius: 16px 0px 0px 16px;
@@ -236,40 +237,40 @@ const submitNickName = async () => {
     }
 
     .Vue-Toastification__toast-body {
-        color: var(--sec-text, #7782aa);
-        font-family: Inter;
-        font-size: 10px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-        text-align: left;
+    color: var(--sec-text, #7782aa);
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: left;
     }
 
     .Vue-Toastification__close-button{
-        top: 22px !important;
-        background-image: url("@/assets/public/svg/icon_public_52.svg");
-        background-repeat: no-repeat;
-        background-size: 18px;
-        color: transparent;
-        opacity: 1;
+    top: 22px !important;
+    background-image: url("@/assets/public/svg/icon_public_52.svg");
+    background-repeat: no-repeat;
+    background-size: 18px;
+    color: transparent;
+    opacity: 1;
     }
 }
 
 
 .Vue-Toastification__container {
-    right: 0!important;
-    left: unset!important;;
-    width: 290px!important;
-    margin-right: 37px;
-    height: 60px!important;
-    //flex-direction: unset!important;
+  right: 0!important;
+  left: unset!important;;
+  width: 290px!important;
+  margin-right: 37px;
+  height: 60px!important;
+  //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
-    top: 70px !important;
-    right: 0px !important;
-    width: 330px !important;
+    top: 70px;
+    right: -20px !important;
+    width: 320px !important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;
@@ -278,22 +279,22 @@ const submitNickName = async () => {
 }
 
 .Vue-Toastification__toast-body {
-    color: var(--sec-text, #7782aa);
-    font-family: Inter;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-align: left;
+  color: var(--sec-text, #7782aa);
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
 }
 
 .Vue-Toastification__close-button{
-    top: 22px !important;
-    background-image: url("@/assets/public/svg/icon_public_52.svg");
-    background-repeat: no-repeat;
-    background-size: 18px;
-    color: transparent;
-    opacity: 1;
+  top: 22px !important;
+  background-image: url("@/assets/public/svg/icon_public_52.svg");
+  background-repeat: no-repeat;
+  background-size: 18px;
+  color: transparent;
+  opacity: 1;
 }
 
 .m-account-nickname-edit {

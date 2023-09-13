@@ -167,9 +167,9 @@ const updateEmail = async () => {
 .Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
-    top: 70px !important;
-    right: 0px !important;
-    width: 330px !important;
+    top: 70px;
+    right: -20px !important;
+    width: 320px !important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;

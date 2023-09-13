@@ -20,12 +20,14 @@ const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setUserNavBarToggle } = appBarStore();
+const { setBonusDashboardDialogVisible } = appBarStore();
 const { setMailMenuShow } = mailStore();
 
 // mail count
 const mailCount = ref<number>(10);
 // navbar toggle
 const navbarToggle = ref<boolean>(false);
+const bonusDashboardToggle = ref<boolean>(false);
 const sportBtnActive = ref<boolean>(false);
 const casinoBtnActive = ref<boolean>(false);
 const mailBtnActive = ref<boolean>(false);
@@ -58,6 +60,11 @@ const navToggle = computed(() => {
   return getNavBarToggle.value
 })
 
+const bonusToggle = computed(() => {
+  const { getBonusDashboardDialogVisible } = storeToRefs(appBarStore());
+  return getBonusDashboardDialogVisible.value
+})
+
 // get mail data
 const mailList = computed((): GetMailData[] => {
   const { getMailList } = storeToRefs(mailStore())
@@ -73,6 +80,10 @@ watch(navToggle, (newValue) => {
   menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
 }, { deep: true })
 
+watch(bonusToggle, (newValue) => {
+  bonusDashboardToggle.value = newValue;
+}, { deep: true })
+
 watch(mailMenuShow, async (newValue) => {
   if (newValue) {
     sportBtnActive.value = false
@@ -81,6 +92,7 @@ watch(mailMenuShow, async (newValue) => {
     setUserNavBarToggle(false);
     setMainBlurEffectShow(false);
     setNavBarToggle(navbarToggle.value)
+    setBonusDashboardDialogVisible(false);
     menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
     casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
     sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
@@ -115,6 +127,7 @@ const handleNavbarToggle = () => {
   casinoBtnActive.value = false;
   sportBtnActive.value = false
   setUserNavBarToggle(false);
+  setBonusDashboardDialogVisible(false);
   setMainBlurEffectShow(false);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
@@ -162,20 +175,40 @@ const goToSportPage = () => {
 }
 
 const goToSharePage = () => {
-  sportBtnActive.value = false
+  bonusDashboardToggle.value = !bonusDashboardToggle.value;
+  navbarToggle.value = false;
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
-  navbarToggle.value = false;
+  sportBtnActive.value = false
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
+  setNavBarToggle(false);
   setTimeout(() => {
-    setNavBarToggle(navbarToggle.value)
-    setMainBlurEffectShow(navbarToggle.value);
-  }, 200);
+    setBonusDashboardDialogVisible(bonusDashboardToggle.value)
+    setMainBlurEffectShow(bonusDashboardToggle.value);
+  }, 10);
   menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+
+  // sportBtnActive.value = false
+  // mailMenuShow.value = false;
+  // casinoBtnActive.value = false;
+  // navbarToggle.value = false;
+  
+  // setUserNavBarToggle(false);
+  // setNavBarToggle(false);
+  // setMainBlurEffectShow(false);
+  // setTimeout(() => {
+  //   setBonusDashboardDialogVisible(true);
+
+  // },10)
+  
+  // menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  // casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  // sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  // mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
 }
 
 const handleScroll = (event: any) => {

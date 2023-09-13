@@ -30,6 +30,7 @@ import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
 import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
 import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
 import MAccountDialog from "@/views/account/dialog/index.vue";
+// import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 import { mailStore } from "@/store/mail";
 import router from '@/router';
 
@@ -43,6 +44,7 @@ const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
+// const { setBonusDashboardDialogVisible } = appBarStore();
 const { setAuthModalType } = authStore();
 const { setNickNameDialogVisible } = authStore();
 const { setRefferalDialogShow } = refferalStore();
@@ -80,6 +82,7 @@ const mobileDialog = ref<boolean>(false);
 const mobileDialogCheck = ref<boolean>(false);
 const accountDialog = ref<boolean>(false);
 const nickNameDialog = ref<boolean>(false);
+// const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
 const authDialogVisible = computed(() => {
@@ -92,6 +95,11 @@ const nickNameDialogVisible = computed(() => {
   return getNickNameDialogVisible.value
 })
 
+// const bonusDashboardDialogVisible = computed(() => {
+//   const { getBonusDashboardDialogVisible } = storeToRefs(appBarStore());
+//   return getBonusDashboardDialogVisible.value
+// })
+
 watch(nickNameDialogVisible, (newValue) => {
   nickNameDialog.value = newValue;
   if (newValue) {
@@ -102,7 +110,26 @@ watch(nickNameDialogVisible, (newValue) => {
   }
 })
 
+// watch(bonusDashboardDialogVisible, (newValue) => {
+//   bonusDashboardDialog.value = newValue;
+//   if (newValue) {
+//     setMainBlurEffectShow(true);
+//     setOverlayScrimShow(true);
+//     setHeaderBlurEffectShow(true)
+//     setMenuBlurEffectShow(true);
+//   }
+// })
+
 // methods
+
+// const closeBonusDashboardDialog = () => {
+//   console.log('>>>>>>>>>>')
+//   setMainBlurEffectShow(false);
+//   setHeaderBlurEffectShow(false);
+//   setMenuBlurEffectShow(false);
+//   setOverlayScrimShow(false);
+//   setBonusDashboardDialogVisible(false);
+// }
 const closeDialog = (type: dialogType) => {
   if (mobileWidth.value < 600 && type == "signup" && signUpForm.value) {
     return;
@@ -458,6 +485,18 @@ onMounted(() => {
         <MDeposit v-else />
       </template>
     </v-dialog>
+
+    <!-----------------------Bonus Dashboard Dialog --------------------------------------->
+
+    <!-- <v-dialog
+      v-model="bonusDashboardDialog"
+      width="340"
+      :scrim="true"
+      transition="scale-transition"
+      @click:outside="closeBonusDashboardDialog"
+    >
+      <MBonusDashboardDialog @closeBonusDashboardDialog="closeBonusDashboardDialog" />
+    </v-dialog> -->
 
     <!-----------------------Authentication Dialog --------------------------------------->
 

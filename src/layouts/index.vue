@@ -12,6 +12,7 @@ import { useDisplay } from "vuetify";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
+import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 
 const { width } = useDisplay();
 
@@ -29,6 +30,11 @@ const fixPositionShow = computed(() => {
   return getFixPositionEnable.value;
 });
 
+const bonusDashboardDialogShow = computed(() => {
+  const { getBonusDashboardDialogVisible } = storeToRefs(appBarStore());
+  return getBonusDashboardDialogVisible.value;
+});
+
 const handleScroll = () => {
   console.log("scroll");
 };
@@ -41,6 +47,7 @@ const handleScroll = () => {
     <NavBarLayout v-if="mobileWidth > 600" />
     <MNavBarLayout v-else />
     <UserNavBarLayout />
+    <MBonusDashboardDialog />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
     <MobileMenuLayout v-if="mobileWidth < 600" />
@@ -64,9 +71,9 @@ const handleScroll = () => {
 .Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
-    top: 70px !important;
+    top: 70px;
     right: -20px !important;
-    width: 330px!important;
+    width: 320px !important;
     height: 60px;
     border: none;
     border-radius: 16px 0px 0px 16px;
