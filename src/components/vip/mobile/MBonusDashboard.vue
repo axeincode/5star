@@ -410,7 +410,12 @@ onMounted(() => {
   </v-navigation-drawer>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.m-bonus-background {
+  .v-navigation-drawer__content {
+    overflow-y: hidden !important;
+  }
+}
 .m-bonus-btns {
   position: relative;
   top: 30px;

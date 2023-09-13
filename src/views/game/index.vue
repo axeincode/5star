@@ -20,6 +20,7 @@ const { width } = useDisplay();
 const { setMailMenuShow } = mailStore();
 const { dispatchGameEnter } = gameStore();
 const route = useRoute();
+const mobileHeight = ref<number | undefined>(0);
 
 const luckyJackpotList = ref<Array<any>>([
   {
@@ -355,6 +356,7 @@ const handleIframeLoad = () => {
 };
 
 onMounted(async () => {
+  mobileHeight.value = window.visualViewport?.height;
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -387,7 +389,7 @@ onUnmounted(() => {
       <iframe
         ref="frame"
         :src="enterGameItem.weburl"
-        :style="{ height: frameShow ? '100vh' : '0px' }"
+        :style="{ height: frameShow ? mobileHeight + 'px' : '0px' }"
         class="home-game-frame-area"
         @load="handleIframeLoad"
       ></iframe>
