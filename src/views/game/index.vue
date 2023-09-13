@@ -356,7 +356,7 @@ const handleIframeLoad = () => {
 };
 
 onMounted(async () => {
-  mobileHeight.value = window.visualViewport?.height;
+  mobileHeight.value = window.innerHeight;
   window.scrollTo({
     top: 0,
     behavior: "smooth",
