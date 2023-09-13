@@ -673,7 +673,7 @@ onMounted(() => {
                       >
                     </div>
                   </div>
-                  <div>
+                  <div style="margin-top: 3px;">
                     <v-progress-linear
                       v-model="item.deposit_rate"
                       height="19"
@@ -694,7 +694,7 @@ onMounted(() => {
                       >
                     </div>
                   </div>
-                  <div>
+                  <div style="margin-top: 3px;">
                     <v-progress-linear
                       v-model="item.bet_rate"
                       height="19"

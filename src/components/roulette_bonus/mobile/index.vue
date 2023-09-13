@@ -16,6 +16,7 @@ const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
 const winnerToggleSwitch = ref<boolean>(false);
 const marginShow = ref<boolean>(false);
+const muteValue = ref<boolean>(false);
 
 interface rouletteItem {
     value: string
@@ -273,6 +274,10 @@ const showWinnerBody = () => {
     winnerBodyHeight.value = winnerBodyShow.value ? 255 : 0;
 }
 
+const handleMuteValue = () => {
+    muteValue.value = !muteValue.value;
+}
+
 onMounted(() => {
     if (window.innerHeight <= 667) {
         marginShow.value = true;
@@ -283,10 +288,12 @@ onMounted(() => {
 <template>
     <div class="m-roulette-bonus-dialog-container" :class="marginShow ? 'm-roulette-bonus-dialog-margin' : ''">
         <div class="m-roulette-bonus-dialog-header-left">
-            <v-btn class="m-roulette-bonus-dialog-sound-bg-1 ml-4" icon="true" width="34" height="34">
+            <v-btn class="m-roulette-bonus-dialog-sound-bg-1 ml-4" icon="true" width="34" height="34" @click="handleMuteValue">
                 <div class="m-roulette-bonus-dialog-sound-bg-2">
                     <img src="@/assets/public/svg/icon_public_46.svg" width="18"
-                        class="m-roulette-bonus-dialog-sound-position" />
+                        class="m-roulette-bonus-dialog-sound-position" v-if="muteValue == false" />
+                    <img src="@/assets/public/svg/icon_public_47.svg" width="18"
+                        class="m-roulette-bonus-dialog-sound-position" v-else />
                 </div>
             </v-btn>
         </div>

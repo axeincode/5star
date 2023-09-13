@@ -258,7 +258,7 @@ export const lang: langType = {
   mobile_menu: {
     menu: "Menu",
     casino: "Casino",
-    share: "Share",
+    share: "Bonus",
     sport: "Sport",
     mail: "Mail"
   },
@@ -440,7 +440,12 @@ export const lang: langType = {
       deposit: "Deposit",
       receive: "Receive",
       wager: "Wager requirement"
-    }
+    },
+    dashboard_recharge_title1 : "Recharge now!",
+    dashboard_recharge_title2 : "Get Daily Login Bonus",
+    dashboard_recharge_content1 : "VIP users who recharge within 7 days wil recive a daily",
+    dashboard_recharge_content2 : "login bonus, the higher the VIP level, the bigger the bonus!",
+    
   },
   transaction: {
     tab: {

@@ -302,24 +302,22 @@ onMounted(async () => {
       <v-list-item class="m-user-item" @click="goVIPPage">
         <template v-slot:prepend>
           <div>
-            <div style="height: 30px">
-              <img src="@/assets/app_bar/image/img_vip_02.png" width="22" />
+            <div style="height: 30px; justify-content: center; display: flex;">
+              <img src="@/assets/app_bar/image/img_vip_02.png" width="26"  />
             </div>
-            <div class="text-800-10 color-F9BC01 text-center">
-              VIP {{ vipInfo.level }}
-            </div>
+            <div class="text-800-12 color-F9BC01 text-center">VIP {{ vipInfo.level }}</div>
           </div>
         </template>
         <v-list-item-title class="ml-2">
-          <div class="deposit-progress-bg">
-            <div class="d-flex mx-1">
+          <div class="deposit-progress-bg mb-1">
+            <div class="d-flex">
               <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
               <div class="ml-auto text-800-8">
                 <Font>R$ {{ vipInfo.deposit_exp }}</Font> /
                 <Font color="#F9BC01">R$ {{ selectedVipLevel.deposit_exp }}</Font>
               </div>
             </div>
-            <div>
+            <div style="margin-top:2px">
               <v-progress-linear
                 v-model="depositRate"
                 height="8"
@@ -336,7 +334,7 @@ onMounted(async () => {
                 <Font color="#623AEC">R$ {{ selectedVipLevel.bet_exp }}</Font>
               </div>
             </div>
-            <div>
+            <div style="margin-top:2px">
               <v-progress-linear v-model="depositRate" height="8" class="wager-progress">
               </v-progress-linear>
             </div>

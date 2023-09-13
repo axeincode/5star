@@ -301,6 +301,9 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
   user.value.wallet = formatCurrency(Number(item.value), locale, currencyUnit);
 }
 
+const handleCurrencyMenuShow = () => {
+  currencyMenuShow.value = !currencyMenuShow.value;
+}
 const showUserNavBar = (): void => {
   userNavBarToggle.value = !userNavBarToggle.value
   setNavBarToggle(false)
@@ -535,6 +538,8 @@ onMounted(async () => {
                     :scrim="true"
                     class="m-currency-menu"
                     transition="slide-y-transition"
+                    @click.stop="handleCurrencyMenuShow"
+
                   >
                     <template v-slot:activator="{ props }">
                       <div

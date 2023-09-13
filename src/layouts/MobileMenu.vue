@@ -391,7 +391,7 @@ onMounted(() => {
           :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''"
         >
           <v-list-item-title class="ml-2">
-            <div class="mail-header-text">{{ t("mail_dialog.header_text") }}</div>
+            <div class="mail-header-text text-700-14">{{ t("mail_dialog.header_text") }}</div>
           </v-list-item-title>
         </v-list-item>
         <template v-for="(mailItem, index) in tempMailList" :key="index">
@@ -563,7 +563,7 @@ onMounted(() => {
     padding: 14px 20px !important;
     border-radius: 12px !important;
     animation-name: mailScaling;
-    animation-duration: 0.2s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
   }
@@ -573,12 +573,12 @@ onMounted(() => {
     transform: translateY(-43px);
     z-index: -1;
     opacity: 0.8;
-    transition: scale 0.2s ease;
+    transition: scale 0.5s ease;
   }
 
   .animation-mail-item {
     animation-name: animationMailScaling;
-    animation-duration: 0.2s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
   }
@@ -586,21 +586,21 @@ onMounted(() => {
 
 .share-img-position {
   position: absolute;
-  top: -15px;
-  width: 40px;
+  top: -11px;
+  width: 44px;
 }
 
 .share-background-img-position {
   position: absolute;
-  top: -18px;
-  width: 46px;
+  top: -12px;
+  width: 45px;
 }
 
 .circle-background {
   position: absolute;
-  top: -22px;
-  width: 54px;
-  height: 54px;
+  top: -16px;
+  width: 51px;
+  height: 51px;
   background-color: #000000;
   border-radius: 50%;
 }

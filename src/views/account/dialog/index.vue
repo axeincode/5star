@@ -50,7 +50,7 @@ const handleMenu = (index: number) => {
         <v-row class="mt-16 mx-2 justify-center text-700-12 text-gray">
             {{ nickName }}
         </v-row>
-        <v-row class="mx-1 mt-2">
+        <v-row class="mx-1 mt-4">
             <v-col cols="12" class="m-account-menu m-account-dialog-menu-body">
                 <v-list theme="dark">
                     <template v-for="(item, index) in menuList" :key="index">
