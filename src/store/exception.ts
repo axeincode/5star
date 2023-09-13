@@ -6,7 +6,7 @@ export const handleException = (code: number) => {
             errorMsg = '失败';
             break;
         case 100000:
-            errorMsg = '传递的数据异常';
+            errorMsg = 'The data passed is abnormal';
             break;
         case 100001:
             errorMsg = 'The password does not meet the requirements';

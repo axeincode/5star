@@ -227,7 +227,7 @@ watch(mobileWidth, (newValue: number) => {
 
 const handleNotifyShow = () => {
   const toast = useToast();
-  toast.success( notificationText.value, { 
+  toast.success( notificationText.value, {
       timeout: 3000,
       closeOnClick: false,
       pauseOnFocusLoss: false,
@@ -305,12 +305,14 @@ onMounted(async () => {
             <div style="height: 30px">
               <img src="@/assets/app_bar/image/img_vip_02.png" width="22" />
             </div>
-            <div class="text-800-10 color-F9BC01 text-center">VIP {{ vipInfo.level }}</div>
+            <div class="text-800-10 color-F9BC01 text-center">
+              VIP {{ vipInfo.level }}
+            </div>
           </div>
         </template>
         <v-list-item-title class="ml-2">
           <div class="deposit-progress-bg">
-            <div class="d-flex">
+            <div class="d-flex mx-1">
               <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
               <div class="ml-auto text-800-8">
                 <Font>R$ {{ vipInfo.deposit_exp }}</Font> /
@@ -327,7 +329,7 @@ onMounted(async () => {
             </div>
           </div>
           <div class="deposit-progress-bg">
-            <div class="d-flex">
+            <div class="d-flex mx-1">
               <div class="white text-500-8">{{ t("appBar.wager") }}</div>
               <div class="ml-auto text-800-8">
                 <Font>R$ {{ vipInfo.bet_exp }}</Font> /

@@ -67,6 +67,11 @@ export namespace NETWORK {
     static SOCKET_CONNECT = '/user/connect/websocket'
   }
 
+  // transaction api
+  export class TRANSACTION_PAGE {
+    static TRANSACTION_HISTORY = '/user/transactionshistory'
+  }
+
   //Listening events sent actively
   export class UNSOLICITED {}
 }

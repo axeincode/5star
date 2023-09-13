@@ -159,14 +159,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
   },
 ])
 
-const depositAmountList = ref<Array<string>>([
-  '20',
-  '200',
-  '500',
-  '2000',
-  '5000',
-  '19999',
-])
+const depositAmountList = ref<Array<any>>([])
 
 const depositBlurEffectShow = computed(() => {
   const { getDepositBlurEffectShow } = storeToRefs(appBarStore());
@@ -257,8 +250,36 @@ watch(depositConfig, (newValue) => {
   const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
   currencyList.value = filteredObjects;
   selectedPaymentItem.value = paymentList.value[0];
-  depositAmountList.value = newValue["list"];
-  bonusAmount.value = newValue["bonus"][0]["type"] == 0 ? Number(newValue["bonus"][0].award) : Number(newValue["bonus"][0].rate) * 100
+  newValue["list"].map((item: string) => {
+    let bonusAmount: number = 0;
+    let bonusType: number = 0;
+    newValue["bonus"].map((bonusItem: any) => {
+      if (bonusItem["type"] == 0) {
+        if (Number(item) >= bonusItem["min"] && Number(item) <= bonusItem["max"]) {
+          bonusAmount = bonusItem["award"]
+          bonusType = bonusItem["type"]
+        } else if (bonusItem["max"] == 0 && Number(item) >= bonusItem["min"]) {
+          bonusAmount = bonusItem["award"]
+          bonusType = bonusItem["type"]
+        }
+      } else if (bonusItem["type"] == 1) {
+        if (Number(item) >= bonusItem["min"] && Number(item) <= bonusItem["max"]) {
+          bonusAmount = bonusItem["rate"]
+          bonusType = bonusItem["type"]
+        } else if (bonusItem["max"] == 0 && Number(item) >= bonusItem["min"]) {
+          bonusAmount = bonusItem["rate"]
+          bonusType = bonusItem["type"]
+        }
+      }
+    })
+    depositAmountList.value.push({
+      depositSelect: item,
+      bonus: bonusAmount,
+      type: bonusType
+    })
+  })
+  // depositAmountList.value = newValue["list"];
+  // bonusAmount.value = newValue["bonus"][0]["type"] == 0 ? Number(newValue["bonus"][0].award) : Number(newValue["bonus"][0].rate) * 100
 }, { deep: true });
 
 const handleDepositAmount = (amount: string) => {
@@ -371,7 +392,7 @@ const handleDepositSubmit = async () => {
           locale = 'es-CO';
           break;
       }
-      depositAmountWithCurrency.value = formatCurrency(Number(depositAmountWithBonus.value), locale, selectedCurrencyItem.value.name);
+      depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
       codeUrl.value = depositSubmit.value.code_url;
       setMainBlurEffectShow(false);
       setOverlayScrimShow(false);
@@ -457,19 +478,21 @@ watch(bonusCheck, (newValue) => {
       promotionDialogVisible.value = newValue;
     }, 10)
   } else {
-    if (depositConfig.value["bonus"][0]["type"] == 0) {
-      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["award"]
-      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["award"]
+    depositConfig.value["bonus"].map((bonusItem: any) => {
+      if (bonusItem["type"] == 0) {
+        if (Number(depositAmount.value) >= bonusItem["min"] && Number(depositAmount.value) <= bonusItem["max"]) {
+          depositRate.value = bonusItem["award"]
+        } else if (bonusItem["max"] == 0 && Number(depositAmount.value) >= bonusItem["min"]) {
+          depositRate.value = bonusItem["award"]
+        }
+      } else if (bonusItem["type"] == 1) {
+        if (Number(depositAmount.value) >= bonusItem["min"] && Number(depositAmount.value) <= bonusItem["max"]) {
+          depositRate.value = bonusItem["rate"]
+        } else if (bonusItem["max"] == 0 && Number(depositAmount.value) >= bonusItem["min"]) {
+          depositRate.value = bonusItem["rate"]
+        }
       }
-    } else if (depositConfig.value["bonus"][0]["type"] == 1) {
-      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      }
-    }
+    })
   }
 })
 
@@ -482,34 +505,21 @@ watch(depositAmount, (newValue) => {
   }
   isShowAmountValidation.value = !validateAmount();
   if (!bonusCheck.value) {
-    if (depositConfig.value["bonus"][0]["type"] == 0) {
-      // if (depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"] && depositConfig.value["bonus"][0]["award"] < depositConfig.value["bonus"][0]["max"]) {
-      //   depositRate.value = depositConfig.value["bonus"][0]["award"]
-      // } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["award"]) {
-      //   depositRate.value = depositConfig.value["bonus"][0]["min"];
-      // } else if (depositConfig.value["bonus"][0]["max"] == 0 && depositConfig.value["bonus"][0]["award"] > depositConfig.value["bonus"][0]["min"]) {
-      //   depositRate.value = depositConfig.value["bonus"][0]["award"]
-      // }
-      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["award"]
-      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["award"]
+    depositConfig.value["bonus"].map((bonusItem: any) => {
+      if (bonusItem["type"] == 0) {
+        if (Number(depositAmount.value) >= bonusItem["min"] && Number(depositAmount.value) <= bonusItem["max"]) {
+          depositRate.value = bonusItem["award"]
+        } else if (bonusItem["max"] == 0 && Number(depositAmount.value) >= bonusItem["min"]) {
+          depositRate.value = bonusItem["award"]
+        }
+      } else if (bonusItem["type"] == 1) {
+        if (Number(depositAmount.value) >= bonusItem["min"] && Number(depositAmount.value) <= bonusItem["max"]) {
+          depositRate.value = bonusItem["rate"]
+        } else if (bonusItem["max"] == 0 && Number(depositAmount.value) >= bonusItem["min"]) {
+          depositRate.value = bonusItem["rate"]
+        }
       }
-    } else if (depositConfig.value["bonus"][0]["type"] == 1) {
-      // const bonus = Number(depositAmount.value) * Number(depositConfig.value["bonus"][0]["rate"]);
-      // if (bonus > depositConfig.value["bonus"][0]["min"] && bonus < depositConfig.value["bonus"][0]["max"]) {
-      //   depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      // } else if (depositConfig.value["bonus"][0]["min"] == depositConfig.value["bonus"][0]["max"] && depositConfig.value["bonus"][0]["min"] == bonus) {
-      //   depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      // } else if (depositConfig.value["bonus"][0]["max"] == 0 && bonus > depositConfig.value["bonus"][0]["min"]) {
-      //   depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      // }
-      if (Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"] && Number(depositAmount.value) <= depositConfig.value["bonus"][0]["max"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      } else if (depositConfig.value["bonus"][0]["max"] == 0 && Number(depositAmount.value) >= depositConfig.value["bonus"][0]["min"]) {
-        depositRate.value = depositConfig.value["bonus"][0]["rate"]
-      }
-    }
+    })
   }
 })
 
@@ -691,25 +701,23 @@ onMounted(async () => {
           class="my-1 text-none"
           height="40px"
           :class="[
-            depositAmountItem == depositAmount
+            depositAmountItem.depositSelect == depositAmount
               ? 'm-deposit-amout-btn-black'
               : 'm-deposit-amout-btn-white',
           ]"
-          @click="handleDepositAmount(depositAmountItem)"
+          @click="handleDepositAmount(depositAmountItem.depositSelect)"
         >
-          {{ depositAmountUnit }} {{ depositAmountItem }}
+          {{ depositAmountUnit }} {{ depositAmountItem.depositSelect }}
           <div
             class="m-deposit-amount-area"
-            v-if="
-              !bonusCheck &&
-              ((Number(depositAmountItem) >= Number(depositConfig['bonus'][0]['min']) &&
-                Number(depositAmountItem) <= Number(depositConfig['bonus'][0]['max'])) ||
-                (Number(depositAmountItem) >= Number(depositConfig['bonus'][0]['min']) &&
-                  Number(depositConfig['bonus'][0]['max']) == 0))
-            "
+            v-if="!bonusCheck && depositAmountItem.bonus != 0"
           >
             <div class="m-deposit-amount-rate-text">
-              {{ depositConfig["bonus"][0].type == 0 ? bonusAmount : bonusAmount + "%" }}
+              {{
+                depositAmountItem.type == 0
+                  ? depositAmountItem.bonus
+                  : depositAmountItem.bonus + "%"
+              }}
             </div>
           </div>
         </v-btn>
@@ -790,7 +798,7 @@ onMounted(async () => {
       <MDepositInfoDialog
         :selectedPaymentItem="selectedPaymentItem"
         :selectedCurrencyItem="selectedCurrencyItem"
-        :depositAmountWithBonus="depositAmountWithBonus"
+        :depositAmount="depositAmount"
         :depositAmountWithCurrency="depositAmountWithCurrency"
         :codeUrl="codeUrl"
         @depositInfoDialogClose="handleDepositInformation"
@@ -1005,7 +1013,7 @@ onMounted(async () => {
   transform: none !important;
 }
 
-.m-deposit-amount-text{
+.m-deposit-amount-text {
   transform-origin: top !important;
 
   .v-field__field {

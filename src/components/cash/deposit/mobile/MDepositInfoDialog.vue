@@ -11,16 +11,16 @@ import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 const { t } = useI18n();
 
 const emit = defineEmits<{ (e: "depositInfoDialogClose"): void }>();
-const props = defineProps<{ selectedPaymentItem: GetPaymentItem, selectedCurrencyItem: GetCurrencyItem, depositAmountWithBonus: string | number, codeUrl: string, depositAmountWithCurrency: string }>();
+const props = defineProps<{ selectedPaymentItem: GetPaymentItem, selectedCurrencyItem: GetCurrencyItem, depositAmount: string | number, codeUrl: string, depositAmountWithCurrency: string }>();
 
-const { selectedPaymentItem, selectedCurrencyItem, depositAmountWithBonus, codeUrl, depositAmountWithCurrency } = toRefs(props);
+const { selectedPaymentItem, selectedCurrencyItem, depositAmount, codeUrl, depositAmountWithCurrency } = toRefs(props);
 
 const closeDepositInfoDialog = async () => {
     emit("depositInfoDialogClose");
 };
 
 const size = ref<number>(132)
-const notificationText = ref<string>('Copied');
+const notificationText = ref<string>('successful copied');
 
 const handleCopyUrlCode = () => {
     navigator.clipboard.writeText(codeUrl.value).then(
@@ -65,7 +65,7 @@ const handleCopyUrlCode = () => {
       <div class="mx-5 pt-3 d-flex" style="justify-content: space-between">
         <img :src="selectedPaymentItem.icon" />
         <p class="text-900-20 white">
-          {{ selectedCurrencyItem.name }}&nbsp;{{ depositAmountWithBonus }}
+          {{ selectedCurrencyItem.name }}&nbsp;{{ depositAmount }}
         </p>
       </div>
       <div class="m-deposit-info-qr-code">

@@ -532,6 +532,7 @@ onMounted(async () => {
                   <v-menu
                     offset="20"
                     v-model:model-value="currencyMenuShow"
+                    :scrim="true"
                     class="m-currency-menu"
                     transition="slide-y-transition"
                   >
@@ -953,6 +954,10 @@ onMounted(async () => {
 .m-currency-menu {
   .v-overlay__content {
     left: 10px !important;
+  }
+
+  .v-overlay__scrim {
+    opacity: 0 !important;
   }
 
   .v-overlay__content::after {

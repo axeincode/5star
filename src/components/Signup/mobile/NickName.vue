@@ -22,6 +22,7 @@ const modules = [Pagination];
 const { t } = useI18n();
 const emit = defineEmits<{ (e: "close"): void }>();
 const { dispatchUpdateUserInfo } = authStore();
+const { dispatchUserProfile } = authStore();
 
 const userName = ref<string>("");
 const isShowUsernameValidation = ref<boolean>(false);
@@ -105,6 +106,7 @@ const submitNickName = async () => {
     avatar: selectedAvatarItem.value,
   });
   if (success.value) {
+    await dispatchUserProfile();
     const toast = useToast();
     toast.success("added name successfully!", {
       timeout: 3000,

@@ -100,6 +100,11 @@ export const withdrawStore = defineStore({
       // response call back function
       const next = (response: Withdraw.GetWithdrawalHistoryResponse) => {
         if (response.code == 200) {
+          this.withdrawHistoryItem.record.map((item: Withdraw.WithdrawalHistoryItem) => {
+            if (item.id == data.id) {
+              item.status = 3;
+            }
+          })
           this.setSuccess(true);
         } else {
           this.setErrorMessage(handleException(response.code));

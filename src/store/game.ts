@@ -19,7 +19,9 @@ export const gameStore = defineStore({
             weburl: ""
         } as Game.GameEnterResponse,
         searchGameDialogShow: false as boolean,
-        searchTextList: [] as Array<string>
+        searchTextList: [] as Array<string>,
+        gameFilterText: "" as string,
+        originalGames: [] as Array<Game.Search>
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -28,7 +30,9 @@ export const gameStore = defineStore({
         getGameSearchList: (state) => state.gameSearchList,
         getEnterGameItem: (state) => state.enterGameItem,
         getSearchGameDialogShow: (state) => state.searchGameDialogShow,
-        getSearchTextList: (state) => state.searchTextList
+        getSearchTextList: (state) => state.searchTextList,
+        getGameFilterText: (state) => state.gameFilterText,
+        getOriginalGames: (state) => state.originalGames,
     },
     actions: {
         // set functions
@@ -61,6 +65,12 @@ export const gameStore = defineStore({
         },
         removeAllSearchTextList() {
             this.searchTextList = [];
+        },
+        setGameFilterText(gameFilterText: string) {
+            this.gameFilterText = gameFilterText
+        },
+        setOriginalGames(originalGames: Array<Game.Search>) {
+            this.originalGames = originalGames
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {

@@ -196,7 +196,7 @@ const goToSharePage = () => {
   // mailMenuShow.value = false;
   // casinoBtnActive.value = false;
   // navbarToggle.value = false;
-  
+
   // setUserNavBarToggle(false);
   // setNavBarToggle(false);
   // setMainBlurEffectShow(false);
@@ -204,7 +204,7 @@ const goToSharePage = () => {
   //   setBonusDashboardDialogVisible(true);
 
   // },10)
-  
+
   // menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
   // casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   // sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
@@ -429,7 +429,7 @@ onMounted(() => {
 <style lang="scss">
 @keyframes mailScaling {
   0% {
-    transform: scale(0);
+    transform: scale(0.8);
   }
 
   60% {
@@ -443,7 +443,7 @@ onMounted(() => {
 
 @keyframes animationMailScaling {
   0% {
-    transform: scale(0);
+    transform: scale(0.8);
   }
 
   60% {

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
-import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import GameHistory from "./game_history/index.vue";
@@ -14,12 +13,14 @@ import Withdrawal from "./withdrawal/index.vue";
 import MWithdrawal from "./mobile/withdrawal/index.vue";
 import { withdrawStore } from "@/store/withdraw";
 import { depositStore } from "@/store/deposit";
+import { bonusTransactionStore } from "@/store/bonusTransaction";
 import moment from "moment-timezone";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchWithdrawalHistory } = withdrawStore();
 const { dispatchUserDepositHistory } = depositStore();
+const { dispatchTransactionHistory } = bonusTransactionStore();
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -33,6 +34,11 @@ const withdrawHistoryItem = computed(() => {
 const depositHistoryItem = computed(() => {
   const { getDepositHistoryItem } = storeToRefs(depositStore());
   return getDepositHistoryItem.value;
+});
+
+const transactionHistoryItem = computed(() => {
+  const { getTransactionHistoryItem } = storeToRefs(bonusTransactionStore());
+  return getTransactionHistoryItem.value;
 });
 
 const transactionTabs = ref<Array<string>>([
@@ -88,6 +94,11 @@ onMounted(async () => {
     page_size: pageSize.value,
     start_time: Math.ceil(moment().valueOf() / 1000),
   });
+  await dispatchTransactionHistory({
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
+    lid: 0,
+  });
 });
 </script>
 <template>
@@ -132,7 +143,11 @@ onMounted(async () => {
       style="margin-left: 10px; margin-right: 10px"
     >
       <Transactions v-if="mobileWidth > 600" />
-      <MTransactions v-else />
+      <MTransactions
+        :pageSize="pageSize"
+        :transactionHistoryItem="transactionHistoryItem"
+        v-else
+      />
     </v-window-item>
     <v-window-item
       :value="t('transaction.tab.deposit')"

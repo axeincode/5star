@@ -72,10 +72,6 @@ const refundWithdrawalSubmit = async (id: number, index: number) => {
       icon: SuccessIcon,
       rtl: false,
     });
-    await dispatchWithdrawalHistory({
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
   }
 }
 

@@ -10,7 +10,10 @@ import { refferalStore } from "@/store/refferal";
 import { mailStore } from "@/store/mail";
 import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 
+const router = useRouter();
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
@@ -22,7 +25,7 @@ const { setMailMenuShow } = mailStore();
 const { setSearchGameDialogShow } = gameStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
-
+const { setGameFilterText } = gameStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -31,6 +34,7 @@ const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
 const originalMenu = ref<boolean>(false);
 const navDrawer = ref<any>(null);
+const casinoIconColor = ref<string>("#7782AA");
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -61,6 +65,11 @@ const loginBonusDialog = computed(() => {
 const rouletteBonusDialog = computed(() => {
   const { getRouletteBonusDialogVisible } = storeToRefs(loginBonusStore());
   return getRouletteBonusDialogVisible.value;
+})
+
+const originalGames = computed(() => {
+  const { getOriginalGames } = storeToRefs(gameStore());
+  return getOriginalGames.value
 })
 
 // language array
@@ -125,6 +134,14 @@ watch(navBarToggle, (newValue) => {
   }
 })
 
+watch(open, (value) => {
+  if (value.length == 1) {
+    casinoIconColor.value = "#7782AA";
+  } else {
+    casinoIconColor.value = "#FFFFFF";
+  }
+})
+
 const handleLanguageDropdown = (item: string) => {
   language.value = item;
   switch (item) {
@@ -150,6 +167,24 @@ const navDrawerScroll = () => {
   languageMenu.value = false;
 }
 
+const handleEnterGame = async (id: number, name: string) => {
+  let replaceName = name.replace(/ /g, "-");
+  if (mobileWidth.value < 600) {
+    setMailMenuShow(true);
+  }
+  router.push(`/game/${id}/${replaceName}`);
+};
+
+const casinoIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", casinoIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", casinoIconColor.value);
+    }
+  }
+  return el;
+};
+
 const openLoginBonusDialog = () => {
   setLoginBonusDialogVisible(true);
   setNavBarToggle(false);
@@ -171,6 +206,25 @@ const openRefferalDialogShow = () => {
   setOverlayScrimShow(false);
   setRefferalDialogShow(true)
   setNavBarToggle(false);
+}
+const handleGameFilter = (filterText: string) => {
+  switch (filterText) {
+    case t('navBar.casino_sub_menu.recently_played'):
+      setGameFilterText("history");
+      break;
+    case t('navBar.casino_sub_menu.favorites'):
+      setGameFilterText("favorite");
+      break;
+    case t('navBar.casino_sub_menu.slots'):
+      setGameFilterText("slot");
+      break;
+    case t('navBar.casino_sub_menu.live_casino'):
+      setGameFilterText("live");
+      break;
+  }
+  setNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setOverlayScrimShow(false);
 }
 
 onMounted(() => {
@@ -277,15 +331,30 @@ onMounted(() => {
         <v-list-group value="Casino">
           <template v-slot:activator="{ props }">
             <v-list-item
-              class="m-avatar-img m-user-item1 m-nav-menu"
+              class="m-user-item1 m-nav-menu white"
               v-bind="props"
-              prepend-avatar="@/assets/public/svg/icon_public_34.svg"
-              :title="t('navBar.casino')"
               link
               value="casino"
               :height="40"
-              style="margin-bottom: -16px!important; margin-top: -8px!important; padding-left: 10px;"
-            ></v-list-item>
+              style="
+                margin-bottom: -16px !important;
+                margin-top: -8px !important;
+                padding-left: 10px;
+              "
+            >
+              <template v-slot:prepend>
+                <inline-svg
+                  :src="icon_public_34"
+                  width="16"
+                  :transform-source="casinoIconTransform"
+                ></inline-svg>
+              </template>
+              <v-list-item-title
+                class="ml-2"
+                :class="open.length == 1 ? 'gray' : 'white'"
+                >{{ t("navBar.casino") }}</v-list-item-title
+              >
+            </v-list-item>
           </template>
           <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px">
             <v-list>
@@ -294,14 +363,16 @@ onMounted(() => {
                 prepend-avatar="@/assets/public/svg/icon_public_35.svg"
                 :title="t('navBar.casino_sub_menu.recently_played')"
                 value="recently played"
-                style="margin-bottom: -4px!important; margin-top: -4px!important;"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.recently_played'))"
               ></v-list-item>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_36.svg"
                 :title="t('navBar.casino_sub_menu.favorites')"
                 value="favorites"
-                style="margin-bottom: -4px!important; margin-top: -4px!important;"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.favorites'))"
               ></v-list-item>
               <v-menu
                 location="center"
@@ -318,19 +389,20 @@ onMounted(() => {
                     :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
                     :title="t('navBar.casino_sub_menu.game_originals')"
                     value="game originals"
-                    style="margin-bottom: -4px!important; margin-top: -4px!important;"
+                    style="margin-bottom: -4px !important; margin-top: -4px !important"
                   >
                   </v-list-item>
                 </template>
                 <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
                   <v-list-item
-                    v-for="(item, i) in gameOriginalItems"
+                    v-for="(item, i) in originalGames"
                     :key="i"
                     :value="item.name"
                     class="m-avatar-img m-nav-sub-menu"
-                    :prepend-avatar="item.icon"
+                    prepend-avatar="@/assets/public/svg/icon_public_21.svg"
                     :title="item.name"
                     style="font-size: 11px !important; font-weight: 500 !important"
+                    @click="handleEnterGame(item.id, item.name)"
                   >
                   </v-list-item>
                 </v-list>
@@ -340,14 +412,16 @@ onMounted(() => {
                 prepend-avatar="@/assets/public/svg/icon_public_38.svg"
                 :title="t('navBar.casino_sub_menu.slots')"
                 value="slots"
-                style="margin-bottom: -4px!important; margin-top: -4px!important;"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.slots'))"
               ></v-list-item>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_39.svg"
                 :title="t('navBar.casino_sub_menu.live_casino')"
                 value="live casino"
-                style="margin-bottom: -4px!important; margin-top: -4px!important;"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.live_casino'))"
               ></v-list-item>
             </v-list>
           </v-card>
@@ -358,7 +432,7 @@ onMounted(() => {
           class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_40.svg"
           :title="t('navBar.sport')"
-          style="margin-bottom: -8px!important; padding-left: 10px;"
+          style="margin-bottom: -8px !important; padding-left: 10px"
         ></v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
@@ -367,13 +441,21 @@ onMounted(() => {
           class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_41.svg"
           :title="t('navBar.menu_item_1.promotions')"
-          style="margin-bottom: -4px!important; margin-top: -8px!important; padding-left: 10px;"
+          style="
+            margin-bottom: -4px !important;
+            margin-top: -8px !important;
+            padding-left: 10px;
+          "
         ></v-list-item>
         <v-list-item
           class="m-vip-club m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_42.svg"
           :title="t('navBar.menu_item_1.vip_club')"
-          style="margin-bottom: -4px!important; margin-top: -4px!important; padding-left: 10px;"
+          style="
+            margin-bottom: -4px !important;
+            margin-top: -4px !important;
+            padding-left: 10px;
+          "
           router
           :to="{ name: 'VIP' }"
         ></v-list-item>
@@ -381,7 +463,11 @@ onMounted(() => {
           class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_43.svg"
           :title="t('navBar.menu_item_1.affiliate')"
-          style="margin-bottom: -4px!important; margin-top: -4px!important; padding-left: 10px;"
+          style="
+            margin-bottom: -4px !important;
+            margin-top: -4px !important;
+            padding-left: 10px;
+          "
           router
           :to="{ name: 'Affiliate' }"
         ></v-list-item>
@@ -389,7 +475,11 @@ onMounted(() => {
           class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_44.svg"
           :title="t('navBar.menu_item_1.blog')"
-          style="margin-bottom: -8px!important; margin-top: -4px!important; padding-left: 10px;"
+          style="
+            margin-bottom: -8px !important;
+            margin-top: -4px !important;
+            padding-left: 10px;
+          "
         ></v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
@@ -398,7 +488,11 @@ onMounted(() => {
           class="m-avatar-img m-user-item1 m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_45.svg"
           :title="t('navBar.live_support')"
-          style="margin-bottom: -8px!important; margin-top: -4px!important; padding-left: 10px;"
+          style="
+            margin-bottom: -8px !important;
+            margin-top: -4px !important;
+            padding-left: 10px;
+          "
         ></v-list-item>
       </v-list>
       <v-list>
@@ -413,7 +507,7 @@ onMounted(() => {
             <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
               <v-list-item
                 v-bind="props"
-                class="m-casino-sub-img  m-nav-menu"
+                class="m-casino-sub-img m-nav-menu"
                 prepend-avatar="@/assets/public/svg/icon_public_57.svg"
                 :title="language"
                 :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
@@ -458,6 +552,10 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+::deep(.v-list-item__overlay) {
+  opacity: 1 !important;
+}
+
 .nav-lang-selected-item {
   border: 1px solid #00b25c;
   margin: 5px;
@@ -614,7 +712,7 @@ onMounted(() => {
 
   :deep(.v-list-item-title) {
     font-weight: 700;
-    font-size: 12px!important;
+    font-size: 12px !important;
     color: #7782aa;
   }
 
@@ -881,27 +979,31 @@ onMounted(() => {
   left: 37px;
   top: 21px;
 }
+
 .m-nav-menu {
   :deep(.v-list-item-title) {
-    font-size: 12px!important;
-    font-weight: 700!important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
   }
+
   :deep(.v-avatar) {
-    margin-right: 10px!important;
+    margin-right: 10px !important;
   }
 }
+
 .m-nav-sub-menu {
   :deep(.v-list-item-title) {
-    font-size: 11px!important;
-    font-weight: 500!important;
-    width: max-content;
+    font-size: 11px !important;
+    font-weight: 500 !important;
   }
+
   :deep(.v-avatar) {
-    margin-right: 6px!important;
+    margin-right: 6px !important;
   }
 }
-.m-user-item1{
-  padding-top:0px!important;
-  padding-bottom:0px!important;
+
+.m-user-item1 {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 </style>

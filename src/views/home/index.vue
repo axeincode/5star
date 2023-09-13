@@ -67,6 +67,7 @@ const Dashboard = defineComponent({
     const { dispatchGameEnter } = gameStore();
     const { dispatchUserGame } = gameStore();
     const { dispatchFavoriteGame } = gameStore();
+    const { setOriginalGames } = gameStore();
     const { setMailMenuShow } = mailStore();
     const { setNavBarToggle } = appBarStore();
     const { setMainBlurEffectShow } = appBarStore();
@@ -676,6 +677,11 @@ const Dashboard = defineComponent({
     const searchGameDialogShow = computed(() => {
       const { getSearchGameDialogShow } = storeToRefs(gameStore());
       return getSearchGameDialogShow.value;
+    });
+
+    const gameFilterText = computed(() => {
+      const { getGameFilterText } = storeToRefs(gameStore());
+      return getGameFilterText.value;
     });
 
     const isNumeric = (value: any) => {
@@ -1358,6 +1364,101 @@ const Dashboard = defineComponent({
       setMailMenuShow(value);
     });
 
+    watch(gameFilterText, async (value) => {
+      selectedGameFilterBtn.value = value;
+      switch (selectedGameFilterBtn.value) {
+        case "favorite":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#FFFFFF";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "favorite";
+          break;
+        case "history":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#FFFFFF";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "history";
+          break;
+        case "original":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#FFFFFF";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "original";
+          break;
+        case "pgsoft":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#FFFFFF";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "pgsoft";
+          break;
+        case "slot":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#FFFFFF";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "slot";
+          break;
+        case "live":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#FFFFFF";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "live";
+          break;
+      }
+
+      if (
+        selectedCategoryName.value == "favorite" ||
+        selectedCategoryName.value == "history"
+      ) {
+        await dispatchUserGame({
+          game_categories_slug: selectedCategoryName.value,
+          page: currentPage.value,
+          limit: limit.value,
+        });
+        pagingGames.value.map(async (item) => {
+          if (item.slug == selectedCategoryName.value) {
+            if (gameSearchList.value.list.length > 0) {
+              gameSearchList.value.list.map((item) => {
+                item.image = state.testGames[Math.floor(Math.random() * 28)];
+              });
+            }
+            item.page_no = 1;
+            item.games = gameSearchList.value.list;
+            item.game_count = gameSearchList.value.total;
+          }
+        });
+      }
+    });
+
     onMounted(async () => {
       loading.value = true;
       window.scrollTo({
@@ -1438,6 +1539,9 @@ const Dashboard = defineComponent({
         }
         item.page_no = 1;
         item.games = gameSearchList.value.list;
+        if (item.slug == "original") {
+          setOriginalGames(gameSearchList.value.list.slice(0, 9));
+        }
       });
 
       loading.value = false;
@@ -3002,7 +3106,7 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
-    height: 160px;
+    // height: 160px;
   }
 
   .v-progressive-image-loading:before {
