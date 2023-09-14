@@ -4,10 +4,10 @@ import { useI18n } from "vue-i18n";
 import { type GetPaymentItem } from '@/interface/deposit';
 import { type GetCurrencyItem } from '@/interface/deposit';
 import QrcodeVue from 'qrcode.vue'
-import { copyText } from 'vue3-clipboard'
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import * as clipboard from "clipboard-polyfill";
 
 const { t } = useI18n();
 
@@ -24,37 +24,58 @@ const size = ref<number>(132)
 const notificationText = ref<string>('successful copied');
 
 const handleCopyUrlCode = async () => {
-  if (window.navigator.clipboard) {
-    window.navigator.clipboard.writeText(codeUrl.value).then(
-      () => {
-        console.log('Copied to clipboard!');
-        const toast = useToast();
-        toast.success(notificationText.value, {
-          timeout: 3000,
-          closeOnClick: false,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          draggable: false,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: SuccessIcon,
-          rtl: false,
-        });
-      },
-      (error) => {
-        console.error('Could not copy text: ', error);
-      }
-    );
-  } else {
-    const textArea = document.createElement("textarea");
-    textArea.textContent = codeUrl.value;
-    textArea.style.position = "absolute";
-    textArea.style.left = "-9999px";
-    document.body.append(textArea);
-    textArea.select();
-    document.execCommand("copy");
-  }
+  clipboard.writeText(codeUrl.value).then(
+    () => {
+      console.log('Copied to clipboard!');
+      const toast = useToast();
+      toast.success(notificationText.value, {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+    },
+    (error) => {
+      console.error('Could not copy text: ', error);
+    }
+  );
+  // if (window.navigator.clipboard) {
+  //   window.navigator.clipboard.writeText(codeUrl.value).then(
+  //     () => {
+  //       console.log('Copied to clipboard!');
+  //       const toast = useToast();
+  //       toast.success(notificationText.value, {
+  //         timeout: 3000,
+  //         closeOnClick: false,
+  //         pauseOnFocusLoss: false,
+  //         pauseOnHover: false,
+  //         draggable: false,
+  //         showCloseButtonOnHover: false,
+  //         hideProgressBar: true,
+  //         closeButton: "button",
+  //         icon: SuccessIcon,
+  //         rtl: false,
+  //       });
+  //     },
+  //     (error) => {
+  //       console.error('Could not copy text: ', error);
+  //     }
+  //   );
+  // } else {
+  //   const textArea = document.createElement("textarea");
+  //   textArea.textContent = codeUrl.value;
+  //   textArea.style.position = "absolute";
+  //   textArea.style.left = "-9999px";
+  //   document.body.append(textArea);
+  //   textArea.select();
+  //   document.execCommand("copy");
+  // }
 }
 </script>
 

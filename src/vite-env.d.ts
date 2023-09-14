@@ -7,5 +7,3 @@ declare module '*.vue' {
 }
 
 declare module 'vue-progressive-image';
-
-declare module 'vue3-clipboard';
