@@ -43,6 +43,26 @@ const mailIconColor = ref<string>('#7782AA');
 const mailListHeight = ref<number>(0);
 
 const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
+const shareIconIndex = ref<number>(0);
+
+
+setTimeout(() => {
+  shareIconIndex.value++;
+}, 5000);
+watch(shareIconIndex, (newValue) => {
+  if ((newValue % 3) == 0) {
+    shareIcon.value = new URL("@/assets/public/image/img_public_19.png", import.meta.url).href; 
+  } else if ((newValue % 3) == 1) {
+    shareIcon.value = new URL("@/assets/public/image/img_public_10.png", import.meta.url).href;     
+  } else {
+    shareIcon.value = new URL("@/assets/public/image/img_public_46.png", import.meta.url).href; 
+  }
+  setTimeout(() => {
+    shareIconIndex.value++;
+  }, 5000);
+}, { deep: true })
+
+
 
 const prevScrollPos = ref<number>(0);
 
@@ -341,10 +361,13 @@ onMounted(() => {
     <v-btn class="menu-text-color share-ripple-btn" @click="goToSharePage">
       <div class="circle-background"></div>
       <img
-        src="@/assets/public/svg/bg_public_22.svg"
+        src="@/assets/public/image/bg_public_22.png"
         class="share-background-img-position"
       />
-      <img :src="shareIcon" class="share-img-position" />
+      <div class = "m-mask">
+        <img :src="shareIcon" class="share-img-position share-animation"/>
+      </div>
+      
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
       </div>
@@ -464,6 +487,9 @@ onMounted(() => {
   }
 }
 
+
+
+
 .mobile-menu-index {
   z-index: 2009 !important;
   overflow: inherit !important;
@@ -488,6 +514,49 @@ onMounted(() => {
   }
 }
 
+
+
+
+
+@keyframes shareAnimation {
+
+  0% {top: 70px}
+  1.8% { top: 0px}
+  4.2% {top: 16px; transform: scaleY(0.7)}
+  7.2% { top: 6px; transform: scaleY(1.1)}
+  10.8% {top: 11px; transform: scaleY(1)}
+  
+  95% {top: 11px}
+  99% {top: 6px}
+  100% {top: 70px}
+  
+  
+}
+
+.m-mask {
+  position: absolute;
+  width: 46px;
+  height: 55px;
+  top:-23px;
+  -webkit-mask-image: url("@/assets/public/image/ua_public_132.png");
+  mask-image: url("@/assets/public/image/ua_public_132.png");
+  border-radius: 0px 0px 25px 25px;
+}
+.share-animation {
+  animation-name: shareAnimation;
+  position: relative;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.scale-mail-item {
+  scale: 0.96;
+  transform: translateY(-43px);
+  z-index: -1;
+  opacity: 0.8;
+  transition: scale 0.5s ease;
+}
 .menu-text-color {
   color: #7782aa;
 
@@ -577,14 +646,7 @@ onMounted(() => {
     animation-timing-function: linear;
     animation-iteration-count: 1;
   }
-
-  .scale-mail-item {
-    scale: 0.96;
-    transform: translateY(-43px);
-    z-index: -1;
-    opacity: 0.8;
-    transition: scale 0.5s ease;
-  }
+  
 
   .animation-mail-item {
     animation-name: animationMailScaling;
@@ -595,9 +657,10 @@ onMounted(() => {
 }
 
 .share-img-position {
-  position: absolute;
+  position: relative;
   top: -11px;
   width: 44px;
+  left:-2px;
 }
 
 .share-background-img-position {

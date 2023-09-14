@@ -100,6 +100,9 @@ const handleSelectBonusBtn = (selBtn: string) => {
   selectedBtn.value = selBtn;
 }
 
+const handleClose = () => {
+  drawer.value = !drawer.value;
+}
 
 onMounted(() => {
   drawer.value = false;
@@ -117,21 +120,26 @@ onMounted(() => {
     v-model="drawer"
     style = "
     background-color:transparent!important;
-    height: 615px!important;
+    height: 593px!important;
     box-shadow: none!important;
     border: none!important;"
     disable-route-watcher
   >
-    <div class="d-flex">
-      <div class="m-bonus-dashboard-title">Bonus Dashboard</div>
-      <div class="m-bonus-dashboard-img">
-        <img
-          src="@/assets/public/image/img_public_43.png"
-          width="95"
-          height="73"
-          style="float: right"
-        />
-      </div>
+    <div class="d-flex m-bonus-dashboard-header" @click="handleClose">
+      <v-btn>
+        <div class="m-bonus-dashboard-title">Bonus Dashboard</div>
+          <div class="m-bonus-dashboard-img">
+            
+              <img
+                src="@/assets/public/image/img_public_43.png"
+                width="95"
+                height="73"
+                style="float: right"
+              />
+            
+          </div>
+      </v-btn>
+      
     </div>
 
     <div class="m-bonus-btns">
@@ -427,7 +435,6 @@ onMounted(() => {
 
 .m-bonus-btns {
   position: relative;
-  top: 30px;
 
   height: 60px;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -470,7 +477,8 @@ onMounted(() => {
 }
 
 .m-nav-drawer-content1 {
-  padding-top: 40px !important;
+  margin-top: -30px;
+  padding-top: 46px !important;
   background: rgba(41, 37, 60, 1);
 
   .m-recharge-bonus-body {
@@ -530,7 +538,7 @@ onMounted(() => {
 
 .m-bonus-dashboard-title {
   position: relative;
-  top: 84px;
+  top: 24px;
   font-family: Inter;
   font-size: 18px;
   font-weight: 700;
@@ -542,8 +550,17 @@ onMounted(() => {
 }
 .m-bonus-dashboard-img {
   position: relative;
-  top: 30px;
+  top: 0px;
   margin-left: 27px;
+
+  
+}
+.m-bonus-dashboard-header {
+  .v-btn{
+    background: transparent;
+    height: fit-content;
+    box-shadow: none;
+  }
 }
 .m-bonus-hide {
   display: none;
