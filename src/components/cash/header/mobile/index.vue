@@ -27,6 +27,7 @@ const { setPixInfo } = depositStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { dispatchUserProfile } = authStore();
+const { setPixInfoToggle } = depositStore();
 
 const cashToggleSwitch = ref<boolean>(false);
 
@@ -249,6 +250,9 @@ watch(pixInfoMenuShow, (value) => {
     confirmValidation.value = false;
   }
   setDepositBlurEffectShow(pixInfoMenuShow.value == true ? true : false)
+  if (!value) {
+    setPixInfoToggle(false);
+  }
 })
 
 const depositTransform = (el: any) => {
@@ -266,8 +270,7 @@ const withdrawTransform = (el: any) => {
 }
 
 
-onMounted(async () => {
-  await dispatchUserProfile();
+onMounted(() => {
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
