@@ -356,9 +356,14 @@ const handleIframeLoad = () => {
   }
 };
 
-onMounted(async () => {
-  setMobileMenuShow(false);
+const handleResize = () => {
   mobileHeight.value = window.innerHeight;
+};
+
+onMounted(async () => {
+  window.addEventListener("resize", handleResize);
+  mobileHeight.value = window.innerHeight;
+  setMobileMenuShow(false);
   window.scrollTo({
     top: 0,
     behavior: "smooth",

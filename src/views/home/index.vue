@@ -1184,6 +1184,7 @@ const Dashboard = defineComponent({
     };
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
+      currentPage.value = 1;
       selectedGameFilterBtn.value = gamFilterBtn;
       switch (selectedGameFilterBtn.value) {
         case t("home.button.all_game"):
@@ -1287,6 +1288,34 @@ const Dashboard = defineComponent({
           }
         });
       }
+      if (mobileWidth.value > 600) {
+        pagingGames.value.map((item) => {
+          if (item.games.length > 7) {
+            item.games = item.games.slice(0, 7);
+            item.page_no = 1;
+          }
+        });
+        allGames.value.map((item) => {
+          if (item.games.length > 7) {
+            item.games = item.games.slice(0, 7);
+            item.page_no = 1;
+          }
+        });
+      } else {
+        pagingGames.value.map((item) => {
+          if (item.games.length > 6) {
+            item.games = item.games.slice(0, 6);
+            item.page_no = 1;
+          }
+        });
+        allGames.value.map((item) => {
+          if (item.games.length > 6) {
+            item.games = item.games.slice(0, 6);
+            item.page_no = 1;
+          }
+        });
+      }
+      console.log(pagingGames.value);
     };
 
     const handleMoreGame = async (
@@ -1302,7 +1331,7 @@ const Dashboard = defineComponent({
       if (slug == "favorite" || slug == "history") {
         await dispatchUserGame({
           game_categories_slug: selectedCategoryName.value,
-          page: currentPage.value,
+          page: new_page_no,
           limit: limit.value * new_page_no,
         });
       } else {
@@ -1310,7 +1339,7 @@ const Dashboard = defineComponent({
           "?game_categories_slug=" +
             slug +
             "&page=" +
-            moreGameCurrentPage.value +
+            new_page_no +
             "&limit=" +
             limit.value
         );
@@ -1340,17 +1369,22 @@ const Dashboard = defineComponent({
       await dispatchFavoriteGame({
         del_game: id,
       });
-      await dispatchUserGame({
-        game_categories_slug: selectedCategoryName.value,
-        page: currentPage.value,
-        limit: limit.value * page_no,
-      });
-      gameSearchList.value.list.map((item) => {
-        item.image = state.testGames[Math.floor(Math.random() * 28)];
-      });
+      // await dispatchUserGame({
+      //   game_categories_slug: selectedCategoryName.value,
+      //   page: currentPage.value,
+      //   limit: limit.value * page_no,
+      // });
+      // gameSearchList.value.list.map((item) => {
+      //   item.image = state.testGames[Math.floor(Math.random() * 28)];
+      // });
       pagingGames.value.map((item) => {
         if (item.name == selectedCategoryName.value) {
-          item.games = gameSearchList.value.list;
+          item.games = item.games.filter((gameItem) => gameItem.id != id);
+          if (mobileWidth.value > 600) {
+            item.page_no = Math.ceil(item.games.length / 7);
+          } else {
+            item.page_no = Math.ceil(item.games.length / 6);
+          }
         }
       });
     };
