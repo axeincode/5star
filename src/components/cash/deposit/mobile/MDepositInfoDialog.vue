@@ -25,7 +25,7 @@ const notificationText = ref<string>('successful copied');
 
 const handleCopyUrlCode = async () => {
   if (window.navigator.clipboard) {
-    navigator.clipboard.writeText(codeUrl.value).then(
+    window.navigator.clipboard.writeText(codeUrl.value).then(
       () => {
         console.log('Copied to clipboard!');
         const toast = useToast();
