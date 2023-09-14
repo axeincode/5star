@@ -354,6 +354,7 @@ const errMessage = computed(() => {
 
 const handleDepositSubmit = async () => {
   if (Number(depositAmount.value) == 0) return;
+  await dispatchUserProfile();
   if (pixInfo.value.id == '' || pixInfo.value.id == undefined) {
     setPixInfoToggle(true);
     return;
