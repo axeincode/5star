@@ -3,6 +3,7 @@ import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { appBarStore } from "@/store/appBar";
+import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
 import { type GetMailData } from '@/interface/mail';
 import { useDisplay } from 'vuetify'
@@ -53,6 +54,11 @@ const mobileVersion = computed(() => {
 
 const mobileWidth: any = computed(() => {
   return width.value;
+})
+
+const mobileMenuShow = computed(() => {
+  const { getMobileMenuShow } = storeToRefs(gameStore());
+  return getMobileMenuShow.value
 })
 
 const navToggle = computed(() => {
@@ -301,6 +307,7 @@ onMounted(() => {
 
 <template>
   <v-bottom-navigation
+    v-if="mobileMenuShow"
     bg-color="#000000"
     grow
     class="mobile-menu-index"
@@ -391,7 +398,9 @@ onMounted(() => {
           :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''"
         >
           <v-list-item-title class="ml-2">
-            <div class="mail-header-text text-700-14">{{ t("mail_dialog.header_text") }}</div>
+            <div class="mail-header-text text-700-14">
+              {{ t("mail_dialog.header_text") }}
+            </div>
           </v-list-item-title>
         </v-list-item>
         <template v-for="(mailItem, index) in tempMailList" :key="index">
@@ -464,6 +473,7 @@ onMounted(() => {
       color: #6742ec;
     }
   }
+
   button:active:enabled {
     transform: none !important;
   }
@@ -610,6 +620,7 @@ onMounted(() => {
     opacity: 0 !important;
   }
 }
+
 .menu-bg-blur {
   filter: blur(3px);
   -webkit-filter: blur(3px);

@@ -19,6 +19,7 @@ export const gameStore = defineStore({
             weburl: ""
         } as Game.GameEnterResponse,
         searchGameDialogShow: false as boolean,
+        mobileMenuShow: true as boolean,
         searchTextList: [] as Array<string>,
         gameFilterText: "" as string,
         originalGames: [] as Array<Game.Search>
@@ -33,6 +34,7 @@ export const gameStore = defineStore({
         getSearchTextList: (state) => state.searchTextList,
         getGameFilterText: (state) => state.gameFilterText,
         getOriginalGames: (state) => state.originalGames,
+        getMobileMenuShow: (state) => state.mobileMenuShow
     },
     actions: {
         // set functions
@@ -71,6 +73,9 @@ export const gameStore = defineStore({
         },
         setOriginalGames(originalGames: Array<Game.Search>) {
             this.originalGames = originalGames
+        },
+        setMobileMenuShow(mobileMenuShow: boolean) {
+            this.mobileMenuShow = mobileMenuShow;
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {

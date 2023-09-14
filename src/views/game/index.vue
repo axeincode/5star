@@ -19,6 +19,7 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const { setMailMenuShow } = mailStore();
 const { dispatchGameEnter } = gameStore();
+const { setMobileMenuShow } = gameStore();
 const route = useRoute();
 const mobileHeight = ref<number | undefined>(0);
 
@@ -356,6 +357,7 @@ const handleIframeLoad = () => {
 };
 
 onMounted(async () => {
+  setMobileMenuShow(false);
   mobileHeight.value = window.innerHeight;
   window.scrollTo({
     top: 0,
@@ -373,6 +375,7 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
+  setMobileMenuShow(true);
   setMailMenuShow(false);
 });
 </script>
