@@ -415,7 +415,7 @@ onMounted(async () => {
   if (token.value != undefined) {
     await dispatchUserProfile();
     await dispatchUserBalance();
-    await dispatchSocketConnect();
+    // await dispatchSocketConnect();
   }
 });
 </script>
