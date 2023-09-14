@@ -27,6 +27,7 @@ import { mailStore } from "@/store/mail";
 import { refferalStore } from "@/store/refferal";
 import { appBarStore } from "@/store/appBar";
 import { gameStore } from "@/store/game";
+import { socketStore } from "@/store/socket";
 import type * as Game from "@/interface/game";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -71,6 +72,7 @@ const Dashboard = defineComponent({
     const { setMailMenuShow } = mailStore();
     const { setNavBarToggle } = appBarStore();
     const { setMainBlurEffectShow } = appBarStore();
+    const { dispatchSocketConnect } = socketStore();
     const router = useRouter();
 
     // initiate component state
@@ -1502,6 +1504,7 @@ const Dashboard = defineComponent({
       recordScrollInterval.value = setInterval(() => {
         state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
       }, 600);
+      await dispatchSocketConnect();
       await dispatchGameCategories("?type=paging");
       gameGroupBtnList.value = gameCategories.value;
       gameGroupBtnList.value.map((item) => {
