@@ -22,8 +22,6 @@ import InlineSvg from 'vue-inline-svg';
 
 import Vue3Lazyload from 'vue3-lazyload'
 
-import VueLazyload from 'vue-lazyload'
-
 import loadingIcon from "@/assets/loading.svg";
 
 import "vue-progressive-image/dist/style.css";
@@ -31,6 +29,8 @@ import "vue-progressive-image/dist/style.css";
 import Toast, { POSITION, PluginOptions } from "vue-toastification";
 
 import "vue-toastification/dist/index.css";
+
+import VueClipboard from 'vue3-clipboard'
 
 
 const app = createApp(App)
@@ -61,6 +61,11 @@ app.use(Vue3Lazyload, {
 app.component('inline-svg', InlineSvg);
 
 app.use(ElementPlus)
+
+app.use(VueClipboard, {
+  autoSetContainer: true,
+  appendToBody: true,
+})
 
 const options: PluginOptions = {
   position: POSITION.TOP_RIGHT,

@@ -338,6 +338,7 @@ const menuList = ref<Array<string>>([
   t('account.menu.preference_text'),
   t('account.menu.suspend_account_text'),
 ])
+const mainHeight = ref<number>(0);
 
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
@@ -390,11 +391,13 @@ const depositBlurEffectShow = computed(() => {
   return getDepositBlurEffectShow.value
 })
 
-
-
-// mounted
+const handleResize = () => {
+  mainHeight.value = window.innerHeight;
+}
 
 onMounted(() => {
+  window.addEventListener("resize", handleResize);
+  mainHeight.value = window.innerHeight;
   if (overlayScrimShow.value) {
     overlayScrimBackground.value = "transparent";
   } else {
@@ -412,7 +415,7 @@ onMounted(() => {
     class="main-background"
     :class="mainBlurEffectShow ? 'main-bg-blur' : ''"
     :style="{
-      height: mobileWidth < 600 && mailMenuShow ? '100vh' : 'unset',
+      height: mobileWidth < 600 && mailMenuShow ? mainHeight + 'px' : 'unset',
       overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'unset',
     }"
   >
