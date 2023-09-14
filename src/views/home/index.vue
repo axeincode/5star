@@ -2380,7 +2380,6 @@ export default Dashboard;
                   :src="gameItem.image"
                   lazy-placeholder
                   blur="30"
-                  delay="300"
                   @click="handleEnterGame(gameItem.id, gameItem.name)"
                 />
                 <div
@@ -2434,7 +2433,6 @@ export default Dashboard;
                   :src="gameItem.image"
                   lazy-placeholder
                   blur="30"
-                  delay="300"
                   @click="handleEnterGame(gameItem.id, gameItem.name)"
                 />
                 <div
@@ -3022,6 +3020,7 @@ export default Dashboard;
 
 .v-progressive-image-main {
   width: 100%;
+  height: 100%;
 }
 
 .m-home-loading {
@@ -3129,7 +3128,7 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
-    height: 158px;
+    height: 100%;
   }
 
   .v-progressive-image-loading:before {
