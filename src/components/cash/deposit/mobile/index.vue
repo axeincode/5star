@@ -37,6 +37,7 @@ const { setCashDialogToggle } = appBarStore();
 const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
 const { setPixInfoToggle } = depositStore();
+const { dispatchUserProfile } = authStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
@@ -367,6 +368,7 @@ const handleDepositSubmit = async () => {
   })
   loading.value = false;
   if (success.value) {
+    await dispatchUserProfile();
     if (depositSubmit.value.code_url != "") {
       depositAmountWithBonus.value = depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
       let locale = 'pt-BR';
