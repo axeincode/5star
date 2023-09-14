@@ -27,11 +27,11 @@
     "vue-3-socket.io": "^1.0.5",
     "vue-i18n": "^9.2.2",
     "vue-inline-svg": "^3.1.2",
-    "vue-lazyload": "^3.0.0",
     "vue-progressive-image": "^4.0.0",
     "vue-router": "^4.0.0",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-carousel": "^0.3.1",
+    "vue3-clipboard": "^1.0.0",
     "vue3-lazyload": "^0.3.8",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.0.0"
