@@ -413,6 +413,7 @@ onMounted(() => {
     :class="mainBlurEffectShow ? 'main-bg-blur' : ''"
     :style="{
       height: mobileWidth < 600 && mailMenuShow ? '100vh' : 'unset',
+      position: mobileWidth < 600 && mailMenuShow ? 'fixed' : 'unset',
       overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'unset',
     }"
   >

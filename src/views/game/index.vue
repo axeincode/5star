@@ -389,7 +389,7 @@ onUnmounted(() => {
       <iframe
         ref="frame"
         :src="enterGameItem.weburl"
-        :style="{ height: frameShow ? mobileHeight + 'px' : '0px' }"
+        :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
         class="home-game-frame-area"
         @load="handleIframeLoad"
       ></iframe>
@@ -616,14 +616,13 @@ onUnmounted(() => {
       top: 0px;
       border: none;
       width: 100%;
-      height: 100vh;
       opacity: 1;
       z-index: 20000000;
       overflow: unset;
     }
 
     .m-loading-container {
-      position: absolute;
+      position: fixed;
       top: 0px;
       border: none;
       width: 100%;

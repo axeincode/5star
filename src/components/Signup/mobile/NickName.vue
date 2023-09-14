@@ -226,6 +226,10 @@ onMounted(() => {
     text-align: center;
   }
 
+  .v-progressive-image {
+    background: transparent !important;
+  }
+
   .m-nickname-avatar-btn {
     position: absolute;
     top: 112px;
@@ -353,10 +357,6 @@ onMounted(() => {
       opacity: 1 !important;
     }
   }
-}
-
-.v-progressive-image {
-  background: transparent !important;
 }
 
 .m-signup-displayname-img {

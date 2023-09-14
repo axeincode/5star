@@ -1512,8 +1512,20 @@ const Dashboard = defineComponent({
             );
           }
           if (gameSearchList.value.list.length > 0) {
-            gameSearchList.value.list.map((item) => {
-              item.image = state.testGames[Math.floor(Math.random() * 28)];
+            let index = 0;
+            gameSearchList.value.list.map(async (gameItem) => {
+              if (item.slug == "original") {
+                gameItem.image = state.originalGames[index];
+              } else if (item.slug == "pgsoft") {
+                gameItem.image = state.principalGames[index];
+              } else if (item.slug == "slot") {
+                gameItem.image = state.slots[index];
+              } else if (item.slug == "live") {
+                gameItem.image = state.liveCasinos[index];
+              } else {
+                gameItem.image = state.testGames[Math.floor(Math.random() * 28)];
+              }
+              index++;
             });
           }
           item.page_no = 1;
@@ -1533,8 +1545,20 @@ const Dashboard = defineComponent({
             limit.value
         );
         if (gameSearchList.value.list.length > 0) {
-          gameSearchList.value.list.map(async (item) => {
-            item.image = state.testGames[Math.floor(Math.random() * 28)];
+          let index = 0;
+          gameSearchList.value.list.map(async (gameItem) => {
+            if (item.slug == "original") {
+              gameItem.image = state.originalGames[index];
+            } else if (item.slug == "pgsoft") {
+              gameItem.image = state.principalGames[index];
+            } else if (item.slug == "slot") {
+              gameItem.image = state.slots[index];
+            } else if (item.slug == "live") {
+              gameItem.image = state.liveCasinos[index];
+            } else {
+              gameItem.image = state.testGames[Math.floor(Math.random() * 28)];
+            }
+            index++;
           });
         }
         item.page_no = 1;
@@ -1623,7 +1647,7 @@ export default Dashboard;
     <v-navigation-drawer
       v-model="searchDialogShow"
       location="top"
-      class = "m-search-bar"
+      class="m-search-bar"
       temporary
       :touchless="true"
       :style="{ height: 'unset', top: '0px', zIndex: 300000, background: 'unset' }"
@@ -2233,7 +2257,6 @@ export default Dashboard;
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
-                delay="300"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
                 style="max-width: unset"
               />
@@ -2263,7 +2286,6 @@ export default Dashboard;
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
-                delay="300"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
               />
               <!-- <img
@@ -3107,7 +3129,7 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
-    // height: 160px;
+    height: 158px;
   }
 
   .v-progressive-image-loading:before {
@@ -3617,6 +3639,6 @@ export default Dashboard;
 }
 
 .m-search-bar {
-  box-shadow: none!important;
+  box-shadow: none !important;
 }
 </style>
