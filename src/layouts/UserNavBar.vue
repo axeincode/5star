@@ -267,7 +267,7 @@ onMounted(async () => {
     class="user-nav-background pt-14"
     location="right"
     width="269"
-    style = "padding-bottom: 58px!important;"
+    style="padding-bottom: 58px !important"
     v-model="drawer"
     :touchless="true"
   >
@@ -304,10 +304,12 @@ onMounted(async () => {
       <v-list-item class="m-user-item" @click="goVIPPage">
         <template v-slot:prepend>
           <div>
-            <div style="height: 30px; justify-content: center; display: flex;">
-              <img src="@/assets/app_bar/image/img_vip_02.png" width="26"  />
+            <div style="height: 30px; justify-content: center; display: flex">
+              <img src="@/assets/app_bar/image/img_vip_02.png" width="26" />
             </div>
-            <div class="text-800-12 color-F9BC01 text-center">VIP {{ vipInfo.level }}</div>
+            <div class="text-800-12 color-F9BC01 text-center">
+              VIP {{ vipInfo.level }}
+            </div>
           </div>
         </template>
         <v-list-item-title class="ml-2">
@@ -319,7 +321,7 @@ onMounted(async () => {
                 <Font color="#F9BC01">R$ {{ selectedVipLevel.deposit_exp }}</Font>
               </div>
             </div>
-            <div style="margin-top:2px">
+            <div style="margin-top: 2px">
               <v-progress-linear
                 v-model="depositRate"
                 height="8"
@@ -336,7 +338,7 @@ onMounted(async () => {
                 <Font color="#623AEC">R$ {{ selectedVipLevel.bet_exp }}</Font>
               </div>
             </div>
-            <div style="margin-top:2px">
+            <div style="margin-top: 2px">
               <v-progress-linear v-model="depositRate" height="8" class="wager-progress">
               </v-progress-linear>
             </div>
@@ -606,6 +608,7 @@ onMounted(async () => {
 }
 
 .mobile-nav {
+  overflow-y: auto !important;
   .v-list-item__overlay {
     opacity: 0 !important;
   }
