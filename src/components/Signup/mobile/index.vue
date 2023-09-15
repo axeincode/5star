@@ -420,6 +420,8 @@ const MSignup = defineComponent({
 
     const handleResize = () => {
       if (window.visualViewport?.height != undefined) {
+        state.containerHeight = window.visualViewport?.height - 54;
+        state.bodyHeight = window.innerHeight - 194;
         if (window.visualViewport.height < 667) {
           state.overflow = true;
         } else {

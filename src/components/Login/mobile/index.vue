@@ -103,19 +103,19 @@ const Login = defineComponent({
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
-      console.log('???????????????????????')
+      console.log("???????????????????????");
       const toast = useToast();
-      toast.success( t("login.forgotPasswordPage.notification"), { 
-          timeout: 3000,
-          closeOnClick: false,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          draggable: false,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: SuccessIcon,
-          rtl: false,
+      toast.success(t("login.forgotPasswordPage.notification"), {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
       });
       state.currentPage = state.PAGE_TYPE.LOGIN_FORM;
       // state.notificationShow = !state.notificationShow;
@@ -151,17 +151,17 @@ const Login = defineComponent({
         await dispatchUserBalance();
         await dispatchSocketConnect();
         const toast = useToast();
-        toast.success( t("login.submit_result.success_text"), { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: SuccessIcon,
-            rtl: false,
+        toast.success(t("login.submit_result.success_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
         });
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
@@ -175,17 +175,17 @@ const Login = defineComponent({
         }, 100);
       } else {
         const toast = useToast();
-        toast.success( t("login.submit_result.err_text"), { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: WarningIcon,
-            rtl: false,
+        toast.success(t("login.submit_result.err_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
         });
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
@@ -245,11 +245,19 @@ const Login = defineComponent({
       { deep: true }
     );
 
+    const handleResize = () => {
+      if (window.visualViewport?.height != undefined) {
+        state.containerHeight = window.visualViewport?.height - 54;
+        state.bodyHeight = window.innerHeight - 194;
+      }
+    };
+
     onMounted(() => {
       if (window.visualViewport?.height != undefined) {
         state.containerHeight = window.visualViewport?.height - 54;
         state.bodyHeight = window.innerHeight - 194;
       }
+      window.addEventListener("resize", handleResize);
       // setTimeout(() => {
       //   state.closeBtnShow = true;
       // }, 300);
