@@ -44,6 +44,7 @@ const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
+const {setActiveAccountIndex} = appBarStore();
 // const { setBonusDashboardDialogVisible } = appBarStore();
 const { setAuthModalType } = authStore();
 const { setNickNameDialogVisible } = authStore();
@@ -360,6 +361,7 @@ const accountDialogClose = () => {
 
 const selectActiveIndex = (index: number) => {
   activeMenuIndex.value = index;
+  setActiveAccountIndex(index);
   selectedMenuItem.value = menuList.value[index];
   accountDialog.value = false;
   setMainBlurEffectShow(false);

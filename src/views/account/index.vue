@@ -49,7 +49,13 @@ const handleMenu = (index: number) => {
 const handleDropdown = (item: string, index: number) => {
     selectedMenuItem.value = item;
     activeMenuIndex.value = index;
+  router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
 }
+
+const activeAccountIndex = computed(() => {
+  const {getActiveAccountIndex} = storeToRefs(appBarStore());
+  return getActiveAccountIndex.value
+})
 
 const selectActiveIndex = (index: number) => {
     activeMenuIndex.value = index;
@@ -111,6 +117,10 @@ const mDialogHide = () => {
 const goBeforePage = () => {
     router.go(-1);
 }
+
+watch(activeAccountIndex, (value) => {
+  activeMenuIndex.value = value;
+})
 
 onMounted(() => {
     if (mobileWidth.value > 1280) {

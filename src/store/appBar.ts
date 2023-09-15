@@ -22,6 +22,7 @@ export const appBarStore = defineStore({
     depositHeaderBlurEffectShow: false as boolean,
     depositWithdrawToggle: false as boolean,
     bonusDashboardDialogVisible: false as boolean,
+    activeAccountIndex: 0 as number,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -42,8 +43,7 @@ export const appBarStore = defineStore({
     getDepositHeaderBlurEffectShow: (state) => state.depositHeaderBlurEffectShow,
     getDepositWithdrawToggle: (state) => state.depositWithdrawToggle,
     getBonusDashboardDialogVisible: (state) => state.bonusDashboardDialogVisible,
-    
-    
+    getActiveAccountIndex: (state) => state.activeAccountIndex,
   },
   actions: {
     setSuccess(success: boolean) {
@@ -100,5 +100,8 @@ export const appBarStore = defineStore({
     setBonusDashboardDialogVisible(bonusDashboardDialogVisible: boolean) {
       this.bonusDashboardDialogVisible = bonusDashboardDialogVisible;
     },
+    setActiveAccountIndex(activeAccountIndex: number) {
+      this.activeAccountIndex = activeAccountIndex;
+    }
   }
 })

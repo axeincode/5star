@@ -236,6 +236,7 @@ const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
 };
 
 watch(depositConfig, (newValue) => {
+  depositAmountList.value = [];
   paymentList.value = [];
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
     paymentList.value.push({
