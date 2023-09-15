@@ -1188,7 +1188,7 @@ const Dashboard = defineComponent({
       });
       if (token.value != undefined) {
         let replaceName = name.replace(/ /g, "-");
-      
+
         if (mobileWidth.value < 600) {
           setMailMenuShow(true);
         }
@@ -1197,10 +1197,16 @@ const Dashboard = defineComponent({
         setAuthModalType('login');
       }
 
-      
+
     };
 
+    const gameFilterBtnFlag = ref<boolean>(false);
+
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
+      if (gameFilterBtnFlag.value) {
+        return;
+      }
+      gameFilterBtnFlag.value = true;
       currentPage.value = 1;
       selectedGameFilterBtn.value = gamFilterBtn;
       switch (selectedGameFilterBtn.value) {
@@ -1333,6 +1339,7 @@ const Dashboard = defineComponent({
         });
       }
       console.log(pagingGames.value);
+        gameFilterBtnFlag.value = false;
     };
 
     const handleMoreGame = async (

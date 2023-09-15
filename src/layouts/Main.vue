@@ -131,6 +131,7 @@ watch(nickNameDialogVisible, (newValue) => {
 //   setOverlayScrimShow(false);
 //   setBonusDashboardDialogVisible(false);
 // }
+
 const closeDialog = (type: dialogType) => {
   if (mobileWidth.value < 600 && type == "signup" && signUpForm.value) {
     return;
@@ -254,6 +255,7 @@ const refferalDialogVisible = computed(() => {
   const { getRefferalDialogVisible } = storeToRefs(refferalStore());
   return getRefferalDialogVisible.value;
 })
+
 watch(refferalDialogVisible, (newValue) => {
   refferalDialog.value = newValue;
   if(refferalDialog.value && mobileWidth.value <600) {
