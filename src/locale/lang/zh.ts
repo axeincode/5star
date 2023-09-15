@@ -400,7 +400,7 @@ export const lang: langType = {
     title_text: "Your Account balance and bonuses",
     total_text: "Total",
     withdraw_text: "Withdrawal Amount",
-    super_bonus_text: "5% Supper BONUS",
+    super_bonus_text: "% Supper BONUS",
     bonus_text: "Bonus",
     no_active_text: "No active bonues found",
     table: {

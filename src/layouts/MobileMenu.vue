@@ -46,9 +46,7 @@ const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", im
 const shareIconIndex = ref<number>(0);
 
 
-setTimeout(() => {
-  shareIconIndex.value++;
-}, 5000);
+
 watch(shareIconIndex, (newValue) => {
   if ((newValue % 3) == 0) {
     shareIcon.value = new URL("@/assets/public/image/img_public_19.png", import.meta.url).href; 
@@ -57,9 +55,15 @@ watch(shareIconIndex, (newValue) => {
   } else {
     shareIcon.value = new URL("@/assets/public/image/img_public_46.png", import.meta.url).href; 
   }
-  setTimeout(() => {
-    shareIconIndex.value++;
-  }, 5000);
+
+  const share_image = document.querySelector('.share-img-position');
+  if (!share_image) {
+    return;
+  } else {
+
+    share_image.classList.add('share-animation');
+  }
+ 
 }, { deep: true })
 
 
@@ -319,9 +323,14 @@ const menuBlurEffectShow = computed(() => {
 })
 
 onMounted(() => {
+  
+  setInterval(() => {
+    shareIconIndex.value = shareIconIndex.value+1;
+  }, 5000);
   mailCount.value = mailList.value.length
   console.log(tempMailList.value.length);
-  mailListHeight.value = window.innerHeight - 219
+  mailListHeight.value = window.innerHeight - 219;
+  
 })
 </script>
 
@@ -365,7 +374,7 @@ onMounted(() => {
         class="share-background-img-position"
       />
       <div class = "m-mask">
-        <img :src="shareIcon" class="share-img-position share-animation"/>
+        <img :src="shareIcon" class="share-img-position "/>
       </div>
       
       <div class="pt-6 text-600-12">
@@ -517,13 +526,15 @@ onMounted(() => {
 @keyframes shareAnimation {
 
   0% {top: 70px}
-  1.8% { top: 0px}
-  4.2% {top: 16px; transform: scaleY(0.7)}
-  7.2% { top: 6px; transform: scaleY(1.1)}
-  10.8% {top: 11px; transform: scaleY(1)}
+  1.5% {top: 70px}
+  3.3% { top: 0px}
+  5.7% {top: 16px; transform: scaleY(0.7)}
+  8.7% { top: 6px; transform: scaleY(1.1)}
+  13.3% {top: 11px; transform: scaleY(1)}
   
-  95% {top: 11px}
-  99% {top: 6px}
+  93.5% {top: 11px}
+  96.5% {top: 6px}
+  98.5% {top: 6px}
   100% {top: 70px}
   
   
@@ -656,7 +667,7 @@ onMounted(() => {
   position: relative;
   top: -11px;
   width: 44px;
-  left:-2px;
+  left:-1px;
 }
 
 .share-background-img-position {

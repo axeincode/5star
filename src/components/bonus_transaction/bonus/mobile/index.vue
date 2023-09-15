@@ -196,11 +196,17 @@ const formsList = ref<Array<any>>([
                 </v-row>
               </template>
             </v-expansion-panel-title>
+            
             <v-expansion-panel-text class="mt-3">
-              <v-row class="ma-0">
-                <v-col cols="8" class="text-right text-400-12 pt-0">
-                  {{ t("bonus.super_bonus_text") }}
+              <v-row class="ma-0" v-if="item.type != 'Underway'">
+                <v-col cols="8" class="text-right text-400-12 pt-0" v-if="item.rate ==0">
+                  50{{ t("bonus.super_bonus_text") }}
                 </v-col>
+
+                <v-col cols="8" class="text-right text-400-12 pt-0" v-else>
+                  {{item.rate}}{{ t("bonus.super_bonus_text") }}
+                </v-col>
+
                 <v-col cols="4" class="text-right pt-0">
                   <img
                     src="@/assets/public/svg/icon_public_53.svg"
