@@ -239,6 +239,7 @@ onMounted(() => {
     :scrim-opacity="0.6"
     :touchless="true"
     class="nav-background pb-100"
+    style = "padding-bottom: 56px!important;"
     :width="192"
     v-model="drawer"
   >

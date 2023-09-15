@@ -254,6 +254,7 @@ watch(vipLevels, (value) => {
   })
 })
 
+
 onMounted(async () => {
   await dispatchVipInfo();
   await dispatchVipLevels();
@@ -263,9 +264,10 @@ onMounted(async () => {
 <template>
   <v-navigation-drawer
     temporary
-    class="user-nav-background pt-14 pb-88"
+    class="user-nav-background pt-14"
     location="right"
     width="269"
+    style = "padding-bottom: 58px!important;"
     v-model="drawer"
     :touchless="true"
   >

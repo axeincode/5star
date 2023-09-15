@@ -409,7 +409,7 @@ onMounted(() => {
       <v-list
         theme="dark"
         bg-color="transparent"
-        class="px-2"
+        class="px-2  m-mail-list"
         :height="tempMailList.length > 8 ? mailListHeight + 'px' : ''"
         :width="mobileWidth"
         @scroll="handleScroll"
@@ -464,10 +464,6 @@ onMounted(() => {
     transform: scale(0.8);
   }
 
-  60% {
-    transform: scale(1.2);
-  }
-
   100% {
     transform: scale(1);
   }
@@ -507,7 +503,7 @@ onMounted(() => {
 
 .m-mail-menu-overlay {
   bottom: 80px !important;
-
+  overflow-x: hidden;
   .v-overlay__scrim {
     bottom: 80px !important;
     opacity: 0 !important;
@@ -689,5 +685,8 @@ onMounted(() => {
   -webkit-filter: blur(3px);
   // filter: saturate(180%) blur(3px);
   // -webkit-filter: saturate(180%) blur(3px);
+}
+.m-mail-list {
+  overflow-x: hidden!important;
 }
 </style>

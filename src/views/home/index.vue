@@ -12,6 +12,7 @@ import {
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import GameProviders from "@/components/global/game_provider/index.vue";
+import { type GetUserInfo } from "@/interface/user";
 // import { Carousel, Slide, Navigation } from "vue3-carousel";
 import icon_public_92 from "@/assets/public/svg/icon_public_92.svg";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
@@ -28,6 +29,7 @@ import { refferalStore } from "@/store/refferal";
 import { appBarStore } from "@/store/appBar";
 import { gameStore } from "@/store/game";
 import { socketStore } from "@/store/socket";
+import { authStore } from "@/store/auth";
 import type * as Game from "@/interface/game";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -44,6 +46,7 @@ import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 
+const { setAuthModalType } = authStore();
 const Dashboard = defineComponent({
   components: {
     GameProviders,
@@ -1178,11 +1181,23 @@ const Dashboard = defineComponent({
     };
 
     const handleEnterGame = async (id: number, name: string) => {
-      let replaceName = name.replace(/ /g, "-");
-      if (mobileWidth.value < 600) {
-        setMailMenuShow(true);
+
+      const token = computed(() => {
+        const { getToken } = storeToRefs(authStore());
+        return getToken.value;
+      });
+      if (token.value != undefined) {
+        let replaceName = name.replace(/ /g, "-");
+      
+        if (mobileWidth.value < 600) {
+          setMailMenuShow(true);
+        }
+        router.push(`/game/${id}/${replaceName}`);
+      } else {
+        setAuthModalType('login');
       }
-      router.push(`/game/${id}/${replaceName}`);
+
+      
     };
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
