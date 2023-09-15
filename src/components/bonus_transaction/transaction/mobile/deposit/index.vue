@@ -27,6 +27,32 @@ const formsList = ref<Array<any>>([
     status: "Cancelled",
     note: "",
   },
+  {
+    date: "2023/1/29 17:50:36",
+    id: "re54er35sgf",
+    type: "pix",
+    amount: "R$ 150.00",
+    status: "Cancelled",
+    note: "",
+  },
+  {
+    date: "2023/1/29 17:50:36",
+    id: "re54er35sgf",
+    type: "pix",
+    amount: "R$ 150.00",
+    status: "Cancelled",
+    note: "",
+  },
+  {
+    date: "2023/1/29 17:50:36",
+    id: "re54er35sgf",
+    type: "pix",
+    amount: "R$ 150.00",
+    status: "Cancelled",
+    note: "",
+  },
+  {},
+  {}
 ]);
 
 const paginationLength = ref<number>(0);
@@ -106,59 +132,98 @@ watch(depositHistoryItem, (value) => {
         </tr>
       </thead>
       <tbody class="forms-table-body">
-        <tr v-for="(item, index) in depositHistoryItem.record" :key="index">
-          <td
-            class="text-400-12 text-center"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
-          </td>
-          <td
-            class="text-400-12 text-center"
-            style="
-              min-width: 60px;
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-            "
-          >
-            {{ item.id }}
-          </td>
-          <td
-            class="text-400-12 text-center"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ item.type }}
-          </td>
-          <td
-            class="text-400-12 text-center color-01983A"
-            style="
-              min-width: 130px;
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-            "
-          >
-            {{ item.amount }}
-          </td>
-          <td
-            class="text-400-12 text-center"
-            :class="item.status == 3 ? 'color-01983A' : ''"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            <template v-if="item.status == -2">Closed </template>
-            <template v-if="item.status == -1">Failed </template>
-            <template v-if="item.status == 0">Generated </template>
-            <template v-if="item.status == 1">In progress</template>
-            <template v-if="item.status == 2">Success </template>
-            <template v-if="item.status == 3">Completion </template>
-            <template v-if="item.status == 4">Refunded </template>
-          </td>
-          <td
-            class="text-400-12 text-center"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ item.note }}
-          </td>
-        </tr>
+        <template v-if="depositHistoryItem.record.length == 0">
+          <tr v-for="(item, index) in formsList" :key="index">
+            <td
+              class="text-400-12 text-center"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12 text-center"
+              style="
+                min-width: 60px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            ></td>
+            <td
+              class="text-400-12 text-center"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12 text-center color-01983A"
+              style="
+                min-width: 130px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            ></td>
+            <td
+              class="text-400-12 text-center"
+              :class="item.status == 3 ? 'color-01983A' : ''"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12 text-center"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+          </tr>
+        </template>
+        <template v-else>
+          <tr v-for="(item, index) in depositHistoryItem.record" :key="index">
+            <td
+              class="text-400-12 text-center"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+            </td>
+            <td
+              class="text-400-12 text-center"
+              style="
+                min-width: 60px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            >
+              {{ item.id }}
+            </td>
+            <td
+              class="text-400-12 text-center"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ item.type }}
+            </td>
+            <td
+              class="text-400-12 text-center color-01983A"
+              style="
+                min-width: 130px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            >
+              {{ item.amount }}
+            </td>
+            <td
+              class="text-400-12 text-center"
+              :class="item.status == 3 ? 'color-01983A' : ''"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              <template v-if="item.status == -2">Closed </template>
+              <template v-if="item.status == -1">Failed </template>
+              <template v-if="item.status == 0">Generated </template>
+              <template v-if="item.status == 1">In progress</template>
+              <template v-if="item.status == 2">Success </template>
+              <template v-if="item.status == 3">Completion </template>
+              <template v-if="item.status == 4">Refunded </template>
+            </td>
+            <td
+              class="text-400-12 text-center"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ item.note }}
+            </td>
+          </tr>
+        </template>
       </tbody>
     </v-table>
   </v-row>

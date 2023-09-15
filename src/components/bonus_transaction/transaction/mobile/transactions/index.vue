@@ -32,6 +32,17 @@ const startIndex = ref<number>(0);
 const endIndex = ref<number>(8);
 const currentList = ref<Array<TransactionHistoryItem>>([]);
 
+const tempHistoryList = [
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+]
+
 const mobileWidth = computed(() => {
   return width.value;
 });
@@ -93,7 +104,6 @@ onMounted(async () => {
       :class="fixPositionShow ? 'table-position-overflow' : ''"
       theme="dark"
       fixed-header
-      height="660px"
       style="padding: 16px"
     >
       <thead class="forms-table-header">
@@ -149,108 +159,150 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody class="forms-table-body">
-        <tr
-          v-for="(item, index) in transactionHistoryItem.record.slice(
-            startIndex,
-            endIndex
-          )"
-          :key="index"
-        >
-          <td
-            class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
+        <template v-if="transactionHistoryItem.record.length == 0">
+          <tr v-for="(item, index) in tempHistoryList" :key="index">
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12"
+              style="
+                min-width: 160px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            ></td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12"
+              style="
+                min-width: 60px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            ></td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12"
+              style="
+                min-width: 130px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            ></td>
+          </tr>
+        </template>
+        <template v-else>
+          <tr
+            v-for="(item, index) in transactionHistoryItem.record.slice(
+              startIndex,
+              endIndex
+            )"
+            :key="index"
           >
-            {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
-          </td>
-          <td
-            class="text-400-12"
-            style="
-              min-width: 160px;
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-            "
-            :class="
-              Number(item.type) != -102 && item.type != -202
-                ? 'color-01983A'
-                : 'color-D42763'
-            "
-          >
-            {{ item.amount }}
-          </td>
-          <td
-            class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            <template v-if="Number(item.type) == 101">
-              {{ t("transaction_history.type.text_1") }}
-            </template>
-            <template v-if="Number(item.type) == -102">
-              {{ t("transaction_history.type.text_2") }}
-            </template>
-            <template v-if="Number(item.type) == 103">
-              {{ t("transaction_history.type.text_3") }}
-            </template>
-            <template v-if="Number(item.type) == 104">
-              {{ t("transaction_history.type.text_4") }}
-            </template>
-            <template v-if="Number(item.type) == 201">
-              {{ t("transaction_history.type.text_5") }}
-            </template>
-            <template v-if="Number(item.type) == -202">
-              {{ t("transaction_history.type.text_6") }}
-            </template>
-            <template v-if="Number(item.type) == -203">
-              {{ t("transaction_history.type.text_7") }}
-            </template>
-            <template v-if="Number(item.type) == 204">
-              {{ t("transaction_history.type.text_8") }}
-            </template>
-            <template v-if="Number(item.type) == 301">
-              {{ t("transaction_history.type.text_9") }}
-            </template>
-            <template v-if="Number(item.type) == 401">
-              {{ t("transaction_history.type.text_10") }}
-            </template>
-            <template v-if="Number(item.type) == 901">
-              {{ t("transaction_history.type.text_11") }}
-            </template>
-            <template v-if="Number(item.type) == -902">
-              {{ t("transaction_history.type.text_12") }}
-            </template>
-            <template v-if="Number(item.type) == 801">
-              {{ t("transaction_history.type.text_13") }}
-            </template>
-            <template v-if="Number(item.type) == -802">
-              {{ t("transaction_history.type.text_14") }}
-            </template>
-          </td>
-          <td
-            class="text-400-12"
-            style="
-              min-width: 60px;
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-            "
-          >
-            {{ item.id }}
-          </td>
-          <td
-            class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ item.note }}
-          </td>
-          <td
-            class="text-400-12"
-            style="
-              min-width: 130px;
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-            "
-          >
-            {{ item.balance }}
-          </td>
-        </tr>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+            </td>
+            <td
+              class="text-400-12"
+              style="
+                min-width: 160px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+              :class="
+                Number(item.type) != -102 && item.type != -202
+                  ? 'color-01983A'
+                  : 'color-D42763'
+              "
+            >
+              {{ item.amount }}
+            </td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              <template v-if="Number(item.type) == 101">
+                {{ t("transaction_history.type.text_1") }}
+              </template>
+              <template v-if="Number(item.type) == -102">
+                {{ t("transaction_history.type.text_2") }}
+              </template>
+              <template v-if="Number(item.type) == 103">
+                {{ t("transaction_history.type.text_3") }}
+              </template>
+              <template v-if="Number(item.type) == 104">
+                {{ t("transaction_history.type.text_4") }}
+              </template>
+              <template v-if="Number(item.type) == 201">
+                {{ t("transaction_history.type.text_5") }}
+              </template>
+              <template v-if="Number(item.type) == -202">
+                {{ t("transaction_history.type.text_6") }}
+              </template>
+              <template v-if="Number(item.type) == -203">
+                {{ t("transaction_history.type.text_7") }}
+              </template>
+              <template v-if="Number(item.type) == 204">
+                {{ t("transaction_history.type.text_8") }}
+              </template>
+              <template v-if="Number(item.type) == 301">
+                {{ t("transaction_history.type.text_9") }}
+              </template>
+              <template v-if="Number(item.type) == 401">
+                {{ t("transaction_history.type.text_10") }}
+              </template>
+              <template v-if="Number(item.type) == 901">
+                {{ t("transaction_history.type.text_11") }}
+              </template>
+              <template v-if="Number(item.type) == -902">
+                {{ t("transaction_history.type.text_12") }}
+              </template>
+              <template v-if="Number(item.type) == 801">
+                {{ t("transaction_history.type.text_13") }}
+              </template>
+              <template v-if="Number(item.type) == -802">
+                {{ t("transaction_history.type.text_14") }}
+              </template>
+            </td>
+            <td
+              class="text-400-12"
+              style="
+                min-width: 60px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            >
+              {{ item.id }}
+            </td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ item.note }}
+            </td>
+            <td
+              class="text-400-12"
+              style="
+                min-width: 130px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            >
+              {{ item.balance }}
+            </td>
+          </tr>
+        </template>
       </tbody>
     </v-table>
   </v-row>

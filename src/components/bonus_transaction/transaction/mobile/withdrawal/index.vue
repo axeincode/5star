@@ -39,6 +39,63 @@ const startIndex = ref<number>(0);
 const endIndex = ref<number>(8);
 const currentList = ref<Array<WithdrawalHistoryItem>>([]);
 
+const tempHistoryList = [
+  {
+    id: "",
+    created_at: "",
+    type: "",
+    note: "",
+    status: "",
+    amount: "",
+    currency_type: "",
+  },
+  {
+    id: "",
+    created_at: "",
+    type: "",
+    note: "",
+    status: "",
+    amount: "",
+    currency_type: "",
+  },
+  {
+    id: "",
+    created_at: "",
+    type: "",
+    note: "",
+    status: "",
+    amount: "",
+    currency_type: "",
+  },
+  {
+    id: "",
+    created_at: "",
+    type: "",
+    note: "",
+    status: "",
+    amount: "",
+    currency_type: "",
+  },
+  {
+    id: "",
+    created_at: "",
+    type: "",
+    note: "",
+    status: "",
+    amount: "",
+    currency_type: "",
+  },
+  {
+    id: "",
+    created_at: "",
+    type: "",
+    note: "",
+    status: "",
+    amount: "",
+    currency_type: "",
+  },
+]
+
 const success = computed(() => {
   const { getSuccess } = storeToRefs(withdrawStore());
   return getSuccess.value
@@ -176,86 +233,135 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody class="forms-table-body">
-        <tr
-          v-for="(item, index) in withdrawHistoryItem.record.slice(startIndex, endIndex)"
-          :key="index"
-        >
-          <td
-            class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
+        <template v-if="withdrawHistoryItem.record.length == 0">
+          <tr v-for="(item, index) in tempHistoryList" :key="index">
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 60px;
+              "
+            ></td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12 color-D42763"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 130px;
+              "
+            ></td>
+            <td
+              class="text-400-12"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 130px;
+              "
+            ></td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            ></td>
+          </tr>
+        </template>
+        <template v-else>
+          <tr
+            v-for="(item, index) in withdrawHistoryItem.record.slice(
+              startIndex,
+              endIndex
+            )"
+            :key="index"
           >
-            {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
-          </td>
-          <td
-            class="text-400-12"
-            style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-              min-width: 60px;
-            "
-          >
-            {{ item.id }}
-          </td>
-          <td
-            class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ item.type }}
-          </td>
-          <td
-            class="text-400-12 color-D42763"
-            style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-              min-width: 130px;
-            "
-          >
-            {{ item.amount }}
-          </td>
-          <td
-            class="text-400-12"
-            :class="item.status == 1 ? 'color-F9BC01' : ''"
-            style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
-              min-width: 130px;
-            "
-          >
-            {{ withdrawalStatus[Number(item.status)] }}
-          </td>
-          <td
-            class="text-400-12"
-            :class="item.status == 1 ? 'color-F9BC01' : ''"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ item.note }}
-          </td>
-          <td
-            class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            <v-btn
-              class="ma-2 button-bright text-none withdraw-refund-btn"
-              rounded
-              v-if="item.status == 0 || item.status == 1"
-              :loading="index == loadingIndex ? loading : false"
-              @click="refundWithdrawalSubmit(item.id, index)"
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
-              {{ t("transaction.withdraw.refund") }}
-            </v-btn>
-            <img src="@/assets/public/svg/icon_public_18.svg" v-if="item.status == 2" />
-            <img
-              src="@/assets/public/svg/icon_public_52.svg"
-              v-if="item.status == 3"
-              width="24"
-            />
-            <img
-              src="@/assets/public/svg/icon_public_25.svg"
-              v-if="item.status == 4"
-              width="24"
-            />
-          </td>
-        </tr>
+              {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+            </td>
+            <td
+              class="text-400-12"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 60px;
+              "
+            >
+              {{ item.id }}
+            </td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ item.type }}
+            </td>
+            <td
+              class="text-400-12 color-D42763"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 130px;
+              "
+            >
+              {{ item.amount }}
+            </td>
+            <td
+              class="text-400-12"
+              :class="item.status == 1 ? 'color-F9BC01' : ''"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 130px;
+              "
+            >
+              {{ withdrawalStatus[Number(item.status)] }}
+            </td>
+            <td
+              class="text-400-12"
+              :class="item.status == 1 ? 'color-F9BC01' : ''"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ item.note }}
+            </td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              <v-btn
+                class="ma-2 button-bright text-none withdraw-refund-btn"
+                rounded
+                v-if="item.status == 0 || item.status == 1"
+                :loading="index == loadingIndex ? loading : false"
+                @click="refundWithdrawalSubmit(item.id, index)"
+              >
+                {{ t("transaction.withdraw.refund") }}
+              </v-btn>
+              <img src="@/assets/public/svg/icon_public_18.svg" v-if="item.status == 2" />
+              <img
+                src="@/assets/public/svg/icon_public_52.svg"
+                v-if="item.status == 3"
+                width="24"
+              />
+              <img
+                src="@/assets/public/svg/icon_public_25.svg"
+                v-if="item.status == 4"
+                width="24"
+              />
+            </td>
+          </tr>
+        </template>
       </tbody>
     </v-table>
   </v-row>

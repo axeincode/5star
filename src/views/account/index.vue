@@ -19,6 +19,7 @@ const { t } = useI18n();
 const { width } = useDisplay()
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
+const { setActiveAccountIndex } = appBarStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -29,80 +30,81 @@ const selectedMenuItem = ref<string>(t('account.menu.user_info_text'));
 const accountMenuShow = ref<boolean>(false);
 
 const menuList = ref<Array<string>>([
-    t('account.menu.user_info_text'),
-    t('account.menu.personal_info_text'),
-    t('account.menu.document_text'),
-    t('account.menu.preference_text'),
-    t('account.menu.suspend_account_text'),
+  t('account.menu.user_info_text'),
+  t('account.menu.personal_info_text'),
+  t('account.menu.document_text'),
+  t('account.menu.preference_text'),
+  t('account.menu.suspend_account_text'),
 ])
 
 const refferalAppBarShow = computed(() => {
-    const { getRefferalAppBarShow } = storeToRefs(refferalStore());
-    return getRefferalAppBarShow.value;
+  const { getRefferalAppBarShow } = storeToRefs(refferalStore());
+  return getRefferalAppBarShow.value;
 })
 
 
 const handleMenu = (index: number) => {
-    activeMenuIndex.value = index;
+  activeMenuIndex.value = index;
 }
 
 const handleDropdown = (item: string, index: number) => {
-    selectedMenuItem.value = item;
-    activeMenuIndex.value = index;
+  setActiveAccountIndex(index)
+  selectedMenuItem.value = item;
+  activeMenuIndex.value = index;
   router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
 }
 
 const activeAccountIndex = computed(() => {
-  const {getActiveAccountIndex} = storeToRefs(appBarStore());
+  const { getActiveAccountIndex } = storeToRefs(appBarStore());
   return getActiveAccountIndex.value
 })
 
 const selectActiveIndex = (index: number) => {
-    activeMenuIndex.value = index;
-    selectedMenuItem.value = menuList.value[index];
-    mobileDialogVisible.value = false;
+  activeMenuIndex.value = index;
+  selectedMenuItem.value = menuList.value[index];
+  mobileDialogVisible.value = false;
 }
 
 const mobileWidth: any = computed(() => {
-    return width.value;
+  return width.value;
 })
 
 const userInfo = computed((): GetUserInfo => {
-    const { getUserInfo } = storeToRefs(authStore());
-    return getUserInfo.value;
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value;
 })
 
 const accountHeight = computed(() => {
-    return window.innerHeight;
+  return window.innerHeight;
 })
 
 const rightBarToggle = computed(() => {
-    const { getRightBarToggle } = storeToRefs(appBarStore());
-    return getRightBarToggle.value;
+  const { getRightBarToggle } = storeToRefs(appBarStore());
+  return getRightBarToggle.value;
 })
 
 watch(rightBarToggle, (newValue) => {
-    if (mobileWidth.value > 1280) {
-        if (newValue) {
-            accountWidth.value = "account-container";
-        } else {
-            accountWidth.value = "account-container-1";
-        }
+  if (mobileWidth.value > 1280) {
+    if (newValue) {
+      accountWidth.value = "account-container";
     } else {
-        accountWidth.value = "account-container-2";
+      accountWidth.value = "account-container-1";
     }
+  } else {
+    accountWidth.value = "account-container-2";
+  }
 })
 
 watch(mobileWidth, (newValue: number) => {
-    if (newValue > 1280) {
-        if (rightBarToggle.value) {
-            accountWidth.value = "account-container";
-        } else {
-            accountWidth.value = "account-container-1";
-        }
+  if (newValue > 1280) {
+    if (rightBarToggle.value) {
+      accountWidth.value = "account-container";
     } else {
-        accountWidth.value = "account-container-2";
+      accountWidth.value = "account-container-1";
     }
+  } else {
+    accountWidth.value = "account-container-2";
+  }
 })
 
 // watch(mobileDialogVisible, (value: boolean) => {
@@ -111,35 +113,36 @@ watch(mobileWidth, (newValue: number) => {
 // })
 
 const mDialogHide = () => {
-    mobileDialogVisible.value = false;
+  mobileDialogVisible.value = false;
 }
 
 const goBeforePage = () => {
-    router.go(-1);
+  router.go(-1);
 }
 
 watch(activeAccountIndex, (value) => {
   activeMenuIndex.value = value;
+  selectedMenuItem.value = menuList.value[value];
 })
 
 onMounted(() => {
-    if (mobileWidth.value > 1280) {
-        if (rightBarToggle.value) {
-            accountWidth.value = "account-container";
-        } else {
-            accountWidth.value = "account-container-1";
-        }
+  if (mobileWidth.value > 1280) {
+    if (rightBarToggle.value) {
+      accountWidth.value = "account-container";
     } else {
-        accountWidth.value = "account-container-2";
+      accountWidth.value = "account-container-1";
     }
-    if (mobileWidth.value < 600) {
-        mobileDialogVisible.value = true;
-    }
-    activeMenuIndex.value = route.query.index ? route.query.index : 0
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+  } else {
+    accountWidth.value = "account-container-2";
+  }
+  if (mobileWidth.value < 600) {
+    mobileDialogVisible.value = true;
+  }
+  activeMenuIndex.value = route.query.index ? route.query.index : 0
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 })
 </script>
 

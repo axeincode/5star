@@ -171,6 +171,36 @@ onMounted(async () => {
         v-else
       />
     </v-window-item>
+    <v-window-item
+      :value="t('transaction.tab.vip')"
+      style="margin-left: 10px; margin-right: 10px"
+    >
+      <Withdrawal
+        :pageSize="pageSize"
+        :withdrawHistoryItem="withdrawHistoryItem"
+        v-if="mobileWidth > 600"
+      />
+      <MWithdrawal
+        :pageSize="pageSize"
+        :withdrawHistoryItem="withdrawHistoryItem"
+        v-else
+      />
+    </v-window-item>
+    <v-window-item
+      :value="t('transaction.tab.referral')"
+      style="margin-left: 10px; margin-right: 10px"
+    >
+      <Withdrawal
+        :pageSize="pageSize"
+        :withdrawHistoryItem="withdrawHistoryItem"
+        v-if="mobileWidth > 600"
+      />
+      <MWithdrawal
+        :pageSize="pageSize"
+        :withdrawHistoryItem="withdrawHistoryItem"
+        v-else
+      />
+    </v-window-item>
   </v-window>
 </template>
 <style lang="scss">

@@ -171,6 +171,7 @@ watch(mobileWidth, (newValue: number) => {
 })
 
 watch(currencyMenuShow, (value: boolean) => {
+  console.log(value);
   if (mobileWidth.value < 600) {
     if (value) {
       setUserNavBarToggle(false);
@@ -203,6 +204,7 @@ const formatCurrency = (currency: number, locale: string, currencyUnit: string) 
 const toggleLanguage = () => {
   currentLanguage.value = currentLanguage.value === "en" ? "zh" : "en";
 };
+
 const openDialog = (type: dialogType) => {
   setAuthModalType(type);
   setOverlayScrimShow(false);
@@ -299,11 +301,17 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
       break;
   }
   user.value.wallet = formatCurrency(Number(item.value), locale, currencyUnit);
+  setTimeout(() => {
+    setOverlayScrimShow(false);
+    setMainBlurEffectShow(false);
+    setMailMenuShow(false);
+  }, 300)
 }
 
 const handleCurrencyMenuShow = () => {
   currencyMenuShow.value = !currencyMenuShow.value;
 }
+
 const showUserNavBar = (): void => {
   userNavBarToggle.value = !userNavBarToggle.value
   setNavBarToggle(false)
