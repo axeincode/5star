@@ -35,13 +35,19 @@ const bonusDashboardDialogShow = computed(() => {
   return getBonusDashboardDialogVisible.value;
 });
 
+// main blur effect
+const mainBlurEffectShow = computed(() => {
+  const { getMainBlurEffectShow } = storeToRefs(appBarStore());
+  return getMainBlurEffectShow.value
+})
+
 const handleScroll = () => {
   console.log("scroll");
 };
 </script>
 
 <template>
-  <v-app :class="fixPositionShow ? 'appbar-position-fix' : ''">
+  <v-app :class="[fixPositionShow ? 'appbar-position-fix' : '', mainBlurEffectShow ? 'app-touch-stop' : '']">
     <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />
     <NavBarLayout v-if="mobileWidth > 600" />
@@ -98,6 +104,10 @@ const handleScroll = () => {
   background-size: 18px;
   color: transparent;
   opacity: 1;
+}
+
+.app-touch-stop {
+  touch-action: none!important;
 }
 </style>
 
