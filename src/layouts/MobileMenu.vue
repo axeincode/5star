@@ -368,14 +368,17 @@ onMounted(() => {
       </div>
     </v-btn>
     <v-btn class="menu-text-color share-ripple-btn" @click="goToSharePage">
-      <div class="circle-background"></div>
-      <img
-        src="@/assets/public/image/bg_public_22.png"
-        class="share-background-img-position"
-      />
-      <div class = "m-mask">
-        <img :src="shareIcon" class="share-img-position "/>
+      <div class = "bonus-icon-body">
+        <div class="circle-background"></div>
+        <img
+          src="@/assets/public/image/bg_public_22.png"
+          class="share-background-img-position"
+        />
+        <div class = "m-mask">
+          <img :src="shareIcon" class="share-img-position "/>
+        </div>
       </div>
+      
       
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
@@ -527,14 +530,14 @@ onMounted(() => {
 
   0% {top: 70px}
   1.5% {top: 70px}
-  3.3% { top: 0px}
-  5.7% {top: 16px; transform: scaleY(0.7)}
-  8.7% { top: 6px; transform: scaleY(1.1)}
-  13.3% {top: 11px; transform: scaleY(1)}
+  3.3% { top: -8px}
+  5.7% {top: 8px; transform: scaleY(0.7)}
+  8.7% { top: -2px; transform: scaleY(1.1)}
+  13.3% {top: 3px; transform: scaleY(1)}
   
-  93.5% {top: 11px}
-  96.5% {top: 6px}
-  98.5% {top: 6px}
+  93.5% {top: 3px}
+  96.5% {top: -2px}
+  98.5% {top: -2px}
   100% {top: 70px}
   
   
@@ -544,17 +547,31 @@ onMounted(() => {
   position: absolute;
   width: 46px;
   height: 55px;
-  top:-23px;
   -webkit-mask-image: url("@/assets/public/image/ua_public_132.png");
   mask-image: url("@/assets/public/image/ua_public_132.png");
   border-radius: 0px 0px 25px 25px;
 }
+
+.bonus-icon-body {
+  position: absolute;
+  top: -16px;
+  left: 13px;
+}
+
 .share-animation {
   animation-name: shareAnimation;
-  position: relative;
+  position: absolute;
   animation-duration: 5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+}
+
+.share-img-position {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 44px;
+  // left:2px;
 }
 
 .scale-mail-item {
@@ -663,22 +680,18 @@ onMounted(() => {
   }
 }
 
-.share-img-position {
-  position: relative;
-  top: -11px;
-  width: 44px;
-  left:-1px;
-}
+
 
 .share-background-img-position {
   position: absolute;
-  top: -12px;
+  left: 3px;
+  top: 3px;
   width: 45px;
 }
 
 .circle-background {
   position: absolute;
-  top: -16px;
+  // top: -16px;
   width: 51px;
   height: 51px;
   background-color: #000000;
