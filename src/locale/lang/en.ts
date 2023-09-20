@@ -574,21 +574,21 @@ export const lang: langType = {
     },
     reward_card_2: {
       vip_week_gift_text: "VIP Week Gift",
-      text_1: "VIP Bonus: R$ 5",
+      text_1: "VIP Bonus: ",
       text_2: "Free spin times*2",
       text_3: "Collectable after ",
       text_4: " days"
     },
     reward_card_3: {
       vip_month_gift_text: "VIP Month Gift",
-      text_1: "VIP Bonus: R$ 5",
+      text_1: "VIP Bonus: ",
       text_2: "Free spin times*2",
       text_3: "Collectable after ",
       text_4: " days"
     },
     reward_card_4: {
       vip_upgrage_gift_text: "VIP Upgrade Gift",
-      text_1: "VIP Bonus: R$ 5",
+      text_1: "VIP Bonus: ",
       text_2: "Free spin times*2",
       text_3: "Available for first upgrade only",
     },
@@ -612,7 +612,7 @@ export const lang: langType = {
       text_1: "My Super Spin",
       text_2: "Number of opportunities left: ",
       text_3: "Spin  Now",
-      text_4: "VIP2 has the possibility of winning he following awards",
+      text_4: " has the possibility of winning he following awards",
       text_5: "See all",
     },
     vip_mission_body: {
@@ -632,7 +632,7 @@ export const lang: langType = {
       text_15: "VIP 3 can start",
     },
     benifit_description_body: {
-      text_1: "VIP2 all rights and benefits description",
+      text_1: " all rights and benefits description",
       text_2: "Upgrade Conditions",
       text_3: "Relegation Conditions",
       text_4: "Total deposits",
@@ -656,7 +656,7 @@ export const lang: langType = {
       text_3: "Join in now",
     },
     login_bonus: {
-      title_text: "Login Bonus",
+      title_text: " Login Bonus",
       day_1_text: "DAY 1",
       day_2_text: "DAY 2",
       day_3_text: "DAY 3",

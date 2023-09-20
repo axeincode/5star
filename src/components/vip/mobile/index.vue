@@ -11,6 +11,8 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { vipStore } from "@/store/vip";
+import { userStore } from "@/store/user";
+import moment from 'moment-timezone';
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -20,8 +22,11 @@ const selectedTabIndex = ref<number>(0)
 const depositRate = ref<number>(56);
 const spinCardItem = ref<any | null>(null)
 const missionCardItem = ref<any | null>(null)
-const descriptionTab = ref<string>("VIP2")
+const descriptionTab = ref<any>(0)
 const rewardTab = ref<any>(0);
+const cashbackTab = ref<any>(0);
+const vipTab = ref<any>(0);
+const spinTab = ref<any>(0);
 const vipSlideClass = ref<string>("");
 const currentSlide = ref<any>(0);
 const vipSwitchValue = ref<any>(0);
@@ -85,14 +90,6 @@ const vipTabs = ref<Array<string>>([
   t('vip.cash_back_text'),
   t('vip.super_carousel_text'),
   t('vip.welfare_task'),
-])
-
-const vipDescriptionItems = ref([
-  "VIP1",
-  "VIP2",
-  "VIP3",
-  "VIP4",
-  "VIP5",
 ])
 
 const selectedVIPDescriptionIndex = ref<number>(1);
@@ -264,6 +261,10 @@ const vipMissionItems = ref([
   },
 ])
 
+const this_week_end_day = moment().clone().endOf('week').format('YYYY-MM-DD');
+
+const this_month_end_day = moment().clone().endOf('month').format('YYYY-MM-DD');
+
 const vipLevels = computed(() => {
   const { getVipLevels } = storeToRefs(vipStore());
   getVipLevels.value.map(item => {
@@ -277,8 +278,36 @@ const vipLevels = computed(() => {
     } else {
       item.bet_rate = 0;
     }
+    let currnet_date = moment().format("YYYY-MM-DD");
+    let end_time = moment(currnet_date + " 23:59:59");
+    const now = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD HH:mm:ss");
+    let duration = moment.duration(end_time.diff(now));
+
+    var hours = duration.hours();
+    var minutes = duration.minutes().toString().length == 1 ? "0" + duration.minutes() : duration.minutes();
+    var seconds = duration.seconds().toString().length == 1 ? "0" + duration.seconds() : duration.seconds();
+    item.availabe_daily_bonus_time = hours + ":" + minutes + ":" + seconds;
+
+    let this_week_end_time = moment(this_week_end_day + " 23:59:59");
+    let week_duration = moment.duration(this_week_end_time.diff(now));
+
+    var days = week_duration.days();
+
+    item.collectable_week_bonus_day = days;
+
+    let this_month_end_time = moment(this_month_end_day + " 23:59:59");
+    let month_duration = moment.duration(this_month_end_time.diff(now));
+
+    var month_days = month_duration.days();
+
+    item.collectable_month_bonus_day = month_days;
   })
   return getVipLevels.value
+})
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value
 })
 
 const vipInfo = computed(() => {
@@ -308,16 +337,6 @@ const vipSwitchPosition = ref<number>(0);
 
 const handleCarouselChange = (index: number): void => {
   selectedIndex.value = index;
-}
-
-const nextDescription = () => {
-  selectedVIPDescriptionIndex.value = (selectedVIPDescriptionIndex.value + 1) % vipDescriptionItems.value.length;
-  descriptionTab.value = vipDescriptionItems.value[selectedVIPDescriptionIndex.value];
-}
-
-const prevDescription = () => {
-  selectedVIPDescriptionIndex.value = (vipDescriptionItems.value.length + selectedVIPDescriptionIndex.value - 1) % vipDescriptionItems.value.length;
-  descriptionTab.value = vipDescriptionItems.value[selectedVIPDescriptionIndex.value];
 }
 
 const rightBarToggle = computed(() => {
@@ -398,6 +417,10 @@ watch(missionCardShow, (value) => {
 watch(currentSlide, (value) => {
   vipSwitchValue.value = value;
   rewardTab.value = value;
+  cashbackTab.value = value;
+  vipTab.value = value;
+  spinTab.value = value;
+  descriptionTab.value = value;
 })
 
 const cashbackElement = ref<any | null>(null);
@@ -524,12 +547,20 @@ const handleVipSwitchLeft = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value - 1 + 10) % 10;
   rewardTab.value = (rewardTab.value - 1 + 10) % 10;
+  cashbackTab.value = (cashbackTab.value - 1 + 10) % 10;
+  vipTab.value = (vipTab.value - 1 + 10) % 10;
+  spinTab.value = (spinTab.value - 1 + 10) % 10;
+  descriptionTab.value = (descriptionTab.value - 1 + 10) % 10;
 }
 
 const handleVipSwitchRight = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value + 1 + 10) % 10;
   rewardTab.value = (rewardTab.value + 1 + 10) % 10;
+  cashbackTab.value = (cashbackTab.value + 1 + 10) % 10;
+  vipTab.value = (vipTab.value + 1 + 10) % 10;
+  spinTab.value = (spinTab.value + 1 + 10) % 10;
+  descriptionTab.value = (descriptionTab.value + 1 + 10) % 10;
 }
 
 const arrowSwitchTransform = (el: any) => {
@@ -537,9 +568,8 @@ const arrowSwitchTransform = (el: any) => {
   return el;
 }
 
-window.addEventListener('scroll', handleWindowScroll);
-
 onMounted(() => {
+  window.addEventListener('scroll', handleWindowScroll);
   spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
   vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
 })
@@ -673,7 +703,7 @@ onMounted(() => {
                       >
                     </div>
                   </div>
-                  <div style="margin-top: 3px;">
+                  <div style="margin-top: 3px">
                     <v-progress-linear
                       v-model="item.deposit_rate"
                       height="19"
@@ -694,7 +724,7 @@ onMounted(() => {
                       >
                     </div>
                   </div>
-                  <div style="margin-top: 3px;">
+                  <div style="margin-top: 3px">
                     <v-progress-linear
                       v-model="item.bet_rate"
                       height="19"
@@ -731,626 +761,621 @@ onMounted(() => {
       </div>
 
       <!------------------------- vip reward ----------------------------->
-      <v-window v-model="rewardTab">
-        <v-window-item
-          v-for="(item, index) in vipLevels"
-          :key="index"
-          :value="item.level"
-        >
-          <div
-            class="reward-body mx-2"
-            ref="rewardElement"
-            :class="tabSelect ? 'mt-15' : 'mt-2'"
+      <div ref="rewardElement">
+        <v-window v-model="rewardTab">
+          <v-window-item
+            v-for="(item, index) in vipLevels"
+            :key="index"
+            :value="item.level"
           >
-            <div class="text-800-14 white pt-4 mx-4">
-              {{ t("vip.reward_text") }} {{ item.level }}
+            <div class="reward-body mx-2 pb-4" :class="tabSelect ? 'mt-15' : 'mt-2'">
+              <div class="text-800-14 white pt-4 mx-4">
+                {{ t("vip.reward_text") }} {{ item.level }}
+              </div>
+              <v-row class="mt-2 justify-center pb-2 mx-2">
+                <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                  <div class="m-reward-card text-center">
+                    <div class="text-800-10 yellow pt-4">
+                      {{ t("vip.reward_card_1.daily_free_bonus_text") }}
+                    </div>
+                    <div class="mt-4">
+                      <img src="@/assets/public/image/img_public_02.png" width="40" />
+                    </div>
+                    <div class="mt-4 text-600-9 white">
+                      {{ t("vip.reward_card_1.text_1") }} {{ item.free_spins_times }}
+                    </div>
+                    <div class="mt-2 mx-4">
+                      <v-btn
+                        class="text-none button-dark m-button-dark"
+                        width="-webkit-fill-available"
+                        height="28px"
+                      >
+                        {{ t("vip.receive_btn_text") }}
+                      </v-btn>
+                    </div>
+                    <div class="mt-2 text-400-9 white">
+                      {{ t("vip.reward_card_1.text_2") }}
+                      <Font class="yellow">{{ item.availabe_daily_bonus_time }}</Font>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                  <div class="m-reward-card text-center">
+                    <div class="text-800-10 yellow pt-4">
+                      {{ t("vip.reward_card_2.vip_week_gift_text") }}
+                    </div>
+                    <div class="mt-4 d-flex justify-center align-center">
+                      <img src="@/assets/public/image/img_public_02.png" width="40" />
+                      <img
+                        src="@/assets/public/image/img_public_09.png"
+                        class="ml-4"
+                        width="39"
+                        height="27"
+                      />
+                    </div>
+                    <div class="mt-6 text-600-9 white">
+                      {{ t("vip.reward_card_2.text_1") }} R$ {{ item.week_award }}
+                    </div>
+                    <!-- <div class="text-600-9 white">
+                      {{ t("vip.reward_card_2.text_2") }}
+                    </div> -->
+                    <div class="mt-2 mx-4">
+                      <v-btn
+                        class="text-none button-dark m-button-dark"
+                        width="-webkit-fill-available"
+                        height="28px"
+                      >
+                        {{ t("vip.receive_btn_text") }}
+                      </v-btn>
+                    </div>
+                    <div class="mt-2 text-400-9 white">
+                      {{ t("vip.reward_card_2.text_3") }}
+                      <Font class="yellow">{{ item.collectable_week_bonus_day }}</Font>
+                      {{ t("vip.reward_card_2.text_4") }}
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                  <div class="m-reward-card text-center">
+                    <div class="text-800-10 yellow pt-4">
+                      {{ t("vip.reward_card_3.vip_month_gift_text") }}
+                    </div>
+                    <div class="mt-4 d-flex justify-center align-center">
+                      <img src="@/assets/public/image/img_public_02.png" width="40" />
+                      <img
+                        src="@/assets/public/image/img_public_09.png"
+                        class="ml-4"
+                        width="39"
+                        height="27"
+                      />
+                    </div>
+                    <div class="mt-6 text-600-9 white">
+                      {{ t("vip.reward_card_3.text_1") }} R$ {{ item.month_award }}
+                    </div>
+                    <!-- <div class="text-600-9 white">
+                      {{ t("vip.reward_card_3.text_2") }}
+                    </div> -->
+                    <div class="mt-2 mx-4">
+                      <v-btn
+                        class="text-none button-dark m-button-dark"
+                        width="-webkit-fill-available"
+                        height="28px"
+                      >
+                        {{ t("vip.receive_btn_text") }}
+                      </v-btn>
+                    </div>
+                    <div class="mt-2 text-400-9 white">
+                      {{ t("vip.reward_card_3.text_3") }}
+                      <Font class="yellow">{{ item.collectable_month_bonus_day }}</Font>
+                      {{ t("vip.reward_card_3.text_4") }}
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="6" md="3" class="d-flex justify-center pa-1">
+                  <div class="m-reward-card text-center">
+                    <div class="text-800-10 yellow pt-4">
+                      {{ t("vip.reward_card_4.vip_upgrage_gift_text") }}
+                    </div>
+                    <div class="mt-4 d-flex justify-center align-center">
+                      <img src="@/assets/public/image/img_public_02.png" width="40" />
+                      <img
+                        src="@/assets/public/image/img_public_09.png"
+                        class="ml-4"
+                        width="39"
+                        height="27"
+                      />
+                    </div>
+                    <div class="mt-6 text-600-9 white">
+                      {{ t("vip.reward_card_4.text_1") }} R$ {{ item.upgrade_award }}
+                    </div>
+                    <!-- <div class="text-600-9 white">
+                      {{ t("vip.reward_card_4.text_2") }}
+                    </div> -->
+                    <div class="mt-2 mx-4">
+                      <v-btn
+                        class="text-none button-dark m-button-dark"
+                        width="-webkit-fill-available"
+                        height="28px"
+                      >
+                        {{ t("vip.receive_btn_text") }}
+                      </v-btn>
+                    </div>
+                    <div class="mt-2 text-400-9 white">
+                      {{ t("vip.reward_card_4.text_3") }}
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
             </div>
-            <v-row class="mt-2 justify-center pb-2 mx-2">
-              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-                <div class="m-reward-card text-center">
-                  <div class="text-800-10 yellow pt-4">
-                    {{ t("vip.reward_card_1.daily_free_bonus_text") }}
-                  </div>
-                  <div class="mt-4">
-                    <img src="@/assets/public/image/img_public_02.png" width="40" />
-                  </div>
-                  <div class="mt-4 text-600-9 white">
-                    {{ t("vip.reward_card_1.text_1") }} {{ item.free_spins_times }}
-                  </div>
-                  <div class="mt-2 mx-4">
-                    <v-btn
-                      class="text-none button-dark m-button-dark"
-                      width="-webkit-fill-available"
-                      height="28px"
-                    >
-                      {{ t("vip.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                  <div class="mt-2 text-400-9 white">
-                    {{ t("vip.reward_card_1.text_2")
-                    }}<Font class="yellow">21:23:22</Font>
-                  </div>
-                </div>
-              </v-col>
-              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-                <div class="m-reward-card text-center">
-                  <div class="text-800-10 yellow pt-4">
-                    {{ t("vip.reward_card_2.vip_week_gift_text") }}
-                  </div>
-                  <div class="mt-4 d-flex justify-center align-center">
-                    <img src="@/assets/public/image/img_public_02.png" width="40" />
-                    <img
-                      src="@/assets/public/image/img_public_09.png"
-                      class="ml-4"
-                      width="39"
-                      height="27"
-                    />
-                  </div>
-                  <div class="mt-2 text-600-9 white">
-                    {{ t("vip.reward_card_2.text_1") }}
-                  </div>
-                  <div class="text-600-9 white">
-                    {{ t("vip.reward_card_2.text_2") }}
-                  </div>
-                  <div class="mt-2 mx-4">
-                    <v-btn
-                      class="text-none button-dark m-button-dark"
-                      width="-webkit-fill-available"
-                      height="28px"
-                    >
-                      {{ t("vip.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                  <div class="mt-2 text-400-9 white">
-                    {{ t("vip.reward_card_2.text_3") }}<Font class="yellow">3</Font
-                    >{{ t("vip.reward_card_2.text_4") }}
-                  </div>
-                </div>
-              </v-col>
-              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-                <div class="m-reward-card text-center">
-                  <div class="text-800-10 yellow pt-4">
-                    {{ t("vip.reward_card_3.vip_month_gift_text") }}
-                  </div>
-                  <div class="mt-4 d-flex justify-center align-center">
-                    <img src="@/assets/public/image/img_public_02.png" width="40" />
-                    <img
-                      src="@/assets/public/image/img_public_09.png"
-                      class="ml-4"
-                      width="39"
-                      height="27"
-                    />
-                  </div>
-                  <div class="mt-2 text-600-9 white">
-                    {{ t("vip.reward_card_3.text_1") }}
-                  </div>
-                  <div class="text-600-9 white">
-                    {{ t("vip.reward_card_3.text_2") }}
-                  </div>
-                  <div class="mt-2 mx-4">
-                    <v-btn
-                      class="text-none button-dark m-button-dark"
-                      width="-webkit-fill-available"
-                      height="28px"
-                    >
-                      {{ t("vip.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                  <div class="mt-2 text-400-9 white">
-                    {{ t("vip.reward_card_3.text_3") }}<Font class="yellow">3</Font
-                    >{{ t("vip.reward_card_3.text_4") }}
-                  </div>
-                </div>
-              </v-col>
-              <v-col cols="6" md="3" class="d-flex justify-center pa-1">
-                <div class="m-reward-card text-center">
-                  <div class="text-800-10 yellow pt-4">
-                    {{ t("vip.reward_card_4.vip_upgrage_gift_text") }}
-                  </div>
-                  <div class="mt-4 d-flex justify-center align-center">
-                    <img src="@/assets/public/image/img_public_02.png" width="40" />
-                    <img
-                      src="@/assets/public/image/img_public_09.png"
-                      class="ml-4"
-                      width="39"
-                      height="27"
-                    />
-                  </div>
-                  <div class="mt-2 text-600-9 white">
-                    {{ t("vip.reward_card_4.text_1") }}
-                  </div>
-                  <div class="text-600-9 white">
-                    {{ t("vip.reward_card_4.text_2") }}
-                  </div>
-                  <div class="mt-2 mx-4">
-                    <v-btn
-                      class="text-none button-dark m-button-dark"
-                      width="-webkit-fill-available"
-                      height="28px"
-                    >
-                      {{ t("vip.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                  <div class="mt-2 text-400-9 white">
-                    {{ t("vip.reward_card_4.text_3") }}
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </div>
-        </v-window-item>
-      </v-window>
-
+          </v-window-item>
+        </v-window>
+      </div>
       <!---------------------------- cashback bonus --------------------------------->
-      <div
-        class="m-cashback-bonus-body mx-2 pb-4"
-        ref="cashbackElement"
-        :class="tabSelect ? 'mt-15' : 'mt-6'"
-      >
-        <div class="text-800-14 white pt-4 mx-3 d-flex">
-          <p style="width: 110px">
-            {{ t("vip.cashback_body.text_1") }}
-          </p>
-          <v-btn
-            class="text-none button-yellow ml-auto relative"
-            height="49px"
-            width="160px"
+      <div ref="cashbackElement">
+        <v-window v-model="cashbackTab">
+          <v-window-item
+            v-for="(item, index) in vipLevels"
+            :key="index"
+            :value="item.level"
           >
-            <img
-              src="@/assets/public/image/img_public_10.png"
-              class="m-cashback-btn-img"
-              width="39"
-              height="48"
-            />
-            {{ t("vip.cashback_body.text_2") }}
-          </v-btn>
-        </div>
-        <v-card theme="dark" color="#1C1929" class="mt-4 mx-3" style="border-radius: 8px">
-          <div class="pa-2">
-            <v-row class="ma-0 pa-0 align-center">
-              <v-col cols="4">
-                <p class="text-500-12 white">
-                  {{ t("vip.cashback_body.text_3") }}
-                  {{ vipItems[selectedIndex].vipGrade }}
+            <div
+              class="m-cashback-bonus-body mx-2 pb-4"
+              :class="tabSelect ? 'mt-15' : 'mt-6'"
+            >
+              <div class="text-800-14 white pt-4 mx-3 d-flex">
+                <p style="width: 110px">
+                  {{ t("vip.cashback_body.text_1") }}
                 </p>
-              </v-col>
-              <v-col cols="8" class="d-flex">
-                <p class="text-600-12 text-gray ml-auto" style="width: 115px">
-                  {{ t("vip.cashback_body.text_4") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_22.svg"
-                  class="ml-2"
-                  width="16"
-                />
-              </v-col>
-            </v-row>
-            <v-row class="pa-0 ma-0">
-              <v-col cols="6" md="3" class="pa-1">
-                <v-card
-                  theme="dark"
-                  color="#29253C"
-                  class="text-center pa-2 relative"
-                  height="90"
-                  style="border-radius: 4px"
-                >
-                  <img
-                    src="@/assets/public/image/img_public_22.png"
-                    class="cashback-card-img"
-                    width="90"
-                    height="85"
-                  />
-                  <p class="text-600-10 white">{{ t("vip.cashback_body.text_11") }}</p>
-                  <p class="text-800-20 color-04D981 mt-2">0.4%</p>
-                  <p class="text-700-10 text-gray mt-2">
-                    {{ t("vip.cashback_body.text_5") }} 0.5%
-                  </p>
-                </v-card>
-              </v-col>
-              <v-col cols="6" md="3" class="pa-1">
-                <v-card
-                  theme="dark"
-                  color="#29253C"
-                  class="text-center pa-2 relative"
-                  height="90"
-                  style="border-radius: 4px"
-                >
-                  <img
-                    src="@/assets/public/image/img_public_22.png"
-                    class="cashback-card-img"
-                    width="90"
-                    height="85"
-                  />
-                  <p class="text-600-10 white">{{ t("vip.cashback_body.text_11") }}</p>
-                  <p class="text-800-20 color-04D981 mt-2">0.5%</p>
-                  <p class="text-700-10 text-gray mt-2">
-                    {{ t("vip.cashback_body.text_5") }} 0.6%
-                  </p>
-                </v-card>
-              </v-col>
-              <v-col cols="6" md="3" class="pa-1">
-                <v-card
-                  theme="dark"
-                  color="#29253C"
-                  class="text-center pa-2 relative"
-                  height="90"
-                  style="border-radius: 4px"
-                >
-                  <img
-                    src="@/assets/public/image/img_public_22.png"
-                    class="cashback-card-img"
-                    width="90"
-                    height="85"
-                  />
-                  <p class="text-600-10 white">{{ t("vip.cashback_body.text_11") }}</p>
-                  <p class="text-800-20 color-04D981 mt-2">0.5%</p>
-                  <p class="text-700-10 text-gray mt-2">
-                    {{ t("vip.cashback_body.text_5") }} 0.6%
-                  </p>
-                </v-card>
-              </v-col>
-              <v-col cols="6" md="3" class="pa-1">
-                <v-card
-                  theme="dark"
-                  color="#29253C"
-                  class="text-center pa-2 relative"
-                  height="90"
-                  style="border-radius: 4px"
-                >
-                  <img
-                    src="@/assets/public/image/img_public_22.png"
-                    class="cashback-card-img"
-                    width="90"
-                    height="85"
-                  />
-                  <p class="text-600-10 white">{{ t("vip.cashback_body.text_11") }}</p>
-                  <p class="text-800-20 color-04D981 mt-2">0.4%</p>
-                  <p class="text-700-10 text-gray mt-2">
-                    {{ t("vip.cashback_body.text_5") }} 0.5%
-                  </p>
-                </v-card>
-              </v-col>
-            </v-row>
-          </div>
-        </v-card>
-        <v-card theme="dark" color="#1C1929" class="mt-4 mx-3" style="border-radius: 8px">
-          <div class="pa-4">
-            <v-row class="pa-0 mx-0 align-center">
-              <v-col cols="12">
-                <p class="text-700-12 white">{{ t("vip.cashback_body.text_7") }}</p>
-                <p class="text-700-16 yellow mt-2">R$ 12345678910</p>
-              </v-col>
-              <v-divider></v-divider>
-              <v-col cols="12">
-                <p class="text-700-12 white">{{ t("vip.cashback_body.text_8") }}</p>
-                <p class="text-700-16 yellow mt-2">R$ 12345678910</p>
-              </v-col>
-              <v-col cols="12" md="4" class="text-right">
                 <v-btn
                   class="text-none button-yellow ml-auto relative"
                   height="49px"
-                  width="-webkit-fill-available"
+                  width="160px"
                 >
-                  <div class="cashback-bonus-help-img">
-                    <img src="@/assets/public/svg/icon_public_76.svg" />
-                  </div>
-                  <div
-                    style="width: 150px; white-space: normal; letter-spacing: normal"
-                    class="text-800-14 ml-4"
-                  >
-                    {{ t("vip.cashback_body.text_9") }}
-                    <span class="text-600-14">{{ t("vip.cashback_body.text_10") }}</span>
-                  </div>
+                  <img
+                    src="@/assets/public/image/img_public_10.png"
+                    class="m-cashback-btn-img"
+                    width="39"
+                    height="48"
+                  />
+                  {{ t("vip.cashback_body.text_2") }}
                 </v-btn>
-              </v-col>
-            </v-row>
-          </div>
-        </v-card>
-      </div>
-      <!-------------------------- My Super Spin ---------------------------------->
-
-      <div
-        class="m-super-spin-body relative mt-6 mx-2 pb-2"
-        ref="spinElement"
-        :class="tabSelect ? 'mt-15' : 'mt-6'"
-      >
-        <v-row class="mx-2 d-flex">
-          <v-col cols="12" class="text-800-14 white">
-            {{ t("vip.super_spin_body.text_1") }}
-          </v-col>
-          <v-col cols="12" class="px-1">
-            <v-card
-              theme="dark"
-              color="#1C1929"
-              class="ml-auto d-flex align-center"
-              height="49"
-            >
-              <v-row class="align-center ma-0 pa-0">
-                <v-col cols="5" class="ma-0 pa-0">
-                  <p class="text-600-12 white text-center px-4">
-                    {{ t("vip.super_spin_body.text_2") }}
-                  </p>
-                </v-col>
-                <v-col cols="2" class="ma-0 pa-0">
-                  <p class="text-800-20 white">3</p>
-                </v-col>
-                <v-col cols="5" class="ma-0 pa-0">
-                  <v-btn
-                    class="text-none button-yellow m-spin-now-btn"
-                    height="49px"
-                    width="-webkit-fill-available"
-                  >
-                    {{ t("vip.super_spin_body.text_3") }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
-        <div
-          color="#1C1929"
-          class="ma-2 pa-4 m-spin-game-card box"
-          :style="{
-            height: spinCardShow ? spinCardHeight2 + 'px' : spinCardHeight1 + 'px',
-            transition: spinCardShow ? 'height 0.3s ease-out' : 'unset',
-          }"
-        >
-          <p class="text-500-13 white">{{ t("vip.super_spin_body.text_4") }}</p>
-          <v-row class="mt-4 justify-center align-center" ref="spinCardItem">
-            <v-col
-              cols="6"
-              md="3"
-              lg="2"
-              v-for="(item, index) in spinItems"
-              :key="index"
-              class="text-center d-flex justify-center pa-1"
-            >
+              </div>
               <v-card
                 theme="dark"
-                color="#29253C"
-                class="py-6"
-                style="border-radius: 6px"
+                color="#1C1929"
+                class="mt-4 mx-3"
+                style="border-radius: 8px"
               >
-                <img :src="item.image" />
-                <p class="text-600-12 white mt-4">{{ item.title }}</p>
-                <p class="text-500-10 text-gray mt-2 mx-2">{{ item.content }}</p>
+                <div class="pa-2">
+                  <v-row class="ma-0 pa-0 align-center">
+                    <v-col cols="4">
+                      <p class="text-500-12 white">
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ item.level }}
+                      </p>
+                    </v-col>
+                    <v-col cols="8" class="d-flex">
+                      <p class="text-600-12 text-gray ml-auto" style="width: 115px">
+                        {{ t("vip.cashback_body.text_4") }}
+                      </p>
+                      <img
+                        src="@/assets/public/svg/icon_public_22.svg"
+                        class="ml-2"
+                        width="16"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-row class="pa-0 ma-0">
+                    <v-col
+                      cols="6"
+                      md="3"
+                      class="pa-1"
+                      v-for="(cashItemKey, index) in Object.keys(item.bet_award_rate)"
+                      :key="index"
+                    >
+                      <v-card
+                        theme="dark"
+                        color="#29253C"
+                        class="text-center pa-2 relative"
+                        height="90"
+                        style="border-radius: 4px"
+                      >
+                        <img
+                          src="@/assets/public/image/img_public_22.png"
+                          class="cashback-card-img"
+                          width="90"
+                          height="85"
+                        />
+                        <p class="text-600-10 white">
+                          {{ cashItemKey }}
+                        </p>
+                        <p class="text-800-20 color-04D981 mt-2">
+                          {{ item.bet_award_rate[cashItemKey] }}%
+                        </p>
+                        <p class="text-700-10 text-gray mt-2">
+                          {{ t("vip.cashback_body.text_5") }} 0.5%
+                        </p>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </div>
               </v-card>
-            </v-col>
-          </v-row>
-        </div>
-        <v-btn
-          class="text-none button-1C1929 m-spin-more-btn-position"
-          width="140px"
-          height="40px"
-          style="transform: translateX(-50%) !important"
-          @click="spinCardShow = !spinCardShow"
-        >
-          {{ t("vip.super_spin_body.text_5") }}
-          <v-icon class="mdi-down-position" v-if="!spinCardShow">mdi-chevron-down</v-icon>
-          <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
-        </v-btn>
+              <v-card
+                theme="dark"
+                color="#1C1929"
+                class="mt-4 mx-3"
+                style="border-radius: 8px"
+              >
+                <div class="pa-4">
+                  <v-row class="pa-0 mx-0 align-center">
+                    <v-col cols="12">
+                      <p class="text-700-12 white">{{ t("vip.cashback_body.text_7") }}</p>
+                      <p class="text-700-16 yellow mt-2">R$ 12345678910</p>
+                    </v-col>
+                    <v-divider></v-divider>
+                    <v-col cols="12">
+                      <p class="text-700-12 white">{{ t("vip.cashback_body.text_8") }}</p>
+                      <p class="text-700-16 yellow mt-2">R$ 12345678910</p>
+                    </v-col>
+                    <v-col cols="12" md="4" class="text-right">
+                      <v-btn
+                        class="text-none button-yellow ml-auto relative"
+                        height="49px"
+                        width="-webkit-fill-available"
+                      >
+                        <div class="cashback-bonus-help-img">
+                          <img src="@/assets/public/svg/icon_public_76.svg" />
+                        </div>
+                        <div
+                          style="
+                            width: 150px;
+                            white-space: normal;
+                            letter-spacing: normal;
+                          "
+                          class="text-800-14 ml-4"
+                        >
+                          {{ t("vip.cashback_body.text_9") }}
+                          <span class="text-600-14">{{
+                            t("vip.cashback_body.text_10")
+                          }}</span>
+                        </div>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </div>
+              </v-card>
+            </div>
+          </v-window-item>
+        </v-window>
+      </div>
+      <!-------------------------- My Super Spin ---------------------------------->
+      <div ref="spinElement">
+        <v-window v-model="spinTab" style="overflow: initial">
+          <v-window-item
+            v-for="(item, index) in vipLevels"
+            :key="index"
+            :value="item.level"
+          >
+            <div
+              class="m-super-spin-body relative mt-6 mx-2 pb-2"
+              :class="tabSelect ? 'mt-15' : 'mt-6'"
+            >
+              <v-row class="mx-2 d-flex">
+                <v-col cols="12" class="text-800-14 white">
+                  {{ t("vip.super_spin_body.text_1") }}
+                </v-col>
+                <v-col cols="12" class="px-1">
+                  <v-card
+                    theme="dark"
+                    color="#1C1929"
+                    class="ml-auto d-flex align-center"
+                    height="49"
+                  >
+                    <v-row class="align-center ma-0 pa-0">
+                      <v-col cols="5" class="ma-0 pa-0">
+                        <p class="text-600-12 white text-center px-4">
+                          {{ t("vip.super_spin_body.text_2") }}
+                        </p>
+                      </v-col>
+                      <v-col cols="2" class="ma-0 pa-0">
+                        <p class="text-800-20 white">{{ item.free_spins_times }}</p>
+                      </v-col>
+                      <v-col cols="5" class="ma-0 pa-0">
+                        <v-btn
+                          class="text-none button-yellow m-spin-now-btn"
+                          height="49px"
+                          width="-webkit-fill-available"
+                        >
+                          {{ t("vip.super_spin_body.text_3") }}
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-col>
+              </v-row>
+              <div
+                color="#1C1929"
+                class="ma-2 pa-4 m-spin-game-card box"
+                :style="{
+                  height: spinCardShow ? spinCardHeight2 + 'px' : spinCardHeight1 + 'px',
+                  transition: spinCardShow ? 'height 0.3s ease-out' : 'unset',
+                }"
+              >
+                <p class="text-500-13 white">
+                  VIP{{ item.level }}{{ t("vip.super_spin_body.text_4") }}
+                </p>
+                <v-row class="mt-4 justify-center align-center" ref="spinCardItem">
+                  <v-col
+                    cols="6"
+                    md="3"
+                    lg="2"
+                    v-for="(item, index) in spinItems"
+                    :key="index"
+                    class="text-center d-flex justify-center pa-1"
+                  >
+                    <v-card
+                      theme="dark"
+                      color="#29253C"
+                      class="py-6"
+                      style="border-radius: 6px"
+                    >
+                      <img :src="item.image" />
+                      <p class="text-600-12 white mt-4">{{ item.title }}</p>
+                      <p class="text-500-10 text-gray mt-2 mx-2">{{ item.content }}</p>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <v-btn
+                class="text-none button-1C1929 m-spin-more-btn-position"
+                width="140px"
+                height="40px"
+                style="transform: translateX(-50%) !important"
+                @click="spinCardShow = !spinCardShow"
+              >
+                {{ t("vip.super_spin_body.text_5") }}
+                <v-icon class="mdi-down-position" v-if="!spinCardShow"
+                  >mdi-chevron-down</v-icon
+                >
+                <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
+              </v-btn>
+            </div>
+          </v-window-item>
+        </v-window>
       </div>
 
       <!------------------------   My VIP Mission -------------------------------->
 
-      <div
-        class="vip-mission-body relative mt-6 mx-2 pb-2"
-        ref="vipElement"
-        :class="tabSelect ? 'mt-15' : 'mt-6'"
-      >
-        <div class="text-800-14 white pt-4 mx-4 d-flex">
-          {{ t("vip.vip_mission_body.text_1") }}
-          <p class="ml-auto">
-            {{ t("vip.vip_mission_body.text_2") }} <Font class="text-800-20">0</Font>
-            {{ t("vip.vip_mission_body.text_3") }}
-          </p>
-        </div>
-        <div
-          color="#1C1929"
-          class="ma-2 pa-4 m-spin-game-card box"
-          :style="{
-            height: missionCardShow ? vipMissionHeight2 + 'px' : vipMissionHeight1 + 'px',
-            transition: missionCardShow ? 'height 0.3s ease-out' : 'unset',
-          }"
-        >
-          <v-row class="justify-center align-center" ref="missionCardItem">
-            <v-col
-              cols="6"
-              v-for="(item, index) in vipMissionItems"
-              :key="index"
-              class="text-center d-flex justify-center pa-1"
-            >
-              <v-card
-                theme="dark"
-                color="#29253C"
-                class="py-6"
-                v-if="item.type == 1"
-                height="220"
-                style="width: 100%; border-radius: 6px"
-              >
-                <img src="@/assets/public/image/img_public_11.png" width="50" />
-                <p class="text-500-10 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_5") }}
-                </p>
-                <v-btn
-                  class="text-none button-bright m-mission-btn-1 mt-13 mx-2"
-                  height="28px"
-                  width="-webkit-fill-available"
-                >
-                  {{ t("vip.vip_mission_body.text_6") }}
-                </v-btn>
-              </v-card>
-              <v-card
-                theme="dark"
-                color="#29253C"
-                class="py-6"
-                height="220"
-                style="width: 100%; border-radius: 6px"
-                v-if="item.type == 2"
-              >
-                <div
-                  class="m-mission-ongoing-position text-600-8 white align-center d-flex justify-center"
-                >
-                  {{ t("vip.vip_mission_body.text_7") }}
-                </div>
-                <div class="m-mission-time-position text-600-8 white">
-                  {{ item.time }}
-                </div>
-                <img src="@/assets/public/image/img_public_11.png" width="50" />
-                <p class="text-500-10 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_8") }}
-                </p>
-                <div class="mission-progress-bg mx-4 mt-6">
-                  <v-progress-linear
-                    v-model="item.missionRate"
-                    height="10"
-                    class="mission-progress"
-                  >
-                    <div class="text-500-10 white">
-                      {{ item.currentRate }} / {{ item.totalRate }}
-                    </div>
-                  </v-progress-linear>
-                </div>
-                <v-btn
-                  class="text-none button-purple m-mission-btn-2 mt-4 mx-2"
-                  height="28px"
-                  width="-webkit-fill-available"
-                >
-                  {{ t("vip.vip_mission_body.text_11") }}
-                </v-btn>
-              </v-card>
-              <v-card
-                theme="dark"
-                class="py-6 mission-card-bg-3"
-                height="220"
-                style="width: 100%; border-radius: 6px"
-                v-if="item.type == 3"
-              >
-                <div
-                  class="m-mission-ongoing-position text-600-8 white align-center d-flex justify-center"
-                >
-                  {{ t("vip.vip_mission_body.text_7") }}
-                </div>
-                <div class="m-mission-time-position text-600-8 white">
-                  {{ item.time }}
-                </div>
-                <img src="@/assets/public/image/img_public_11.png" width="50" />
-                <p class="text-500-10 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_8") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_10") }}
-                </p>
-                <div class="mission-progress-bg mx-4 mt-3">
-                  <v-progress-linear
-                    v-model="item.missionRate"
-                    height="10"
-                    class="mission-progress"
-                  >
-                    <div class="text-500-10 white">
-                      {{ item.currentRate }} / {{ item.totalRate }}
-                    </div>
-                  </v-progress-linear>
-                </div>
-                <v-btn
-                  class="text-none button-bright m-mission-btn-1 mt-3 mx-2"
-                  height="28px"
-                  width="-webkit-fill-available"
-                >
-                  <img
-                    src="@/assets/public/image/img_public_14.png"
-                    class="m-mission-gift-img-position"
-                    width="34"
-                  />
-                  {{ t("vip.vip_mission_body.text_12") }}
-                </v-btn>
-              </v-card>
-              <v-card
-                theme="dark"
-                color="#29253C"
-                class="py-6"
-                height="220"
-                style="width: 100%; border-radius: 6px"
-                v-if="item.type == 4"
-              >
-                <div
-                  class="m-mission-completed-position text-600-8 white align-center d-flex justify-center"
-                >
-                  {{ t("vip.vip_mission_body.text_2") }}
-                </div>
-                <img src="@/assets/public/image/img_public_11.png" width="50" />
-                <p class="text-500-10 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_5") }}
-                </p>
-                <p class="text-500-10 text-gray mt-7">
-                  {{ t("vip.vip_mission_body.text_13") }}
-                </p>
-                <v-btn
-                  class="text-none button-dark m-mission-btn-3 mt-3 mx-2"
-                  height="28px"
-                  width="-webkit-fill-available"
-                >
-                  {{ t("vip.vip_mission_body.text_2") }}
-                </v-btn>
-              </v-card>
-              <v-card
-                theme="dark"
-                color="#29253C"
-                class="py-6"
-                height="220"
-                style="width: 100%; border-radius: 6px"
-                v-if="item.type == 5"
-              >
-                <img src="@/assets/public/image/img_public_13.png" width="50" />
-                <p class="text-500-10 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_5") }}
-                </p>
-                <p class="text-600-10 white mt-1">
-                  {{ t("vip.vip_mission_body.text_10") }}
-                </p>
-                <v-btn
-                  class="text-none button-dark m-mission-btn-3 mt-8 mx-2"
-                  height="28px"
-                  width="-webkit-fill-available"
-                >
-                  <img
-                    src="@/assets/public/svg/icon_public_77.svg"
-                    class="m-mission-warning-img-position"
-                  />
-                  {{ t("vip.vip_mission_body.text_15") }}
-                </v-btn>
-              </v-card>
-            </v-col>
-          </v-row>
-        </div>
-        <v-btn
-          class="text-none button-1C1929 m-spin-more-btn-position"
-          width="140px"
-          height="40px"
-          style="transform: translateX(-50%) !important; border: 1px solid #923d71"
-          @click="missionCardShow = !missionCardShow"
-        >
-          {{ t("vip.super_spin_body.text_5") }}
-          <v-icon class="mdi-down-position" v-if="!missionCardShow"
-            >mdi-chevron-down</v-icon
+      <div ref="vipElement">
+        <v-window v-model="vipTab" style="overflow: initial">
+          <v-window-item
+            v-for="(item, index) in vipLevels"
+            :key="index"
+            :value="item.level"
           >
-          <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
-        </v-btn>
+            <div
+              class="vip-mission-body relative mt-6 mx-2 pb-2"
+              :class="tabSelect ? 'mt-15' : 'mt-6'"
+            >
+              <div class="text-800-14 white pt-4 mx-4 d-flex">
+                {{ t("vip.vip_mission_body.text_1") }}
+                <p class="ml-auto">
+                  {{ t("vip.vip_mission_body.text_2") }}
+                  <Font class="text-800-20">0</Font>
+                  {{ t("vip.vip_mission_body.text_3") }}
+                </p>
+              </div>
+              <div
+                color="#1C1929"
+                class="ma-2 pa-4 m-spin-game-card box"
+                :style="{
+                  height: missionCardShow
+                    ? vipMissionHeight2 + 'px'
+                    : vipMissionHeight1 + 'px',
+                  transition: missionCardShow ? 'height 0.3s ease-out' : 'unset',
+                }"
+              >
+                <v-row class="justify-center align-center" ref="missionCardItem">
+                  <v-col
+                    cols="6"
+                    v-for="(item, index) in vipMissionItems"
+                    :key="index"
+                    class="text-center d-flex justify-center pa-1"
+                  >
+                    <v-card
+                      theme="dark"
+                      color="#29253C"
+                      class="py-6"
+                      v-if="item.type == 1"
+                      height="220"
+                      style="width: 100%; border-radius: 6px"
+                    >
+                      <img src="@/assets/public/image/img_public_11.png" width="50" />
+                      <p class="text-500-10 text-gray mt-2">
+                        {{ t("vip.vip_mission_body.text_4") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_5") }}
+                      </p>
+                      <v-btn
+                        class="text-none button-bright m-mission-btn-1 mt-13 mx-2"
+                        height="28px"
+                        width="-webkit-fill-available"
+                      >
+                        {{ t("vip.vip_mission_body.text_6") }}
+                      </v-btn>
+                    </v-card>
+                    <v-card
+                      theme="dark"
+                      color="#29253C"
+                      class="py-6"
+                      height="220"
+                      style="width: 100%; border-radius: 6px"
+                      v-if="item.type == 2"
+                    >
+                      <div
+                        class="m-mission-ongoing-position text-600-8 white align-center d-flex justify-center"
+                      >
+                        {{ t("vip.vip_mission_body.text_7") }}
+                      </div>
+                      <div class="m-mission-time-position text-600-8 white">
+                        {{ item.time }}
+                      </div>
+                      <img src="@/assets/public/image/img_public_11.png" width="50" />
+                      <p class="text-500-10 text-gray mt-2">
+                        {{ t("vip.vip_mission_body.text_4") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_8") }}
+                      </p>
+                      <div class="mission-progress-bg mx-4 mt-6">
+                        <v-progress-linear
+                          v-model="item.missionRate"
+                          height="10"
+                          class="mission-progress"
+                        >
+                          <div class="text-500-10 white">
+                            {{ item.currentRate }} / {{ item.totalRate }}
+                          </div>
+                        </v-progress-linear>
+                      </div>
+                      <v-btn
+                        class="text-none button-purple m-mission-btn-2 mt-4 mx-2"
+                        height="28px"
+                        width="-webkit-fill-available"
+                      >
+                        {{ t("vip.vip_mission_body.text_11") }}
+                      </v-btn>
+                    </v-card>
+                    <v-card
+                      theme="dark"
+                      class="py-6 mission-card-bg-3"
+                      height="220"
+                      style="width: 100%; border-radius: 6px"
+                      v-if="item.type == 3"
+                    >
+                      <div
+                        class="m-mission-ongoing-position text-600-8 white align-center d-flex justify-center"
+                      >
+                        {{ t("vip.vip_mission_body.text_7") }}
+                      </div>
+                      <div class="m-mission-time-position text-600-8 white">
+                        {{ item.time }}
+                      </div>
+                      <img src="@/assets/public/image/img_public_11.png" width="50" />
+                      <p class="text-500-10 text-gray mt-2">
+                        {{ t("vip.vip_mission_body.text_4") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_8") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_10") }}
+                      </p>
+                      <div class="mission-progress-bg mx-4 mt-3">
+                        <v-progress-linear
+                          v-model="item.missionRate"
+                          height="10"
+                          class="mission-progress"
+                        >
+                          <div class="text-500-10 white">
+                            {{ item.currentRate }} / {{ item.totalRate }}
+                          </div>
+                        </v-progress-linear>
+                      </div>
+                      <v-btn
+                        class="text-none button-bright m-mission-btn-1 mt-3 mx-2"
+                        height="28px"
+                        width="-webkit-fill-available"
+                      >
+                        <img
+                          src="@/assets/public/image/img_public_14.png"
+                          class="m-mission-gift-img-position"
+                          width="34"
+                        />
+                        {{ t("vip.vip_mission_body.text_12") }}
+                      </v-btn>
+                    </v-card>
+                    <v-card
+                      theme="dark"
+                      color="#29253C"
+                      class="py-6"
+                      height="220"
+                      style="width: 100%; border-radius: 6px"
+                      v-if="item.type == 4"
+                    >
+                      <div
+                        class="m-mission-completed-position text-600-8 white align-center d-flex justify-center"
+                      >
+                        {{ t("vip.vip_mission_body.text_2") }}
+                      </div>
+                      <img src="@/assets/public/image/img_public_11.png" width="50" />
+                      <p class="text-500-10 text-gray mt-2">
+                        {{ t("vip.vip_mission_body.text_4") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_5") }}
+                      </p>
+                      <p class="text-500-10 text-gray mt-7">
+                        {{ t("vip.vip_mission_body.text_13") }}
+                      </p>
+                      <v-btn
+                        class="text-none button-dark m-mission-btn-3 mt-3 mx-2"
+                        height="28px"
+                        width="-webkit-fill-available"
+                      >
+                        {{ t("vip.vip_mission_body.text_2") }}
+                      </v-btn>
+                    </v-card>
+                    <v-card
+                      theme="dark"
+                      color="#29253C"
+                      class="py-6"
+                      height="220"
+                      style="width: 100%; border-radius: 6px"
+                      v-if="item.type == 5"
+                    >
+                      <img src="@/assets/public/image/img_public_13.png" width="50" />
+                      <p class="text-500-10 text-gray mt-2">
+                        {{ t("vip.vip_mission_body.text_4") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_5") }}
+                      </p>
+                      <p class="text-600-10 white mt-1">
+                        {{ t("vip.vip_mission_body.text_10") }}
+                      </p>
+                      <v-btn
+                        class="text-none button-dark m-mission-btn-3 mt-8 mx-2"
+                        height="28px"
+                        width="-webkit-fill-available"
+                      >
+                        <img
+                          src="@/assets/public/svg/icon_public_77.svg"
+                          class="m-mission-warning-img-position"
+                        />
+                        {{ t("vip.vip_mission_body.text_15") }}
+                      </v-btn>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <v-btn
+                class="text-none button-1C1929 m-spin-more-btn-position"
+                width="140px"
+                height="40px"
+                style="transform: translateX(-50%) !important; border: 1px solid #923d71"
+                @click="missionCardShow = !missionCardShow"
+              >
+                {{ t("vip.super_spin_body.text_5") }}
+                <v-icon class="mdi-down-position" v-if="!missionCardShow"
+                  >mdi-chevron-down</v-icon
+                >
+                <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
+              </v-btn>
+            </div>
+          </v-window-item>
+        </v-window>
       </div>
 
       <!--------------------------    VIP Benifit Description ---------------------->
@@ -1358,15 +1383,15 @@ onMounted(() => {
         class="m-benifit-description-body mt-6 mx-2 pb-2 relative"
         ref="benefitElement"
       >
-        <div class="m-benifit-description-header pa-4 text-700-16 white">
-          {{ t("vip.benifit_description_body.text_1") }}
-        </div>
         <v-window v-model="descriptionTab">
           <v-window-item
-            v-for="(item, index) in vipDescriptionItems"
+            v-for="(item, index) in vipLevels"
             :key="index"
-            :value="item"
+            :value="item.level"
           >
+            <div class="m-benifit-description-header pa-4 text-700-16 white">
+              VIP{{ item.level }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
             <v-row class="mt-2 mx-1">
               <v-col cols="6" class="ma-0 pa-1">
                 <p class="text-700-12 white ml-2">
@@ -1517,7 +1542,9 @@ onMounted(() => {
                           {{ t("vip.benifit_description_body.text_15") }}
                         </p>
                         <p class="text-700-16 yellow mt-1">
-                          100BRL<span class="text-500-12">/ Monthly</span>
+                          {{ item.free_withdrawals }}
+                          {{ userBalance.currency?.toLocaleUpperCase() }}
+                          <span class="text-500-12">/ Monthly</span>
                         </p>
                       </div>
                     </v-col>
@@ -1526,7 +1553,7 @@ onMounted(() => {
                         <p class="text-500-12 text-gray">
                           {{ t("vip.benifit_description_body.text_16") }}
                         </p>
-                        <p class="text-700-16 yellow mt-1">2.5%</p>
+                        <p class="text-700-16 yellow mt-1">{{ item.withdrawal_fee }}%</p>
                       </div>
                     </v-col>
                   </v-row>
@@ -1535,7 +1562,7 @@ onMounted(() => {
             </v-row>
           </v-window-item>
         </v-window>
-        <div
+        <!-- <div
           class="d-flex align-center justify-center"
           :class="
             mobileWidth < 960 ? 'mt-2 mr-4 justify-end' : 'benifit-description-pagination'
@@ -1562,7 +1589,7 @@ onMounted(() => {
           >
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
-        </div>
+        </div> -->
       </div>
 
       <!----------------------------   footer-body    ------------------------------------>
@@ -1595,6 +1622,7 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
 <style lang="scss">
 .m-vip-switch {
   position: fixed;

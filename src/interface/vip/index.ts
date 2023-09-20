@@ -44,13 +44,14 @@ export interface VipLevel {
     free_withdrawals: number,
     free_withdrawals_times: number,
     withdrawal_fee: number,
-    bet_award_rate: {
-        casino: number,
-    },
-    SigninAward: Array<number>,
+    bet_award_rate: any,
+    signin_award: Array<any>,
     tasks_max: number,
     deposit_rate: number,
-    bet_rate: number
+    bet_rate: number,
+    availabe_daily_bonus_time: string,
+    collectable_week_bonus_day: string | number,
+    collectable_month_bonus_day: string | number,
 }
 
 export type GetVipInfoResponse = {    

@@ -1715,7 +1715,7 @@ export default Dashboard;
       <MSearch :searchDialogShow="searchDialogShow" />
     </v-navigation-drawer>
 
-    <div :class="searchDialogShow ? 'main-bg-blur' : ''">
+    <div :class="searchDialogShow ? 'home-bg-blur' : ''">
       <!-- image carousel -->
 
       <!-- <v-carousel
@@ -3184,6 +3184,10 @@ export default Dashboard;
 }
 
 .home-body {
+  .home-bg-blur {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+  }
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;

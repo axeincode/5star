@@ -1,66 +1,96 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+import { userStore } from "@/store/user";
+import { authStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
 import { type GetBonusData } from "@/interface/bonus";
+import { bonusStore } from "@/store/bonus";
+import moment from "moment-timezone";
 
 const { t } = useI18n()
 const { width } = useDisplay();
+const { dispatchUserBonus } = bonusStore();
 
 const mobileWidth = computed(() => {
-    return width.value
+  return width.value
+})
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value
+})
+
+const userInfo = computed(() => {
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value
+})
+
+const userBonusList = computed(() => {
+  const { getBonusList } = storeToRefs(bonusStore());
+  if (getBonusList.value.list != undefined) {
+    getBonusList.value.list.map(item => {
+      item.rate = Math.ceil(item.now / item.max);
+    })
+  }
+  return getBonusList.value
 })
 
 const totalAmount = ref<string>("R$ 1500.56");
 const withdrawAmount = ref<string>("R$ 855.79");
 
 const bonusList = ref<Array<GetBonusData>>([
-    {
-        type: "Completion",
-        rate: 100,
-        currentCash: "R$ 90000.00",
-        totalCash: "R$ 90000.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 6000",
-        expireDate: "2023/2/20"
-    },
-    {
-        type: "Underway",
-        rate: 50,
-        currentCash: "R$ 90000.00",
-        totalCash: "R$ 90000.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 6000",
-        expireDate: "2023/2/20"
-    },
-    {
-        type: "Failure",
-        rate: 0,
-        currentCash: "R$ 0.00",
-        totalCash: "R$ 67500.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 0",
-        expireDate: "2023/2/20"
-    },
-    {
-        type: "Failure",
-        rate: 50,
-        currentCash: "R$ 36000.00",
-        totalCash: "R$ 67500.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 0",
-        expireDate: "2023/2/20"
-    },
+  {
+    type: "Completion",
+    rate: 100,
+    currentCash: "R$ 90000.00",
+    totalCash: "R$ 90000.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 6000",
+    expireDate: "2023/2/20"
+  },
+  {
+    type: "Underway",
+    rate: 50,
+    currentCash: "R$ 90000.00",
+    totalCash: "R$ 90000.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 6000",
+    expireDate: "2023/2/20"
+  },
+  {
+    type: "Failure",
+    rate: 0,
+    currentCash: "R$ 0.00",
+    totalCash: "R$ 67500.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 0",
+    expireDate: "2023/2/20"
+  },
+  {
+    type: "Failure",
+    rate: 50,
+    currentCash: "R$ 36000.00",
+    totalCash: "R$ 67500.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 0",
+    expireDate: "2023/2/20"
+  },
 ]);
 
 const formsList = ref<Array<any>>([
-    {
-        date: "2023/01/20",
-        deposit: 3000,
-        receive: 6000,
-        wager: 90000
-    },
+  {
+    date: "2023/01/20",
+    deposit: 3000,
+    receive: 6000,
+    wager: 90000
+  },
 ])
+
+onMounted(async () => {
+  await dispatchUserBonus();
+})
 </script>
 <template>
   <v-row class="mt-4 mx-2 text-400-12 text-gray text-center">
@@ -76,7 +106,7 @@ const formsList = ref<Array<any>>([
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-12 white">{{ totalAmount }}</div>
+          <div class="text-600-12 white">{{ userBalance.amount }}</div>
         </v-list-item-title>
         <template v-slot:append>
           <div v-ripple.center style="width: 24px; height: 24px">
@@ -90,7 +120,7 @@ const formsList = ref<Array<any>>([
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.withdraw_text") }}</div>
-          <div class="text-600-12 white">{{ withdrawAmount }}</div>
+          <div class="text-600-12 white">{{ userBalance.availabe_balance }}</div>
         </v-list-item-title>
       </v-list-item>
     </v-col>
@@ -99,12 +129,12 @@ const formsList = ref<Array<any>>([
         <v-expansion-panels>
           <v-expansion-panel
             class="bg-color-211F31 mt-2 m-collapse-body"
-            v-for="(item, index) in bonusList"
+            v-for="(item, index) in userBonusList.list"
             :key="index"
             :ripple="false"
           >
             <v-expansion-panel-title
-              :class="[item.type == 'Failure' ? 'failure-title' : 'completion-title']"
+              :class="[item.status == 3 ? 'failure-title' : 'completion-title']"
               :ripple="false"
             >
               <template v-slot:default="{ expanded }">
@@ -112,31 +142,33 @@ const formsList = ref<Array<any>>([
                   <v-col
                     cols="3"
                     class="text-700-10 text-center bonus-cash-border d-flex align-center justify-center"
-                    :class="[item.type == 'Failure' ? 'black' : '']"
-                    >{{ item.restCash }}</v-col
+                    :class="[item.status == 3 ? 'black' : '']"
                   >
+                    {{ userBalance.currency?.toLocaleUpperCase() }} {{ item.deposit }}
+                  </v-col>
                   <v-col
                     cols="3"
                     class="text-400-10 text-center bonus-cash-border d-flex align-center justify-center"
-                    :class="[item.type == 'Failure' ? 'color-FF6200' : '']"
-                    >{{ item.type }}</v-col
+                    :class="[item.status == 3 ? 'color-FF6200' : '']"
                   >
+                    <template v-if="item.status == 0">Not opened</template>
+                    <template v-else-if="item.status == 1">Opening</template>
+                    <template v-if="item.status == 2">Completion</template>
+                    <template v-if="item.status == 3">Failure</template>
+                  </v-col>
                   <v-col
                     cols="4"
                     class="text-center bonus-cash-border"
-                    v-if="item.type != 'Underway'"
+                    v-if="item.status != 1"
                   >
-                    <div
-                      class="text-400-10"
-                      :class="[item.type == 'Failure' ? 'black' : '']"
-                    >
+                    <div class="text-400-10" :class="[item.status == 3 ? 'black' : '']">
                       Expire on
                     </div>
                     <div
                       class="text-600-10 mt-2"
-                      :class="[item.type == 'Failure' ? 'black' : '']"
+                      :class="[item.status == 3 ? 'black' : '']"
                     >
-                      {{ item.expireDate }}
+                      {{ moment(item.ended_at * 1000).format("YYYY-MM-DD") }}
                     </div>
                   </v-col>
                   <v-col
@@ -147,48 +179,47 @@ const formsList = ref<Array<any>>([
                     <div class="text-400-10">No time limit</div>
                   </v-col>
                   <v-col cols="2" class="text-right">
-                    <img
-                      src="@/assets/bonus/img/img_so_03.png"
-                      v-if="item.type == 'Completion'"
-                      width="25"
-                    />
-                    <img
-                      src="@/assets/bonus/img/img_so_07.png"
-                      v-else-if="item.type == 'Failure'"
-                      width="25"
-                    />
+                    <div class="relative" style="margin-left: auto; width: 25px">
+                      <img
+                        src="@/assets/bonus/img/img_so_01.png"
+                        v-if="((item.receive - item.deposit) * 100) / item.deposit >= 100"
+                        width="24"
+                      />
+                      <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
+                      <p class="m-bonus-rate">
+                        {{ ((item.receive - item.deposit) * 100) / item.deposit }}%
+                      </p>
+                    </div>
                   </v-col>
                   <v-col cols="12" class="text-center mt-1">
                     <div
                       class="text-400-10 mt-2"
-                      v-if="item.type != 'Underway'"
-                      :class="[item.type == 'Failure' ? 'black' : '']"
+                      v-if="(item.status = 1)"
+                      :class="[item.status == 3 ? 'black' : '']"
                     >
                       Complete the task and get
                       <Font
                         :class="[
-                          item.type == 'Failure' ? 'm-bonus-cash-failure' : 'bonus-cash',
+                          item.status == 3 ? 'm-bonus-cash-failure' : 'bonus-cash',
                         ]"
                       >
-                        {{ item.bonusCash }}</Font
+                        R$ {{ item.receive }}</Font
                       >
                       bonus
                     </div>
-                    <div :class="[item.type == 'Underway' ? 'mt-4' : 'mt-2']">
+                    <div :class="[item.status == 1 ? 'mt-4' : 'mt-2']">
                       <v-progress-linear
                         v-model="item.rate"
                         height="16"
                         :class="[
-                          item.type == 'Failure'
-                            ? 'failure-progress'
-                            : 'completion-progress',
+                          item.status == 3 ? 'failure-progress' : 'completion-progress',
                         ]"
                       >
                         <div
                           class="text-400-10"
-                          :class="[item.type == 'Failure' ? 'gray' : '']"
+                          :class="[item.status == 3 ? 'gray' : '']"
                         >
-                          {{ item.currentCash }} / {{ item.totalCash }}
+                          R$ {{ item.now }} / R$ {{ item.max }}
                         </div>
                       </v-progress-linear>
                     </div>
@@ -196,17 +227,31 @@ const formsList = ref<Array<any>>([
                 </v-row>
               </template>
             </v-expansion-panel-title>
-            
+
             <v-expansion-panel-text class="mt-3">
-              <v-row class="ma-0" v-if="item.type != 'Underway'">
-                <v-col cols="8" class="text-right text-400-12 pt-0" v-if="item.rate ==0">
-                  50{{ t("bonus.super_bonus_text") }}
+              <!-- <v-row class="ma-0" v-if="item.status != 1">
+                <v-col cols="8" class="text-right text-400-12 pt-0" v-if="item.rate == 0">
+                  {{ ((item.receive - item.deposit) * 100) / item.deposit }}
+                  {{ t("bonus.super_bonus_text") }}
                 </v-col>
 
                 <v-col cols="8" class="text-right text-400-12 pt-0" v-else>
-                  {{item.rate}}{{ t("bonus.super_bonus_text") }}
+                  {{ item.rate }}{{ t("bonus.super_bonus_text") }}
                 </v-col>
 
+                <v-col cols="4" class="text-right pt-0">
+                  <img
+                    src="@/assets/public/svg/icon_public_53.svg"
+                    width="20"
+                    class="m-bonus-expansion-help-img"
+                  />
+                </v-col>
+              </v-row> -->
+              <v-row class="ma-0">
+                <v-col cols="8" class="text-right text-400-12 pt-0">
+                  {{ ((item.receive - item.deposit) * 100) / item.deposit }}
+                  {{ t("bonus.super_bonus_text") }}
+                </v-col>
                 <v-col cols="4" class="text-right pt-0">
                   <img
                     src="@/assets/public/svg/icon_public_53.svg"
@@ -233,8 +278,8 @@ const formsList = ref<Array<any>>([
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in formsList" :key="index">
-                    <td>{{ item.date }}</td>
+                  <tr>
+                    <td>{{ moment(item.created_at * 1000).format("YYYY/MM/DD") }}</td>
                     <td>{{ item.deposit }}</td>
                     <td>{{ item.receive }}</td>
                     <td>{{ item.wager }}</td>
@@ -242,10 +287,12 @@ const formsList = ref<Array<any>>([
                 </tbody>
               </v-table>
               <v-row class="ma-0">
-                <v-col cols="5" class="text-left text-500-10"> ID: Qsd58844221122 </v-col>
+                <v-col cols="5" class="text-left text-500-10">
+                  ID: {{ userInfo.uid }}
+                </v-col>
                 <v-col cols="7" class="justify-end d-flex text-500-10">
-                  {{ t("bonus.table.deposit") }} $3000,
-                  {{ t("bonus.table.receive") }} $6000
+                  {{ t("bonus.table.deposit") }} ${{ item.deposit }},
+                  {{ t("bonus.table.receive") }} ${{ item.receive }}
                 </v-col>
               </v-row>
             </v-expansion-panel-text>
@@ -259,11 +306,13 @@ const formsList = ref<Array<any>>([
 .v-expansion-panel-title__overlay {
   opacity: 0 !important;
 }
+
 .m-bonus-expansion-help-img:active {
   scale: 0.95;
   filter: brightness(80%);
   transition: scale 0.2s;
 }
+
 .m-bonus-card-body {
   // height: 700px;
   overflow-y: auto;
@@ -278,6 +327,21 @@ const formsList = ref<Array<any>>([
     top: 40px;
     right: 10px;
   }
+}
+
+.m-bonus-rate {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
+  font-family: Haettenschweiler;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  // line-height: normal;
+  // letter-spacing: 0.16px;
 }
 
 .m-forms-bonus-table-bg {

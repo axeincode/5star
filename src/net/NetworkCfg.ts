@@ -72,6 +72,11 @@ export namespace NETWORK {
     static TRANSACTION_HISTORY = '/user/transactionshistory'
   }
 
+  // bonus api
+  export class BONUS_PAGE {
+    static USER_BONUS = '/user/bonuses';
+  }
+
   //Listening events sent actively
   export class UNSOLICITED {}
 }
