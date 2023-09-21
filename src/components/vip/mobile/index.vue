@@ -17,6 +17,9 @@ import moment from 'moment-timezone';
 const { t } = useI18n();
 const { width } = useDisplay()
 
+const { dispatchVipTasks } = vipStore();
+const { dispatchVipLevelAward } = vipStore();
+
 const vipWidth = ref<string>('vip-container');
 const selectedTabIndex = ref<number>(0)
 const depositRate = ref<number>(56);
@@ -305,6 +308,11 @@ const vipLevels = computed(() => {
   return getVipLevels.value
 })
 
+const vipTasks = computed(() => {
+  const { getVipTasks } = storeToRefs(vipStore());
+  return getVipTasks.value
+})
+
 const userBalance = computed(() => {
   const { getUserBalance } = storeToRefs(userStore());
   return getUserBalance.value
@@ -568,7 +576,14 @@ const arrowSwitchTransform = (el: any) => {
   return el;
 }
 
-onMounted(() => {
+const submitVipLevelAward = async (awardType: number) => {
+  await dispatchVipLevelAward({
+    type: awardType
+  })
+}
+
+onMounted(async () => {
+  await dispatchVipTasks();
   window.addEventListener('scroll', handleWindowScroll);
   spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
   vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
@@ -821,9 +836,15 @@ onMounted(() => {
                     </div> -->
                     <div class="mt-2 mx-4">
                       <v-btn
-                        class="text-none button-dark m-button-dark"
+                        class="text-none m-button-dark"
                         width="-webkit-fill-available"
                         height="28px"
+                        :class="
+                          item.collectable_week_bonus_day == 0
+                            ? 'button-bright'
+                            : 'button-dark'
+                        "
+                        @click="submitVipLevelAward(1)"
                       >
                         {{ t("vip.receive_btn_text") }}
                       </v-btn>
@@ -857,9 +878,15 @@ onMounted(() => {
                     </div> -->
                     <div class="mt-2 mx-4">
                       <v-btn
-                        class="text-none button-dark m-button-dark"
+                        class="text-none m-button-dark"
                         width="-webkit-fill-available"
                         height="28px"
+                        :class="
+                          item.collectable_month_bonus_day == 0
+                            ? 'button-bright'
+                            : 'button-dark'
+                        "
+                        @click="submitVipLevelAward(2)"
                       >
                         {{ t("vip.receive_btn_text") }}
                       </v-btn>
@@ -896,6 +923,7 @@ onMounted(() => {
                         class="text-none button-dark m-button-dark"
                         width="-webkit-fill-available"
                         height="28px"
+                        @click="submitVipLevelAward(3)"
                       >
                         {{ t("vip.receive_btn_text") }}
                       </v-btn>

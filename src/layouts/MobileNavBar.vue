@@ -12,6 +12,14 @@ import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
+import icon_public_35 from "@/assets/public/svg/icon_public_35.svg";
+import icon_public_36 from "@/assets/public/svg/icon_public_36.svg";
+import icon_public_37 from "@/assets/public/svg/icon_public_37.svg";
+import icon_public_38 from "@/assets/public/svg/icon_public_38.svg";
+import icon_public_39 from "@/assets/public/svg/icon_public_39.svg";
+import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
+import icon_public_41 from "@/assets/public/svg/icon_public_41.svg";
+import icon_public_42 from "@/assets/public/svg/icon_public_42.svg";
 
 const router = useRouter();
 const { setNavBarToggle } = appBarStore();
@@ -35,6 +43,17 @@ const languageMenu = ref<boolean>(false);
 const originalMenu = ref<boolean>(false);
 const navDrawer = ref<any>(null);
 const casinoIconColor = ref<string>("#7782AA");
+const originalIconColor = ref<string>("#7782AA")
+const recentlyIconColor = ref<string>("#7782AA")
+const favoriteIconColor = ref<string>("#7782AA")
+const slotIconColor = ref<string>("#7782AA")
+const liveIconColor = ref<string>("#7782AA")
+const sportIconColor = ref<string>("#7782AA")
+const promotionIconColor = ref<string>("#7782AA")
+const vipIconColor = ref<string>("#7782AA")
+const affiliateIconColor = ref<string>("#7782AA")
+const activeItem = ref<string>("");
+const navItem = ref<string>("");
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -137,9 +156,34 @@ watch(navBarToggle, (newValue) => {
 watch(open, (value) => {
   if (value.length == 1) {
     casinoIconColor.value = "#7782AA";
+    recentlyIconColor.value = "#7782AA"
+    favoriteIconColor.value = "#7782AA"
+    slotIconColor.value = "#7782AA"
+    liveIconColor.value = "#7782AA"
+    activeItem.value = "";
   } else {
     casinoIconColor.value = "#FFFFFF";
+    sportIconColor.value = "#7782AA"
+    promotionIconColor.value = "#7782AA"
+    navItem.value = "";
   }
+})
+
+watch(originalMenu, (value) => {
+  if (value) {
+    originalIconColor.value = "#FFFFFF";
+    recentlyIconColor.value = "#7782AA"
+    favoriteIconColor.value = "#7782AA"
+    slotIconColor.value = "#7782AA"
+    liveIconColor.value = "#7782AA"
+    activeItem.value = "";
+  } else {
+    originalIconColor.value = "#7782AA"
+  }
+})
+
+watch(activeItem, (value) => {
+  console.log(value);
 })
 
 const handleLanguageDropdown = (item: string) => {
@@ -185,6 +229,76 @@ const casinoIconTransform = (el: any) => {
   return el;
 };
 
+const originalIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", originalIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", originalIconColor.value);
+    }
+  }
+  return el;
+};
+
+const recentlyIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", recentlyIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", recentlyIconColor.value);
+    }
+  }
+  return el;
+};
+
+const favoriteIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", favoriteIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", favoriteIconColor.value);
+    }
+  }
+  return el;
+};
+
+const slotIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", slotIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", slotIconColor.value);
+    }
+  }
+  return el;
+};
+
+const liveIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", liveIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", liveIconColor.value);
+    }
+  }
+  return el;
+};
+
+const sportIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", sportIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", sportIconColor.value);
+    }
+  }
+  return el;
+};
+
+const promotionIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", promotionIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", promotionIconColor.value);
+    }
+  }
+  return el;
+};
+
 const openLoginBonusDialog = () => {
   setLoginBonusDialogVisible(true);
   setNavBarToggle(false);
@@ -208,23 +322,64 @@ const openRefferalDialogShow = () => {
   setNavBarToggle(false);
 }
 const handleGameFilter = (filterText: string) => {
+  let tempFilterText: string = "";
   switch (filterText) {
     case t('navBar.casino_sub_menu.recently_played'):
       setGameFilterText("history");
+      tempFilterText = "history";
+      activeItem.value = t('navBar.casino_sub_menu.recently_played');
+      recentlyIconColor.value = "#FFFFFF"
+      favoriteIconColor.value = "#7782AA"
+      slotIconColor.value = "#7782AA"
+      liveIconColor.value = "#7782AA"
       break;
     case t('navBar.casino_sub_menu.favorites'):
       setGameFilterText("favorite");
+      tempFilterText = "favorite";
+      activeItem.value = t('navBar.casino_sub_menu.favorites');
+      favoriteIconColor.value = "#FFFFFF"
+      recentlyIconColor.value = "#7782AA"
+      slotIconColor.value = "#7782AA"
+      liveIconColor.value = "#7782AA"
       break;
     case t('navBar.casino_sub_menu.slots'):
       setGameFilterText("slot");
+      tempFilterText = "slot";
+      activeItem.value = t('navBar.casino_sub_menu.slots');
+      recentlyIconColor.value = "#7782AA"
+      favoriteIconColor.value = "#7782AA"
+      slotIconColor.value = "#FFFFFF"
+      liveIconColor.value = "#7782AA"
       break;
     case t('navBar.casino_sub_menu.live_casino'):
       setGameFilterText("live");
+      tempFilterText = "live";
+      activeItem.value = t('navBar.casino_sub_menu.live_casino');
+      recentlyIconColor.value = "#7782AA"
+      favoriteIconColor.value = "#7782AA"
+      slotIconColor.value = "#7782AA"
+      liveIconColor.value = "#FFFFFF"
       break;
   }
+  router.push({ name: "Dashboard", query: { filter: tempFilterText } });
   setNavBarToggle(false);
   setMainBlurEffectShow(false);
   setOverlayScrimShow(false);
+}
+
+const handleNavbarItem = (navbarText: string) => {
+  open.value = [''];
+  navItem.value = navbarText
+  switch (navbarText) {
+    case t('navBar.sport'):
+      sportIconColor.value = "#FFFFFF"
+      promotionIconColor.value = "#7782AA"
+      break;
+    case t('navBar.menu_item_1.promotions'):
+      sportIconColor.value = "#7782AA"
+      promotionIconColor.value = "#FFFFFF"
+      break;
+  }
 }
 
 onMounted(() => {
@@ -239,7 +394,7 @@ onMounted(() => {
     :scrim-opacity="0.6"
     :touchless="true"
     class="nav-background pb-100"
-    style = "padding-bottom: 56px!important;"
+    style="padding-bottom: 56px !important"
     :width="192"
     v-model="drawer"
   >
@@ -353,28 +508,60 @@ onMounted(() => {
               <v-list-item-title
                 class="ml-2"
                 :class="open.length == 1 ? 'gray' : 'white'"
-                >{{ t("navBar.casino") }}</v-list-item-title
               >
+                {{ t("navBar.casino") }}
+              </v-list-item-title>
             </v-list-item>
           </template>
           <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px">
             <v-list>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
-                prepend-avatar="@/assets/public/svg/icon_public_35.svg"
-                :title="t('navBar.casino_sub_menu.recently_played')"
                 value="recently played"
+                v-model="activeItem"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
                 @click="handleGameFilter(t('navBar.casino_sub_menu.recently_played'))"
-              ></v-list-item>
+              >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_35"
+                    width="16"
+                    :transform-source="recentlyIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.recently_played')
+                      ? 'white'
+                      : 'gray'
+                  "
+                >
+                  {{ t("navBar.casino_sub_menu.recently_played") }}
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
-                prepend-avatar="@/assets/public/svg/icon_public_36.svg"
-                :title="t('navBar.casino_sub_menu.favorites')"
                 value="favorites"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
                 @click="handleGameFilter(t('navBar.casino_sub_menu.favorites'))"
-              ></v-list-item>
+              >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_36"
+                    width="16"
+                    :transform-source="favoriteIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.favorites') ? 'white' : 'gray'
+                  "
+                >
+                  {{ t("navBar.casino_sub_menu.favorites") }}
+                </v-list-item-title>
+              </v-list-item>
               <v-menu
                 location="center"
                 offset="10"
@@ -386,12 +573,23 @@ onMounted(() => {
                   <v-list-item
                     v-bind="props"
                     class="m-casino-sub-img m-nav-sub-menu"
-                    prepend-avatar="@/assets/public/svg/icon_public_37.svg"
                     :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
-                    :title="t('navBar.casino_sub_menu.game_originals')"
                     value="game originals"
                     style="margin-bottom: -4px !important; margin-top: -4px !important"
                   >
+                    <template v-slot:prepend>
+                      <inline-svg
+                        :src="icon_public_37"
+                        width="16"
+                        :transform-source="originalIconTransform"
+                      ></inline-svg>
+                    </template>
+                    <v-list-item-title
+                      class="ml-2"
+                      :class="originalMenu ? 'white' : 'gray'"
+                    >
+                      {{ t("navBar.casino_sub_menu.game_originals") }}
+                    </v-list-item-title>
                   </v-list-item>
                 </template>
                 <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
@@ -410,20 +608,50 @@ onMounted(() => {
               </v-menu>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
-                prepend-avatar="@/assets/public/svg/icon_public_38.svg"
-                :title="t('navBar.casino_sub_menu.slots')"
                 value="slots"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
                 @click="handleGameFilter(t('navBar.casino_sub_menu.slots'))"
-              ></v-list-item>
+              >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_38"
+                    width="16"
+                    :transform-source="slotIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.slots') ? 'white' : 'gray'
+                  "
+                >
+                  {{ t("navBar.casino_sub_menu.slots") }}
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
-                prepend-avatar="@/assets/public/svg/icon_public_39.svg"
-                :title="t('navBar.casino_sub_menu.live_casino')"
                 value="live casino"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
                 @click="handleGameFilter(t('navBar.casino_sub_menu.live_casino'))"
-              ></v-list-item>
+              >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_39"
+                    width="16"
+                    :transform-source="liveIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.live_casino')
+                      ? 'white'
+                      : 'gray'
+                  "
+                >
+                  {{ t("navBar.casino_sub_menu.live_casino") }}
+                </v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-card>
         </v-list-group>
@@ -431,23 +659,49 @@ onMounted(() => {
       <v-list>
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
-          prepend-avatar="@/assets/public/svg/icon_public_40.svg"
-          :title="t('navBar.sport')"
           style="margin-bottom: -8px !important; padding-left: 10px"
-        ></v-list-item>
+          @click="handleNavbarItem(t('navBar.sport'))"
+        >
+          <template v-slot:prepend>
+            <inline-svg
+              :src="icon_public_40"
+              width="16"
+              :transform-source="sportIconTransform"
+            ></inline-svg>
+          </template>
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.sport') ? 'white' : 'gray'"
+          >
+            {{ t("navBar.sport") }}
+          </v-list-item-title>
+        </v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
-          prepend-avatar="@/assets/public/svg/icon_public_41.svg"
-          :title="t('navBar.menu_item_1.promotions')"
           style="
             margin-bottom: -4px !important;
             margin-top: -8px !important;
             padding-left: 10px;
           "
-        ></v-list-item>
+          @click="handleNavbarItem(t('navBar.menu_item_1.promotions'))"
+        >
+          <template v-slot:prepend>
+            <inline-svg
+              :src="icon_public_41"
+              width="16"
+              :transform-source="promotionIconTransform"
+            ></inline-svg>
+          </template>
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.menu_item_1.promotions') ? 'white' : 'gray'"
+          >
+            {{ t("navBar.menu_item_1.promotions") }}
+          </v-list-item-title>
+        </v-list-item>
         <v-list-item
           class="m-vip-club m-nav-menu"
           prepend-avatar="@/assets/public/svg/icon_public_42.svg"

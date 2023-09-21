@@ -30,7 +30,6 @@ import Toast, { POSITION, PluginOptions } from "vue-toastification";
 
 import "vue-toastification/dist/index.css";
 
-
 const app = createApp(App)
 
 registerPlugins(app)

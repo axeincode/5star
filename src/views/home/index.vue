@@ -32,7 +32,7 @@ import { socketStore } from "@/store/socket";
 import { authStore } from "@/store/auth";
 import type * as Game from "@/interface/game";
 import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Search from "@/views/home/components/Search.vue";
 import MSearch from "@/views/home/components/mobile/Search.vue";
 import { ProgressiveImage } from "vue-progressive-image";
@@ -77,6 +77,7 @@ const Dashboard = defineComponent({
     const { setMainBlurEffectShow } = appBarStore();
     const { dispatchSocketConnect } = socketStore();
     const router = useRouter();
+    const route = useRoute();
 
     // initiate component state
     const state = reactive({
@@ -611,11 +612,11 @@ const Dashboard = defineComponent({
     const recordContainer = ref<HTMLElement | null>(null);
     const recordScrollInterval = ref<any>(null);
     const historyToggleSwitch = ref<boolean>(false);
-    const selectedGameFilterBtn = ref<string>(t("home.button.all_game"));
+    const selectedGameFilterBtn = ref<any>(t("home.button.all_game"));
     const searchDialogShow = ref<boolean>(false);
     const filterTabText = ref<string>("lobby");
     const gameGroupBtnList = ref<Array<any>>([]);
-    const selectedCategoryName = ref<string>("");
+    const selectedCategoryName = ref<any>("");
     const loading = ref<boolean>(false);
 
     const swiper = ref<any>(null);
@@ -1339,7 +1340,7 @@ const Dashboard = defineComponent({
         });
       }
       console.log(pagingGames.value);
-        gameFilterBtnFlag.value = false;
+      gameFilterBtnFlag.value = false;
     };
 
     const handleMoreGame = async (
@@ -1361,11 +1362,11 @@ const Dashboard = defineComponent({
       } else {
         await dispatchGameSearch(
           "?game_categories_slug=" +
-            slug +
-            "&page=" +
-            new_page_no +
-            "&limit=" +
-            limit.value
+          slug +
+          "&page=" +
+          new_page_no +
+          "&limit=" +
+          limit.value
         );
       }
       moreLoading.value = false;
@@ -1563,11 +1564,11 @@ const Dashboard = defineComponent({
           } else {
             await dispatchGameSearch(
               "?game_categories_slug=" +
-                item.slug +
-                "&page=" +
-                currentPage.value +
-                "&limit=" +
-                limit.value
+              item.slug +
+              "&page=" +
+              currentPage.value +
+              "&limit=" +
+              limit.value
             );
           }
           if (gameSearchList.value.list.length > 0) {
@@ -1597,11 +1598,11 @@ const Dashboard = defineComponent({
       allGames.value.map(async (item) => {
         await dispatchGameSearch(
           "?game_categories_slug=" +
-            item.slug +
-            "&page=" +
-            currentPage.value +
-            "&limit=" +
-            limit.value
+          item.slug +
+          "&page=" +
+          currentPage.value +
+          "&limit=" +
+          limit.value
         );
         if (gameSearchList.value.list.length > 0) {
           let index = 0;
@@ -1628,6 +1629,86 @@ const Dashboard = defineComponent({
       });
 
       loading.value = false;
+      selectedCategoryName.value = route.query.filter ? route.query.filter : "";
+      selectedGameFilterBtn.value = route.query.filter ? route.query.filter : t("home.button.all_game");
+      switch (selectedGameFilterBtn.value) {
+        case t("home.button.all_game"):
+          gameFilterIconColor1.value = "#FFFFFF";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "lobby";
+          break;
+        case "favorite":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#FFFFFF";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "favorite";
+          break;
+        case "history":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#FFFFFF";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "history";
+          break;
+        case "original":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#FFFFFF";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "original";
+          break;
+        case "pgsoft":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#FFFFFF";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "pgsoft";
+          break;
+        case "slot":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#FFFFFF";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "slot";
+          break;
+        case "live":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#7782AA";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#FFFFFF";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "live";
+          break;
+      }
     });
 
     onUnmounted(() => {
@@ -3188,6 +3269,7 @@ export default Dashboard;
     filter: blur(3px);
     -webkit-filter: blur(3px);
   }
+
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;

@@ -54,6 +54,24 @@ export interface VipLevel {
     collectable_month_bonus_day: string | number,
 }
 
+export interface VipTaskItem {
+    index: number
+    task_id: number
+    task_type: number
+    task_terms : {
+        terms_id: number
+        deposit: number
+        bet: number
+        game_type: string
+        game_tag: string
+        times: number
+        multiplier: number
+        game_win: number
+    }
+    state: number
+    award: number
+}
+
 export type GetVipInfoResponse = {    
     code: number
     data: VipInfo
@@ -63,5 +81,17 @@ export type GetVipInfoResponse = {
 export type GetVipLevelResponse = {
     code: number
     data: Array<VipLevel>
+    message: string
+}
+
+export type GetVipTaskResponse = {
+    code: number
+    data: Array<VipTaskItem>
+    message: string
+}
+
+export type GetVipLevelAwardResponse = {
+    code: number
+    data: any
     message: string
 }
