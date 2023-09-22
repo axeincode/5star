@@ -13,6 +13,27 @@ import { useDisplay } from "vuetify";
 import { vipStore } from "@/store/vip";
 import { userStore } from "@/store/user";
 import moment from 'moment-timezone';
+import img_vip_00 from "@/assets/vip/image/img_vip_00.png";
+import img_vip_01 from "@/assets/vip/image/img_vip_01.png";
+import img_vip_02 from "@/assets/vip/image/img_vip_02.png";
+import img_vip_03 from "@/assets/vip/image/img_vip_03.png";
+import img_vip_04 from "@/assets/vip/image/img_vip_04.png";
+import img_vip_05 from "@/assets/vip/image/img_vip_05.png";
+import img_vip_06 from "@/assets/vip/image/img_vip_06.png";
+import img_vip_07 from "@/assets/vip/image/img_vip_07.png";
+import img_vip_08 from "@/assets/vip/image/img_vip_08.png";
+import img_vip_09 from "@/assets/vip/image/img_vip_09.png";
+import img_vip_10 from "@/assets/vip/image/img_vip_10.png";
+import img_vip_11 from "@/assets/vip/image/img_vip_11.png";
+import img_vip_12 from "@/assets/vip/image/img_vip_12.png";
+import img_vip_13 from "@/assets/vip/image/img_vip_13.png";
+import img_vip_14 from "@/assets/vip/image/img_vip_14.png";
+import img_vip_15 from "@/assets/vip/image/img_vip_15.png";
+import img_vip_16 from "@/assets/vip/image/img_vip_16.png";
+import img_vip_17 from "@/assets/vip/image/img_vip_17.png";
+import img_vip_18 from "@/assets/vip/image/img_vip_18.png";
+import img_vip_19 from "@/assets/vip/image/img_vip_19.png";
+import img_vip_20 from "@/assets/vip/image/img_vip_20.png";
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -94,6 +115,30 @@ const vipTabs = ref<Array<string>>([
   t('vip.super_carousel_text'),
   t('vip.welfare_task'),
 ])
+
+const vipLevelImgs = ref<Array<any>>([
+  img_vip_00,
+  img_vip_01,
+  img_vip_02,
+  img_vip_03,
+  img_vip_04,
+  img_vip_05,
+  img_vip_06,
+  img_vip_07,
+  img_vip_08,
+  img_vip_09,
+  img_vip_10,
+  img_vip_11,
+  img_vip_12,
+  img_vip_13,
+  img_vip_14,
+  img_vip_15,
+  img_vip_16,
+  img_vip_17,
+  img_vip_18,
+  img_vip_19,
+  img_vip_20,
+]);
 
 const selectedVIPDescriptionIndex = ref<number>(1);
 
@@ -633,76 +678,7 @@ onMounted(async () => {
             </div>
             <v-row class="full-height mx-2 mt-0">
               <v-col cols="3" class="text-center">
-                <img
-                  src="@/assets/vip/image/img_vip_00.png"
-                  width="49"
-                  v-if="item.level == 0"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_01.png"
-                  width="49"
-                  v-if="item.level == 1"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_02.png"
-                  width="49"
-                  v-if="item.level == 2"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_03.png"
-                  width="49"
-                  v-if="item.level == 3"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_04.png"
-                  width="49"
-                  v-if="item.level == 4"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_05.png"
-                  width="49"
-                  v-if="item.level == 5"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_06.png"
-                  width="49"
-                  v-if="item.level == 6"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_07.png"
-                  width="49"
-                  v-if="item.level == 7"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_08.png"
-                  width="49"
-                  v-if="item.level == 8"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_09.png"
-                  width="49"
-                  v-if="item.level == 9"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_10.png"
-                  width="49"
-                  v-if="item.level == 10"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_11.png"
-                  width="49"
-                  v-if="item.level == 11"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_12.png"
-                  width="49"
-                  v-if="item.level == 12"
-                />
-                <img
-                  src="@/assets/vip/image/img_vip_13.png"
-                  width="49"
-                  v-if="item.level == 13"
-                />
+                <img :src="vipLevelImgs[item.level]" width="49" v-if="item.level == 0" />
                 <p class="text-800-14 yellow">VIP {{ item.level }}</p>
               </v-col>
               <v-col cols="9">

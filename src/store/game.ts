@@ -22,7 +22,11 @@ export const gameStore = defineStore({
         mobileMenuShow: true as boolean,
         searchTextList: [] as Array<string>,
         gameFilterText: "" as string,
-        originalGames: [] as Array<Game.Search>
+        originalGames: [] as Array<Game.Search>,
+        gameHistoryItem: {
+            total_pages: 0,
+            record: []
+        } as Game.GameHistoryResponse
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -34,7 +38,8 @@ export const gameStore = defineStore({
         getSearchTextList: (state) => state.searchTextList,
         getGameFilterText: (state) => state.gameFilterText,
         getOriginalGames: (state) => state.originalGames,
-        getMobileMenuShow: (state) => state.mobileMenuShow
+        getMobileMenuShow: (state) => state.mobileMenuShow,
+        gameHistoryItem: (state) => state.gameHistoryItem,
     },
     actions: {
         // set functions
@@ -76,6 +81,9 @@ export const gameStore = defineStore({
         },
         setMobileMenuShow(mobileMenuShow: boolean) {
             this.mobileMenuShow = mobileMenuShow;
+        },
+        setGameHistoryItem(gameHistoryItem: Game.GameHistoryResponse) {
+            this.gameHistoryItem = gameHistoryItem;
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {
@@ -158,5 +166,21 @@ export const gameStore = defineStore({
             }
             await network.sendMsg(route, data, next, 1);
         },
+        // game history api response
+        async dispatchGameHistory(data: any) {
+          this.setSuccess(false);
+          const route: string = NETWORK.GAME_INFO.GAME_HISTORY;
+          const network: Network = Network.getInstance();
+          // response call back function
+          const next = (response: Game.GetGameHistoryResponse) => {
+            if (response.code == 200) {
+              this.setSuccess(true);
+              this.setGameHistoryItem(response.data);
+            } else {
+              this.setErrorMessage(handleException(response.code));
+            }
+          }
+          await network.sendMsg(route, data, next, 1);
+        }
     }
 })

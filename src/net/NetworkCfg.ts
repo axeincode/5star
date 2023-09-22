@@ -54,6 +54,7 @@ export namespace NETWORK {
     static GAME_ENTER = '/user/enter/game'; // game enter
     static USER_GAME = '/user/games'; // user game
     static FAVORITE_GAME = '/user/setup/game' // favorite game
+    static GAME_HISTORY = '/user/gamehistory' // game history
   }
 
   // vip api

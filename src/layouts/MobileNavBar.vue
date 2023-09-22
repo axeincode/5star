@@ -20,6 +20,12 @@ import icon_public_39 from "@/assets/public/svg/icon_public_39.svg";
 import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
 import icon_public_41 from "@/assets/public/svg/icon_public_41.svg";
 import icon_public_42 from "@/assets/public/svg/icon_public_42.svg";
+import icon_public_43 from "@/assets/public/svg/icon_public_43.svg";
+import icon_public_44 from "@/assets/public/svg/icon_public_44.svg";
+import icon_public_45 from "@/assets/public/svg/icon_public_45.svg";
+import icon_public_46 from "@/assets/public/svg/icon_public_46.svg";
+import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
+import icon_public_57 from "@/assets/public/svg/icon_public_57.svg";
 
 const router = useRouter();
 const { setNavBarToggle } = appBarStore();
@@ -52,8 +58,14 @@ const sportIconColor = ref<string>("#7782AA")
 const promotionIconColor = ref<string>("#7782AA")
 const vipIconColor = ref<string>("#7782AA")
 const affiliateIconColor = ref<string>("#7782AA")
+const blogIconColor = ref<string>("#7782AA")
+const supportIconColor = ref<string>("#7782AA")
+const languageIconColor = ref<string>("#7782AA")
 const activeItem = ref<string>("");
 const navItem = ref<string>("");
+const soundCheckBox = ref<boolean>(false);
+const onCheckboxColor = ref<string>("#ffffff");
+const offCheckboxColor = ref<string>("#7782AA");
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -182,9 +194,37 @@ watch(originalMenu, (value) => {
   }
 })
 
-watch(activeItem, (value) => {
-  console.log(value);
+watch(languageMenu, (value) => {
+  if (value) {
+    languageIconColor.value = "#FFFFFF";
+  } else {
+    languageIconColor.value = "#7782AA"
+  }
 })
+
+watch(soundCheckBox, (value: boolean) => {
+    if (value) {
+        onCheckboxColor.value = "#7782AA";
+        offCheckboxColor.value = "#ffffff";
+    } else {
+      onCheckboxColor.value = "#ffffff";
+      offCheckboxColor.value = "#7782AA";
+    }
+}, { deep: true });
+
+const onIconTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', onCheckboxColor.value)
+    }
+    return el
+}
+
+const offIconTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', offCheckboxColor.value)
+    }
+    return el
+}
 
 const handleLanguageDropdown = (item: string) => {
   language.value = item;
@@ -289,11 +329,61 @@ const sportIconTransform = (el: any) => {
   return el;
 };
 
+const vipIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", vipIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", vipIconColor.value);
+    }
+  }
+  return el;
+};
+
 const promotionIconTransform = (el: any) => {
   for (let node of el.children) {
     node.setAttribute("fill", promotionIconColor.value);
     for (let subNode of node.children) {
       subNode.setAttribute("fill", promotionIconColor.value);
+    }
+  }
+  return el;
+};
+
+const affiliateIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", affiliateIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", affiliateIconColor.value);
+    }
+  }
+  return el;
+};
+
+const blogIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", blogIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", blogIconColor.value);
+    }
+  }
+  return el;
+};
+
+const supportIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", supportIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", supportIconColor.value);
+    }
+  }
+  return el;
+};
+
+const languageIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", languageIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", languageIconColor.value);
     }
   }
   return el;
@@ -321,6 +411,7 @@ const openRefferalDialogShow = () => {
   setRefferalDialogShow(true)
   setNavBarToggle(false);
 }
+
 const handleGameFilter = (filterText: string) => {
   let tempFilterText: string = "";
   switch (filterText) {
@@ -374,10 +465,50 @@ const handleNavbarItem = (navbarText: string) => {
     case t('navBar.sport'):
       sportIconColor.value = "#FFFFFF"
       promotionIconColor.value = "#7782AA"
+      vipIconColor.value = "#7782AA"
+      affiliateIconColor.value = "#7782AA"
+      blogIconColor.value = "#7782AA"
+      supportIconColor.value = "#7782AA"
       break;
     case t('navBar.menu_item_1.promotions'):
       sportIconColor.value = "#7782AA"
       promotionIconColor.value = "#FFFFFF"
+      vipIconColor.value = "#7782AA"
+      affiliateIconColor.value = "#7782AA"
+      blogIconColor.value = "#7782AA"
+      supportIconColor.value = "#7782AA"
+      break;
+    case t('navBar.menu_item_1.vip_club'):
+      sportIconColor.value = "#7782AA"
+      promotionIconColor.value = "#7782AA"
+      vipIconColor.value = "#FFFFFF"
+      affiliateIconColor.value = "#7782AA"
+      blogIconColor.value = "#7782AA"
+      supportIconColor.value = "#7782AA"
+      break;
+    case t('navBar.menu_item_1.affiliate'):
+      sportIconColor.value = "#7782AA"
+      promotionIconColor.value = "#7782AA"
+      vipIconColor.value = "#7782AA"
+      affiliateIconColor.value = "#FFFFFF"
+      blogIconColor.value = "#7782AA"
+      supportIconColor.value = "#7782AA"
+      break;
+    case t('navBar.menu_item_1.blog'):
+      sportIconColor.value = "#7782AA"
+      promotionIconColor.value = "#7782AA"
+      vipIconColor.value = "#7782AA"
+      affiliateIconColor.value = "#7782AA"
+      blogIconColor.value = "#FFFFFF"
+      supportIconColor.value = "#7782AA"
+      break;
+    case t('navBar.live_support'):
+      sportIconColor.value = "#7782AA"
+      promotionIconColor.value = "#7782AA"
+      vipIconColor.value = "#7782AA"
+      affiliateIconColor.value = "#7782AA"
+      blogIconColor.value = "#7782AA"
+      supportIconColor.value = "#FFFFFF"
       break;
   }
 }
@@ -704,8 +835,6 @@ onMounted(() => {
         </v-list-item>
         <v-list-item
           class="m-vip-club m-nav-menu"
-          prepend-avatar="@/assets/public/svg/icon_public_42.svg"
-          :title="t('navBar.menu_item_1.vip_club')"
           style="
             margin-bottom: -4px !important;
             margin-top: -4px !important;
@@ -713,11 +842,21 @@ onMounted(() => {
           "
           router
           :to="{ name: 'VIP' }"
-        ></v-list-item>
+          @click="handleNavbarItem(t('navBar.menu_item_1.vip_club'))"
+        >
+          <template v-slot:prepend>
+            <inline-svg
+              :src="icon_public_42"
+              width="16"
+              :transform-source="vipIconTransform"
+            ></inline-svg>
+          </template>
+          <v-list-item-title class="ml-2">
+            {{ t("navBar.menu_item_1.vip_club") }}
+          </v-list-item-title>
+        </v-list-item>
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
-          prepend-avatar="@/assets/public/svg/icon_public_43.svg"
-          :title="t('navBar.menu_item_1.affiliate')"
           style="
             margin-bottom: -4px !important;
             margin-top: -4px !important;
@@ -725,30 +864,71 @@ onMounted(() => {
           "
           router
           :to="{ name: 'Affiliate' }"
-        ></v-list-item>
+          @click="handleNavbarItem(t('navBar.menu_item_1.affiliate'))"
+        >
+          <template v-slot:prepend>
+            <inline-svg
+              :src="icon_public_43"
+              width="16"
+              :transform-source="affiliateIconTransform"
+            ></inline-svg>
+          </template>
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.menu_item_1.affiliate') ? 'white' : 'gray'"
+          >
+            {{ t("navBar.menu_item_1.affiliate") }}
+          </v-list-item-title>
+        </v-list-item>
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
-          prepend-avatar="@/assets/public/svg/icon_public_44.svg"
-          :title="t('navBar.menu_item_1.blog')"
           style="
             margin-bottom: -8px !important;
             margin-top: -4px !important;
             padding-left: 10px;
           "
-        ></v-list-item>
+          @click="handleNavbarItem(t('navBar.menu_item_1.blog'))"
+        >
+          <template v-slot:prepend>
+            <inline-svg
+              :src="icon_public_44"
+              width="16"
+              :transform-source="blogIconTransform"
+            ></inline-svg>
+          </template>
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.menu_item_1.blog') ? 'white' : 'gray'"
+          >
+            {{ t("navBar.menu_item_1.blog") }}
+          </v-list-item-title>
+        </v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
-          prepend-avatar="@/assets/public/svg/icon_public_45.svg"
-          :title="t('navBar.live_support')"
           style="
             margin-bottom: -8px !important;
             margin-top: -4px !important;
             padding-left: 10px;
           "
-        ></v-list-item>
+          @click="handleNavbarItem(t('navBar.live_support'))"
+        >
+          <template v-slot:prepend>
+            <inline-svg
+              :src="icon_public_45"
+              width="16"
+              :transform-source="supportIconTransform"
+            ></inline-svg>
+          </template>
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.live_support') ? 'white' : 'gray'"
+          >
+            {{ t("navBar.live_support") }}
+          </v-list-item-title>
+        </v-list-item>
       </v-list>
       <v-list>
         <v-menu
@@ -763,10 +943,18 @@ onMounted(() => {
               <v-list-item
                 v-bind="props"
                 class="m-casino-sub-img m-nav-menu"
-                prepend-avatar="@/assets/public/svg/icon_public_57.svg"
-                :title="language"
                 :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
               >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_57"
+                    width="16"
+                    :transform-source="languageIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title class="ml-2" :class="languageMenu ? 'white' : 'gray'">
+                  {{ language }}
+                </v-list-item-title>
               </v-list-item>
             </v-card>
           </template>
@@ -790,15 +978,23 @@ onMounted(() => {
         </v-menu>
       </v-list>
       <v-list-item class="m-theme-toggle">
-        <input type="checkbox" id="m-theme-toggle" />
+        <input type="checkbox" id="m-theme-toggle" v-model="soundCheckBox" />
         <label for="m-theme-toggle">
           <div class="dark">
-            <img src="@/assets/public/svg/icon_public_46.svg" width="16" />
-            <p class="text-700-10">{{ t("navBar.sound_mode.on") }}</p>
+            <inline-svg
+              :src="icon_public_46"
+              width="16"
+              :transform-source="onIconTransform"
+            ></inline-svg>
+            <p class="text-700-10 ml-1">{{ t("navBar.sound_mode.on") }}</p>
           </div>
           <div class="light">
-            <img src="@/assets/public/svg/icon_public_47.svg" width="16" />
-            <p class="text-700-10">{{ t("navBar.sound_mode.off") }}</p>
+            <inline-svg
+              :src="icon_public_47"
+              width="16"
+              :transform-source="offIconTransform"
+            ></inline-svg>
+            <p class="text-700-10 ml-1">{{ t("navBar.sound_mode.off") }}</p>
           </div>
         </label>
       </v-list-item>

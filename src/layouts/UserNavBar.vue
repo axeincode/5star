@@ -18,6 +18,27 @@ import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { VipLevel } from "@/interface/vip";
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
+import img_vip_00 from "@/assets/vip/image/img_vip_00.png";
+import img_vip_01 from "@/assets/vip/image/img_vip_01.png";
+import img_vip_02 from "@/assets/vip/image/img_vip_02.png";
+import img_vip_03 from "@/assets/vip/image/img_vip_03.png";
+import img_vip_04 from "@/assets/vip/image/img_vip_04.png";
+import img_vip_05 from "@/assets/vip/image/img_vip_05.png";
+import img_vip_06 from "@/assets/vip/image/img_vip_06.png";
+import img_vip_07 from "@/assets/vip/image/img_vip_07.png";
+import img_vip_08 from "@/assets/vip/image/img_vip_08.png";
+import img_vip_09 from "@/assets/vip/image/img_vip_09.png";
+import img_vip_10 from "@/assets/vip/image/img_vip_10.png";
+import img_vip_11 from "@/assets/vip/image/img_vip_11.png";
+import img_vip_12 from "@/assets/vip/image/img_vip_12.png";
+import img_vip_13 from "@/assets/vip/image/img_vip_13.png";
+import img_vip_14 from "@/assets/vip/image/img_vip_14.png";
+import img_vip_15 from "@/assets/vip/image/img_vip_15.png";
+import img_vip_16 from "@/assets/vip/image/img_vip_16.png";
+import img_vip_17 from "@/assets/vip/image/img_vip_17.png";
+import img_vip_18 from "@/assets/vip/image/img_vip_18.png";
+import img_vip_19 from "@/assets/vip/image/img_vip_19.png";
+import img_vip_20 from "@/assets/vip/image/img_vip_20.png";
 
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
@@ -83,11 +104,38 @@ const selectedVipLevel = ref<VipLevel>({
   bet_award_rate: {
     casino: 0,
   },
-  SigninAward: [],
+  signin_award: [],
   tasks_max: 0,
   deposit_rate: 0,
-  bet_rate: 0
+  bet_rate: 0,
+  availabe_daily_bonus_time: "",
+  collectable_week_bonus_day: "",
+  collectable_month_bonus_day: ""
 });
+
+const vipLevelImgs = ref<Array<any>>([
+  img_vip_00,
+  img_vip_01,
+  img_vip_02,
+  img_vip_03,
+  img_vip_04,
+  img_vip_05,
+  img_vip_06,
+  img_vip_07,
+  img_vip_08,
+  img_vip_09,
+  img_vip_10,
+  img_vip_11,
+  img_vip_12,
+  img_vip_13,
+  img_vip_14,
+  img_vip_15,
+  img_vip_16,
+  img_vip_17,
+  img_vip_18,
+  img_vip_19,
+  img_vip_20,
+]);
 
 const userInfo = computed(() => {
   const { getUserInfo } = storeToRefs(authStore());
@@ -323,9 +371,9 @@ onMounted(async () => {
           <template v-slot:prepend>
             <div>
               <div style="height: 30px; justify-content: center; display: flex">
-                <img src="@/assets/app_bar/image/img_vip_02.png" width="26" />
+                <img :src="vipLevelImgs[vipInfo.level]" width="25" />
               </div>
-              <div class="text-800-12 color-F9BC01 text-center">
+              <div class="text-800-10 color-F9BC01 text-center mt-1">
                 VIP {{ vipInfo.level }}
               </div>
             </div>

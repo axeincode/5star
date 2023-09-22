@@ -13,6 +13,7 @@ import Withdrawal from "./withdrawal/index.vue";
 import MWithdrawal from "./mobile/withdrawal/index.vue";
 import { withdrawStore } from "@/store/withdraw";
 import { depositStore } from "@/store/deposit";
+import { gameStore } from "@/store/game";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import moment from "moment-timezone";
 
@@ -20,6 +21,7 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchWithdrawalHistory } = withdrawStore();
 const { dispatchUserDepositHistory } = depositStore();
+const { dispatchGameHistory } = gameStore();
 const { dispatchTransactionHistory } = bonusTransactionStore();
 
 const mobileWidth = computed(() => {
@@ -86,6 +88,10 @@ watch(selectedTab, async (value) => {
 onMounted(async () => {
   selectedTab.value =
     transactionTab.value == "" ? selectedTab.value : transactionTab.value;
+  // await dispatchGameHistory({
+  //   page_size: pageSize.value,
+  //   start_time: Math.ceil(moment().valueOf() / 1000),
+  // });
   await dispatchUserDepositHistory({
     page_size: pageSize.value,
     start_time: Math.ceil(moment().valueOf() / 1000),

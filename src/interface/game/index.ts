@@ -32,6 +32,21 @@ export interface GameEnterResponse {
     weburl: string
 }
 
+export interface GameHistoryItem {
+    name : string,
+    created_at : number,
+    amount : string | number,
+    multiplier : string | number,
+    bet_id : string | number,
+    status : string | number,
+    profit : number,
+}
+
+export interface GameHistoryResponse {
+    total_pages: number
+    record: Array<GameHistoryItem>
+}
+
 export interface GameSearchResponse {
     list: Array<Search>
     total: number
@@ -52,5 +67,11 @@ export type GetGameSearchResponse = {
 export type GetGameEnterResponse = {
     code: number
     data: GameEnterResponse
+    message: string
+}
+
+export type GetGameHistoryResponse = {
+    code: number
+    data: GameHistoryResponse
     message: string
 }
