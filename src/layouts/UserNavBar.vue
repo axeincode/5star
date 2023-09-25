@@ -476,9 +476,9 @@ onMounted(async () => {
           <template v-slot:prepend>
             <img src="@/assets/public/svg/icon_public_64.svg" width="18" />
           </template>
-          <v-list-item-title class="ml-2">{{
-            t("appBar.refer_friend")
-          }}</v-list-item-title>
+          <v-list-item-title class="ml-2">
+            {{ t("appBar.refer_friend") }}
+          </v-list-item-title>
           <template v-slot:append>
             <img
               src="@/assets/public/image/img_public_09.png"

@@ -2358,7 +2358,7 @@ export default Dashboard;
       >
         <v-row
           class="ml-4 original_game_text"
-          :class="mobileWidth > 600 ? ' mt-12' : ' mt-7'"
+          :class="mobileWidth > 600 ? ' mt-12' : ' mt-4'"
           v-if="item.games.length > 0"
           style="margin-bottom: 6px !important"
         >

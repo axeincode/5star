@@ -678,7 +678,7 @@ onMounted(async () => {
             </div>
             <v-row class="full-height mx-2 mt-0">
               <v-col cols="3" class="text-center">
-                <img :src="vipLevelImgs[item.level]" width="49" v-if="item.level == 0" />
+                <img :src="vipLevelImgs[item.level]" width="49" />
                 <p class="text-800-14 yellow">VIP {{ item.level }}</p>
               </v-col>
               <v-col cols="9">
@@ -742,7 +742,7 @@ onMounted(async () => {
               class="ma-2 text-none m-transaction-tab-btn"
               :class="selectedVIPTab == item ? 'black' : 'text-gray'"
               :color="selectedVIPTab == item ? '#32CFEC' : 'transparent'"
-              :width="mobileWidth < 600 ? 100 : 150"
+              :width="mobileWidth < 600 ? 110 : 150"
               @click="handleSelectVIPTab(item)"
             >
               {{ item }}

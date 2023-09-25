@@ -231,12 +231,13 @@ const startRoulette = () => {
     spinNumber.value--;
     speed.value = Math.floor(Math.random() * 10) * 26;
     isSpinning.value = true;
-    const bezier = [0.165, 0.84, 0.44, 1.005];
+    const bezier = [0.165, 0.84, 0.44, 1.005, 0.2];
     const newWheelIndex = currentWheelIndex.value - speed.value;
     const result = getRouletteWheelValue(newWheelIndex);
     if (speed.value == 0) {
         speed.value = 520
     }
+    let duration_speed = 3000;
     let newRotaion = currentWheelRotation.value + (360 / 8) * speed.value;
     const animation = anime({
         targets: roulette.value,
@@ -244,10 +245,9 @@ const startRoulette = () => {
             return newRotaion;
         },
         duration: function () {
-            return 5000;
+            return duration_speed;
         },
         loop: 1,
-        // easing: "cubicBezier(0.010, 0.990, 0.855, 1.010)",
         easing: `cubicBezier(${bezier.join(",")})`,
         complete: (...args) => {
             currentWheelRotation.value = newRotaion;
@@ -286,550 +286,718 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="m-roulette-bonus-dialog-container" :class="marginShow ? 'm-roulette-bonus-dialog-margin' : ''">
-        <div class="m-roulette-bonus-dialog-header-left">
-            <v-btn class="m-roulette-bonus-dialog-sound-bg-1 ml-4" icon="true" width="34" height="34" @click="handleMuteValue">
-                <div class="m-roulette-bonus-dialog-sound-bg-2">
-                    <img src="@/assets/public/svg/icon_public_46.svg" width="18"
-                        class="m-roulette-bonus-dialog-sound-position" v-if="muteValue == false" />
-                    <img src="@/assets/public/svg/icon_public_47.svg" width="18"
-                        class="m-roulette-bonus-dialog-sound-position" v-else />
-                </div>
-            </v-btn>
+  <div
+    class="m-roulette-bonus-dialog-container"
+    :class="marginShow ? 'm-roulette-bonus-dialog-margin' : ''"
+  >
+    <div class="m-roulette-bonus-dialog-header-left">
+      <v-btn
+        class="m-roulette-bonus-dialog-sound-bg-1 ml-4"
+        icon="true"
+        width="34"
+        height="34"
+        @click="handleMuteValue"
+      >
+        <div class="m-roulette-bonus-dialog-sound-bg-2">
+          <img
+            src="@/assets/public/svg/icon_public_46.svg"
+            width="18"
+            class="m-roulette-bonus-dialog-sound-position"
+            v-if="muteValue == false"
+          />
+          <img
+            src="@/assets/public/svg/icon_public_47.svg"
+            width="18"
+            class="m-roulette-bonus-dialog-sound-position"
+            v-else
+          />
         </div>
-        <div class="m-roulette-bonus-dialog-header-right">
-            <v-menu offset="10" content-class="m-roulette-bonus-help-menu" :scrim="false">
-                <template v-slot:activator="{ props }">
-                    <v-btn class="m-roulette-bonus-dialog-help-bg mr-4" v-bind="props" icon="true" width="34" height="34">
-                        <div class="m-roulette-bonus-dialog-help-bg-2">
-                            <img src="@/assets/public/svg/icon_public_22.svg" width="18"
-                                class="m-roulette-bonus-dialog-help-position" />
-                        </div>
-                    </v-btn>
-                </template>
-                <v-list theme="dark" bg-color="#211F31" width="324" height="435">
-                    <p class="text-900-14 gray mt-4 text-center">{{ t('vip.roulette_bonus.help_menu.title_text') }}</p>
-                    <p class="text-400-10 gray mt-4 mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_1') }}</p>
-                    <p class="text-400-10 gray mt-3 mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_2') }}</p>
-                    <p class="text-900-10 gray mt-3 mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_3') }}</p>
-                    <p class="text-400-10 gray mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_4') }}</p>
-                    <p class="text-400-10 gray mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_5') }}</p>
-                    <p class="text-400-10 gray mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_6') }}</p>
-                    <p class="text-900-10 gray mt-3 mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_7') }}</p>
-                    <p class="text-400-10 gray mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_8') }}</p>
-                    <p class="text-400-10 gray mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_9') }}</p>
-                    <p class="text-400-10 gray mx-6 ">{{ t('vip.roulette_bonus.help_menu.text_10') }}</p>
-                </v-list>
-            </v-menu>
-            <v-btn class="m-roulette-bonus-dialog-close-bg mr-4" icon="true" width="34" height="34"
-                @click="emit('closeRouletteBonusDialog')">
-                <div class="m-roulette-bonus-dialog-close-bg-2">
-                    <img src="@/assets/public/svg/icon_public_52.svg" width="18"
-                        class="m-roulette-bonus-dialog-close-position" />
-                </div>
-            </v-btn>
-        </div>
-        <div class="m-roulette-bonus-dialog-body">
-            <img src="@/assets/vip/image/img_vip_31.png" width="316" class="m-roulette-bonus-dialog-spin-position" />
-
-            <!---------------- roulette module ----------------->
-            <div class="m-roulette-bonus-dialog-spin-position-1" ref="roulette">
-                <img src="@/assets/vip/image/img_vip_30.png" width="184" />
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-1">{{ wheelMap[0].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-8">{{ wheelMap[1].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-7">{{ wheelMap[2].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-6">{{ wheelMap[3].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-5">{{ wheelMap[4].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-4">{{ wheelMap[5].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-3">{{ wheelMap[6].value }}</p>
-                <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-2">{{ wheelMap[7].value }}</p>
-            </div>
-
-            <img src="@/assets/vip/image/img_vip_28.png" width="38" class="m-roulette-bonus-dialog-spin-position-2" />
-            <img src="@/assets/vip/image/img_vip_29.png" width="52" class="m-roulette-bonus-dialog-spin-position-3" />
-            <div class="m-roulette-bonus-dialog-body-1">
-                <p class="text-900-14 white mt-2 text-center">{{ t('vip.roulette_bonus.paid_text') }}</p>
-                <p class="text-900-20 yellow text-center">{{ roulettePaidBonus }}</p>
-            </div>
-            <v-btn class="button-bright text-none m-roulette-bonus-dialog-body-2" width="311" height="40"
-                @click="startRoulette" :disabled="isSpinning || spinNumber <= 0">
-                {{ t('vip.roulette_bonus.roulette_btn_text') }}
-                <div class="m-roulette-bonus-dialog-spin-number-bg">
-                    <p class="text-800-14 white">{{ spinNumber }}</p>
-                </div>
-            </v-btn>
-            <div class="m-roulette-bonus-dialog-body-3">
-                <div class="my-1">
-                    <v-row v-for="(item, index) in rouletteHistory" :key="index" class="ma-0 mx-2 pa-0">
-                        <v-col cols="5" class="px-1 ma-0 text-500-9 gray" style="padding-top: 2px; padding-bottom: 2px;">{{ item.rouletteTime }}</v-col>
-                        <v-col cols="4" class="px-1 ma-0 text-500-9 gray" style="padding-top: 2px; padding-bottom: 2px;">{{ item.user }}</v-col>
-                        <v-col cols="3" class="px-1 ma-0 text-500-9 yellow" v-if="item.rouletteResult == 'IPHONE 14'" style="padding-top: 2px; padding-bottom: 2px;">{{
-                            item.rouletteResult }}</v-col>
-                        <v-col cols="3" class="px-1 ma-0 text-900-9 white" style="padding-top: 2px; padding-bottom: 2px;"
-                            v-else-if="item.rouletteResult == 'R$ 5000' || item.rouletteResult == 'R$ 500' || item.rouletteResult == 'R$ 50'">{{
-                                item.rouletteResult }}</v-col>
-                        <v-col cols="3" class="px-1 ma-0 text-900-9 gray" v-else style="padding-top: 2px; padding-bottom: 2px;">{{ item.rouletteResult }}</v-col>
-                    </v-row>
-                </div>
-            </div>
-            <v-btn class="text-none m-roulette-bonus-dialog-body-4" width="170" height="36" @click="showWinnerBody">
-                {{ t('vip.roulette_bonus.victory_btn_text') }}
-                <v-icon style="font-size: 20px;" class="mt-1" v-if="winnerBodyShow">mdi-chevron-down</v-icon>
-                <v-icon style="font-size: 20px;" class="mt-1" v-else>mdi-chevron-up</v-icon>
-            </v-btn>
-        </div>
-        <div class="m-roulette-bonus-dialog-winner-body" :style="{ height: winnerBodyHeight + 'px' }">
-            <div class="m-victory-toggle">
-                <input type="checkbox" id="m-victory-toggle" v-model="winnerToggleSwitch" />
-                <label for="m-victory-toggle">
-                    <div class="winner">
-                        <p class="text-700-10">{{ t('vip.roulette_bonus.winner_text') }}</p>
-                    </div>
-                    <div class="prize">
-                        <p class="text-700-10">{{ t('vip.roulette_bonus.prize_winner_text') }}</p>
-                    </div>
-                </label>
-            </div>
-            <div class="m-roulette-bonus-dialog-winner-content">
-                <div class="my-2" v-if="!winnerToggleSwitch">
-                    <v-row v-for="(winnerItem, winnerIndex) in rouletteWinnerHistory" :key="winnerIndex"
-                        class="ma-0 mx-2 pa-0">
-                        <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{ winnerItem.rouletteTime }}</v-col>
-                        <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{ winnerItem.user }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 yellow"
-                            v-if="winnerItem.rouletteResult == 'IPHONE 14'">{{
-                                winnerItem.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 white"
-                            v-else-if="winnerItem.rouletteResult == 'R$ 5000'">
-                            {{ winnerItem.rouletteResult }}
-                        </v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{ winnerItem.rouletteResult }}</v-col>
-                    </v-row>
-                </div>
-                <div class="my-2" v-else>
-                    <v-row v-for="(prizeItem, prizeIndex) in roulettePrizeHistory" :key="prizeIndex" class="ma-0 mx-2 pa-0">
-                        <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{ prizeItem.rouletteTime }}</v-col>
-                        <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{ prizeItem.user }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 yellow"
-                            v-if="prizeItem.rouletteResult == 'IPHONE 14'">{{
-                                prizeItem.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 white"
-                            v-else-if="prizeItem.rouletteResult == 'R$ 5000' || prizeItem.rouletteResult == 'R$ 500' || prizeItem.rouletteResult == 'R$ 50'">{{
-                                prizeItem.rouletteResult }}</v-col>
-                        <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{ prizeItem.rouletteResult }}</v-col>
-                    </v-row>
-                </div>
-            </div>
-        </div>
+      </v-btn>
     </div>
+    <div class="m-roulette-bonus-dialog-header-right">
+      <v-menu offset="10" content-class="m-roulette-bonus-help-menu" :scrim="false">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            class="m-roulette-bonus-dialog-help-bg mr-4"
+            v-bind="props"
+            icon="true"
+            width="34"
+            height="34"
+          >
+            <div class="m-roulette-bonus-dialog-help-bg-2">
+              <img
+                src="@/assets/public/svg/icon_public_22.svg"
+                width="18"
+                class="m-roulette-bonus-dialog-help-position"
+              />
+            </div>
+          </v-btn>
+        </template>
+        <v-list theme="dark" bg-color="#211F31" width="324" height="435">
+          <p class="text-900-14 gray mt-4 text-center">
+            {{ t("vip.roulette_bonus.help_menu.title_text") }}
+          </p>
+          <p class="text-400-10 gray mt-4 mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_1") }}
+          </p>
+          <p class="text-400-10 gray mt-3 mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_2") }}
+          </p>
+          <p class="text-900-10 gray mt-3 mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_3") }}
+          </p>
+          <p class="text-400-10 gray mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_4") }}
+          </p>
+          <p class="text-400-10 gray mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_5") }}
+          </p>
+          <p class="text-400-10 gray mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_6") }}
+          </p>
+          <p class="text-900-10 gray mt-3 mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_7") }}
+          </p>
+          <p class="text-400-10 gray mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_8") }}
+          </p>
+          <p class="text-400-10 gray mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_9") }}
+          </p>
+          <p class="text-400-10 gray mx-6">
+            {{ t("vip.roulette_bonus.help_menu.text_10") }}
+          </p>
+        </v-list>
+      </v-menu>
+      <v-btn
+        class="m-roulette-bonus-dialog-close-bg mr-4"
+        icon="true"
+        width="34"
+        height="34"
+        @click="emit('closeRouletteBonusDialog')"
+      >
+        <div class="m-roulette-bonus-dialog-close-bg-2">
+          <img
+            src="@/assets/public/svg/icon_public_52.svg"
+            width="18"
+            class="m-roulette-bonus-dialog-close-position"
+          />
+        </div>
+      </v-btn>
+    </div>
+    <div class="m-roulette-bonus-dialog-body">
+      <img
+        src="@/assets/vip/image/img_vip_31.png"
+        width="316"
+        class="m-roulette-bonus-dialog-spin-position"
+      />
+
+      <!---------------- roulette module ----------------->
+      <div class="m-roulette-bonus-dialog-spin-position-1" ref="roulette">
+        <img src="@/assets/vip/image/img_vip_30.png" width="184" />
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-1">
+          {{ wheelMap[0].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-8">
+          {{ wheelMap[1].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-7">
+          {{ wheelMap[2].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-6">
+          {{ wheelMap[3].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-5">
+          {{ wheelMap[4].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-4">
+          {{ wheelMap[5].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-3">
+          {{ wheelMap[6].value }}
+        </p>
+        <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-2">
+          {{ wheelMap[7].value }}
+        </p>
+      </div>
+
+      <img
+        src="@/assets/vip/image/img_vip_28.png"
+        width="38"
+        class="m-roulette-bonus-dialog-spin-position-2"
+      />
+      <img
+        src="@/assets/vip/image/img_vip_29.png"
+        width="52"
+        class="m-roulette-bonus-dialog-spin-position-3"
+      />
+      <div class="m-roulette-bonus-dialog-body-1">
+        <p class="text-900-14 white mt-2 text-center">
+          {{ t("vip.roulette_bonus.paid_text") }}
+        </p>
+        <p class="text-900-20 yellow text-center">{{ roulettePaidBonus }}</p>
+      </div>
+      <v-btn
+        class="button-bright text-none m-roulette-bonus-dialog-body-2"
+        width="311"
+        height="40"
+        @click="startRoulette"
+        :disabled="isSpinning || spinNumber <= 0"
+      >
+        {{ t("vip.roulette_bonus.roulette_btn_text") }}
+        <div class="m-roulette-bonus-dialog-spin-number-bg">
+          <p class="text-800-14 white">{{ spinNumber }}</p>
+        </div>
+      </v-btn>
+      <div class="m-roulette-bonus-dialog-body-3">
+        <div class="my-1">
+          <v-row
+            v-for="(item, index) in rouletteHistory"
+            :key="index"
+            class="ma-0 mx-2 pa-0"
+          >
+            <v-col
+              cols="5"
+              class="px-1 ma-0 text-500-9 gray"
+              style="padding-top: 2px; padding-bottom: 2px"
+              >{{ item.rouletteTime }}</v-col
+            >
+            <v-col
+              cols="4"
+              class="px-1 ma-0 text-500-9 gray"
+              style="padding-top: 2px; padding-bottom: 2px"
+              >{{ item.user }}</v-col
+            >
+            <v-col
+              cols="3"
+              class="px-1 ma-0 text-500-9 yellow"
+              v-if="item.rouletteResult == 'IPHONE 14'"
+              style="padding-top: 2px; padding-bottom: 2px"
+              >{{ item.rouletteResult }}</v-col
+            >
+            <v-col
+              cols="3"
+              class="px-1 ma-0 text-900-9 white"
+              style="padding-top: 2px; padding-bottom: 2px"
+              v-else-if="
+                item.rouletteResult == 'R$ 5000' ||
+                item.rouletteResult == 'R$ 500' ||
+                item.rouletteResult == 'R$ 50'
+              "
+              >{{ item.rouletteResult }}</v-col
+            >
+            <v-col
+              cols="3"
+              class="px-1 ma-0 text-900-9 gray"
+              v-else
+              style="padding-top: 2px; padding-bottom: 2px"
+              >{{ item.rouletteResult }}</v-col
+            >
+          </v-row>
+        </div>
+      </div>
+      <v-btn
+        class="text-none m-roulette-bonus-dialog-body-4"
+        width="170"
+        height="36"
+        @click="showWinnerBody"
+      >
+        {{ t("vip.roulette_bonus.victory_btn_text") }}
+        <v-icon style="font-size: 20px" class="mt-1" v-if="winnerBodyShow"
+          >mdi-chevron-down</v-icon
+        >
+        <v-icon style="font-size: 20px" class="mt-1" v-else>mdi-chevron-up</v-icon>
+      </v-btn>
+    </div>
+    <div
+      class="m-roulette-bonus-dialog-winner-body"
+      :style="{ height: winnerBodyHeight + 'px' }"
+    >
+      <div class="m-victory-toggle">
+        <input type="checkbox" id="m-victory-toggle" v-model="winnerToggleSwitch" />
+        <label for="m-victory-toggle">
+          <div class="winner">
+            <p class="text-700-10">{{ t("vip.roulette_bonus.winner_text") }}</p>
+          </div>
+          <div class="prize">
+            <p class="text-700-10">{{ t("vip.roulette_bonus.prize_winner_text") }}</p>
+          </div>
+        </label>
+      </div>
+      <div class="m-roulette-bonus-dialog-winner-content">
+        <div class="my-2" v-if="!winnerToggleSwitch">
+          <v-row
+            v-for="(winnerItem, winnerIndex) in rouletteWinnerHistory"
+            :key="winnerIndex"
+            class="ma-0 mx-2 pa-0"
+          >
+            <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{
+              winnerItem.rouletteTime
+            }}</v-col>
+            <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{
+              winnerItem.user
+            }}</v-col>
+            <v-col
+              cols="3"
+              class="pa-1 ma-0 text-500-10 yellow"
+              v-if="winnerItem.rouletteResult == 'IPHONE 14'"
+              >{{ winnerItem.rouletteResult }}</v-col
+            >
+            <v-col
+              cols="3"
+              class="pa-1 ma-0 text-500-10 white"
+              v-else-if="winnerItem.rouletteResult == 'R$ 5000'"
+            >
+              {{ winnerItem.rouletteResult }}
+            </v-col>
+            <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{
+              winnerItem.rouletteResult
+            }}</v-col>
+          </v-row>
+        </div>
+        <div class="my-2" v-else>
+          <v-row
+            v-for="(prizeItem, prizeIndex) in roulettePrizeHistory"
+            :key="prizeIndex"
+            class="ma-0 mx-2 pa-0"
+          >
+            <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{
+              prizeItem.rouletteTime
+            }}</v-col>
+            <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{
+              prizeItem.user
+            }}</v-col>
+            <v-col
+              cols="3"
+              class="pa-1 ma-0 text-500-10 yellow"
+              v-if="prizeItem.rouletteResult == 'IPHONE 14'"
+              >{{ prizeItem.rouletteResult }}</v-col
+            >
+            <v-col
+              cols="3"
+              class="pa-1 ma-0 text-500-10 white"
+              v-else-if="
+                prizeItem.rouletteResult == 'R$ 5000' ||
+                prizeItem.rouletteResult == 'R$ 500' ||
+                prizeItem.rouletteResult == 'R$ 50'
+              "
+              >{{ prizeItem.rouletteResult }}</v-col
+            >
+            <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{
+              prizeItem.rouletteResult
+            }}</v-col>
+          </v-row>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
 .m-roulette-bonus-help-menu {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }
 
 .m-roulette-bonus-help-menu::after {
-    content: "";
-    position: absolute;
-    align-self: center;
-    float: right;
-    top: -30px;
-    right: 70px;
-    border: 17px solid #211f31;
-    border-right-color: transparent;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-right-width: 6px;
-    border-left-width: 6px;
+  content: "";
+  position: absolute;
+  align-self: center;
+  float: right;
+  top: -30px;
+  right: 70px;
+  border: 17px solid #211f31;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-right-width: 6px;
+  border-left-width: 6px;
 }
 
 .m-roulette-bonus-dialog-margin {
-    margin-top: 80px;
+  margin-top: 80px;
 }
 
 .m-roulette-bonus-dialog-container {
-    width: 340px;
-    height: 447px;
-    border-radius: 0px 0px 24px 24px;
-    background: linear-gradient(180deg, #2C2744 0%, #693FF6 100%);
+  width: 340px;
+  height: 447px;
+  border-radius: 0px 0px 24px 24px;
+  background: linear-gradient(180deg, #2c2744 0%, #693ff6 100%);
+  position: relative;
+
+  .m-roulette-bonus-dialog-header-left {
+    display: flex;
+    align-items: center;
+    width: 138px;
+    position: absolute;
+    left: 0;
+    top: -46px;
+    height: 46px;
+    border-radius: 16px 16px 0px 0px;
+    background: #29263c;
+
+    .m-roulette-bonus-dialog-sound-bg-1 {
+      background: #211f31;
+      border-radius: 34px;
+      position: relative;
+      z-index: 2000;
+    }
+
+    .m-roulette-bonus-dialog-sound-bg-2 {
+      width: 28px;
+      height: 28px;
+      background: #29253c;
+      border-radius: 28px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .m-roulette-bonus-dialog-sound-position {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .m-roulette-bonus-dialog-header-right {
+    width: 138px;
+    position: absolute;
+    right: 0;
+    top: -46px;
+    height: 46px;
+    border-radius: 16px 16px 0px 0px;
+    background: #29263c;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    .m-roulette-bonus-dialog-help-bg {
+      background: #211f31;
+      border-radius: 34px;
+      position: relative;
+      z-index: 2000;
+    }
+
+    .m-roulette-bonus-dialog-help-bg-2 {
+      width: 28px;
+      height: 28px;
+      background: #29253c;
+      border-radius: 28px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .m-roulette-bonus-dialog-help-position {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .m-roulette-bonus-dialog-close-bg {
+      background: #211f31;
+      border-radius: 34px;
+      position: relative;
+      z-index: 2000;
+    }
+
+    .m-roulette-bonus-dialog-close-bg-2 {
+      width: 28px;
+      height: 28px;
+      background: #29253c;
+      border-radius: 28px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .m-roulette-bonus-dialog-close-position {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .m-roulette-bonus-dialog-body {
     position: relative;
 
-    .m-roulette-bonus-dialog-header-left {
-        display: flex;
-        align-items: center;
-        width: 138px;
-        position: absolute;
-        left: 0;
-        top: -46px;
-        height: 46px;
-        border-radius: 16px 16px 0px 0px;
-        background: #29263C;
-
-        .m-roulette-bonus-dialog-sound-bg-1 {
-            background: #211F31;
-            border-radius: 34px;
-            position: relative;
-            z-index: 2000;
-        }
-
-        .m-roulette-bonus-dialog-sound-bg-2 {
-            width: 28px;
-            height: 28px;
-            background: #29253C;
-            border-radius: 28px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .m-roulette-bonus-dialog-sound-position {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
+    .m-roulette-bonus-dialog-spin-position {
+      position: absolute;
+      top: -56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
     }
 
-    .m-roulette-bonus-dialog-header-right {
-        width: 138px;
-        position: absolute;
-        right: 0;
-        top: -46px;
-        height: 46px;
-        border-radius: 16px 16px 0px 0px;
-        background: #29263C;
-        display: flex;
-        align-items: center;
-        justify-content: end;
-
-        .m-roulette-bonus-dialog-help-bg {
-            background: #211F31;
-            border-radius: 34px;
-            position: relative;
-            z-index: 2000;
-        }
-
-        .m-roulette-bonus-dialog-help-bg-2 {
-            width: 28px;
-            height: 28px;
-            background: #29253C;
-            border-radius: 28px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .m-roulette-bonus-dialog-help-position {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .m-roulette-bonus-dialog-close-bg {
-            background: #211F31;
-            border-radius: 34px;
-            position: relative;
-            z-index: 2000;
-        }
-
-        .m-roulette-bonus-dialog-close-bg-2 {
-            width: 28px;
-            height: 28px;
-            background: #29253C;
-            border-radius: 28px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .m-roulette-bonus-dialog-close-position {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
+    .m-roulette-bonus-dialog-spin-position-1 {
+      width: 184px;
+      height: 184px;
+      position: absolute;
+      top: -32px;
+      left: 80px;
+      z-index: 21;
     }
 
-    .m-roulette-bonus-dialog-body {
+    .m-roulette-bonus-dialog-spin-text-position-1 {
+      position: absolute;
+      top: 34px;
+      left: 71px;
+      transform: rotate(90deg);
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-2 {
+      position: absolute;
+      top: 49px;
+      left: 40px;
+      transform: rotate(45deg);
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-3 {
+      position: absolute;
+      top: 85px;
+      left: 11px;
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-4 {
+      position: absolute;
+      top: 124px;
+      left: 38px;
+      transform: rotate(-45deg);
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-5 {
+      position: absolute;
+      top: 138px;
+      left: 74px;
+      transform: rotate(-90deg);
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-6 {
+      position: absolute;
+      top: 122px;
+      left: 116px;
+      transform: rotate(-135deg);
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-7 {
+      position: absolute;
+      top: 84px;
+      left: 132px;
+    }
+
+    .m-roulette-bonus-dialog-spin-text-position-8 {
+      position: absolute;
+      top: 45px;
+      left: 120px;
+      transform: rotate(135deg);
+    }
+
+    .m-roulette-bonus-dialog-spin-position-2 {
+      position: absolute;
+      top: -36px;
+      left: 153px;
+      z-index: 22;
+    }
+
+    .m-roulette-bonus-dialog-spin-position-3 {
+      position: absolute;
+      top: 34px;
+      left: 146px;
+      z-index: 22;
+    }
+
+    .m-roulette-bonus-dialog-body-1 {
+      position: absolute;
+      top: 198px;
+      left: 51%;
+      transform: translateX(-50%);
+      width: 312px;
+      height: 60px;
+      border-radius: 10px;
+      background: #211f31;
+      /* Text Box */
+      box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+    }
+
+    .m-roulette-bonus-dialog-body-2 {
+      position: absolute;
+      top: 267px;
+      left: 51%;
+      transform: translateX(-50%);
+
+      .v-btn__content {
+        text-align: center;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+      }
+
+      .m-roulette-bonus-dialog-spin-number-bg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+        background: #211f31;
+        border-radius: 30px;
+      }
+    }
+
+    .m-roulette-bonus-dialog-body-3 {
+      overflow-y: auto;
+      position: absolute;
+      top: 314px;
+      left: 51%;
+      transform: translateX(-50%);
+      width: 312px;
+      height: 82px;
+      border-radius: 10px;
+      background: #211f31;
+      /* Text Box */
+      box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+    }
+
+    .m-roulette-bonus-dialog-body-4 {
+      border-radius: 12px;
+      border: 1px solid #693ff8;
+      background: #1c1929;
+      box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+      position: absolute;
+      top: 402px;
+      left: 51%;
+      transform: translateX(-50%);
+      z-index: 2;
+
+      .v-btn__content {
+        color: #fff;
+        text-align: center;
+        font-family: "Inter";
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: normal;
+      }
+    }
+  }
+
+  .m-roulette-bonus-dialog-winner-body {
+    width: 100%;
+    border-radius: 24px;
+    background: #29253c;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    transition: height 0.2s ease-out;
+    overflow: hidden;
+
+    // winner and prize toggle switch
+    .m-victory-toggle {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      label {
+        width: 312px;
+        height: 32px;
         position: relative;
+        display: block;
+        border-radius: 50px;
+        background: #211f31;
+        box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+        cursor: pointer;
+        transition: 0.3s;
+        margin: auto;
 
-        .m-roulette-bonus-dialog-spin-position {
-            position: absolute;
-            top: -56px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
+        div {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          font-weight: 700;
+          font-size: 14px;
         }
 
-        .m-roulette-bonus-dialog-spin-position-1 {
-            width: 184px;
-            height: 184px;
-            position: absolute;
-            top: -32px;
-            left: 80px;
-            z-index: 21;
+        .winner {
+          left: 52px;
+          transition: 0.3s;
+          color: black;
         }
 
-        .m-roulette-bonus-dialog-spin-text-position-1 {
-            position: absolute;
-            top: 34px;
-            left: 71px;
-            transform: rotate(90deg);
+        .prize {
+          left: 194px;
+          transition: 0.3s;
+          color: #7782aa;
         }
+      }
 
-        .m-roulette-bonus-dialog-spin-text-position-2 {
-            position: absolute;
-            top: 49px;
-            left: 40px;
-            transform: rotate(45deg);
-        }
-
-        .m-roulette-bonus-dialog-spin-text-position-3 {
-            position: absolute;
-            top: 85px;
-            left: 11px;
-        }
-
-        .m-roulette-bonus-dialog-spin-text-position-4 {
-            position: absolute;
-            top: 124px;
-            left: 38px;
-            transform: rotate(-45deg);
-        }
-
-        .m-roulette-bonus-dialog-spin-text-position-5 {
-            position: absolute;
-            top: 138px;
-            left: 74px;
-            transform: rotate(-90deg);
-        }
-
-        .m-roulette-bonus-dialog-spin-text-position-6 {
-            position: absolute;
-            top: 122px;
-            left: 116px;
-            transform: rotate(-135deg);
-        }
-
-        .m-roulette-bonus-dialog-spin-text-position-7 {
-            position: absolute;
-            top: 84px;
-            left: 132px;
-        }
-
-        .m-roulette-bonus-dialog-spin-text-position-8 {
-            position: absolute;
-            top: 45px;
-            left: 120px;
-            transform: rotate(135deg);
-        }
-
-        .m-roulette-bonus-dialog-spin-position-2 {
-            position: absolute;
-            top: -36px;
-            left: 153px;
-            z-index: 22;
-        }
-
-        .m-roulette-bonus-dialog-spin-position-3 {
-            position: absolute;
-            top: 34px;
-            left: 146px;
-            z-index: 22;
-        }
-
-        .m-roulette-bonus-dialog-body-1 {
-            position: absolute;
-            top: 198px;
-            left: 51%;
-            transform: translateX(-50%);
-            width: 312px;
-            height: 60px;
-            border-radius: 10px;
-            background: #211F31;
-            /* Text Box */
-            box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-        }
-
-        .m-roulette-bonus-dialog-body-2 {
-            position: absolute;
-            top: 267px;
-            left: 51%;
-            transform: translateX(-50%);
-
-            .v-btn__content {
-                text-align: center;
-                font-family: Inter;
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 900;
-                line-height: normal;
-            }
-
-            .m-roulette-bonus-dialog-spin-number-bg {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: absolute;
-                top: 50%;
-                right: 12px;
-                transform: translateY(-50%);
-                width: 26px;
-                height: 26px;
-                flex-shrink: 0;
-                background: #211F31;
-                border-radius: 30px;
-            }
-        }
-
-        .m-roulette-bonus-dialog-body-3 {
-            overflow-y: auto;
-            position: absolute;
-            top: 314px;
-            left: 51%;
-            transform: translateX(-50%);
-            width: 312px;
-            height: 82px;
-            border-radius: 10px;
-            background: #211F31;
-            /* Text Box */
-            box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-        }
-
-        .m-roulette-bonus-dialog-body-4 {
-            border-radius: 12px;
-            border: 1px solid #693FF8;
-            background: #1C1929;
-            box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-            position: absolute;
-            top: 402px;
-            left: 51%;
-            transform: translateX(-50%);
-            z-index: 2;
-
-            .v-btn__content {
-                color: #FFF;
-                text-align: center;
-                font-family: "Inter";
-                font-size: 10px;
-                font-style: normal;
-                font-weight: 700;
-                line-height: normal;
-                letter-spacing: normal;
-            }
-        }
-    }
-
-    .m-roulette-bonus-dialog-winner-body {
-        width: 100%;
-        border-radius: 24px;
-        background: #29253C;
+      label:after {
+        content: "";
+        width: 140px;
+        height: 28px;
         position: absolute;
-        bottom: 0;
-        z-index: 1;
-        transition: height 0.3s ease-out;
-        overflow: hidden;
+        top: 2px;
+        left: 2px;
+        background: #32cfec;
+        border-radius: 20px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+      }
 
-        // winner and prize toggle switch
-        .m-victory-toggle {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
+      input {
+        width: 0;
+        height: 0;
+        visibility: hidden;
+      }
 
-            label {
-                width: 312px;
-                height: 32px;
-                position: relative;
-                display: block;
-                border-radius: 50px;
-                background: #211F31;
-                box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-                cursor: pointer;
-                transition: 0.3s;
-                margin: auto;
+      input:checked + label:after {
+        left: 309px;
+        transform: translateX(-100%);
+      }
 
-                div {
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    z-index: 100;
-                    display: flex;
-                    align-items: center;
-                    font-weight: 700;
-                    font-size: 14px;
-                }
+      label:active:after {
+        width: 140px;
+      }
 
-                .winner {
-                    left: 52px;
-                    transition: 0.3s;
-                    color: black;
-                }
+      input:checked + label .winner {
+        color: #7782aa;
+      }
 
-                .prize {
-                    left: 194px;
-                    transition: 0.3s;
-                    color: #7782AA;
-                }
-            }
-
-            label:after {
-                content: "";
-                width: 140px;
-                height: 28px;
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                background: #32CFEC;
-                border-radius: 20px;
-                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-                transition: 0.3s;
-            }
-
-            input {
-                width: 0;
-                height: 0;
-                visibility: hidden;
-            }
-
-            input:checked+label:after {
-                left: 309px;
-                transform: translateX(-100%);
-            }
-
-            label:active:after {
-                width: 140px;
-            }
-
-            input:checked+label .winner {
-                color: #7782AA
-            }
-
-            input:checked+label .prize {
-                color: black
-            }
-
-        }
-
-        .m-roulette-bonus-dialog-winner-content {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 312px;
-            height: 153px;
-            border-radius: 12px;
-            background: #211F31;
-            /* Text Box */
-            box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-            overflow-y: auto;
-        }
+      input:checked + label .prize {
+        color: black;
+      }
     }
+
+    .m-roulette-bonus-dialog-winner-content {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 312px;
+      height: 153px;
+      border-radius: 12px;
+      background: #211f31;
+      /* Text Box */
+      box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+      overflow-y: auto;
+    }
+  }
 }
 </style>
