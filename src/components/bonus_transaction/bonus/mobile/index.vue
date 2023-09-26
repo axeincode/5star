@@ -90,6 +90,7 @@ const formsList = ref<Array<any>>([
 
 onMounted(async () => {
   await dispatchUserBonus();
+  console.log(userBonusList.value);
 })
 </script>
 <template>
@@ -108,11 +109,11 @@ onMounted(async () => {
           <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
           <div class="text-600-12 white">{{ userBalance.amount }}</div>
         </v-list-item-title>
-        <template v-slot:append>
+        <!-- <template v-slot:append>
           <div v-ripple.center style="width: 24px; height: 24px">
             <img src="@/assets/public/svg/btn_public_02.svg" width="24" />
           </div>
-        </template>
+        </template> -->
       </v-list-item>
       <v-list-item class="m-bg-color-1 mt-4 mx-6">
         <template v-slot:prepend>
@@ -126,7 +127,14 @@ onMounted(async () => {
     </v-col>
     <v-col cols="12" class="pa-1">
       <v-card theme="dark" color="#1C1929" class="m-bonus-card-body pa-2">
-        <v-expansion-panels>
+        <div
+          v-if="userBonusList.list == null || userBonusList.list.length == 0"
+          class="ma-4"
+        >
+          <p class="text-700-12 gray">{{ t("bonus.text_1") }}</p>
+          <p class="text-400-12 gray">{{ t("bonus.text_2") }}</p>
+        </div>
+        <v-expansion-panels v-else>
           <v-expansion-panel
             class="bg-color-211F31 mt-2 m-collapse-body"
             v-for="(item, index) in userBonusList.list"
@@ -314,8 +322,9 @@ onMounted(async () => {
 }
 
 .m-bonus-card-body {
-  // height: 700px;
+  min-height: 233px;
   overflow-y: auto;
+  margin-bottom: 6px;
 
   .v-expansion-panel-title__icon {
     display: inline-flex;

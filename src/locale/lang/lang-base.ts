@@ -439,10 +439,12 @@ export type langType = {
       receive: string
       wager: string
     },
-    dashboard_recharge_title1 : string,
-    dashboard_recharge_title2 : string,
-    dashboard_recharge_content1 : string,
-    dashboard_recharge_content2 : string,
+    dashboard_recharge_title1 : string
+    dashboard_recharge_title2 : string
+    dashboard_recharge_content1 : string
+    dashboard_recharge_content2 : string
+    text_1: string
+    text_2: string
   }
   transaction: {
     tab: {

@@ -9,7 +9,9 @@ export const bonusStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    bonusList: {} as Bonus.GetBonusList,
+    bonusList: {
+      list: []
+    } as Bonus.GetBonusList,
   }),
   getters: {
     getSuccess: (state) => state.success,

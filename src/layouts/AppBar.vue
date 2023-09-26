@@ -645,7 +645,7 @@ onMounted(async () => {
             <div class="d-flex align-center" v-else>
               <div class="user-item" value="user dropdown" @click="showUserNavBar">
                 <img
-                  :src="user.avatar"
+                  :src="userInfo.avatar"
                   width="40"
                   class="mr-0 original-game-img-avatar"
                   style="margin-top: 8px"

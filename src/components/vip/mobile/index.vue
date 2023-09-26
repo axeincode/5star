@@ -34,6 +34,14 @@ import img_vip_17 from "@/assets/vip/image/img_vip_17.png";
 import img_vip_18 from "@/assets/vip/image/img_vip_18.png";
 import img_vip_19 from "@/assets/vip/image/img_vip_19.png";
 import img_vip_20 from "@/assets/vip/image/img_vip_20.png";
+import { Swiper, SwiperSlide } from "swiper/vue";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+// import Swiper core and required modules
+import { Pagination } from "swiper/modules";
+
+const modules = [Pagination];
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -46,15 +54,15 @@ const selectedTabIndex = ref<number>(0)
 const depositRate = ref<number>(56);
 const spinCardItem = ref<any | null>(null)
 const missionCardItem = ref<any | null>(null)
-const descriptionTab = ref<any>(0)
-const rewardTab = ref<any>(0);
-const cashbackTab = ref<any>(0);
-const vipTab = ref<any>(0);
-const spinTab = ref<any>(0);
 const vipSlideClass = ref<string>("");
 const currentSlide = ref<any>(0);
-const vipSwitchValue = ref<any>(0);
+const vipSwitchValue = ref<any>(1);
 const vipSwitch = ref<boolean>(false);
+const rewardSwiper = ref<any>(null);
+const cashbackSwiper = ref<any>(null);
+const spinSwiper = ref<any>(null);
+const vipSwiper = ref<any>(null);
+const descriptionSwiper = ref<any>(null);
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -467,13 +475,23 @@ watch(missionCardShow, (value) => {
   }
 })
 
-watch(currentSlide, (value) => {
-  vipSwitchValue.value = value;
-  rewardTab.value = value;
-  cashbackTab.value = value;
-  vipTab.value = value;
-  spinTab.value = value;
-  descriptionTab.value = value;
+watch(currentSlide, (value: number, newValue : number) => {
+  console.log(value, newValue);
+  vipSwitchValue.value = vipLevels.value[currentSlide.value].level;
+  if ((newValue < value) || (value == 0 && (newValue + 1) == vipLevels.value.length)) {
+    rewardSwiper.value.slideNext();
+    cashbackSwiper.value.slideNext();
+    spinSwiper.value.slideNext();
+    vipSwiper.value.slideNext();
+    descriptionSwiper.value.slideNext();
+  }
+  if ((newValue > value) || (newValue == 0 && (value + 1) == vipLevels.value.length)) {
+    rewardSwiper.value.slidePrev();
+    cashbackSwiper.value.slidePrev();
+    spinSwiper.value.slidePrev();
+    vipSwiper.value.slidePrev();
+    descriptionSwiper.value.slidePrev();
+  }
 })
 
 const cashbackElement = ref<any | null>(null);
@@ -599,21 +617,21 @@ const handleSelectVIPTab = (item: string) => {
 const handleVipSwitchLeft = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value - 1 + 10) % 10;
-  rewardTab.value = (rewardTab.value - 1 + 10) % 10;
-  cashbackTab.value = (cashbackTab.value - 1 + 10) % 10;
-  vipTab.value = (vipTab.value - 1 + 10) % 10;
-  spinTab.value = (spinTab.value - 1 + 10) % 10;
-  descriptionTab.value = (descriptionTab.value - 1 + 10) % 10;
+  rewardSwiper.value.slidePrev();
+  cashbackSwiper.value.slidePrev();
+  spinSwiper.value.slidePrev();
+  vipSwiper.value.slidePrev();
+  descriptionSwiper.value.slidePrev();
 }
 
 const handleVipSwitchRight = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value + 1 + 10) % 10;
-  rewardTab.value = (rewardTab.value + 1 + 10) % 10;
-  cashbackTab.value = (cashbackTab.value + 1 + 10) % 10;
-  vipTab.value = (vipTab.value + 1 + 10) % 10;
-  spinTab.value = (spinTab.value + 1 + 10) % 10;
-  descriptionTab.value = (descriptionTab.value + 1 + 10) % 10;
+  rewardSwiper.value.slideNext();
+  cashbackSwiper.value.slideNext();
+  spinSwiper.value.slideNext();
+  vipSwiper.value.slideNext();
+  descriptionSwiper.value.slideNext();
 }
 
 const arrowSwitchTransform = (el: any) => {
@@ -625,6 +643,34 @@ const submitVipLevelAward = async (awardType: number) => {
   await dispatchVipLevelAward({
     type: awardType
   })
+}
+
+const getRewardSwiperRef = (swiperInstance: any) => {
+  rewardSwiper.value = swiperInstance;
+};
+
+const getCashbackSwiperRef = (swiperInstance: any) => {
+  cashbackSwiper.value = swiperInstance;
+}
+
+const getSpinSwiperRef = (swiperInstance: any) => {
+  spinSwiper.value = swiperInstance;
+}
+
+const getVipSwiperRef = (swiperInstance: any) => {
+  vipSwiper.value = swiperInstance;
+}
+
+const getDescriptionSwiperRef = (swiperInstance: any) => {
+  descriptionSwiper.value = swiperInstance;
+}
+
+const handleBeforeSlide = () => {
+ console.log('handleBeforeSlide')
+}
+
+const handleRewardSwiperChange = () => {
+ console.log('handleRewardSwiperChange')
 }
 
 onMounted(async () => {
@@ -666,6 +712,7 @@ onMounted(async () => {
         :itemsToShow="1.2"
         :wrapAround="true"
         :transition="500"
+        @beforeSlide="handleBeforeSlide"
         class="m-vip-carousel"
         :style="{
           margin: refferalAppBarShow ? '0px 10px !important' : '10px !important',
@@ -753,11 +800,17 @@ onMounted(async () => {
 
       <!------------------------- vip reward ----------------------------->
       <div ref="rewardElement">
-        <v-window v-model="rewardTab">
-          <v-window-item
+        <Swiper
+          :modules="modules"
+          :slidesPerView="1"
+          :loop="true"
+          @swiper="getRewardSwiperRef"
+          @slide-change="handleRewardSwiperChange"
+        >
+          <SwiperSlide
             v-for="(item, index) in vipLevels"
             :key="index"
-            :value="item.level"
+            :virtualIndex="index"
           >
             <div class="reward-body mx-2 pb-4" :class="tabSelect ? 'mt-15' : 'mt-2'">
               <div class="text-800-14 white pt-4 mx-4">
@@ -911,16 +964,21 @@ onMounted(async () => {
                 </v-col>
               </v-row>
             </div>
-          </v-window-item>
-        </v-window>
+          </SwiperSlide>
+        </Swiper>
       </div>
       <!---------------------------- cashback bonus --------------------------------->
       <div ref="cashbackElement">
-        <v-window v-model="cashbackTab">
-          <v-window-item
+        <Swiper
+          :modules="modules"
+          :slidesPerView="1"
+          :loop="true"
+          @swiper="getCashbackSwiperRef"
+        >
+          <SwiperSlide
             v-for="(item, index) in vipLevels"
             :key="index"
-            :value="item.level"
+            :virtualIndex="index"
           >
             <div
               class="m-cashback-bonus-body mx-2 pb-4"
@@ -1049,16 +1107,21 @@ onMounted(async () => {
                 </div>
               </v-card>
             </div>
-          </v-window-item>
-        </v-window>
+          </SwiperSlide>
+        </Swiper>
       </div>
       <!-------------------------- My Super Spin ---------------------------------->
       <div ref="spinElement">
-        <v-window v-model="spinTab" style="overflow: initial">
-          <v-window-item
+        <Swiper
+          :modules="modules"
+          :slidesPerView="1"
+          :loop="true"
+          @swiper="getSpinSwiperRef"
+        >
+          <SwiperSlide
             v-for="(item, index) in vipLevels"
             :key="index"
-            :value="item.level"
+            :virtualIndex="index"
           >
             <div
               class="m-super-spin-body relative mt-6 mx-2 pb-2"
@@ -1144,18 +1207,23 @@ onMounted(async () => {
                 <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
               </v-btn>
             </div>
-          </v-window-item>
-        </v-window>
+          </SwiperSlide>
+        </Swiper>
       </div>
 
       <!------------------------   My VIP Mission -------------------------------->
 
       <div ref="vipElement">
-        <v-window v-model="vipTab" style="overflow: initial">
-          <v-window-item
+        <Swiper
+          :modules="modules"
+          :slidesPerView="1"
+          :loop="true"
+          @swiper="getVipSwiperRef"
+        >
+          <SwiperSlide
             v-for="(item, index) in vipLevels"
             :key="index"
-            :value="item.level"
+            :virtualIndex="index"
           >
             <div
               class="vip-mission-body relative mt-6 mx-2 pb-2"
@@ -1378,8 +1446,8 @@ onMounted(async () => {
                 <v-icon class="mdi-down-position" v-else>mdi-chevron-up</v-icon>
               </v-btn>
             </div>
-          </v-window-item>
-        </v-window>
+          </SwiperSlide>
+        </Swiper>
       </div>
 
       <!--------------------------    VIP Benifit Description ---------------------->
@@ -1387,11 +1455,17 @@ onMounted(async () => {
         class="m-benifit-description-body mt-6 mx-2 pb-2 relative"
         ref="benefitElement"
       >
-        <v-window v-model="descriptionTab">
-          <v-window-item
+        <Swiper
+          :modules="modules"
+          :slidesPerView="1"
+          :spaceBetween="8"
+          :loop="true"
+          @swiper="getDescriptionSwiperRef"
+        >
+          <SwiperSlide
             v-for="(item, index) in vipLevels"
             :key="index"
-            :value="item.level"
+            :virtualIndex="index"
           >
             <div class="m-benifit-description-header pa-4 text-700-16 white">
               VIP{{ item.level }}{{ t("vip.benifit_description_body.text_1") }}
@@ -1564,36 +1638,8 @@ onMounted(async () => {
                 </v-card>
               </v-col>
             </v-row>
-          </v-window-item>
-        </v-window>
-        <!-- <div
-          class="d-flex align-center justify-center"
-          :class="
-            mobileWidth < 960 ? 'mt-2 mr-4 justify-end' : 'benifit-description-pagination'
-          "
-        >
-          <v-btn
-            class="button-black description-prev-btn"
-            theme="dark"
-            icon
-            @click="prevDescription"
-            width="28"
-            height="28"
-          >
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <p class="text-700-16 white mx-4">{{ descriptionTab }}</p>
-          <v-btn
-            class="button-black description-prev-btn"
-            theme="dark"
-            icon
-            @click="nextDescription"
-            width="28"
-            height="28"
-          >
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </div> -->
+          </SwiperSlide>
+        </Swiper>
       </div>
 
       <!----------------------------   footer-body    ------------------------------------>
@@ -1628,6 +1674,14 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+.swiper {
+  overflow: inherit;
+}
+
+.swiper-wrapper {
+  box-sizing: inherit;
+}
+
 .m-vip-switch {
   position: fixed;
   left: 50%;

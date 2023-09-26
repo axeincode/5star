@@ -445,7 +445,8 @@ export const lang: langType = {
     dashboard_recharge_title2 : "Get Daily Login Bonus",
     dashboard_recharge_content1 : "VIP users who recharge within 7 days wil recive a daily",
     dashboard_recharge_content2 : "login bonus, the higher the VIP level, the bigger the bonus!",
-    
+    text_1: "Bonus",
+    text_2: "No active bonues found"
   },
   transaction: {
     tab: {

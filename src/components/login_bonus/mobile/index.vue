@@ -64,7 +64,7 @@ const handleLoginBonus = (day: number) => {
     </v-btn>
     <img src="@/assets/vip/image/img_agent_02.png" class="m-login-bonus-agent-img" />
     <div class="m-login-bonus-body">
-      <Swiper :modules="modules" :slidesPerView="1" @swiper="getSwiperRef">
+      <Swiper :modules="modules" :slidesPerView="1" :loop="true" @swiper="getSwiperRef">
         <SwiperSlide
           v-for="(item, index) in vipLevels"
           :key="index"
