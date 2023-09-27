@@ -237,7 +237,10 @@ const startRoulette = () => {
     if (speed.value == 0) {
         speed.value = 520
     }
-    let duration_speed = 3000;
+    let duration_speed = 10000;
+    // setInterval(() => {
+    //   duration_speed = duration_speed - 10000;
+    // }, 300)
     let newRotaion = currentWheelRotation.value + (360 / 8) * speed.value;
     const animation = anime({
         targets: roulette.value,
@@ -248,7 +251,8 @@ const startRoulette = () => {
             return duration_speed;
         },
         loop: 1,
-        easing: `cubicBezier(${bezier.join(",")})`,
+        // easing: `cubicBezier(${bezier.join(",")})`,
+        easing: 'easeInOutQuad',
         complete: (...args) => {
             currentWheelRotation.value = newRotaion;
             currentWheelIndex.value = newWheelIndex;

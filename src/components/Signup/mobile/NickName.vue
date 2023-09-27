@@ -230,6 +230,12 @@ onMounted(() => {
     background: transparent !important;
   }
 
+  .m-nickname-swiper-container {
+    .swiper {
+      overflow: hidden !important;
+    }
+  }
+
   .m-nickname-avatar-btn {
     position: absolute;
     top: 112px;
