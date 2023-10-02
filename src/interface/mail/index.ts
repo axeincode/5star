@@ -1,6 +1,7 @@
 export interface GetMailData {
     id: number
-    icon: any
+    icon: any    
+    offset: number
     mail_content_1: {
         color: string
         content: string

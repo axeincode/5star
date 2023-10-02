@@ -49,11 +49,11 @@ const shareIconIndex = ref<number>(0);
 
 watch(shareIconIndex, (newValue) => {
   if ((newValue % 3) == 0) {
-    shareIcon.value = new URL("@/assets/public/image/img_public_19.png", import.meta.url).href; 
+    shareIcon.value = new URL("@/assets/public/image/img_public_19.png", import.meta.url).href;
   } else if ((newValue % 3) == 1) {
-    shareIcon.value = new URL("@/assets/public/image/img_public_10.png", import.meta.url).href;     
+    shareIcon.value = new URL("@/assets/public/image/img_public_10.png", import.meta.url).href;
   } else {
-    shareIcon.value = new URL("@/assets/public/image/img_public_46.png", import.meta.url).href; 
+    shareIcon.value = new URL("@/assets/public/image/img_public_46.png", import.meta.url).href;
   }
 
   const share_image = document.querySelector('.share-img-position');
@@ -63,7 +63,7 @@ watch(shareIconIndex, (newValue) => {
 
     share_image.classList.add('share-animation');
   }
- 
+
 }, { deep: true })
 
 
@@ -137,13 +137,63 @@ watch(mailMenuShow, async (newValue) => {
     mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
   }
   setMailMenuShow(newValue);
+  var scale = 0.94;
+  var translateY = -56;
+  var opacity = 0.8;
+  var zIndex = 100
+  console.log(mailList.value.length);
   if (newValue) {
-    for (const item of mailList.value) {
+    for (let item of mailList.value) {
       await new Promise<void>((resolve) => {
-        setTimeout(() => {
+        setTimeout(async () => {
           tempMailList.value.push(item);
+          const vList = document.querySelector('.mobile-mail-menu');
+          if (!vList) {
+            return;
+          }
+
+          await new Promise<void>((resolve) => {
+            setTimeout(() => {
+              resolve();
+            }, 100)
+          })
+
+          const vListRect = vList.getBoundingClientRect();
+          const listItems = Array.from(vList.querySelectorAll('.mail-item')) as Array<HTMLElement>;
+          console.log("listItem: ", listItems.length);
+          // listItems.forEach((listItem: HTMLElement) => {
+          const rect = listItems[tempMailList.value.length - 1].getBoundingClientRect();
+          console.log(tempMailList.value.length);
+          listItems[tempMailList.value.length - 1].style.zIndex = `${zIndex}`
+          if (rect.top > 0 && rect.bottom >= vListRect.bottom) {
+            if (listItems.length == 16) {
+              console.log("11111111111111", listItems.length);
+            }
+            listItems[tempMailList.value.length - 1].style.scale = `${scale}`;
+            listItems[tempMailList.value.length - 1].style.transform = `translateY(${translateY}px)`
+            listItems[tempMailList.value.length - 1].style.zIndex = `${zIndex}`
+            listItems[tempMailList.value.length - 1].style.opacity = `${opacity}`
+            listItems[tempMailList.value.length - 1].style.animation = '0.8s ease-in-out 0s 1 normal none running fadeIn'
+            var keyframes = `@keyframes fadeIn {
+                  from {
+                    opacity: 0;
+                    translateY(0px)
+                  }
+                  to {
+                    opacity: 0.8;
+                    translateY(${translateY}px)
+                  }
+              }`;
+            var styleSheet = document.styleSheets[0];
+            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+            scale -= 0.04;
+            translateY = translateY - 70;
+          }
+          zIndex -= 1;
+          console.log("rect, bottom", rect.bottom, vListRect.bottom);
+          // });
           resolve();
-        }, 100);
+        }, 10);
       });
     }
   } else {
@@ -241,6 +291,8 @@ const goToSharePage = () => {
   // mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
 }
 
+const listContainer = ref<any>(null);
+
 const handleScroll = (event: any) => {
   const vList = document.querySelector('.mobile-mail-menu');
 
@@ -248,30 +300,81 @@ const handleScroll = (event: any) => {
     return;
   }
 
-  const listItems = Array.from(vList.querySelectorAll('.v-list-item'));
+  const listItems = Array.from(vList.querySelectorAll('.mail-item')) as Array<HTMLElement>;
 
   const currentScrollPos = event.target.scrollTop;
 
-  listItems.forEach((listItem) => {
+  const vListRect = vList.getBoundingClientRect();
+
+  console.log(currentScrollPos - prevScrollPos.value);
+
+  const delta = currentScrollPos - prevScrollPos.value;
+
+  listItems.forEach((listItem: HTMLElement) => {
     const rect = listItem.getBoundingClientRect();
 
     // If the current scroll position is greater than the previous one, the scrollbar is going down
     if (currentScrollPos > prevScrollPos.value) {
-      // console.log('Scrollbar is going down');
-      if (rect.top > 0 && rect.bottom < window.innerHeight - 85 && rect.bottom > window.innerHeight - 115) {
-        listItem.classList.remove('scale-mail-item');
-        // listItem.classList.add('animation-mail-item');
+      console.log('Scrollbar is going down');
+      console.log(Number(listItem.style.scale));
+      if (Number(listItem.style.scale) > 0 && Number(listItem.style.scale) < 1) {
+        listItem.style.scale = `${Number(listItem.style.scale) + 0.001}`;
+      } else if (Number(listItem.style.scale) > 0 && Number(listItem.style.scale) < 0.8) {
+        listItem.style.scale = `${Number(listItem.style.scale) + 0.002}`;
       }
+      // console.log(window.getComputedStyle(listItem).getPropertyValue('transform'));
+      const matrix = new DOMMatrix(window.getComputedStyle(listItem).getPropertyValue('transform'));
+      // console.log(matrix.m42);
+      if (matrix.m42 != 0) {
+        const translateY = matrix.m42 + delta >= 0 ? 0 : matrix.m42 + delta
+        listItem.style.transform = `translateY(${translateY}px)`
+      } else {
+        listItem.style.scale = "1";
+        listItem.style.opacity = "1"
+      }
+      // listItem.style.zIndex = `100`
+      // if (rect.top > 0 && rect.bottom < window.innerHeight - 85 && rect.bottom > window.innerHeight - 115) {
+      //   listItem.classList.remove('scale-mail-item');
+      //   listItem.classList.add('animation-mail-item');
+      // }
     }
     // Otherwise, the scrollbar is going up
     else {
       // console.log('Scrollbar is going up');
-      if (rect.bottom > window.innerHeight - 83) {
-        listItem.classList.add('scale-mail-item');
-        // listItem.classList.remove('animation-mail-item');
+      // if (rect.bottom > window.innerHeight - 83) {
+      // listItem.classList.add('scale-mail-item');
+      // listItem.classList.remove('animation-mail-item');
+      // }
+      const opacity = 0.8
+      if (rect.top > 0 && rect.bottom >= vListRect.bottom) {
+        const matrix = new DOMMatrix(window.getComputedStyle(listItem).getPropertyValue('transform'));
+        const translateY = matrix.m42 + delta >= 0 ? 0 : matrix.m42 + delta
+        listItem.style.transform = `translateY(${translateY}px)`
+        listItem.style.scale = `${Number(listItem.style.scale) - 0.006}`;
+        listItem.style.opacity = `${opacity}`
+        listItem.style.animation = '0.8s ease-in-out 0s 1 normal none running fadeIn'
+        // var keyframes = `@keyframes fadeIn {
+        //       from {
+        //         opacity: 0;
+        //         translateY(0px)
+        //       }
+        //       to {
+        //         opacity: 0.8;
+        //         translateY(${translateY}px)
+        //       }
+        // }`;
+        // var styleSheet = document.styleSheets[0];
+        // styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
       }
     }
   });
+
+  if (event.target.scrollTop + event.target.clientHeight >= event.target.scrollHeight) {
+    console.log('Scrollbar reached the end');
+    listItems[listItems.length - 1].style.transform = `translateY(0px)`
+    listItems[listItems.length - 1].style.scale = "1";
+    listItems[listItems.length - 1].style.opacity = "1"
+  }
 
   prevScrollPos.value = currentScrollPos;
 }
@@ -322,15 +425,18 @@ const menuBlurEffectShow = computed(() => {
   return getMenuBlurEffectShow.value
 })
 
+const handleResize = () => {
+  mailListHeight.value = window.innerHeight - 246;
+}
+
 onMounted(() => {
-  
   setInterval(() => {
-    shareIconIndex.value = shareIconIndex.value+1;
+    shareIconIndex.value = shareIconIndex.value + 1;
   }, 5000);
   mailCount.value = mailList.value.length
   console.log(tempMailList.value.length);
-  mailListHeight.value = window.innerHeight - 219;
-  
+  mailListHeight.value = window.innerHeight - 246;
+  window.addEventListener("resize", handleResize);
 })
 </script>
 
@@ -368,18 +474,17 @@ onMounted(() => {
       </div>
     </v-btn>
     <v-btn class="menu-text-color share-ripple-btn" @click="goToSharePage">
-      <div class = "bonus-icon-body">
+      <div class="bonus-icon-body">
         <div class="circle-background"></div>
         <img
           src="@/assets/public/image/bg_public_22.png"
           class="share-background-img-position"
         />
-        <div class = "m-mask">
-          <img :src="shareIcon" class="share-img-position "/>
+        <div class="m-mask">
+          <img :src="shareIcon" class="share-img-position" />
         </div>
       </div>
-      
-      
+
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
       </div>
@@ -421,12 +526,13 @@ onMounted(() => {
       <v-list
         theme="dark"
         bg-color="transparent"
-        class="px-2  m-mail-list"
+        class="px-2 m-mail-list"
         :height="tempMailList.length > 8 ? mailListHeight + 'px' : ''"
         :width="mobileWidth"
         @scroll="handleScroll"
         style="box-shadow: none !important"
         :style="{ marginLeft: tempMailList.length > 8 ? '6px' : 'auto' }"
+        ref="listContainer"
       >
         <v-list-item
           height="36"
@@ -442,7 +548,7 @@ onMounted(() => {
           <v-list-item
             class="mail-item"
             :value="mailItem.mail_content_1.content"
-            :class="index > 8 ? 'scale-mail-item' : ''"
+            height="64"
           >
             <template v-slot:prepend>
               <img :src="mailItem.icon" width="20" />
@@ -476,6 +582,10 @@ onMounted(() => {
     transform: scale(0.8);
   }
 
+  80% {
+    transform: scale(1.1);
+  }
+
   100% {
     transform: scale(1);
   }
@@ -486,17 +596,14 @@ onMounted(() => {
     transform: scale(0.8);
   }
 
-  60% {
-    transform: scale(1.2);
-  }
+  // 60% {
+  //   transform: scale(1.2);
+  // }
 
   100% {
     transform: scale(1);
   }
 }
-
-
-
 
 .mobile-menu-index {
   z-index: 2009 !important;
@@ -516,31 +623,56 @@ onMounted(() => {
 .m-mail-menu-overlay {
   bottom: 80px !important;
   overflow-x: hidden;
+
   .v-overlay__scrim {
     bottom: 80px !important;
     opacity: 0 !important;
   }
 }
 
-
-
-
-
 @keyframes shareAnimation {
+  0% {
+    top: 70px;
+  }
 
-  0% {top: 70px}
-  1.5% {top: 70px}
-  3.3% { top: -8px}
-  5.7% {top: 8px; transform: scaleY(0.7)}
-  8.7% { top: -2px; transform: scaleY(1.1)}
-  13.3% {top: 3px; transform: scaleY(1)}
-  
-  93.5% {top: 3px}
-  96.5% {top: -2px}
-  98.5% {top: -2px}
-  100% {top: 70px}
-  
-  
+  1.5% {
+    top: 70px;
+  }
+
+  3.3% {
+    top: -8px;
+  }
+
+  5.7% {
+    top: 8px;
+    transform: scaleY(0.7);
+  }
+
+  8.7% {
+    top: -2px;
+    transform: scaleY(1.1);
+  }
+
+  13.3% {
+    top: 3px;
+    transform: scaleY(1);
+  }
+
+  93.5% {
+    top: 3px;
+  }
+
+  96.5% {
+    top: -2px;
+  }
+
+  98.5% {
+    top: -2px;
+  }
+
+  100% {
+    top: 70px;
+  }
 }
 
 .m-mask {
@@ -575,12 +707,13 @@ onMounted(() => {
 }
 
 .scale-mail-item {
-  scale: 0.96;
-  transform: translateY(-43px);
-  z-index: -1;
-  opacity: 0.8;
-  transition: scale 0.5s ease;
+  // scale: 0.8;
+  // transform: translateY(-43px);
+  // z-index: -1;
+  // opacity: 0.8;
+  transition: transform 0.5s ease-in-out;
 }
+
 .menu-text-color {
   color: #7782aa;
 
@@ -669,8 +802,8 @@ onMounted(() => {
     animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
+    // transition: transform 0.2s ease-in-out;
   }
-  
 
   .animation-mail-item {
     animation-name: animationMailScaling;
@@ -679,8 +812,6 @@ onMounted(() => {
     animation-iteration-count: 1;
   }
 }
-
-
 
 .share-background-img-position {
   position: absolute;
@@ -710,7 +841,8 @@ onMounted(() => {
   // filter: saturate(180%) blur(3px);
   // -webkit-filter: saturate(180%) blur(3px);
 }
+
 .m-mail-list {
-  overflow-x: hidden!important;
+  overflow-x: hidden !important;
 }
 </style>

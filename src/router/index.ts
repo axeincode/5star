@@ -13,6 +13,17 @@ const routes = [
     ],
   },
   {
+    path: '/test',
+    component: () => import('@/layouts/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Test',
+        component: () => import('@/views/test/index.vue')
+      },
+    ],
+  },
+  {
     path: '/affiliate',
     component: () => import('@/layouts/index.vue'),
     children: [
