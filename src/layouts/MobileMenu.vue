@@ -186,7 +186,7 @@ watch(mailMenuShow, async (newValue) => {
               }`;
             var styleSheet = document.styleSheets[0];
             styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-            scale -= 0.04;
+            scale -= 0.02;
             translateY = translateY - 70;
           }
           zIndex -= 1;
@@ -350,7 +350,7 @@ const handleScroll = (event: any) => {
         const matrix = new DOMMatrix(window.getComputedStyle(listItem).getPropertyValue('transform'));
         const translateY = matrix.m42 + delta >= 0 ? 0 : matrix.m42 + delta
         listItem.style.transform = `translateY(${translateY}px)`
-        listItem.style.scale = `${Number(listItem.style.scale) - 0.006}`;
+        listItem.style.scale = `${Number(listItem.style.scale) - 0.01}`;
         listItem.style.opacity = `${opacity}`
         listItem.style.animation = '0.8s ease-in-out 0s 1 normal none running fadeIn'
         // var keyframes = `@keyframes fadeIn {
