@@ -1,80 +1,81 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { defineAsyncComponent } from 'vue';
 
 const routes = [
   {
     path: '/',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'Dashboard',
-        component: () => import('@/views/home/index.vue'),
+        component: defineAsyncComponent(() => import('@/views/home/index.vue')),
       },
     ],
   },
   {
     path: '/test',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'Test',
-        component: () => import('@/views/test/index.vue')
+        component: defineAsyncComponent(() => import('@/views/test/index.vue'))
       },
     ],
   },
   {
     path: '/affiliate',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'Affiliate',
-        component: () => import('@/views/affiliate/index.vue'),
+        component: defineAsyncComponent(() => import('@/views/affiliate/index.vue')),
       },
     ],
   },
   {
     path: '/bonus-transaction',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'Bonuses And Transactions',
-        component: () => import('@/views/bonus_transaction/index.vue'),
+        component: defineAsyncComponent(() => import('@/views/bonus_transaction/index.vue')),
       },
     ],
   },
   {
     path: '/account',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'Account',
-        component: () => import('@/views/account/index.vue'),
+        component: defineAsyncComponent(() => import('@/views/account/index.vue')),
       },
     ],
   },
   {
     path: '/vip',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'VIP',
-        component: () => import('@/views/vip/index.vue'),
+        component: defineAsyncComponent(() => import('@/views/vip/index.vue')),
       },
     ],
   },
   {
     path: '/game/:id?/:name?',
-    component: () => import('@/layouts/index.vue'),
+    component: defineAsyncComponent(() => import('@/layouts/index.vue')),
     children: [
       {
         path: '',
         name: 'Game',
-        component: () => import('@/views/game/index.vue'),
+        component: defineAsyncComponent(() => import('@/views/game/index.vue')),
       },
     ],
   },

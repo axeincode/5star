@@ -1,23 +1,19 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { createWebSocket } from "@/plugins/socket";
+import { ref, onMounted, Suspense } from "vue";
+import { RouterView } from "vue-router";
 
-onMounted(() => {
-  // const socket = createWebSocket("user");
-  // socket.onopen = function () {
-  //   console.log("connected");
-  // };
-  // socket.onmessage = function (event) {
-  //   console.log(event);
-  // };
-  // socket.onerror = function (error) {
-  //   console.error("WebSocket Error:", error);
-  // };
-});
+onMounted(() => {});
 </script>
 
 <template>
-  <router-view />
+  <Suspense>
+    <template #default>
+      <router-view />
+    </template>
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
+  </Suspense>
 </template>
 
 <style lang="scss">

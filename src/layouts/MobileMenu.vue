@@ -66,8 +66,6 @@ watch(shareIconIndex, (newValue) => {
 
 }, { deep: true })
 
-
-
 const prevScrollPos = ref<number>(0);
 
 // pc or mobile screen switch
@@ -151,24 +149,18 @@ watch(mailMenuShow, async (newValue) => {
           if (!vList) {
             return;
           }
-
           await new Promise<void>((resolve) => {
             setTimeout(() => {
               resolve();
             }, 100)
           })
-
           const vListRect = vList.getBoundingClientRect();
           const listItems = Array.from(vList.querySelectorAll('.mail-item')) as Array<HTMLElement>;
           console.log("listItem: ", listItems.length);
-          // listItems.forEach((listItem: HTMLElement) => {
           const rect = listItems[tempMailList.value.length - 1].getBoundingClientRect();
           console.log(tempMailList.value.length);
           listItems[tempMailList.value.length - 1].style.zIndex = `${zIndex}`
           if (rect.top > 0 && rect.bottom >= vListRect.bottom) {
-            if (listItems.length == 16) {
-              console.log("11111111111111", listItems.length);
-            }
             listItems[tempMailList.value.length - 1].style.scale = `${scale}`;
             listItems[tempMailList.value.length - 1].style.transform = `translateY(${translateY}px)`
             listItems[tempMailList.value.length - 1].style.zIndex = `${zIndex}`
@@ -191,7 +183,6 @@ watch(mailMenuShow, async (newValue) => {
           }
           zIndex -= 1;
           console.log("rect, bottom", rect.bottom, vListRect.bottom);
-          // });
           resolve();
         }, 10);
       });
