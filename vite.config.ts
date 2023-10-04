@@ -82,26 +82,26 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       //     drop_debugger: true,
       //   }
       // },
-      rollupOptions: {
-        external: [
-          "vue",
-          "element-plus",
-          "pinia",
-          "axios",
-          "vuetify",
-          "vue-router",
-        ],
-        output: {
-          manualChunks(id) {
-            if (id.includes("node_modules")) {
-              return id.toString()
-                .split("node_modules/")[1]
-                .split("/")[0]
-                .toString();
-            }
-          }
-        }
-      }
+      // rollupOptions: {
+      //   external: [
+      //     "vue",
+      //     "element-plus",
+      //     "pinia",
+      //     "axios",
+      //     "vuetify",
+      //     "vue-router",
+      //   ],
+      //   output: {
+      //     manualChunks(id) {
+      //       if (id.includes("node_modules")) {
+      //         return id.toString()
+      //           .split("node_modules/")[1]
+      //           .split("/")[0]
+      //           .toString();
+      //       }
+      //     }
+      //   }
+      // }
     },
     resolve: {
       alias: {
