@@ -52,27 +52,27 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           configFile: 'src/assets/public/css/settings.scss',
         },
       }),
-      // legacy({
-      //   targets: ['defaults', 'not IE 11'],
-      //   additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-      //   polyfills: ['es.promise.finally'],
-      // }),
-      // cacheResource({
-      //   cacheDir: path.join(__dirname, ".cache"),
-      // }),
-      // VitePluginCdn({
-      //   esm: true,
-      //   modules: [
-      //     {
-      //       name: 'vue',
-      //       url: 'https://cdn.jsdelivr.net/npm/vue@:version/dist/vue.min.js',
-      //     },
-      //     {
-      //       name: 'axios',
-      //       url: 'https://cdn.jsdelivr.net/npm/axios@:version/dist/axios.min.js',
-      //     },
-      //   ],
-      // }),
+      legacy({
+        targets: ['defaults', 'not IE 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+        polyfills: ['es.promise.finally'],
+      }),
+      cacheResource({
+        cacheDir: path.join(__dirname, ".cache"),
+      }),
+      VitePluginCdn({
+        esm: true,
+        modules: [
+          {
+            name: 'vue',
+            url: 'https://cdn.jsdelivr.net/npm/vue@:version/dist/vue.min.js',
+          },
+          {
+            name: 'axios',
+            url: 'https://cdn.jsdelivr.net/npm/axios@:version/dist/axios.min.js',
+          },
+        ],
+      }),
     ],
     build: {
       chunkSizeWarningLimit: 1000,
