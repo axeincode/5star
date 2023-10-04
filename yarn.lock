@@ -5344,7 +5344,7 @@
     "temp-dir" "^1.0.0"
     "uuid" "^3.0.1"
 
-"terser@^5.0.0", "terser@^5.21.0", "terser@^5.4.0":
+"terser@^5.0.0", "terser@^5.4.0":
   "integrity" "sha512-WtnFKrxu9kaoXuiZFSGrcAvvBqAdmKx0SFNmVNYdJamMu9yyN3I/QF0FbH4QcqJQ+y1CJnzxGIKH0cSj+FGYRw=="
   "resolved" "https://registry.npmjs.org/terser/-/terser-5.21.0.tgz"
   "version" "5.21.0"

@@ -52,7 +52,6 @@
     "rollup-plugin-external-globals": "^0.8.0",
     "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.60.0",
-    "terser": "^5.21.0",
     "typescript": "^5.0.0",
     "vite": "^4.2.0",
     "vite-plugin-cache-resource": "^0.0.1",
