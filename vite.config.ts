@@ -22,8 +22,8 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       vue({
         template: { transformAssetUrls }
       }),
-      cssnano(),
-      terser(),
+      // cssnano(),
+      // terser(),
       // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
       vuetify({
         autoImport: true,
@@ -36,28 +36,28 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
         polyfills: ['es.promise.finally'],
       }),
-      imagemin({
-        optipng: {
-          optimizationLevel: 7
-        },
-        mozjpeg: {
-          quality: 20
-        },
-        pngquant: {
-          quality: [0.8, 0.9],
-          speed: 4
-        },
-        svgo: {
-          plugins: [
-            {
-              removeViewBox: false
-            },
-            {
-              cleanupIDs: true
-            }
-          ]
-        }
-      }),
+      // imagemin({
+      //   optipng: {
+      //     optimizationLevel: 7
+      //   },
+      //   mozjpeg: {
+      //     quality: 20
+      //   },
+      //   pngquant: {
+      //     quality: [0.8, 0.9],
+      //     speed: 4
+      //   },
+      //   svgo: {
+      //     plugins: [
+      //       {
+      //         removeViewBox: false
+      //       },
+      //       {
+      //         cleanupIDs: true
+      //       }
+      //     ]
+      //   }
+      // }),
       cacheResource({
         cacheDir: path.join(__dirname, ".cache"),
       }),
