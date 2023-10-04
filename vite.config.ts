@@ -22,30 +22,6 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       vue({
         template: { transformAssetUrls }
       }),
-      // cssnano(),
-      // terser(),
-      // imagemin({
-      //   optipng: {
-      //     optimizationLevel: 7
-      //   },
-      //   mozjpeg: {
-      //     quality: 20
-      //   },
-      //   pngquant: {
-      //     quality: [0.8, 0.9],
-      //     speed: 4
-      //   },
-      //   svgo: {
-      //     plugins: [
-      //       {
-      //         removeViewBox: false
-      //       },
-      //       {
-      //         cleanupIDs: true
-      //       }
-      //     ]
-      //   }
-      // }),
       vuetify({
         autoImport: true,
         styles: {
@@ -76,32 +52,6 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
     ],
     build: {
       chunkSizeWarningLimit: 1000,
-      // terserOptions: {
-      //   compress: {
-      //     drop_console: true,
-      //     drop_debugger: true,
-      //   }
-      // },
-      // rollupOptions: {
-      //   external: [
-      //     "vue",
-      //     "element-plus",
-      //     "pinia",
-      //     "axios",
-      //     "vuetify",
-      //     "vue-router",
-      //   ],
-      //   output: {
-      //     manualChunks(id) {
-      //       if (id.includes("node_modules")) {
-      //         return id.toString()
-      //           .split("node_modules/")[1]
-      //           .split("/")[0]
-      //           .toString();
-      //       }
-      //     }
-      //   }
-      // }
     },
     resolve: {
       alias: {

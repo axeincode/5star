@@ -8,6 +8,7 @@ import {
   computed,
   onMounted,
   onUnmounted,
+  getCurrentInstance,
 } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
@@ -78,6 +79,7 @@ const Dashboard = defineComponent({
     const { dispatchSocketConnect } = socketStore();
     const router = useRouter();
     const route = useRoute();
+    const instance = getCurrentInstance();
 
     // initiate component state
     const state = reactive({
@@ -604,6 +606,7 @@ const Dashboard = defineComponent({
         new URL("@/assets/home/image/img_lc_06.png", import.meta.url).href,
         new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
       ],
+      paginGameShow: false,
     });
 
     const luckyContainer = ref<HTMLElement | null>(null);
@@ -689,6 +692,10 @@ const Dashboard = defineComponent({
       const { getGameFilterText } = storeToRefs(gameStore());
       return getGameFilterText.value;
     });
+
+    const cdnUrl = computed(() => {
+      return instance?.appContext.config.globalProperties.$cdn('vue');
+    })
 
     const isNumeric = (value: any) => {
       return /^-?\d+$/.test(value);
@@ -1527,6 +1534,42 @@ const Dashboard = defineComponent({
       recordScrollInterval.value = setInterval(() => {
         state.recordList.push(state.recordList[Math.floor(Math.random() * 10)]);
       }, 600);
+      await dispatchGameCategories(`?type=${filterTabText.value}`);
+      loading.value = false;
+      allGames.value = gameCategories.value;
+      allGames.value.map(async (item) => {
+        await dispatchGameSearch(
+          "?game_categories_slug=" +
+          item.slug +
+          "&page=" +
+          currentPage.value +
+          "&limit=" +
+          limit.value
+        );
+        if (gameSearchList.value.list.length > 0) {
+          let index = 0;
+          gameSearchList.value.list.map(async (gameItem) => {
+            if (item.slug == "original") {
+              gameItem.image = state.originalGames[index];
+            } else if (item.slug == "pgsoft") {
+              gameItem.image = state.principalGames[index];
+            } else if (item.slug == "slot") {
+              gameItem.image = state.slots[index];
+            } else if (item.slug == "live") {
+              gameItem.image = state.liveCasinos[index];
+            } else {
+              gameItem.image = state.testGames[Math.floor(Math.random() * 28)];
+            }
+            index++;
+          });
+        }
+        item.page_no = 1;
+        item.games = gameSearchList.value.list;
+        if (item.slug == "original") {
+          setOriginalGames(gameSearchList.value.list.slice(0, 9));
+        }
+      });
+
       await dispatchSocketConnect();
       await dispatchGameCategories("?type=paging");
       gameGroupBtnList.value = gameCategories.value;
@@ -1593,42 +1636,11 @@ const Dashboard = defineComponent({
           item.game_count = gameSearchList.value.total;
         })
       );
-      await dispatchGameCategories(`?type=${filterTabText.value}`);
-      allGames.value = gameCategories.value;
-      allGames.value.map(async (item) => {
-        await dispatchGameSearch(
-          "?game_categories_slug=" +
-          item.slug +
-          "&page=" +
-          currentPage.value +
-          "&limit=" +
-          limit.value
-        );
-        if (gameSearchList.value.list.length > 0) {
-          let index = 0;
-          gameSearchList.value.list.map(async (gameItem) => {
-            if (item.slug == "original") {
-              gameItem.image = state.originalGames[index];
-            } else if (item.slug == "pgsoft") {
-              gameItem.image = state.principalGames[index];
-            } else if (item.slug == "slot") {
-              gameItem.image = state.slots[index];
-            } else if (item.slug == "live") {
-              gameItem.image = state.liveCasinos[index];
-            } else {
-              gameItem.image = state.testGames[Math.floor(Math.random() * 28)];
-            }
-            index++;
-          });
-        }
-        item.page_no = 1;
-        item.games = gameSearchList.value.list;
-        if (item.slug == "original") {
-          setOriginalGames(gameSearchList.value.list.slice(0, 9));
-        }
-      });
 
-      loading.value = false;
+      setTimeout(() => {
+        state.paginGameShow = true;
+      }, 1000);
+
       selectedCategoryName.value = route.query.filter ? route.query.filter : "";
       selectedGameFilterBtn.value = route.query.filter ? route.query.filter : t("home.button.all_game");
       switch (selectedGameFilterBtn.value) {
@@ -2426,6 +2438,7 @@ export default Dashboard;
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
+                :delay="50000"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
               />
               <!-- <img
@@ -2490,6 +2503,7 @@ export default Dashboard;
         v-for="(otherGameItem, otherIndex) in pagingGames"
         :key="otherIndex"
         v-else
+        v-if="paginGameShow"
       >
         <template v-if="otherGameItem.slug == selectedCategoryName">
           <v-row
@@ -3273,7 +3287,6 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
-    height: 100%;
   }
 
   .v-progressive-image-loading:before {
