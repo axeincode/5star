@@ -2438,7 +2438,6 @@ export default Dashboard;
                 :src="gameItem.image"
                 lazy-placeholder
                 blur="30"
-                :delay="50000"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
               />
               <!-- <img
