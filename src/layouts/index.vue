@@ -1,18 +1,31 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
-import NavBarLayout from "./NavBar.vue";
-import MNavBarLayout from "./MobileNavBar.vue";
-import UserNavBarLayout from "./UserNavBar.vue";
-import RightBarLayout from "./RightBar.vue";
-import AppBarLayout from "./AppBar.vue";
-import MainLayout from "./Main.vue";
-import MobileMenuLayout from "./MobileMenu.vue";
-import RefferalLayout from "./RefferalBar.vue";
+import { defineAsyncComponent } from "vue";
+// import NavBarLayout from "./NavBar.vue";
+// import MNavBarLayout from "./MobileNavBar.vue";
+// import UserNavBarLayout from "./UserNavBar.vue";
+// import RightBarLayout from "./RightBar.vue";
+// import AppBarLayout from "./AppBar.vue";
+// import MainLayout from "./Main.vue";
+// import MobileMenuLayout from "./MobileMenu.vue";
+// import RefferalLayout from "./RefferalBar.vue";
+// import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 import { useDisplay } from "vuetify";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
-import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
+
+const NavBarLayout = defineAsyncComponent(() => import("./NavBar.vue"));
+const MNavBarLayout = defineAsyncComponent(() => import("./MobileNavBar.vue"));
+const UserNavBarLayout = defineAsyncComponent(() => import("./UserNavBar.vue"));
+const RightBarLayout = defineAsyncComponent(() => import("./RightBar.vue"));
+const AppBarLayout = defineAsyncComponent(() => import("./AppBar.vue"));
+const MainLayout = defineAsyncComponent(() => import("./Main.vue"));
+const MobileMenuLayout = defineAsyncComponent(() => import("./MobileMenu.vue"));
+const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
+const MBonusDashboardDialog = defineAsyncComponent(
+  () => import("@/components/vip/mobile/MBonusDashboard.vue")
+);
 
 const { width } = useDisplay();
 
@@ -61,24 +74,24 @@ const handleScroll = () => {
 }
 
 .Vue-Toastification__container {
-  right: 0!important;
-  left: unset!important;;
-  width: 290px!important;
+  right: 0 !important;
+  left: unset !important;
+  width: 290px !important;
   margin-right: 37px;
-  height: 60px!important;
+  height: 60px !important;
   //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
-    align-items: center !important;
-    z-index: 1000000000 !important;
-    top: 70px;
-    right: -20px !important;
-    width: 320px !important;
-    height: 60px;
-    border: none;
-    border-radius: 16px 0px 0px 16px;
-    background: var(--bg-2, #181522);
-    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+  align-items: center !important;
+  z-index: 1000000000 !important;
+  top: 70px;
+  right: -20px !important;
+  width: 320px !important;
+  height: 60px;
+  border: none;
+  border-radius: 16px 0px 0px 16px;
+  background: var(--bg-2, #181522);
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
 .Vue-Toastification__toast-body {
@@ -91,7 +104,7 @@ const handleScroll = () => {
   text-align: left;
 }
 
-.Vue-Toastification__close-button{
+.Vue-Toastification__close-button {
   top: 22px !important;
   background-image: url("@/assets/public/svg/icon_public_52.svg");
   background-repeat: no-repeat;
@@ -100,4 +113,3 @@ const handleScroll = () => {
   opacity: 1;
 }
 </style>
-

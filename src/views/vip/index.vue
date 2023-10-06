@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue";
-import VIP from "@/components/vip/index.vue";
-import MVIP from "@/components/vip/mobile/index.vue";
+// import VIP from "@/components/vip/index.vue";
+// import MVIP from "@/components/vip/mobile/index.vue";
 import { useDisplay } from "vuetify";
+import { defineAsyncComponent } from "vue";
 
 const { width } = useDisplay();
 
@@ -11,6 +12,9 @@ const loading = ref<boolean>(true);
 const mobileWidth: any = computed(() => {
   return width.value;
 });
+
+const MVIP = defineAsyncComponent(() => import("@/components/vip/mobile/index.vue"));
+const VIP = defineAsyncComponent(() => import("@/components/vip/index.vue"));
 
 onMounted(() => {
   window.scrollTo({

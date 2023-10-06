@@ -1,16 +1,36 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue";
+import { defineAsyncComponent } from "vue";
 import { appBarStore } from "@/store/appBar";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import Invite from "@/components/affiliate/invite/index.vue";
-import MInvite from "@/components/affiliate/invite/mobile/index.vue";
-import Statistics from "@/components/affiliate/statistics/index.vue";
-import MStatistics from "@/components/affiliate/statistics/mobile/index.vue";
-import Forms from "@/components/affiliate/forms/index.vue";
-import MForms from "@/components/affiliate/forms/mobile/index.vue";
+// import Invite from "@/components/affiliate/invite/index.vue";
+// import MInvite from "@/components/affiliate/invite/mobile/index.vue";
+// import Statistics from "@/components/affiliate/statistics/index.vue";
+// import MStatistics from "@/components/affiliate/statistics/mobile/index.vue";
+// import Forms from "@/components/affiliate/forms/index.vue";
+// import MForms from "@/components/affiliate/forms/mobile/index.vue";
+
+const Invite = defineAsyncComponent(
+  () => import("@/components/affiliate/invite/index.vue")
+);
+const MInvite = defineAsyncComponent(
+  () => import("@/components/affiliate/invite/mobile/index.vue")
+);
+const Statistics = defineAsyncComponent(
+  () => import("@/components/affiliate/statistics/index.vue")
+);
+const MStatistics = defineAsyncComponent(
+  () => import("@/components/affiliate/statistics/mobile/index.vue")
+);
+const Forms = defineAsyncComponent(
+  () => import("@/components/affiliate/forms/index.vue")
+);
+const MForms = defineAsyncComponent(
+  () => import("@/components/affiliate/forms/mobile/index.vue")
+);
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -205,6 +225,7 @@ onMounted(() => {
     scale: 0.8;
   }
 }
+
 .m-home-loading {
   height: 100vh;
   position: relative;
@@ -237,6 +258,7 @@ onMounted(() => {
     }
   }
 }
+
 .affiliate-container {
   margin: -20px 40px;
   background: #211f31;

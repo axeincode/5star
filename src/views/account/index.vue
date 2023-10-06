@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue"
+import { defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
@@ -8,12 +9,20 @@ import { storeToRefs } from "pinia";
 import { type GetUserInfo } from "@/interface/user";
 import { authStore } from "@/store/auth";
 import { refferalStore } from '@/store/refferal';
-import UserInformation from "@/components/account/user_information/pc/index.vue";
-import MUserInformation from "@/components/account/user_information/mobile/index.vue";
-import GameProviders from "@/components/global/game_provider/index.vue";
-import SuspendAccount from "@/components/account/suspend_account/index.vue";
-import MSuspendAccount from "@/components/account/suspend_account/mobile/index.vue";
-import MDialog from "./dialog/index.vue";
+// import UserInformation from "@/components/account/user_information/pc/index.vue";
+// import MUserInformation from "@/components/account/user_information/mobile/index.vue";
+// import GameProviders from "@/components/global/game_provider/index.vue";
+// import SuspendAccount from "@/components/account/suspend_account/index.vue";
+// import MSuspendAccount from "@/components/account/suspend_account/mobile/index.vue";
+// import MDialog from "./dialog/index.vue";
+
+
+const UserInformation = defineAsyncComponent(() => import("@/components/account/user_information/pc/index.vue"));
+const MUserInformation = defineAsyncComponent(() => import("@/components/account/user_information/mobile/index.vue"));
+const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
+const SuspendAccount = defineAsyncComponent(() => import("@/components/account/suspend_account/index.vue"));
+const MSuspendAccount = defineAsyncComponent(() => import("@/components/account/suspend_account/mobile/index.vue"));
+const MDialog = defineAsyncComponent(() => import("./dialog/index.vue"));
 
 const { t } = useI18n();
 const { width } = useDisplay()

@@ -1,15 +1,29 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue";
+import { defineAsyncComponent } from "vue";
 import { appBarStore } from "@/store/appBar";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import Bonus from "@/components/bonus_transaction/bonus/index.vue";
-import MBonus from "@/components/bonus_transaction/bonus/mobile/index.vue";
-import Transaction from "@/components/bonus_transaction/transaction/index.vue";
-import GameProviders from "@/components/global/game_provider/index.vue";
+// import Bonus from "@/components/bonus_transaction/bonus/index.vue";
+// import MBonus from "@/components/bonus_transaction/bonus/mobile/index.vue";
+// import Transaction from "@/components/bonus_transaction/transaction/index.vue";
+// import GameProviders from "@/components/global/game_provider/index.vue";
+
+const Bonus = defineAsyncComponent(
+  () => import("@/components/bonus_transaction/bonus/index.vue")
+);
+const MBonus = defineAsyncComponent(
+  () => import("@/components/bonus_transaction/bonus/mobile/index.vue")
+);
+const Transaction = defineAsyncComponent(
+  () => import("@/components/bonus_transaction/transaction/index.vue")
+);
+const GameProviders = defineAsyncComponent(
+  () => import("@/components/global/game_provider/index.vue")
+);
 
 const { t } = useI18n();
 const { width } = useDisplay();

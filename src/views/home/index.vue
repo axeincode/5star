@@ -1,18 +1,18 @@
 <script lang="ts">
-import {
-  defineComponent,
-  toRefs,
-  reactive,
-  watch,
-  ref,
-  computed,
-  onMounted,
-  onUnmounted,
-  getCurrentInstance,
-} from "vue";
+import { defineComponent } from "vue";
+import { toRefs } from "vue";
+import { reactive } from "vue";
+import { watch } from "vue";
+import { ref } from "vue";
+import { computed } from "vue";
+import { onMounted } from "vue";
+import { onUnmounted } from "vue";
+import { getCurrentInstance } from "vue";
+import { defineAsyncComponent } from "vue";
+import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router'
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import GameProviders from "@/components/global/game_provider/index.vue";
+// import GameProviders from "@/components/global/game_provider/index.vue";
 import { type GetUserInfo } from "@/interface/user";
 // import { Carousel, Slide, Navigation } from "vue3-carousel";
 import icon_public_92 from "@/assets/public/svg/icon_public_92.svg";
@@ -47,8 +47,21 @@ import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 
+
+const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
+
 const { setAuthModalType } = authStore();
 const Dashboard = defineComponent({
+  async beforeRouteEnter(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded, next: any) {
+    await Promise.all([
+      import('@/views/vip/index.vue'),
+      import('@/views/affiliate/index.vue'),
+      import('@/views/bonus_transaction/index.vue'),
+      import('@/views/account/index.vue'),
+      import('@/views/game/index.vue'),
+    ])
+    next()
+  },
   components: {
     GameProviders,
     // Carousel,
