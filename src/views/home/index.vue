@@ -54,6 +54,7 @@ const { setAuthModalType } = authStore();
 const Dashboard = defineComponent({
   async beforeRouteEnter(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded, next: any) {
     await Promise.all([
+      import('@/layout/index.vue'),
       import('@/views/vip/index.vue'),
       import('@/views/affiliate/index.vue'),
       import('@/views/bonus_transaction/index.vue'),
@@ -3299,6 +3300,10 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
+  }
+
+  .v-progressive-image-loading {
+    height: 160px;
   }
 
   .v-progressive-image-loading:before {

@@ -68,6 +68,9 @@ const handleScroll = () => {
 </template>
 
 <style lang="scss">
+.v-application {
+  background: #31275c !important;
+}
 .appbar-position-fix {
   overflow: hidden !important;
   // position: fixed !important;

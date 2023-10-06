@@ -1852,6 +1852,16 @@ onMounted(async () => {
   }
 }
 
+.carousel__slide--prev {
+  opacity: 0.8;
+  transform: rotateY(-10deg) scale(0.9);
+}
+
+.carousel__slide--next {
+  opacity: 0.8;
+  transform: rotateY(10deg) scale(0.9);
+}
+
 .m-vip-carousel {
 }
 
