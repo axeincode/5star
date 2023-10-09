@@ -14,6 +14,7 @@ import { storeToRefs } from 'pinia';
 import { ElNotification, getPositionDataWithUnit } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import { useToast } from "vue-toastification";
+import * as clipboard from "clipboard-polyfill";
 
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
@@ -165,6 +166,8 @@ const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", imp
 
 const inviteItem = computed(() => {
     const { getInviteItem } = storeToRefs(inviteStore());
+    inviteList.value[0].content = getInviteItem.value.web_invite_url;
+    inviteList.value[1].content = getInviteItem.value.invite_code;
     return getInviteItem.value
 })
 
@@ -178,10 +181,11 @@ watch(slider, (newValue) => {
     }
 })
 
-const inviteUrlCopy = () => {
-    notificationText.value = "Successful replication"
-    notificationShow.value = !notificationShow.value;
-    if(notificationShow.value) {
+const inviteUrlCopy = (content: string) => {
+  clipboard.writeText(content).then(
+    () => {
+      console.log("Copied to clipboard!");
+      notificationText.value = "Successful replication"
       const toast = useToast();
       toast.success(notificationText.value, {
         timeout: 5000,
@@ -195,7 +199,11 @@ const inviteUrlCopy = () => {
         icon: SuccessIcon,
         rtl: false,
       });
+    },
+    (error) => {
+      console.error("Could not copy text: ", error);
     }
+  );
 }
 
 const closeBonusDialog = () => {
@@ -242,7 +250,7 @@ onMounted(async () => {
           <template v-slot:append>
             <v-btn
               icon=""
-              @click="inviteUrlCopy"
+              @click="inviteUrlCopy(item.content)"
               class="m-invite-url-copy-btn"
               bg-color="#353652"
               width="24"
@@ -1093,24 +1101,24 @@ onMounted(async () => {
 }
 
 .Vue-Toastification__container {
-  right: 0!important;
-  left: unset!important;;
-  width: 290px!important;
+  right: 0 !important;
+  left: unset !important;
+  width: 290px !important;
   margin-right: 37px;
-  height: 60px!important;
+  height: 60px !important;
   //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
-    align-items: center !important;
-    z-index: 1000000000 !important;
-    top: 70px;
-    right: -20px !important;
-    width: 320px !important;
-    height: 60px;
-    border: none;
-    border-radius: 16px 0px 0px 16px;
-    background: var(--bg-2, #181522);
-    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+  align-items: center !important;
+  z-index: 1000000000 !important;
+  top: 70px;
+  right: -20px !important;
+  width: 320px !important;
+  height: 60px;
+  border: none;
+  border-radius: 16px 0px 0px 16px;
+  background: var(--bg-2, #181522);
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
 .Vue-Toastification__toast-body {
@@ -1123,7 +1131,7 @@ onMounted(async () => {
   text-align: left;
 }
 
-.Vue-Toastification__close-button{
+.Vue-Toastification__close-button {
   top: 22px !important;
   background-image: url("@/assets/public/svg/icon_public_52.svg");
   background-repeat: no-repeat;

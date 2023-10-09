@@ -1,13 +1,16 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
 import { refferalStore } from "@/store/refferal";
+import { inviteStore } from "@/store/invite";
+import { storeToRefs } from "pinia";
 import Notification from "@/components/global/notification/index.vue";
 import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { useToast } from "vue-toastification";
+import * as clipboard from "clipboard-polyfill";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -16,6 +19,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
+const { dispatchUserInvite } = inviteStore();
 
 const invitedUser = ref<number>(28560);
 const earnMoney = ref<number>(85601479);
@@ -37,7 +41,7 @@ const checkIcon = ref<any>(
 const notificationText = ref<string>(t("refferal.copy_success_text"));
 
 const copyToClipboard = () => {
-  navigator.clipboard.writeText(siteUrl.value).then(
+  clipboard.writeText(inviteItem.value.web_invite_url).then(
     () => {
       console.log("Copied to clipboard!");
       const toast = useToast();
@@ -53,14 +57,40 @@ const copyToClipboard = () => {
         icon: SuccessIcon,
         rtl: false,
       });
-      notificationShow.value = !notificationShow.value;
-      // setRefferalDialogShow(false);
     },
     (error) => {
       console.error("Could not copy text: ", error);
     }
   );
+  // navigator.clipboard.writeText(siteUrl.value).then(
+  //   () => {
+  //     console.log("Copied to clipboard!");
+  //     const toast = useToast();
+  //     toast.success(notificationText.value, {
+  //       timeout: 3000,
+  //       closeOnClick: false,
+  //       pauseOnFocusLoss: false,
+  //       pauseOnHover: false,
+  //       draggable: false,
+  //       showCloseButtonOnHover: false,
+  //       hideProgressBar: true,
+  //       closeButton: "button",
+  //       icon: SuccessIcon,
+  //       rtl: false,
+  //     });
+  //     notificationShow.value = !notificationShow.value;
+  //     // setRefferalDialogShow(false);
+  //   },
+  //   (error) => {
+  //     console.error("Could not copy text: ", error);
+  //   }
+  // );
 };
+
+const inviteItem = computed(() => {
+  const { getInviteItem } = storeToRefs(inviteStore());
+  return getInviteItem.value;
+});
 
 const showMainDialog = () => {
   descriptionVisible.value = false;
@@ -79,7 +109,8 @@ const closeReferDialog = () => {
   setOverlayScrimShow(false);
 };
 
-onMounted(() => {
+onMounted(async () => {
+  await dispatchUserInvite();
   setTimeout(() => {
     refferalContainerHeight.value = 594;
   }, 800);
@@ -189,12 +220,14 @@ onMounted(() => {
             {{ t("refferal.dialog.body.text_1") }}
           </div>
           <div class="text-center mt-4 text-500-12 text-gray">
-            {{ t("refferal.dialog.body.text_2") }}{{ refferalCode
+            {{ t("refferal.dialog.body.text_2") }}{{ inviteItem.invite_code
             }}{{ t("refferal.dialog.body.text_3") }}
           </div>
           <div class="text-center mt-6 mx-6">
             <v-card theme="dark" color="#211F31" height="40">
-              <div class="text-400-14 text-gray mt-2">{{ siteUrl }}</div>
+              <div class="text-400-14 text-gray mt-2">
+                {{ inviteItem.web_invite_url }}
+              </div>
             </v-card>
           </div>
           <div class="text-center mt-8 mx-6">

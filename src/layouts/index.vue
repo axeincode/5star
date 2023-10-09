@@ -68,6 +68,9 @@ const handleScroll = () => {
 </template>
 
 <style lang="scss">
+.v-navigation-drawer {
+  background: #29253c !important;
+}
 .v-application {
   background: #31275c !important;
 }

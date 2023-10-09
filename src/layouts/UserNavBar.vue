@@ -556,7 +556,7 @@ onMounted(async () => {
 
 <style lang="scss">
 .nav-background {
-  background-color: #29253c !important;
+  background: #29253c !important;
   color: #7782aa !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -566,7 +566,7 @@ onMounted(async () => {
 }
 
 .user-nav-background {
-  background-color: #211f31 !important;
+  background: #211f31 !important;
   color: #7782aa !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;

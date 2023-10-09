@@ -5,6 +5,9 @@ import LoginHeader from "./Header.vue";
 import { authStore } from "@/store/auth";
 import { userStore } from "@/store/user";
 import { socketStore } from "@/store/socket";
+import { inviteStore } from "@/store/invite";
+import { refferalStore } from "@/store/refferal";
+import { appBarStore } from "@/store/appBar";
 import Notification from "@/components/global/notification/index.vue";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
@@ -30,8 +33,11 @@ const Login = defineComponent({
     const { dispatchUserProfile } = authStore();
     const { setAuthModalType } = authStore();
     const { dispatchUserBalance } = userStore();
+    const { setOverlayScrimShow } = appBarStore();
+    const { setRefferalDialogShow } = refferalStore();
     const { setToken } = authStore();
     const { dispatchSocketConnect } = socketStore();
+    const { dispatchUserInvite } = inviteStore();
     const { width } = useDisplay();
 
     // initiate component state
@@ -149,7 +155,10 @@ const Login = defineComponent({
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
+        // await dispatchUserInvite();
         await dispatchSocketConnect();
+        setOverlayScrimShow(false);
+        setRefferalDialogShow(true);
         const toast = useToast();
         toast.success(t("login.submit_result.success_text"), {
           timeout: 3000,
@@ -633,6 +642,22 @@ export default Login;
 
 .m-login-body-height {
   height: 613px !important;
+}
+
+// divider
+.m-divide-text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #414968;
+  position: relative;
+  top: 12px;
+  text-align: center;
+  width: 120px;
+  background-color: #2e274c;
+  margin: auto;
+  z-index: 1;
 }
 
 // close modal button
