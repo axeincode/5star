@@ -110,13 +110,13 @@ const closeReferDialog = () => {
 };
 
 onMounted(async () => {
-  await dispatchUserInvite();
   setTimeout(() => {
     refferalContainerHeight.value = 594;
   }, 800);
   setTimeout(() => {
     refferalContainerBackground.value = "#2E274C";
   }, 400);
+  await dispatchUserInvite();
 });
 </script>
 
