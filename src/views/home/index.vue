@@ -3042,15 +3042,15 @@ export default Dashboard;
               >
                 <v-col cols="3" class="py-1">
                   <img :src="item.rank" v-if="!isNumeric(item.rank)" width="22" />
-                  <p class="text-500-14 gray text-center" style="width: 27px" v-else>
+                  <p class="text-500-12 gray text-center" style="width: 27px" v-else>
                     {{ item.rank }}
                   </p>
                 </v-col>
                 <v-col cols="5" class="d-flex align-center py-1">
-                  <img :src="item.player.image" width="40" />
-                  <p class="text-500-14 gray">{{ item.player.name }}</p>
+                  <img :src="item.player.image" width="38" />
+                  <p class="text-500-12 gray">{{ item.player.name }}</p>
                 </v-col>
-                <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{
+                <v-col cols="4" class="py-1 text-500-12 color-01983A text-center">{{
                   item.profit
                 }}</v-col>
               </v-row>
@@ -3091,14 +3091,18 @@ export default Dashboard;
               <swiper-slide v-for="(item, index) in recordList" :key="index">
                 <v-row class="mx-4 mt-1 align-center">
                   <v-col cols="4" class="py-1 d-flex align-center">
-                    <img :src="item.game.image" width="22" />
-                    <p class="text-500-14 gray text-center ml-2">{{ item.game.name }}</p>
+                    <img :src="item.game.image" width="20" />
+                    <p
+                      class="text-500-12 gray text-center ml-2 home-game-record-name-text"
+                    >
+                      {{ item.game.name }}
+                    </p>
                   </v-col>
                   <v-col cols="4" class="d-flex align-center py-1">
-                    <img :src="item.player.image" width="40" />
-                    <p class="text-500-14 gray">{{ item.player.name }}</p>
+                    <img :src="item.player.image" width="38" />
+                    <p class="text-500-12 gray">{{ item.player.name }}</p>
                   </v-col>
-                  <v-col cols="4" class="py-1 text-500-14 color-01983A text-center">{{
+                  <v-col cols="4" class="py-1 text-500-12 color-01983A text-center">{{
                     item.amount
                   }}</v-col>
                 </v-row>
@@ -3188,6 +3192,12 @@ export default Dashboard;
 .v-progressive-image-main {
   width: 100%;
   height: 100%;
+}
+
+.home-game-record-name-text {
+  text-overflow: ellipsis;
+  word-wrap: initial;
+  overflow-x: hidden;
 }
 
 .m-home-loading {

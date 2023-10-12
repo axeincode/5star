@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import ValidationBox from "@/components/Signup/ValidationBox.vue";
 import { storeToRefs } from "pinia";
 import { authStore } from "@/store/auth";
+import { vipStore } from "@/store/vip";
 import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
@@ -23,6 +24,8 @@ const { t } = useI18n();
 const emit = defineEmits<{ (e: "close"): void }>();
 const { dispatchUpdateUserInfo } = authStore();
 const { dispatchUserProfile } = authStore();
+const { dispatchVipInfo } = vipStore();
+const { dispatchVipLevels } = vipStore();
 
 const userName = ref<string>("");
 const isShowUsernameValidation = ref<boolean>(false);
@@ -107,6 +110,8 @@ const submitNickName = async () => {
   });
   if (success.value) {
     await dispatchUserProfile();
+    await dispatchVipInfo();
+    await dispatchVipLevels();
     const toast = useToast();
     toast.success("added name successfully!", {
       timeout: 3000,

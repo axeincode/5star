@@ -127,6 +127,10 @@ const mDialogHide = () => {
 
 const goBeforePage = () => {
   router.go(-1);
+  setTimeout(() => {
+    activeMenuIndex.value = route.query.index ? route.query.index : 0
+    setActiveAccountIndex(activeMenuIndex.value)
+  }, 500)
 }
 
 watch(activeAccountIndex, (value) => {
@@ -148,6 +152,7 @@ onMounted(() => {
     mobileDialogVisible.value = true;
   }
   activeMenuIndex.value = route.query.index ? route.query.index : 0
+  setActiveAccountIndex(activeMenuIndex.value)
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
