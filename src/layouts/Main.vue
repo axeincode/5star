@@ -721,7 +721,8 @@ onMounted(() => {
 }
 
 .mobile-login-dialog-position {
-  position: sticky !important;
+  // position: sticky !important;
+  position: absolute !important;
   margin: 0 !important;
   height: 0px !important;
   bottom: 0 !important;

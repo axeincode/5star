@@ -215,7 +215,7 @@ const MSignup = defineComponent({
     };
 
     const handleOnPasswordInputBlur = (): void => {
-      state.isShowPasswordValidation = false;
+      // state.isShowPasswordValidation = false;
     };
 
     const handleOnUserNameInputFocus = (): void => {
@@ -614,7 +614,7 @@ export default MSignup;
           <v-btn
             class="mt-8 mx-3"
             :class="isFormDataReady ? 'm-signup-btn' : 'm-signup-disabled-btn'"
-            width="-webkit-fill-available"
+            width="94%"
             height="48px"
             :loading="loading"
             :onclick="handleSignupFormSubmit"
@@ -669,7 +669,7 @@ export default MSignup;
         <v-row style="margin-top: 100px">
           <v-btn
             class="ma-3 button-bright m-signup-continue-btn"
-            width="-webkit-fill-available"
+            width="94%"
             height="48px"
             @click="handleClickContinueButton"
           >
@@ -679,7 +679,7 @@ export default MSignup;
         <v-row class="mt-4">
           <v-btn
             class="ma-3 button-dark m-signup-cancel-btn"
-            width="-webkit-fill-available"
+            width="94%"
             height="48px"
             @click="cancelConfirm"
           >

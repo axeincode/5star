@@ -10,6 +10,7 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { socketStore } from "@/store/socket";
+import { vipStore } from "@/store/vip";
 import { useToast } from "vue-toastification";
 
 const Login = defineComponent({
@@ -27,6 +28,8 @@ const Login = defineComponent({
     const { setToken } = authStore();
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
+    const { dispatchVipInfo } = vipStore();
+    const { dispatchVipLevels } = vipStore();
 
     // initiate component state
     const state = reactive({
@@ -84,17 +87,17 @@ const Login = defineComponent({
       // state.notificationText = t("login.forgotPasswordPage.notification");
 
       const toast = useToast();
-      toast.success(t("login.forgotPasswordPage.notification"), { 
-          timeout: 3000,
-          closeOnClick: false,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          draggable: false,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: SuccessIcon,
-          rtl: false,
+      toast.success(t("login.forgotPasswordPage.notification"), {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
       });
       state.currentPage = state.PAGE_TYPE.LOGIN_FORM;
     };
@@ -119,6 +122,8 @@ const Login = defineComponent({
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
+        await dispatchVipInfo();
+        await dispatchVipLevels();
         await dispatchSocketConnect();
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
@@ -128,17 +133,17 @@ const Login = defineComponent({
         // state.notificationText = t("login.submit_result.success_text");
 
         const toast = useToast();
-        toast.success(t("login.submit_result.success_text"), { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: SuccessIcon,
-            rtl: false,
+        toast.success(t("login.submit_result.success_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
         });
         setTimeout(() => {
           setAuthModalType("");
@@ -153,17 +158,17 @@ const Login = defineComponent({
         // state.notificationText = t("login.submit_result.err_text");
 
         const toast = useToast();
-        toast.success( t("login.submit_result.err_text"), { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: WarningIcon,
-            rtl: false,
+        toast.success(t("login.submit_result.err_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
         });
       }
 

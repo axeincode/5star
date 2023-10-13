@@ -1225,12 +1225,13 @@ const Dashboard = defineComponent({
     const gameFilterBtnFlag = ref<boolean>(false);
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
+      console.log(gamFilterBtn, t("home.button.all_game"));
       if (gameFilterBtnFlag.value) {
         return;
       }
       gameFilterBtnFlag.value = true;
       currentPage.value = 1;
-      selectedGameFilterBtn.value = gamFilterBtn;
+      selectedGameFilterBtn.value = gamFilterBtn == "original" ? t("home.button.all_game") : gamFilterBtn;
       switch (selectedGameFilterBtn.value) {
         case t("home.button.all_game"):
           gameFilterIconColor1.value = "#FFFFFF";
@@ -1823,60 +1824,6 @@ export default Dashboard;
     </v-navigation-drawer>
 
     <div :class="searchDialogShow ? 'home-bg-blur' : ''">
-      <!-- image carousel -->
-
-      <!-- <v-carousel
-        cycle
-        interval="6000"
-        height="247"
-        hide-delimiter-background
-        :hide-delimiters="slides.length <= 1"
-        show-arrows="hover"
-      >
-        <template v-slot:prev="{ props }">
-          <v-btn
-            class="button-carousel text-none prev-btn-position"
-            variant="elevated"
-            icon="mdi-chevron-left"
-            @click="props.onClick"
-            v-if="slides.length > 1 && mobileWidth > 600"
-          >
-          </v-btn>
-        </template>
-        <template v-slot:next="{ props }">
-          <v-btn
-            class="button-carousel text-none next-btn-position"
-            variant="elevated"
-            icon="mdi-chevron-right"
-            @click="props.onClick"
-            v-if="slides.length > 1 && mobileWidth > 600"
-          >
-          </v-btn>
-        </template>
-        <v-carousel-item v-for="(slide, slideIndex) in carouselSlides" :key="slideIndex">
-          <v-sheet color="#31275C" height="100%" tile>
-            <v-row align="center" justify="center" class="mx-2 relative">
-              <v-col
-                v-for="(i, index) in 3"
-                :key="index"
-                cols="12"
-                sm="6"
-                md="6"
-                lg="4"
-                xl="4"
-                :class="mobileWidth < 600 ? 'px-0' : 'px-2'"
-              >
-                <img
-                  :src="slide[index]"
-                  class="slider-img-width"
-                  :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
-                />
-              </v-col>
-            </v-row>
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel> -->
-
       <div class="relative home-swiper" v-if="mobileWidth > 600">
         <swiper
           :modules="modules"
@@ -2240,138 +2187,6 @@ export default Dashboard;
                 {{ item.name }}
               </v-btn>
             </v-slide-group-item>
-            <!-- <v-slide-group-item>
-              <v-btn
-                class="mr-3 text-none"
-                width="112"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.favorite')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.favorite'))"
-              >
-                <inline-svg
-                  :src="icon_public_36"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform2"
-                ></inline-svg>
-                {{ t("home.button.favorite") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-3 text-none"
-                width="140"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.recently_played')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.recently_played'))"
-              >
-                <inline-svg
-                  :src="icon_public_35"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform3"
-                ></inline-svg>
-                {{ t("home.button.recently_played") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-3 text-none"
-                width="136"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.original_game')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.original_game'))"
-              >
-                <inline-svg
-                  :src="icon_public_37"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform4"
-                ></inline-svg>
-                {{ t("home.button.original_game") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-3 text-none"
-                width="112"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.pg_soft')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.pg_soft'))"
-              >
-                <inline-svg
-                  :src="icon_public_95"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform5"
-                ></inline-svg>
-                {{ t("home.button.pg_soft") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-3 text-none"
-                width="112"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.slots')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.slots'))"
-              >
-                <inline-svg
-                  :src="icon_public_38"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform6"
-                ></inline-svg>
-                {{ t("home.button.slots") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-3 text-none"
-                width="112"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.live_casino')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.live_casino'))"
-              >
-                <inline-svg
-                  :src="icon_public_39"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform7"
-                ></inline-svg>
-                {{ t("home.button.live_casino") }}
-              </v-btn>
-            </v-slide-group-item> -->
           </v-slide-group>
         </template>
       </v-row>
@@ -2387,6 +2202,7 @@ export default Dashboard;
           :class="mobileWidth > 600 ? ' mt-12' : ' mt-4'"
           v-if="item.games.length > 0"
           style="margin-bottom: 6px !important"
+          @click="handleGameFilterBtn(item.slug)"
         >
           <inline-svg
             :src="item.image"
@@ -2683,172 +2499,12 @@ export default Dashboard;
         </template>
       </template>
 
-      <!-- original games -->
-
-      <!-- <v-row class="ml-4 mt-6 mb-1 original_game_text">
-        {{ t("home.original_games") }}
-      </v-row>
-      <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-        <div
-          style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-          v-for="(item, index) in originalGames"
-          :key="index"
-        >
-          <v-img :src="item" class="original-game-img-width" />
-        </div>
-      </v-row>
-      <v-row class="mx-1 mt-0" v-else>
-        <v-col
-          cols="4"
-          lg="2"
-          md="2"
-          sm="3"
-          class="px-1"
-          v-for="(item, index) in mOriginalGames"
-          :key="index"
-        >
-          <img
-            v-lazy="item"
-            alt="Lazy loaded image"
-            :data-src="item"
-            class="original-game-img-width"
-          />
-        </v-col>
-      </v-row>
-      <v-row
-        class="justify-center"
-        :class="mobileWidth < 600 ? 'mt-6 mx-3 mb-0' : 'mt-8 ml-4'"
-      >
-        <v-btn
-          class="text-none more-btn-color"
-          variant="outlined"
-          :width="mobileWidth < 600 ? '100%' : 164"
-          :height="mobileWidth < 600 ? 41 : 48"
-        >
-          {{ t("home.more") }}
-        </v-btn>
-      </v-row> -->
-
-      <!-- principal games -->
-
-      <!-- <v-row class="ml-4 mt-7 mb-0 original_game_text">
-        {{ t("home.principal") }}
-      </v-row>
-      <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-        <div
-          style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-          v-for="(principalItem, principalIndex) in principalGames"
-          :key="principalIndex"
-        >
-          <v-img :src="principalItem" class="original-game-img-width" />
-        </div>
-      </v-row>
-      <v-row class="mx-1 mt-2" v-else>
-        <v-col
-          cols="4"
-          lg="2"
-          md="2"
-          sm="3"
-          class="px-1"
-          v-for="(principalItem, principalIndex) in mPrincipalGames"
-          :key="principalIndex"
-        >
-          <v-img :src="principalItem" class="original-game-img-width" />
-        </v-col>
-      </v-row>
-      <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
-        <v-btn
-          :ripple="false"
-          class="text-none more-btn-color"
-          variant="outlined"
-          :width="mobileWidth < 600 ? '100%' : 164"
-          :height="mobileWidth < 600 ? 41 : 48"
-        >
-          {{ t("home.more") }}
-        </v-btn>
-      </v-row> -->
-
       <!-------------------- game providers -------------->
 
       <GameProviders />
 
-      <!-------------------- slot games -------------->
-
-      <!-- <v-row class="ml-4 mt-6 mb-2 original_game_text">
-        {{ t("home.slots") }}
-      </v-row>
-      <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-        <div
-          style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-          v-for="(slotItem, slotIndex) in slots"
-          :key="slotIndex"
-        >
-          <v-img :src="slotItem" class="original-game-img-width" />
-        </div>
-      </v-row>
-      <v-row class="mx-1 mt-2" v-else>
-        <v-col
-          cols="4"
-          lg="2"
-          md="2"
-          sm="3"
-          class="px-1"
-          v-for="(slotItem, slotIndex) in mSlots"
-          :key="slotIndex"
-        >
-          <v-img :src="slotItem" class="original-game-img-width" />
-        </v-col>
-      </v-row>
-      <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
-        <v-btn
-          class="text-none more-btn-color"
-          variant="outlined"
-          :width="mobileWidth < 600 ? '100%' : 164"
-          :height="mobileWidth < 600 ? 41 : 48"
-        >
-          {{ t("home.more") }}
-        </v-btn>
-      </v-row> -->
-
-      <!-------------------- live casino games -------------->
-
-      <!-- <v-row class="ml-4 mt-6 mb-2 original_game_text">
-        {{ t("home.live_casino") }}
-      </v-row>
-      <v-row class="ml-4 mr-2 mt-2" v-if="mobileWidth > 600">
-        <div
-          style="flex: 0 0 14.2857%; max-width: 14.2857%; padding-right: 8px"
-          v-for="(liveCasinoItem, liveCasinoIndex) in liveCasinos"
-          :key="liveCasinoIndex"
-        >
-          <v-img :src="liveCasinoItem" class="original-game-img-width" />
-        </div>
-      </v-row>
-      <v-row class="mx-1 mt-2" v-else>
-        <v-col
-          cols="4"
-          lg="2"
-          md="2"
-          sm="3"
-          class="px-1"
-          v-for="(liveCasinoItem, liveCasinoIndex) in mLiveCasinos"
-          :key="liveCasinoIndex"
-        >
-          <v-img :src="liveCasinoItem" class="original-game-img-width" />
-        </v-col>
-      </v-row>
-      <v-row class="justify-center" :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'">
-        <v-btn
-          class="text-none more-btn-color"
-          variant="outlined"
-          :width="mobileWidth < 600 ? '100%' : 164"
-          :height="mobileWidth < 600 ? 41 : 48"
-        >
-          {{ t("home.more") }}
-        </v-btn>
-      </v-row> -->
-
       <!--------------------- Game History ---------------------->
+
       <v-row class="mx-2 mt-6" v-if="mobileWidth > 600">
         <v-col cols="12" md="6">
           <div class="d-flex align-center">

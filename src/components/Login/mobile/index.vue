@@ -6,6 +6,7 @@ import { authStore } from "@/store/auth";
 import { userStore } from "@/store/user";
 import { socketStore } from "@/store/socket";
 import { inviteStore } from "@/store/invite";
+import { vipStore } from "@/store/vip";
 import { refferalStore } from "@/store/refferal";
 import { appBarStore } from "@/store/appBar";
 import Notification from "@/components/global/notification/index.vue";
@@ -38,6 +39,8 @@ const Login = defineComponent({
     const { setToken } = authStore();
     const { dispatchSocketConnect } = socketStore();
     const { dispatchUserInvite } = inviteStore();
+    const { dispatchVipInfo } = vipStore();
+    const { dispatchVipLevels } = vipStore();
     const { width } = useDisplay();
 
     // initiate component state
@@ -156,6 +159,8 @@ const Login = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         // await dispatchUserInvite();
+        await dispatchVipInfo();
+        await dispatchVipLevels();
         await dispatchSocketConnect();
         setOverlayScrimShow(false);
         setRefferalDialogShow(true);
@@ -386,7 +391,7 @@ export default Login;
         <v-row style="margin-top: 116px">
           <v-btn
             class="ma-3 button-bright m-signin-btn-text"
-            width="-webkit-fill-available"
+            width="94%"
             height="48px"
             :loading="loading"
             :disabled="!isFormDataReady"
@@ -493,7 +498,7 @@ export default Login;
         <v-row style="margin-top: 200px">
           <v-btn
             class="ma-3 button-bright m-signin-btn-text"
-            width="-webkit-fill-available"
+            width="94%"
             height="48"
             autocapitalize="off"
             @click="handleForgotPassword"

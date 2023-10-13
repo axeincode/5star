@@ -277,8 +277,8 @@ onMounted(() => {
   margin: -60px 0px;
   background: #211f31;
   padding-bottom: 10px;
-  margin-bottom: 1px;
   border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .affiliate-tabs {

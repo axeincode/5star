@@ -69,7 +69,7 @@ export default ValidationBox;
         <v-icon class="mr-2 validation-item-icon">
           {{ validationList[n - 1] ? "mdi-check-circle" : "mdi-close-circle" }}
         </v-icon>
-        <p>{{ descriptionList[n - 1] }}</p>
+        <p class="m-validation-description-text">{{ descriptionList[n - 1] }}</p>
       </v-row>
     </v-row>
   </div>
@@ -93,6 +93,12 @@ export default ValidationBox;
 
   .validation-list-item {
     font-size: 10px !important;
+  }
+
+  .m-validation-description-text {
+    max-width: 238px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 }
 
