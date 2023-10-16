@@ -114,32 +114,30 @@ onMounted(() => {
     temporary
     :scrim-opacity="0.6"
     :touchless="true"
-    class = "m-bonus-nav"
-    :class="mobileWidth < 600 ?'m-bonus-background' : 'm-bonus-hide'"
+    class="m-bonus-nav"
+    :class="mobileWidth < 600 ? 'm-bonus-background' : 'm-bonus-hide'"
     location="bottom"
     v-model="drawer"
-    style = "
-    background-color:transparent!important;
-    height: 593px!important;
-    box-shadow: none!important;
-    border: none!important;"
+    style="
+      background-color: transparent !important;
+      height: 593px !important;
+      box-shadow: none !important;
+      border: none !important;
+    "
     disable-route-watcher
   >
     <div class="d-flex m-bonus-dashboard-header" @click="handleClose">
       <v-btn>
         <div class="m-bonus-dashboard-title">Bonus Dashboard</div>
-          <div class="m-bonus-dashboard-img">
-            
-              <img
-                src="@/assets/public/image/img_public_43.png"
-                width="95"
-                height="73"
-                style="float: right"
-              />
-            
-          </div>
+        <div class="m-bonus-dashboard-img">
+          <img
+            src="@/assets/public/image/img_public_43.png"
+            width="95"
+            height="73"
+            style="float: right"
+          />
+        </div>
       </v-btn>
-      
     </div>
 
     <div class="m-bonus-btns">
@@ -178,31 +176,26 @@ onMounted(() => {
     <div class="m-nav-drawer-content1">
       <div class="m-recharge-bonus-body">
         <v-row class="m-recharge-bonus-description">
-        
           <v-col cols="9" class="m-recharge-col">
-            <div
-              class="m-recharge-col-title"
-            >
-              <p class="text-800-16 white mb-2" style="width: 180px; text-align: center;">
-                {{ t('bonus.dashboard_recharge_title1') }}
+            <div class="m-recharge-col-title">
+              <p class="text-800-16 white mb-2" style="width: 180px; text-align: center">
+                {{ t("bonus.dashboard_recharge_title1") }}
               </p>
-              
-              <p class="text-800-16 white " style="margin-bottom: 14px;">
-                {{ t('bonus.dashboard_recharge_title2') }}
+
+              <p class="text-800-16 white" style="margin-bottom: 14px">
+                {{ t("bonus.dashboard_recharge_title2") }}
               </p>
             </div>
-            <div
-              class=""
-            >
-              <p class="text-600-8 white " style="margin-bottom: 6px;">
-                {{ t('bonus.dashboard_recharge_content1') }}
+            <div class="">
+              <p class="text-600-8 white" style="margin-bottom: 6px">
+                {{ t("bonus.dashboard_recharge_content1") }}
               </p>
-              <p class="text-600-8 white ">
-                {{ t('bonus.dashboard_recharge_content2') }}
+              <p class="text-600-8 white">
+                {{ t("bonus.dashboard_recharge_content2") }}
               </p>
             </div>
           </v-col>
-          <v-col cols="3" class="m-recharge-col m-recharge-col-img ">
+          <v-col cols="3" class="m-recharge-col m-recharge-col-img">
             <img
               src="@/assets/public/image/img_public_44.png"
               width="81"
@@ -211,9 +204,9 @@ onMounted(() => {
             />
           </v-col>
         </v-row>
-        <v-row style="margin-top: 16px; height: 40px" class="d-flex">
+        <v-row style="margin-top: 16px; height: 40px; align-items: center" class="d-flex">
           <v-col cols="6" class="m-recharge-col m-recharge-col-btn1">
-            <v-btn class="m-recharge-more-btn" width="95" height="16">
+            <v-btn class="m-recharge-more-btn">
               <div class="d-flex" style="font-size: 12px; color: rgba(18, 255, 118, 1)">
                 <p>View details</p>
                 <img
@@ -226,8 +219,8 @@ onMounted(() => {
             </v-btn>
           </v-col>
           <v-col cols="6" class="m-recharge-col m-recharge-col-btn2">
-            <div style="float: right; margin-right: 46px">
-              <v-btn class="m-recharge-more-btn" width="95" height="16">
+            <div style="float: right">
+              <v-btn class="m-recharge-more-btn">
                 <div
                   class="d-flex justify-center"
                   style="
@@ -382,9 +375,9 @@ onMounted(() => {
             />
           </v-col>
         </v-row>
-        <v-row style="margin-top: 16px; height: 40px" class="d-flex">
+        <v-row style="margin-top: 16px; height: 40px; align-items: center" class="d-flex">
           <v-col cols="6" class="m-recharge-col m-recharge-col-btn1">
-            <v-btn class="m-recharge-more-btn" width="95" height="16">
+            <v-btn class="m-recharge-more-btn">
               <div class="d-flex" style="font-size: 12px; color: rgba(18, 255, 118, 1)">
                 <p>View details</p>
                 <img
@@ -397,8 +390,8 @@ onMounted(() => {
             </v-btn>
           </v-col>
           <v-col cols="6" class="m-recharge-col m-recharge-col-btn2">
-            <div style="float: right; margin-right: 46px">
-              <v-btn class="m-recharge-more-btn" width="95" height="16">
+            <div style="float: right">
+              <v-btn class="m-recharge-more-btn">
                 <div
                   class="d-flex justify-center"
                   style="
@@ -420,16 +413,15 @@ onMounted(() => {
           </v-col>
         </v-row>
       </div>
-      <div style="height: 100px; background: rgba(41, 37, 60, 1);"></div>
+      <div style="height: 100px; background: rgba(41, 37, 60, 1)"></div>
     </div>
-    
   </v-navigation-drawer>
 </template>
 
-<style lang="scss" >
+<style lang="scss">
 .m-bonus-nav {
-  .v-navigation-drawer__content{
-    overflow-y: hidden!important;
+  .v-navigation-drawer__content {
+    overflow-y: hidden !important;
   }
 }
 
@@ -531,9 +523,9 @@ onMounted(() => {
   padding: 0px !important;
 }
 .m-recharge-col-btn1 {
-  margin-top: auto !important;
-  margin-bottom: auto !important;
-  padding-left: 16px !important;
+  // margin-top: auto !important;
+  // margin-bottom: auto !important;
+  // padding-left: 16px !important;
 }
 
 .m-bonus-dashboard-title {
@@ -552,11 +544,9 @@ onMounted(() => {
   position: relative;
   top: 0px;
   margin-left: 27px;
-
-  
 }
 .m-bonus-dashboard-header {
-  .v-btn{
+  .v-btn {
     background: transparent;
     height: fit-content;
     box-shadow: none;

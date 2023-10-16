@@ -67,6 +67,9 @@ const errMessage = computed(() => {
   return getErrMessage.value;
 });
 
+// computed variables
+const isFormDataReady = computed((): boolean => validateUserName());
+
 const userNameValidationList = computed((): boolean[] => {
   const username = userName.value;
   // 2-20 characters in length
@@ -104,6 +107,10 @@ const getSwiperRef = (swiperInstance: any) => {
 };
 
 const submitNickName = async () => {
+  if (!validateUserName()) {
+    isShowUsernameValidation.value = true;
+    return;
+  }
   await dispatchUpdateUserInfo({
     name: userName.value,
     avatar: selectedAvatarItem.value,
@@ -201,10 +208,9 @@ onMounted(() => {
     </div>
     <v-row class="mx-5 mt-5">
       <v-btn
-        class="button-bright m-signup-confirm-btn"
+        :class="isFormDataReady ? 'm-signup-btn' : 'm-signup-disabled-btn'"
         width="-webkit-fill-available"
         height="48px"
-        :disabled="!validateUserName()"
         @click="submitNickName"
       >
         {{ t("signup.displayNamePage.submit") }}
@@ -346,6 +352,33 @@ onMounted(() => {
   }
 }
 
+.m-signup-btn {
+  background: #32cfec;
+
+  .v-btn__content {
+    text-align: center;
+    font-family: "Inter";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}
+.m-signup-disabled-btn {
+  border-radius: 12px;
+  background: var(--Secondary-Button, #353652);
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+  .v-btn__content {
+    color: #ffffff;
+    text-align: center;
+    font-family: "Inter";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}
 .m-signup-displayname {
   transform-origin: top !important;
 

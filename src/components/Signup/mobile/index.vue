@@ -215,7 +215,7 @@ const MSignup = defineComponent({
     };
 
     const handleOnPasswordInputBlur = (): void => {
-      // state.isShowPasswordValidation = false;
+      state.isShowPasswordValidation = false;
     };
 
     const handleOnUserNameInputFocus = (): void => {

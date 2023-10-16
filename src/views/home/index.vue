@@ -661,6 +661,12 @@ const Dashboard = defineComponent({
     const moreLoading = ref<boolean>(false);
     const moreIndex = ref<number>(0);
 
+    // get Token
+    const token = computed(() => {
+      const { getToken } = storeToRefs(authStore());
+      return getToken.value;
+    });
+
     const refferalAppBarShow = computed(() => {
       const { getRefferalAppBarShow } = storeToRefs(refferalStore());
       return getRefferalAppBarShow.value;
@@ -1585,7 +1591,9 @@ const Dashboard = defineComponent({
         }
       });
 
-      await dispatchSocketConnect();
+      if (token.value != undefined) {
+        await dispatchSocketConnect();
+      }
       await dispatchGameCategories("?type=paging");
       gameGroupBtnList.value = gameCategories.value;
       gameGroupBtnList.value.map((item) => {
