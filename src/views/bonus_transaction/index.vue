@@ -10,7 +10,7 @@ import { useDisplay } from "vuetify";
 // import Bonus from "@/components/bonus_transaction/bonus/index.vue";
 // import MBonus from "@/components/bonus_transaction/bonus/mobile/index.vue";
 // import Transaction from "@/components/bonus_transaction/transaction/index.vue";
-// import GameProviders from "@/components/global/game_provider/index.vue";
+import GameProviders from "@/components/global/game_provider/index.vue";
 
 const Bonus = defineAsyncComponent(
   () => import("@/components/bonus_transaction/bonus/index.vue")
@@ -21,9 +21,9 @@ const MBonus = defineAsyncComponent(
 const Transaction = defineAsyncComponent(
   () => import("@/components/bonus_transaction/transaction/index.vue")
 );
-const GameProviders = defineAsyncComponent(
-  () => import("@/components/global/game_provider/index.vue")
-);
+// const GameProviders = defineAsyncComponent(
+//   () => import("@/components/global/game_provider/index.vue")
+// );
 
 const { t } = useI18n();
 const { width } = useDisplay();

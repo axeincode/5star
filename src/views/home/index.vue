@@ -1225,12 +1225,15 @@ const Dashboard = defineComponent({
         setAuthModalType('login');
       }
 
-
     };
 
     const gameFilterBtnFlag = ref<boolean>(false);
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       console.log(gamFilterBtn, t("home.button.all_game"));
       if (gameFilterBtnFlag.value) {
         return;
@@ -1825,7 +1828,12 @@ export default Dashboard;
       class="m-search-bar"
       temporary
       :touchless="true"
-      :style="{ height: 'unset', top: '0px', zIndex: 300000, background: 'unset' }"
+      :style="{
+        height: 'unset',
+        top: '0px',
+        zIndex: 300000,
+        background: 'unset !important',
+      }"
       v-if="mobileWidth < 600"
     >
       <MSearch :searchDialogShow="searchDialogShow" />
@@ -2100,10 +2108,10 @@ export default Dashboard;
         </template>
         <template v-else>
           <v-slide-group
+            v-model="selectedGameFilterBtn"
             class="mt-4 mb-0"
             show-arrows
             style="
-              touch-action: none;
               margin-left: 0px !important;
               margin-right: 0px !important;
               background: none !important;
@@ -2132,7 +2140,11 @@ export default Dashboard;
                 {{ t("home.button.all_game") }}
               </v-btn>
             </v-slide-group-item>
-            <v-slide-group-item v-for="(item, index) in gameGroupBtnList" :key="index">
+            <v-slide-group-item
+              v-for="(item, index) in gameGroupBtnList"
+              :key="index"
+              :value="item.slug"
+            >
               <v-btn
                 class="mr-3 text-none"
                 width="136"

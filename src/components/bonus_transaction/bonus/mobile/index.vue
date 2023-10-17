@@ -340,13 +340,13 @@ onMounted(async () => {
 
 .m-bonus-rate {
   position: absolute;
-  top: 4px;
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
   font-family: Haettenschweiler;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 400;
   // line-height: normal;

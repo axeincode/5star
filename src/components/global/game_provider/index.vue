@@ -66,4 +66,12 @@ const mobileWidth = computed(() => {
   width: 100%;
   cursor: pointer;
 }
+@media (max-width: 600px) {
+  .v-slide-group__prev {
+    display: none !important;
+  }
+  .v-slide-group__next {
+    display: none !important;
+  }
+}
 </style>
