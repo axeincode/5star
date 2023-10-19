@@ -188,20 +188,6 @@ onMounted(async () => {
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
               <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.id") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border1">
-              <div style="width: 50px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.type") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border1">
-              <div style="width: 100px; margin-left: 16px; margin-right: 16px">
                 {{ t("transaction.transactions.amount") }}
               </div>
             </div>
@@ -210,6 +196,20 @@ onMounted(async () => {
             <div class="forms-table-border1">
               <div style="width: 90px; margin-left: 20px; margin-right: 20px">
                 {{ t("transaction.game_history.status") }}
+              </div>
+            </div>
+          </th>
+          <th class="text-700-12 black text-center">
+            <div class="forms-table-border1">
+              <div style="margin-left: 16px; margin-right: 16px">
+                {{ t("transaction.transactions.type") }}
+              </div>
+            </div>
+          </th>
+          <th class="text-700-12 black text-center">
+            <div class="forms-table-border1">
+              <div style="width: 100px; margin-left: 16px; margin-right: 16px">
+                {{ t("transaction.transactions.id") }}
               </div>
             </div>
           </th>

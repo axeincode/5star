@@ -136,21 +136,21 @@ const fixPositionShow = computed(() => {
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
               <div style="width: 90px; margin-left: 20px; margin-right: 20px">
-                {{ t("transaction.game_history.multilier") }}
+                {{ t("transaction.game_history.status") }}
               </div>
             </div>
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 100px; margin-left: 20px; margin-right: 20px">
-                {{ t("transaction.game_history.betId") }}
+              <div style="width: 120px; margin-left: 20px; margin-right: 20px">
+                {{ t("transaction.game_history.profit") }}
               </div>
             </div>
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
               <div style="width: 90px; margin-left: 20px; margin-right: 20px">
-                {{ t("transaction.game_history.status") }}
+                {{ t("transaction.game_history.multilier") }}
               </div>
             </div>
           </th>
@@ -159,8 +159,8 @@ const fixPositionShow = computed(() => {
             style="border-radius: 0px 8px 8px 0px"
           >
             <div class="forms-table-border2">
-              <div style="width: 120px; margin-left: 20px; margin-right: 20px">
-                {{ t("transaction.game_history.profit") }}
+              <div style="width: 100px; margin-left: 20px; margin-right: 20px">
+                {{ t("transaction.game_history.betId") }}
               </div>
             </div>
           </th>
@@ -238,18 +238,6 @@ const fixPositionShow = computed(() => {
             class="m-bonus-transaction-table-body-cells"
             style="padding-top: 21px !important; padding-bottom: 21px !important"
           >
-            {{ item.multilier }}
-          </td>
-          <td
-            class="m-bonus-transaction-table-body-cells"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
-            {{ item.betId }}
-          </td>
-          <td
-            class="m-bonus-transaction-table-body-cells"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
-          >
             {{ item.status }}
           </td>
           <td
@@ -262,6 +250,18 @@ const fixPositionShow = computed(() => {
             :class="item.status == 'win' ? 'color-01983A' : 'color-D42763'"
           >
             {{ item.profit }}
+          </td>
+          <td
+            class="m-bonus-transaction-table-body-cells"
+            style="padding-top: 21px !important; padding-bottom: 21px !important"
+          >
+            {{ item.multilier }}
+          </td>
+          <td
+            class="m-bonus-transaction-table-body-cells"
+            style="padding-top: 21px !important; padding-bottom: 21px !important"
+          >
+            {{ item.betId }}
           </td>
         </tr>
       </tbody>

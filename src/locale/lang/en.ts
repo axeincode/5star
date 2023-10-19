@@ -260,7 +260,9 @@ export const lang: langType = {
     casino: "Casino",
     share: "Bonus",
     sport: "Sport",
-    mail: "Mail"
+    mail: "Mail",
+    reward: "Reward",
+    search: "Search"
   },
   deposit_dialog: {
     deposit_info: {

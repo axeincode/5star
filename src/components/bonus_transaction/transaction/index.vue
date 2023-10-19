@@ -71,6 +71,10 @@ const touchless = () => {
   return false;
 };
 
+const transactionTabToggle = (item: string) => {
+  selectedTab.value = item;
+};
+
 watch(selectedTab, async (value) => {
   // if (value == t("transaction.tab.withdrawal")) {
   //   await dispatchWithdrawalHistory({
@@ -112,24 +116,23 @@ onMounted(async () => {
     class="mt-2 slide-tab-btns slide-tabs"
     v-model="selectedTab"
     show-arrows
-    style="
-      touch-action: none;
-      margin-left: 16px !important;
-      margin-right: 16px !important;
-    "
+    style="touch-action: none"
+    :style="{
+      marginLeft: mobileWidth < 600 ? '' : '16px !important',
+      marginRight: mobileWidth < 600 ? '' : '16px !important',
+    }"
   >
     <v-slide-group-item
       v-for="(item, index) in transactionTabs"
       :key="index"
-      v-slot="{ isSelected, toggle }"
       :value="item"
     >
       <v-btn
         class="ma-2 text-none transaction-tab-btn"
-        :class="isSelected ? 'white' : 'text-gray'"
+        :class="selectedTab == item ? 'white' : 'text-gray'"
         rounded
-        :color="isSelected ? '#29253C' : 'transparent'"
-        @click="toggle"
+        :color="selectedTab == item ? '#29253C' : 'transparent'"
+        @click="transactionTabToggle(item)"
         :width="mobileWidth < 600 ? 106 : 150"
       >
         {{ item }}
@@ -231,6 +234,9 @@ onMounted(async () => {
 }
 
 @media (max-width: 600px) {
+  .slide-tabs {
+    border-radius: 0px !important;
+  }
   .v-slide-group {
     margin: 10px 0px !important;
   }

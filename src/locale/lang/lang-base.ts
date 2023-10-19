@@ -259,6 +259,8 @@ export type langType = {
     share: string
     sport: string
     mail: string
+    reward: string
+    search: string
   }
   deposit_dialog: {
     deposit_info: {

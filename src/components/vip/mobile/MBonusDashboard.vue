@@ -521,6 +521,9 @@ onMounted(() => {
 }
 .m-recharge-col {
   padding: 0px !important;
+  .v-btn--variant-elevated {
+    background: none !important;
+  }
 }
 .m-recharge-col-btn1 {
   // margin-top: auto !important;
@@ -550,6 +553,9 @@ onMounted(() => {
     background: transparent;
     height: fit-content;
     box-shadow: none;
+  }
+  .v-btn.v-btn--density-default {
+    height: unset;
   }
 }
 .m-bonus-hide {

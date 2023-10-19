@@ -13,6 +13,9 @@ import icon_public_81 from "@/assets/public/svg/icon_public_81.svg";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
 import icon_public_55 from "@/assets/public/svg/icon_public_55.svg";
+import icon_public_97 from "@/assets/public/svg/icon_public_97.svg";
+import icon_public_96 from "@/assets/public/svg/icon_public_96.svg";
+
 const { t } = useI18n();
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -31,6 +34,8 @@ const navbarToggle = ref<boolean>(false);
 const bonusDashboardToggle = ref<boolean>(false);
 const sportBtnActive = ref<boolean>(false);
 const casinoBtnActive = ref<boolean>(false);
+const rewardBtnActive = ref<boolean>(false);
+const searchBtnActive = ref<boolean>(false);
 const mailBtnActive = ref<boolean>(false);
 const mailNavigation = ref<boolean>(false);
 const mailMenuShow = ref<boolean>(false);
@@ -40,12 +45,12 @@ const menuIconColor = ref<string>("#7782AA");
 const casinoIconColor = ref<string>('#7782AA');
 const sportIconColor = ref<string>('#7782AA');
 const mailIconColor = ref<string>('#7782AA');
+const rewardIconColor = ref<string>('#7782AA');
+const searchIconColor = ref<string>('#7782AA');
 const mailListHeight = ref<number>(0);
 
 const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
 const shareIconIndex = ref<number>(0);
-
-
 
 watch(shareIconIndex, (newValue) => {
   if ((newValue % 3) == 0) {
@@ -117,6 +122,8 @@ watch(mailMenuShow, async (newValue) => {
     sportBtnActive.value = false
     casinoBtnActive.value = false;
     navbarToggle.value = false;
+    rewardBtnActive.value = false;
+    searchBtnActive.value = false;
     setUserNavBarToggle(false);
     setMainBlurEffectShow(false);
     setNavBarToggle(navbarToggle.value)
@@ -125,6 +132,8 @@ watch(mailMenuShow, async (newValue) => {
     casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
     sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
     mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+    rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+    searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
     setTimeout(() => {
       setMainBlurEffectShow(newValue);
       setOverlayScrimShow(newValue);
@@ -196,7 +205,9 @@ const handleNavbarToggle = () => {
   navbarToggle.value = !navbarToggle.value
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
-  sportBtnActive.value = false
+  sportBtnActive.value = false;
+  rewardBtnActive.value = false;
+  searchBtnActive.value = false;
   setUserNavBarToggle(false);
   setBonusDashboardDialogVisible(false);
   setMainBlurEffectShow(false);
@@ -208,12 +219,16 @@ const handleNavbarToggle = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
 const goHomePage = () => {
   casinoBtnActive.value = !casinoBtnActive.value
   mailMenuShow.value = false;
   sportBtnActive.value = false
+  rewardBtnActive.value = false;
+  searchBtnActive.value = false;
   router.push({ name: "Dashboard" });
   navbarToggle.value = false;
   setUserNavBarToggle(false);
@@ -226,12 +241,17 @@ const goHomePage = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
-const goToSportPage = () => {
-  sportBtnActive.value = !sportBtnActive.value
+const handleRewardToggle = () => {
+  rewardBtnActive.value = !rewardBtnActive.value
   mailMenuShow.value = false;
-  casinoBtnActive.value = false;
+  sportBtnActive.value = false
+  casinoBtnActive.value = false
+  searchBtnActive.value = false;
+  router.push({ name: "Dashboard" });
   navbarToggle.value = false;
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
@@ -243,6 +263,48 @@ const goToSportPage = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
+}
+
+const handleSearchToggle = () => {
+  searchBtnActive.value = !searchBtnActive.value
+  mailMenuShow.value = false;
+  casinoBtnActive.value = false;
+  navbarToggle.value = false;
+  rewardBtnActive.value = false;
+  setUserNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
+  }, 200);
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
+}
+const goToSportPage = () => {
+  sportBtnActive.value = !sportBtnActive.value
+  mailMenuShow.value = false;
+  casinoBtnActive.value = false;
+  navbarToggle.value = false;
+  rewardBtnActive.value = false;
+  searchBtnActive.value = false;
+  setUserNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value)
+    setMainBlurEffectShow(navbarToggle.value);
+  }, 200);
+  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
 const goToSharePage = () => {
@@ -251,6 +313,8 @@ const goToSharePage = () => {
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
   sportBtnActive.value = false
+  rewardBtnActive.value = false;
+  searchBtnActive.value = false;
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
   setNavBarToggle(false);
@@ -262,6 +326,8 @@ const goToSharePage = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 
   // sportBtnActive.value = false
   // mailMenuShow.value = false;
@@ -390,11 +456,34 @@ const casinoSvgTransform = (el: any) => {
   return el
 }
 
+const rewardSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', rewardIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', rewardIconColor.value)
+      for (let moreSubNode of subNode.children) {
+        moreSubNode.setAttribute('fill', rewardIconColor.value)
+      }
+    }
+  }
+  return el
+}
+
 const sportSvgTransform = (el: any) => {
   for (let node of el.children) {
     node.setAttribute('fill', sportIconColor.value)
     for (let subNode of node.children) {
       subNode.setAttribute('fill', sportIconColor.value)
+    }
+  }
+  return el
+}
+
+const searchSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', searchIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', searchIconColor.value)
     }
   }
   return el
@@ -453,15 +542,15 @@ onMounted(() => {
         {{ t("mobile_menu.menu") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color" @click="goHomePage">
+    <v-btn class="menu-text-color" @click="handleRewardToggle">
       <inline-svg
-        :src="icon_public_34"
+        :src="icon_public_97"
         width="20"
         height="20"
-        :transform-source="casinoSvgTransform"
+        :transform-source="rewardSvgTransform"
       ></inline-svg>
       <div class="pt-1 text-600-12">
-        {{ t("mobile_menu.casino") }}
+        {{ t("mobile_menu.reward") }}
       </div>
     </v-btn>
     <v-btn class="menu-text-color share-ripple-btn" @click="goToSharePage">
@@ -480,15 +569,15 @@ onMounted(() => {
         {{ t("mobile_menu.share") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color" @click="goToSportPage">
+    <v-btn class="menu-text-color" @click="handleSearchToggle">
       <inline-svg
-        :src="icon_public_40"
+        :src="icon_public_96"
         width="20"
         height="20"
-        :transform-source="sportSvgTransform"
+        :transform-source="searchSvgTransform"
       ></inline-svg>
       <div class="pt-1 text-600-12">
-        {{ t("mobile_menu.sport") }}
+        {{ t("mobile_menu.search") }}
       </div>
     </v-btn>
     <v-menu

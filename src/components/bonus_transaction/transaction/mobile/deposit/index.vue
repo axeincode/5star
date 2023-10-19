@@ -93,8 +93,15 @@ watch(depositHistoryItem, (value) => {
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.id") }}
+              <div style="width: 80px; margin-left: 16px; margin-right: 16px">
+                {{ t("transaction.transactions.amount") }}
+              </div>
+            </div>
+          </th>
+          <th class="text-700-12 black text-center">
+            <div class="forms-table-border1">
+              <div style="width: 50px; margin-left: 16px; margin-right: 16px">
+                {{ t("transaction.game_history.status") }}
               </div>
             </div>
           </th>
@@ -107,15 +114,8 @@ watch(depositHistoryItem, (value) => {
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.amount") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border1">
-              <div style="width: 90px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.game_history.status") }}
+              <div style="width: 120px; margin-left: 16px; margin-right: 16px">
+                {{ t("transaction.transactions.id") }}
               </div>
             </div>
           </th>
@@ -160,7 +160,6 @@ watch(depositHistoryItem, (value) => {
             ></td>
             <td
               class="text-400-12 text-center"
-              :class="item.status == 3 ? 'color-01983A' : ''"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             ></td>
             <td
@@ -178,22 +177,6 @@ watch(depositHistoryItem, (value) => {
               {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
             </td>
             <td
-              class="text-400-12 text-center"
-              style="
-                min-width: 60px;
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-              "
-            >
-              {{ item.id }}
-            </td>
-            <td
-              class="text-400-12 text-center"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            >
-              {{ item.type }}
-            </td>
-            <td
               class="text-400-12 text-center color-01983A"
               style="
                 min-width: 130px;
@@ -201,11 +184,11 @@ watch(depositHistoryItem, (value) => {
                 padding-bottom: 21px !important;
               "
             >
-              {{ item.amount }}
+              R$ {{ item.amount }}
             </td>
             <td
               class="text-400-12 text-center"
-              :class="item.status == 3 ? 'color-01983A' : ''"
+              :class="item.status == 3 ? 'color-01983A' : 'color-01983A'"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
               <template v-if="item.status == -2">Closed </template>
@@ -215,6 +198,26 @@ watch(depositHistoryItem, (value) => {
               <template v-if="item.status == 2">Success </template>
               <template v-if="item.status == 3">Completion </template>
               <template v-if="item.status == 4">Refunded </template>
+            </td>
+            <td
+              class="text-400-12 text-center"
+              style="
+                min-width: 40px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            >
+              {{ item.type }}
+            </td>
+            <td
+              class="text-400-12 text-center"
+              style="
+                min-width: 60px;
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+              "
+            >
+              {{ item.id }}
             </td>
             <td
               class="text-400-12 text-center"
