@@ -431,6 +431,7 @@ export type langType = {
   bonus: {
     title_text: string
     total_text: string
+    bonus_money_text: string
     withdraw_text: string
     super_bonus_text: string
     bonus_text: string

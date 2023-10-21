@@ -9,9 +9,12 @@ const cards = ref<Array<any>>([
 
 const lastScrollTop = ref<number>(0);
 
-const handleScroll = (event: any) => {};
+const handleWindowScroll = (event: any) => {
+  console.log("ok");
+};
 
 onMounted(() => {
+  window.addEventListener("scroll", handleWindowScroll);
   let lastScrollTop = 0;
   const listContainer = document.querySelector(".list-container");
 });

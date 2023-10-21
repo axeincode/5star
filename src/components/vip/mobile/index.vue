@@ -111,8 +111,8 @@ const vipItems = ref<Array<GetVIPData>>([
 
 const vipTabs = ref<Array<string>>([
   t('vip.all_bonus_text'),
-  t('vip.cash_back_text'),
-  t('vip.super_carousel_text'),
+  // t('vip.cash_back_text'),
+  // t('vip.super_carousel_text'),
   t('vip.welfare_task'),
 ])
 
@@ -575,7 +575,7 @@ const tabSelect = ref(false);
 const isMouseClick = ref(false);
 
 const handleSelectVIPTab = (item: string) => {
-  // selectedVIPTab.value = item
+  selectedVIPTab.value = item
   // isMouseClick.value = true;
   vipSlidePosition.value = true;
   tabSelect.value = true;
@@ -773,8 +773,8 @@ const handleCashbackSwiperPrevChange = () => {
 }
 
 onMounted(async () => {
-  await dispatchVipTasks();
   window.addEventListener('scroll', handleWindowScroll);
+  await dispatchVipTasks();
   spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
   vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
 })
@@ -805,7 +805,11 @@ onMounted(async () => {
         </inline-svg>
       </div>
     </div>
-    <div class="m-vip-body" :style="{ paddingTop: refferalAppBarShow ? '40px' : '44px' }">
+    <div
+      class="m-vip-body"
+      :style="{ paddingTop: refferalAppBarShow ? '40px' : '44px' }"
+      @scroll="handleWindowScroll"
+    >
       <Carousel
         v-model="currentSlide"
         :itemsToShow="1.2"
@@ -1099,8 +1103,10 @@ onMounted(async () => {
           </SwiperSlide>
         </Swiper>
       </div>
+
       <!---------------------------- cashback bonus --------------------------------->
-      <div ref="cashbackElement">
+
+      <!-- <div ref="cashbackElement">
         <Swiper
           :modules="modules"
           :slidesPerView="1"
@@ -1243,9 +1249,11 @@ onMounted(async () => {
             </div>
           </SwiperSlide>
         </Swiper>
-      </div>
+      </div> -->
+
       <!-------------------------- My Super Spin ---------------------------------->
-      <div ref="spinElement">
+
+      <!-- <div ref="spinElement">
         <Swiper
           :modules="modules"
           :slidesPerView="1"
@@ -1343,7 +1351,7 @@ onMounted(async () => {
             </div>
           </SwiperSlide>
         </Swiper>
-      </div>
+      </div> -->
 
       <!------------------------   My VIP Mission -------------------------------->
 

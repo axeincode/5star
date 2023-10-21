@@ -120,6 +120,15 @@ onMounted(async () => {
           <img src="@/assets/public/svg/icon_public_27.svg" width="30" />
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
+          <div class="text-400-10 text-gray">{{ t("bonus.bonus_money_text") }}</div>
+          <div class="text-600-12 white">{{ userBalance.availabe_balance }}</div>
+        </v-list-item-title>
+      </v-list-item>
+      <v-list-item class="m-bg-color-1 mt-4 mx-6">
+        <template v-slot:prepend>
+          <img src="@/assets/public/svg/icon_public_100.svg" width="30" />
+        </template>
+        <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.withdraw_text") }}</div>
           <div class="text-600-12 white">{{ userBalance.availabe_balance }}</div>
         </v-list-item-title>
