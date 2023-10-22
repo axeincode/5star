@@ -228,13 +228,9 @@ watch(userNavBarToggle, (newValue) => {
 })
 
 watch(drawer, (newValue: boolean) => {
-  // if (newValue) {
-  setTimeout(() => {
-    if (navScroll.value) {
-      navScroll.value.scrollTop = 0;
-    }
-  }, 1000)
-  // }
+  if (navScroll.value) {
+    navScroll.value.scrollTop = 0;
+  }
   setUserNavBarToggle(newValue);
   setMailMenuShow(newValue);
   if (!newValue && !accountPageShow.value && !referPageShow.value) {
@@ -277,6 +273,7 @@ const handleNotifyShow = (uid: string) => {
     }
   );
 }
+
 watch(vipLevels, (value) => {
   value.map(item => {
     if (item.level == vipInfo.value.level) {
@@ -291,6 +288,9 @@ watch(vipLevels, (value) => {
   })
 })
 
+const handleScroll = () => {
+  console.log("ok");
+}
 
 onMounted(async () => {
   await dispatchVipInfo();
@@ -307,11 +307,12 @@ onMounted(async () => {
     style="padding-bottom: 58px !important"
     v-model="drawer"
     :touchless="true"
+    :on-scroll="handleScroll"
   >
     <template v-slot:prepend>
       <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
     </template>
-    <div ref="navScroll">
+    <div ref="navScroll" class="v-navigation-drawer__content" @scroll="handleScroll">
       <v-list class="mobile-nav" density="compact" nav>
         <v-list-item class="m-user-item">
           <template v-slot:prepend>

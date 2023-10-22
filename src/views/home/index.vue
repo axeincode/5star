@@ -376,7 +376,7 @@ const Dashboard = defineComponent({
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
       window.scrollTo({
-        top: 0,
+        top: 250,
         behavior: "smooth",
       });
       console.log(gamFilterBtn, t("home.button.all_game"));
