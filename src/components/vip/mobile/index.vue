@@ -454,6 +454,9 @@ watch(missionCardShow, (value) => {
 })
 
 watch(currentSlide, (value: number, newValue: number) => {
+  console.log(currentSlide.value);
+  vipSwitchValue.value = vipLevels.value[currentSlide.value].level;
+  console.log(vipSwitchValue.value);
   if (rewardSlide.value) {
     rewardSlide.value = false;
     return;
@@ -474,35 +477,34 @@ watch(currentSlide, (value: number, newValue: number) => {
     descriptionSlide.value = false;
     return;
   }
-  vipSwitchValue.value = vipLevels.value[currentSlide.value].level;
   if (value == 0 && (newValue + 1) == vipLevels.value.length) {
     rewardSwiper.value.slideNext();
-    cashbackSwiper.value.slideNext();
-    spinSwiper.value.slideNext();
+    // cashbackSwiper.value.slideNext();
+    // spinSwiper.value.slideNext();
     vipSwiper.value.slideNext();
     descriptionSwiper.value.slideNext();
     return;
   }
   if (newValue == 0 && (value + 1) == vipLevels.value.length) {
     rewardSwiper.value.slidePrev();
-    cashbackSwiper.value.slidePrev();
-    spinSwiper.value.slidePrev();
+    // cashbackSwiper.value.slidePrev();
+    // spinSwiper.value.slidePrev();
     vipSwiper.value.slidePrev();
     descriptionSwiper.value.slidePrev();
     return;
   }
   if (newValue < value) {
     rewardSwiper.value.slideNext();
-    cashbackSwiper.value.slideNext();
-    spinSwiper.value.slideNext();
+    // cashbackSwiper.value.slideNext();
+    // spinSwiper.value.slideNext();
     vipSwiper.value.slideNext();
     descriptionSwiper.value.slideNext();
     return;
   }
   if (newValue > value) {
     rewardSwiper.value.slidePrev();
-    cashbackSwiper.value.slidePrev();
-    spinSwiper.value.slidePrev();
+    // cashbackSwiper.value.slidePrev();
+    // spinSwiper.value.slidePrev();
     vipSwiper.value.slidePrev();
     descriptionSwiper.value.slidePrev();
     return;
@@ -633,8 +635,8 @@ const handleVipSwitchLeft = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value - 1 + 10) % 10;
   rewardSwiper.value.slidePrev();
-  cashbackSwiper.value.slidePrev();
-  spinSwiper.value.slidePrev();
+  // cashbackSwiper.value.slidePrev();
+  // spinSwiper.value.slidePrev();
   vipSwiper.value.slidePrev();
   descriptionSwiper.value.slidePrev();
 }
@@ -643,8 +645,8 @@ const handleVipSwitchRight = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value + 1 + 10) % 10;
   rewardSwiper.value.slideNext();
-  cashbackSwiper.value.slideNext();
-  spinSwiper.value.slideNext();
+  // cashbackSwiper.value.slideNext();
+  // spinSwiper.value.slideNext();
   vipSwiper.value.slideNext();
   descriptionSwiper.value.slideNext();
 }
@@ -681,94 +683,87 @@ const getDescriptionSwiperRef = (swiperInstance: any) => {
 }
 
 const handleRewardSwiperNextChange = () => {
-  // rewardSlide.value = true;
-  // if (cashbackSlide.value) {
-  //   return;
-  // }
-  // if (spinSlide.value) {
-  //   return;
-  // }
-  // if (vipSlide.value) {
-  //   return;
-  // }
-  // if (descriptionSlide.value) {
-  //   return;
-  // }
-  // currentSlide.value = rewardSwiper.value.activeIndex;
-  // cashbackSwiper.value.slideNext();
-  // cashbackSlide.value = false;
-  // spinSlide.value = false;
-  // vipSlide.value = false;
-  // descriptionSlide.value = false;
+  rewardSlide.value = true;
+  if (cashbackSlide.value) {
+    return;
+  }
+  if (spinSlide.value) {
+    return;
+  }
+  if (vipSlide.value) {
+    return;
+  }
+  if (descriptionSlide.value) {
+    return;
+  }
+  currentSlide.value = rewardSwiper.value.realIndex;
+  cashbackSlide.value = false;
+  spinSlide.value = false;
+  vipSlide.value = false;
+  descriptionSlide.value = false;
 }
 
 const handleRewardSwiperPrevChange = () => {
-  // rewardSlide.value = true;
-  // currentSlide.value = rewardSwiper.value.activeIndex;
+  rewardSlide.value = true;
+  if (cashbackSlide.value) {
+    return;
+  }
+  if (spinSlide.value) {
+    return;
+  }
+  if (vipSlide.value) {
+    return;
+  }
+  if (descriptionSlide.value) {
+    return;
+  }
+  currentSlide.value = rewardSwiper.value.realIndex;
+  cashbackSlide.value = false;
+  spinSlide.value = false;
+  vipSlide.value = false;
+  descriptionSlide.value = false;
+}
+
+const handleVipSwiperNextChange = () => {
+  // vipSlide.value = true;
+  // if (rewardSlide.value) {
+  //   return;
+  // }
   // if (cashbackSlide.value) {
   //   return;
   // }
   // if (spinSlide.value) {
   //   return;
   // }
-  // if (vipSlide.value) {
-  //   return;
-  // }
   // if (descriptionSlide.value) {
   //   return;
   // }
-  // cashbackSwiper.value.slidePrev();
+  // console.log("sdfsdfdsfdsf");
+  // currentSlide.value = vipSwiper.value.realIndex;
   // cashbackSlide.value = false;
   // spinSlide.value = false;
-  // vipSlide.value = false;
+  // rewardSlide.value = false;
   // descriptionSlide.value = false;
 }
 
-const handleCashbackSwiperNextChange = () => {
-  // cashbackSlide.value = true;
-  // currentSlide.value = cashbackSwiper.value.activeIndex;
+const handleVipSwiperPrevChange = () => {
+  // vipSlide.value = true;
+  // if (cashbackSlide.value) {
+  //   return;
+  // }
   // if (rewardSlide.value) {
   //   return;
   // }
   // if (spinSlide.value) {
   //   return;
   // }
-  // if (vipSlide.value) {
-  //   return;
-  // }
   // if (descriptionSlide.value) {
   //   return;
   // }
-  // rewardSwiper.value.slideNext();
-  // rewardSwiper.value = false;
+  // currentSlide.value = vipSwiper.value.realIndex;
+  // cashbackSlide.value = false;
   // spinSlide.value = false;
-  // vipSlide.value = false;
-  // descriptionSlide.value = false;
-}
-
-const handleCashbackSwiperPrevChange = () => {
-  // cashbackSlide.value = true;
-  // if (rewardSlide.value) {
-  //   rewardSlide.value = false;
-  //   return;
-  // }
-  // if (spinSlide.value) {
-  //   spinSlide.value = false;
-  //   return;
-  // }
-  // if (vipSlide.value) {
-  //   vipSlide.value = false;
-  //   return;
-  // }
-  // if (descriptionSlide.value) {
-  //   descriptionSlide.value = false;
-  //   return;
-  // }
-  // currentSlide.value = cashbackSwiper.value.activeIndex;
-  // rewardSwiper.value.slidePrev();
-  // rewardSwiper.value = false;
-  // spinSlide.value = false;
-  // vipSlide.value = false;
+  // rewardSlide.value = false;
   // descriptionSlide.value = false;
 }
 
@@ -1361,6 +1356,8 @@ onMounted(async () => {
           :slidesPerView="1"
           :loop="true"
           @swiper="getVipSwiperRef"
+          @slide-next-transition-end="handleVipSwiperNextChange"
+          @slide-prev-transition-end="handleVipSwiperPrevChange"
         >
           <SwiperSlide
             v-for="(item, index) in vipLevels"

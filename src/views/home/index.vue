@@ -193,9 +193,12 @@ const Dashboard = defineComponent({
     const bannerComponent = ref(null);
     const gameHistoryComponent = ref(null);
 
-    const bannerLoad = async() => {
+    const bannerLoad = async () => {
       const bannerValue = await import('@/views/home/components/Banner.vue');
       bannerComponent.value = bannerValue.default;
+    }
+
+    const gameHistoryLoad = async () => {
       const gameHistoryValue = await import('@/views/home/components/GameHistory.vue');
       gameHistoryComponent.value = gameHistoryValue.default;
     }
@@ -700,9 +703,9 @@ const Dashboard = defineComponent({
         top: 0,
         behavior: "smooth",
       });
+      bannerLoad();
       await dispatchGameCategories(`?type=${filterTabText.value}`);
       loading.value = false;
-      bannerLoad();
       allGames.value = gameCategories.value;
       allGames.value.map(async (item) => {
         await dispatchGameSearch(
@@ -805,6 +808,8 @@ const Dashboard = defineComponent({
           item.game_count = gameSearchList.value.total;
         })
       );
+
+      gameHistoryLoad();
 
       setTimeout(() => {
         state.paginGameShow = true;
@@ -935,6 +940,7 @@ const Dashboard = defineComponent({
       pagingGames,
       bannerComponent,
       bannerLoad,
+      gameHistoryLoad,
       gameHistoryComponent
     };
   },
