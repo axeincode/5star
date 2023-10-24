@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="circle-container">
+  <!-- <div class="circle-container">
     <div class="circle">
       <div class="letter">C</div>
       <div class="letter">A</div>
@@ -29,12 +29,20 @@ onMounted(() => {
       <div class="letter">I</div>
       <div class="letter">N</div>
       <div class="letter">O</div>
-      <!-- Add more letters as needed -->
     </div>
-  </div>
+  </div> -->
+  <div class="trapezoid"></div>
 </template>
 
 <style lang="scss">
+.trapezoid {
+  width: 200px;
+  height: 0;
+  border-bottom: 100px solid #ccc;
+  // border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  // border-radius: 20px;
+}
 .list-container {
   background-color: white;
   display: none;

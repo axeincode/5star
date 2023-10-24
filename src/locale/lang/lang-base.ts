@@ -186,6 +186,9 @@ export type langType = {
   }
   home: {
     search: string
+    live_win: {
+      text_1: string
+    }
     button: {      
       all_game: string
       favorite: string

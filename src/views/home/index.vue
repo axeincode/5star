@@ -190,8 +190,9 @@ const Dashboard = defineComponent({
     const moreLoading = ref<boolean>(false);
     const moreIndex = ref<number>(0);
 
-    const bannerComponent = ref(null);
-    const gameHistoryComponent = ref(null);
+    const bannerComponent = ref<component>(null);
+    const gameHistoryComponent = ref<component>(null);
+    const liveWinComponent = ref<component>(null)
 
     const bannerLoad = async () => {
       const bannerValue = await import('@/views/home/components/Banner.vue');
@@ -201,6 +202,11 @@ const Dashboard = defineComponent({
     const gameHistoryLoad = async () => {
       const gameHistoryValue = await import('@/views/home/components/GameHistory.vue');
       gameHistoryComponent.value = gameHistoryValue.default;
+    }
+
+    const liveWinLoad = async () => {
+      const liveWinValue = await import('@/views/home/components/LiveWin.vue');
+      liveWinComponent.value = liveWinValue.default;
     }
 
     // get Token
@@ -703,8 +709,9 @@ const Dashboard = defineComponent({
         top: 0,
         behavior: "smooth",
       });
-      bannerLoad();
       await dispatchGameCategories(`?type=${filterTabText.value}`);
+      bannerLoad();
+      liveWinLoad();
       loading.value = false;
       allGames.value = gameCategories.value;
       allGames.value.map(async (item) => {
@@ -939,8 +946,10 @@ const Dashboard = defineComponent({
       allGames,
       pagingGames,
       bannerComponent,
+      liveWinComponent,
       bannerLoad,
       gameHistoryLoad,
+      liveWinLoad,
       gameHistoryComponent
     };
   },
@@ -982,8 +991,11 @@ export default Dashboard;
       <!-- 这里是banner -->
       <component :is="bannerComponent"></component>
 
+      <!-- Live Win Component -->
+      <component :is="liveWinComponent"></component>
+
       <!-- input for search -->
-      <v-row class="mt-2 home-search-bar" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
+      <v-row class="mt-0 home-search-bar" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
         <v-text-field
           :placeholder="t('home.search')"
           class="form-textfield dark-textfield"

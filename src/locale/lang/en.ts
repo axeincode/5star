@@ -188,6 +188,9 @@ export const lang: langType = {
   },
   home: {
     search: "Search Games Or Providers",
+    live_win: {
+      text_1: "LIVE WINS"
+    },
     button: {
       all_game: "All Games",
       favorite: "Favorite",
