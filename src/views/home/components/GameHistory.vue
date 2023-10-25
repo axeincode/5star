@@ -856,7 +856,6 @@ export default GameHistoryComponent;
           }"
           :slidesPerView="10"
           :spaceBetween="0"
-          :preventInteractionOnTransition="true"
           :virtual="true"
         >
           <swiper-slide v-for="(item, index) in recordList" :key="index">

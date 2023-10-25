@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
@@ -9,12 +10,20 @@ import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png"
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import type * as LiveWinItem from "@/interface/home";
-import { useI18n } from "vue-i18n";
+import { Swiper, SwiperSlide } from "swiper/vue";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+// import Swiper core and required modules
+import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 
 const { t } = useI18n();
+const modules = [Pagination, Autoplay, Navigation];
 
 const svgIconColor = ref<string>("#7782AA");
+const interval = ref<any>(null);
 
+/* vip level images */
 const vipLevelImgs = ref<Array<any>>([
   img_vipemblem_1_24,
   img_vipemblem_25_49,
@@ -25,6 +34,7 @@ const vipLevelImgs = ref<Array<any>>([
   img_vipemblem_200,
 ]);
 
+/* change svg icon or fill color */
 const svgIconTransform = (el: any) => {
   for (let node of el.children) {
     node.setAttribute("fill", svgIconColor.value);
@@ -35,11 +45,69 @@ const svgIconTransform = (el: any) => {
   return el;
 };
 
+/* live win game temp list */
 const liveWinList = ref<Array<LiveWinItem>>([
   {
     image: new URL("@/assets/home/image/img_win_01.png", import.meta.url).href,
+    level: 0,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_02.png", import.meta.url).href,
+    level: 1,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_03.png", import.meta.url).href,
+    level: 2,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_01.png", import.meta.url).href,
+    level: 3,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_02.png", import.meta.url).href,
+    level: 4,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_03.png", import.meta.url).href,
+    level: 5,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_01.png", import.meta.url).href,
+    level: 6,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_02.png", import.meta.url).href,
+    level: 1,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_03.png", import.meta.url).href,
+    level: 2,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
   },
 ]);
+
+onMounted(() => {
+  interval.value = setInterval(() => {
+    liveWinList.value.push(liveWinList.value[Math.floor(Math.random() * 8)]);
+  }, 600);
+});
 </script>
 
 <template>
@@ -54,6 +122,34 @@ const liveWinList = ref<Array<LiveWinItem>>([
         style="margin-top: 2px"
       ></inline-svg>
       <p class="text-900-10 gray ml-1">{{ t("home.live_win.text_1") }}</p>
+    </div>
+    <div class="live-win-body">
+      <Swiper
+        :modules="modules"
+        :slidesPerView="5"
+        :spaceBetween="8"
+        class="mx-2"
+        :autoplay="{
+          delay: 600,
+          disableOnInteraction: false,
+        }"
+        style="height: auto"
+      >
+        <SwiperSlide
+          v-for="(item, index) in liveWinList"
+          :key="index"
+          :virtualIndex="index"
+        >
+          <div class="text-center">
+            <img :src="item.image" class="live-win-img" />
+            <div class="live-win-level-text">
+              <img :src="vipLevelImgs[item.level]" width="12" />
+              <p class="text-500-8 white ml-1">{{ item.game_name }}</p>
+            </div>
+            <div class="text-900-10 color-12FF76">{{ item.betting_amount }}</div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
     </div>
   </div>
 </template>
@@ -71,6 +167,20 @@ const liveWinList = ref<Array<LiveWinItem>>([
     left: 10px;
     display: flex;
     align-items: center;
+  }
+  .live-win-body {
+    position: absolute;
+    top: 30px;
+    width: 100%;
+  }
+  .live-win-img {
+    width: 95%;
+    border-radius: 12px;
+  }
+  .live-win-level-text {
+    display: flex;
+    align-items: center;
+    margin: 0px 6px;
   }
 }
 </style>
