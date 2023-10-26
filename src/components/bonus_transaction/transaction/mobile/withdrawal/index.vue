@@ -17,11 +17,26 @@ const { dispatchWithdrawalHistory } = withdrawStore();
 const { dispatchWithdrawalRefund } = withdrawStore();
 
 const withdrawalStatus = [
-  "Pending",
-  "Processing",
-  "Success",
-  "Failed",
-  "Waiting for manual processing. action",
+  {
+    value: "Pending",
+    color: "white",
+  },
+  {
+    value: "Processing",
+    color: "white",
+  },
+  {
+    value: "Success",
+    color: "color-01983A",
+  },
+  {
+    value: "Failed",
+    color: "red",
+  },
+  {
+    value: "Waiting for manual processing.",
+    color: "white",
+  },
 ]
 
 const props = defineProps<{
@@ -319,14 +334,16 @@ onMounted(async () => {
             </td>
             <td
               class="text-400-12"
-              :class="item.status == 1 ? 'color-F9BC01' : ''"
+              :class="withdrawalStatus[Number(item.status)].color"
               style="
                 padding-top: 21px !important;
                 padding-bottom: 21px !important;
                 min-width: 130px;
               "
             >
-              {{ withdrawalStatus[Number(item.status)] }}
+              <div>
+                {{ withdrawalStatus[Number(item.status)].value }}
+              </div>
             </td>
             <td
               class="text-400-12"

@@ -188,16 +188,15 @@ watch(depositHistoryItem, (value) => {
             </td>
             <td
               class="text-400-12 text-center"
-              :class="item.status == 3 ? 'color-01983A' : 'color-01983A'"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
-              <template v-if="item.status == -2">Closed </template>
-              <template v-if="item.status == -1">Failed </template>
-              <template v-if="item.status == 0">Generated </template>
-              <template v-if="item.status == 1">In progress</template>
-              <template v-if="item.status == 2">Success </template>
-              <template v-if="item.status == 3">Completion </template>
-              <template v-if="item.status == 4">Refunded </template>
+              <div v-if="item.status == -2" class="white">Closed</div>
+              <div v-if="item.status == -1" class="red">Failed</div>
+              <div v-if="item.status == 0" class="red">Generated</div>
+              <div v-if="item.status == 1" class="white">In progress</div>
+              <div v-if="item.status == 2" class="color-01983A">Success</div>
+              <div v-if="item.status == 3" class="color-01983A">Completion</div>
+              <div v-if="item.status == 4" class="white">Refunded</div>
             </td>
             <td
               class="text-400-12 text-center"

@@ -129,10 +129,6 @@ onMounted(() => {
         :slidesPerView="5"
         :spaceBetween="8"
         class="mx-2"
-        :autoplay="{
-          delay: 600,
-          disableOnInteraction: false,
-        }"
         style="height: auto"
       >
         <SwiperSlide

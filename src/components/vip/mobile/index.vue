@@ -1829,13 +1829,6 @@ onMounted(async () => {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.swiper {
-  overflow: inherit;
-}
-
-.swiper-wrapper {
-  box-sizing: inherit;
-}
 
 .m-vip-switch {
   position: fixed;
@@ -1900,6 +1893,14 @@ onMounted(async () => {
 
 .m-vip-body {
   padding-top: 44px;
+
+  .swiper {
+    overflow: inherit;
+  }
+
+  .swiper-wrapper {
+    box-sizing: inherit;
+  }
 
   .v-slide-group {
     background: #1c1929 !important;

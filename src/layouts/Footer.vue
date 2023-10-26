@@ -45,7 +45,7 @@ const mobileWidth = computed(() => {
           {{ t("home.footer.game.menu_4") }}
         </div>
       </v-col>
-      <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
+      <v-col cols="3" sm="4" md="2" lg="2" class="px-1 pl-2">
         <div class="footer-title" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.title") }}
         </div>
