@@ -903,7 +903,6 @@ export default GameHistoryComponent;
               :transform-source="winnerTransform"
             >
             </inline-svg>
-            <!-- <img src="@/assets/public/svg/icon_public_92.svg" width="20" /> -->
             <P class="ml-1">{{ t("home.lucky_jackpot_text") }}</P>
           </div>
           <div class="prize">
@@ -914,7 +913,6 @@ export default GameHistoryComponent;
               :transform-source="prizeTransform"
             >
             </inline-svg>
-            <!-- <img src="@/assets/public/svg/icon_public_91.svg" width="20" /> -->
             <p class="ml-1">{{ t("home.latest_record_text") }}</p>
           </div>
         </label>

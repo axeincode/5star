@@ -225,6 +225,17 @@ export const lang: langType = {
     amount_text: "Amount",
     lucky_jackpot_text: "Lucky Jackpot",
     latest_record_text: "Latest Record",
+    bet_history: {
+      text_1: "BETS",
+      text_2: "All Bets",
+      text_3: "High RoIIers",
+      text_4: "Lucky Bets",
+      text_5: "My Bets",
+      text_6: "Game",
+      text_7: "Multi",
+      text_8: "Payout",
+      text_9: "",
+    },
     footer: {
       game: {
         title: "Game",

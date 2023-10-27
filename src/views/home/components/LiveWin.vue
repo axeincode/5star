@@ -128,6 +128,10 @@ onMounted(() => {
         :modules="modules"
         :slidesPerView="5"
         :spaceBetween="8"
+        :autoplay="{
+          delay: 600,
+          disableOnInteraction: false,
+        }"
         class="mx-2"
         style="height: auto"
       >

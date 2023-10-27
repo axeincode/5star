@@ -192,7 +192,8 @@ const Dashboard = defineComponent({
 
     const bannerComponent = ref<component>(null);
     const gameHistoryComponent = ref<component>(null);
-    const liveWinComponent = ref<component>(null)
+    const liveWinComponent = ref<component>(null);
+    const betHistoryComponent = ref<component>(null);
 
     const bannerLoad = async () => {
       const bannerValue = await import('@/views/home/components/Banner.vue');
@@ -202,6 +203,11 @@ const Dashboard = defineComponent({
     const gameHistoryLoad = async () => {
       const gameHistoryValue = await import('@/views/home/components/GameHistory.vue');
       gameHistoryComponent.value = gameHistoryValue.default;
+    }
+
+    const betHistoryLoad = async () => {
+      const betHistoryValue = await import('@/views/home/components/BetHistory.vue');
+      betHistoryComponent.value = betHistoryValue.default;
     }
 
     const liveWinLoad = async () => {
@@ -712,6 +718,7 @@ const Dashboard = defineComponent({
       await dispatchGameCategories(`?type=${filterTabText.value}`);
       bannerLoad();
       liveWinLoad();
+      betHistoryLoad();
       loading.value = false;
       allGames.value = gameCategories.value;
       allGames.value.map(async (item) => {
@@ -947,9 +954,11 @@ const Dashboard = defineComponent({
       pagingGames,
       bannerComponent,
       liveWinComponent,
+      betHistoryComponent,
       bannerLoad,
       gameHistoryLoad,
       liveWinLoad,
+      betHistoryLoad,
       gameHistoryComponent
     };
   },
@@ -1599,7 +1608,10 @@ export default Dashboard;
       <GameProviders />
 
       <!--------------------- Game History ---------------------->
-      <component :is="gameHistoryComponent" v-if="bannerComponent"></component>
+      <!-- <component :is="gameHistoryComponent" v-if="bannerComponent"></component> -->
+
+      <!--------------------- Bet History ---------------------->
+      <component :is="betHistoryComponent" v-if="bannerComponent"></component>
     </div>
   </div>
 </template>
@@ -1767,10 +1779,6 @@ export default Dashboard;
   transition-duration: 0.28s;
 }
 
-.swiper-vertical {
-  // touch-action: unset;
-}
-
 .home-body {
   .home-bg-blur {
     filter: blur(3px);
@@ -1924,34 +1932,6 @@ export default Dashboard;
   overflow-y: hidden;
   scroll-behavior: smooth;
   height: 450px;
-}
-
-.m-home-lucky-jackpot-height {
-  .swiper-wrapper {
-    height: 450px;
-
-    .swiper-slide {
-      .v-col-4 {
-        flex-basis: 0;
-        flex-grow: 1;
-      }
-    }
-  }
-}
-
-.home-lucky-jackpot-height {
-  height: 640px;
-
-  .swiper-wrapper {
-    height: 568px;
-
-    .swiper-slide {
-      .v-col-4 {
-        flex-basis: 0;
-        flex-grow: 1;
-      }
-    }
-  }
 }
 
 .slider-img-width {
