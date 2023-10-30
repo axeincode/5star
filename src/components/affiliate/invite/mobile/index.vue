@@ -6,8 +6,6 @@ import { useDisplay } from "vuetify";
 import { type GetInvitaionBonusData } from "@/interface/affiliate/invite"
 import { type GetBettingCommissionData } from "@/interface/affiliate/invite"
 import Notification from "@/components/global/notification/index.vue";
-import BonusDialog from "./../bonus_dailog/index.vue";
-import MBonusDialog from "./../bonus_dailog/mobile/index.vue";
 import { appBarStore } from "@/store/appBar";
 import { inviteStore } from '@/store/invite';
 import { storeToRefs } from 'pinia';
@@ -15,6 +13,12 @@ import { ElNotification, getPositionDataWithUnit } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
+import MStatistics from "../components/mobile/Statistics.vue";
+import MInvitePartner from "../components/mobile/InvitePartner.vue";
+import MSocialCommunity from "../components/mobile/SocialCommunity.vue";
+import MAchievementBonus from "../components/mobile/AchievementBonus.vue";
+import MInviteFooter from "../components/mobile/InviteFooter.vue";
+import MCommission from "../components/mobile/Commission.vue";
 
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
@@ -35,14 +39,10 @@ const inviteList = ref([
         content: "6273728f800a98d4025a3073"
     }
 ])
-const inviteUserValue = ref<number>(44057);
-const depositUserValue = ref<number>(3963);
 const revenuCashMenuShow = ref<boolean>(false);
 const commissionMenuShow = ref<boolean>(false);
-const bonusTodayValue = ref<string>("R$ 55.44");
-const bonusYesterdayValue = ref<string>("R$ 98.02");
-const revenuCash = ref<string>("R$ 415.740");
 const morePeople = ref<number>(1025);
+
 const invitationBonusItem = ref({
     cash: "R$ 40.496.845",
     content: "8099369 people received"
@@ -56,77 +56,7 @@ const bonusDialog = ref<boolean>(false);
 const slider = ref<number>(0);
 const min = 0;
 const max = 101;
-const slides = ref([
-    [
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 3,
-            rate: 100,
-            cash: "R$ 10",
-        },
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 10,
-            rate: 30,
-            cash: "R$ 30",
-        },
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 25,
-            rate: 20,
-            cash: "R$ 60",
-        },
-    ],
-    [
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 10,
-            rate: 30,
-            cash: "R$ 30",
-        },
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 3,
-            rate: 100,
-            cash: "R$ 10",
-        },
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 25,
-            rate: 20,
-            cash: "R$ 60",
-        },
-    ],
-    [
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 25,
-            rate: 20,
-            cash: "R$ 60",
-        },
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 10,
-            rate: 30,
-            cash: "R$ 30",
-        },
-        {
-            headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
-            grade: 3,
-            totalGrade: 3,
-            rate: 100,
-            cash: "R$ 10",
-        },
-    ],
-]);
+
 
 const mobileWidth = computed(() => {
     return width.value;
@@ -160,19 +90,9 @@ const invitationBonusList = ref<GetInvitaionBonusData[]>([
     }
 ])
 
-const notificationShow = ref<boolean>(false);
-const notificationText = ref<string>("");
-const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
-
 const inviteItem = computed(() => {
     const { getInviteItem } = storeToRefs(inviteStore());
-    inviteList.value[0].content = getInviteItem.value.web_invite_url;
-    inviteList.value[1].content = getInviteItem.value.invite_code;
     return getInviteItem.value
-})
-
-watch(inviteItem, (newValue) => {
-
 })
 
 watch(slider, (newValue) => {
@@ -180,31 +100,6 @@ watch(slider, (newValue) => {
       slider.value = 97;
     }
 })
-
-const inviteUrlCopy = (content: string) => {
-  clipboard.writeText(content).then(
-    () => {
-      console.log("Copied to clipboard!");
-      notificationText.value = "Successful replication"
-      const toast = useToast();
-      toast.success(notificationText.value, {
-        timeout: 5000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: SuccessIcon,
-        rtl: false,
-      });
-    },
-    (error) => {
-      console.error("Could not copy text: ", error);
-    }
-  );
-}
 
 const closeBonusDialog = () => {
     setMainBlurEffectShow(false);
@@ -231,116 +126,15 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <v-row class="mx-4 mt-2 align-center">
-    <v-col cols="12" md="5" lg="5" class="ma-0 pa-0" style="height: 100%">
-      <v-card color="#29253C" theme="dark" class="text-center pb-4">
-        <p class="mt-3 m-invite-partner-text text-center">
-          {{ t("affiliate.invite.invite_partner") }}
-        </p>
-        <v-list-item
-          class="m-invite-url-item"
-          v-for="(item, index) in inviteList"
-          :key="index"
-          style="height: 40px"
-        >
-          <v-list-item-title class="ml-4 text-left" style="line-height: 20px">
-            <div class="text-400-10 gray">{{ item.title }}</div>
-            <div class="text-600-12">{{ item.content }}</div>
-          </v-list-item-title>
-          <template v-slot:append>
-            <v-btn
-              icon=""
-              @click="inviteUrlCopy(item.content)"
-              class="m-invite-url-copy-btn"
-              bg-color="#353652"
-              width="24"
-              height="24"
-            >
-              <img src="@/assets/public/svg/icon_public_71.svg" width="16" />
-            </v-btn>
-          </template>
-        </v-list-item>
-      </v-card>
-    </v-col>
-    <v-col cols="12" md="7" lg="7" class="mt-3 pa-0">
-      <v-card color="#1C1929" class="pa-3 m-invite-card-1">
-        <v-row>
-          <v-col cols="6" md="3" lg="3" class="m-invite-border text-center py-0 my-3">
-            <div class="m-invite-url-title">{{ t("affiliate.invite.invited_user") }}</div>
-            <div class="m-invite-url-right-text mt-2">{{ inviteUserValue }}</div>
-          </v-col>
-          <v-col
-            cols="6"
-            md="3"
-            lg="3"
-            class="text-center py-0 my-3"
-            :class="[mobileWidth < 960 ? '' : 'm-invite-border']"
-          >
-            <div class="m-invite-url-title">{{ t("affiliate.invite.deposit_user") }}</div>
-            <div class="m-invite-url-right-text mt-2">{{ depositUserValue }}</div>
-          </v-col>
-          <v-col cols="6" md="3" lg="3" class="m-invite-border text-center py-0 my-3">
-            <div class="m-invite-url-title">{{ t("affiliate.invite.bonus_today") }}</div>
-            <div class="m-invite-url-right-text mt-2">{{ bonusTodayValue }}</div>
-          </v-col>
-          <v-col cols="6" md="3" lg="3" class="text-center py-0 my-3">
-            <div class="m-invite-url-title">
-              {{ t("affiliate.invite.bonus_yesterday") }}
-            </div>
-            <div class="m-invite-url-right-text mt-2">{{ bonusYesterdayValue }}</div>
-          </v-col>
-        </v-row>
-      </v-card>
-      <v-card class="mt-5 pa-5 invite-right-card-bg">
-        <v-row class="align-center mx-2">
-          <v-col cols="8" class="pa-2">
-            <div class="text-700-16 white">
-              {{ t("affiliate.invite.monthly_revenu_goal") }}
-            </div>
-          </v-col>
-          <v-col cols="4" class="text-right pa-0 pt-2">
-            <img src="@/assets/public/image/img_public_06.png" width="74" height="69" />
-          </v-col>
-        </v-row>
-        <v-row class="mx-2 my-0">
-          <v-col cols="12">
-            <div class="d-flex mt-2">
-              <div class="m-invite-revenu-cash-text">{{ revenuCash }}</div>
-              <v-menu v-model="revenuCashMenuShow">
-                <template v-slot:activator="{ props }">
-                  <img
-                    src="@/assets/public/svg/icon_public_22.svg"
-                    class="ml-4"
-                    v-bind="props"
-                    width="16"
-                  />
-                </template>
-                <v-list
-                  theme="dark"
-                  bg-color="#211F31"
-                  class="px-2"
-                  :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
-                  style="margin: 0px 2px 0px -15px"
-                >
-                  <v-list-item class="pt-4">
-                    <div class="text-center text-400-12 gray">
-                      {{ t("affiliate.invite.help_text_1") }}
-                    </div>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-            <div>
-              <span class="text-500-10 yellow">{{ morePeople }}</span>
-              <span class="text-500-10 white">{{
-                t("affiliate.invite.more_people_text")
-              }}</span>
-            </div>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-col>
-  </v-row>
+  <!-- User Statistics Component -->
+  <MStatistics />
+
+  <!-- Invite Partner Component -->
+  <MInvitePartner :inviteItem="inviteItem" />
+
+  <!-- Social Community Component -->
+  <MSocialCommunity />
+
   <v-row class="justify-center mt-6 text-800-14 white">
     {{ t("affiliate.invite.premiums_text") }}
   </v-row>
@@ -423,202 +217,7 @@ onMounted(async () => {
       </v-col>
     </v-row>
   </v-card>
-  <v-card color="#29253C" class="mt-5 mx-3 px-3 pt-4">
-    <v-row class="justify-center mt-1">
-      <div class="text-700-14 white">{{ t("affiliate.invite.achivement_bonus") }}</div>
-      <img
-        src="@/assets/public/svg/icon_public_22.svg"
-        class="ml-4"
-        style="cursor: pointer"
-        @click="bonusDialogShow"
-        width="16"
-      />
-    </v-row>
-    <v-dialog
-      v-model="bonusDialog"
-      :width="mobileWidth < 600 ? 328 : 471"
-      @click:outside="closeBonusDialog"
-    >
-      <BonusDialog @close="closeBonusDialog" v-if="mobileWidth > 600" />
-      <MBonusDialog @close="closeBonusDialog" v-else />
-    </v-dialog>
-    <v-row class="justify-center mx-2">
-      <v-col cols="12">
-        <p class="text-400-12 gray">
-          {{ t("affiliate.invite.achivement_bonus_text_1") }}
-        </p>
-      </v-col>
-    </v-row>
-    <!-- card carousel -->
-    <v-row class="mt-10">
-      <v-carousel
-        interval="6000"
-        height="386"
-        hide-delimiter-background
-        hide-delimiters
-        show-arrows="hover"
-      >
-        <!-- prev, next button hide when slides array length is less than 2 -->
-        <template v-slot:prev="{ props }">
-          <v-btn
-            class="button-carousel text-none m-prev-btn-position"
-            icon="mdi-chevron-left"
-            @click="props.onClick"
-            v-if="slides.length > 1"
-            style="width: 24px !important; height: 24px !important"
-          >
-          </v-btn>
-        </template>
-        <template v-slot:next="{ props }">
-          <v-btn
-            class="button-carousel text-none m-next-btn-position"
-            variant="elevated"
-            icon="mdi-chevron-right"
-            @click="props.onClick"
-            v-if="slides.length > 1"
-            style="width: 24px !important; height: 24px !important"
-          >
-          </v-btn>
-        </template>
-        <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
-          <v-sheet color="#29253C" height="100%" tile>
-            <v-row align="center" justify="center" class="mx-10 justify-center">
-              <v-col
-                v-for="(i, index) in 3"
-                :key="index"
-                cols="4"
-                v-if="mobileWidth > 960"
-              >
-                <v-card color="#211F31" class="mt-4 relative m-invite-carousel-card">
-                  <div class="m-invite-carousel-card-header"></div>
-                  <img
-                    :src="slide[index].headerImg"
-                    class="m-invite-carousel-header-img"
-                  />
-                  <div class="m-invite-carousel-header-text">
-                    {{ t("affiliate.invite.agent_realization_text") }}
-                    {{ slide[index].totalGrade }}
-                  </div>
-                  <div class="m-invite-carousel-header-rate bonus-progress-bg">
-                    <v-progress-linear
-                      v-model="slide[index].rate"
-                      height="21"
-                      class="bonus-progress"
-                    >
-                      <div class="text-800-14 white">
-                        <Font class="active">{{ slide[index].grade }} / </Font>
-                        {{ slide[index].totalGrade }}
-                      </div>
-                    </v-progress-linear>
-                  </div>
-                  <div class="m-invite-carousel-body-text" style="font-size: 28px">
-                    {{ slide[index].cash }}
-                  </div>
-                  <div class="text-center">
-                    <v-btn
-                      class="m-invite-carousel-btn text-none"
-                      width="176"
-                      height="42"
-                      :class="[
-                        slide[index].grade == 3 ? 'button-bright' : 'invite-receive-btn',
-                      ]"
-                    >
-                      {{ t("affiliate.invite.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-col>
-              <v-col
-                v-for="(i, index1) in 2"
-                :key="index1"
-                cols="6"
-                v-else-if="mobileWidth > 600 && mobileWidth <= 960"
-              >
-                <v-card color="#211F31" class="mt-4 relative m-invite-carousel-card">
-                  <div class="m-invite-carousel-card-header"></div>
-                  <img
-                    :src="slide[index1].headerImg"
-                    class="m-invite-carousel-header-img"
-                  />
-                  <div class="m-invite-carousel-header-text">
-                    {{ t("affiliate.invite.agent_realization_text") }}
-                    {{ slide[index1].grade }}
-                  </div>
-                  <div class="m-invite-carousel-header-rate bonus-progress-bg">
-                    <v-progress-linear
-                      v-model="slide[index1].rate"
-                      height="21"
-                      class="bonus-progress"
-                    >
-                      <div class="text-800-14 white">
-                        <Font class="active">{{ slide[index1].grade }} / </Font>
-                        {{ slide[index1].totalGrade }}
-                      </div>
-                    </v-progress-linear>
-                  </div>
-                  <div class="m-invite-carousel-body-text" style="font-size: 28px">
-                    {{ slide[index1].cash }}
-                  </div>
-                  <div class="text-center">
-                    <v-btn
-                      class="m-invite-carousel-btn text-none"
-                      width="176"
-                      height="42"
-                      :class="[
-                        slide[index1].grade == 3 ? 'button-bright' : 'invite-receive-btn',
-                      ]"
-                    >
-                      {{ t("affiliate.invite.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-col>
-              <v-col v-for="(i, index2) in 1" :key="index2" cols="12" v-else>
-                <v-card color="#211F31" class="mt-4 relative m-invite-carousel-card">
-                  <div class="m-invite-carousel-card-header"></div>
-                  <img
-                    :src="slide[index2].headerImg"
-                    class="m-invite-carousel-header-img"
-                  />
-                  <div class="m-invite-carousel-header-text">
-                    {{ t("affiliate.invite.agent_realization_text") }}
-                    {{ slide[index2].grade }}
-                  </div>
-                  <div class="m-invite-carousel-header-rate bonus-progress-bg">
-                    <v-progress-linear
-                      v-model="slide[index2].rate"
-                      height="21"
-                      class="bonus-progress"
-                    >
-                      <div class="text-800-14 white">
-                        <Font class="active">{{ slide[index2].grade }} / </Font>
-                        {{ slide[index2].totalGrade }}
-                      </div>
-                    </v-progress-linear>
-                  </div>
-                  <div class="m-invite-carousel-body-text" style="font-size: 28px">
-                    {{ slide[index2].cash }}
-                  </div>
-                  <div class="text-center">
-                    <v-btn
-                      class="m-invite-carousel-btn text-none"
-                      width="176"
-                      height="42"
-                      :class="[
-                        slide[index2].grade == 3 ? 'button-bright' : 'invite-receive-btn',
-                      ]"
-                    >
-                      {{ t("affiliate.invite.receive_btn_text") }}
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel>
-    </v-row>
-  </v-card>
+
   <v-row class="mt-6 justify-center mx-16">
     <div class="text-700-14 white text-center relative">
       {{ t("affiliate.invite.commission_title_text") }}
@@ -647,103 +246,12 @@ onMounted(async () => {
       </v-menu>
     </div>
   </v-row>
-  <v-row class="mt-4 justify-center px-10">
-    <div class="text-400-12 gray text-center">
-      {{ t("affiliate.invite.commission_content_text") }}
-    </div>
-  </v-row>
-  <v-card class="invite-right-card-bg mt-5 mx-3 pa-3 py-5">
-    <v-row class="mx-0">
-      <v-col cols="12" md="6" lg="6">
-        <div class="text-700-14 white">{{ t("affiliate.invite.invite_text_1") }}</div>
-        <div class="text-400-12 white mt-4">
-          {{ t("affiliate.invite.invite_text_2") }}
-        </div>
-        <div class="text-400-12 white mt-4">
-          <span>{{ t("affiliate.invite.invite_text_3_1") }}</span>
-          <Font color="#F9BC01" class="text-900-12">30 %</Font>
-          <span>{{ t("affiliate.invite.invite_text_3_2") }}</span>
-        </div>
-        <div class="text-400-12 white mt-4">
-          <span>{{ t("affiliate.invite.invite_text_4_1") }}</span>
-          <Font color="#F9BC01" class="text-900-12">30 %</Font>
-          <span>{{ t("affiliate.invite.invite_text_4_2") }}</span>
-        </div>
-        <div class="text-400-12 white mt-4">
-          <span>{{ t("affiliate.invite.invite_text_5_1") }}</span>
-          <Font color="#F9BC01" class="text-900-12">30 %</Font>
-          <span>{{ t("affiliate.invite.invite_text_5_2") }}</span>
-        </div>
-        <img
-          src="@/assets/affiliate/invite/image/img_agent_19.png"
-          class="mt-6"
-          style="width: 100%; max-width: 630px"
-        />
-      </v-col>
-      <v-col cols="12" md="6" lg="6" class="text-center">
-        <img
-          src="@/assets/affiliate/invite/image/img_agent_02.png"
-          class="mt-1"
-          style="width: 80%; max-width: 410px"
-        />
-        <div class="m-footer-body-bg">
-          <div class="text-700-12 white pt-4">
-            {{ t("affiliate.invite.invite_text_6") }}
-          </div>
-          <div class="footer-body-cash-text pt-2" style="font-size: 26px">
-            R$ {{ Math.ceil(slider) }}
-          </div>
-          <div class="text-400-10 gray mx-2">
-            <span>{{ t("affiliate.invite.invite_text_7") }}</span>
-            <Font color="#F9BC01" class="text-800-10">{{ Math.ceil(slider) }}</Font>
-            <span>{{ t("affiliate.invite.invite_text_8") }}</span>
-          </div>
-          <div class="mx-2 py-3">
-            <v-slider
-              v-model="slider"
-              color="#32CFEC"
-              class="align-center"
-              rounded="rounded-xl"
-              :max="max"
-              :min="min"
-              hide-details
-            >
-            </v-slider>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-  </v-card>
-  <v-card class="invite-footer-card-bg mt-5 mx-3 pa-3 py-5">
-    <v-row class="mx-1 align-center">
-      <v-col cols="12" md="6" lg="6">
-        <div class="mt-4 text-800-12 white">
-          {{ t("affiliate.invite.invite_text_9") }}
-        </div>
-        <div class="mt-4 text-500-12 white">
-          {{ t("affiliate.invite.invite_text_10") }}
-        </div>
-        <div class="mt-4 text-800-12 color-1ACB51">
-          {{ t("affiliate.invite.invite_text_11") }}
-        </div>
-        <div class="mt-4 text-500-12 white">
-          {{ t("affiliate.invite.invite_text_12") }}
-        </div>
-      </v-col>
-      <v-col cols="12" md="6" lg="6" class="d-flex align-center justify-center">
-        <img
-          src="@/assets/affiliate/invite/image/img_agent_03.png"
-          class="mt-4 m-invite-img-3"
-          width="281"
-        />
-      </v-col>
-    </v-row>
-  </v-card>
-  <!-- <Notification
-    :notificationShow="notificationShow"
-    :notificationText="notificationText"
-    :checkIcon="checkIcon"
-  /> -->
+
+  <!-- Commission Component -->
+  <MCommission />
+
+  <!-- Invite Footer Component -->
+  <MInviteFooter />
 </template>
 <style lang="scss">
 .m-prev-btn-position {
@@ -772,14 +280,14 @@ onMounted(async () => {
   .v-slider-thumb__ripple {
     width: 38px !important;
     left: -2.7px !important;
-    height: 25px;
-    top: -2px;
-    border-radius: 32px;
+    height: 25px !important;
+    top: -2px !important;
+    border-radius: 32px !important;
     filter: blur(0.3px);
   }
 
   .v-slider.v-input--horizontal .v-slider-track__background {
-    height: 2px;
+    height: 2px !important;
   }
 
   .v-slider-thumb__surface::before {
@@ -824,14 +332,6 @@ onMounted(async () => {
   background: var(--secondary-button-353652, #353652);
 }
 
-.m-invite-card-1 {
-  border-radius: 8px;
-  background: var(--bg-51-c-1929, #1c1929);
-
-  /* Text Box */
-  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-}
-
 .invite-receive-btn {
   background: #353652 !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
@@ -864,12 +364,6 @@ onMounted(async () => {
 
 .m-invite-border {
   border-right: 2px solid #414968;
-}
-
-.m-invite-url-right-text {
-  font-weight: 800;
-  font-size: 12px;
-  color: #ffffff;
 }
 
 .invite-right-card-bg {

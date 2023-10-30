@@ -367,6 +367,16 @@ export const lang: langType = {
       text_3: "Forms"
     },
     invite: {
+      text_1: "Today's Deposit Users",
+      text_2: "Yesterday's Deposits Users",
+      text_3: "Today's Revenue",
+      text_4: "Yesterday's Revenue ",
+      text_5: "Deposits this month Users",
+      text_6: "Total Registered Users",
+      text_7: "This Month's Revenue",
+      text_8: "Total Depositing Users",
+      text_9: "Total Revenue",
+      text_10: "Share with your social community",
       invite_partner: "INVITE A PARTNER",
       invited_user: "Invited Users",
       deposit_user: "Deposited Users",
