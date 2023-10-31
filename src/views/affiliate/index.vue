@@ -31,6 +31,9 @@ const Forms = defineAsyncComponent(
 const MForms = defineAsyncComponent(
   () => import("@/components/affiliate/forms/mobile/index.vue")
 );
+const MAchievement = defineAsyncComponent(
+  () => import("@/components/affiliate/achievement/mobile/index.vue")
+);
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -148,7 +151,7 @@ onMounted(() => {
       </div>
       <div class="m-affiliate-tab-body" v-else>
         <v-row class="text-center">
-          <v-col cols="4">
+          <v-col cols="3" class="px-1">
             <p
               v-ripple.center
               @click="tabSelect(0)"
@@ -158,7 +161,17 @@ onMounted(() => {
               {{ t("affiliate.tab.text_1") }}
             </p>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3" class="px-1">
+            <p
+              v-ripple.center
+              @click="tabSelect(3)"
+              class="cursor-pointer"
+              :class="[selectedTabIndex == 3 ? 'selected-tab-text' : '']"
+            >
+              {{ t("affiliate.tab.text_4") }}
+            </p>
+          </v-col>
+          <v-col cols="3" class="px-1">
             <p
               v-ripple.center
               @click="tabSelect(1)"
@@ -168,7 +181,7 @@ onMounted(() => {
               {{ t("affiliate.tab.text_2") }}
             </p>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3" class="px-1">
             <p
               v-ripple.center
               @click="tabSelect(2)"
@@ -193,6 +206,10 @@ onMounted(() => {
       <div v-if="selectedTabIndex == 2">
         <Forms v-if="mobileWidth > 600" />
         <MForms v-else />
+      </div>
+      <div v-if="selectedTabIndex == 3">
+        <Forms v-if="mobileWidth > 600" />
+        <MAchievement v-else />
       </div>
     </div>
   </div>
@@ -274,7 +291,7 @@ onMounted(() => {
 }
 
 .m-affiliate-container {
-  margin: -60px 0px;
+  margin: -60px 0px 10px 0px;
   background: #211f31;
   padding-bottom: 10px;
   border-radius: 8px;
@@ -318,7 +335,7 @@ onMounted(() => {
 
   .m-affiliate-tab-body {
     display: flex;
-    padding: 0px 60px;
+    padding: 0px 30px;
     align-items: center;
     background: #29253c;
     height: 48px;

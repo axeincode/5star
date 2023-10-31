@@ -364,7 +364,8 @@ export const lang: langType = {
     tab: {
       text_1: "Invite",
       text_2: "Statistics",
-      text_3: "Forms"
+      text_3: "Forms",
+      text_4: "Achievement",
     },
     invite: {
       text_1: "Today's Deposit Users",
@@ -418,6 +419,11 @@ export const lang: langType = {
         text_2: "Cumulative Deposit Users",
         text_3: "Bonus"
       }
+    },
+    achievement: {
+      text_1: "Achievement Reward",
+      text_2: "Agent ReaIization",
+      text_3: "Receive"
     },
     statistics: {
       receive_btn_text: "Receive",

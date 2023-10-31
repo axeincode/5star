@@ -63,24 +63,24 @@ watch(
 watch(rightBarToggle, (newValue) => {
   if (mobileWidth.value > 1280) {
     if (newValue) {
-      affiliateWidth.value = "affiliate-container";
+      affiliateWidth.value = "bonus-transaction-container";
     } else {
-      affiliateWidth.value = "affiliate-container-1";
+      affiliateWidth.value = "bonus-transaction-container-1";
     }
   } else {
-    affiliateWidth.value = "m-affiliate-container";
+    affiliateWidth.value = "m-bonus-transaction-container";
   }
 });
 
 watch(mobileWidth, (newValue: number) => {
   if (newValue > 1280) {
     if (rightBarToggle.value) {
-      affiliateWidth.value = "affiliate-container";
+      affiliateWidth.value = "bonus-transaction-container";
     } else {
-      affiliateWidth.value = "affiliate-container-1";
+      affiliateWidth.value = "bonus-transaction-container-1";
     }
   } else {
-    affiliateWidth.value = "m-affiliate-container";
+    affiliateWidth.value = "m-bonus-transaction-container";
   }
 });
 
@@ -91,12 +91,12 @@ const tabSelect = (index: number) => {
 onMounted(() => {
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
-      affiliateWidth.value = "affiliate-container";
+      affiliateWidth.value = "bonus-transaction-container";
     } else {
-      affiliateWidth.value = "affiliate-container-1";
+      affiliateWidth.value = "bonus-transaction-container-1";
     }
   } else {
-    affiliateWidth.value = "m-affiliate-container";
+    affiliateWidth.value = "m-bonus-transaction-container";
   }
 
   selectedTabIndex.value = bonusTabIndex.value;
@@ -243,21 +243,21 @@ onMounted(() => {
     }
   }
 }
-.affiliate-container {
+.bonus-transaction-container {
   margin: -20px 40px;
   background: #211f31;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
-.affiliate-container-1 {
+.bonus-transaction-container-1 {
   margin: -20px 40px;
   background: #211f31;
   // padding-bottom: 20px;
   border-radius: 8px;
 }
 
-.m-affiliate-container {
+.m-bonus-transaction-container {
   margin: -60px 0px;
   background: #211f31;
   // padding-bottom: 20px;

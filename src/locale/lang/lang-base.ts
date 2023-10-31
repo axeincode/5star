@@ -363,6 +363,7 @@ export type langType = {
       text_1: string
       text_2: string
       text_3: string
+      text_4: string
     }
     invite: {
       text_1: string
@@ -416,7 +417,12 @@ export type langType = {
         text_2: string
         text_3: string
       }
-    },
+    }
+    achievement: {
+      text_1: string
+      text_2: string
+      text_3: string
+    }
     statistics: {
       receive_btn_text: string
       total_profit_text: string
