@@ -424,6 +424,19 @@ export type langType = {
       text_3: string
     }
     statistics: {
+      level_text: string
+      grade_text_1: string
+      grade_text_2: string
+      grade_text_3: string
+      text_4: string
+      text_5: string
+      text_6: string
+      text_7: string
+      text_8: string
+      text_9: string
+      text_10: string
+      text_11: string
+      summary_text: string
       receive_btn_text: string
       total_profit_text: string
       mobile_profit_title: string

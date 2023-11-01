@@ -3,7 +3,6 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import img_agent_6 from "@/assets/affiliate/invite/image/img_agent_6.png";
-import img_agent_6_1 from "@/assets/affiliate/invite/image/img_agent_6_1.png";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -15,17 +14,17 @@ const rewardGrades = ref<Array<any>>([
     grade: 3,
   },
   {
-    img: img_agent_6_1,
+    img: img_agent_6,
     value: 1000,
     grade: 6,
   },
   {
-    img: img_agent_6_1,
+    img: img_agent_6,
     value: 10000,
     grade: 9,
   },
   {
-    img: img_agent_6_1,
+    img: img_agent_6,
     value: 100000,
     grade: 12,
   },
@@ -45,7 +44,7 @@ const mobileWidth = computed(() => {
     <v-row class="mx-3 mt-6">
       <template v-for="(item, index) in rewardGrades" :key="index">
         <v-col cols="3">
-          <img :src="item.img" />
+          <img :src="item.img" :class="index == 0 ? 'img-gray' : ''" />
           <p class="text-900-11" :class="index == 0 ? 'gray' : 'color-F9BC01'">
             R$ {{ item.value }}
           </p>

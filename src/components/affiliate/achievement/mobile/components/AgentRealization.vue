@@ -10,6 +10,12 @@ import img_agentemblem_5 from "@/assets/affiliate/achievement/img_agentemblem_5.
 import img_agentemblem_6 from "@/assets/affiliate/achievement/img_agentemblem_6.png";
 import img_agentemblem_7 from "@/assets/affiliate/achievement/img_agentemblem_7.png";
 import img_agentemblem_8 from "@/assets/affiliate/achievement/img_agentemblem_8.png";
+import img_agentemblem_9 from "@/assets/affiliate/achievement/img_agentemblem_9.png";
+import img_agentemblem_10 from "@/assets/affiliate/achievement/img_agentemblem_10.png";
+import img_agentemblem_11 from "@/assets/affiliate/achievement/img_agentemblem_11.png";
+import img_agentemblem_12 from "@/assets/affiliate/achievement/img_agentemblem_12.png";
+import img_agentemblem_13 from "@/assets/affiliate/achievement/img_agentemblem_13.png";
+import img_agentemblem_14 from "@/assets/affiliate/achievement/img_agentemblem_14.png";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -42,43 +48,43 @@ const realizationItem = ref<Array<any>>([
     rate: 97.8,
   },
   {
-    img: img_agentemblem_2,
+    img: img_agentemblem_5,
     grade: 1000,
     realization_grade: 500,
     rate: 97.8,
   },
   {
-    img: img_agentemblem_3,
+    img: img_agentemblem_6,
     grade: 2000,
     realization_grade: 1000,
     rate: 21.5,
   },
   {
-    img: img_agentemblem_4,
+    img: img_agentemblem_7,
     grade: 6000,
     realization_grade: 3000,
     rate: 0,
   },
   {
-    img: img_agentemblem_5,
+    img: img_agentemblem_8,
     grade: 12000,
     realization_grade: 5000,
     rate: 0,
   },
   {
-    img: img_agentemblem_6,
+    img: img_agentemblem_9,
     grade: 25000,
     realization_grade: 10000,
     rate: 0,
   },
   {
-    img: img_agentemblem_7,
+    img: img_agentemblem_10,
     grade: 2000000,
     realization_grade: 50000,
     rate: 0,
   },
   {
-    img: img_agentemblem_8,
+    img: img_agentemblem_11,
     grade: 4000000,
     realization_grade: 100000,
     rate: 0,
@@ -98,7 +104,7 @@ const mobileWidth = computed(() => {
   >
     <v-row class="mx-0">
       <v-col cols="5" class="text-center">
-        <img :src="item.img" width="50" />
+        <img :src="item.img" width="50" :class="index < 4 ? 'img-gray opacity-3' : ''" />
         <p
           class="text-900-18"
           :class="item.grade >= 1000 ? 'color-F9BC01' : 'color-414968'"
