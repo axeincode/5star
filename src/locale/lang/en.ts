@@ -469,6 +469,7 @@ export const lang: langType = {
       table: {
         time: "Time",
         user: "User",
+        event: "Event",
         bonus: "Bonus",
       }
     }

@@ -467,6 +467,7 @@ export type langType = {
       table: {
         time: string
         user: string
+        event: string
         bonus: string
       }
     }

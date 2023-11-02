@@ -63,51 +63,61 @@ const formsList = ref<Array<any>>([
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
+    event: "lnvitation Bonus",
     bonus: "R$ 12",
   },
 ]);
@@ -258,6 +268,11 @@ const fixPositionShow = computed(() => {
           <th class="m-forms-table-header-text">
             <div class="forms-table-border">{{ t("affiliate.forms.table.user") }}</div>
           </th>
+          <th class="m-forms-table-header-text">
+            <div class="forms-table-border-1 text-left">
+              {{ t("affiliate.forms.table.event") }}
+            </div>
+          </th>
           <th class="m-forms-table-header-text" style="border-radius: 0px 43px 43px 0px">
             {{ t("affiliate.forms.table.bonus") }}
           </th>
@@ -267,6 +282,7 @@ const fixPositionShow = computed(() => {
         <tr v-for="(item, index) in formsList" :key="index">
           <td class="text-500-12">{{ item.time }}</td>
           <td class="text-500-12">{{ item.user }}</td>
+          <td class="text-500-12 text-left">{{ item.event }}</td>
           <td class="text-500-12">{{ item.bonus }}</td>
         </tr>
       </tbody>
@@ -377,6 +393,10 @@ const fixPositionShow = computed(() => {
 
   .forms-table-border {
     border-left: 1px solid #000000 !important;
+    border-right: 1px solid #000000 !important;
+  }
+
+  .forms-table-border-1 {
     border-right: 1px solid #000000 !important;
   }
 }
