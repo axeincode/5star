@@ -142,6 +142,10 @@ const mobileWidth = computed(() => {
 
 const inviteHistoryConfig = computed(() => {
   const { getInviteHistoryConfig } = storeToRefs(inviteStore());
+  getInviteHistoryConfig.value.list.push({
+    index: 3,
+    name: "Achievement Bonus",
+  });
   return getInviteHistoryConfig.value;
 });
 
@@ -153,7 +157,6 @@ const fixPositionShow = computed(() => {
   const { getFixPositionEnable } = storeToRefs(appBarStore());
   return getFixPositionEnable.value;
 });
-
 </script>
 <template>
   <v-row class="mt-4 mx-4">
@@ -231,7 +234,7 @@ const fixPositionShow = computed(() => {
           v-for="(item, i) in cashItems"
           :key="i"
           :value="item"
-          class="bonus-item mx-2"
+          class="bonus-item mx-1"
           :class="selectedCashItem == item ? 'm-bonus-menu-selected-item' : ''"
           @click="handleCashDropdown(item)"
         >
@@ -240,8 +243,13 @@ const fixPositionShow = computed(() => {
       </v-list>
     </v-menu>
   </v-row>
-  <v-row class="mx-2 mt-6 m-forms-bonus-table" >
-    <v-table class="m-forms-bonus-table-bg" :class="fixPositionShow ? 'table-position-overflow' : ''" theme="dark" fixed-header>
+  <v-row class="mx-2 mt-6 m-forms-bonus-table">
+    <v-table
+      class="m-forms-bonus-table-bg"
+      :class="fixPositionShow ? 'table-position-overflow' : ''"
+      theme="dark"
+      fixed-header
+    >
       <thead class="forms-table-header">
         <tr>
           <th class="m-forms-table-header-text" style="border-radius: 43px 0px 0px 43px">
@@ -269,6 +277,14 @@ const fixPositionShow = computed(() => {
   </v-row>
 </template>
 <style lang="scss">
+.m-bonus-menu-card {
+  .v-list-item__append {
+    width: 18px;
+  }
+  .v-list-item__append > .v-icon {
+    margin-inline-start: unset !important;
+  }
+}
 .m-bonus-menu::after {
   content: "";
   position: absolute;
@@ -325,7 +341,7 @@ const fixPositionShow = computed(() => {
 
 .table-position-overflow {
   .v-table__wrapper {
-    overflow: hidden!important;
+    overflow: hidden !important;
   }
 }
 
@@ -392,6 +408,18 @@ const fixPositionShow = computed(() => {
   }
 }
 
+.el-popper.is-light .el-popper__arrow::before {
+  border: 1px solid #181522;
+  background: #181522 !important;
+  right: 0;
+}
+
+.el-popper.is-light {
+  background-color: #181522 !important;
+  border: none !important;
+  border-radius: 10px !important;
+}
+
 .m-date-picker-background-1 {
   z-index: 2002 !important;
   position: absolute !important;
@@ -399,7 +427,7 @@ const fixPositionShow = computed(() => {
 
   .el-popper.is-light .el-popper__arrow::before {
     border: 1px solid #181522;
-    background: #181522;
+    background: #181522 !important;
     right: 0;
   }
 
@@ -509,7 +537,7 @@ const fixPositionShow = computed(() => {
 
   .el-popper.is-light .el-popper__arrow::before {
     border: 1px solid #181522;
-    background: #181522;
+    background: #181522 !important;
     right: 0;
   }
 
