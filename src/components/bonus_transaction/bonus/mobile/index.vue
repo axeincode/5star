@@ -107,7 +107,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-12 white">{{ userBalance.amount }}</div>
+          <div class="text-600-12 white">R$ {{ userBalance.amount }}</div>
         </v-list-item-title>
         <!-- <template v-slot:append>
           <div v-ripple.center style="width: 24px; height: 24px">
@@ -121,7 +121,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.bonus_money_text") }}</div>
-          <div class="text-600-12 white">{{ userBalance.availabe_balance }}</div>
+          <div class="text-600-12 white">R$ {{ userBalance.availabe_balance }}</div>
         </v-list-item-title>
       </v-list-item>
       <v-list-item class="m-bg-color-1 mt-4 mx-6">
@@ -130,7 +130,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.withdraw_text") }}</div>
-          <div class="text-600-12 white">{{ userBalance.availabe_balance }}</div>
+          <div class="text-600-12 white">R$ {{ userBalance.availabe_balance }}</div>
         </v-list-item-title>
       </v-list-item>
     </v-col>

@@ -1,66 +1,97 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+import { userStore } from "@/store/user";
+import { authStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
 import { type GetBonusData } from "@/interface/bonus";
+import { bonusStore } from "@/store/bonus";
+import moment from "moment-timezone";
 
 const { t } = useI18n()
 const { width } = useDisplay();
+const { dispatchUserBonus } = bonusStore();
 
 const mobileWidth = computed(() => {
-    return width.value
+  return width.value
+})
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value
+})
+
+const userInfo = computed(() => {
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value
+})
+
+const userBonusList = computed(() => {
+  const { getBonusList } = storeToRefs(bonusStore());
+  if (getBonusList.value.list != undefined) {
+    getBonusList.value.list.map(item => {
+      item.rate = Math.ceil(item.now / item.max);
+    })
+  }
+  return getBonusList.value
 })
 
 const totalAmount = ref<string>("R$ 1500.56");
 const withdrawAmount = ref<string>("R$ 855.79");
 
 const bonusList = ref<Array<GetBonusData>>([
-    {
-        type: "Completion",
-        rate: 100,
-        currentCash: "R$ 90000.00",
-        totalCash: "R$ 90000.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 6000",
-        expireDate: "2023/2/20"
-    },
-    {
-        type: "Underway",
-        rate: 50,
-        currentCash: "R$ 90000.00",
-        totalCash: "R$ 90000.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 6000",
-        expireDate: "2023/2/20"
-    },
-    {
-        type: "Failure",
-        rate: 0,
-        currentCash: "R$ 0.00",
-        totalCash: "R$ 67500.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 0",
-        expireDate: "2023/2/20"
-    },
-    {
-        type: "Failure",
-        rate: 50,
-        currentCash: "R$ 36000.00",
-        totalCash: "R$ 67500.00",
-        restCash: "RRL 3000",
-        bonusCash: "R$ 0",
-        expireDate: "2023/2/20"
-    },
+  {
+    type: "Completion",
+    rate: 100,
+    currentCash: "R$ 90000.00",
+    totalCash: "R$ 90000.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 6000",
+    expireDate: "2023/2/20"
+  },
+  {
+    type: "Underway",
+    rate: 50,
+    currentCash: "R$ 90000.00",
+    totalCash: "R$ 90000.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 6000",
+    expireDate: "2023/2/20"
+  },
+  {
+    type: "Failure",
+    rate: 0,
+    currentCash: "R$ 0.00",
+    totalCash: "R$ 67500.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 0",
+    expireDate: "2023/2/20"
+  },
+  {
+    type: "Failure",
+    rate: 50,
+    currentCash: "R$ 36000.00",
+    totalCash: "R$ 67500.00",
+    restCash: "RRL 3000",
+    bonusCash: "R$ 0",
+    expireDate: "2023/2/20"
+  },
 ]);
 
 const formsList = ref<Array<any>>([
-    {
-        date: "2023/01/20",
-        deposit: 3000,
-        receive: 6000,
-        wager: 90000
-    },
+  {
+    date: "2023/01/20",
+    deposit: 3000,
+    receive: 6000,
+    wager: 90000
+  },
 ])
+
+onMounted(async () => {
+  await dispatchUserBonus();
+  console.log(userBonusList.value);
+})
 </script>
 <template>
   <v-row class="mt-6 mx-2 text-600-16 text-gray text-center">
@@ -72,23 +103,32 @@ const formsList = ref<Array<any>>([
     <v-col cols="12" md="4" lg="4">
       <v-list-item class="bg-color-1">
         <template v-slot:prepend>
-          <img src="@/assets/public/svg/icon_public_26.svg" />
+          <img src="@/assets/public/svg/icon_public_26.svg" width="32" />
         </template>
         <v-list-item-title class="ml-4">
           <div class="text-400-12 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-14 white">{{ totalAmount }}</div>
+          <div class="text-600-14 white">R$ {{ userBalance.amount }}</div>
         </v-list-item-title>
-        <template v-slot:append>
+        <!-- <template v-slot:append>
           <img src="@/assets/public/svg/btn_public_02.svg" />
-        </template>
+        </template> -->
       </v-list-item>
       <v-list-item class="bg-color-1 mt-4">
         <template v-slot:prepend>
-          <img src="@/assets/public/svg/icon_public_27.svg" />
+          <img src="@/assets/public/svg/icon_public_27.svg" width="32" />
+        </template>
+        <v-list-item-title class="ml-4">
+          <div class="text-400-12 text-gray">{{ t("bonus.bonus_money_text") }}</div>
+          <div class="text-600-14 white">R$ {{ userBalance.availabe_balance }}</div>
+        </v-list-item-title>
+      </v-list-item>
+      <v-list-item class="bg-color-1 mt-4">
+        <template v-slot:prepend>
+          <img src="@/assets/public/svg/icon_public_100.svg" width="32" />
         </template>
         <v-list-item-title class="ml-4">
           <div class="text-400-12 text-gray">{{ t("bonus.withdraw_text") }}</div>
-          <div class="text-600-14 white">{{ withdrawAmount }}</div>
+          <div class="text-600-14 white">R$ {{ userBalance.availabe_balance }}</div>
         </v-list-item-title>
       </v-list-item>
     </v-col>

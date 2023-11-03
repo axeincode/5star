@@ -234,7 +234,11 @@ export const lang: langType = {
       text_6: "Game",
       text_7: "Multi",
       text_8: "Payout",
-      text_9: "",
+      text_9: "Player/Clan",
+      text_10: "Time",
+      text_11: "Wager",
+      text_12: "Multiplier",
+      text_13: "",
     },
     footer: {
       game: {

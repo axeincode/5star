@@ -265,11 +265,11 @@ const fixPositionShow = computed(() => {
           <th class="m-forms-table-header-text" style="border-radius: 43px 0px 0px 43px">
             {{ t("affiliate.forms.table.time") }}
           </th>
-          <th class="m-forms-table-header-text">
+          <th class="m-forms-table-header-text px-0">
             <div class="forms-table-border">{{ t("affiliate.forms.table.user") }}</div>
           </th>
-          <th class="m-forms-table-header-text">
-            <div class="forms-table-border-1 text-left">
+          <th class="m-forms-table-header-text px-0">
+            <div class="forms-table-border-1">
               {{ t("affiliate.forms.table.event") }}
             </div>
           </th>
@@ -282,7 +282,7 @@ const fixPositionShow = computed(() => {
         <tr v-for="(item, index) in formsList" :key="index">
           <td class="text-500-12">{{ item.time }}</td>
           <td class="text-500-12">{{ item.user }}</td>
-          <td class="text-500-12 text-left">{{ item.event }}</td>
+          <td class="text-500-12">{{ item.event }}</td>
           <td class="text-500-12">{{ item.bonus }}</td>
         </tr>
       </tbody>

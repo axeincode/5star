@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useDisplay } from "vuetify";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
@@ -18,6 +19,7 @@ import "swiper/css/pagination";
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 
 const { t } = useI18n();
+const { width } = useDisplay();
 const modules = [Pagination, Autoplay, Navigation];
 
 const svgIconColor = ref<string>("#7782AA");
@@ -103,6 +105,10 @@ const liveWinList = ref<Array<LiveWinItem>>([
   },
 ]);
 
+const mobileWidth = computed(() => {
+  return width.value;
+});
+
 onMounted(() => {
   interval.value = setInterval(() => {
     liveWinList.value.push(liveWinList.value[Math.floor(Math.random() * 8)]);
@@ -111,7 +117,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="home-live-win">
+  <div class="m-home-live-win" v-if="mobileWidth < 600">
     <img src="@/assets/home/svg/live_win_1.svg" class="m-live-win-img-width" />
     <div class="live-win-header">
       <inline-svg
@@ -152,10 +158,50 @@ onMounted(() => {
       </Swiper>
     </div>
   </div>
+  <div class="home-live-win" v-else>
+    <img src="@/assets/home/svg/live_win.svg" class="live-win-img-width" />
+    <div class="live-win-header">
+      <inline-svg
+        :src="icon_public_91"
+        width="24"
+        height="24"
+        :transform-source="svgIconTransform"
+      ></inline-svg>
+      <p class="text-700-22 gray ml-2">{{ t("home.live_win.text_1") }}</p>
+    </div>
+    <div class="live-win-body">
+      <Swiper
+        :modules="modules"
+        :slidesPerView="11"
+        :spaceBetween="8"
+        :autoplay="{
+          delay: 600,
+          disableOnInteraction: false,
+        }"
+        class="mx-2"
+        style="height: auto"
+      >
+        <SwiperSlide
+          v-for="(item, index) in liveWinList"
+          :key="index"
+          :virtualIndex="index"
+        >
+          <div class="text-center">
+            <img :src="item.image" class="live-win-img" />
+            <div class="live-win-level-text">
+              <img :src="vipLevelImgs[item.level]" width="21" />
+              <p class="text-400-14 white ml-2">{{ item.game_name }}</p>
+            </div>
+            <div class="text-900-18 color-12FF76">{{ item.betting_amount }}</div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
-.home-live-win {
+.m-home-live-win {
   position: relative;
   margin: 28px 4px 0px 4px;
   .m-live-win-img-width {
@@ -181,6 +227,36 @@ onMounted(() => {
     display: flex;
     align-items: center;
     margin: 0px 6px;
+    justify-content: center;
+  }
+}
+.home-live-win {
+  position: relative;
+  margin: 28px 16px 0px 16px;
+  .live-win-img-width {
+    width: 100%;
+  }
+  .live-win-header {
+    position: absolute;
+    top: 15px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .live-win-body {
+    position: absolute;
+    top: 76px;
+    width: 100%;
+  }
+  .live-win-img {
+    width: 95%;
+    border-radius: 12px;
+  }
+  .live-win-level-text {
+    display: flex;
+    align-items: center;
+    margin: 0px 6px;
+    justify-content: center;
   }
 }
 </style>

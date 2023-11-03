@@ -4,6 +4,13 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
+import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
+import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
+import img_vipemblem_50_74 from "@/assets/vip/image/img_vipemblem_50-74.png";
+import img_vipemblem_75_99 from "@/assets/vip/image/img_vipemblem_75-99.png";
+import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png";
+import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
+import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
 import "swiper/css";
@@ -32,6 +39,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
       name: "Minesssssss",
     },
+    player: {
+      image: img_vipemblem_1_24,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 20,
   },
@@ -39,6 +50,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
       name: "Mines",
+    },
+    player: {
+      image: img_vipemblem_1_24,
+      name: "Ar***ra",
     },
     multi: "1.50",
     payout: 12,
@@ -48,6 +63,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
       name: "Mines",
     },
+    player: {
+      image: img_vipemblem_1_24,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 7,
   },
@@ -55,6 +74,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
       name: "Mines",
+    },
+    player: {
+      image: img_vipemblem_25_49,
+      name: "Ar***ra",
     },
     multi: "10.50",
     payout: 12.17,
@@ -64,6 +87,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
       name: "Double",
     },
+    player: {
+      image: img_vipemblem_25_49,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 32,
   },
@@ -72,6 +99,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
       name: "Crash",
     },
+    player: {
+      image: img_vipemblem_25_49,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 5,
   },
@@ -79,6 +110,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
       name: "Crash",
+    },
+    player: {
+      image: img_vipemblem_25_49,
+      name: "Ar***ra",
     },
     multi: "0.50",
     payout: 13,
@@ -88,6 +123,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
       name: "Double",
     },
+    player: {
+      image: img_vipemblem_50_74,
+      name: "Ar***ra",
+    },
     multi: "3.50",
     payout: 6.2,
   },
@@ -96,6 +135,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
       name: "Double",
     },
+    player: {
+      image: img_vipemblem_50_74,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 22.1,
   },
@@ -103,6 +146,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
+    },
+    player: {
+      image: img_vipemblem_50_74,
+      name: "Ar***ra",
     },
     multi: "0.50",
     payout: 34.7,
@@ -112,6 +159,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
     },
+    player: {
+      image: img_vipemblem_75_99,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 25,
   },
@@ -119,6 +170,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
+    },
+    player: {
+      image: img_vipemblem_75_99,
+      name: "Ar***ra",
     },
     multi: "0.50",
     payout: 4.5,
@@ -128,6 +183,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
       name: "Double",
     },
+    player: {
+      image: img_vipemblem_75_99,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 22.1,
   },
@@ -136,6 +195,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
     },
+    player: {
+      image: img_vipemblem_75_99,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 133,
   },
@@ -143,6 +206,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
+    },
+    player: {
+      image: img_vipemblem_100_149,
+      name: "Ar***ra",
     },
     multi: "0.50",
     payout: 25,
@@ -152,6 +219,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
     },
+    player: {
+      image: img_vipemblem_100_149,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 7.6,
   },
@@ -159,6 +230,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
       name: "Double",
+    },
+    player: {
+      image: img_vipemblem_100_149,
+      name: "Ar***ra",
     },
     multi: "0.50",
     payout: 22.1,
@@ -168,6 +243,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
     },
+    player: {
+      image: img_vipemblem_159_199,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 133,
   },
@@ -176,6 +255,10 @@ const allBetHistoryList = ref<Array<any>>([
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
     },
+    player: {
+      image: img_vipemblem_159_199,
+      name: "Ar***ra",
+    },
     multi: "0.50",
     payout: 5,
   },
@@ -183,6 +266,10 @@ const allBetHistoryList = ref<Array<any>>([
     game: {
       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
       name: "Dice",
+    },
+    player: {
+      image: img_vipemblem_200,
+      name: "Ar***ra",
     },
     multi: "234.50",
     payout: 1.33,
@@ -236,13 +323,138 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-row v-if="mobileWidth > 600"></v-row>
+  <div v-if="mobileWidth > 600" class="mt-4 mx-2">
+    <div class="d-flex align-center mx-2">
+      <img src="@/assets/public/svg/icon_public_99.svg" width="32" />
+      <p class="text-700-20 white ml-1">{{ t("home.bet_history.text_1") }}</p>
+    </div>
+    <div
+      class="bet-history-tabs mt-4"
+      style="padding: 0px 2px"
+      :style="{ width: token != undefined ? '516px' : '388px' }"
+    >
+      <template v-for="(item, index) in betHistoryTabList">
+        <v-btn
+          class="text-none"
+          :class="item == selectedBtnText ? 'button-bright' : 'button-transparent'"
+          width="128px"
+          height="36px"
+          style="border-radius: 8px !important"
+          @click="handleBetHistoryTab(item)"
+        >
+          {{ item }}
+        </v-btn>
+      </template>
+    </div>
+    <v-card
+      color="#211F32"
+      theme="dark"
+      height="640"
+      class="mt-2 mx-2 all-bet-history-height"
+    >
+      <v-card
+        color="#29253C"
+        theme="dark"
+        height="48"
+        class="mx-1 mt-1"
+        style="border-radius: 16px; box-shadow: unset"
+      >
+        <v-row class="mx-3 my-0 align-center" style="height: 100%">
+          <v-col cols="2" class="text-700-16 gray py-0">
+            {{ t("home.bet_history.text_6") }}
+          </v-col>
+          <v-col cols="2" class="text-700-16 text-center gray py-0">
+            {{ t("home.bet_history.text_9") }}
+          </v-col>
+          <v-col cols="2" class="text-700-16 text-right gray py-0">
+            {{ t("home.bet_history.text_10") }}
+          </v-col>
+          <v-col cols="2" class="text-700-16 text-right gray py-0">
+            {{ t("home.bet_history.text_11") }}
+          </v-col>
+          <v-col cols="2" class="text-700-16 text-right gray py-0">
+            {{ t("home.bet_history.text_12") }}
+          </v-col>
+          <v-col cols="2" class="text-700-16 text-right gray py-0">
+            {{ t("home.bet_history.text_8") }}
+          </v-col>
+        </v-row>
+      </v-card>
+      <swiper
+        :direction="'vertical'"
+        :modules="modules"
+        :slidesPerView="15"
+        :spaceBetween="10"
+        :virtual="true"
+      >
+        <swiper-slide v-for="(item, index) in allBetHistoryList" :key="index">
+          <v-row class="mx-4 mt-1 align-center">
+            <v-col
+              cols="2"
+              class="py-1 d-flex align-center"
+              style="flex-basis: 0; flex-grow: 1"
+            >
+              <img :src="item.game.image" width="22" />
+              <p class="text-500-16 gray text-center ml-2">
+                {{ item.game.name }}
+              </p>
+            </v-col>
+            <v-col
+              cols="2"
+              class="py-1 d-flex align-center justify-center"
+              style="flex-basis: 0; flex-grow: 1"
+            >
+              <img :src="item.player.image" width="22" />
+              <p class="text-500-16 gray text-center ml-2">
+                {{ item.player.name }}
+              </p>
+            </v-col>
+            <v-col cols="2" class="py-1 text-right" style="flex-basis: 0; flex-grow: 1">
+              <p
+                class="text-500-16"
+                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
+              >
+                {{ item.multi }}X
+              </p>
+            </v-col>
+            <v-col cols="2" class="py-1 text-right" style="flex-basis: 0; flex-grow: 1">
+              <p
+                class="text-500-16"
+                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
+              >
+                {{ item.multi }}X
+              </p>
+            </v-col>
+            <v-col cols="2" class="py-1 text-right" style="flex-basis: 0; flex-grow: 1">
+              <p
+                class="text-500-16"
+                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
+              >
+                {{ item.multi }}X
+              </p>
+            </v-col>
+            <v-col
+              cols="2"
+              class="py-1 text-500-16 text-right"
+              :class="item.payout > 10 ? 'color-01983A' : 'gray'"
+              style="flex-basis: 0; flex-grow: 1"
+            >
+              $ {{ item.payout }}
+            </v-col>
+          </v-row>
+        </swiper-slide>
+      </swiper>
+    </v-card>
+  </div>
   <div v-else class="mt-4">
     <div class="d-flex align-center mx-6">
       <img src="@/assets/public/svg/icon_public_99.svg" />
       <p class="text-800-16 white ml-1">{{ t("home.bet_history.text_1") }}</p>
     </div>
-    <div class="m-bet-history-tabs mt-1">
+    <div
+      class="m-bet-history-tabs mt-1"
+      :style="{ width: token != undefined ? '332px' : '252px' }"
+    >
       <template v-for="(item, index) in betHistoryTabList">
         <v-btn
           class="text-none"
@@ -269,7 +481,7 @@ onMounted(() => {
         class="mx-1 mt-1"
         style="border-radius: 16px"
       >
-        <v-row class="mx-3 align-center" style="margin-top: 6px">
+        <v-row class="mx-3 my-0 align-center" style="height: 100%">
           <v-col cols="4" class="text-700-12 gray py-0">
             {{ t("home.bet_history.text_6") }}
           </v-col>
@@ -323,11 +535,36 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.bet-history-tabs {
+  display: flex;
+  align-items: center;
+  margin: 0px 10px;
+  height: 40px;
+  border-radius: 8px;
+  background: #211f32;
+  /* Text Box */
+  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+  .button-transparent {
+    background: transparent !important;
+    box-shadow: none !important;
+    .v-btn__content {
+      font-size: 14px;
+      color: #7782aa;
+      font-weight: 700;
+    }
+  }
+  .button-bright {
+    .v-btn__content {
+      font-size: 14px;
+      color: #000000;
+      font-weight: 700;
+    }
+  }
+}
 .m-bet-history-tabs {
   display: flex;
   align-items: center;
   margin: 0px 10px;
-  width: 332px;
   height: 32px;
   border-radius: 8px;
   background: #211f32;
@@ -339,6 +576,13 @@ onMounted(() => {
     .v-btn__content {
       font-size: 12px;
       color: #7782aa;
+      font-weight: 700;
+    }
+  }
+  .button-bright {
+    .v-btn__content {
+      font-size: 12px;
+      color: #000000;
       font-weight: 700;
     }
   }
@@ -373,7 +617,7 @@ onMounted(() => {
 }
 .all-bet-history-height {
   height: 640px;
-
+  border-radius: 16px;
   .swiper-wrapper {
     height: 568px;
 
