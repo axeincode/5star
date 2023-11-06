@@ -453,7 +453,7 @@ onMounted(() => {
     background: #211f31;
     border-radius: 24px !important;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.1s;
     margin: auto;
 
     div {

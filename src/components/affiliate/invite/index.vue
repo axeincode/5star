@@ -12,19 +12,37 @@ import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
+import * as clipboard from "clipboard-polyfill";
+import QrcodeVue from 'qrcode.vue'
+import { type StatisticsItem } from "@/interface/affiliate/invite"
+import icon_public_28 from "@/assets/public/svg/icon_public_28.svg";
+import icon_public_29 from "@/assets/public/svg/icon_public_29.svg";
+import icon_public_30 from "@/assets/public/svg/icon_public_30.svg";
+import icon_public_31 from "@/assets/public/svg/icon_public_31.svg";
+import icon_public_32 from "@/assets/public/svg/icon_public_32.svg";
+import icon_public_33 from "@/assets/public/svg/icon_public_33.svg";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const inviteList = ref([
     {
         title: "Invitation URL:",
-        content: "https://betfiery.com?referralcode=62737..."
+        content: "https.//betfiery.com/referralcode = 6273728f800a98d4989 7997qwqe31231 werwrsdf33 d3333333wetwewfiNffsdse31231w33wetwewfiNffsds..."
     },
     {
         title: "Copy the invitation code",
         content: "6273728f800a98d4025a3073"
     }
 ])
+
+const socialIcons = ref<Array<any>>([
+  icon_public_28,
+  icon_public_32,
+  icon_public_33,
+  icon_public_29,
+  icon_public_30,
+  icon_public_31,
+]);
 const morePeople = ref<number>(1025);
 const invitationBonusItem = ref({
     cash: "R$ 40.496.845",
@@ -37,6 +55,7 @@ const bettingCommissionItem = ref({
 })
 const bonusDialog = ref<boolean>(false);
 const slider = ref<number>(0);
+const size = ref<number>(132)
 const revenuCashMenuShow = ref<boolean>(false);
 const commissionMenuShow = ref<boolean>(false);
 const min = 0;
@@ -112,6 +131,17 @@ const slides = ref([
         },
     ],
 ]);
+const statisticsItem = ref<StatisticsItem>({
+    today_deposited_user: 0,
+    yesterday_deposited_user: 3963,
+    today_revenue: 55.44,
+    yesterday_revenue: 98.02,
+    this_month_deposited_user: 0,
+    this_month_revenue: 0,
+    total_registered_user: 0,
+    total_depositing_user: 0,
+    total_revenue: 0,
+});
 
 const mobileWidth = computed(() => {
     return width.value;
@@ -149,25 +179,32 @@ const notificationShow = ref<boolean>(false);
 const notificationText = ref<string>("");
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
-const inviteUrlCopy = () => {
-    notificationText.value = "Successful replication"
-    notificationShow.value = !notificationShow.value;
-    if (notificationShow.value) {
-        const toast = useToast();
-        toast.success(notificationText.value, {
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: SuccessIcon,
-            rtl: false,
-        });
+
+
+const inviteUrlCopy = (content: string) => {
+  clipboard.writeText(content).then(
+    () => {
+      console.log("Copied to clipboard!");
+      notificationText.value = "Successful replication";
+      const toast = useToast();
+      toast.success(notificationText.value, {
+        timeout: 5000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+    },
+    (error) => {
+      console.error("Could not copy text: ", error);
     }
-}
+  );
+};
 
 window.addEventListener('scroll', function () {
     revenuCashMenuShow.value = false;
@@ -184,19 +221,46 @@ onMounted(() => {
 <template>
   <v-row class="mx-2 mt-2 align-center">
     <v-col cols="12" md="5" lg="5" class="ma-0 pa-0" style="height: 100%">
-      <v-card color="#29253C" theme="dark" class="text-center pb-4">
+      <v-card
+        color="#29253C"
+        theme="dark"
+        class="text-center pb-4"
+        style="box-shadow: unset"
+      >
         <p class="ma-5 invite-partner-text">{{ t("affiliate.invite.invite_partner") }}</p>
-        <v-list-item
-          class="invite-url-item"
-          v-for="(item, index) in inviteList"
-          :key="index"
-        >
+        <v-list-item class="invite-url-item">
           <v-list-item-title class="ml-4 text-left">
-            <div class="invite-url-title">{{ item.title }}</div>
-            <div>{{ item.content }}</div>
+            <div class="invite-url-title">{{ inviteList[0].title }}</div>
+            <div style="text-wrap: balance">{{ inviteList[0].content }}</div>
+            <v-btn
+              icon=""
+              @click="inviteUrlCopy"
+              width="40"
+              height="40"
+              class="mt-1 invite-url-copy-btn"
+            >
+              <img src="@/assets/public/svg/icon_public_71.svg" />
+            </v-btn>
           </v-list-item-title>
           <template v-slot:append>
-            <v-btn icon="" @click="inviteUrlCopy">
+            <div class="invite-qr-code-body text-center">
+              <QrcodeVue :value="inviteList[0].content" :size="size" class="mt-2" />
+            </div>
+          </template>
+        </v-list-item>
+        <v-list-item class="invite-url-item">
+          <v-list-item-title class="ml-4 text-left">
+            <div class="invite-url-title">{{ inviteList[1].title }}</div>
+            <div>{{ inviteList[1].content }}</div>
+          </v-list-item-title>
+          <template v-slot:append>
+            <v-btn
+              icon=""
+              @click="inviteUrlCopy"
+              class="invite-url-copy-btn"
+              width="40"
+              height="40"
+            >
               <img src="@/assets/public/svg/icon_public_71.svg" />
             </v-btn>
           </template>
@@ -204,104 +268,111 @@ onMounted(() => {
       </v-card>
     </v-col>
     <v-col cols="12" md="7" lg="7">
-      <v-card color="#1C1929" class="pa-5">
-        <v-row>
-          <v-col cols="6" md="3" lg="3" class="invite-border text-center">
-            <div class="invite-url-title">{{ t("affiliate.invite.invited_user") }}</div>
-            <div class="invite-url-right-text mt-2">{{ inviteUserValue }}</div>
-          </v-col>
-          <v-col
-            cols="6"
-            md="3"
-            lg="3"
-            class="text-center"
-            :class="[mobileWidth < 960 ? '' : 'invite-border']"
-          >
-            <div class="invite-url-title">{{ t("affiliate.invite.deposit_user") }}</div>
-            <div class="invite-url-right-text mt-2">{{ depositUserValue }}</div>
-          </v-col>
-          <v-col cols="6" md="3" lg="3" class="invite-border text-center">
-            <div class="invite-url-title">{{ t("affiliate.invite.bonus_today") }}</div>
-            <div class="invite-url-right-text mt-2">{{ bonusTodayValue }}</div>
-          </v-col>
-          <v-col cols="6" md="3" lg="3" class="text-center">
-            <div class="invite-url-title">
-              {{ t("affiliate.invite.bonus_yesterday") }}
+      <v-card
+        color="#29253C"
+        theme="dark"
+        class="text-center pa-2"
+        style="box-shadow: unset"
+      >
+        <v-card color="#1C1929" class="pa-5 mb-2" style="box-shadow: unset">
+          <v-row>
+            <v-col cols="6" md="3" lg="3" class="text-center py-1">
+              <div class="invite-url-title">{{ t("affiliate.invite.text_1") }}</div>
+              <div class="invite-url-right-text mt-1">
+                {{ statisticsItem.today_deposited_user }}
+              </div>
+            </v-col>
+            <v-col
+              cols="6"
+              md="3"
+              lg="3"
+              class="text-center py-1"
+              :class="[mobileWidth < 960 ? '' : 'invite-border']"
+            >
+              <div class="invite-url-title">{{ t("affiliate.invite.text_3") }}</div>
+              <div class="invite-url-right-text mt-1">
+                R$ {{ statisticsItem.today_revenue }}
+              </div>
+            </v-col>
+            <v-col cols="6" md="3" lg="3" class="text-center py-1">
+              <div class="invite-url-title">
+                {{ t("affiliate.invite.text_2") }}
+              </div>
+              <div class="invite-url-right-text mt-1">
+                {{ statisticsItem.yesterday_deposited_user }}
+              </div>
+            </v-col>
+            <v-col cols="6" md="3" lg="3" class="text-center py-1">
+              <div class="invite-url-title">
+                {{ t("affiliate.invite.text_4") }}
+              </div>
+              <div class="invite-url-right-text mt-1">
+                R$ {{ statisticsItem.yesterday_revenue }}
+              </div>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card color="#1C1929" class="pa-5 mb-2" style="box-shadow: unset">
+          <v-row>
+            <v-col cols="6" md="3" lg="3" class="text-center py-1">
+              <div class="invite-url-title">
+                {{ t("affiliate.invite.text_5") }}
+              </div>
+              <div class="invite-url-right-text mt-1">
+                {{ statisticsItem.this_month_deposited_user }}
+              </div>
+            </v-col>
+            <v-col
+              cols="6"
+              md="3"
+              lg="3"
+              class="text-center py-1"
+              :class="[mobileWidth < 960 ? '' : 'invite-border']"
+            >
+              <div class="invite-url-title">
+                {{ t("affiliate.invite.text_7") }}
+              </div>
+              <div class="invite-url-right-text mt-2">
+                R$ {{ statisticsItem.this_month_revenue.toFixed(2) }}
+              </div>
+            </v-col>
+            <v-col cols="6" md="3" lg="3" class="text-center py-1">
+              <div class="invite-url-title">{{ t("affiliate.invite.text_6") }}</div>
+              <div class="invite-url-right-text mt-2">
+                {{ statisticsItem.total_registered_user }}
+              </div>
+            </v-col>
+            <v-col cols="6" md="3" lg="3" class="text-center py-1">
+              <div class="invite-url-title">
+                {{ t("affiliate.invite.text_8") }}
+              </div>
+              <div class="invite-url-right-text mt-2">
+                {{ statisticsItem.total_depositing_user }}
+              </div>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card color="#1C1929" class="pa-5 mb-3" style="box-shadow: unset">
+          <v-row>
+            <v-col cols="12" class="text-center py-1">
+              <div class="invite-url-title">{{ t("affiliate.invite.text_9") }}</div>
+              <div class="invite-url-right-text mt-2">
+                R$ {{ statisticsItem.total_revenue.toFixed(2) }}
+              </div>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card class="pa-5 invite-right-card-bg" style="box-shadow: unset">
+          <v-row class="align-center">
+            <img src="@/assets/affiliate/invite/image/img_agent_5.png" width="92" />
+            <p class="text-700-18 white mr-2">{{ t("affiliate.invite.text_10") }}</p>
+            <div class="d-flex align-center justify-center" style="margin-left: auto">
+              <template v-for="(icon, index) in socialIcons">
+                <img :src="icon" width="58" class="mr-2" />
+              </template>
             </div>
-            <div class="invite-url-right-text mt-2">{{ bonusYesterdayValue }}</div>
-          </v-col>
-        </v-row>
-      </v-card>
-      <v-card class="mt-5 pa-5 invite-right-card-bg">
-        <v-row class="align-center" v-if="mobileWidth > 600">
-          <v-col cols="3" class="text-center pa-0">
-            <div class="invite-revenu-text">
-              {{ t("affiliate.invite.monthly_revenu_goal") }}
-            </div>
-          </v-col>
-          <v-col cols="3" class="text-center pa-0">
-            <img src="@/assets/public/image/img_public_06.png" width="92" height="84" />
-          </v-col>
-          <v-col cols="6" class="pa-0">
-            <div class="d-flex">
-              <div class="invite-revenu-cash-text">{{ revenuCash }}</div>
-              <v-menu v-model="revenuCashMenuShow">
-                <template v-slot:activator="{ props }">
-                  <img
-                    src="@/assets/public/svg/icon_public_22.svg"
-                    class="ml-4"
-                    style="cursor: pointer"
-                    v-bind="props"
-                  />
-                </template>
-                <v-list theme="dark" bg-color="#211F31" width="400">
-                  <p class="pa-4 invite-url-title">
-                    {{ t("affiliate.invite.help_text_1") }}
-                  </p>
-                </v-list>
-              </v-menu>
-            </div>
-            <div>
-              <span class="invite-more-people-value-text">{{ morePeople }}</span>
-              <span class="invite-more-people-text">{{
-                t("affiliate.invite.more_people_text")
-              }}</span>
-            </div>
-          </v-col>
-        </v-row>
-        <v-row class="align-center" v-else>
-          <v-col cols="8" class="pa-2">
-            <div class="invite-revenu-text">
-              {{ t("affiliate.invite.monthly_revenu_goal") }}
-            </div>
-            <div class="d-flex mt-2">
-              <div class="invite-revenu-cash-text">{{ revenuCash }}</div>
-              <v-menu v-model="revenuCashMenuShow">
-                <template v-slot:activator="{ props }">
-                  <img
-                    src="@/assets/public/svg/icon_public_22.svg"
-                    class="ml-4"
-                    v-bind="props"
-                  />
-                </template>
-                <v-list theme="dark" bg-color="#211F31" class="px-2" width="400">
-                  <p class="pa-4 invite-url-title">
-                    {{ t("affiliate.invite.help_text_1") }}
-                  </p>
-                </v-list>
-              </v-menu>
-            </div>
-            <div>
-              <span class="invite-more-people-value-text">{{ morePeople }}</span>
-              <span class="invite-more-people-text">{{
-                t("affiliate.invite.more_people_text")
-              }}</span>
-            </div>
-          </v-col>
-          <v-col cols="4" class="text-center pa-0">
-            <img src="@/assets/public/image/img_public_06.png" width="92" height="84" />
-          </v-col>
-        </v-row>
+          </v-row>
+        </v-card>
       </v-card>
     </v-col>
   </v-row>
@@ -393,7 +464,7 @@ onMounted(() => {
       </div>
     </v-row>
   </v-card>
-  <v-card color="#29253C" class="mt-5 mx-3 pa-3 py-5">
+  <!-- <v-card color="#29253C" class="mt-5 mx-3 pa-3 py-5">
     <v-row class="justify-center">
       <div class="premiums-text">{{ t("affiliate.invite.achivement_bonus") }}</div>
       <img
@@ -416,7 +487,6 @@ onMounted(() => {
       </v-col>
       <v-col cols="1" md="3" lg="3"></v-col>
     </v-row>
-    <!-- card carousel -->
     <v-row class="mt-10">
       <v-carousel
         interval="6000"
@@ -425,7 +495,6 @@ onMounted(() => {
         :hide-delimiters="slides.length <= 1"
         show-arrows="hover"
       >
-        <!-- prev, next button hide when slides array length is less than 2 -->
         <template v-slot:prev="{ props }">
           <v-btn
             class="button-carousel text-none prev-btn-position"
@@ -584,7 +653,7 @@ onMounted(() => {
         </v-carousel-item>
       </v-carousel>
     </v-row>
-  </v-card>
+  </v-card> -->
   <v-row class="mt-6 justify-center">
     <div class="premiums-text">{{ t("affiliate.invite.commission_title_text") }}</div>
     <v-menu v-model="commissionMenuShow">
@@ -615,17 +684,17 @@ onMounted(() => {
         </div>
         <div class="invitation-bonus-text-2 mt-4">
           <span>{{ t("affiliate.invite.invite_text_3_1") }}</span>
-          <Font color="#F9BC01">30 %</Font>
+          <font color="#F9BC01">30 %</font>
           <span>{{ t("affiliate.invite.invite_text_3_2") }}</span>
         </div>
         <div class="invitation-bonus-text-2 mt-4">
           <span>{{ t("affiliate.invite.invite_text_4_1") }}</span>
-          <Font color="#F9BC01">30 %</Font>
+          <font color="#F9BC01">15 %</font>
           <span>{{ t("affiliate.invite.invite_text_4_2") }}</span>
         </div>
         <div class="invitation-bonus-text-2 mt-4">
           <span>{{ t("affiliate.invite.invite_text_5_1") }}</span>
-          <Font color="#F9BC01">30 %</Font>
+          <font color="#F9BC01">5 %</font>
           <span>{{ t("affiliate.invite.invite_text_5_2") }}</span>
         </div>
         <img
@@ -697,6 +766,12 @@ onMounted(() => {
   <!-- <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" /> -->
 </template>
 <style lang="scss">
+.invite-qr-code-body {
+  width: 153px;
+  height: 153px;
+  background: #ffffff;
+  margin: 16px;
+}
 .invite-partner-text {
   color: #f9bc01;
   font-weight: 700;
@@ -708,6 +783,10 @@ onMounted(() => {
   background-color: #1c1929 !important;
   padding: 4px 8px !important;
   border-radius: 12px !important;
+
+  .v-list-item__content {
+    height: 100%;
+  }
 
   .v-btn--icon {
     border-radius: 10px;
@@ -725,7 +804,7 @@ onMounted(() => {
 
 .invite-url-title {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   color: #7782aa;
 }
 
@@ -747,7 +826,7 @@ onMounted(() => {
 
 .invite-url-right-text {
   font-weight: 800;
-  font-size: 16px;
+  font-size: 14px;
   color: #ffffff;
 }
 
@@ -759,6 +838,11 @@ onMounted(() => {
   font-weight: 700;
   font-size: 18px;
   color: #ffffff;
+}
+
+.invite-url-copy-btn {
+  border-radius: 4px;
+  background: var(--Secondary-Button-353652, #353652);
 }
 
 .invite-revenu-cash-text {

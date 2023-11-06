@@ -2,13 +2,13 @@
 import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import { type statisticsItem } from "@/interface/affiliate/invite"
+import { type StatisticsItem } from "@/interface/affiliate/invite"
 
 const { t } = useI18n();
 const { width } = useDisplay();
 
 const revenuCash = ref<number>(415.740);
-const statisticsItem = ref<statisticsItem>({
+const statisticsItem = ref<StatisticsItem>({
     today_deposited_user: 0,
     yesterday_deposited_user: 3963,
     today_revenue: 55.44,

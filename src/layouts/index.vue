@@ -1,31 +1,33 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { defineAsyncComponent } from "vue";
-// import NavBarLayout from "./NavBar.vue";
-// import MNavBarLayout from "./MobileNavBar.vue";
-// import UserNavBarLayout from "./UserNavBar.vue";
-// import RightBarLayout from "./RightBar.vue";
-// import AppBarLayout from "./AppBar.vue";
-// import MainLayout from "./Main.vue";
-// import MobileMenuLayout from "./MobileMenu.vue";
-// import RefferalLayout from "./RefferalBar.vue";
-// import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
+
+import NavBarLayout from "./NavBar.vue";
+import MNavBarLayout from "./MobileNavBar.vue";
+import UserNavBarLayout from "./UserNavBar.vue";
+import RightBarLayout from "./RightBar.vue";
+import AppBarLayout from "./AppBar.vue";
+import MainLayout from "./Main.vue";
+import MobileMenuLayout from "./MobileMenu.vue";
+import RefferalLayout from "./RefferalBar.vue";
+import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
+
 import { useDisplay } from "vuetify";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
 
-const NavBarLayout = defineAsyncComponent(() => import("./NavBar.vue"));
-const MNavBarLayout = defineAsyncComponent(() => import("./MobileNavBar.vue"));
-const UserNavBarLayout = defineAsyncComponent(() => import("./UserNavBar.vue"));
-const RightBarLayout = defineAsyncComponent(() => import("./RightBar.vue"));
-const AppBarLayout = defineAsyncComponent(() => import("./AppBar.vue"));
-const MainLayout = defineAsyncComponent(() => import("./Main.vue"));
-const MobileMenuLayout = defineAsyncComponent(() => import("./MobileMenu.vue"));
-const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
-const MBonusDashboardDialog = defineAsyncComponent(
-  () => import("@/components/vip/mobile/MBonusDashboard.vue")
-);
+// const NavBarLayout = defineAsyncComponent(() => import("./NavBar.vue"));
+// const MNavBarLayout = defineAsyncComponent(() => import("./MobileNavBar.vue"));
+// const UserNavBarLayout = defineAsyncComponent(() => import("./UserNavBar.vue"));
+// const RightBarLayout = defineAsyncComponent(() => import("./RightBar.vue"));
+// const AppBarLayout = defineAsyncComponent(() => import("./AppBar.vue"));
+// const MainLayout = defineAsyncComponent(() => import("./Main.vue"));
+// const MobileMenuLayout = defineAsyncComponent(() => import("./MobileMenu.vue"));
+// const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
+// const MBonusDashboardDialog = defineAsyncComponent(
+//   () => import("@/components/vip/mobile/MBonusDashboard.vue")
+// );
 
 const { width } = useDisplay();
 
