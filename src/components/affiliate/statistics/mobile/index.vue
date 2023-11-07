@@ -121,6 +121,7 @@ onMounted(async () => {
     <v-col
       cols="4"
       class="text-center"
+      style="height: 100%"
       :class="
         summaryTabText == 'today'
           ? 'm-statistics-summary-tab-active black text-600-13'
@@ -133,6 +134,7 @@ onMounted(async () => {
     <v-col
       cols="4"
       class="text-center"
+      style="height: 100%"
       :class="
         summaryTabText == 'week'
           ? 'm-statistics-summary-tab-active black text-600-13'
@@ -145,6 +147,7 @@ onMounted(async () => {
     <v-col
       cols="4"
       class="text-center"
+      style="height: 100%"
       :class="
         summaryTabText == 'month'
           ? 'm-statistics-summary-tab-active black text-600-13'
@@ -157,7 +160,7 @@ onMounted(async () => {
   </v-row>
   <v-row class="mx-4 my-7 pa-0 m-statistics-receive-card">
     <v-col cols="5" class="pa-0 text-center">
-      <img src="@/assets/affiliate/statistics/img_agent_8.png" />
+      <img src="@/assets/affiliate/statistics/img_agent_8.png" width="82" />
       <p class="text-800-12 white">{{ t("affiliate.statistics.tab.text_1") }}</p>
     </v-col>
     <v-col cols="7" class="pa-0 text-center">

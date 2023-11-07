@@ -28,7 +28,11 @@ const selectedBonusItem = ref("Invitation Bonus");
 
 const datePickerShow = ref<boolean>(false);
 
-const bonusItems = ref<Array<string>>(["Invitation Bonus", "Betting Commission"]);
+const bonusItems = ref<Array<string>>([
+  "Invitation Bonus",
+  "Betting Commission",
+  "Achievement Bonus",
+]);
 
 const bonusMenuShow = ref<boolean>(false);
 const cashMenuShow = ref<boolean>(false);

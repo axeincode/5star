@@ -1,318 +1,228 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useDisplay } from 'vuetify';
+import { ref, computed, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { useDisplay } from "vuetify";
+import { inviteStore } from "@/store/invite";
+import { storeToRefs } from "pinia";
 
-const { t } = useI18n()
+const { t } = useI18n();
 const { width } = useDisplay();
 
-const profitTab = ref("today");
+const { dispatchInviteSelf } = inviteStore();
+
+const summaryTabText = ref("today");
 
 const mobileWidth = computed(() => {
-    return width.value
-})
+  return width.value;
+});
+
+const personalInvitationInfo = computed(() => {
+  const { getPersonalInvitationInfo } = storeToRefs(inviteStore());
+  return getPersonalInvitationInfo.value;
+});
+
+const handleSummaryTab = (tabText: string) => {
+  summaryTabText.value = tabText;
+};
+
+onMounted(async () => {
+  await dispatchInviteSelf();
+});
 </script>
 <template>
-    <v-row class="mt-6 statistics-profit-text">
-        {{ t('affiliate.statistics.total_profit_text') }}
+  <v-card class="statistics-summary-card">
+    <div class="my-4 mx-8 text-700-18 white">
+      {{ t("affiliate.statistics.summary_text") }}
+    </div>
+    <v-row class="mx-2 mb-4 mt-0 px-6 statistics-summary-level">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.level_text") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.grade_text_1") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.grade_text_2") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.grade_text_3") }}
+      </v-col>
     </v-row>
-    <v-card class="statistics-profit-card-body">
-        <v-row class="justify-center">
-            <v-col cols="12" md="4" lg="4" class="text-center">
-                <div v-if="mobileWidth > 960">
-                    <img src="@/assets/public/image/img_public_15.png"
-                        :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                    <p class="statistics-profit-cash-text">R$ 19,34</p>
-                    <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-4']">
-                        {{ t('affiliate.statistics.total_profit_text') }}
-                    </p>
-                </div>
-                <div v-else>
-                    <v-row class="justify-center align-center">
-                        <v-col cols="6">
-                            <p class="statistics-profit-cash-text">R$ 19,34</p>
-                            <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-8']">
-                                {{ t('affiliate.statistics.total_profit_text') }}
-                            </p>
-                        </v-col>
-                        <v-col cols="6">
-                            <img src="@/assets/public/image/img_public_15.png"
-                                :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                        </v-col>
-                    </v-row>
-                </div>
-            </v-col>
-            <v-col cols="12" md="8" lg="8" class="text-center">
-                <v-card theme="dark" color="#1C1929" class="ma-4">
-                    <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
-                        <v-col cols="6" lg="3">
-                            <p class="statistics-profit-cash-text-1">R$ 25.916</p>
-                            <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.invitation_bonus') }}</p>
-                        </v-col>
-                        <v-col cols="6" lg="3">
-                            <p class="statistics-profit-cash-text-1">R$ 40.533,73</p>
-                            <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.betting_commision') }}</p>
-                        </v-col>
-                        <v-col cols="6" lg="3">
-                            <p class="statistics-profit-cash-text-1">R$ 3.225</p>
-                            <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.achivement_bonus') }}</p>
-                        </v-col>
-                        <v-col cols="6" lg="3">
-                            <p class="statistics-profit-cash-text-1">3972</p>
-                            <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.deposit_user') }}</p>
-                        </v-col>
-                    </v-row>
-                </v-card>
-                <div class="px-10 mb-4">
-                    <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.text_1') }}</p>
-                    <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.text_2') }}</p>
-                    <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.text_3') }}</p>
-                </div>
-            </v-col>
-        </v-row>
-    </v-card>
-    <v-tabs v-model="profitTab" bg-color="#211F31" class="mt-12 mx-12">
-        <v-tab value="today" :class="[profitTab == 'today' ? 'statistics-tab-active' : 'statistics-tab']">{{
-            t('affiliate.statistics.tab.text_1') }}</v-tab>
-        <v-tab value="week" :class="[profitTab == 'week' ? 'statistics-tab-active' : 'statistics-tab']">{{
-            t('affiliate.statistics.tab.text_2') }}</v-tab>
-        <v-tab value="month" :class="[profitTab == 'month' ? 'statistics-tab-active' : 'statistics-tab']">{{
-            t('affiliate.statistics.tab.text_3') }}</v-tab>
-    </v-tabs>
-    <v-window v-model="profitTab">
-        <v-window-item value="today">
-            <v-card class="statistics-profit-card-today">
-                <v-row class="justify-center">
-                    <v-col cols="12" md="4" lg="4" class="text-center">
-                        <div v-if="mobileWidth > 960">
-                            <img src="@/assets/public/image/img_public_16.png"
-                                :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                            <p class="statistics-profit-cash-text">R$ 19,34</p>
-                            <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-4']">
-                                {{ t('affiliate.statistics.tab.today.profit_today_text') }}
-                            </p>
-                        </div>
-                        <div v-else>
-                            <v-row class="justify-center align-center">
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text">R$ 19,34</p>
-                                    <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-8']">
-                                        {{ t('affiliate.statistics.tab.today.profit_today_text') }}
-                                    </p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <img src="@/assets/public/image/img_public_16.png"
-                                        :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                                </v-col>
-                            </v-row>
-                        </div>
-                    </v-col>
-                    <v-col cols="12" md="8" lg="8" class="text-center">
-                        <v-card theme="dark" color="#1C1929" class="ma-4">
-                            <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text-1">R$ 19,34</p>
-                                    <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.betting_commision') }}</p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text-1">R$ 0</p>
-                                    <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.invitation_bonus') }}</p>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                        <div class="px-10 mb-4">
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
-                            <p class="statistics-text_1">{{ t('affiliate.statistics.tab.profit_tab_text_3') }}</p>
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
-                            <p class="statistics-text_1">
-                                {{ t('affiliate.statistics.tab.profit_tab_text_5') }}<Font color="#F9BC01">$12</Font>
-                            </p>
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-window-item>
-        <v-window-item value="week">
-            <v-card class="statistics-profit-card-week">
-                <v-row class="justify-center">
-                    <v-col cols="12" md="4" lg="4" class="text-center">
-                        <div v-if="mobileWidth > 960">
-                            <img src="@/assets/public/image/img_public_16.png"
-                                :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                            <p class="statistics-profit-cash-text">R$ 19,34</p>
-                            <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-4']">
-                                {{ t('affiliate.statistics.tab.week.profit_this_week_text') }}
-                            </p>
-                        </div>
-                        <div v-else>
-                            <v-row class="justify-center align-center">
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text">R$ 19,34</p>
-                                    <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-8']">
-                                        {{ t('affiliate.statistics.tab.week.profit_this_week_text') }}
-                                    </p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <img src="@/assets/public/image/img_public_16.png"
-                                        :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                                </v-col>
-                            </v-row>
-                        </div>
-                    </v-col>
-                    <v-col cols="12" md="8" lg="8" class="text-center">
-                        <v-card theme="dark" color="#1C1929" class="ma-4">
-                            <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text-1">R$ 19,34</p>
-                                    <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.betting_commision') }}</p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text-1">R$ 0</p>
-                                    <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.invitation_bonus') }}</p>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                        <div class="px-10 mb-4">
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
-                            <p class="statistics-text_1">{{ t('affiliate.statistics.tab.profit_tab_text_3') }}</p>
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
-                            <p class="statistics-text_1">
-                                {{ t('affiliate.statistics.tab.profit_tab_text_5') }}
-                                <Font color="#F9BC01">$12</Font>
-                            </p>
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-window-item>
-        <v-window-item value="month">
-            <v-card class="statistics-profit-card-month">
-                <v-row class="justify-center">
-                    <v-col cols="12" md="4" lg="4" class="text-center">
-                        <div v-if="mobileWidth > 960">
-                            <img src="@/assets/public/image/img_public_16.png"
-                                :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                            <p class="statistics-profit-cash-text">R$ 19,34</p>
-                            <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-4']">
-                                {{ t('affiliate.statistics.tab.month.profit_this_month_text') }}
-                            </p>
-                        </div>
-                        <div v-else>
-                            <v-row class="justify-center align-center">
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text">R$ 19,34</p>
-                                    <p class="statistics-profit-text pa-0" :class="[mobileWidth < 960 ? 'my-2' : 'my-8']">
-                                        {{ t('affiliate.statistics.tab.month.profit_this_month_text') }}
-                                    </p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <img src="@/assets/public/image/img_public_16.png"
-                                        :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']" />
-                                </v-col>
-                            </v-row>
-                        </div>
-                    </v-col>
-                    <v-col cols="12" md="8" lg="8" class="text-center">
-                        <v-card theme="dark" color="#1C1929" class="ma-4">
-                            <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text-1">R$ 19,34</p>
-                                    <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.betting_commision') }}</p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <p class="statistics-profit-cash-text-1">R$ 0</p>
-                                    <p class="statistics-text-700 mt-4">{{ t('affiliate.invite.invitation_bonus') }}</p>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                        <div class="px-10 mb-4">
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_1') }}</p>
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_2') }}</p>
-                            <p class="statistics-text_1">{{ t('affiliate.statistics.tab.profit_tab_text_3') }}</p>
-                            <p class="statistics-text_1 mt-6">{{ t('affiliate.statistics.tab.profit_tab_text_4') }}</p>
-                            <p class="statistics-text_1">
-                                {{ t('affiliate.statistics.tab.profit_tab_text_5') }}<Font color="#F9BC01">$12</Font>
-                            </p>
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-window-item>
-    </v-window>
+    <v-row class="mx-2 my-2 px-6 statistics-user-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_4") }}
+        {{ t("affiliate.statistics.text_5") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> 0 </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> 0 </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> 0 </v-col>
+    </v-row>
+    <v-row class="mx-2 my-2 px-6 statistics-user-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_6") }} {{ t("affiliate.statistics.text_5") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> 0 </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> 0 </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> 0 </v-col>
+    </v-row>
+    <v-row class="mx-2 my-2 px-6 statistics-commission-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_8") }}
+        {{ t("affiliate.statistics.text_7") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
+    </v-row>
+    <v-row class="mx-2 my-2 px-6 statistics-user-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_6") }}
+        {{ t("affiliate.statistics.text_7") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+    </v-row>
+    <v-row class="mx-2 my-2 px-6 statistics-user-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_9") }}
+        {{ t("affiliate.statistics.text_7") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+    </v-row>
+    <v-row class="mx-2 my-2 px-6 statistics-commission-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_8") }}
+        {{ t("affiliate.statistics.text_7") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
+    </v-row>
+    <v-row class="mx-2 my-2 px-6 statistics-commission-card">
+      <v-col cols="3" class="pa-0 text-400-16 gray">
+        {{ t("affiliate.statistics.text_10") }}
+        {{ t("affiliate.statistics.text_11") }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
+    </v-row>
+  </v-card>
+  <v-row class="mx-12 statistics-summary-tab my-0 align-center">
+    <v-col
+      cols="4"
+      class="text-center pt-5 text-700-18"
+      style="height: 100%; cursor: pointer"
+      :class="
+        summaryTabText == 'today'
+          ? 'statistics-summary-tab-active black'
+          : 'white text-500-13'
+      "
+      @click="handleSummaryTab('today')"
+    >
+      {{ t("affiliate.statistics.tab.text_1") }}
+    </v-col>
+    <v-col
+      cols="4"
+      class="text-center pt-5 text-700-18"
+      style="height: 100%; cursor: pointer"
+      :class="
+        summaryTabText == 'week'
+          ? 'statistics-summary-tab-active black'
+          : 'white text-500-13'
+      "
+      @click="handleSummaryTab('week')"
+    >
+      {{ t("affiliate.statistics.tab.text_2") }}
+    </v-col>
+    <v-col
+      cols="4"
+      class="text-center pt-5 text-700-18"
+      style="height: 100%; cursor: pointer"
+      :class="
+        summaryTabText == 'month'
+          ? 'statistics-summary-tab-active black'
+          : 'white text-500-13'
+      "
+      @click="handleSummaryTab('month')"
+    >
+      {{ t("affiliate.statistics.tab.text_3") }}
+    </v-col>
+  </v-row>
+  <v-row class="mx-4 my-7 pa-0 statistics-receive-card">
+    <v-col cols="4" class="pa-0 text-center">
+      <img src="@/assets/affiliate/statistics/img_agent_8.png" width="108" />
+      <p class="text-800-16 white">{{ t("affiliate.statistics.tab.text_1") }}</p>
+    </v-col>
+    <v-col cols="4" class="pa-0 text-center">
+      <p class="text-800-32 yellow">R$ 19000,34</p>
+    </v-col>
+    <v-col cols="4" class="pa-0 text-center">
+      <v-btn class="text-none statistics-receive-btn" width="185" height="64">
+        {{ t("affiliate.achievement.text_3") }}
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
 <style lang="scss">
-.statistics-text_1 {
-    font-weight: 700;
+.statistics-summary-card {
+  margin: 16px 16px 0px 16px;
+  border-radius: 12px;
+  background: #29253c;
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+  overflow-x: auto;
+}
+.statistics-summary-level {
+  align-items: center;
+  height: 48px;
+  border-radius: 8px;
+  background: #211f31;
+}
+.statistics-user-card {
+  align-items: center;
+  height: 48px;
+  border-radius: 8px;
+  background: #211f31;
+}
+.statistics-commission-card {
+  align-items: center;
+  height: 48px;
+  border-radius: 8px;
+  background: #191725;
+}
+.statistics-summary-tab {
+  height: 64px;
+  border-radius: 0px 0px 8px 8px;
+  background: #29253c;
+  align-items: center;
+  justify-content: center;
+}
+.statistics-summary-tab-active {
+  border-radius: 0px 0px 8px 8px;
+  background: var(--Primary-Button-32CFEC, #32cfec);
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+}
+.statistics-receive-card {
+  height: 118px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #2e68af 0%, #21a68b 100%);
+  align-items: center;
+  justify-content: center;
+}
+.statistics-receive-btn {
+  border-radius: 16px;
+  background: var(--Secondary-Button-353652, #353652);
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+  .v-btn__content {
+    color: #fff;
+    font-family: Inter;
     font-size: 16px;
-    color: #FFFFFF;
-    text-align: justify;
-}
-
-.statistics-profit-text {
-    padding: 0px 86px;
+    font-style: normal;
     font-weight: 700;
-    font-size: 18px;
-    color: #FFFFFF;
-}
-
-.statistics-profit-card-body {
-    margin: 24px 16px 0px 16px;
-    background: linear-gradient(90deg, #29263F 0%, #4A32AA 100%) !important;
-    border-radius: 8px !important;
-}
-
-.statistics-profit-cash-text {
-    font-weight: 800;
-    font-size: 36px;
-    color: #F9BC01;
-}
-
-.statistics-profit-cash-text-1 {
-    font-weight: 800;
-    font-size: 26px;
-    color: #F9BC01;
-}
-
-.statistics-text-700 {
-    font-weight: 700;
-    font-size: 16px;
-    color: #FFFFFF;
-}
-
-.statistics-tab-active {
-    background: #32CFEC !important;
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
-    border-radius: 8px 8px 0px 0px !important;
-    font-weight: 700;
-    font-size: 18px;
-}
-
-.statistics-tab {
-    background: #29253C !important;
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
-    border-radius: 8px 8px 0px 0px !important;
-    font-weight: 700;
-    font-size: 18px;
-    color: #FFFFFF;
-}
-
-.statistics-profit-card-today {
-    margin: 0px 16px;
-    background: linear-gradient(90deg, #2E68AF 0%, #21A68B 100%);
-    border-radius: 8px;
-}
-
-.statistics-profit-card-week {
-    margin: 0px 16px;
-    background: linear-gradient(90deg, #3B26A6 0%, #6C2FE6 100%);
-    border-radius: 8px;
-}
-
-.statistics-profit-card-month {
-    margin: 0px 16px;
-    background: linear-gradient(90deg, #DE8245 0%, #D84594 100%);
-    border-radius: 8px;
+    line-height: normal;
+  }
 }
 </style>

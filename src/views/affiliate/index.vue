@@ -31,6 +31,9 @@ const Forms = defineAsyncComponent(
 const MForms = defineAsyncComponent(
   () => import("@/components/affiliate/forms/mobile/index.vue")
 );
+const Achievement = defineAsyncComponent(
+  () => import("@/components/affiliate/achievement/index.vue")
+);
 const MAchievement = defineAsyncComponent(
   () => import("@/components/affiliate/achievement/mobile/index.vue")
 );
@@ -135,6 +138,14 @@ onMounted(() => {
         <p
           class="affiliate-tab-text"
           v-ripple.center
+          @click="tabSelect(3)"
+          :class="[selectedTabIndex == 3 ? 'selected-tab-text' : '']"
+        >
+          {{ t("affiliate.tab.text_4") }}
+        </p>
+        <p
+          class="affiliate-tab-text"
+          v-ripple.center
           @click="tabSelect(1)"
           :class="[selectedTabIndex == 1 ? 'selected-tab-text' : '']"
         >
@@ -208,7 +219,7 @@ onMounted(() => {
         <MForms v-else />
       </div>
       <div v-if="selectedTabIndex == 3">
-        <Forms v-if="mobileWidth > 600" />
+        <Achievement v-if="mobileWidth > 600" />
         <MAchievement v-else />
       </div>
     </div>
@@ -307,7 +318,7 @@ onMounted(() => {
     align-items: center;
     background: #29253c;
     height: 64px;
-    margin: 8px;
+    margin: 8px 16px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 8px;
     font-weight: 400;
