@@ -2,8 +2,8 @@
 import { ref, watch, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import MReward from "./components/Reward.vue";
-import MAgentRealization from "./components/AgentRealization.vue";
+import Reward from "./components/Reward.vue";
+import AgentRealization from "./components/AgentRealization.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -21,9 +21,9 @@ const mobileWidth = computed(() => {
 
 <template>
   <div class="pb-4">
-    <v-row class="mt-6 justify-center mx-16">
-      <div class="text-700-14 white text-center relative">
-        {{ t("affiliate.invite.commission_title_text") }}
+    <v-row class="mt-6 justify-start mx-12">
+      <div class="text-700-16 white text-center relative">
+        {{ t("affiliate.achievement.text_4") }}
         <v-menu v-model="commissionMenuShow">
           <template v-slot:activator="{ props }">
             <img
@@ -49,13 +49,13 @@ const mobileWidth = computed(() => {
         </v-menu>
       </div>
     </v-row>
-    <v-row class="mt-4 justify-center px-10 mb-0">
-      <div class="text-400-12 gray text-center">
-        {{ t("affiliate.invite.commission_content_text") }}
+    <v-row class="mt-4 justify-start mb-0 mx-12">
+      <div class="text-400-16 gray text-left" style="width: 511px">
+        {{ t("affiliate.achievement.text_5") }}
       </div>
     </v-row>
-    <MReward />
-    <MAgentRealization />
+    <Reward />
+    <AgentRealization />
   </div>
 </template>
 

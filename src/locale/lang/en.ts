@@ -427,7 +427,9 @@ export const lang: langType = {
     achievement: {
       text_1: "Achievement Reward",
       text_2: "Agent ReaIization",
-      text_3: "Receive"
+      text_3: "Receive",
+      text_4: "INVITE ACHIEVEMENT BONUS",
+      text_5: "When you invite a certain number of recharge users every day, you can unlock the corresponding [Invitation Achievement Reward].",
     },
     statistics: {
       level_text: "Level",

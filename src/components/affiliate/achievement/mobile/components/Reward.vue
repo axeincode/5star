@@ -44,7 +44,7 @@ const mobileWidth = computed(() => {
     <v-row class="mx-3 mt-6">
       <template v-for="(item, index) in rewardGrades" :key="index">
         <v-col cols="3">
-          <img :src="item.img" :class="index == 0 ? 'img-gray' : ''" />
+          <img :src="item.img" :class="index == 0 ? 'img-gray' : ''" width="64" />
           <p class="text-900-11" :class="index == 0 ? 'gray' : 'color-F9BC01'">
             R$ {{ item.value }}
           </p>

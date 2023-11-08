@@ -98,42 +98,34 @@ const mobileWidth = computed(() => {
 
 <template>
   <v-card
-    class="m-achievement-realization-card mx-4 mt-2"
+    class="achievement-realization-card mx-8 mt-2"
     v-for="(item, index) in realizationItem"
     :key="index"
   >
-    <v-row class="mx-0">
-      <v-col cols="5" class="text-center">
-        <img :src="item.img" width="50" :class="index < 4 ? 'img-gray opacity-3' : ''" />
-        <p
-          class="text-900-18"
-          :class="item.grade >= 1000 ? 'color-F9BC01' : 'color-414968'"
-        >
-          R$ {{ item.grade }}
-        </p>
+    <v-row class="mx-0 align-center my-0" style="height: 100%">
+      <v-col cols="1" class="text-center pa-0" style="height: 100%">
+        <img :src="item.img" width="45" :class="index < 4 ? 'img-gray opacity-3' : ''" />
       </v-col>
-      <v-col cols="7" class="text-center">
-        <p
-          class="text-700-12 mt-4"
-          :class="item.grade >= 1000 ? 'white' : 'color-414968'"
-        >
+      <v-col cols="3" class="pa-0">
+        <p class="text-700-18" :class="item.grade >= 1000 ? 'white' : 'color-414968'">
           {{ t("affiliate.achievement.text_2") }} {{ item.realization_grade }}
         </p>
+      </v-col>
+      <v-col cols="4" class="pa-0">
         <div
-          class="mt-2"
           :class="
             item.grade >= 1000
-              ? 'm-achievement-realization-progress-active-bg'
-              : 'm-achievement-realization-progress-bg'
+              ? 'achievement-realization-progress-active-bg'
+              : 'achievement-realization-progress-bg'
           "
         >
           <v-progress-linear
             v-model="item.rate"
             height="24"
-            class="m-achievement-realization-progress"
+            class="achievement-realization-progress"
           >
             <div
-              class="text-800-10"
+              class="text-800-14"
               :class="item.grade >= 1000 ? 'white' : 'color-414968'"
             >
               {{
@@ -146,14 +138,24 @@ const mobileWidth = computed(() => {
             </div>
           </v-progress-linear>
         </div>
+      </v-col>
+      <v-col cols="2" class="pa-0 text-right">
+        <p
+          class="text-900-18"
+          :class="item.grade >= 1000 ? 'color-F9BC01' : 'color-414968'"
+        >
+          R$ {{ item.grade }}
+        </p>
+      </v-col>
+      <v-col cols="2" class="text-center pa-0">
         <v-btn
-          class="text-none mt-3"
+          class="text-none"
           width="132"
-          height="32"
+          height="48"
           :class="
             item.grade >= 1000
-              ? 'm-achievement-realization-active-btn'
-              : 'm-achievement-realization-btn'
+              ? 'achievement-realization-active-btn'
+              : 'achievement-realization-btn'
           "
         >
           {{ t("affiliate.achievement.text_3") }}
@@ -164,15 +166,15 @@ const mobileWidth = computed(() => {
 </template>
 
 <style lang="scss">
-.m-achievement-realization-card {
+.achievement-realization-card {
   border-radius: 8px;
   background: #29253c;
-  height: 121px;
+  height: 72px;
   box-shadow: none;
 }
-.m-achievement-realization-progress-bg {
+.achievement-realization-progress-bg {
   .v-progress-linear {
-    width: 180px;
+    width: 280px;
     border-radius: 30px;
     background: #211f31;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -186,9 +188,9 @@ const mobileWidth = computed(() => {
     background: linear-gradient(0deg, #1c1929 0%, #393a71 100%);
   }
 }
-.m-achievement-realization-progress-active-bg {
+.achievement-realization-progress-active-bg {
   .v-progress-linear {
-    width: 180px;
+    width: 280px;
     border-radius: 30px;
     background: #211f31;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -202,27 +204,27 @@ const mobileWidth = computed(() => {
     background: linear-gradient(180deg, #6d44f8 0%, #5726fc 100%);
   }
 }
-.m-achievement-realization-active-btn {
+.achievement-realization-active-btn {
   border-radius: 8px;
   background: #32cfec;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
     color: #000;
     font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
   }
 }
-.m-achievement-realization-btn {
+.achievement-realization-btn {
   border-radius: 8px;
   background: var(--Secondary-Button-353652, #353652);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
     color: #414968;
     font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
