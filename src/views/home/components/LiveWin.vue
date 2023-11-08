@@ -98,6 +98,18 @@ const liveWinList = ref<Array<LiveWinItem>>([
     betting_amount: "$12.33",
   },
   {
+    image: new URL("@/assets/home/image/img_win_02.png", import.meta.url).href,
+    level: 1,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
+    image: new URL("@/assets/home/image/img_win_02.png", import.meta.url).href,
+    level: 1,
+    game_name: "Mgnonk...",
+    betting_amount: "$12.33",
+  },
+  {
     image: new URL("@/assets/home/image/img_win_03.png", import.meta.url).href,
     level: 2,
     game_name: "Mgnonk...",
