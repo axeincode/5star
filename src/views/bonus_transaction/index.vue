@@ -28,7 +28,7 @@ const Transaction = defineAsyncComponent(
 const { t } = useI18n();
 const { width } = useDisplay();
 
-const affiliateWidth = ref<string>("affiliate-container");
+const affiliateWidth = ref<string>("bonus-transaction-container");
 const selectedTabIndex = ref<number>(0);
 
 const loading = ref<boolean>(true);
@@ -122,15 +122,15 @@ onMounted(() => {
     <div
       :class="
         mobileWidth > 600
-          ? 'affiliate-tabs'
+          ? 'bonus-transaction-tabs'
           : refferalAppBarShow
-          ? 'm-affiliate-tabs'
-          : 'm-affiliate-tabs-1'
+          ? 'm-bonus-transaction-tabs'
+          : 'm-bonus-transaction-tabs-1'
       "
     >
-      <div class="affiliate-tab-body" v-if="mobileWidth > 600">
+      <div class="bonus-transaction-tab-body" v-if="mobileWidth > 600">
         <p
-          class="affiliate-tab-text"
+          class="bonus-transaction-tab-text"
           v-ripple.center
           @click="tabSelect(0)"
           :class="[selectedTabIndex == 0 ? 'selected-tab-text' : '']"
@@ -138,7 +138,7 @@ onMounted(() => {
           {{ t("appBar.bonuses") }}
         </p>
         <p
-          class="affiliate-tab-text"
+          class="bonus-transaction-tab-text"
           v-ripple.center
           @click="tabSelect(1)"
           :class="[selectedTabIndex == 1 ? 'selected-tab-text' : '']"
@@ -146,7 +146,7 @@ onMounted(() => {
           {{ t("appBar.transactions") }}
         </p>
       </div>
-      <div class="m-affiliate-tab-body" v-else>
+      <div class="m-bonus-transaction-tab-body" v-else>
         <v-row class="text-center">
           <v-col cols="4">
             <p
@@ -264,10 +264,10 @@ onMounted(() => {
   border-radius: 8px;
 }
 
-.m-affiliate-tabs {
+.m-bonus-transaction-tabs {
   padding-top: 50px;
 
-  .m-affiliate-tab-body {
+  .m-bonus-transaction-tab-body {
     display: flex;
     padding: 0px 60px;
     align-items: center;
@@ -281,7 +281,7 @@ onMounted(() => {
     color: #7782aa;
   }
 
-  .affiliate-tab-text {
+  .bonus-transaction-tab-text {
     margin-right: 100px;
     cursor: pointer;
   }
@@ -296,10 +296,10 @@ onMounted(() => {
   }
 }
 
-.m-affiliate-tabs-1 {
+.m-bonus-transaction-tabs-1 {
   padding-top: 66px;
 
-  .m-affiliate-tab-body {
+  .m-bonus-transaction-tab-body {
     display: flex;
     padding: 0px 60px;
     align-items: center;
@@ -313,7 +313,7 @@ onMounted(() => {
     color: #7782aa;
   }
 
-  .affiliate-tab-text {
+  .bonus-transaction-tab-text {
     margin-right: 100px;
     cursor: pointer;
   }
@@ -328,10 +328,10 @@ onMounted(() => {
   }
 }
 
-.affiliate-tabs {
+.bonus-transaction-tabs {
   padding-top: 30px;
 
-  .affiliate-tab-body {
+  .bonus-transaction-tab-body {
     display: flex;
     padding: 0px 60px;
     align-items: center;
@@ -345,7 +345,7 @@ onMounted(() => {
     color: #7782aa;
   }
 
-  .affiliate-tab-text {
+  .bonus-transaction-tab-text {
     margin-right: 100px;
     cursor: pointer;
   }

@@ -32,7 +32,7 @@ export const lang: langType = {
     formPage: {
       header: {
         titleLine1: " Register at ",
-        titleLine2: " BLUE.GAME ",
+        titleLine2: " Brazstar.com ",
       },
       emailAddress: "Email Address",
       password: "Password",
@@ -56,6 +56,7 @@ export const lang: langType = {
         bold: "User Agreement & confirm ",
         suffix: "I am at least 18 years old",
       },
+      agree_alert_text: "Agree to follow the terms",
       alreadyAccount: "Already have an account? ",
       signIn: "Sign in",
       button: "Sign up",
@@ -77,7 +78,7 @@ export const lang: langType = {
       username: "Username",
       validation: {
         username: {
-          title: "This is the name others will see on Blue.game",
+          title: "This is the name others will see on Brazstar.com",
           items: [
             "2-20 characters in length",
             "Nickname must not be like your email",
@@ -120,7 +121,7 @@ export const lang: langType = {
   },
   navBar: {
     casino: 'CASINO',
-    sport: 'SPORT',
+    sport: 'SPORTS',
     my_vip_perks: 'My VIP Perks',
     more: 'More',
     task_text: "TASK",
@@ -137,7 +138,7 @@ export const lang: langType = {
     casino_sub_menu: {
       recently_played: 'Recently Played',
       favorites: 'Favorites',
-      game_originals: 'BLUEGAME Originals',
+      game_originals: 'Brazstar Originals',
       slots: 'Slots',
       live_casino: 'Live Casino',
     },
@@ -155,7 +156,7 @@ export const lang: langType = {
   rightBar: {
     dropdownItem: {
       casino: 'Casino',
-      sport: 'Sport'
+      sport: 'Sports'
     },
     bottom: {
       yourMessage: "Your Message"
@@ -187,9 +188,13 @@ export const lang: langType = {
   },
   home: {
     search: "Search Games Or Providers",
+    live_win: {
+      text_1: "LIVE WINS"
+    },
     button: {
       all_game: "All Games",
       favorite: "Favorite",
+      recently_played: "Recently Played",
       original_game: "Original Game",
       pg_soft: "PGsoft",
       slots: "Slots",
@@ -202,9 +207,13 @@ export const lang: langType = {
       text_4: "Original Games",
       text_5: "About",
       text_6: "results",
+      search_history: "Search History",
     },
     original_games: "Original Games",
     more: "Load more",
+    more_text_1: "Displaying ",
+    more_text_2: " of ",
+    more_text_3: " games",
     principal: "Principal",
     game_providers: "GAME Providers",
     slots: "Slots",
@@ -216,6 +225,21 @@ export const lang: langType = {
     amount_text: "Amount",
     lucky_jackpot_text: "Lucky Jackpot",
     latest_record_text: "Latest Record",
+    bet_history: {
+      text_1: "BETS",
+      text_2: "All Bets",
+      text_3: "High RoIIers",
+      text_4: "Lucky Bets",
+      text_5: "My Bets",
+      text_6: "Game",
+      text_7: "Multi",
+      text_8: "Payout",
+      text_9: "Player/Clan",
+      text_10: "Time",
+      text_11: "Wager",
+      text_12: "Multiplier",
+      text_13: "",
+    },
     footer: {
       game: {
         title: "Game",
@@ -238,25 +262,35 @@ export const lang: langType = {
         menu_5: "Responsible Gambling",
       },
       footer_4: {
-        text: "The blue.game website offers games with an adventure experience directly owned by Pistis Trade N.V., to be a  user of our site you must be 18 years or older. We are not responsible for violating your local laws regarding online gaming. Play responsibly and have fun at blue.game."
+        text: "The Brazstar.com website offers games with an adventure experience directly owned by Pistis Trade N.V., to be a  user of our site you must be 18 years or older. We are not responsible for violating your local laws regarding online gaming. Play responsibly and have fun at Brazstar.com."
       },
       logo: {
-        text_1: "Blue.game is operated by Pistis Trade N.V., company registration number 162576, with registered address at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is licensed and authorized by the Government of Curacao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ License Number: GLH-OCCHKTWxxxxxxxxxx.",
-        text_2: "Gambling can be addictive. Please play responsibly. Blue.game only accepts customers over 18 years of age."
+        text_1: "Brazstar.com is operated by Pistis Trade N.V., company registration number 162576, with registered address at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is licensed and authorized by the Government of Curacao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ License Number: GLH-OCCHKTWxxxxxxxxxx.",
+        text_2: "Gambling can be addictive. Please play responsibly. Brazstar.com only accepts customers over 18 years of age."
       },
       footer_6: {
-        text: "© 2023 Blue.game All rights reserved."
+        text: "© 2023 Brazstar.com All rights reserved."
       }
     }
   },
   mobile_menu: {
     menu: "Menu",
     casino: "Casino",
-    share: "Share",
-    sport: "Sport",
-    mail: "Mail"
+    share: "Bonus",
+    sport: "Sports",
+    mail: "Mail",
+    reward: "Reward",
+    search: "Search"
   },
   deposit_dialog: {
+    deposit_info: {
+      text_1: "Deposit Information",
+      text_2: "1. Scan the QR code bellow in the PIX app",
+      text_3: "2. Complete the deposit with your bank",
+      text_4: "3. Your ",
+      text_5: " balance and any applicabledeposit bonus will be credited",
+      text_6: "COPY PIX CODE"
+    },
     deposit_currency: "Deposit Currency",
     choose_payment_method: "Choose a Payment Method",
     deposit_amount: "Deposit amount",
@@ -273,11 +307,29 @@ export const lang: langType = {
     personal_information: {
       header_text: "Enter your Pix details",
       id_text: "ID Number(CPF)",
-      first_name: "Fist Name",
+      first_name: "First Name",
       last_name: "Last Name",
       confirm_text: "Confirm",
       confirm_success_text: "Successfully submitted, need to modify please contact customer service",
       confirm_warning_text: "Please contact customer service to make changes"
+    }
+  },
+  transaction_history: {
+    type: {
+      text_1: "Game Win",
+      text_2: "Game Bet",
+      text_3: "Game funds rollback",
+      text_4: "Game draw funds",
+      text_5: "Deposit",
+      text_6: "Withdrawal",
+      text_7: "Deposit operation canceled",
+      text_8: "Withdrawal operation canceled",
+      text_9: "Reward",
+      text_10: "Agency commission rebate",
+      text_11: "Other operations to increase funds",
+      text_12: "Other operations reduce funds",
+      text_13: "Increase the amount that can be withdrawn",
+      text_14: "Subtract the specified amount that can be withdrawn",
     }
   },
   withdraw_dialog: {
@@ -316,9 +368,20 @@ export const lang: langType = {
     tab: {
       text_1: "Invite",
       text_2: "Statistics",
-      text_3: "Forms"
+      text_3: "Forms",
+      text_4: "Achievement",
     },
     invite: {
+      text_1: "Today's Deposit Users",
+      text_2: "Yesterday's Deposits Users",
+      text_3: "Today's Revenue",
+      text_4: "Yesterday's Revenue ",
+      text_5: "Deposits this month Users",
+      text_6: "Total Registered Users",
+      text_7: "This Month's Revenue",
+      text_8: "Total Depositing Users",
+      text_9: "Total Revenue",
+      text_10: "Share with your social community",
       invite_partner: "INVITE A PARTNER",
       invited_user: "Invited Users",
       deposit_user: "Deposited Users",
@@ -338,14 +401,14 @@ export const lang: langType = {
       receive_btn_text: "Receive",
       commission_title_text: "HOW TO GET COMMISSION ON YOUR BETS",
       commission_content_text: "This will be your long-term income, and you will receive a different percentage commission each time a player you invite places a bet.",
-      invite_text_1: "Bonus rules: All players at the 'Promoter' level receive a percentage of the platform advantage bonus for each bet.",
+      invite_text_1: "Bonus rules: All players at the 'Promoter' level receive a percentage of the Platform's profit bonus for each bet.",
       invite_text_2: "The proportions of the 3 levels are as follows:",
       invite_text_3_1: "- Level 1: Get ",
-      invite_text_3_2: " platform advantage",
+      invite_text_3_2: " Platform's profit",
       invite_text_4_1: "- Level 2: Get ",
-      invite_text_4_2: " platform advantage",
+      invite_text_4_2: " Platform's profit",
       invite_text_5_1: "- Level 3: Get ",
-      invite_text_5_2: " platform advantage",
+      invite_text_5_2: " Platform's profit",
       invite_text_6: "INCOME CALCULATOR",
       invite_text_7: "Invite ",
       invite_text_8: " active users Expected annual income to be earned",
@@ -361,7 +424,27 @@ export const lang: langType = {
         text_3: "Bonus"
       }
     },
+    achievement: {
+      text_1: "Achievement Reward",
+      text_2: "Agent ReaIization",
+      text_3: "Receive",
+      text_4: "INVITE ACHIEVEMENT BONUS",
+      text_5: "When you invite a certain number of recharge users every day, you can unlock the corresponding [Invitation Achievement Reward].",
+    },
     statistics: {
+      level_text: "Level",
+      grade_text_1: "Grade 1",
+      grade_text_2: "Grade 2",
+      grade_text_3: "Grade 3",
+      text_4: "Registered",
+      text_5: "Users",
+      text_6: "Deposit",
+      text_7: "Amount",
+      text_8: "Commission",
+      text_9: "Bet",
+      text_10: "Achievement",
+      text_11: "Reward",
+      summary_text: "Summarize",
       receive_btn_text: "Receive",
       total_profit_text: "TOTAL PROFIT",
       mobile_profit_title: "PREMIUMS ISSUED SO FAR",
@@ -392,6 +475,7 @@ export const lang: langType = {
       table: {
         time: "Time",
         user: "User",
+        event: "Event",
         bonus: "Bonus",
       }
     }
@@ -399,6 +483,7 @@ export const lang: langType = {
   bonus: {
     title_text: "Your Account balance and bonuses",
     total_text: "Total",
+    bonus_money_text: "Bonus Money",
     withdraw_text: "Withdrawal Amount",
     super_bonus_text: "% Supper BONUS",
     bonus_text: "Bonus",
@@ -408,7 +493,13 @@ export const lang: langType = {
       deposit: "Deposit",
       receive: "Receive",
       wager: "Wager requirement"
-    }
+    },
+    dashboard_recharge_title1 : "Recharge now!",
+    dashboard_recharge_title2 : "Get Daily Login Bonus",
+    dashboard_recharge_content1 : "VIP users who recharge within 7 days wil recive a daily",
+    dashboard_recharge_content2 : "login bonus, the higher the VIP level, the bigger the bonus!",
+    text_1: "Bonus",
+    text_2: "No active bonues found"
   },
   transaction: {
     tab: {
@@ -485,7 +576,7 @@ export const lang: langType = {
       minimum_duration_text: "Minimum suspension: 1 day(s)",
       confirm_text: "Confirm",
       dialog: {
-        title_text: "Blue.game Show",
+        title_text: "Brazstar.com Show",
         content_text_1: "Are you sure you want to suspend your account for ",
         content_text_2: " days?",
         determine_btn_text: "Determine",
@@ -515,7 +606,7 @@ export const lang: langType = {
     copy_success_text: "Copied to the clipboard.",
     description: {
       text_1: "Invite your friends",
-      text_2: "Invite friends who aren't on Blue.game yet. You will receive 20.00 BRL for each friend that signs up and makes a deposit. There's no limit to how many friends you can invite. That means there's also no limit to how much you can earn!",
+      text_2: "Invite friends who aren't on Brazstar.com yet. You will receive 20.00 BRL for each friend that signs up and makes a deposit. There's no limit to how many friends you can invite. That means there's also no limit to how much you can earn!",
       term_text: "Terms:",
       text_3: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
       back_btn_text: "Back"
@@ -537,21 +628,21 @@ export const lang: langType = {
     },
     reward_card_2: {
       vip_week_gift_text: "VIP Week Gift",
-      text_1: "VIP Bonus: R$ 5",
+      text_1: "VIP Bonus: ",
       text_2: "Free spin times*2",
       text_3: "Collectable after ",
       text_4: " days"
     },
     reward_card_3: {
       vip_month_gift_text: "VIP Month Gift",
-      text_1: "VIP Bonus: R$ 5",
+      text_1: "VIP Bonus: ",
       text_2: "Free spin times*2",
       text_3: "Collectable after ",
       text_4: " days"
     },
     reward_card_4: {
-      vip_upgrage_gift_text: "VIP Upgrade Gift",
-      text_1: "VIP Bonus: R$ 5",
+      vip_upgrage_gift_text: "VIP Rank Bouns",
+      text_1: "VIP Bonus: ",
       text_2: "Free spin times*2",
       text_3: "Available for first upgrade only",
     },
@@ -575,7 +666,7 @@ export const lang: langType = {
       text_1: "My Super Spin",
       text_2: "Number of opportunities left: ",
       text_3: "Spin  Now",
-      text_4: "VIP2 has the possibility of winning he following awards",
+      text_4: " has the possibility of winning he following awards",
       text_5: "See all",
     },
     vip_mission_body: {
@@ -595,7 +686,7 @@ export const lang: langType = {
       text_15: "VIP 3 can start",
     },
     benifit_description_body: {
-      text_1: "VIP2 all rights and benefits description",
+      text_1: " all rights and benefits description",
       text_2: "Upgrade Conditions",
       text_3: "Relegation Conditions",
       text_4: "Total deposits",
@@ -619,7 +710,7 @@ export const lang: langType = {
       text_3: "Join in now",
     },
     login_bonus: {
-      title_text: "Login Bonus",
+      title_text: " Login Bonus",
       day_1_text: "DAY 1",
       day_2_text: "DAY 2",
       day_3_text: "DAY 3",
@@ -653,5 +744,49 @@ export const lang: langType = {
         text_10: "3. BETFIERY reserves the right to modify, alter, suspend, cancel, reject or cancel this promotion at its sole discretion.",
       }
     }
+  },
+  exception: {
+    text_1: "failed",
+    text_2: "The data passed is abnormal",
+    text_3: "",
+    text_4: "",
+    text_5: "",
+    text_6: "",
+    text_7: "",
+    text_8: "",
+    text_9: "",
+    text_10: "",
+    text_11: "",
+    text_12: "",
+    text_13: "",
+    text_14: "",
+    text_15: "",
+    text_16: "",
+    text_17: "",
+    text_18: "",
+    text_19: "",
+    text_20: "",
+    text_21: "",
+    text_22: "",
+    text_23: "",
+    text_24: "",
+    text_25: "",
+    text_26: "",
+    text_27: "",
+    text_28: "",
+    text_29: "",
+    text_30: "",
+    text_31: "",
+    text_32: "",
+    text_33: "",
+    text_34: "",
+    text_35: "",
+    text_36: "",
+    text_37: "",
+    text_38: "",
+    text_39: "",
+    text_40: "",
+    text_41: "",
+    text_42: "",
   }
 };

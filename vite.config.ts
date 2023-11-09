@@ -5,11 +5,9 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import { fileURLToPath, URL } from 'node:url'
 import path, { resolve } from "path";
 import legacy from '@vitejs/plugin-legacy';
-import imagemin from 'vite-plugin-imagemin';
-import cssnano from 'cssnano';
-import { terser } from 'rollup-plugin-terser';
 import { cacheResource } from "vite-plugin-cache-resource";
 import VitePluginCdn from 'vite-plugin-cdn';
+import { splitVendorChunkPlugin } from 'vite'
 
 // https://vitejs.dev/config/
 export default (configEnv: ConfigEnv): UserConfigExport => {
@@ -49,6 +47,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           },
         ],
       }),
+      splitVendorChunkPlugin(),
     ],
     build: {
       chunkSizeWarningLimit: 1000,

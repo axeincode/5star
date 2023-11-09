@@ -17,7 +17,7 @@ const invitedUser = ref<number>(28560);
 const earnMoney = ref<number>(85601479);
 const host = ref<string>("xxx.com");
 const refferalCode = ref<string>("xxxxxxxxxx");
-const siteUrl = ref<string>("https://blue.game/xxxxxxxxxx");
+const siteUrl = ref<string>("https://Brazstar.com/xxxxxxxxxx");
 
 const descriptionVisible = ref<boolean>(false);
 

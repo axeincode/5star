@@ -32,7 +32,7 @@ export const lang: langType = {
     formPage: {
       header: {
         titleLine1: " Register at ",
-        titleLine2: " BLUE.GAME ",
+        titleLine2: " Brazstar.com ",
       },
       emailAddress: "Email Address",
       password: "Password",
@@ -78,7 +78,7 @@ export const lang: langType = {
       username: "Username",
       validation: {
         username: {
-          title: "This is the name others will see on Blue.game",
+          title: "This is the name others will see on Brazstar.com",
           items: [
             "2-20 characters in length",
             "Nickname must not be like your email",
@@ -121,7 +121,7 @@ export const lang: langType = {
   },
   navBar: {
     casino: 'CASINO',
-    sport: 'SPORT',
+    sport: 'SPORTS',
     my_vip_perks: 'My VIP Perks',
     more: 'More',
     task_text: "TASK",
@@ -138,7 +138,7 @@ export const lang: langType = {
     casino_sub_menu: {
       recently_played: 'Recently Played',
       favorites: 'Favorites',
-      game_originals: 'BLUEGAME Originals',
+      game_originals: 'Brazstar Originals',
       slots: 'Slots',
       live_casino: 'Live Casino',
     },
@@ -156,7 +156,7 @@ export const lang: langType = {
   rightBar: {
     dropdownItem: {
       casino: 'Casino',
-      sport: 'Sport'
+      sport: 'Sports'
     },
     bottom: {
       yourMessage: "Your Message"
@@ -262,14 +262,14 @@ export const lang: langType = {
         menu_5: "Responsible Gambling",
       },
       footer_4: {
-        text: "The blue.game website offers games with an adventure experience directly owned by Pistis Trade N.V., to be a  user of our site you must be 18 years or older. We are not responsible for violating your local laws regarding online gaming. Play responsibly and have fun at blue.game."
+        text: "The Brazstar.com website offers games with an adventure experience directly owned by Pistis Trade N.V., to be a  user of our site you must be 18 years or older. We are not responsible for violating your local laws regarding online gaming. Play responsibly and have fun at Brazstar.com."
       },
       logo: {
-        text_1: "Blue.game is operated by Pistis Trade N.V., company registration number 162576, with registered address at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is licensed and authorized by the Government of Curacao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ License Number: GLH-OCCHKTWxxxxxxxxxx.",
-        text_2: "Gambling can be addictive. Please play responsibly. Blue.game only accepts customers over 18 years of age."
+        text_1: "Brazstar.com is operated by Pistis Trade N.V., company registration number 162576, with registered address at Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao and is licensed and authorized by the Government of Curacao and operates under the Master License of Gaming Services Provider, N.V. #365/JAZ License Number: GLH-OCCHKTWxxxxxxxxxx.",
+        text_2: "Gambling can be addictive. Please play responsibly. Brazstar.com only accepts customers over 18 years of age."
       },
       footer_6: {
-        text: "© 2023 Blue.game All rights reserved."
+        text: "© 2023 Brazstar.com All rights reserved."
       }
     }
   },
@@ -277,7 +277,7 @@ export const lang: langType = {
     menu: "Menu",
     casino: "Casino",
     share: "Bonus",
-    sport: "Sport",
+    sport: "Sports",
     mail: "Mail",
     reward: "Reward",
     search: "Search"
@@ -576,7 +576,7 @@ export const lang: langType = {
       minimum_duration_text: "Minimum suspension: 1 day(s)",
       confirm_text: "Confirm",
       dialog: {
-        title_text: "Blue.game Show",
+        title_text: "Brazstar.com Show",
         content_text_1: "Are you sure you want to suspend your account for ",
         content_text_2: " days?",
         determine_btn_text: "Determine",
@@ -606,7 +606,7 @@ export const lang: langType = {
     copy_success_text: "Copied to the clipboard.",
     description: {
       text_1: "Invite your friends",
-      text_2: "Invite friends who aren't on Blue.game yet. You will receive 20.00 BRL for each friend that signs up and makes a deposit. There's no limit to how many friends you can invite. That means there's also no limit to how much you can earn!",
+      text_2: "Invite friends who aren't on Brazstar.com yet. You will receive 20.00 BRL for each friend that signs up and makes a deposit. There's no limit to how many friends you can invite. That means there's also no limit to how much you can earn!",
       term_text: "Terms:",
       text_3: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
       back_btn_text: "Back"

@@ -21,7 +21,7 @@ export const authStore = defineStore({
     userInfo: {
       uid: "User6696608024",
       name: "Little Planes",
-      email: "anderson.bluegame@gmail.com",
+      email: "anderson.brazstar@gmail.com",
       phone: "+5517991696669",
       avatar: new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
     } as User.GetUserInfo,
