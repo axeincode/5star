@@ -10,6 +10,8 @@ import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
+import icon_public_46 from "@/assets/public/svg/icon_public_46.svg";
+import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
 
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
@@ -23,8 +25,11 @@ const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
 const originalMenu = ref<boolean>(false);
 const casinoCheckBox = ref<boolean>(false);
+const soundCheckBox = ref<boolean>(false);
 const casinoCheckboxColor = ref<string>("#ffffff");
 const sportCheckboxColor = ref<string>("#7782AA");
+const onCheckboxColor = ref<string>("#ffffff");
+const offCheckboxColor = ref<string>("#7782AA");
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -140,6 +145,30 @@ const casinoTransform = (el: any) => {
 const sportTransform = (el: any) => {
     for (let node of el.children) {
         node.setAttribute('fill', sportCheckboxColor.value)
+    }
+    return el
+}
+
+watch(soundCheckBox, (value: boolean) => {
+    if (value) {
+        onCheckboxColor.value = "#7782AA";
+        offCheckboxColor.value = "#ffffff";
+    } else {
+      onCheckboxColor.value = "#ffffff";
+      offCheckboxColor.value = "#7782AA";
+    }
+}, { deep: true });
+
+const onIconTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', onCheckboxColor.value)
+    }
+    return el
+}
+
+const offIconTransform = (el: any) => {
+    for (let node of el.children) {
+        node.setAttribute('fill', offCheckboxColor.value)
     }
     return el
 }
@@ -406,14 +435,24 @@ onMounted(() => {
       </v-menu>
     </v-list>
     <v-list-item class="theme-toggle">
-      <input type="checkbox" id="theme-toggle" />
+      <input type="checkbox" id="theme-toggle" v-model="soundCheckBox" />
       <label for="theme-toggle">
         <div class="dark">
-          <img src="@/assets/public/svg/icon_public_46.svg" />
+          <inline-svg
+            :src="icon_public_46"
+            width="24"
+            :transform-source="onIconTransform"
+          ></inline-svg>
+          <!-- <img src="@/assets/public/svg/icon_public_46.svg" /> -->
           <p class="text-700-14 ml-1">{{ t("navBar.sound_mode.on") }}</p>
         </div>
         <div class="light">
-          <img src="@/assets/public/svg/icon_public_47.svg" />
+          <inline-svg
+            :src="icon_public_47"
+            width="24"
+            :transform-source="offIconTransform"
+          ></inline-svg>
+          <!-- <img src="@/assets/public/svg/icon_public_47.svg" /> -->
           <p class="text-700-14 ml-1">{{ t("navBar.sound_mode.off") }}</p>
         </div>
       </label>
@@ -453,7 +492,7 @@ onMounted(() => {
     background: #211f31;
     border-radius: 24px !important;
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.2s;
     margin: auto;
 
     div {

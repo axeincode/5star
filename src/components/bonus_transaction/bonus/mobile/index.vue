@@ -204,7 +204,13 @@ onMounted(async () => {
                       />
                       <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
                       <p class="m-bonus-rate">
-                        {{ ((item.receive - item.deposit) * 100) / item.deposit }}%
+                        {{
+                          item.deposit == 0
+                            ? 0
+                            : Number(
+                                ((item.receive - item.deposit) * 100) / item.deposit
+                              )
+                        }}%
                       </p>
                     </div>
                   </v-col>

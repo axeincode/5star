@@ -948,7 +948,7 @@ export default MSignup;
 // mobile dialog contaier
 .m-signup-container {
   border-radius: 26px 26px 0px 0px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: 613px;
   width: 100%;

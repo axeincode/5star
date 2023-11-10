@@ -617,7 +617,7 @@ export default Login;
 .m-login-container {
   height: 613px;
   border-radius: 26px 26px 0px 0px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
 
