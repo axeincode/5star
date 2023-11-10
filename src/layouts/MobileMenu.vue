@@ -553,7 +553,7 @@ onMounted(() => {
         {{ t("mobile_menu.reward") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color share-ripple-btn" @click="goToSharePage">
+    <v-btn class="menu-text-color" @click="goToSharePage">
       <div class="bonus-icon-body">
         <div class="circle-background"></div>
         <img
@@ -756,11 +756,11 @@ onMounted(() => {
 }
 
 .m-mask {
-  position: absolute;
+  position: fixed;
   width: 46px;
   height: 55px;
-  -webkit-mask-image: url("@/assets/public/image/ua_public_132.png");
-  mask-image: url("@/assets/public/image/ua_public_132.png");
+  // -webkit-mask-image: url("@/assets/public/image/ua_public_132.png");
+  // mask-image: url("@/assets/public/image/ua_public_132.png");
   border-radius: 0px 0px 25px 25px;
 }
 
