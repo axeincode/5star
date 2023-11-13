@@ -279,6 +279,7 @@ export type langType = {
     mail: string
     reward: string
     search: string
+    promo: string
   }
   deposit_dialog: {
     deposit_info: {

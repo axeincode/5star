@@ -7,13 +7,25 @@ const cards = ref<Array<any>>([
   { title: "Card 3", content: "This is the content of card 3" },
 ]);
 
+const items = ref<Array<string>>(["Item 1", "Item 2", "Item 3"]);
+
+const currentIndex = ref<number>(-1);
+
 const lastScrollTop = ref<number>(0);
+
+const showNextItem = () => {
+  currentIndex.value++;
+  if (currentIndex.value < items.value.length) {
+    setTimeout(showNextItem, 1000);
+  }
+};
 
 const handleWindowScroll = (event: any) => {
   console.log("ok");
 };
 
 onMounted(() => {
+  showNextItem();
   window.addEventListener("scroll", handleWindowScroll);
   let lastScrollTop = 0;
   const listContainer = document.querySelector(".list-container");
@@ -21,20 +33,42 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- <div class="circle-container">
-    <div class="circle">
-      <div class="letter">C</div>
-      <div class="letter">A</div>
-      <div class="letter">S</div>
-      <div class="letter">I</div>
-      <div class="letter">N</div>
-      <div class="letter">O</div>
+  <!-- <div class="circle-container"> -->
+  <div class="circle">
+    <div class="letter">C</div>
+    <div class="letter">A</div>
+    <div class="letter">S</div>
+    <div class="letter">I</div>
+    <div class="letter">N</div>
+    <div class="letter">O</div>
+  </div>
+  <!-- </div> -->
+  <div class="trapezoid"></div>
+  <!-- <div class="container">
+    <div
+      v-for="(item, index) in items"
+      :key="index"
+      :class="['item', { show: index <= currentIndex }]"
+    >
+      {{ item }}
     </div>
   </div> -->
-  <div class="trapezoid"></div>
 </template>
 
 <style lang="scss">
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.item.show {
+  opacity: 1;
+}
 .trapezoid {
   width: 200px;
   height: 0;

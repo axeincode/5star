@@ -30,6 +30,7 @@ import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
 import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
 import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
 import MAccountDialog from "@/views/account/dialog/index.vue";
+import MenuSemiCircle from "@/components/global/menu_semi_circle/index.vue";
 
 // import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 import { mailStore } from "@/store/mail";
@@ -663,11 +664,17 @@ onMounted(() => {
 
     <router-view />
 
+    <!-- back top -->
+
     <el-backtop :right="16" :bottom="70">
       <div class="m-back-top relative">
         <img src="@/assets/public/svg/icon_public_94.svg" class="m-back-icon-position" />
       </div>
     </el-backtop>
+
+    <!-- mobile menu semicircle toggle -->
+
+    <MenuSemiCircle />
 
     <!-------------------------------- Footer Tab ----------------------------------------->
     <Footer />

@@ -280,7 +280,8 @@ export const lang: langType = {
     sport: "Sports",
     mail: "Mail",
     reward: "Reward",
-    search: "Search"
+    search: "Search",
+    promo: "Promo",
   },
   deposit_dialog: {
     deposit_info: {

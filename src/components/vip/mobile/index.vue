@@ -55,6 +55,7 @@ const cashbackSlide = ref<boolean>(false);
 const spinSlide = ref<boolean>(false);
 const vipSlide = ref<boolean>(false);
 const descriptionSlide = ref<boolean>(false);
+const touchStartX = ref<number>(0);
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -454,9 +455,7 @@ watch(missionCardShow, (value) => {
 })
 
 watch(currentSlide, (value: number, newValue: number) => {
-  console.log(currentSlide.value);
   vipSwitchValue.value = vipLevels.value[currentSlide.value].level;
-  console.log(vipSwitchValue.value);
   if (rewardSlide.value) {
     rewardSlide.value = false;
     return;
@@ -683,45 +682,45 @@ const getDescriptionSwiperRef = (swiperInstance: any) => {
 }
 
 const handleRewardSwiperNextChange = () => {
-  rewardSlide.value = true;
-  if (cashbackSlide.value) {
-    return;
-  }
-  if (spinSlide.value) {
-    return;
-  }
-  if (vipSlide.value) {
-    return;
-  }
-  if (descriptionSlide.value) {
-    return;
-  }
-  currentSlide.value = rewardSwiper.value.realIndex;
-  cashbackSlide.value = false;
-  spinSlide.value = false;
-  vipSlide.value = false;
-  descriptionSlide.value = false;
+  // rewardSlide.value = true;
+  // if (cashbackSlide.value) {
+  //   return;
+  // }
+  // if (spinSlide.value) {
+  //   return;
+  // }
+  // if (vipSlide.value) {
+  //   return;
+  // }
+  // if (descriptionSlide.value) {
+  //   return;
+  // }
+  // currentSlide.value = rewardSwiper.value.realIndex;
+  // cashbackSlide.value = false;
+  // spinSlide.value = false;
+  // vipSlide.value = false;
+  // descriptionSlide.value = false;
 }
 
 const handleRewardSwiperPrevChange = () => {
-  rewardSlide.value = true;
-  if (cashbackSlide.value) {
-    return;
-  }
-  if (spinSlide.value) {
-    return;
-  }
-  if (vipSlide.value) {
-    return;
-  }
-  if (descriptionSlide.value) {
-    return;
-  }
-  currentSlide.value = rewardSwiper.value.realIndex;
-  cashbackSlide.value = false;
-  spinSlide.value = false;
-  vipSlide.value = false;
-  descriptionSlide.value = false;
+  // rewardSlide.value = true;
+  // if (cashbackSlide.value) {
+  //   return;
+  // }
+  // if (spinSlide.value) {
+  //   return;
+  // }
+  // if (vipSlide.value) {
+  //   return;
+  // }
+  // if (descriptionSlide.value) {
+  //   return;
+  // }
+  // currentSlide.value = rewardSwiper.value.realIndex;
+  // cashbackSlide.value = false;
+  // spinSlide.value = false;
+  // vipSlide.value = false;
+  // descriptionSlide.value = false;
 }
 
 const handleVipSwiperNextChange = () => {
@@ -765,6 +764,81 @@ const handleVipSwiperPrevChange = () => {
   // spinSlide.value = false;
   // rewardSlide.value = false;
   // descriptionSlide.value = false;
+}
+
+const handleRewardTouchEnd = (event) => {
+  currentSlide.value = rewardSwiper.value.realIndex;
+  rewardSlide.value = false;
+}
+
+const handleRewardTouchStart = (event) => {
+  touchStartX.value  = event.touches[0].clientX;
+}
+
+const handleRewardTouchMove = () => {
+  const touchX = event.touches[0].clientX;
+  const deltaX = touchX - touchStartX.value; // Calculate the delta X value
+  if (deltaX > 300 && !rewardSlide.value) {
+    rewardSlide.value = true;
+    // Swiped right
+    vipSwiper.value.slidePrev();
+    descriptionSwiper.value.slidePrev();
+  } else if (deltaX < -300 && !rewardSlide.value) {
+    rewardSlide.value = true;
+    // Swiped left
+    vipSwiper.value.slideNext();
+    descriptionSwiper.value.slideNext();
+  }
+}
+
+const handleVipTouchEnd = (event) => {
+  currentSlide.value = vipSwiper.value.realIndex;
+  vipSlide.value = false;
+}
+
+const handleVipTouchStart = (event) => {
+  touchStartX.value  = event.touches[0].clientX;
+}
+
+const handleVipTouchMove = () => {
+  const touchX = event.touches[0].clientX;
+  const deltaX = touchX - touchStartX.value; // Calculate the delta X value
+  if (deltaX > 300 && !vipSlide.value) {
+    vipSlide.value = true;
+    // Swiped right
+    rewardSwiper.value.slidePrev();
+    descriptionSwiper.value.slidePrev();
+  } else if (deltaX < -300 && !vipSlide.value) {
+    vipSlide.value = true;
+    // Swiped left
+    rewardSwiper.value.slideNext();
+    descriptionSwiper.value.slideNext();
+  }
+}
+
+const handleDescriptionTouchEnd = (event) => {
+  currentSlide.value = descriptionSwiper.value.realIndex;
+  descriptionSlide.value = false;
+}
+
+const handleDescriptionTouchStart = (event) => {
+  touchStartX.value  = event.touches[0].clientX;
+}
+
+const handleDescriptionTouchMove = () => {
+  const touchX = event.touches[0].clientX;
+  const deltaX = touchX - touchStartX.value; // Calculate the delta X value
+  if (deltaX > 300 && !vipSlide.value) {
+    descriptionSlide.value = true;
+    // Swiped right
+    rewardSwiper.value.slidePrev();
+    vipSwiper.value.slidePrev();
+  } else if (deltaX < -300 && !vipSlide.value) {
+    descriptionSlide.value = true;
+    // Swiped left
+    vipSwiper.value.slideNext();
+    rewardSwiper.value.slideNext();
+  }
 }
 
 onMounted(async () => {
@@ -935,6 +1009,9 @@ onMounted(async () => {
           :slidesPerView="1"
           :loop="true"
           @swiper="getRewardSwiperRef"
+          @touchstart="handleRewardTouchStart"
+          @touchend="handleRewardTouchEnd"
+          @touchmove="handleRewardTouchMove"
           @slide-next-transition-end="handleRewardSwiperNextChange"
           @slide-prev-transition-end="handleRewardSwiperPrevChange"
         >
@@ -1356,6 +1433,9 @@ onMounted(async () => {
           :slidesPerView="1"
           :loop="true"
           @swiper="getVipSwiperRef"
+          @touchstart="handleVipTouchStart"
+          @touchend="handleVipTouchEnd"
+          @touchmove="handleVipTouchMove"
           @slide-next-transition-end="handleVipSwiperNextChange"
           @slide-prev-transition-end="handleVipSwiperPrevChange"
         >
@@ -1599,6 +1679,9 @@ onMounted(async () => {
           :slidesPerView="1"
           :spaceBetween="8"
           :loop="true"
+          @touchstart="handleDescriptionTouchStart"
+          @touchend="handleDescriptionTouchEnd"
+          @touchmove="handleDescriptionTouchMove"
           @swiper="getDescriptionSwiperRef"
         >
           <SwiperSlide

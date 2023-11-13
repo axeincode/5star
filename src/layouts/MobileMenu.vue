@@ -45,7 +45,7 @@ const menuIconColor = ref<string>("#7782AA");
 const casinoIconColor = ref<string>('#7782AA');
 const sportIconColor = ref<string>('#7782AA');
 const mailIconColor = ref<string>('#7782AA');
-const rewardIconColor = ref<string>('#7782AA');
+const promoIconColor = ref<string>('#7782AA');
 const searchIconColor = ref<string>('#7782AA');
 const mailListHeight = ref<number>(0);
 
@@ -132,7 +132,7 @@ watch(mailMenuShow, async (newValue) => {
     casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
     sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
     mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-    rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+    promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
     searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
     setTimeout(() => {
       setMainBlurEffectShow(newValue);
@@ -161,7 +161,7 @@ watch(mailMenuShow, async (newValue) => {
           await new Promise<void>((resolve) => {
             setTimeout(() => {
               resolve();
-            }, 100)
+            }, 70)
           })
           const vListRect = vList.getBoundingClientRect();
           const listItems = Array.from(vList.querySelectorAll('.mail-item')) as Array<HTMLElement>;
@@ -219,7 +219,7 @@ const handleNavbarToggle = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
@@ -241,11 +241,11 @@ const goHomePage = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
-const handleRewardToggle = () => {
+const handlePromoToggle = () => {
   rewardBtnActive.value = !rewardBtnActive.value
   mailMenuShow.value = false;
   sportBtnActive.value = false
@@ -263,7 +263,7 @@ const handleRewardToggle = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
@@ -283,7 +283,7 @@ const handleSearchToggle = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 const goToSportPage = () => {
@@ -303,7 +303,7 @@ const goToSportPage = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 }
 
@@ -326,7 +326,7 @@ const goToSharePage = () => {
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
   mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  promoIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
 
   // sportBtnActive.value = false
@@ -456,13 +456,13 @@ const casinoSvgTransform = (el: any) => {
   return el
 }
 
-const rewardSvgTransform = (el: any) => {
+const promoSvgTransform = (el: any) => {
   for (let node of el.children) {
-    node.setAttribute('fill', rewardIconColor.value)
+    node.setAttribute('fill', promoIconColor.value)
     for (let subNode of node.children) {
-      subNode.setAttribute('fill', rewardIconColor.value)
+      subNode.setAttribute('fill', promoIconColor.value)
       for (let moreSubNode of subNode.children) {
-        moreSubNode.setAttribute('fill', rewardIconColor.value)
+        moreSubNode.setAttribute('fill', promoIconColor.value)
       }
     }
   }
@@ -527,6 +527,7 @@ onMounted(() => {
     grow
     class="mobile-menu-index"
     :class="menuBlurEffectShow ? 'menu-bg-blur' : ''"
+    style="height: 60px"
   >
     <v-btn class="menu-text-color" @click="handleNavbarToggle" :ripple="false">
       <inline-svg
@@ -542,18 +543,18 @@ onMounted(() => {
         {{ t("mobile_menu.menu") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color" @click="handleRewardToggle">
+    <v-btn class="menu-text-color" @click="handlePromoToggle">
       <inline-svg
         :src="icon_public_97"
         width="20"
         height="20"
-        :transform-source="rewardSvgTransform"
+        :transform-source="promoSvgTransform"
       ></inline-svg>
       <div class="pt-1 text-600-12">
-        {{ t("mobile_menu.reward") }}
+        {{ t("mobile_menu.promo") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color" @click="goToSharePage">
+    <!-- <v-btn class="menu-text-color" @click="goToSharePage">
       <div class="bonus-icon-body">
         <div class="circle-background"></div>
         <img
@@ -567,6 +568,45 @@ onMounted(() => {
 
       <div class="pt-6 text-600-12">
         {{ t("mobile_menu.share") }}
+      </div>
+    </v-btn> -->
+    <v-btn class="menu-text-color">
+      <div class="m-menu-casino-bg">
+        <img
+          src="@/assets/public/image/temp/img_public_16.png"
+          width="72"
+          class="m-menu-casino-bg-img"
+        />
+        <img
+          src="@/assets/public/image/temp/img_public_17.png"
+          width="46"
+          class="m-menu-casino-body-img"
+        />
+        <img
+          src="@/assets/public/image/Subtract.png"
+          width="18"
+          class="m-menu-casino-body-icon"
+        />
+        <div class="m-menu-circle">
+          <div class="letter white">C</div>
+          <div class="letter white">A</div>
+          <div class="letter white">S</div>
+          <div class="letter white">I</div>
+          <div class="letter white">N</div>
+          <div class="letter white">O</div>
+          <div class="letter opacity-1">R</div>
+          <div class="letter opacity-1">E</div>
+          <div class="letter opacity-1">W</div>
+          <div class="letter opacity-1">A</div>
+          <div class="letter opacity-1">R</div>
+          <div class="letter opacity-1">D</div>
+          <div class="letter opacity-1">S</div>
+          <div class="letter opacity-1">P</div>
+          <div class="letter opacity-1">O</div>
+          <div class="letter opacity-1">R</div>
+          <div class="letter opacity-1">T</div>
+          <div class="letter opacity-1">S</div>
+        </div>
       </div>
     </v-btn>
     <v-btn class="menu-text-color" @click="handleSearchToggle">
@@ -682,6 +722,103 @@ onMounted(() => {
 
   100% {
     transform: scale(1);
+  }
+}
+
+.m-menu-circle {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-90deg);
+  position: absolute;
+  top: 1px;
+  left: 1px;
+
+  .letter {
+    position: absolute;
+    transform-origin: center;
+    font-size: 7px;
+    font-family: Inter;
+    font-weight: 500;
+    word-wrap: break-word;
+    // transform: rotateY(0deg) rotateZ(0deg);
+    text-align: center;
+  }
+  .opacity-1 {
+    opacity: 0.1;
+  }
+  .letter:nth-child(1) {
+    transform: rotateZ(313deg) translateY(-26px) rotateZ(-176deg);
+  }
+
+  .letter:nth-child(2) {
+    transform: rotateZ(295deg) translateY(-26px) rotateZ(-173deg);
+  }
+
+  .letter:nth-child(3) {
+    transform: rotateZ(278deg) translateY(-26px) rotateZ(-184deg);
+  }
+
+  .letter:nth-child(4) {
+    transform: rotateZ(265deg) translateY(-26px) rotateZ(-179deg);
+  }
+
+  .letter:nth-child(5) {
+    transform: rotateZ(248deg) translateY(-26px) rotateZ(-174deg);
+  }
+
+  .letter:nth-child(6) {
+    transform: rotateZ(228deg) translateY(-26px) rotateZ(14deg);
+  }
+
+  .letter:nth-child(7) {
+    transform: rotateZ(196deg) translateY(-26px) rotateZ(-182deg);
+  }
+
+  .letter:nth-child(8) {
+    transform: rotateZ(178deg) translateY(-26px) rotateZ(-181deg);
+  }
+
+  .letter:nth-child(9) {
+    transform: rotateZ(158deg) translateY(-26px) rotateZ(-131deg);
+  }
+
+  .letter:nth-child(10) {
+    transform: rotateZ(138deg) translateY(-26px) rotateZ(-185deg);
+  }
+
+  .letter:nth-child(11) {
+    transform: rotateZ(120deg) translateY(-26px) rotateZ(-180deg);
+  }
+
+  .letter:nth-child(12) {
+    transform: rotateZ(103deg) translateY(-26px) rotateZ(-175deg);
+  }
+
+  .letter:nth-child(13) {
+    transform: rotateZ(73deg) translateY(-26px) rotateZ(-176deg);
+  }
+
+  .letter:nth-child(14) {
+    transform: rotateZ(54deg) translateY(-26px) rotateZ(-173deg);
+  }
+
+  .letter:nth-child(15) {
+    transform: rotateZ(36deg) translateY(-26px) rotateZ(-169deg);
+  }
+
+  .letter:nth-child(16) {
+    transform: rotateZ(17deg) translateY(-26px) rotateZ(-179deg);
+  }
+
+  .letter:nth-child(17) {
+    transform: rotateZ(-1deg) translateY(-26px) rotateZ(-174deg);
+  }
+
+  .letter:nth-child(18) {
+    transform: rotateZ(-22deg) translateY(-26px) rotateZ(0deg);
   }
 }
 
@@ -879,7 +1016,7 @@ onMounted(() => {
     padding: 14px 20px !important;
     border-radius: 12px !important;
     animation-name: mailScaling;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
     // transition: transform 0.2s ease-in-out;
@@ -887,7 +1024,7 @@ onMounted(() => {
 
   .animation-mail-item {
     animation-name: animationMailScaling;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
   }
@@ -920,6 +1057,31 @@ onMounted(() => {
   -webkit-filter: blur(3px);
   // filter: saturate(180%) blur(3px);
   // -webkit-filter: saturate(180%) blur(3px);
+}
+
+.m-menu-casino-bg {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  bottom: 3px;
+}
+
+.m-menu-casino-bg-img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.m-menu-casino-body-img {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+}
+
+.m-menu-casino-body-icon {
+  position: absolute;
+  top: 27px;
+  left: 27px;
 }
 
 .m-mail-list {
