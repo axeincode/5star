@@ -349,7 +349,7 @@ const Login = defineComponent({
           id: 'facebook-sdk',
           src: 'https://connect.facebook.net/en_US/sdk.js'
         })
-        await new Promise((reslove) => {
+        await new Promise((resolve) => {
           window.fbAsyncInit = () => {
             FB?.init({
               appId: sysInfos.appId,
@@ -357,7 +357,7 @@ const Login = defineComponent({
               xfbml: true,
               version: 'v12.0'
             })
-            reslove(void 0)
+            resolve(void 0)
           }
         })
       }
