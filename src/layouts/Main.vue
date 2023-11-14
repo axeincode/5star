@@ -674,7 +674,7 @@ onMounted(() => {
 
     <!-- mobile menu semicircle toggle -->
 
-    <MenuSemiCircle />
+    <MenuSemiCircle v-if="mobileWidth < 600" />
 
     <!-------------------------------- Footer Tab ----------------------------------------->
     <Footer />

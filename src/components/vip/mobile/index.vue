@@ -1923,7 +1923,7 @@ onMounted(async () => {
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(6px);
-  z-index: 200;
+  z-index: 4;
   display: flex;
   padding: 12px;
   justify-content: space-between;
