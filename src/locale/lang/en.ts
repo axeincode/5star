@@ -186,6 +186,25 @@ export const lang: langType = {
       bronze: "Bronze",
     }
   },
+  about: {      
+    page: {
+      text_1: "Invite",
+      text_2: "TERMS OF SERVICE",
+      text_3: "PRIVACY POLICY",
+      text_4: "RESPONSIBLE GAMBLING",
+      text_5: "BONUS TERMS",
+      text_6: "PAYMENT METHODS",
+      text_7: "REFERRAL-SYSTEM FAQ",
+      text_8: "AML Policy",
+      text_9: "KYC Policy",
+      text_10: "Terms and Conditions",
+      text_11: "Last updated: 10.10.2023",
+      text_12: "1. Introduction",
+      text_13: "These terms and conditions and the documents referred to below (the 'Terms') apply to the use of the current website (the 'Website') and its related or connected services (collectively, the 'Service').",
+      text_14: 'You should carefully review these Terms as they contain important information concerning your rights and obligations concerning the use of the Website and form a binding legal agreement between you - our customer (the "Customer"), and us. By using this Website and/or accessing the Service, you, whether you are a guest or a registered user with an account (“Account”), agree to be bound by these Terms, together with any amendments, which may be published from time to time. If you do not accept these Terms, you should refrain from accessing the Service and using the Website.',
+      text_15: 'The Service is owned by Pistis Trade N.V. having its office at Zuikertuintjeweg Z/N (Zuikertuin Tower). Company Registration number 162576 (“Company”), licensed in Curaçao under the License #GLH-OCCHKTW0703172023 issued by Gaming Services Provider N.V. for the provision of online games of chance.',
+    }
+  },
   home: {
     search: "Search Games Or Providers",
     live_win: {

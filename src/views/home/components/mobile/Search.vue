@@ -274,7 +274,7 @@ onMounted(async () => {
   <div
     class="m-home-search-body"
     :style="{
-      height: searchContainerHeight >= 590 ? 'unset' : searchContainerHeight - 80 + 'px',
+      height: searchContainerHeight >= 590 ? '43vh' : searchContainerHeight - 80 + 'px',
       maxHeight: '643px',
     }"
   >

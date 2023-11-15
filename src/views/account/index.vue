@@ -230,7 +230,7 @@ onMounted(() => {
               :value="item"
               @click="handleDropdown(item, i)"
             >
-              <v-list-item-title class="text-center text-600-14 gray">{{
+              <v-list-item-title class="text-center text-400-12 gray">{{
                 item
               }}</v-list-item-title>
             </v-list-item>
@@ -274,7 +274,7 @@ onMounted(() => {
 .m-account-menu-card {
   width: 200px;
   height: 40px;
-  border-radius: 12px;
+  border-radius: 12px !important;
 
   .v-list-item__append > .v-icon {
     font-size: 18px;

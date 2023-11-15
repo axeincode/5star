@@ -78,6 +78,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/about-us',
+    component: () => import('@/layouts/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'About_US',
+        component: () => import('@/views/about_us/index.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

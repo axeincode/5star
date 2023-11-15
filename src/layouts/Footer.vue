@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 const { t } = useI18n();
 const { name, width } = useDisplay();
+const route = useRoute();
+const router = useRouter();
 
 const footerIcons = ref([
   new URL("@/assets/public/svg/icon_public_80.svg", import.meta.url).href,
@@ -22,6 +25,10 @@ const mobileVersion = computed(() => {
 const mobileWidth = computed(() => {
   return width.value;
 });
+
+const goToAboutPage = () => {
+  router.push({ name: "About_US" });
+};
 </script>
 
 <template>
@@ -60,7 +67,11 @@ const mobileWidth = computed(() => {
         <div class="footer-title" :class="mobileWidth < 600 ? 'ml-12' : ''">
           {{ t("home.footer.about_us.title") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage"
+        >
           {{ t("home.footer.about_us.menu_1") }}
         </div>
         <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">

@@ -186,6 +186,22 @@ export const lang: langType = {
       bronze: "Bronze",
     }
   },
+  about: {      
+    page: {
+      text_1: "Invite",
+      text_2: "TERMS OF SERVICE",
+      text_3: "PRIVACY POLICY",
+      text_4: "RESPONSIBLE GAMBLING",
+      text_5: "BONUS TERMS",
+      text_6: "PAYMENT METHODS",
+      text_7: "REFERRAL-SYSTEM FAQ",
+      text_8: "AML Policy",
+      text_9: "KYC Policy",
+      text_10: "",
+      text_11: "",
+      text_12: "",
+    }
+  },
   home: {
     search: "Search Games Or Providers",
     live_win: {
@@ -280,7 +296,8 @@ export const lang: langType = {
     sport: "Sports",
     mail: "Mail",
     reward: "Reward",
-    search: "Search"
+    search: "Search",
+    promo: "Promo",
   },
   deposit_dialog: {
     deposit_info: {
