@@ -4,20 +4,20 @@ import { defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import { appBarStore } from "@/store/appBar";
+import { aboutStore } from "@/store/about";
 import { storeToRefs } from "pinia";
 import { refferalStore } from "@/store/refferal";
+import MTermsOfService from "@/components/about_us/terms_of_service/mobile/index.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
-const { setActiveAccountIndex } = appBarStore();
+const { setActiveAboutIndex } = aboutStore();
 const route = useRoute();
 const router = useRouter();
 
 const activeMenuIndex = ref<any>(0);
 const selectedMenuItem = ref<string>(t("about.page.text_2"));
 const aboutMenuShow = ref<boolean>(false);
-const activeNames = ref<Array<string>>(["1"]);
 
 const menuList = ref<Array<string>>([
   t("about.page.text_2"),
@@ -40,14 +40,14 @@ const handleMenu = (index: number) => {
 };
 
 const handleDropdown = (item: string, index: number) => {
-  setActiveAccountIndex(index);
+  setActiveAboutIndex(index);
   selectedMenuItem.value = item;
   activeMenuIndex.value = index;
 };
 
-const activeAccountIndex = computed(() => {
-  const { getActiveAccountIndex } = storeToRefs(appBarStore());
-  return getActiveAccountIndex.value;
+const activeAboutIndex = computed(() => {
+  const { getActiveAboutIndex } = storeToRefs(aboutStore());
+  return getActiveAboutIndex.value;
 });
 
 const selectActiveIndex = (index: number) => {
@@ -64,18 +64,18 @@ const goBeforePage = () => {
   router.go(-1);
   setTimeout(() => {
     activeMenuIndex.value = route.query.index ? route.query.index : 0;
-    setActiveAccountIndex(activeMenuIndex.value);
+    setActiveAboutIndex(activeMenuIndex.value);
   }, 500);
 };
 
-watch(activeAccountIndex, (value) => {
+watch(activeAboutIndex, (value) => {
   activeMenuIndex.value = value;
   selectedMenuItem.value = menuList.value[value];
 });
 
 onMounted(() => {
   activeMenuIndex.value = route.query.index ? route.query.index : 0;
-  setActiveAccountIndex(activeMenuIndex.value);
+  setActiveAboutIndex(activeMenuIndex.value);
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -128,13 +128,7 @@ onMounted(() => {
         <div class="text-400-10 gray mt-2">
           {{ t("about.page.text_11") }}
         </div>
-        <div class="m-about-collapse mt-2">
-          <el-collapse v-model="activeNames">
-            <el-collapse-item :title="t('about.page.text_12')" name="1">
-              <div>{{ t("about.page.text_13") }}</div>
-            </el-collapse-item>
-          </el-collapse>
-        </div>
+        <MTermsOfService />
       </div>
     </div>
   </div>
@@ -162,39 +156,6 @@ onMounted(() => {
   .v-list-item__append > .v-icon {
     font-size: 18px;
     margin-inline-start: 0px !important;
-  }
-}
-
-.m-about-collapse {
-  .el-collapse {
-    border-top: unset !important;
-  }
-  .el-collapse-item__header {
-    background-color: #1c1929 !important;
-    border-bottom: unset !important;
-    color: var(--White-BG, #fff);
-    font-family: Inter;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
-  .el-collapse-item__wrap {
-    background-color: #1c1929 !important;
-    border-bottom: 1px solid #29263c;
-  }
-  .el-collapse-item__content {
-    padding-bottom: 16px;
-    color: var(--Sec-Text-7782AA, #7782aa);
-    font-family: Inter;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 160%; /* 19.2px */
-  }
-  .el-icon {
-    color: white !important;
-    font-size: 14px;
   }
 }
 

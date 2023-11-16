@@ -6,22 +6,16 @@ export const aboutStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    loginBonusDialogVisible: false as boolean,
-    rouletteBonusDialogVisible: false as boolean,
+    activeAboutIndex: 0 as number,
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
-    getLoginBonusDialogVisible: (state) => state.loginBonusDialogVisible,
-    getRouletteBonusDialogVisible: (state) => state.rouletteBonusDialogVisible,
+    getActiveAboutIndex: (state) => state.activeAboutIndex,
   },
   actions: {
-    setLoginBonusDialogVisible(loginBonusDialogVisible: boolean) {
-      console.log(loginBonusDialogVisible)
-      this.loginBonusDialogVisible = loginBonusDialogVisible;
-    },
-    setRouletteBonusDialogVisible(rouletteBonusDialogVisible: boolean) {
-      this.rouletteBonusDialogVisible = rouletteBonusDialogVisible;
+    setActiveAboutIndex(activeAboutIndex: number) {
+      this.activeAboutIndex = activeAboutIndex;
     }
   }
 })
