@@ -8,6 +8,10 @@ import { aboutStore } from "@/store/about";
 import { storeToRefs } from "pinia";
 import { refferalStore } from "@/store/refferal";
 import MTermsOfService from "@/components/about_us/terms_of_service/mobile/index.vue";
+import MPrivacyPolicy from "@/components/about_us/privacy_policy/mobile/index.vue";
+import MResponsibleGambling from "@/components/about_us/responsible_gambling/mobile/index.vue";
+import MBonusTerms from "@/components/about_us/bonus_terms/mobile/index.vue";
+import MPaymentMethods from "@/components/about_us/payment_methods/mobile/index.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -15,8 +19,8 @@ const { setActiveAboutIndex } = aboutStore();
 const route = useRoute();
 const router = useRouter();
 
-const activeMenuIndex = ref<any>(0);
-const selectedMenuItem = ref<string>(t("about.page.text_2"));
+const activeMenuIndex = ref<number>(4);
+const selectedMenuItem = ref<string>(t("about.page.text_4"));
 const aboutMenuShow = ref<boolean>(false);
 
 const menuList = ref<Array<string>>([
@@ -62,19 +66,9 @@ const mobileWidth: any = computed(() => {
 
 const goBeforePage = () => {
   router.go(-1);
-  setTimeout(() => {
-    activeMenuIndex.value = route.query.index ? route.query.index : 0;
-    setActiveAboutIndex(activeMenuIndex.value);
-  }, 500);
 };
 
-watch(activeAboutIndex, (value) => {
-  activeMenuIndex.value = value;
-  selectedMenuItem.value = menuList.value[value];
-});
-
 onMounted(() => {
-  activeMenuIndex.value = route.query.index ? route.query.index : 0;
   setActiveAboutIndex(activeMenuIndex.value);
   window.scrollTo({
     top: 0,
@@ -121,15 +115,11 @@ onMounted(() => {
           </v-list>
         </v-menu>
       </div>
-      <div class="m-about-main-body mx-3 px-6 py-5">
-        <div class="text-700-14 white">
-          {{ t("about.page.text_10") }}
-        </div>
-        <div class="text-400-10 gray mt-2">
-          {{ t("about.page.text_11") }}
-        </div>
-        <MTermsOfService />
-      </div>
+      <MTermsOfService v-if="activeMenuIndex == 0" />
+      <MPrivacyPolicy v-if="activeMenuIndex == 1" />
+      <MResponsibleGambling v-if="activeMenuIndex == 2" />
+      <MBonusTerms v-if="activeMenuIndex == 3" />
+      <MPaymentMethods v-if="activeMenuIndex == 4" />
     </div>
   </div>
 </template>
