@@ -211,3 +211,31 @@
 //     )
 //     return prefix + '?' + CountQueuingStrategy.stringify(queryMerged)
 // }
+
+/**
+ * 文件大小格式化
+ * @example
+ * fuleSizeFormatter(4581430) 
+ */
+// export const fuleSizeFormatter = (value: number): string => {
+//     const unitArr = ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+//     const src = parseFloat(value + '')
+//     const index = Math.floor(Math.log(src) / Math.log(1024))
+//     let size = src / Math.pow(1024, index)
+//     size = parseInt(size + '')
+//     return size + unitArr[index]
+// }
+
+/**
+ * 金額數值格式化
+ * @example
+ * amountFormatter(4581430)
+ */
+// export const amountFormatter = (value: number): string => {
+//     const unitArr = ['K', 'M', 'B', 'T']
+//     const src = parseFloat(value + '')
+//     const index = Math.floor(Math.log(src) / Math.log(1000))
+//     let size = src / Math.pow(1000, index)
+//     size = parseInt(size + '')
+//     return size + unitArr[index]
+// }
