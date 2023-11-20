@@ -103,11 +103,11 @@ onMounted(async () => {
     <v-col cols="12" class="pa-1">
       <v-list-item class="m-bg-color-1 mx-6">
         <template v-slot:prepend>
-          <img src="@/assets/public/svg/icon_public_26.svg" width="30" />
+          <img src="@/assets/public/svg/icon_public_98.svg" width="30" />
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
-          <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-12 white">R$ {{ userBalance.amount }}</div>
+          <div class="text-400-10 text-gray">{{ t("bonus.account_balance") }}</div>
+          <div class="text-600-12 white">R$ {{ userBalance.real }}</div>
         </v-list-item-title>
         <!-- <template v-slot:append>
           <div v-ripple.center style="width: 24px; height: 24px">
@@ -120,17 +120,17 @@ onMounted(async () => {
           <img src="@/assets/public/svg/icon_public_27.svg" width="30" />
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
-          <div class="text-400-10 text-gray">{{ t("bonus.bonus_money_text") }}</div>
-          <div class="text-600-12 white">R$ {{ userBalance.availabe_balance }}</div>
+          <div class="text-400-10 text-gray">{{ t("bonus.bonus_money") }}</div>
+          <div class="text-600-12 white">R$ {{ userBalance.bonus }}</div>
         </v-list-item-title>
       </v-list-item>
       <v-list-item class="m-bg-color-1 mt-4 mx-6">
         <template v-slot:prepend>
-          <img src="@/assets/public/svg/icon_public_100.svg" width="30" />
+          <img src="@/assets/public/svg/icon_public_26.svg" width="30" />
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
-          <div class="text-400-10 text-gray">{{ t("bonus.withdraw_text") }}</div>
-          <div class="text-600-12 white">R$ {{ userBalance.availabe_balance }}</div>
+          <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
+          <div class="text-600-12 white">R$ {{ userBalance.amount }}</div>
         </v-list-item-title>
       </v-list-item>
     </v-col>
@@ -143,184 +143,160 @@ onMounted(async () => {
           <p class="text-700-12 gray">{{ t("bonus.text_1") }}</p>
           <p class="text-400-12 gray">{{ t("bonus.text_2") }}</p>
         </div>
-        <v-expansion-panels v-else>
-          <v-expansion-panel
-            class="bg-color-211F31 mt-2 m-collapse-body"
-            v-for="(item, index) in userBonusList.list"
-            :key="index"
-            :ripple="false"
-          >
-            <v-expansion-panel-title
-              :class="[item.status == 3 ? 'failure-title' : 'completion-title']"
-              :ripple="false"
-            >
-              <template v-slot:default="{ expanded }">
-                <v-row no-gutters class="align-center">
-                  <v-col
-                    cols="3"
-                    class="text-700-10 text-center bonus-cash-border d-flex align-center justify-center"
-                    :class="[item.status == 3 ? 'black' : '']"
-                  >
-                    {{ userBalance.currency?.toLocaleUpperCase() }} {{ item.deposit }}
-                  </v-col>
-                  <v-col
-                    cols="3"
-                    class="text-400-10 text-center bonus-cash-border d-flex align-center justify-center"
-                    :class="[item.status == 3 ? 'color-FF6200' : '']"
-                  >
-                    <template v-if="item.status == 0">Not opened</template>
-                    <template v-else-if="item.status == 1">Opening</template>
-                    <template v-if="item.status == 2">Completion</template>
-                    <template v-if="item.status == 3">Failure</template>
-                  </v-col>
-                  <v-col
-                    cols="4"
-                    class="text-center bonus-cash-border"
-                    v-if="item.status != 1"
-                  >
-                    <div class="text-400-10" :class="[item.status == 3 ? 'black' : '']">
-                      Expire on
-                    </div>
-                    <div
-                      class="text-600-10 mt-2"
-                      :class="[item.status == 3 ? 'black' : '']"
-                    >
-                      {{ moment(item.ended_at * 1000).format("YYYY-MM-DD") }}
-                    </div>
-                  </v-col>
-                  <v-col
-                    cols="4"
-                    class="text-center bonus-cash-border d-flex align-center justify-center"
-                    v-else
-                  >
-                    <div class="text-400-10">No time limit</div>
-                  </v-col>
-                  <v-col cols="2" class="text-right">
-                    <div class="relative" style="margin-left: auto; width: 25px">
-                      <img
-                        src="@/assets/bonus/img/img_so_01.png"
-                        v-if="((item.receive - item.deposit) * 100) / item.deposit >= 100"
-                        width="24"
-                      />
-                      <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
-                      <p class="m-bonus-rate">
-                        {{
-                          item.deposit == 0
-                            ? 0
-                            : Number(
-                                ((item.receive - item.deposit) * 100) / item.deposit
-                              )
-                        }}%
-                      </p>
-                    </div>
-                  </v-col>
-                  <v-col cols="12" class="text-center mt-1">
-                    <div
-                      class="text-400-10 mt-2"
-                      v-if="(item.status = 1)"
-                      :class="[item.status == 3 ? 'black' : '']"
-                    >
-                      Complete the task and get
-                      <Font
-                        :class="[
-                          item.status == 3 ? 'm-bonus-cash-failure' : 'bonus-cash',
-                        ]"
-                      >
-                        R$ {{ item.receive }}</Font
-                      >
-                      bonus
-                    </div>
-                    <div :class="[item.status == 1 ? 'mt-4' : 'mt-2']">
-                      <v-progress-linear
-                        v-model="item.rate"
-                        height="16"
-                        :class="[
-                          item.status == 3 ? 'failure-progress' : 'completion-progress',
-                        ]"
+        <template v-else v-for="(item, index) in userBonusList.list" :key="index">
+          <div class="m-bonus-deposit-group">
+            <v-expansion-panels>
+              <v-expansion-panel class="bg-color-211F31 m-collapse-body" :ripple="false">
+                <v-expansion-panel-title
+                  :class="[
+                    item.status == 3 ? 'failure-title-bg' : '',
+                    item.type == 0 && item.status != 3 ? 'real-title-bg' : '',
+                    item.type == 1 && item.status != 3 ? 'bonus-title-bg' : '',
+                  ]"
+                  :ripple="false"
+                >
+                  <template v-slot:default="{ expanded }">
+                    <v-row no-gutters class="align-center">
+                      <v-col
+                        cols="3"
+                        class="text-700-10 bonus-cash-border pt-1 pl-2"
+                        :class="[item.status == 3 ? 'black' : '']"
                       >
                         <div
                           class="text-400-10"
-                          :class="[item.status == 3 ? 'gray' : '']"
+                          :class="item.type == 0 ? 'color-6AA82D' : 'yellow'"
                         >
-                          R$ {{ item.now }} / R$ {{ item.max }}
+                          {{ item.type == 0 ? t("bonus.text_3") : t("bonus.text_4") }}
                         </div>
-                      </v-progress-linear>
-                    </div>
-                  </v-col>
-                </v-row>
-              </template>
-            </v-expansion-panel-title>
+                        <div class="mt-2">
+                          {{ userBalance.currency?.toLocaleUpperCase() }}
+                          {{ item.deposit }}
+                        </div>
+                      </v-col>
+                      <v-col
+                        cols="3"
+                        class="text-400-10 text-center bonus-cash-border d-flex align-center justify-center"
+                        :class="[item.status == 3 ? 'color-FF6200' : '']"
+                      >
+                        <template v-if="item.status == 0">Not opened</template>
+                        <template v-else-if="item.status == 1">Underway</template>
+                        <template v-if="item.status == 2">Completion</template>
+                        <template v-if="item.status == 3">Suspend</template>
+                      </v-col>
+                      <v-col
+                        cols="4"
+                        class="text-center bonus-cash-border"
+                        v-if="item.status != 1"
+                      >
+                        <div
+                          class="text-400-10"
+                          :class="[item.status == 3 ? 'black' : '']"
+                        >
+                          Expire on
+                        </div>
+                        <div
+                          class="text-600-10 mt-2"
+                          :class="[item.status == 3 ? 'black' : '']"
+                        >
+                          {{ moment(item.ended_at * 1000).format("YYYY-MM-DD") }}
+                        </div>
+                      </v-col>
+                      <v-col
+                        cols="4"
+                        class="text-center bonus-cash-border d-flex align-center justify-center"
+                        v-else
+                      >
+                        <div class="text-400-10">No time limit</div>
+                      </v-col>
+                      <v-col cols="2" class="text-right">
+                        <div class="relative" style="margin-left: auto; width: 25px">
+                          <img
+                            src="@/assets/bonus/img/img_so_01.png"
+                            v-if="
+                              ((item.receive - item.deposit) * 100) / item.deposit >= 100
+                            "
+                            width="24"
+                          />
+                          <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
+                          <p class="m-bonus-rate">
+                            {{
+                              item.deposit == 0
+                                ? 0
+                                : Number(
+                                    ((item.receive - item.deposit) * 100) / item.deposit
+                                  )
+                            }}%
+                          </p>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="text-center mt-1">
+                        <div
+                          class="text-400-10 mt-2"
+                          v-if="(item.status = 1)"
+                          :class="[item.status == 3 ? 'black' : '']"
+                        >
+                          {{ t("bonus.cashable_progress") }}
+                        </div>
+                        <div :class="[item.status == 1 ? 'mt-4' : 'mt-2']">
+                          <v-progress-linear
+                            v-model="item.rate"
+                            height="16"
+                            :class="[
+                              item.status == 3
+                                ? 'failure-progress'
+                                : 'completion-progress',
+                            ]"
+                          >
+                            <div
+                              class="text-400-10"
+                              :class="[item.status == 3 ? 'gray' : '']"
+                            >
+                              R$ {{ item.now }} / R$ {{ item.max }}
+                            </div>
+                          </v-progress-linear>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </template>
+                </v-expansion-panel-title>
 
-            <v-expansion-panel-text class="mt-3">
-              <!-- <v-row class="ma-0" v-if="item.status != 1">
-                <v-col cols="8" class="text-right text-400-12 pt-0" v-if="item.rate == 0">
-                  {{ ((item.receive - item.deposit) * 100) / item.deposit }}
-                  {{ t("bonus.super_bonus_text") }}
-                </v-col>
-
-                <v-col cols="8" class="text-right text-400-12 pt-0" v-else>
-                  {{ item.rate }}{{ t("bonus.super_bonus_text") }}
-                </v-col>
-
-                <v-col cols="4" class="text-right pt-0">
-                  <img
-                    src="@/assets/public/svg/icon_public_53.svg"
-                    width="20"
-                    class="m-bonus-expansion-help-img"
-                  />
-                </v-col>
-              </v-row> -->
-              <v-row class="ma-0">
-                <v-col cols="8" class="text-right text-400-12 pt-0">
-                  {{ ((item.receive - item.deposit) * 100) / item.deposit }}
-                  {{ t("bonus.super_bonus_text") }}
-                </v-col>
-                <v-col cols="4" class="text-right pt-0">
-                  <img
-                    src="@/assets/public/svg/icon_public_53.svg"
-                    width="20"
-                    class="m-bonus-expansion-help-img"
-                  />
-                </v-col>
-              </v-row>
-              <v-table class="m-forms-bonus-table-bg text-400-10">
-                <thead>
-                  <tr>
-                    <th>
-                      {{ t("bonus.table.date") }}
-                    </th>
-                    <th>
-                      {{ t("bonus.table.deposit") }}
-                    </th>
-                    <th>
-                      {{ t("bonus.table.receive") }}
-                    </th>
-                    <th>
-                      {{ t("bonus.table.wager") }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ moment(item.created_at * 1000).format("YYYY/MM/DD") }}</td>
-                    <td>{{ item.deposit }}</td>
-                    <td>{{ item.receive }}</td>
-                    <td>{{ item.wager }}</td>
-                  </tr>
-                </tbody>
-              </v-table>
-              <v-row class="ma-0">
-                <v-col cols="5" class="text-left text-500-10">
-                  ID: {{ userInfo.uid }}
-                </v-col>
-                <v-col cols="7" class="justify-end d-flex text-500-10">
-                  {{ t("bonus.table.deposit") }} ${{ item.deposit }},
-                  {{ t("bonus.table.receive") }} ${{ item.receive }}
-                </v-col>
-              </v-row>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
+                <v-expansion-panel-text class="mt-3">
+                  <v-table class="m-forms-bonus-table-bg text-400-10 white">
+                    <thead>
+                      <tr>
+                        <th>
+                          {{ t("bonus.table.date") }}
+                        </th>
+                        <th>
+                          {{ t("bonus.table.deposit") }}
+                        </th>
+                        <th>
+                          {{ t("bonus.table.receive") }}
+                        </th>
+                        <th>
+                          {{ t("bonus.table.wager") }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ moment(item.created_at * 1000).format("YYYY/MM/DD") }}</td>
+                        <td>{{ item.deposit }}</td>
+                        <td>{{ item.receive }}</td>
+                        <td>{{ item.wager }}</td>
+                      </tr>
+                    </tbody>
+                  </v-table>
+                  <v-row class="ma-0">
+                    <v-col cols="12" class="text-left text-500-10">
+                      ID: {{ item.id }}
+                    </v-col>
+                  </v-row>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </div>
+        </template>
       </v-card>
     </v-col>
   </v-row>
@@ -391,11 +367,17 @@ onMounted(async () => {
   height: 100px !important;
 }
 
-.completion-title {
-  background: linear-gradient(90deg, #29263f 0%, #4a32aa 100%) !important;
+.real-title-bg {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #221f32 0%, #4b32ad 100%) !important;
 }
 
-.failure-title {
+.bonus-title-bg {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #221f32 0%, #5d8f29 100%) !important;
+}
+
+.failure-title-bg {
   background: linear-gradient(90deg, #221f32 0%, #424567 100%) !important;
 }
 
@@ -443,5 +425,13 @@ onMounted(async () => {
 
 .v-expansion-panel-text__wrapper {
   padding: 8px 8px 16px !important;
+}
+.m-bonus-deposit-group {
+  border-radius: 12px;
+  background: #211f31;
+  padding: 4px;
+  .v-expansion-panel {
+    background-color: #29263c !important;
+  }
 }
 </style>

@@ -774,6 +774,204 @@ export type langType = {
       text_18: string
       text_19: string
     }
+    referral_system: {
+      text_1: string
+      text_2: string
+      text_3: string
+      text_4: string
+      text_5: string
+      text_6: string
+      text_7: string
+      text_8: string
+      text_9: string
+      text_10: string
+      text_11: string
+      text_12: string
+      text_13: string
+      text_14: string
+      text_15: string
+      text_16: string
+      text_17: string
+      text_18: string
+      text_19: string
+      text_20: string
+      text_21: string
+      text_22: string
+      text_23: string
+      text_24: string
+      text_25: string
+      text_26: string
+      text_27: string
+      text_28: string
+      text_29: string
+      text_30: string
+      text_31: string
+      text_32: string
+    }
+    aml_policy: {
+      text_1: string
+      text_2: string
+      text_3: string
+      text_4: string
+      text_5: string
+      text_6: string
+      text_7: string
+      text_8: string
+      text_9: string
+      text_10: string
+      text_11: string
+      text_12: string
+      text_13: string
+      text_14: string
+      text_15: string
+      text_16: string
+      text_17: string
+      text_18: string
+      text_19: string
+      text_20: string
+      text_21: string
+      text_22: string
+      text_23: string
+      text_24: string
+      text_25: string
+      text_26: string
+      text_27: string
+      text_28: string
+      text_29: string
+      text_30: string
+      text_31: string
+      text_32: string
+      text_33: string
+      text_34: string
+      text_35: string
+      text_36: string
+      text_37: string
+      text_38: string
+      text_39: string
+      text_40: string
+      text_41: string
+      text_42: string
+      text_43: string
+      text_44: string
+      text_45: string
+      text_46: string
+      text_47: string
+      text_48: string
+      text_49: string
+      text_50: string
+      text_51: string
+      text_52: string
+      text_53: string
+      text_54: string
+      text_55: string
+      text_56: string
+      text_57: string
+      text_58: string
+      text_59: string
+      text_60: string
+      text_61: string
+      text_62: string
+      text_63: string
+      text_64: string
+      text_65: string
+      text_66: string
+      text_67: string
+      text_68: string
+      text_69: string
+      text_70: string
+      text_71: string
+      text_72: string
+      text_73: string
+      text_74: string
+      text_75: string
+      text_76: string
+      text_77: string
+      text_78: string
+      text_79: string
+      text_80: string
+      text_81: string
+      text_82: string
+      text_83: string
+      text_84: string
+      text_85: string
+      text_86: string
+      text_87: string
+      text_88: string
+      text_89: string
+      text_90: string
+      text_91: string
+      text_92: string
+      text_93: string
+      text_94: string
+      text_95: string
+      text_96: string
+      text_97: string
+      text_98: string
+      text_99: string
+      text_100: string
+      text_101: string
+      text_102: string
+      text_103: string
+      text_104: string
+      text_105: string
+      text_106: string
+      text_107: string
+      text_108: string
+      text_109: string
+      text_110: string
+      text_111: string
+      text_112: string
+      text_113: string
+      text_114: string
+      text_115: string
+      text_116: string
+      text_117: string
+      text_118: string
+      text_119: string
+      text_120: string
+      text_121: string
+    }
+    kyc_policy: {
+      text_1: string
+      text_2: string
+      text_3: string
+      text_4: string
+      text_5: string
+      text_6: string
+      text_7: string
+      text_8: string
+      text_9: string
+      text_10: string
+      text_11: string
+      text_12: string
+      text_13: string
+      text_14: string
+      text_15: string
+      text_16: string
+      text_17: string
+      text_18: string
+      text_19: string
+      text_20: string
+      text_21: string
+      text_22: string
+      text_23: string
+      text_24: string
+      text_25: string
+      text_26: string
+      text_27: string
+      text_28: string
+      text_29: string
+      text_30: string
+      text_31: string
+      text_32: string
+      text_33: string
+      text_34: string
+      text_35: string
+      text_36: string
+      text_37: string
+      text_38: string
+      text_39: string
+    }
   }
   home: {
     search: string
@@ -1072,12 +1270,14 @@ export type langType = {
   }
   bonus: {
     title_text: string
+    account_balance: string
+    bonus_money: string
     total_text: string
-    bonus_money_text: string
     withdraw_text: string
     super_bonus_text: string
     bonus_text: string
     no_active_text: string
+    cashable_progress: string
     table: {
       date: string
       deposit: string
@@ -1090,6 +1290,8 @@ export type langType = {
     dashboard_recharge_content2 : string
     text_1: string
     text_2: string
+    text_3: string
+    text_4: string
   }
   transaction: {
     tab: {

@@ -12,6 +12,9 @@ import MPrivacyPolicy from "@/components/about_us/privacy_policy/mobile/index.vu
 import MResponsibleGambling from "@/components/about_us/responsible_gambling/mobile/index.vue";
 import MBonusTerms from "@/components/about_us/bonus_terms/mobile/index.vue";
 import MPaymentMethods from "@/components/about_us/payment_methods/mobile/index.vue";
+import MReferralSystem from "@/components/about_us/referral_system/mobile/index.vue";
+import MAMLPolicy from "@/components/about_us/aml_policy/mobile/index.vue";
+import MKYCPolicy from "@/components/about_us/kyc_policy/mobile/index.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -19,7 +22,7 @@ const { setActiveAboutIndex } = aboutStore();
 const route = useRoute();
 const router = useRouter();
 
-const activeMenuIndex = ref<number>(4);
+const activeMenuIndex = ref<number>(7);
 const selectedMenuItem = ref<string>(t("about.page.text_4"));
 const aboutMenuShow = ref<boolean>(false);
 
@@ -120,6 +123,9 @@ onMounted(() => {
       <MResponsibleGambling v-if="activeMenuIndex == 2" />
       <MBonusTerms v-if="activeMenuIndex == 3" />
       <MPaymentMethods v-if="activeMenuIndex == 4" />
+      <MReferralSystem v-if="activeMenuIndex == 5" />
+      <MAMLPolicy v-if="activeMenuIndex == 6" />
+      <MKYCPolicy v-if="activeMenuIndex == 7" />
     </div>
   </div>
 </template>
