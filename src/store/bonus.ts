@@ -45,5 +45,20 @@ export const bonusStore = defineStore({
       }
       await network.sendMsg(route, {}, next, 1);
     },
+    // bonus cancel
+    async dispatchBonusCancel(data: any) {
+      this.setSuccess(false);
+      const route: string = NETWORK.BONUS_PAGE.BONUS_CANCEL;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: any) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
   }
 })

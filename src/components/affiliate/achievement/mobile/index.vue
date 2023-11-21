@@ -3,10 +3,13 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import MReward from "./components/Reward.vue";
+import { achievementStore } from "@/store/achievement";
+import { storeToRefs } from "pinia";
 import MAgentRealization from "./components/AgentRealization.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const { dispatchAchievementList } = achievementStore();
 
 const commissionMenuShow = ref<boolean>(false);
 
@@ -16,6 +19,38 @@ window.addEventListener("scroll", function () {
 
 const mobileWidth = computed(() => {
   return width.value;
+});
+
+const achievementItem = computed(() => {
+  const { getAchievementItem } = storeToRefs(achievementStore());
+  if (getAchievementItem.value.award_explain.length > 0) {
+    getAchievementItem.value.rate =
+      (getAchievementItem.award_progress * 100) /
+        getAchievementItem.value.award_explain[
+          getAchievementItem.value.award_explain.length - 1
+        ].num >=
+      99
+        ? 99
+        : Math.floor(
+            (getAchievementItem.award_progress * 100) /
+              getAchievementItem.value.award_explain[
+                getAchievementItem.value.award_explain.length - 1
+              ].num
+          );
+  }
+  if (getAchievementItem.value.achievement_explain.length > 0) {
+    getAchievementItem.value.achievement_explain.map((item) => {
+      item.rate =
+        (getAchievementItem.value.achievement_progress * 100) / item.num >= 97.8
+          ? 97.8
+          : Math.floor((getAchievementItem.value.achievement_progress * 100) / item.num);
+    });
+  }
+  return getAchievementItem.value;
+});
+
+onMounted(async () => {
+  await dispatchAchievementList();
 });
 </script>
 
@@ -54,8 +89,8 @@ const mobileWidth = computed(() => {
         {{ t("affiliate.invite.commission_content_text") }}
       </div>
     </v-row>
-    <MReward />
-    <MAgentRealization />
+    <MReward :achievementItem="achievementItem" />
+    <MAgentRealization :achievementItem="achievementItem" />
   </div>
 </template>
 

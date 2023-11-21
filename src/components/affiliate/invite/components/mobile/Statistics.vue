@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { type StatisticsItem } from "@/interface/affiliate/invite"
+import { storeToRefs } from 'pinia';
+import { inviteStore } from '@/store/invite';
+import {type InviteData} from "@/interface/invite";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const props = defineProps<{inviteItem: InviteData}>();
+const {inviteItem} = toRefs(props);
 
 const revenuCash = ref<number>(415.740);
 const statisticsItem = ref<StatisticsItem>({
@@ -32,7 +37,7 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_1") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                {{ statisticsItem.today_deposited_user }}
+                {{ inviteItem.deposit_users_today }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-1 mt-4">
@@ -40,7 +45,7 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_2") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                {{ statisticsItem.yesterday_deposited_user }}
+                {{ inviteItem.deposit_users_yesterdays }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="m-invite-border text-center py-2 mb-4">
@@ -48,13 +53,13 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_3") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.today_revenue }}
+                R$ {{ Number(inviteItem.bonus_today).toFixed(2) }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-2 mb-4">
               <div class="text-400-10 gray">{{ t("affiliate.invite.text_4") }}</div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.yesterday_revenue }}
+                R$ {{ Number(inviteItem.bonus_yesterdays).toFixed(2) }}
               </div>
             </v-col>
           </v-row>
@@ -66,7 +71,7 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_5") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                {{ statisticsItem.this_month_deposited_user }}
+                {{ inviteItem.deposit_users_month }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-1 mt-4">
@@ -74,7 +79,7 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_6") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                {{ statisticsItem.total_registered_user }}
+                {{ inviteItem.invited_users }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="m-invite-border text-center py-2 mb-4">
@@ -82,13 +87,13 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_7") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.this_month_revenue.toFixed(2) }}
+                R$ {{ Number(inviteItem.bonus_month).toFixed(2) }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-2 mb-4">
               <div class="text-400-10 gray">{{ t("affiliate.invite.text_8") }}</div>
               <div class="m-invite-url-right-text mt-2">
-                {{ statisticsItem.total_depositing_user }}
+                {{ inviteItem.deposit_users }}
               </div>
             </v-col>
           </v-row>
@@ -100,7 +105,7 @@ const statisticsItem = ref<StatisticsItem>({
                 {{ t("affiliate.invite.text_9") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.total_revenue.toFixed(2) }}
+                R$ {{ Number(inviteItem.bonus_total).toFixed(2) }}
               </div>
             </v-col>
           </v-row>

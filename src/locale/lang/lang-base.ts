@@ -1292,6 +1292,13 @@ export type langType = {
     text_2: string
     text_3: string
     text_4: string
+    text_5: string
+    dialog: {
+      title_text: string
+      content_text_1: string
+      determine_btn_text: string
+      cancel_btn_text: string
+    }
   }
   transaction: {
     tab: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import img_agentemblem_1 from "@/assets/affiliate/achievement/img_agentemblem_1.png";
@@ -16,9 +16,15 @@ import img_agentemblem_11 from "@/assets/affiliate/achievement/img_agentemblem_1
 import img_agentemblem_12 from "@/assets/affiliate/achievement/img_agentemblem_12.png";
 import img_agentemblem_13 from "@/assets/affiliate/achievement/img_agentemblem_13.png";
 import img_agentemblem_14 from "@/assets/affiliate/achievement/img_agentemblem_14.png";
+import img_agentemblem_15 from "@/assets/affiliate/achievement/img_agentemblem_15.png";
+import {type GetAchievementItem} from "@/interface/achievement";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+
+const props = defineProps<{ achievementItem: GetAchievementItem }>();
+
+const { achievementItem } = toRefs(props);
 
 const rate = ref(97.8); // 100 is 97.8
 
@@ -89,6 +95,12 @@ const realizationItem = ref<Array<any>>([
     realization_grade: 100000,
     rate: 0,
   },
+  {
+    img: img_agentemblem_11,
+    grade: 8000000,
+    realization_grade: 200000,
+    rate: 0,
+  },
 ]);
 
 const mobileWidth = computed(() => {
@@ -99,30 +111,46 @@ const mobileWidth = computed(() => {
 <template>
   <v-card
     class="m-achievement-realization-card mx-4 mt-2"
-    v-for="(item, index) in realizationItem"
+    v-for="(item, index) in achievementItem.achievement_explain"
     :key="index"
   >
     <v-row class="mx-0">
       <v-col cols="5" class="text-center">
-        <img :src="item.img" width="50" :class="index < 4 ? 'img-gray opacity-3' : ''" />
+        <img
+          :src="realizationItem[index].img"
+          width="50"
+          :class="
+            item.achievement_progress < item.num && item.status != 1
+              ? ''
+              : 'img-gray opacity-3'
+          "
+        />
         <p
           class="text-900-18"
-          :class="item.grade >= 1000 ? 'color-F9BC01' : 'color-414968'"
+          :class="
+            item.achievement_progress < item.num && item.status != 1
+              ? 'color-F9BC01'
+              : 'color-414968'
+          "
         >
-          R$ {{ item.grade }}
+          R$ {{ item.award }}
         </p>
       </v-col>
       <v-col cols="7" class="text-center">
         <p
           class="text-700-12 mt-4"
-          :class="item.grade >= 1000 ? 'white' : 'color-414968'"
+          :class="
+            item.achievement_progress < item.num && item.status != 1
+              ? 'white'
+              : 'color-414968'
+          "
         >
-          {{ t("affiliate.achievement.text_2") }} {{ item.realization_grade }}
+          {{ t("affiliate.achievement.text_2") }} {{ item.num }}
         </p>
         <div
           class="mt-2"
           :class="
-            item.grade >= 1000
+            item.achievement_progress < item.num && item.status != 1
               ? 'm-achievement-realization-progress-active-bg'
               : 'm-achievement-realization-progress-bg'
           "
@@ -134,15 +162,15 @@ const mobileWidth = computed(() => {
           >
             <div
               class="text-800-10"
-              :class="item.grade >= 1000 ? 'white' : 'color-414968'"
+              :class="
+                item.achievement_progress < item.num && item.status != 1
+                  ? 'white'
+                  : 'color-414968'
+              "
             >
-              {{
-                item.rate == 97.8
-                  ? item.realization_grade
-                  : (item.realization_grade * item.rate) / 100
-              }}
+              {{ achievementItem.achievement_progress }}
               /
-              {{ item.realization_grade }}
+              {{ item.num }}
             </div>
           </v-progress-linear>
         </div>
@@ -151,7 +179,7 @@ const mobileWidth = computed(() => {
           width="132"
           height="32"
           :class="
-            item.grade >= 1000
+            item.achievement_progress < item.num && item.status != 1
               ? 'm-achievement-realization-active-btn'
               : 'm-achievement-realization-btn'
           "

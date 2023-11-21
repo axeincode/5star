@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import img_agent_6 from "@/assets/affiliate/invite/image/img_agent_6.png";
+import {type GetAchievementItem} from "@/interface/achievement";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+
+const props = defineProps<{achievementItem: GetAchievementItem}>()
+
+const {achievementItem} = toRefs(props);
 
 const rewardGrades = ref<Array<any>>([
   {
@@ -42,23 +47,42 @@ const mobileWidth = computed(() => {
     <img src="@/assets/affiliate/invite/image/img_agent_7.png" class="mt-1" width="88" />
     <p class="text-700-16 white">{{ t("affiliate.achievement.text_1") }}</p>
     <v-row class="mx-3 mt-6">
-      <template v-for="(item, index) in rewardGrades" :key="index">
+      <template v-for="(item, index) in achievementItem.award_explain" :key="index">
         <v-col cols="3" class="px-0">
-          <img :src="item.img" :class="index == 0 ? 'img-gray' : ''" width="64" />
-          <p class="text-900-11" :class="index == 0 ? 'gray' : 'color-F9BC01'">
-            R$ {{ item.value }}
+          <img
+            :src="rewardGrades[index].img"
+            :class="
+              item.num <= achievementItem.award_progress && item.status == 1
+                ? ''
+                : 'img-gray'
+            "
+            width="64"
+          />
+          <p
+            class="text-900-11"
+            :class="
+              item.num <= achievementItem.award_progress && item.status == 1
+                ? 'color-F9BC01'
+                : 'gray'
+            "
+          >
+            R$ {{ item.award }}
           </p>
           <div class="m-achievement-reward-bar"></div>
         </v-col>
       </template>
     </v-row>
     <div class="m-achievement-reward-progress-bg mx-3 mb-2">
-      <v-progress-linear v-model="rate" height="24" class="m-achievement-reward-progress">
+      <v-progress-linear
+        v-model="achievementItem.rate"
+        height="24"
+        class="m-achievement-reward-progress"
+      >
       </v-progress-linear>
       <v-row class="m-achievement-progress-grade">
-        <template v-for="(item, index) in rewardGrades" :key="index">
+        <template v-for="(item, index) in achievementItem.award_explain" :key="index">
           <v-col cols="3" class="ma-0 pa-0">
-            <p class="text-900-10 white">{{ item.grade }}</p>
+            <p class="text-900-10 white">{{ item.num }}</p>
           </v-col>
         </template>
       </v-row>

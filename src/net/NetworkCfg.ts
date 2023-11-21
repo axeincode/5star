@@ -47,6 +47,11 @@ export namespace NETWORK {
     static INVITE_HISTORY = '/user/invite/history' // 
   }
 
+  // achievement api
+  export class ACHIEVEMENT_PAGE {
+    static ACHIEVEMENT_LIST = '/user/invite/achievement/list';
+  }
+
   // game api
   export class GAME_INFO {
     static GAME_CATEGORY = '/games/categories'; // get game category
@@ -78,6 +83,7 @@ export namespace NETWORK {
   // bonus api
   export class BONUS_PAGE {
     static USER_BONUS = '/user/bonuses';
+    static BONUS_CANCEL = '/user/bonuses/cancel'
   }
 
   //Listening events sent actively

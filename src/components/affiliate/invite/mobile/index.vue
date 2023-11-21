@@ -127,7 +127,7 @@ onMounted(async () => {
 </script>
 <template>
   <!-- User Statistics Component -->
-  <MStatistics />
+  <MStatistics :inviteItem="inviteItem" />
 
   <!-- Invite Partner Component -->
   <MInvitePartner :inviteItem="inviteItem" />

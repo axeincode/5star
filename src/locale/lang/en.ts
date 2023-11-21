@@ -1293,7 +1293,14 @@ export const lang: langType = {
     text_1: "Bonus",
     text_2: "No active bonues found",
     text_3: "Real",
-    text_4: "Bonuses"
+    text_4: "Bonuses",
+    text_5: "Forfeit",
+    dialog: {
+      title_text: "Brazstar.com Show",
+      content_text_1: "Are you sure you want to delete the task?",
+      determine_btn_text: "Determine",
+      cancel_btn_text: "Cancel",
+    }
   },
   transaction: {
     tab: {
