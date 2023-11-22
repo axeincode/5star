@@ -12,6 +12,17 @@ export interface InviteData {
     bonus_users_total: string | number
 }
 
+export interface InviteHistoryData {
+    total_pages: number
+    list: Array<InviteHistoryItem>
+}
+
+export interface InviteHistoryItem {
+    time: number | string
+    user: string
+    bonus: number | string
+}
+
 export interface StatisticsData {
     today_profit: StatisticsItem
     week_profit: StatisticsItem
@@ -59,6 +70,12 @@ export interface InviteHistoryConfig {
 export type GetStatisticsResponse = {
     code: number
     data: StatisticsData
+    message: string
+}
+
+export type InviteHistoryResponse = {
+    code: number
+    data: InviteHistoryData
     message: string
 }
 
