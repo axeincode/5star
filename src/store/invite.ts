@@ -62,7 +62,8 @@ export const inviteStore = defineStore({
         achievement_award: 0,
       },
       receive_profit: 0,
-    } as Invite.StatisticsData
+    } as Invite.StatisticsData,
+    inviteHistoryItem: {} as Invite.InviteHistoryData,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -71,6 +72,7 @@ export const inviteStore = defineStore({
     getPersonalInvitationInfo: (state) => state.personalInvitationInfo,
     getInviteHistoryConfig: (state) => state.inviteHistoryConfig,
     getStatisticsItem: (state) => state.statisticsItem,
+    // getInviteHistoryItem: (state) => state.inviteHistoryItem
   },
   actions: {
     // set functions
@@ -91,6 +93,9 @@ export const inviteStore = defineStore({
     },
     setStatisticsItem(statisticsItem: Invite.StatisticsData) {
       this.statisticsItem = statisticsItem;
+    },
+    setInviteHistoryItem(inviteHistoryItem: Invite.InviteHistoryData) {
+      this.inviteHistoryItem = inviteHistoryItem;
     },
     // user invitation information
     async dispatchUserInvite() {
@@ -114,10 +119,10 @@ export const inviteStore = defineStore({
       const route: string = NETWORK.INVITE_PAGE.INVITE_HISTORY;
       const network: Network = Network.getInstance();
       // response call back function
-      const next = (response: Invite.GetInviteResponse) => {
+      const next = (response: Invite.InviteHistoryResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.setInviteItem(response.data);
+          // this.setInviteHistoryItem(response.data);
         } else {
           this.setErrorMessage(handleException(response.code));
         }
