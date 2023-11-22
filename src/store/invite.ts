@@ -108,6 +108,22 @@ export const inviteStore = defineStore({
       }
       await network.sendMsg(route, {}, next, 1);
     },
+    // get invitation activity commission record
+    async dispatchUserInviteHistory() {
+      this.setSuccess(false);
+      const route: string = NETWORK.INVITE_PAGE.INVITE_HISTORY;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Invite.GetInviteResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setInviteItem(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, {}, next, 1);
+    },
     // get agent achievement information
     async dispatchStatisticsList() {
       this.setSuccess(false);
