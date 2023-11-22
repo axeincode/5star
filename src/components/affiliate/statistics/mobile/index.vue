@@ -4,29 +4,57 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { inviteStore } from "@/store/invite";
 import { storeToRefs } from "pinia";
+import { type StatisticsItem } from "@/interface/invite";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 
-const { dispatchInviteSelf } = inviteStore();
+const { dispatchStatisticsList } = inviteStore();
+const { dispatchInviteAward } = inviteStore();
 
-const summaryTabText = ref("today");
+const summaryTabText = ref<string>("today");
+
+const selectedItem = ref<StatisticsItem>({
+  register_user: [],
+  drposit_user: [],
+  deposit_bonus: 0,
+  deposit_amount: [],
+  bet_amount: [],
+  bet_bonus: [],
+  achievement_award: 0,
+})
 
 const mobileWidth = computed(() => {
   return width.value;
 });
 
-const personalInvitationInfo = computed(() => {
-  const { getPersonalInvitationInfo } = storeToRefs(inviteStore());
-  return getPersonalInvitationInfo.value;
-});
-
 const handleSummaryTab = (tabText: string) => {
   summaryTabText.value = tabText;
+  switch (tabText) {
+    case "today":
+      selectedItem.value = statisticsItem.value.today_profit
+      break;
+    case "week":
+      selectedItem.value = statisticsItem.value.week_profit
+      break;
+    case "month":
+      selectedItem.value = statisticsItem.value.month_profit
+      break;
+  }
 };
 
+const statisticsItem = computed(() => {
+  const { getStatisticsItem } = storeToRefs(inviteStore());
+  selectedItem.value = getStatisticsItem.value.today_profit
+  return getStatisticsItem.value;
+});
+
+const inviteAward = async () => {
+  await dispatchInviteAward();
+}
+
 onMounted(async () => {
-  await dispatchInviteSelf();
+  await dispatchStatisticsList();
 });
 </script>
 <template>
@@ -52,9 +80,15 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_5") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray"> 0 </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray"> 0 </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray"> 0 </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        {{ selectedItem.register_user[0] }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        {{ selectedItem.register_user[1] }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        {{ selectedItem.register_user[2] }}
+      </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-user-card">
       <v-col cols="3" class="pa-0 text-400-12 gray">
@@ -62,9 +96,15 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_5") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray"> 0 </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray"> 0 </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray"> 0 </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        {{ selectedItem.drposit_user[0] }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        {{ selectedItem.drposit_user[1] }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        {{ selectedItem.drposit_user[2] }}
+      </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-commission-card">
       <v-col cols="3" class="pa-0 text-400-12 gray">
@@ -72,7 +112,9 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-12 yellow">
+        R$ {{ Number(selectedItem.deposit_bonus).toFixed(2) }}
+      </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
     </v-row>
@@ -82,9 +124,15 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.deposit_amount[0]).toFixed(2) }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.deposit_amount[1]).toFixed(2) }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.deposit_amount[2]).toFixed(2) }}
+      </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-user-card">
       <v-col cols="3" class="pa-0 text-400-12 gray">
@@ -92,9 +140,15 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.bet_amount[0]).toFixed(2) }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.bet_amount[1]).toFixed(2) }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.bet_amount[2]).toFixed(2) }}
+      </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-commission-card">
       <v-col cols="3" class="pa-0 text-400-12 gray">
@@ -102,9 +156,15 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 yellow">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-12 yellow">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-12 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-12 yellow">
+        R$ {{ Number(selectedItem.bet_bonus[0]).toFixed(2) }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 yellow">
+        R$ {{ Number(selectedItem.bet_bonus[1]).toFixed(2) }}
+      </v-col>
+      <v-col cols="3" class="pa-0 text-700-12 yellow">
+        R$ {{ Number(selectedItem.bet_bonus[2]).toFixed(2) }}
+      </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-commission-card">
       <v-col cols="3" class="pa-0 text-400-12 gray">
@@ -112,7 +172,9 @@ onMounted(async () => {
         <br />
         {{ t("affiliate.statistics.text_11") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-12 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-12 gray">
+        R$ {{ Number(selectedItem.achievement_award).toFixed(2) }}
+      </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
     </v-row>
@@ -164,8 +226,16 @@ onMounted(async () => {
       <p class="text-800-12 white">{{ t("affiliate.statistics.tab.text_1") }}</p>
     </v-col>
     <v-col cols="7" class="pa-0 text-center">
-      <p class="text-800-24 yellow">R$ 19000,34</p>
-      <v-btn class="text-none mt-1 m-statistics-receive-btn" width="114" height="32">
+      <p class="text-800-24 yellow">
+        R$ {{ Number(statisticsItem.receive_profit).toFixed(2) }}
+      </p>
+      <v-btn
+        class="text-none mt-1 m-statistics-receive-btn"
+        width="114"
+        height="32"
+        :disabled="Number(statisticsItem.receive_profit) == 0"
+        @click="inviteAward"
+      >
         {{ t("affiliate.achievement.text_3") }}
       </v-btn>
     </v-col>

@@ -41,15 +41,18 @@ export namespace NETWORK {
   // invite api
   export class INVITE_PAGE {
     static INVITE_INFO = '/user/invite'; // get user invite information
-    static INVITER_AWARD = '/user/inviter/award'; // receive invitation achievement commission
+    static INVITER_AWARD = '/user/invite/award'; // receive invitation achievement commission
     static INVITE_SELF = '/user/invite/self'; // personal invitation information
     static INVITE_HISTORY_CONFIG = '/user/invite/historycfg'; // invitation event commission record configuration
-    static INVITE_HISTORY = '/user/invite/history' // 
+    static INVITE_HISTORY = '/user/invite/history'; // get invite history
+    static STATISTICS_LIST = '/user/invite/statistics/list'; // get agent achievement information
   }
 
   // achievement api
   export class ACHIEVEMENT_PAGE {
     static ACHIEVEMENT_LIST = '/user/invite/achievement/list';
+    static STAGE_AWARD = '/user/invite/stage/achievement/award';
+    static ACHIEVEMENT_AWARD = '/user/invite/achievement/award';
   }
 
   // game api

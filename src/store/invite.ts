@@ -32,14 +32,45 @@ export const inviteStore = defineStore({
         invite_bonus: 0
       }
     } as Invite.PersonalInvitationInformation,
-    inviteHistoryConfig: {} as Invite.InviteHistoryConfig
+    inviteHistoryConfig: {} as Invite.InviteHistoryConfig,
+    statisticsItem: {
+      today_profit: {
+        register_user: [],
+        drposit_user: [],
+        deposit_bonus: 0,
+        deposit_amount: [],
+        bet_amount: [],
+        bet_bonus: [],
+        achievement_award: 0,
+      },
+      week_profit: {
+        register_user: [],
+        drposit_user: [],
+        deposit_bonus: 0,
+        deposit_amount: [],
+        bet_amount: [],
+        bet_bonus: [],
+        achievement_award: 0,
+      },
+      month_profit: {
+        register_user: [],
+        drposit_user: [],
+        deposit_bonus: 0,
+        deposit_amount: [],
+        bet_amount: [],
+        bet_bonus: [],
+        achievement_award: 0,
+      },
+      receive_profit: 0,
+    } as Invite.StatisticsData
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getInviteItem: (state) => state.inviteItem,
     getPersonalInvitationInfo: (state) => state.personalInvitationInfo,
-    getInviteHistoryConfig: (state) => state.inviteHistoryConfig
+    getInviteHistoryConfig: (state) => state.inviteHistoryConfig,
+    getStatisticsItem: (state) => state.statisticsItem,
   },
   actions: {
     // set functions
@@ -58,6 +89,9 @@ export const inviteStore = defineStore({
     setInviteHistoryConfig(inviteHistoryConfig: Invite.InviteHistoryConfig) {
       this.inviteHistoryConfig = inviteHistoryConfig;
     },
+    setStatisticsItem(statisticsItem: Invite.StatisticsData) {
+      this.statisticsItem = statisticsItem;
+    },
     // user invitation information
     async dispatchUserInvite() {
       this.setSuccess(false);
@@ -74,8 +108,24 @@ export const inviteStore = defineStore({
       }
       await network.sendMsg(route, {}, next, 1);
     },
-    // receive invitation achievement commission
-    async dispatchInviterAward(data: any) {
+    // get agent achievement information
+    async dispatchStatisticsList() {
+      this.setSuccess(false);
+      const route: string = NETWORK.INVITE_PAGE.STATISTICS_LIST;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Invite.GetStatisticsResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setStatisticsItem(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, {}, next, 1);
+    },
+    // receive invitation achievement commissions
+    async dispatchInviteAward(data: any) {
       this.setSuccess(false);
       const route: string = NETWORK.INVITE_PAGE.INVITER_AWARD;
       const network: Network = Network.getInstance();

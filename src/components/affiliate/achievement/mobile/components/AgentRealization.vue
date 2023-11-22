@@ -17,10 +17,13 @@ import img_agentemblem_12 from "@/assets/affiliate/achievement/img_agentemblem_1
 import img_agentemblem_13 from "@/assets/affiliate/achievement/img_agentemblem_13.png";
 import img_agentemblem_14 from "@/assets/affiliate/achievement/img_agentemblem_14.png";
 import img_agentemblem_15 from "@/assets/affiliate/achievement/img_agentemblem_15.png";
-import {type GetAchievementItem} from "@/interface/achievement";
+import { type GetAchievementItem } from "@/interface/achievement";
+import { type ExplainItem } from "@/interface/achievement";
+import { achievementStore } from "@/store/achievement";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const { dispatchAchievementAward } = achievementStore();
 
 const props = defineProps<{ achievementItem: GetAchievementItem }>();
 
@@ -106,6 +109,13 @@ const realizationItem = ref<Array<any>>([
 const mobileWidth = computed(() => {
   return width.value;
 });
+
+const achievementAward = async (achievement_item: ExplainItem, achievement_progress: number) => {
+  console.log(achievement_item);
+  if (achievement_item.num <= achievement_progress && achievement_item.status == 1) {
+    await dispatchAchievementAward({index: achievement_item.index});
+  }
+}
 </script>
 
 <template>
@@ -120,7 +130,7 @@ const mobileWidth = computed(() => {
           :src="realizationItem[index].img"
           width="50"
           :class="
-            item.achievement_progress < item.num && item.status != 1
+            item.num <= achievementItem.achievement_progress && item.status == 1
               ? ''
               : 'img-gray opacity-3'
           "
@@ -128,7 +138,7 @@ const mobileWidth = computed(() => {
         <p
           class="text-900-18"
           :class="
-            item.achievement_progress < item.num && item.status != 1
+            item.num <= achievementItem.achievement_progress && item.status == 1
               ? 'color-F9BC01'
               : 'color-414968'
           "
@@ -140,7 +150,7 @@ const mobileWidth = computed(() => {
         <p
           class="text-700-12 mt-4"
           :class="
-            item.achievement_progress < item.num && item.status != 1
+            item.num <= achievementItem.achievement_progress && item.status == 1
               ? 'white'
               : 'color-414968'
           "
@@ -150,7 +160,7 @@ const mobileWidth = computed(() => {
         <div
           class="mt-2"
           :class="
-            item.achievement_progress < item.num && item.status != 1
+            item.num <= achievementItem.achievement_progress && item.status == 1
               ? 'm-achievement-realization-progress-active-bg'
               : 'm-achievement-realization-progress-bg'
           "
@@ -163,7 +173,7 @@ const mobileWidth = computed(() => {
             <div
               class="text-800-10"
               :class="
-                item.achievement_progress < item.num && item.status != 1
+                item.num <= achievementItem.achievement_progress && item.status == 1
                   ? 'white'
                   : 'color-414968'
               "
@@ -179,10 +189,12 @@ const mobileWidth = computed(() => {
           width="132"
           height="32"
           :class="
-            item.achievement_progress < item.num && item.status != 1
+            item.num <= achievementItem.achievement_progress && item.status == 1
               ? 'm-achievement-realization-active-btn'
               : 'm-achievement-realization-btn'
           "
+          :disabled="item.num > achievementItem.achievement_progress && item.status != 1"
+          @click="achievementAward(item, achievementItem.achievement_progress)"
         >
           {{ t("affiliate.achievement.text_3") }}
         </v-btn>

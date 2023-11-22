@@ -214,6 +214,7 @@ onMounted(() => {
 
 <style lang="scss">
 .m-home-live-win {
+  min-height: 123px;
   position: relative;
   margin: 28px 4px 0px 4px;
   .m-live-win-img-width {
