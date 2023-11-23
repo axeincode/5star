@@ -129,6 +129,9 @@ export const lang: langType = {
     spin_text: "SPIN",
     live_support: 'Live support',
     earn_free_text: "Earn Free $",
+    login_bonus_text: "VIP Login Bonus",
+    lucky_wheel_text: "Lucky wheel",
+    refer_earn_text: "Refer and Earn",
     menu_item_1: {
       promotions: 'Promotions',
       vip_club: 'VIP Club',
@@ -136,11 +139,13 @@ export const lang: langType = {
       blog: 'Blog',
     },
     casino_sub_menu: {
+      hot_text: "Hot",
       recently_played: 'Recently Played',
       favorites: 'Favorites',
       game_originals: 'Brazstar Originals',
       slots: 'Slots',
       live_casino: 'Live Casino',
+      provider_text: 'Providers'
     },
     language: {
       title: 'Language',

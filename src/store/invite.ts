@@ -63,7 +63,10 @@ export const inviteStore = defineStore({
       },
       receive_profit: 0,
     } as Invite.StatisticsData,
-    inviteHistoryItem: {} as Invite.InviteHistoryData,
+    inviteHistoryItem: {
+      total_pages: 0,
+      list: []
+    } as Invite.InviteHistoryData,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -72,7 +75,7 @@ export const inviteStore = defineStore({
     getPersonalInvitationInfo: (state) => state.personalInvitationInfo,
     getInviteHistoryConfig: (state) => state.inviteHistoryConfig,
     getStatisticsItem: (state) => state.statisticsItem,
-    // getInviteHistoryItem: (state) => state.inviteHistoryItem
+    getInviteHistoryItem: (state) => state.inviteHistoryItem
   },
   actions: {
     // set functions
@@ -114,7 +117,7 @@ export const inviteStore = defineStore({
       await network.sendMsg(route, {}, next, 1);
     },
     // get invitation activity commission record
-    async dispatchUserInviteHistory() {
+    async dispatchUserInviteHistory(formData: Invite.InviteHistoryFormData) {
       this.setSuccess(false);
       const route: string = NETWORK.INVITE_PAGE.INVITE_HISTORY;
       const network: Network = Network.getInstance();
@@ -122,12 +125,12 @@ export const inviteStore = defineStore({
       const next = (response: Invite.InviteHistoryResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          // this.setInviteHistoryItem(response.data);
+          this.setInviteHistoryItem(response.data);
         } else {
           this.setErrorMessage(handleException(response.code));
         }
       }
-      await network.sendMsg(route, {}, next, 1);
+      await network.sendMsg(route, formData, next, 1);
     },
     // get agent achievement information
     async dispatchStatisticsList() {

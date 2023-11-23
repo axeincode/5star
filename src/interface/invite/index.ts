@@ -12,6 +12,13 @@ export interface InviteData {
     bonus_users_total: string | number
 }
 
+export interface InviteHistoryFormData {
+    index: number
+    page: number
+    first_time: string
+    last_time: string
+}
+
 export interface InviteHistoryData {
     total_pages: number
     list: Array<InviteHistoryItem>

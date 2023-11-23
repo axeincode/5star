@@ -127,33 +127,38 @@ export type langType = {
     task_text: string
     unlock_text: string
     spin_text: string
+    login_bonus_text: string
+    lucky_wheel_text: string
+    refer_earn_text: string
     menu_item_1: {
-      promotions: string,
-      vip_club: string,
-      affiliate: string,
-      blog: string,
+      promotions: string
+      vip_club: string
+      affiliate: string
+      blog: string
     },
     casino_sub_menu: {
-      recently_played: string,
-      favorites: string,
-      game_originals: string,
-      slots: string,
-      live_casino: string,
+      hot_text: string
+      recently_played: string
+      favorites: string
+      game_originals: string
+      slots: string
+      live_casino: string
+      provider_text: string
     },
     language: {
-      title: string,
-      english: string,
-      portuguese: string,
-      espanola: string,
+      title: string
+      english: string
+      portuguese: string
+      espanola: string
     },
     sound_mode: {
-      on: string,
-      off: string,
+      on: string
+      off: string
     }
   }
   rightBar: {
     dropdownItem: {
-      casino: string,
+      casino: string
       sport: string
     }
     bottom: {

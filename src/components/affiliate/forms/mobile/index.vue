@@ -9,10 +9,12 @@ import { refferalStore } from "@/store/refferal";
 import { inviteStore } from "@/store/invite";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
+import { type InviteHistoryFormData } from "@/interface/invite";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchInviteHistoryCfg } = inviteStore();
+const { dispatchUserInviteHistory } = inviteStore();
 
 const customPrefix = shallowRef({
   render() {
@@ -55,7 +57,7 @@ const bonusItems = ref<Array<string>>(["Invitation Bonus", "Betting Commission"]
 const bonusMenuShow = ref<boolean>(false);
 const cashMenuShow = ref<boolean>(false);
 
-const selectedCashItem = ref<number>(10);
+const selectedPageSize = ref<number>(10);
 
 const cashItems = ref<Array<number>>([10, 11, 12]);
 
@@ -122,12 +124,27 @@ const formsList = ref<Array<any>>([
   },
 ]);
 
-const handleDropdown = (item: any) => {
+const selectedHistoryConfig = ref<Array<any>>({});
+
+const handleHistoryConfigDropdown = async (item: any) => {
   selectedBonusItem.value = item.name;
+  selectedHistoryConfig.value = item;
+  await dispatchUserInviteHistory({
+    index: selectedHistoryConfig.value.index,
+    page: selectedPageSize.value,
+    first_time: moment(selectedDate.value[0]).valueOf(),
+    last_time: moment(selectedDate.value[1]).valueOf()
+  });
 };
 
-const handleCashDropdown = (item: number) => {
-  selectedCashItem.value = item;
+const handlePageDropdown = async (item: number) => {
+  selectedPageSize.value = item;
+  await dispatchUserInviteHistory({
+    index: selectedHistoryConfig.value.index,
+    page: selectedPageSize.value,
+    first_time: moment(selectedDate.value[0]).valueOf(),
+    last_time: moment(selectedDate.value[1]).valueOf()
+  });
 };
 
 const selectedDate = ref([
@@ -152,20 +169,41 @@ const mobileWidth = computed(() => {
 
 const inviteHistoryConfig = computed(() => {
   const { getInviteHistoryConfig } = storeToRefs(inviteStore());
-  getInviteHistoryConfig.value.list.push({
-    index: 3,
-    name: "Achievement Bonus",
-  });
+  selectedHistoryConfig.value = getInviteHistoryConfig.value.list[0];
+  // getInviteHistoryConfig.value.list.push({
+  //   index: 3,
+  //   name: "Achievement Bonus",
+  // });
   return getInviteHistoryConfig.value;
 });
 
-onMounted(async () => {
-  await dispatchInviteHistoryCfg();
-});
+const inviteHistoryItem = computed(() => {
+  const { getInviteHistoryItem } = storeToRefs(inviteStore());
+  return getInviteHistoryItem.value;
+})
 
 const fixPositionShow = computed(() => {
   const { getFixPositionEnable } = storeToRefs(appBarStore());
   return getFixPositionEnable.value;
+});
+
+watch(selectedDate, async (value) => {
+  await dispatchUserInviteHistory({
+    index: selectedHistoryConfig.value.index,
+    page: selectedPageSize.value,
+    first_time: moment(value[0]).valueOf(),
+    last_time: moment(value[1]).valueOf()
+  });
+}, {deep: true});
+
+onMounted(async () => {
+  await dispatchInviteHistoryCfg();
+  await dispatchUserInviteHistory({
+    index: inviteHistoryConfig.value.list[0].index,
+    page: selectedPageSize.value,
+    first_time: moment(selectedDate.value[0]).valueOf(),
+    last_time: moment(selectedDate.value[1]).valueOf()
+  });
 });
 </script>
 <template>
@@ -219,7 +257,7 @@ const fixPositionShow = computed(() => {
           :key="i"
           :value="item.name"
           class="bonus-item mx-2"
-          @click="handleDropdown(item)"
+          @click="handleHistoryConfigDropdown(item)"
           :class="selectedBonusItem == item.name ? 'm-bonus-menu-selected-item' : ''"
         >
           <v-list-item-title>{{ item.name }}</v-list-item-title>
@@ -232,7 +270,7 @@ const fixPositionShow = computed(() => {
           <v-list-item
             class="bonus-item"
             v-bind="props"
-            :title="selectedCashItem"
+            :title="selectedPageSize"
             append-icon="mdi-chevron-down"
             value=""
           >
@@ -245,8 +283,8 @@ const fixPositionShow = computed(() => {
           :key="i"
           :value="item"
           class="bonus-item mx-1"
-          :class="selectedCashItem == item ? 'm-bonus-menu-selected-item' : ''"
-          @click="handleCashDropdown(item)"
+          :class="selectedPageSize == item ? 'm-bonus-menu-selected-item' : ''"
+          @click="handlePageDropdown(item)"
         >
           <v-list-item-title>{{ item }}</v-list-item-title>
         </v-list-item>
@@ -279,11 +317,21 @@ const fixPositionShow = computed(() => {
         </tr>
       </thead>
       <tbody class="m-forms-table-body">
-        <tr v-for="(item, index) in formsList" :key="index">
+        <tr
+          v-for="(item, index) in inviteHistoryItem.list"
+          :key="index"
+          v-if="inviteHistoryItem.list.length > 0"
+        >
           <td class="text-500-12">{{ item.time }}</td>
           <td class="text-500-12">{{ item.user }}</td>
-          <td class="text-500-12">{{ item.event }}</td>
+          <td class="text-500-12">{{ selectedHistoryConfig.name }}</td>
           <td class="text-500-12">{{ item.bonus }}</td>
+        </tr>
+        <tr v-for="(item, formIndex) in formsList" :key="formIndex" v-else>
+          <td class="text-500-12"></td>
+          <td class="text-500-12"></td>
+          <td class="text-500-12"></td>
+          <td class="text-500-12"></td>
         </tr>
       </tbody>
     </v-table>

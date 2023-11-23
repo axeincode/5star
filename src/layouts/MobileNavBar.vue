@@ -26,6 +26,8 @@ import icon_public_45 from "@/assets/public/svg/icon_public_45.svg";
 import icon_public_46 from "@/assets/public/svg/icon_public_46.svg";
 import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
 import icon_public_57 from "@/assets/public/svg/icon_public_57.svg";
+import icon_public_101 from "@/assets/public/svg/icon_public_101.svg";
+import icon_public_102 from "@/assets/public/svg/icon_public_102.svg";
 
 const router = useRouter();
 const { setNavBarToggle } = appBarStore();
@@ -52,6 +54,8 @@ const casinoIconColor = ref<string>("#7782AA");
 const originalIconColor = ref<string>("#7782AA")
 const recentlyIconColor = ref<string>("#7782AA")
 const favoriteIconColor = ref<string>("#7782AA")
+const hotIconColor = ref<string>("#7782AA")
+const providerIconColor = ref<string>("#7782AA")
 const slotIconColor = ref<string>("#7782AA")
 const liveIconColor = ref<string>("#7782AA")
 const sportIconColor = ref<string>("#7782AA")
@@ -389,6 +393,26 @@ const languageIconTransform = (el: any) => {
   return el;
 };
 
+const hotIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", hotIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", hotIconColor.value);
+    }
+  }
+  return el;
+};
+
+const providerIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", providerIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", providerIconColor.value);
+    }
+  }
+  return el;
+};
+
 const openLoginBonusDialog = () => {
   setLoginBonusDialogVisible(true);
   setNavBarToggle(false);
@@ -423,6 +447,19 @@ const handleGameFilter = (filterText: string) => {
       favoriteIconColor.value = "#7782AA"
       slotIconColor.value = "#7782AA"
       liveIconColor.value = "#7782AA"
+      hotIconColor.value = "#7782AA"
+      providerIconColor.value = "#7782AA"
+      break;
+    case t('navBar.casino_sub_menu.hot_text'):
+      // setGameFilterText("history");
+      tempFilterText = "history";
+      activeItem.value = t('navBar.casino_sub_menu.hot_text');
+      hotIconColor.value = "#FFFFFF"
+      recentlyIconColor.value = "#7782AA"
+      favoriteIconColor.value = "#7782AA"
+      slotIconColor.value = "#7782AA"
+      providerIconColor.value = "#7782AA"
+      liveIconColor.value = "#7782AA"
       break;
     case t('navBar.casino_sub_menu.favorites'):
       setGameFilterText("favorite");
@@ -432,6 +469,8 @@ const handleGameFilter = (filterText: string) => {
       recentlyIconColor.value = "#7782AA"
       slotIconColor.value = "#7782AA"
       liveIconColor.value = "#7782AA"
+      hotIconColor.value = "#7782AA"
+      providerIconColor.value = "#7782AA"
       break;
     case t('navBar.casino_sub_menu.slots'):
       setGameFilterText("slot");
@@ -441,6 +480,8 @@ const handleGameFilter = (filterText: string) => {
       favoriteIconColor.value = "#7782AA"
       slotIconColor.value = "#FFFFFF"
       liveIconColor.value = "#7782AA"
+      hotIconColor.value = "#7782AA"
+      providerIconColor.value = "#7782AA"
       break;
     case t('navBar.casino_sub_menu.live_casino'):
       setGameFilterText("live");
@@ -450,6 +491,19 @@ const handleGameFilter = (filterText: string) => {
       favoriteIconColor.value = "#7782AA"
       slotIconColor.value = "#7782AA"
       liveIconColor.value = "#FFFFFF"
+      hotIconColor.value = "#7782AA"
+      providerIconColor.value = "#7782AA"
+      break;
+    case t('navBar.casino_sub_menu.provider_text'):
+      // setGameFilterText("live");
+      tempFilterText = "live";
+      activeItem.value = t('navBar.casino_sub_menu.provider_text');
+      recentlyIconColor.value = "#7782AA"
+      favoriteIconColor.value = "#7782AA"
+      slotIconColor.value = "#7782AA"
+      liveIconColor.value = "#7782AA"
+      hotIconColor.value = "#7782AA"
+      providerIconColor.value = "#FFFFFF"
       break;
   }
   router.push({ name: "Dashboard", query: { filter: tempFilterText } });
@@ -548,7 +602,33 @@ onMounted(() => {
       </v-list-item>
     </template>
     <div class="m-nav-drawer-content" @scroll="navDrawerScroll">
-      <v-list density="compact" nav class="mt-1 px-0">
+      <div class="m-vip-login-bonus mt-6" @click="openLoginBonusDialog">
+        <img src="@/assets/public/image/img_public_1.png" class="m-vip-login-bonus-img" />
+        <div class="m-vip-login-bonus-text">
+          <p class="text-900-10 white">{{ t("navBar.login_bonus_text") }}</p>
+          <p class="text-400-8 white" style="line-height: 6px">
+            {{ t("navBar.unlock_text") }}
+          </p>
+        </div>
+        <img src="@/assets/public/image/img_ci_7.png" class="m-vip-login-bonus-img-1" />
+      </div>
+      <div class="m-lucky-wheel mt-4" @click="openRouletteBonusDialog">
+        <img src="@/assets/public/image/img_public_2.png" class="m-lucky-wheel-img" />
+        <div class="m-vip-login-bonus-text">
+          <p class="text-900-10 white">{{ t("navBar.lucky_wheel_text") }}</p>
+          <p class="text-400-8 white" style="line-height: 6px">
+            {{ t("navBar.unlock_text") }}
+          </p>
+        </div>
+      </div>
+      <div class="m-refer-earn mt-4">
+        <img src="@/assets/public/svg/img_public_7.svg" width="184" />
+        <img src="@/assets/public/image/img_public_6.png" width="48" class="m-earn-img" />
+        <p class="text-900-12 white m-refer-earn-text">
+          {{ t("navBar.refer_earn_text") }}
+        </p>
+      </div>
+      <!-- <v-list density="compact" nav class="mt-1 px-0">
         <v-card color="#211F31" theme="dark" style="border-radius: 0px">
           <v-row class="ma-2 align-center">
             <span class="m-card-title">{{ t("navBar.my_vip_perks") }}</span>
@@ -612,7 +692,7 @@ onMounted(() => {
             {{ t("navBar.earn_free_text") }}
           </p>
         </v-list-item>
-      </v-list>
+      </v-list> -->
       <v-list v-model:opened="open">
         <v-list-group value="Casino">
           <template v-slot:activator="{ props }">
@@ -643,8 +723,30 @@ onMounted(() => {
               </v-list-item-title>
             </v-list-item>
           </template>
-          <v-card color="#211F31" theme="dark" class="mt-2" style="border-radius: 0px">
+          <v-card color="#211F31" theme="dark" class="mt-6" style="border-radius: 0px">
             <v-list>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="favorites"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.favorites'))"
+              >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_36"
+                    width="16"
+                    :transform-source="favoriteIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.favorites') ? 'white' : 'gray'
+                  "
+                >
+                  {{ t("navBar.casino_sub_menu.favorites") }}
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
                 value="recently played"
@@ -672,24 +774,24 @@ onMounted(() => {
               </v-list-item>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
-                value="favorites"
+                value="hot"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.favorites'))"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.hot_text'))"
               >
                 <template v-slot:prepend>
                   <inline-svg
-                    :src="icon_public_36"
+                    :src="icon_public_101"
                     width="16"
-                    :transform-source="favoriteIconTransform"
+                    :transform-source="hotIconTransform"
                   ></inline-svg>
                 </template>
                 <v-list-item-title
                   class="ml-2"
                   :class="
-                    activeItem == t('navBar.casino_sub_menu.favorites') ? 'white' : 'gray'
+                    activeItem == t('navBar.casino_sub_menu.hot_text') ? 'white' : 'gray'
                   "
                 >
-                  {{ t("navBar.casino_sub_menu.favorites") }}
+                  {{ t("navBar.casino_sub_menu.hot_text") }}
                 </v-list-item-title>
               </v-list-item>
               <v-menu
@@ -780,6 +882,30 @@ onMounted(() => {
                   "
                 >
                   {{ t("navBar.casino_sub_menu.live_casino") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="provider"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(t('navBar.casino_sub_menu.provider_text'))"
+              >
+                <template v-slot:prepend>
+                  <inline-svg
+                    :src="icon_public_102"
+                    width="16"
+                    :transform-source="providerIconTransform"
+                  ></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.provider_text')
+                      ? 'white'
+                      : 'gray'
+                  "
+                >
+                  {{ t("navBar.casino_sub_menu.provider_text") }}
                 </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -1004,6 +1130,72 @@ onMounted(() => {
 <style lang="scss" scoped>
 ::deep(.v-list-item__overlay) {
   opacity: 1 !important;
+}
+
+.m-vip-login-bonus {
+  position: relative;
+  margin: 0px 14px;
+  width: 164px;
+  height: 32px;
+  background: linear-gradient(266deg, #5421fd 1.95%, #5421fd 53.19%);
+  box-shadow: 0px -4px 0px 0px #3a1aa7 inset;
+  border-radius: 4px;
+}
+
+.m-vip-login-bonus-text {
+  position: absolute;
+  left: 60px;
+  top: 2px;
+}
+
+.m-refer-earn {
+  position: relative;
+}
+
+.m-refer-earn-text {
+  position: absolute;
+  top: 20px;
+  left: 72px;
+}
+
+.m-earn-img {
+  position: absolute;
+  top: 0px;
+  left: 16px;
+}
+
+.m-vip-login-bonus-img {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  left: 0px;
+  bottom: -15px;
+}
+
+.m-lucky-wheel-img {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  left: 11px;
+  bottom: -2px;
+}
+
+.m-vip-login-bonus-img-1 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 7px;
+  top: -5px;
+}
+
+.m-lucky-wheel {
+  position: relative;
+  margin: 0px 14px;
+  width: 164px;
+  height: 32px;
+  border-radius: 4px;
+  background: #6aa82d;
+  box-shadow: 0px -4px 0px 0px #384140 inset;
 }
 
 .nav-lang-selected-item {
