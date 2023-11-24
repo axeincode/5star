@@ -23,13 +23,16 @@ export interface GetRouletteHistory {
 }
 
 export interface VipInfo {
-    level: number,
-    deposit_exp: number,
-    bet_exp: number,
-    free_spin_times: number,
-    week_gift: number,
-    month_gift: number,
-    upgrade_gift: number,
+    level: number
+    deposit_exp: number
+    bet_exp: number
+    free_spin_times: number
+    week_gift: number
+    month_gift: number
+    upgrade_gift: number
+    now_cash_back: number
+    yesterday_cash_back: number
+    history_cash_back: number
 }
 
 export interface VipLevel {

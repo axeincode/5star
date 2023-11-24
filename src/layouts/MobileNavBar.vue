@@ -26,8 +26,8 @@ import icon_public_45 from "@/assets/public/svg/icon_public_45.svg";
 import icon_public_46 from "@/assets/public/svg/icon_public_46.svg";
 import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
 import icon_public_57 from "@/assets/public/svg/icon_public_57.svg";
-import icon_public_101 from "@/assets/public/svg/icon_public_101.svg";
-import icon_public_102 from "@/assets/public/svg/icon_public_102.svg";
+import icon_public_95 from "@/assets/public/svg/icon_public_95.svg";
+import icon_public_96 from "@/assets/public/svg/icon_public_96.svg";
 
 const router = useRouter();
 const { setNavBarToggle } = appBarStore();
@@ -622,7 +622,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="m-refer-earn mt-4">
-        <img src="@/assets/public/svg/img_public_7.svg" width="184" />
+        <img src="@/assets/public/svg/img_public_20.svg" width="184" />
         <img src="@/assets/public/image/img_public_6.png" width="48" class="m-earn-img" />
         <p class="text-900-12 white m-refer-earn-text">
           {{ t("navBar.refer_earn_text") }}
@@ -780,7 +780,7 @@ onMounted(() => {
               >
                 <template v-slot:prepend>
                   <inline-svg
-                    :src="icon_public_101"
+                    :src="icon_public_95"
                     width="16"
                     :transform-source="hotIconTransform"
                   ></inline-svg>
@@ -892,7 +892,7 @@ onMounted(() => {
               >
                 <template v-slot:prepend>
                   <inline-svg
-                    :src="icon_public_102"
+                    :src="icon_public_96"
                     width="16"
                     :transform-source="providerIconTransform"
                   ></inline-svg>

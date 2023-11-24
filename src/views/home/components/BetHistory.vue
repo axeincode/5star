@@ -453,13 +453,15 @@ onMounted(() => {
     </div>
     <div
       class="m-bet-history-tabs mt-1"
-      :style="{ width: token != undefined ? '332px' : '252px' }"
+      :style="{ width: token != undefined ? 'unset' : '252px' }"
     >
       <template v-for="(item, index) in betHistoryTabList">
         <v-btn
           class="text-none"
-          :class="item == selectedBtnText ? 'button-bright' : 'button-transparent'"
-          :width="item == t('home.bet_history.text_3') ? '90px' : '80px'"
+          :class="[
+            item == selectedBtnText ? 'button-bright' : 'button-transparent',
+            index == 3 ? 'last-button' : '',
+          ]"
           height="28px"
           style="border-radius: 8px !important"
           @click="handleBetHistoryTab(item)"
@@ -508,13 +510,13 @@ onMounted(() => {
           <v-row class="mx-4 mt-1 align-center">
             <v-col cols="4" class="py-1 d-flex align-center">
               <img :src="item.game.image" width="16" />
-              <p class="text-500-12 gray text-center ml-2 game-text-overflow">
+              <p class="text-400-12 gray text-left ml-2 game-text-overflow">
                 {{ item.game.name }}
               </p>
             </v-col>
             <v-col cols="3" class="py-1 text-center">
               <p
-                class="text-500-12"
+                class="text-400-12"
                 :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
               >
                 {{ item.multi }}X
@@ -522,7 +524,7 @@ onMounted(() => {
             </v-col>
             <v-col
               cols="5"
-              class="py-1 text-500-12 text-right"
+              class="py-1 text-700-12 text-right"
               :class="item.payout > 10 ? 'color-01983A' : 'gray'"
             >
               $ {{ item.payout }}
@@ -586,6 +588,15 @@ onMounted(() => {
       font-weight: 700;
     }
   }
+}
+
+.m-bet-history-tabs button {
+  flex-grow: 1;
+}
+
+.m-bet-history-tabs .last-button {
+  flex-grow: 0;
+  width: 100px;
 }
 .game-text-overflow {
   text-overflow: ellipsis;
