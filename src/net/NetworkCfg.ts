@@ -63,6 +63,8 @@ export namespace NETWORK {
     static USER_GAME = '/user/games'; // user game
     static FAVORITE_GAME = '/user/setup/game' // favorite game
     static GAME_HISTORY = '/user/gamehistory' // game history
+    static SPINPAGE = '/user/spinpage'  // user spinpage
+    static SPIN = '/user/spin'  // user spin
   }
 
   // vip api

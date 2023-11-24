@@ -5,10 +5,13 @@ import { useDisplay } from "vuetify";
 import { type GetRouletteHistory } from '@/interface/vip';
 import anime, { AnimeInstance } from "animejs";
 import { onMounted } from 'vue';
+import { gameStore } from '@/store/game';
+import { storeToRefs } from 'pinia';
 
 const emit = defineEmits<{ (e: 'closeRouletteBonusDialog'): void }>()
 const { t } = useI18n();
 const { width } = useDisplay()
+const { dispatchUserSpinPage, dispatchUserSpin } = gameStore();
 
 const roulettePaidBonus = ref<string>("R$ 1.400.000");
 const spinNumber = ref<number>(10);
@@ -19,11 +22,18 @@ const marginShow = ref<boolean>(false);
 const muteValue = ref<boolean>(false);
 
 interface rouletteItem {
+    itemid: number | string
     value: string
     color: string
+    quantity: string
 }
 
-const rouletteHistory = ref<Array<GetRouletteHistory>>([
+const rouletteHistory = computed(() => {
+  const { getUserSpinPage } = storeToRefs(gameStore());
+  return getUserSpinPage.value.award_record;
+})
+
+const rouletteHistory1 = ref<Array<GetRouletteHistory>>([
     {
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
@@ -50,7 +60,12 @@ const rouletteHistory = ref<Array<GetRouletteHistory>>([
     },
 ])
 
-const rouletteWinnerHistory = ref<Array<GetRouletteHistory>>([
+const rouletteWinnerHistory = computed(() => {
+  const { getUserSpinPage } = storeToRefs(gameStore());
+  return getUserSpinPage.value.big_award_record;
+})
+
+const rouletteWinnerHistory1 = ref<Array<GetRouletteHistory>>([
     {
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
@@ -113,7 +128,12 @@ const rouletteWinnerHistory = ref<Array<GetRouletteHistory>>([
     },
 ])
 
-const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
+const roulettePrizeHistory = computed(() => {
+  const { getUserSpinPage } = storeToRefs(gameStore());
+  return getUserSpinPage.value.big_award_record;
+})
+
+const roulettePrizeHistory1 = ref<Array<GetRouletteHistory>>([
     {
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
@@ -175,10 +195,15 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
         rouletteResult: "R$ 50",
     },
 ])
+
+const wheelMap = computed(() => {
+  const { getUserSpinPage } = storeToRefs(gameStore());
+  return getUserSpinPage.value.award;
+})
 
 // roulette variables
 
-const wheelMap = ref<Array<rouletteItem>>([
+const wheelMap1 = ref<Array<rouletteItem>>([
     {
         value: "R$ 5000",
         color: "D07000",
@@ -221,14 +246,15 @@ const roulette = ref<HTMLElement | undefined>(undefined);
 
 const getRouletteWheelValue = (index: number) => {
     if (index < 0 && index % 8 == 0) {
-        return wheelMap.value[0];
+        return wheelMap.name[0];
     } else {
-        return wheelMap.value[index >= 0 ? index % 8 : 8 - Math.abs(index % 8)];
+        return wheelMap.name[index >= 0 ? index % 8 : 8 - Math.abs(index % 8)];
     }
 }
 
-const startRoulette = () => {
-    spinNumber.value--;
+const startRoulette = async() => {
+    await dispatchUserSpin({})
+    // spinNumber.value--;
     speed.value = Math.floor(Math.random() * 10) * 26;
     isSpinning.value = true;
     const bezier = [0.165, 0.84, 0.44, 1.005, 0.2];
@@ -265,6 +291,7 @@ const startRoulette = () => {
             })
         }
     });
+    await dispatchUserSpinPage({})
 }
 
 // width for mobile
@@ -282,10 +309,24 @@ const handleMuteValue = () => {
     muteValue.value = !muteValue.value;
 }
 
+const comUserSpin = computed(() => {
+  const { getUserSpin } = storeToRefs(gameStore());
+  return getUserSpin.value;
+})
+const comUserSpinPage = computed(() => {
+  const { getUserSpinPage } = storeToRefs(gameStore());
+  return getUserSpinPage.value;
+});
+
+const initUserSpinPage = async() => {
+  await dispatchUserSpinPage({})
+}
+
 onMounted(() => {
     if (window.innerHeight <= 667) {
         marginShow.value = true;
     }
+    initUserSpinPage()
 })
 </script>
 
@@ -400,28 +441,28 @@ onMounted(() => {
       <div class="m-roulette-bonus-dialog-spin-position-1" ref="roulette">
         <img src="@/assets/vip/image/img_vip_30.png" width="184" />
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-1">
-          {{ wheelMap[0].value }}
+          {{ wheelMap[0].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-8">
-          {{ wheelMap[1].value }}
+          {{ wheelMap[1].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-7">
-          {{ wheelMap[2].value }}
+          {{ wheelMap[2].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-6">
-          {{ wheelMap[3].value }}
+          {{ wheelMap[3].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-5">
-          {{ wheelMap[4].value }}
+          {{ wheelMap[4].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-4">
-          {{ wheelMap[5].value }}
+          {{ wheelMap[5].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-3">
-          {{ wheelMap[6].value }}
+          {{ wheelMap[6].name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-2">
-          {{ wheelMap[7].value }}
+          {{ wheelMap[7].name }}
         </p>
       </div>
 
@@ -446,11 +487,11 @@ onMounted(() => {
         width="311"
         height="40"
         @click="startRoulette"
-        :disabled="isSpinning || spinNumber <= 0"
+        :disabled="isSpinning || comUserSpinPage.free_spins <= 0"
       >
         {{ t("vip.roulette_bonus.roulette_btn_text") }}
         <div class="m-roulette-bonus-dialog-spin-number-bg">
-          <p class="text-800-14 white">{{ spinNumber }}</p>
+          <p class="text-800-14 white">{{ comUserSpinPage.free_spins }}</p>
         </div>
       </v-btn>
       <div class="m-roulette-bonus-dialog-body-3">
@@ -464,15 +505,21 @@ onMounted(() => {
               cols="5"
               class="px-1 ma-0 text-500-9 gray"
               style="padding-top: 2px; padding-bottom: 2px"
-              >{{ item.rouletteTime }}</v-col
+              >{{ item.created_at }}</v-col
             >
             <v-col
               cols="4"
               class="px-1 ma-0 text-500-9 gray"
               style="padding-top: 2px; padding-bottom: 2px"
-              >{{ item.user }}</v-col
+              >{{ item.user_name }}</v-col
             >
             <v-col
+              cols="3"
+              class="px-1 ma-0 text-900-9 gray"
+              style="padding-top: 2px; padding-bottom: 2px"
+              >{{ item.name }}</v-col
+            >
+            <!-- <v-col
               cols="3"
               class="px-1 ma-0 text-500-9 yellow"
               v-if="item.rouletteResult == 'IPHONE 14'"
@@ -496,7 +543,7 @@ onMounted(() => {
               v-else
               style="padding-top: 2px; padding-bottom: 2px"
               >{{ item.rouletteResult }}</v-col
-            >
+            > -->
           </v-row>
         </div>
       </div>
@@ -536,12 +583,15 @@ onMounted(() => {
             class="ma-0 mx-2 pa-0"
           >
             <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{
-              winnerItem.rouletteTime
+              winnerItem.created_at
             }}</v-col>
             <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{
-              winnerItem.user
+              winnerItem.user_name
             }}</v-col>
-            <v-col
+            <v-col cols="3" class="pa-1 ma-0 text-500-10 gray">{{
+              winnerItem.name
+            }}</v-col>
+            <!-- <v-col
               cols="3"
               class="pa-1 ma-0 text-500-10 yellow"
               v-if="winnerItem.rouletteResult == 'IPHONE 14'"
@@ -556,7 +606,7 @@ onMounted(() => {
             </v-col>
             <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{
               winnerItem.rouletteResult
-            }}</v-col>
+            }}</v-col> -->
           </v-row>
         </div>
         <div class="my-2" v-else>
@@ -566,12 +616,15 @@ onMounted(() => {
             class="ma-0 mx-2 pa-0"
           >
             <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{
-              prizeItem.rouletteTime
+              prizeItem.created_at
             }}</v-col>
             <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{
-              prizeItem.user
+              prizeItem.user_name
             }}</v-col>
-            <v-col
+            <v-col cols="3" class="pa-1 ma-0 text-500-10 gray">{{
+              prizeItem.name
+            }}</v-col>
+            <!-- <v-col
               cols="3"
               class="pa-1 ma-0 text-500-10 yellow"
               v-if="prizeItem.rouletteResult == 'IPHONE 14'"
@@ -589,7 +642,7 @@ onMounted(() => {
             >
             <v-col cols="3" class="pa-1 ma-0 text-500-10 gray" v-else>{{
               prizeItem.rouletteResult
-            }}</v-col>
+            }}</v-col> -->
           </v-row>
         </div>
       </div>

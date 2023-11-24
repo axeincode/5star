@@ -26,7 +26,9 @@ export const gameStore = defineStore({
         gameHistoryItem: {
             total_pages: 0,
             record: []
-        } as Game.GameHistoryResponse
+        } as Game.GameHistoryResponse,
+        userSpinPage: {},
+        userSpin: {}
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -40,6 +42,8 @@ export const gameStore = defineStore({
         getOriginalGames: (state) => state.originalGames,
         getMobileMenuShow: (state) => state.mobileMenuShow,
         gameHistoryItem: (state) => state.gameHistoryItem,
+        getUserSpinPage: (state) => state.userSpinPage,
+        getUserSpin: (state) => state.userSpin
     },
     actions: {
         // set functions
@@ -84,6 +88,12 @@ export const gameStore = defineStore({
         },
         setGameHistoryItem(gameHistoryItem: Game.GameHistoryResponse) {
             this.gameHistoryItem = gameHistoryItem;
+        },
+        setUserSpinPage(userSpinPage: any) {
+            this.userSpinPage = userSpinPage
+        },
+        setUserSpin(userSpin: any) {
+            this.userSpin = userSpin
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {
@@ -181,6 +191,38 @@ export const gameStore = defineStore({
             }
           }
           await network.sendMsg(route, data, next, 1);
+        },
+        // user spinpage api
+        async dispatchUserSpinPage(data: any) {
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.SPINPAGE;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: any) => {
+                if (response.code == 200) {
+                this.setSuccess(true);
+                this.setUserSpinPage(response.data);
+                } else {
+                this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        // user spin api
+        async dispatchUserSpin(data: any) {
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.SPIN;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: any) => {
+                if (response.code == 200) {
+                this.setSuccess(true);
+                this.setUserSpin(response.data);
+                } else {
+                this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
         }
     }
 })

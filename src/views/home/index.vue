@@ -580,6 +580,12 @@ const Dashboard = defineComponent({
         });
       }
     };
+    // 添加收藏
+    const addFavoriteGame = async (id: string | number) => {
+      await dispatchFavoriteGame({
+        add_game: id,
+      });
+    }
 
     const cancelFavoriteGame = async (id: string | number, page_no: number) => {
       await dispatchFavoriteGame({
@@ -943,6 +949,7 @@ const Dashboard = defineComponent({
       searchDialogShow,
       selectedCategoryName,
       favoriteIconTransform,
+      addFavoriteGame,
       cancelFavoriteGame,
       gameGroupBtnList,
       iconTransform,
@@ -1365,7 +1372,7 @@ export default Dashboard;
               lg="2"
               md="2"
               sm="3"
-              class="px-1 pb-0 original-game-img-width mb-2"
+              class="px-1 relative pb-0 original-game-img-width mb-2"
               v-if="gameIndex < 6 * item.page_no"
             >
               <ProgressiveImage
@@ -1374,6 +1381,15 @@ export default Dashboard;
                 blur="30"
                 @click="handleEnterGame(gameItem.id, gameItem.name)"
               />
+              <div class="m-home-favorite-icon" @click="addFavoriteGame(gameItem.id)">
+                <inline-svg
+                  :src="icon_public_36"
+                  width="16"
+                  height="16"
+                  class="mt-1 ml-1"
+                  :transform-source="favoriteIconTransform"
+                ></inline-svg>
+              </div>
               <!-- <img
                 v-lazy="gameItem.image"
                 :data-src="gameItem.image"
