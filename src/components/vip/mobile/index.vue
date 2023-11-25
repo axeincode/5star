@@ -34,6 +34,7 @@ const { width } = useDisplay()
 
 const { dispatchVipTasks } = vipStore();
 const { dispatchVipLevelAward } = vipStore();
+const { dispatchVipRebateAward } = vipStore();
 
 const vipWidth = ref<string>('vip-container');
 const selectedTabIndex = ref<number>(0)
@@ -112,9 +113,9 @@ const vipItems = ref<Array<GetVIPData>>([
 
 const vipTabs = ref<Array<string>>([
   t('vip.all_bonus_text'),
-  // t('vip.cash_back_text'),
+  t('vip.cash_back_text'),
   // t('vip.super_carousel_text'),
-  t('vip.welfare_task'),
+  // t('vip.welfare_task'),
 ])
 
 const vipLevelImgs = ref<Array<any>>([
@@ -478,33 +479,33 @@ watch(currentSlide, (value: number, newValue: number) => {
   }
   if (value == 0 && (newValue + 1) == vipLevels.value.length) {
     rewardSwiper.value.slideNext();
-    // cashbackSwiper.value.slideNext();
+    cashbackSwiper.value.slideNext();
     // spinSwiper.value.slideNext();
-    vipSwiper.value.slideNext();
+    // vipSwiper.value.slideNext();
     descriptionSwiper.value.slideNext();
     return;
   }
   if (newValue == 0 && (value + 1) == vipLevels.value.length) {
     rewardSwiper.value.slidePrev();
-    // cashbackSwiper.value.slidePrev();
+    cashbackSwiper.value.slidePrev();
     // spinSwiper.value.slidePrev();
-    vipSwiper.value.slidePrev();
+    // vipSwiper.value.slidePrev();
     descriptionSwiper.value.slidePrev();
     return;
   }
   if (newValue < value) {
     rewardSwiper.value.slideNext();
-    // cashbackSwiper.value.slideNext();
+    cashbackSwiper.value.slideNext();
     // spinSwiper.value.slideNext();
-    vipSwiper.value.slideNext();
+    // vipSwiper.value.slideNext();
     descriptionSwiper.value.slideNext();
     return;
   }
   if (newValue > value) {
     rewardSwiper.value.slidePrev();
-    // cashbackSwiper.value.slidePrev();
+    cashbackSwiper.value.slidePrev();
     // spinSwiper.value.slidePrev();
-    vipSwiper.value.slidePrev();
+    // vipSwiper.value.slidePrev();
     descriptionSwiper.value.slidePrev();
     return;
   }
@@ -791,6 +792,31 @@ const handleRewardTouchMove = () => {
   }
 }
 
+const handleCashbackTouchEnd = (event) => {
+  currentSlide.value = cashbackSwiper.value.realIndex;
+  cashbackSlide.value = false;
+}
+
+const handleCashbackTouchStart = (event) => {
+  touchStartX.value  = event.touches[0].clientX;
+}
+
+const handleCashbackTouchMove = () => {
+  const touchX = event.touches[0].clientX;
+  const deltaX = touchX - touchStartX.value; // Calculate the delta X value
+  if (deltaX > 300 && !cashbackSlide.value) {
+    cashbackSlide.value = true;
+    // Swiped right
+    rewardSwiper.value.slidePrev();
+    descriptionSwiper.value.slidePrev();
+  } else if (deltaX < -300 && !cashbackSlide.value) {
+    cashbackSlide.value = true;
+    // Swiped left
+    rewardSwiper.value.slideNext();
+    descriptionSwiper.value.slideNext();
+  }
+}
+
 const handleVipTouchEnd = (event) => {
   currentSlide.value = vipSwiper.value.realIndex;
   vipSlide.value = false;
@@ -838,6 +864,12 @@ const handleDescriptionTouchMove = () => {
     // Swiped left
     vipSwiper.value.slideNext();
     rewardSwiper.value.slideNext();
+  }
+}
+
+const vipRebateAward = async () => {
+  if (Number(vipInfo.value.now_cash_back) > 0) {
+    await dispatchVipRebateAward();
   }
 }
 
@@ -1068,9 +1100,6 @@ onMounted(async () => {
                     <div class="mt-6 text-600-9 white">
                       {{ t("vip.reward_card_2.text_1") }} R$ {{ item.week_award }}
                     </div>
-                    <!-- <div class="text-600-9 white">
-                      {{ t("vip.reward_card_2.text_2") }}
-                    </div> -->
                     <div class="mt-2 mx-4">
                       <v-btn
                         class="text-none m-button-dark"
@@ -1110,9 +1139,6 @@ onMounted(async () => {
                     <div class="mt-6 text-600-9 white">
                       {{ t("vip.reward_card_3.text_1") }} R$ {{ item.month_award }}
                     </div>
-                    <!-- <div class="text-600-9 white">
-                      {{ t("vip.reward_card_3.text_2") }}
-                    </div> -->
                     <div class="mt-2 mx-4">
                       <v-btn
                         class="text-none m-button-dark"
@@ -1152,9 +1178,6 @@ onMounted(async () => {
                     <div class="mt-6 text-600-9 white">
                       {{ t("vip.reward_card_4.text_1") }} R$ {{ item.upgrade_award }}
                     </div>
-                    <!-- <div class="text-600-9 white">
-                      {{ t("vip.reward_card_4.text_2") }}
-                    </div> -->
                     <div class="mt-2 mx-4">
                       <v-btn
                         class="text-none button-dark m-button-dark"
@@ -1178,12 +1201,15 @@ onMounted(async () => {
 
       <!---------------------------- cashback bonus --------------------------------->
 
-      <!-- <div ref="cashbackElement">
+      <div ref="cashbackElement">
         <Swiper
           :modules="modules"
           :slidesPerView="1"
           :loop="true"
           @swiper="getCashbackSwiperRef"
+          @touchstart="handleCashbackTouchStart"
+          @touchend="handleCashbackTouchEnd"
+          @touchmove="handleCashbackTouchMove"
           @slide-next-transition-end="handleCashbackSwiperNextChange"
           @slide-prev-transition-end="handleCashbackSwiperPrevChange"
         >
@@ -1196,14 +1222,18 @@ onMounted(async () => {
               class="m-cashback-bonus-body mx-2 pb-4"
               :class="tabSelect ? 'mt-15' : 'mt-6'"
             >
-              <div class="text-800-14 white pt-4 mx-3 d-flex">
-                <p style="width: 110px">
-                  {{ t("vip.cashback_body.text_1") }}
-                </p>
+              <div class="text-800-14 white mx-3 pt-4">
+                {{ t("vip.cashback_body.text_1") }}
+              </div>
+              <div
+                class="text-800-14 white mt-4 mx-3 d-flex align-center m-cashback-my-card"
+              >
+                <p class="text-800-20 white ml-4">R$ {{ vipInfo.now_cash_back }}</p>
                 <v-btn
                   class="text-none button-yellow ml-auto relative"
                   height="49px"
                   width="160px"
+                  @click="vipRebateAward"
                 >
                   <img
                     src="@/assets/public/image/img_public_10.png"
@@ -1284,12 +1314,16 @@ onMounted(async () => {
                   <v-row class="pa-0 mx-0 align-center">
                     <v-col cols="12">
                       <p class="text-700-12 white">{{ t("vip.cashback_body.text_7") }}</p>
-                      <p class="text-700-16 yellow mt-2">R$ 12345678910</p>
+                      <p class="text-700-16 yellow mt-2">
+                        R$ {{ vipInfo.yesterday_cash_back }}
+                      </p>
                     </v-col>
                     <v-divider></v-divider>
                     <v-col cols="12">
                       <p class="text-700-12 white">{{ t("vip.cashback_body.text_8") }}</p>
-                      <p class="text-700-16 yellow mt-2">R$ 12345678910</p>
+                      <p class="text-700-16 yellow mt-2">
+                        R$ {{ vipInfo.history_cash_back }}
+                      </p>
                     </v-col>
                     <v-col cols="12" md="4" class="text-right">
                       <v-btn
@@ -1308,10 +1342,7 @@ onMounted(async () => {
                           "
                           class="text-800-14 ml-4"
                         >
-                          {{ t("vip.cashback_body.text_9") }}
-                          <span class="text-600-14">{{
-                            t("vip.cashback_body.text_10")
-                          }}</span>
+                          {{ t("vip.cashback_body.text_15") }}
                         </div>
                       </v-btn>
                     </v-col>
@@ -1321,7 +1352,7 @@ onMounted(async () => {
             </div>
           </SwiperSlide>
         </Swiper>
-      </div> -->
+      </div>
 
       <!-------------------------- My Super Spin ---------------------------------->
 
@@ -1427,7 +1458,7 @@ onMounted(async () => {
 
       <!------------------------   My VIP Mission -------------------------------->
 
-      <div ref="vipElement">
+      <!-- <div ref="vipElement">
         <Swiper
           :modules="modules"
           :slidesPerView="1"
@@ -1667,7 +1698,7 @@ onMounted(async () => {
             </div>
           </SwiperSlide>
         </Swiper>
-      </div>
+      </div> -->
 
       <!--------------------------    VIP Benifit Description ---------------------->
       <div
@@ -2031,6 +2062,11 @@ onMounted(async () => {
 .m-cashback-bonus-body {
   border-radius: 8px;
   background: linear-gradient(90deg, #29263f 0%, #4a32aa 100%);
+
+  .m-cashback-my-card {
+    border-radius: 14px;
+    background: #1c1929;
+  }
 
   .v-btn__content {
     margin-left: 10px;

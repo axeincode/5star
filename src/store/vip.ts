@@ -100,5 +100,20 @@ export const vipStore = defineStore({
             }
             await network.sendMsg(route, data, next, 1);
         },
+        // receive VIP code rebate rewards
+        async dispatchVipRebateAward(data: any) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_REBATE_AWARD;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipRebateAwardResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
     }
 })

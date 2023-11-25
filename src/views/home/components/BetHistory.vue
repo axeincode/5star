@@ -458,10 +458,7 @@ onMounted(() => {
       <template v-for="(item, index) in betHistoryTabList">
         <v-btn
           class="text-none"
-          :class="[
-            item == selectedBtnText ? 'button-bright' : 'button-transparent',
-            index == 3 ? 'last-button' : '',
-          ]"
+          :class="[item == selectedBtnText ? 'button-bright' : 'button-transparent']"
           height="28px"
           style="border-radius: 8px !important"
           @click="handleBetHistoryTab(item)"
@@ -588,16 +585,12 @@ onMounted(() => {
       font-weight: 700;
     }
   }
+
+  button {
+    flex: 1;
+  }
 }
 
-.m-bet-history-tabs button {
-  flex-grow: 1;
-}
-
-.m-bet-history-tabs .last-button {
-  flex-grow: 0;
-  width: 100px;
-}
 .game-text-overflow {
   text-overflow: ellipsis;
   width: 45px;

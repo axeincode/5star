@@ -98,3 +98,9 @@ export type GetVipLevelAwardResponse = {
     data: any
     message: string
 }
+
+export type GetVipRebateAwardResponse = {
+    code: number
+    data: any
+    message: string
+}

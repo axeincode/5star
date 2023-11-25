@@ -11,6 +11,8 @@ import Deposit from "./deposit/index.vue";
 import MDeposit from "./mobile/deposit/index.vue";
 import Withdrawal from "./withdrawal/index.vue";
 import MWithdrawal from "./mobile/withdrawal/index.vue";
+import Vip from "./vip/index.vue";
+import MVip from "./mobile/vip/index.vue";
 import { withdrawStore } from "@/store/withdraw";
 import { depositStore } from "@/store/deposit";
 import { gameStore } from "@/store/game";
@@ -184,16 +186,12 @@ onMounted(async () => {
       :value="t('transaction.tab.vip')"
       style="margin-left: 10px; margin-right: 10px"
     >
-      <Withdrawal
+      <Vip
         :pageSize="pageSize"
         :withdrawHistoryItem="withdrawHistoryItem"
         v-if="mobileWidth > 600"
       />
-      <MWithdrawal
-        :pageSize="pageSize"
-        :withdrawHistoryItem="withdrawHistoryItem"
-        v-else
-      />
+      <MVip :pageSize="pageSize" :withdrawHistoryItem="withdrawHistoryItem" v-else />
     </v-window-item>
     <v-window-item
       :value="t('transaction.tab.referral')"

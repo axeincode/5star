@@ -1336,6 +1336,18 @@ export const lang: langType = {
     withdraw: {
       action: "Action",
       refund: "Refund"
+    },
+    vip: {
+      text_1: "VIP RateBack Bonus",
+      text_2: "VIP Rank Bonus",
+      text_3: "VIP WeekIy Bonus",
+      text_4: "VIP Monthly Bonus",
+      text_5: "Date",
+      text_6: "Amount",
+      text_7: "Cashback",
+      text_8: "Cashback Ratio",
+      text_9: "Type",
+      text_10: "",
     }
   },
   account: {
@@ -1456,7 +1468,7 @@ export const lang: langType = {
     cashback_body: {
       text_1: "My CASHBACK Bonus",
       text_2: "Get my CASHBACK",
-      text_3: "CASHBACK ratio of ",
+      text_3: "CASHBACK ratio of VIP",
       text_4: "How to get CASHBACK bonus?",
       text_5: "Next Level VIP ",
       text_7: "Yesterday’s CASHBACK Bonus",
@@ -1467,6 +1479,7 @@ export const lang: langType = {
       text_12: "SLOT",
       text_13: "SPORTS",
       text_14: "LIVE CASINO",
+      text_15: "View Pickup Records",
     },
     super_spin_body: {
       text_1: "My Super Spin",

@@ -621,7 +621,7 @@ onMounted(() => {
           </p>
         </div>
       </div>
-      <div class="m-refer-earn mt-4">
+      <div class="m-refer-earn mt-4" @click="openRefferalDialogShow">
         <img src="@/assets/public/svg/img_public_20.svg" width="184" />
         <img src="@/assets/public/image/img_public_6.png" width="48" class="m-earn-img" />
         <p class="text-900-12 white m-refer-earn-text">
