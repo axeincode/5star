@@ -36,6 +36,8 @@ import { useRouter, useRoute } from "vue-router";
 import Search from "@/views/home/components/Search.vue";
 import MSearch from "@/views/home/components/mobile/Search.vue";
 import { ProgressiveImage } from "vue-progressive-image";
+import { useNamespace } from "element-plus";
+import { NONAME } from "dns";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -74,6 +76,7 @@ const Dashboard = defineComponent({
     const router = useRouter();
     const route = useRoute();
     const instance = getCurrentInstance();
+    // const { dispatchUserActivityList } = gameStore()
 
     // initiate component state
     const state = reactive({
@@ -586,7 +589,7 @@ const Dashboard = defineComponent({
         add_game: id,
       });
     }
-
+    // 取消收藏
     const cancelFavoriteGame = async (id: string | number, page_no: number) => {
       await dispatchFavoriteGame({
         del_game: id,
@@ -600,7 +603,7 @@ const Dashboard = defineComponent({
       //   item.image = state.testGames[Math.floor(Math.random() * 28)];
       // });
       pagingGames.value.map((item) => {
-        if (item.name == selectedCategoryName.value) {
+        if (item.name == 'Favorite') {
           item.games = item.games.filter((gameItem) => gameItem.id != id);
           if (mobileWidth.value > 600) {
             item.page_no = Math.ceil(item.games.length / 7);
@@ -715,6 +718,16 @@ const Dashboard = defineComponent({
       }
     });
 
+    // 活動測試
+    // const comUserActivityList = () => {
+    //   const { getUserActivityList } = storeToRefs(gameStore());
+    //   console.log('這裏呀', getUserActivityList.value.group_data)
+    //   if (getUserActivityList.value?.group_data) {
+    //     return getUserActivityList.value.group_data
+    //   }
+    //   return []
+    // }
+
     onMounted(async () => {
       loading.value = true;
       window.scrollTo({
@@ -722,6 +735,7 @@ const Dashboard = defineComponent({
         behavior: "smooth",
       });
       await dispatchGameCategories(`?type=${filterTabText.value}`);
+      // await dispatchUserActivityList({})
       bannerLoad();
       liveWinLoad();
       betHistoryLoad();
@@ -966,7 +980,8 @@ const Dashboard = defineComponent({
       gameHistoryLoad,
       liveWinLoad,
       betHistoryLoad,
-      gameHistoryComponent
+      gameHistoryComponent,
+      // comUserActivityList
     };
   },
 });
@@ -985,6 +1000,9 @@ export default Dashboard;
   </div>
   <!-- game show -->
   <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'" v-else>
+    <!-- <div style="width: 100%; height: 200px;">
+      <div v-html="comUserActivityList()[0]?.list_data[0]?.content"></div>
+    </div> -->
     <!-- game search -->
     <v-navigation-drawer
       v-model="searchDialogShow"

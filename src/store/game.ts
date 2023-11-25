@@ -28,7 +28,8 @@ export const gameStore = defineStore({
             record: []
         } as Game.GameHistoryResponse,
         userSpinPage: {},
-        userSpin: {}
+        userSpin: {},
+        userActivityList: {}
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -43,7 +44,8 @@ export const gameStore = defineStore({
         getMobileMenuShow: (state) => state.mobileMenuShow,
         gameHistoryItem: (state) => state.gameHistoryItem,
         getUserSpinPage: (state) => state.userSpinPage,
-        getUserSpin: (state) => state.userSpin
+        getUserSpin: (state) => state.userSpin,
+        getUserActivityList: (state) => state.userActivityList
     },
     actions: {
         // set functions
@@ -94,6 +96,10 @@ export const gameStore = defineStore({
         },
         setUserSpin(userSpin: any) {
             this.userSpin = userSpin
+        },
+        setUserActivityList(activityList: any) {
+            console.log('這裏呀', activityList)
+            this.userActivityList = activityList
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {
@@ -218,6 +224,22 @@ export const gameStore = defineStore({
                 if (response.code == 200) {
                 this.setSuccess(true);
                 this.setUserSpin(response.data);
+                } else {
+                this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        // user spin api
+        async dispatchUserActivityList(data: any) {
+            this.setSuccess(false);
+            const route: string = NETWORK.ACTIVITY.USER_ACTIVITY_LIST;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: any) => {
+                if (response.code == 200) {
+                this.setSuccess(true);
+                this.setUserActivityList(response.data);
                 } else {
                 this.setErrorMessage(handleException(response.code));
                 }

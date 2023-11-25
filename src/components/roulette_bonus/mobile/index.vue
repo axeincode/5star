@@ -198,7 +198,8 @@ const roulettePrizeHistory1 = ref<Array<GetRouletteHistory>>([
 
 const wheelMap = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
-  return getUserSpinPage.value.award;
+  console.log('這裏', getUserSpinPage.value)
+  return getUserSpinPage.value.award || [];
 })
 
 // roulette variables
@@ -311,11 +312,17 @@ const handleMuteValue = () => {
 
 const comUserSpin = computed(() => {
   const { getUserSpin } = storeToRefs(gameStore());
-  return getUserSpin.value;
+  if (getUserSpin.value) {
+    return getUserSpin.value;
+  }
+  return {}
 })
 const comUserSpinPage = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
-  return getUserSpinPage.value;
+  if (getUserSpinPage.value) {
+    return getUserSpinPage.value;
+  }
+  return {}
 });
 
 const initUserSpinPage = async() => {
@@ -441,28 +448,28 @@ onMounted(() => {
       <div class="m-roulette-bonus-dialog-spin-position-1" ref="roulette">
         <img src="@/assets/vip/image/img_vip_30.png" width="184" />
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-1">
-          {{ wheelMap[0].name }}
+          {{ wheelMap[0]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-8">
-          {{ wheelMap[1].name }}
+          {{ wheelMap[1]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-7">
-          {{ wheelMap[2].name }}
+          {{ wheelMap[2]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-6">
-          {{ wheelMap[3].name }}
+          {{ wheelMap[3]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-5">
-          {{ wheelMap[4].name }}
+          {{ wheelMap[4]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-4">
-          {{ wheelMap[5].name }}
+          {{ wheelMap[5]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-3">
-          {{ wheelMap[6].name }}
+          {{ wheelMap[6]?.name }}
         </p>
         <p class="text-900-10 white m-roulette-bonus-dialog-spin-text-position-2">
-          {{ wheelMap[7].name }}
+          {{ wheelMap[7]?.name }}
         </p>
       </div>
 

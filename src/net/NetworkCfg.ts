@@ -93,4 +93,9 @@ export namespace NETWORK {
 
   //Listening events sent actively
   export class UNSOLICITED {}
+
+  // activity api
+  export class ACTIVITY {
+    static USER_ACTIVITY_LIST = '/user/activity/list'
+  }
 }
