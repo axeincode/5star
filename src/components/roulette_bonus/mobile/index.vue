@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from "vuetify";
 import { type GetRouletteHistory } from '@/interface/vip';
 import anime, { AnimeInstance } from "animejs";
-import { onMounted } from 'vue';
 import { gameStore } from '@/store/game';
 import { storeToRefs } from 'pinia';
 
@@ -33,211 +32,22 @@ const rouletteHistory = computed(() => {
   return getUserSpinPage.value.award_record;
 })
 
-const rouletteHistory1 = ref<Array<GetRouletteHistory>>([
-    {
-        id: 1,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 1",
-    },
-    {
-        id: 2,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 3,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "IPHONE 14",
-    },
-    {
-        id: 4,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 5000",
-    },
-])
-
 const rouletteWinnerHistory = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
   return getUserSpinPage.value.big_award_record;
 })
-
-const rouletteWinnerHistory1 = ref<Array<GetRouletteHistory>>([
-    {
-        id: 1,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 2,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 1",
-    },
-    {
-        id: 3,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 4,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 5,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 6,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 7,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 8,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 9,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 0.5",
-    },
-    {
-        id: 10,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 5000",
-    },
-])
 
 const roulettePrizeHistory = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
   return getUserSpinPage.value.big_award_record;
 })
 
-const roulettePrizeHistory1 = ref<Array<GetRouletteHistory>>([
-    {
-        id: 1,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 500",
-    },
-    {
-        id: 2,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 500",
-    },
-    {
-        id: 3,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 500",
-    },
-    {
-        id: 4,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 500",
-    },
-    {
-        id: 5,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 500",
-    },
-    {
-        id: 6,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 500",
-    },
-    {
-        id: 7,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 50",
-    },
-    {
-        id: 8,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "IPHONE 14",
-    },
-    {
-        id: 9,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 50",
-    },
-    {
-        id: 10,
-        rouletteTime: "2023/06/20 23:19:00",
-        user: "User9110245128",
-        rouletteResult: "R$ 50",
-    },
-])
-
 const wheelMap = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
-  console.log('這裏', getUserSpinPage.value)
   return getUserSpinPage.value.award || [];
 })
 
 // roulette variables
-
-const wheelMap1 = ref<Array<rouletteItem>>([
-    {
-        value: "R$ 5000",
-        color: "D07000",
-    },
-    {
-        value: "R$ 5",
-        color: "FFBD00",
-    },
-    {
-        value: "1 BTC",
-        color: "FF5600",
-    },
-    {
-        value: "R$ 0.5",
-        color: "FFBD00",
-    },
-    {
-        value: "R$ 500",
-        color: "D07000",
-    },
-    {
-        value: "R$ 50",
-        color: "FFBD00",
-    },
-    {
-        value: "IPHONE 14",
-        color: "31C2F0",
-    },
-    {
-        value: "R$ 10",
-        color: "FFBD00",
-    },
-])
 const isSpinning = ref<boolean>(false);
 const currentWheelIndex = ref<number>(0);
 const speed = ref<number>(42);
@@ -258,9 +68,9 @@ const startRoulette = async() => {
     // spinNumber.value--;
     speed.value = Math.floor(Math.random() * 10) * 26;
     isSpinning.value = true;
-    const bezier = [0.165, 0.84, 0.44, 1.005, 0.2];
+    // const bezier = [0.165, 0.84, 0.44, 1.005, 0.2];
     const newWheelIndex = currentWheelIndex.value - speed.value;
-    const result = getRouletteWheelValue(newWheelIndex);
+    // const result = getRouletteWheelValue(newWheelIndex);
     if (speed.value == 0) {
         speed.value = 520
     }
@@ -284,12 +94,12 @@ const startRoulette = async() => {
             currentWheelRotation.value = newRotaion;
             currentWheelIndex.value = newWheelIndex;
             isSpinning.value = false;
-            rouletteHistory.value.unshift({
-                id: rouletteHistory.value.length + 1,
-                rouletteTime: "2023/06/20 23:19:00",
-                user: "User9110245128",
-                rouletteResult: result.value,
-            })
+            // rouletteHistory.value.unshift({
+            //     id: rouletteHistory.value.length + 1,
+            //     rouletteTime: "2023/06/20 23:19:00",
+            //     user: "User9110245128",
+            //     rouletteResult: result.value,
+            // })
         }
     });
     await dispatchUserSpinPage({})

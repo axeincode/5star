@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
@@ -126,6 +126,14 @@ onMounted(() => {
     liveWinList.value.push(liveWinList.value[Math.floor(Math.random() * 8)]);
   }, 600);
 });
+
+// 在頁面銷毀之前先銷毀定時器
+onUnmounted(() => {
+  if (interval.value) {
+    clearInterval(interval.value)
+    interval.value = null
+  }
+})
 </script>
 
 <template>
