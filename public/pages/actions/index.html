@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=dege" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+    </head>
+    <body>
+        <script src="/libs/broadcastchannel-polyfill/index.js"></script>
+        <script>
+            function getUrlParams() {
+                var urlparams = window.location.search.substr(1) || ''
+                if (urlparams) {
+                    return urlparams.split('&').reduce((a, b) => {
+                        var key = b.split('=')[0]
+                        var value = b.split('=')[1]
+                        return {
+                            ...a,
+                            [key]: value
+                        }
+                    }, {})
+                }
+                return {}
+            }
+            try {
+                var context = window.opener || window.parent || window.top || window
+                var payload = getUrlParams()
+                var params = {
+                    eventType: 'onActions',
+                    type: payload.type,
+                    payload: payload,
+                    origin: window.locaton.origin
+                }
+                if (payload.mode === 'iframe') {
+                    context = window.top
+                }
+                if (context === window) {
+                    context = new BroadcastChannel('message')
+                }
+                context.postMessage(params)
+                window.close()
+            } catch (error) {}
+        </script>
+    </body>
+</html>
