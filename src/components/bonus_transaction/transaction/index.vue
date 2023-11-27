@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted, onUnmounted } from "vue";
+import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
@@ -22,6 +23,7 @@ import moment from "moment-timezone";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const route = useRoute();
 const { dispatchWithdrawalHistory } = withdrawStore();
 const { dispatchUserDepositHistory } = depositStore();
 const { dispatchGameHistory } = gameStore();
@@ -82,7 +84,7 @@ const transactionTabs = ref<Array<string>>([
 const pageSize = ref<number>(8);
 const pageNum = ref<number>(1);
 const vipTimesHistoryIndex = ref<number>(1);
-const selectedTab = ref(t("transaction.tab.game_history"));
+const selectedTab = ref<string>(t("transaction.tab.game_history"));
 
 const transactionTab = computed(() => {
   const { getTransactionTab } = storeToRefs(bonusTransactionStore());
@@ -120,6 +122,9 @@ watch(selectedTab, async (value) => {
 });
 
 onMounted(async () => {
+  selectedTab.value = route.query.tab
+    ? route.query.tab
+    : t("transaction.tab.game_history");
   selectedTab.value =
     transactionTab.value == "" ? selectedTab.value : transactionTab.value;
   // await dispatchGameHistory({

@@ -8,12 +8,14 @@ export const loginBonusStore = defineStore({
     errMessage: '' as string,
     loginBonusDialogVisible: false as boolean,
     rouletteBonusDialogVisible: false as boolean,
+    getBonusDialogVisible: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getLoginBonusDialogVisible: (state) => state.loginBonusDialogVisible,
     getRouletteBonusDialogVisible: (state) => state.rouletteBonusDialogVisible,
+    getDepositAndBonusDialogVisible: (state) => state.getBonusDialogVisible,
   },
   actions: {
     setLoginBonusDialogVisible(loginBonusDialogVisible: boolean) {
@@ -22,6 +24,9 @@ export const loginBonusStore = defineStore({
     },
     setRouletteBonusDialogVisible(rouletteBonusDialogVisible: boolean) {
       this.rouletteBonusDialogVisible = rouletteBonusDialogVisible;
+    },
+    setGetBonusDialogVisible(getBonusDialogVisible: boolean) {
+      this.getBonusDialogVisible = getBonusDialogVisible;
     }
   }
 })

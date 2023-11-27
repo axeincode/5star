@@ -1608,5 +1608,15 @@ export const lang: langType = {
     text_40: "",
     text_41: "",
     text_42: "",
+  },
+  confirm: {
+    text_1: "Congratulations on getting",
+    text_2: "Confirm"
+  },
+  get_bonus: {
+    text_1: "Deposit And Get Bonus",
+    text_2: "Higher Returns",
+    text_3: "after VIP Upgrade",
+    text_4: "Daily Recharge Reward"
   }
 };

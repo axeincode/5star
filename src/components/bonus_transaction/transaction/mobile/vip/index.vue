@@ -282,7 +282,7 @@ onMounted(async () => {
     <v-col cols="6" class="d-flex" style="margin-left: -12px; margin-top: 4px">
       <v-menu
         offset="20"
-        content-class="m-transaction-vip-menu"
+        class="m-transaction-vip-menu"
         v-model="transactionVIPMenuShow"
         location="top"
       >
@@ -337,7 +337,19 @@ onMounted(async () => {
   </v-row>
 </template>
 <style lang="scss">
-.m-transaction-vip-menu {
+.m-transaction-vip-menu .v-overlay__content::after {
+  content: "";
+  position: absolute;
+  align-self: center;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 13px solid #211f31;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-right-width: 8px;
+  border-left-width: 8px;
 }
 .m-transaction-vip-menu-last {
   display: flex;

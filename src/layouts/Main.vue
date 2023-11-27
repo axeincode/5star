@@ -27,6 +27,8 @@ import RefferalDialog from "@/components/refferal/index.vue";
 import MRefferalDialog from "@/components/refferal/mobile/index.vue";
 import LoginBonusDialog from "@/components/login_bonus/index.vue";
 import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
+import GetBonusDialog from "@/components/get_bonus/index.vue";
+import MGetBonusDialog from "@/components/get_bonus/mobile/index.vue";
 import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
 import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
 import MAccountDialog from "@/views/account/dialog/index.vue";
@@ -76,6 +78,7 @@ const { setNickNameDialogVisible } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
+const { setGetBonusDialogVisible } = loginBonusStore();
 const { setUserNavBarToggle } = appBarStore();
 const { setMailMenuShow } = mailStore();
 const { setNavBarToggle } = appBarStore();
@@ -309,13 +312,31 @@ watch(loginBonusDialogVisible, (newValue) => {
   setMainBlurEffectShow(newValue);
 }, { deep: true })
 
-const closeLoginBonusDialog = () => {
+// deposit and get bonus dialog
+const getBonusDialog = ref<boolean>(false);
+const getBonusDialogVisible = computed(() => {
+  const { getDepositAndBonusDialogVisible } = storeToRefs(loginBonusStore());
+  return getDepositAndBonusDialogVisible.value;
+})
 
+watch(getBonusDialogVisible, (newValue) => {
+  getBonusDialog.value = newValue;
+  setOverlayScrimShow(newValue)
+  setMainBlurEffectShow(newValue);
+}, { deep: true })
+
+const closeLoginBonusDialog = () => {
   setLoginBonusDialogVisible(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
+}
 
+const closeGetBonusDialog = () => {
+  setGetBonusDialogVisible(false);
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
 }
 
 // roulette bonus dialog
@@ -327,13 +348,12 @@ const rouletteBonusDialogVisible = computed(() => {
 watch(rouletteBonusDialogVisible, (newValue) => {
   rouletteBonusDialog.value = newValue;
 })
-const closeRouletteBonusDialog = () => {
 
+const closeRouletteBonusDialog = () => {
   setRouletteBonusDialogVisible(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
-
 }
 
 // main blur effect
@@ -635,6 +655,21 @@ onMounted(() => {
       <MLoginBonusDialog v-else @closeLoginBonusDialog="closeLoginBonusDialog" />
     </v-dialog>
 
+    <!----------------------------------- deposit and get bonus dialog --------------------------------->
+
+    <v-dialog
+      v-model="getBonusDialog"
+      :width="mobileWidth < 600 ? '340' : '471'"
+      @click:outside="closeGetBonusDialog"
+      :class="mobileWidth < 600 ? 'm-get-bonus-dialog' : ''"
+    >
+      <GetBonusDialog
+        v-if="mobileWidth > 600"
+        @closeGetBonusDialog="closeGetBonusDialog"
+      />
+      <MGetBonusDialog v-else @closeGetBonusDialog="closeGetBonusDialog" />
+    </v-dialog>
+
     <!----------------------------------- roulette bonus dialog --------------------------------->
 
     <v-dialog
@@ -668,7 +703,7 @@ onMounted(() => {
 
     <el-backtop :right="16" :bottom="70">
       <div class="m-back-top relative">
-        <img src="@/assets/public/svg/icon_public_94.svg" class="m-back-icon-position" />
+        <img src="@/assets/public/svg/icon_public_101.svg" class="m-back-icon-position" />
       </div>
     </el-backtop>
 

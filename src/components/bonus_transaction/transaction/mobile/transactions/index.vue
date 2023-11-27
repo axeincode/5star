@@ -8,6 +8,10 @@ import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
 import { type TransactionHistoryResponse, type TransactionHistoryItem } from "@/interface/transaction";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
+import * as clipboard from "clipboard-polyfill";
+import { useToast } from "vue-toastification";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -32,16 +36,9 @@ const startIndex = ref<number>(0);
 const endIndex = ref<number>(8);
 const currentList = ref<Array<TransactionHistoryItem>>([]);
 
-const tempHistoryList = [
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-]
+const notificationText = ref<string>('Successful replication');
+
+const tempHistoryList = [{},{},{},{},{},{},{},{}];
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -88,6 +85,29 @@ const handlePrev = async (page_no: number) => {
   }
 }
 
+const handleCopyID = async (id: number) => {
+  clipboard.writeText(id).then(
+    () => {
+      console.log('Copied to clipboard!');
+      const toast = useToast();
+      toast.success(notificationText.value, {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+    },
+    (error) => {
+      console.error('Could not copy text: ', error);
+    }
+  );
+}
 watch(transactionHistoryItem, (value) => {
   console.log(value);
   paginationLength.value = moreTransactionHistoryFlag.value && transactionHistoryItem.value.record.length % 8 == 0 ? paginationLength.value + 1 : paginationLength.value
@@ -283,7 +303,19 @@ onMounted(async () => {
                 padding-bottom: 21px !important;
               "
             >
-              {{ item.id }}
+              <div class="d-flex justify-center">
+                {{
+                  item.id.toString().length > 11
+                    ? item.id.toString().slice(0, 11) + "..."
+                    : item.id
+                }}
+                <img
+                  src="@/assets/public/svg/icon_public_71.svg"
+                  width="16"
+                  class="ml-1"
+                  @click="handleCopyID(item.id)"
+                />
+              </div>
             </td>
             <td
               class="text-400-12"
@@ -299,7 +331,7 @@ onMounted(async () => {
                 padding-bottom: 21px !important;
               "
             >
-              {{ item.balance }}
+              R$ {{ item.balance }}
             </td>
           </tr>
         </template>

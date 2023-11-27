@@ -12,6 +12,8 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { vipStore } from "@/store/vip";
 import { userStore } from "@/store/user";
+import { bonusTransactionStore } from "@/store/bonusTransaction";
+import { useRouter } from "vue-router";
 import moment from 'moment-timezone';
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
@@ -31,10 +33,12 @@ const modules = [Pagination];
 
 const { t } = useI18n();
 const { width } = useDisplay()
+const router = useRouter();
 
 const { dispatchVipTasks } = vipStore();
 const { dispatchVipLevelAward } = vipStore();
 const { dispatchVipRebateAward } = vipStore();
+const { setBonusTabIndex } = bonusTransactionStore();
 
 const vipWidth = ref<string>('vip-container');
 const selectedTabIndex = ref<number>(0)
@@ -873,6 +877,11 @@ const vipRebateAward = async () => {
   }
 }
 
+const goToTransactionPage = () => {
+  setBonusTabIndex(1);
+  router.push({name: "Bonuses And Transactions", query: { tab: "VIP" }})
+}
+
 onMounted(async () => {
   window.addEventListener('scroll', handleWindowScroll);
   await dispatchVipTasks();
@@ -1330,6 +1339,7 @@ onMounted(async () => {
                         class="text-none button-yellow ml-auto relative"
                         height="49px"
                         width="-webkit-fill-available"
+                        @click="goToTransactionPage"
                       >
                         <div class="cashback-bonus-help-img">
                           <img src="@/assets/public/svg/icon_public_76.svg" />

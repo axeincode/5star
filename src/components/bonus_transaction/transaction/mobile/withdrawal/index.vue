@@ -8,8 +8,10 @@ import { withdrawStore } from "@/store/withdraw";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
 import { WithdrawalHistoryItem, type WithdrawalHistoryResponse } from "@/interface/withdraw";
+import * as clipboard from "clipboard-polyfill";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -47,6 +49,8 @@ const props = defineProps<{
 const { pageSize, withdrawHistoryItem } = toRefs(props);
 
 const paginationLength = ref<number>(0);
+
+const notificationText = ref<string>('Successful replication');
 
 const loading = ref<boolean>(false);
 const loadingIndex = ref<number>(0)
@@ -169,6 +173,30 @@ const handlePrev = async (page_no: number) => {
       end_time: withdrawHistoryItem.value.record[0].created_at,
     });
   }
+}
+
+const handleCopyID = async (id: number) => {
+  clipboard.writeText(id).then(
+    () => {
+      console.log('Copied to clipboard!');
+      const toast = useToast();
+      toast.success(notificationText.value, {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+    },
+    (error) => {
+      console.error('Could not copy text: ', error);
+    }
+  );
 }
 
 watch(withdrawHistoryItem, (value) => {
@@ -314,7 +342,19 @@ onMounted(async () => {
                 min-width: 60px;
               "
             >
-              {{ item.id }}
+              <div class="d-flex justify-center">
+                {{
+                  item.id.toString().length > 11
+                    ? item.id.toString().slice(0, 11) + "..."
+                    : item.id
+                }}
+                <img
+                  src="@/assets/public/svg/icon_public_71.svg"
+                  width="16"
+                  class="ml-1"
+                  @click="handleCopyID(item.id)"
+                />
+              </div>
             </td>
             <td
               class="text-400-12"

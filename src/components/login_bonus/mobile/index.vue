@@ -2,16 +2,27 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
+import { userStore } from "@/store/user";
 import { storeToRefs } from "pinia";
+import { loginBonusStore } from "@/store/loginBonus";
+import { appBarStore } from "@/store/appBar";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
+import MConfirm from "@/components/global/confirm/mobile";
 
 const emit = defineEmits<{ (e: "closeLoginBonusDialog"): void }>();
 const { t } = useI18n();
+const { setGetBonusDialogVisible } = loginBonusStore();
+const { setLoginBonusDialogVisible } = loginBonusStore();
+const { setNavBarToggle } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
+const { setHeaderBlurEffectShow } = appBarStore();
+const { setMenuBlurEffectShow } = appBarStore();
 
 const vipGrade = ref("VIP1");
 const loginBonusItem = ref({
@@ -20,12 +31,24 @@ const loginBonusItem = ref({
   is_signin: true, // You can sign in today
 });
 const swiper = ref<any>(null);
+const confirmDialog = ref<boolean>(false);
+const selectedDay = ref<number>(0);
 
 const modules = [Pagination];
 
 const vipLevels = computed(() => {
   const { getVipLevels } = storeToRefs(vipStore());
   return getVipLevels.value;
+});
+
+const getBonusDialogVisible = computed(() => {
+  const { getDepositAndBonusDialogVisible } = storeToRefs(loginBonusStore());
+  return getDepositAndBonusDialogVisible.value;
+});
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value;
 });
 
 const goToPrev = () => {
@@ -41,14 +64,29 @@ const getSwiperRef = (swiperInstance: any) => {
 };
 
 const handleLoginBonus = (day: number) => {
-  if (day == loginBonusItem.value.signin_day + 1) {
-    loginBonusItem.value.signin_day = day;
+  console.log(userBalance.value.amount);
+  if (userBalance.value.amount == undefined) {
+    return;
   }
+  if (Number(userBalance.value.amount) <= 0) {
+    setLoginBonusDialogVisible(false);
+    setGetBonusDialogVisible(true);
+    setOverlayScrimShow(true);
+    setMainBlurEffectShow(true);
+    setHeaderBlurEffectShow(true);
+    setMenuBlurEffectShow(true);
+  } else {
+    confirmDialog.value = true;
+    selectedDay.value = day;
+  }
+  // if (day == loginBonusItem.value.signin_day + 1) {
+  //   loginBonusItem.value.signin_day = day;
+  // }
 };
 </script>
 
 <template>
-  <div class="m-login-bonus-dialog-container">
+  <div class="m-login-bonus-dialog-container" :class="confirmDialog ? 'blur-effect' : ''">
     <img
       src="@/assets/public/image/bg_public_03_01.png"
       class="m-header-bar-img-position"
@@ -428,13 +466,13 @@ const handleLoginBonus = (day: number) => {
       </v-col>
       <v-col cols="8" class="pa-0 ma-0">
         <p class="text-center" style="line-height: normal">
-          <Font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_1") }}</Font>
-          <Font class="text-900-10 purple">R$20 </Font>
-          <Font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_2") }}</Font>
-          <Font class="text-900-10 purple">{{ t("vip.login_bonus.footer_text_3") }}</Font>
+          <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_1") }}</font>
+          <font class="text-900-10 purple">R$20 </font>
+          <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_2") }}</font>
+          <font class="text-900-10 purple">{{ t("vip.login_bonus.footer_text_3") }}</font>
         </p>
         <p class="text-center" style="line-height: normal">
-          <Font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_4") }}</Font>
+          <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_4") }}</font>
         </p>
       </v-col>
       <v-col cols="2" class="pa-0 ma-0 text-right">
@@ -449,10 +487,17 @@ const handleLoginBonus = (day: number) => {
         </v-btn>
       </v-col>
     </v-row>
+    <v-dialog v-model="confirmDialog" width="280">
+      <MConfirm />
+    </v-dialog>
   </div>
 </template>
 
 <style lang="scss">
+.blur-effect {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
 .m-login-bonus-footer {
   position: absolute;
   bottom: 34px;
