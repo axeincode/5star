@@ -61,7 +61,7 @@ export interface VipTaskItem {
     index: number
     task_id: number
     task_type: number
-    task_terms : {
+    task_terms: {
         terms_id: number
         deposit: number
         bet: number
@@ -75,7 +75,69 @@ export interface VipTaskItem {
     award: number
 }
 
-export type GetVipInfoResponse = {    
+export interface VipRebateHistoryItem {
+    notes_id: string | number
+    created_at: string | number
+    amount: string | number
+    cash_back: string | number
+    vip_level: string | number
+    vip_rate: string | number
+    game_type: string
+}
+
+export interface VipRebateHistoryData {
+    total: number
+    list: Array<VipRebateHistoryItem>
+}
+
+export interface VipRebateHistoryRequest {
+    page_num: number
+    page_size: number
+    start_time: number
+}
+
+
+export interface VipLevelRewardHistoryItem {
+    notes_id: string | number
+    created_at: string | number
+    amount: string | number
+    vip_level: string | number
+    type: string
+}
+
+export interface VipLevelRewardHistoryData {
+    total: number
+    list: Array<VipLevelRewardHistoryItem>
+}
+
+export interface VipLevelRewardHistoryRequest {
+    page_num: number
+    page_size: number
+    start_time: number
+}
+
+
+export interface VipTimesHistoryItem {
+    notes_id: string | number
+    created_at: string | number
+    amount: string | number
+    vip_level: string | number
+    type: string
+}
+
+export interface VipTimesHistoryData {
+    total: number
+    list: Array<VipTimesHistoryItem>
+}
+
+export interface VipTimesHistoryRequest {
+    index: number
+    page_num: number
+    page_size: number
+    start_time: number
+}
+
+export type GetVipInfoResponse = {
     code: number
     data: VipInfo
     message: string
@@ -102,5 +164,23 @@ export type GetVipLevelAwardResponse = {
 export type GetVipRebateAwardResponse = {
     code: number
     data: any
+    message: string
+}
+
+export type GetVipRebateHistoryResponse = {
+    code: number
+    data: VipRebateHistoryData
+    message: string
+}
+
+export type GetVipLevelRewardHistoryResponse = {
+    code: number
+    data: VipLevelRewardHistoryData,
+    message: string
+}
+
+export type GetVipTimesHistoryResponse = {
+    code: number
+    data: VipTimesHistoryData
     message: string
 }

@@ -74,6 +74,9 @@ export namespace NETWORK {
     static VIP_TASKS = 'user/viptasks'; // vip tasks
     static VIP_LEVEL_AWARD = '/user/viplevel/award' // vip level award
     static VIP_REBATE_AWARD = '/user/viprebate/award' // vip rebate award
+    static VIP_REBATE_HISTORY = '/user/viprebatehistory' // get vip coding record
+    static VIP_LEVEL_AWARD_HISTORY = '/user/viplevelawardhistory' // Obtain VIP level reward record
+    static VIP_TIMES_HISTORY = '/user/viptimeshistory' // Get VIP weekly and monthly reward records
   }
 
   // websocket api

@@ -11,7 +11,19 @@ export const vipStore = defineStore({
         errMessage: '' as string,
         vipInfo: {} as Vip.VipInfo,
         vipLevels: [] as Array<Vip.VipLevel>,
-        vipTasks: [] as Array<Vip.VipTaskItem>
+        vipTasks: [] as Array<Vip.VipTaskItem>,
+        vipRebateHistory: {
+            total: 0,
+            list: []
+        } as Vip.VipRebateHistoryData,
+        vipLevelRewardHistory: {
+            total: 0,
+            list: []
+        } as Vip.VipLevelRewardHistoryData,
+        vipTimesHistory: {
+            total: 0,
+            list: []
+        } as Vip.VipTimesHistoryData,
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -19,6 +31,9 @@ export const vipStore = defineStore({
         getVipInfo: (state) => state.vipInfo,
         getVipLevels: (state) => state.vipLevels,
         getVipTasks: (state) => state.vipTasks,
+        getVipRebateHistory: (state) => state.vipRebateHistory,
+        getVipLevelRewardHistory: (state) => state.vipLevelRewardHistory,
+        getVipTimesHistory: (state) => state.vipTimesHistory,
     },
     actions: {
         // set functions
@@ -36,6 +51,15 @@ export const vipStore = defineStore({
         },
         setVipTasks(vipTasks: Array<Vip.VipTaskItem>) {
             this.vipTasks = vipTasks;
+        },
+        setVipRebateHistory(vipRebateHistory: Vip.VipRebateHistoryData) {
+            this.vipRebateHistory = vipRebateHistory;
+        },
+        setVipLevelRewardHistory(vipLevelRewardHistory: Vip.VipLevelRewardHistoryData) {
+            this.vipLevelRewardHistory = vipLevelRewardHistory;
+        },
+        setVipTimesHistory(vipTimesHistory: Vip.VipTimesHistoryData) {
+            this.vipTimesHistory = vipTimesHistory
         },
         // user vip information api
         async dispatchVipInfo() {
@@ -109,6 +133,54 @@ export const vipStore = defineStore({
             const next = (response: Vip.GetVipRebateAwardResponse) => {
                 if (response.code == 200) {
                     this.setSuccess(true);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
+        // get vip coding record
+        async dispatchVipRebateHistory(data: Vip.VipRebateHistoryRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_REBATE_HISTORY;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipRebateHistoryResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipRebateHistory(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
+        // Obtain VIP level reward record
+        async dispatchVipLevelRewardHistory(data: Vip.VipLevelRewardHistoryRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_LEVEL_AWARD_HISTORY;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelRewardHistoryResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipLevelRewardHistory(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
+        // Get VIP weekly and monthly reward records
+        async dispatchVipTimesHistory(data: Vip.VipTimesHistoryRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_TIMES_HISTORY;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipTimesHistoryResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipTimesHistory(response.data);
                 } else {
                     this.setErrorMessage(handleException(response.code));
                 }

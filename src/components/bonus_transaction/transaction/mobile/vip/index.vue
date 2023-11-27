@@ -4,24 +4,29 @@ import Pagination from "@/components/global/pagination/index.vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
-import { withdrawStore } from "@/store/withdraw";
+import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
-import { WithdrawalHistoryItem, type WithdrawalHistoryResponse } from "@/interface/withdraw";
+import { type VipRebateHistoryItem, type VipRebateHistoryData, type VipLevelRewardHistoryData, type VipTimesHistoryData } from "@/interface/vip";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import VipRebateHistory from './components/VipRebateHistory.vue';
+import VipLevelRewardHistory from './components/VipLevelRewardHistory.vue';
+import VipTimesHistory from './components/VipTimesHistory.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
-const { dispatchWithdrawalHistory } = withdrawStore();
-const { dispatchWithdrawalRefund } = withdrawStore();
+const { dispatchVipRebateHistory } = vipStore();
+const { dispatchVipTimesHistory } = vipStore();
 
 const props = defineProps<{
-  pageSize: number;
-  withdrawHistoryItem: WithdrawalHistoryResponse;
+  pageSize: number,
+  vipRebateHistory: VipRebateHistoryData,
+  vipLevelRewardHistory: VipLevelRewardHistoryData,
+  vipTimesHistory: VipTimesHistoryData,
 }>();
 
-const { pageSize, withdrawHistoryItem } = toRefs(props);
+const { pageSize, vipRebateHistory, vipLevelRewardHistory, vipTimesHistory } = toRefs(props);
 
 const paginationLength = ref<number>(0);
 
@@ -29,7 +34,8 @@ const loading = ref<boolean>(false);
 const loadingIndex = ref<number>(0)
 const startIndex = ref<number>(0);
 const endIndex = ref<number>(8);
-const currentList = ref<Array<WithdrawalHistoryItem>>([]);
+const currentList = ref<Array<VipRebateHistoryItem>>([]);
+const selectedHistoryIndex = ref<number>(1);
 
 const transactionVIPMenuShow = ref<boolean>(false);
 const selectedVipMenuItem = ref<string>(t('transaction.vip.text_1'));
@@ -59,11 +65,11 @@ const fixPositionShow = computed(() => {
 const handleNext = async (page_no: number) => {
   startIndex.value = (page_no - 1) * pageSize.value;
   endIndex.value = startIndex.value + pageSize.value;
-  currentList.value = withdrawHistoryItem.value.record.slice(startIndex.value, endIndex.value);
+  currentList.value = vipRebateHistory.value.list.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
-    await dispatchWithdrawalHistory({
+    await dispatchVipRebateHistory({
       page_size: pageSize.value,
-      start_time: withdrawHistoryItem.value.record[withdrawHistoryItem.value.record.length - 1].created_at,
+      start_time: vipRebateHistory.value.list[vipRebateHistory.value.list.length - 1].created_at,
     });
   }
 }
@@ -71,11 +77,11 @@ const handleNext = async (page_no: number) => {
 const handlePrev = async (page_no: number) => {
   startIndex.value = (page_no - 1) * pageSize.value;
   endIndex.value = startIndex.value + pageSize.value;
-  currentList.value = withdrawHistoryItem.value.record.slice(startIndex.value, endIndex.value);
+  currentList.value = vipRebateHistory.value.list.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
-    await dispatchWithdrawalHistory({
+    await dispatchVipRebateHistory({
       page_size: pageSize.value,
-      end_time: withdrawHistoryItem.value.record[0].created_at,
+      end_time: vipRebateHistory.value.list[0].created_at,
     });
   }
 }
@@ -84,17 +90,39 @@ const handleTransactionMenuDropdown = (item: string) => {
   selectedVipMenuItem.value = item;
 }
 
-watch(withdrawHistoryItem, (value) => {
-  paginationLength.value = withdrawHistoryItem.value.total_pages
+watch(vipRebateHistory, (value) => {
+  paginationLength.value = vipRebateHistory.value.total
+})
+
+watch(selectedVipMenuItem, async (value) => {
+  if (value == t('transaction.vip.text_4')) {
+    selectedHistoryIndex.value = 2;
+    await dispatchVipTimesHistory({
+      index: 2,
+      page_num: 1,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+  }
+
+  if (value == t('transaction.vip.text_3')) {
+    selectedHistoryIndex.value = 1;
+    await dispatchVipTimesHistory({
+      index: 1,
+      page_num: 1,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+  }
 })
 
 onMounted(async () => {
-  paginationLength.value = withdrawHistoryItem.value.total_pages
+  paginationLength.value = vipRebateHistory.value.total
 });
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
-    <v-table
+    <!-- <v-table
       class="m-forms-bonus-table-bg"
       :class="fixPositionShow ? 'table-position-overflow' : ''"
       theme="dark"
@@ -144,7 +172,7 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody class="forms-table-body">
-        <template v-if="withdrawHistoryItem.record.length == 0">
+        <template v-if="vipRebateHistory.list.length == 0">
           <tr v-for="(item, index) in tempHistoryList" :key="index">
             <td
               class="text-400-12"
@@ -182,10 +210,7 @@ onMounted(async () => {
         </template>
         <template v-else>
           <tr
-            v-for="(item, index) in withdrawHistoryItem.record.slice(
-              startIndex,
-              endIndex
-            )"
+            v-for="(item, index) in vipRebateHistory.list.slice(startIndex, endIndex)"
             :key="index"
           >
             <td
@@ -202,27 +227,26 @@ onMounted(async () => {
                 min-width: 60px;
               "
             >
-              {{ item.id }}
+              R$ {{ Number(item.amount).toFixed(2) }}
+            </td>
+            <td
+              class="text-400-12 color-01983A"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              R$ {{ Number(item.cash_back).toFixed(2) }}
             </td>
             <td
               class="text-400-12"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            >
-              {{ item.type }}
-            </td>
-            <td
-              class="text-400-12 color-D42763"
               style="
                 padding-top: 21px !important;
                 padding-bottom: 21px !important;
                 min-width: 130px;
               "
             >
-              {{ item.amount }}
+              VIP {{ item.vip_level }} / {{ Number(item.vip_rate).toFixed(2) }}%
             </td>
             <td
               class="text-400-12"
-              :class="withdrawalStatus[Number(item.status)].color"
               style="
                 padding-top: 21px !important;
                 padding-bottom: 21px !important;
@@ -230,13 +254,29 @@ onMounted(async () => {
               "
             >
               <div>
-                {{ withdrawalStatus[Number(item.status)].value }}
+                {{ item.game_type }}
               </div>
             </td>
           </tr>
         </template>
       </tbody>
-    </v-table>
+    </v-table> -->
+    <VipRebateHistory
+      :currentList="vipRebateHistory.list.slice(startIndex, endIndex)"
+      v-if="selectedVipMenuItem == t('transaction.vip.text_1')"
+    />
+    <VipLevelRewardHistory
+      :currentList="vipLevelRewardHistory.list.slice(startIndex, endIndex)"
+      v-if="selectedVipMenuItem == t('transaction.vip.text_2')"
+    />
+    <VipTimesHistory
+      :currentList="vipTimesHistory.list.slice(startIndex, endIndex)"
+      :selectedHistoryIndex="selectedHistoryIndex"
+      v-if="
+        selectedVipMenuItem == t('transaction.vip.text_3') ||
+        selectedVipMenuItem == t('transaction.vip.text_4')
+      "
+    />
   </v-row>
   <v-row class="m-bonus-transaction-table-5">
     <v-col cols="6" class="d-flex" style="margin-left: -12px; margin-top: 4px">

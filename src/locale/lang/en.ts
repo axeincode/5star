@@ -1347,7 +1347,8 @@ export const lang: langType = {
       text_7: "Cashback",
       text_8: "Cashback Ratio",
       text_9: "Type",
-      text_10: "",
+      text_10: "Bonus",
+      text_11: "Vip Level",
     }
   },
   account: {

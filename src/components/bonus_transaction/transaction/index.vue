@@ -16,6 +16,7 @@ import MVip from "./mobile/vip/index.vue";
 import { withdrawStore } from "@/store/withdraw";
 import { depositStore } from "@/store/deposit";
 import { gameStore } from "@/store/game";
+import { vipStore } from "@/store/vip";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import moment from "moment-timezone";
 
@@ -25,6 +26,9 @@ const { dispatchWithdrawalHistory } = withdrawStore();
 const { dispatchUserDepositHistory } = depositStore();
 const { dispatchGameHistory } = gameStore();
 const { dispatchTransactionHistory } = bonusTransactionStore();
+const { dispatchVipRebateHistory } = vipStore();
+const { dispatchVipLevelRewardHistory } = vipStore();
+const { dispatchVipTimesHistory } = vipStore();
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -45,6 +49,28 @@ const transactionHistoryItem = computed(() => {
   return getTransactionHistoryItem.value;
 });
 
+const vipRebateHistory = computed(() => {
+  const { getVipRebateHistory } = storeToRefs(vipStore());
+  return getVipRebateHistory.value;
+});
+
+const vipLevelRewardHistory = computed(() => {
+  const { getVipLevelRewardHistory } = storeToRefs(vipStore());
+  console.log(getVipLevelRewardHistory.value);
+  getVipLevelRewardHistory.value.list.map((item) => {
+    item.type = "Rank Bonus";
+  });
+  return getVipLevelRewardHistory.value;
+});
+
+const vipTimesHistory = computed(() => {
+  const { getVipTimesHistory } = storeToRefs(vipStore());
+  getVipTimesHistory.value.list.map((item) => {
+    item.type = "Weekly Bonus";
+  });
+  return getVipTimesHistory.value;
+});
+
 const transactionTabs = ref<Array<string>>([
   t("transaction.tab.game_history"),
   t("transaction.tab.transactions"),
@@ -54,6 +80,8 @@ const transactionTabs = ref<Array<string>>([
   t("transaction.tab.referral"),
 ]);
 const pageSize = ref<number>(8);
+const pageNum = ref<number>(1);
+const vipTimesHistoryIndex = ref<number>(1);
 const selectedTab = ref(t("transaction.tab.game_history"));
 
 const transactionTab = computed(() => {
@@ -110,6 +138,22 @@ onMounted(async () => {
     page_size: pageSize.value,
     start_time: Math.ceil(moment().valueOf() / 1000),
     lid: 0,
+  });
+  await dispatchVipRebateHistory({
+    page_num: pageNum.value,
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
+  });
+  await dispatchVipLevelRewardHistory({
+    page_num: pageNum.value,
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
+  });
+  await dispatchVipTimesHistory({
+    index: vipTimesHistoryIndex.value,
+    page_num: pageNum.value,
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
   });
 });
 </script>
@@ -191,7 +235,13 @@ onMounted(async () => {
         :withdrawHistoryItem="withdrawHistoryItem"
         v-if="mobileWidth > 600"
       />
-      <MVip :pageSize="pageSize" :withdrawHistoryItem="withdrawHistoryItem" v-else />
+      <MVip
+        :pageSize="pageSize"
+        :vipRebateHistory="vipRebateHistory"
+        :vipLevelRewardHistory="vipLevelRewardHistory"
+        :vipTimesHistory="vipTimesHistory"
+        v-else
+      />
     </v-window-item>
     <v-window-item
       :value="t('transaction.tab.referral')"
