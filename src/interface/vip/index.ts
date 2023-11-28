@@ -137,6 +137,21 @@ export interface VipTimesHistoryRequest {
     start_time: number
 }
 
+export interface VipSignInData {
+    award: Array<string | number>
+    signin_day: number
+    is_signin: number
+    limited_bet: number
+    limited_deposit: number
+    vip_level: number
+}
+
+export type GetVipSignInResponse = {
+    code: number
+    data: VipSignInData
+    message: string
+}
+
 export type GetVipInfoResponse = {
     code: number
     data: VipInfo

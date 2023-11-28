@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
 import { userStore } from "@/store/user";
+import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import { loginBonusStore } from "@/store/loginBonus";
 import { appBarStore } from "@/store/appBar";
@@ -16,13 +17,16 @@ import MConfirm from "@/components/global/confirm/mobile";
 
 const emit = defineEmits<{ (e: "closeLoginBonusDialog"): void }>();
 const { t } = useI18n();
+const { setAuthModalType } = authStore();
+const { setOverlayScrimShow } = appBarStore();
 const { setGetBonusDialogVisible } = loginBonusStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setNavBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
-const { setOverlayScrimShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
+const { dispatchVipSignInReward } = vipStore();
+const { dispatchVipSignIn } = vipStore();
 
 const vipGrade = ref("VIP1");
 const loginBonusItem = ref({
@@ -33,6 +37,7 @@ const loginBonusItem = ref({
 const swiper = ref<any>(null);
 const confirmDialog = ref<boolean>(false);
 const selectedDay = ref<number>(0);
+const selectedAward = ref<number>(0);
 
 const modules = [Pagination];
 
@@ -51,6 +56,22 @@ const userBalance = computed(() => {
   return getUserBalance.value;
 });
 
+// get Token
+const token = computed(() => {
+  const { getToken } = storeToRefs(authStore());
+  return getToken.value;
+});
+
+const vipSignIn = computed(() => {
+  const { getVipSignIn } = storeToRefs(vipStore());
+  return getVipSignIn.value;
+});
+
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(vipStore());
+  return getSuccess.value;
+});
+
 const goToPrev = () => {
   swiper.value.slidePrev();
 };
@@ -63,9 +84,11 @@ const getSwiperRef = (swiperInstance: any) => {
   swiper.value = swiperInstance;
 };
 
-const handleLoginBonus = (day: number) => {
-  console.log(userBalance.value.amount);
-  if (userBalance.value.amount == undefined) {
+const handleLoginBonus = (day: number, level: number, award: number) => {
+  if (token.value == undefined) {
+    setAuthModalType("login");
+    setOverlayScrimShow(false);
+    emit("closeLoginBonusDialog");
     return;
   }
   if (Number(userBalance.value.amount) <= 0) {
@@ -75,14 +98,36 @@ const handleLoginBonus = (day: number) => {
     setMainBlurEffectShow(true);
     setHeaderBlurEffectShow(true);
     setMenuBlurEffectShow(true);
-  } else {
+    return;
+  }
+  if (
+    Number(vipSignIn.value.signin_day) == day &&
+    Number(vipSignIn.value.vip_level) == Number(level)
+  ) {
     confirmDialog.value = true;
     selectedDay.value = day;
+    selectedAward.value = award;
   }
   // if (day == loginBonusItem.value.signin_day + 1) {
   //   loginBonusItem.value.signin_day = day;
   // }
 };
+
+const submitConfirm = async () => {
+  await dispatchVipSignInReward();
+  if (success.value) {
+    localStorage.setItem("signin_day", selectedDay + 1);
+  }
+};
+
+onMounted(async () => {
+  if (localStorage.getItem("signin_day") == undefined) {
+    localStorage.setItem("signin_day", 0);
+  } else {
+    loginBonusItem.value.signin_day = Number(localStorage.getItem("signin_day"));
+  }
+  await dispatchVipSignIn();
+});
 </script>
 
 <template>
@@ -118,7 +163,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 1"
+                v-if="loginBonusItem.signin_day > 1 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray login-bonus-text-position">
                   {{ t("vip.login_bonus.day_1_text") }}
@@ -136,12 +181,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-1 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(1)"
+                @click="handleLoginBonus(1, item.level, item.signin_award[0].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 1"
+                  v-if="
+                    vipSignIn.signin_day == 1 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_1_text") }}
@@ -159,7 +208,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 2"
+                v-if="loginBonusItem.signin_day > 2 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_2_text") }}
@@ -177,12 +226,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-2 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(2)"
+                @click="handleLoginBonus(2, item.level, item.signin_award[1].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 2"
+                  v-if="
+                    vipSignIn.signin_day == 2 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_2_text") }}
@@ -200,7 +253,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 3"
+                v-if="loginBonusItem.signin_day > 3 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_3_text") }}
@@ -218,12 +271,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-3 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(3)"
+                @click="handleLoginBonus(3, item.level, item.signin_award[2].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 3"
+                  v-if="
+                    vipSignIn.signin_day == 3 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_3_text") }}
@@ -243,7 +300,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 4"
+                v-if="loginBonusItem.signin_day > 4 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_4_text") }}
@@ -261,12 +318,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(4)"
+                @click="handleLoginBonus(4, item.level, item.signin_award[3].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 4"
+                  v-if="
+                    vipSignIn.signin_day == 4 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_4_text") }}
@@ -284,7 +345,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 5"
+                v-if="loginBonusItem.signin_day > 5 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_5_text") }}
@@ -302,12 +363,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(5)"
+                @click="handleLoginBonus(5, item.level, item.signin_award[4].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 5"
+                  v-if="
+                    vipSignIn.signin_day == 5 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_5_text") }}
@@ -325,7 +390,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 6"
+                v-if="loginBonusItem.signin_day > 6 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_6_text") }}
@@ -343,12 +408,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(6)"
+                @click="handleLoginBonus(6, item.level, item.signin_award[5].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 6"
+                  v-if="
+                    vipSignIn.signin_day == 6 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_6_text") }}
@@ -368,7 +437,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="4" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg relative"
-                v-if="loginBonusItem.signin_day >= 7"
+                v-if="loginBonusItem.signin_day > 7 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_7_text") }}
@@ -386,12 +455,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(7)"
+                @click="handleLoginBonus(7, item.level, item.signin_award[6].award)"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 7"
+                  v-if="
+                    vipSignIn.signin_day == 7 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_7_text") }}
@@ -409,7 +482,7 @@ const handleLoginBonus = (day: number) => {
             <v-col cols="8" class="pa-0 d-flex justify-center">
               <div
                 class="m-login-bonus-card-checkout-bg-1 relative"
-                v-if="loginBonusItem.signin_day >= 8"
+                v-if="loginBonusItem.signin_day > 8 && vipSignIn.vip_level == item.level"
               >
                 <p class="text-900-14 gray m-login-bonus-text-position-1">
                   {{ t("vip.login_bonus.day_8_text") }}
@@ -427,12 +500,16 @@ const handleLoginBonus = (day: number) => {
                 class="m-login-bonus-card-bg-5 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(8)"
+                @click="handleLoginBonus(8, item.level, loginBonusItem.award[7])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
                   class="m-login-bonus-sunshine-img"
-                  v-if="loginBonusItem.signin_day + 1 == 8"
+                  v-if="
+                    vipSignIn.signin_day == 8 &&
+                    vipSignIn.vip_level == item.level &&
+                    vipSignIn.is_signin == 1
+                  "
                 />
                 <p class="text-900-12 white m-login-bonus-text-position-1">
                   {{ t("vip.login_bonus.day_8_text") }}
@@ -465,13 +542,63 @@ const handleLoginBonus = (day: number) => {
         </v-btn>
       </v-col>
       <v-col cols="8" class="pa-0 ma-0">
-        <p class="text-center" style="line-height: normal">
+        <template
+          v-if="
+            Number(vipSignIn.limited_bet) == 0 && Number(vipSignIn.limited_deposit) != 0
+          "
+        >
+          <p class="text-center" style="line-height: normal">
+            <font class="text-900-10 white">
+              If you recharge
+              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_deposit }} </font>
+              today,
+            </font>
+          </p>
+        </template>
+        <template
+          v-if="
+            Number(vipSignIn.limited_bet) != 0 && Number(vipSignIn.limited_deposit) == 0
+          "
+        >
+          <p class="text-center" style="line-height: normal">
+            <font class="text-900-10 white">
+              If you bet
+              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_bet }} </font>
+              today,
+            </font>
+          </p>
+        </template>
+        <template
+          v-if="
+            Number(vipSignIn.limited_bet) != 0 && Number(vipSignIn.limited_deposit) != 0
+          "
+        >
+          <p class="text-center" style="line-height: normal">
+            <font class="text-900-10 white">
+              If you recharge
+              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_deposit }} </font>
+              &nbsp;and&nbsp;
+            </font>
+            <font class="text-900-10 white">
+              bet
+              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_bet }} </font>
+              today,
+            </font>
+          </p>
+        </template>
+        <!-- <p class="text-center" style="line-height: normal">
           <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_1") }}</font>
           <font class="text-900-10 purple">R$20 </font>
           <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_2") }}</font>
           <font class="text-900-10 purple">{{ t("vip.login_bonus.footer_text_3") }}</font>
-        </p>
-        <p class="text-center" style="line-height: normal">
+        </p> -->
+        <p
+          class="text-center"
+          style="line-height: normal"
+          v-if="
+            Number(vipSignIn.limited_bet) != 0 || Number(vipSignIn.limited_deposit) != 0
+          "
+        >
           <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_4") }}</font>
         </p>
       </v-col>
@@ -488,7 +615,7 @@ const handleLoginBonus = (day: number) => {
       </v-col>
     </v-row>
     <v-dialog v-model="confirmDialog" width="280">
-      <MConfirm />
+      <MConfirm @submitConfirm="submitConfirm" :selectedAward="selectedAward" />
     </v-dialog>
   </div>
 </template>

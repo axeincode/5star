@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
 
 const { t } = useI18n();
+const emit = defineEmits<{ (e: "submitConfirm"): void }>();
+const props = defineProps<{ selectedAward: number }>();
+const { selectedAward } = toRefs(props);
 </script>
 
 <template>
@@ -13,12 +16,13 @@ const { t } = useI18n();
     <div class="m-confirm-dialog-header">
       <p class="text-800-16">{{ t("confirm.text_1") }}</p>
     </div>
-    <p class="text-900-24 white text-center mt-5">R$ 2</p>
+    <p class="text-900-24 white text-center mt-5">R$ {{ selectedAward }}</p>
     <div class="mt-5 mx-4">
       <v-btn
         class="button-bright m-confirm-btn"
         width="-webkit-fill-available"
         height="48"
+        @click="emit('submitConfirm')"
       >
         {{ t("confirm.text_2") }}
       </v-btn>

@@ -24,6 +24,14 @@ export const vipStore = defineStore({
             total: 0,
             list: []
         } as Vip.VipTimesHistoryData,
+        vipSignIn: {
+            award: [],
+            signin_day: 0,
+            is_signin: 0,
+            limited_bet: 0,
+            limited_deposit: 0,
+            vip_level: 0,
+        } as Vip.VipSignInData
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -34,6 +42,7 @@ export const vipStore = defineStore({
         getVipRebateHistory: (state) => state.vipRebateHistory,
         getVipLevelRewardHistory: (state) => state.vipLevelRewardHistory,
         getVipTimesHistory: (state) => state.vipTimesHistory,
+        getVipSignIn: (state) => state.vipSignIn,
     },
     actions: {
         // set functions
@@ -60,6 +69,40 @@ export const vipStore = defineStore({
         },
         setVipTimesHistory(vipTimesHistory: Vip.VipTimesHistoryData) {
             this.vipTimesHistory = vipTimesHistory
+        },
+        setVipSignIn(vipSignIn: Vip.VipSignInData) {
+            this.vipSignIn = vipSignIn;
+        },
+        // Get VIP check-in content
+        async dispatchVipSignIn() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_SIGNIN;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipSignInResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipSignIn(response.data)
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1);
+        },
+        // Receive VIP sign-in rewards
+        async dispatchVipSignInReward() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_SIGNIN_REWARDS;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: any) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1);
         },
         // user vip information api
         async dispatchVipInfo() {

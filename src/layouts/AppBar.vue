@@ -380,10 +380,6 @@ const goGameHistoryPage = () => {
   setTransactionTab(t('transaction.tab.game_history'));
 }
 
-const openLoginBonusDialog = () => {
-  setLoginBonusDialogVisible(true);
-}
-
 // watches
 watch(currentLanguage, (newLang, oldLang) => {
   setLang(newLang);
@@ -924,9 +920,6 @@ onMounted(async () => {
       </div>
     </div>
     <div v-else>
-      <!-- <v-btn @click="openLoginBonusDialog" class="text-none">
-        Login Bonus
-      </v-btn> -->
       <v-switch
         :label="currentLanguage === 'en' ? 'English' : '中文'"
         color="success"
