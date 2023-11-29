@@ -26,8 +26,8 @@ const mobileWidth = computed(() => {
   return width.value;
 });
 
-const goToAboutPage = () => {
-  router.push({ name: "About_US" });
+const goToAboutPage = (index: number) => {
+  router.push({ name: "About_US", query: { index: index } });
 };
 </script>
 
@@ -70,21 +70,58 @@ const goToAboutPage = () => {
         <div
           class="footer-text-1"
           :class="mobileWidth < 600 ? 'ml-12' : ''"
-          @click="goToAboutPage"
+          @click="goToAboutPage(0)"
         >
-          {{ t("home.footer.about_us.menu_1") }}
+          {{ t("home.footer.about_us.text_1") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
-          {{ t("home.footer.about_us.menu_2") }}
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(1)"
+        >
+          {{ t("home.footer.about_us.text_2") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
-          {{ t("home.footer.about_us.menu_3") }}
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(2)"
+        >
+          {{ t("home.footer.about_us.text_3") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
-          {{ t("home.footer.about_us.menu_4") }}
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(3)"
+        >
+          {{ t("home.footer.about_us.text_4") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-12' : ''">
-          {{ t("home.footer.about_us.menu_5") }}
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(4)"
+        >
+          {{ t("home.footer.about_us.text_5") }}
+        </div>
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(5)"
+        >
+          {{ t("home.footer.about_us.text_6") }}
+        </div>
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(6)"
+        >
+          {{ t("home.footer.about_us.text_7") }}
+        </div>
+        <div
+          class="footer-text-1"
+          :class="mobileWidth < 600 ? 'ml-12' : ''"
+          @click="goToAboutPage(7)"
+        >
+          {{ t("home.footer.about_us.text_8") }}
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="5" lg="5" class="text-center px-0">

@@ -1047,11 +1047,14 @@ export type langType = {
       }
       about_us: {
         title: string
-        menu_1: string
-        menu_2: string
-        menu_3: string
-        menu_4: string
-        menu_5: string
+        text_1: string
+        text_2: string
+        text_3: string
+        text_4: string
+        text_5: string
+        text_6: string
+        text_7: string
+        text_8: string
       }
       footer_4: {
         text: string

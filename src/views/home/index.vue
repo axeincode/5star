@@ -1324,10 +1324,7 @@ export default Dashboard;
 
       <!-- game list -->
       <template v-if="selectedGameFilterBtn == t('home.button.all_game')">
-        <template
-          v-for="(item, index) in allGames"
-          :key="index"
-        >
+        <template v-for="(item, index) in allGames" :key="index">
           <v-row
             class="ml-4 original_game_text"
             :class="mobileWidth > 600 ? ' mt-12' : ' mt-4'"
@@ -1335,7 +1332,7 @@ export default Dashboard;
             style="margin-bottom: 6px !important"
             @click="handleGameFilterBtn(item.slug)"
           >
-            <inline-svg
+            <!-- <inline-svg
               :src="item.image"
               width="18"
               height="18"
@@ -1352,17 +1349,18 @@ export default Dashboard;
               :transform-source="pgIconTransform"
               v-else
             >
-            </inline-svg>
+            </inline-svg> -->
             {{ item.name }}
           </v-row>
           <v-row class="ml-4 mr-2 mt-2 mb-0" v-if="mobileWidth > 600">
             <template v-if="item.games.length > 0">
-              <template
-                v-for="(gameItem, gameIndex) in item.games"
-                :key="gameIndex"
-              >
+              <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
                 <div
-                  style="flex: 0 0 14.2857%; max-width: 14.2857%; padding: 0px 8px 8px 0px"
+                  style="
+                    flex: 0 0 14.2857%;
+                    max-width: 14.2857%;
+                    padding: 0px 8px 8px 0px;
+                  "
                   class="original-game-img-width"
                   v-if="gameIndex < 7 * item.page_no"
                 >
@@ -1384,10 +1382,7 @@ export default Dashboard;
           </v-row>
           <v-row class="mx-1 mt-0 mb-0" v-else>
             <template v-if="item.games.length > 0">
-              <template
-              v-for="(gameItem, gameIndex) in item.games"
-              :key="gameIndex"
-              >
+              <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
                 <v-col
                   cols="4"
                   lg="2"
@@ -1476,7 +1471,7 @@ export default Dashboard;
         :key="otherIndex"
         v-else
       >
-        <template v-if="(otherGameItem.slug == selectedCategoryName) && paginGameShow">
+        <template v-if="otherGameItem.slug == selectedCategoryName && paginGameShow">
           <v-row
             class="ml-4 mr-2 mt-2 pt-8"
             v-if="mobileWidth > 600"
@@ -1487,7 +1482,8 @@ export default Dashboard;
                 otherGameItem.games.length > 0 &&
                 otherGameItem.games != undefined &&
                 otherGameItem.games != null
-              ">
+              "
+            >
               <template
                 v-for="(gameItem, gameIndex) in otherGameItem.games"
                 :key="gameIndex"
@@ -1544,7 +1540,8 @@ export default Dashboard;
                 otherGameItem.games.length > 0 &&
                 otherGameItem.games != undefined &&
                 otherGameItem.games != null
-              ">
+              "
+            >
               <template
                 v-for="(gameItem, gameIndex) in otherGameItem.games"
                 :key="gameIndex"

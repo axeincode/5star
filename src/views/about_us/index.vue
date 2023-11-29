@@ -22,8 +22,8 @@ const { setActiveAboutIndex } = aboutStore();
 const route = useRoute();
 const router = useRouter();
 
-const activeMenuIndex = ref<number>(7);
-const selectedMenuItem = ref<string>(t("about.page.text_4"));
+const activeMenuIndex = ref<number>(0);
+const selectedMenuItem = ref<string>(t("about.page.text_2"));
 const aboutMenuShow = ref<boolean>(false);
 
 const menuList = ref<Array<string>>([
@@ -71,7 +71,26 @@ const goBeforePage = () => {
   router.go(-1);
 };
 
+watch(
+  () => route.query,
+  (newQuery, oldQuery) => {
+    // Handle the route query change here
+    if (newQuery.index) {
+      activeMenuIndex.value = newQuery.index;
+      selectedMenuItem.value = menuList.value[activeMenuIndex.value];
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  }
+);
+
 onMounted(() => {
+  if (route.query.index) {
+    activeMenuIndex.value = route.query.index;
+    selectedMenuItem.value = menuList.value[activeMenuIndex.value];
+  }
   setActiveAboutIndex(activeMenuIndex.value);
   window.scrollTo({
     top: 0,

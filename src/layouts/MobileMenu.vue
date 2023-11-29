@@ -15,7 +15,7 @@ import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
 import icon_public_55 from "@/assets/public/svg/icon_public_55.svg";
 import icon_public_97 from "@/assets/public/svg/icon_public_97.svg";
-import icon_public_96 from "@/assets/public/svg/icon_public_96.svg";
+import icon_public_94 from "@/assets/public/svg/icon_public_94.svg";
 import icon_public_100 from "@/assets/public/svg/icon_public_100.svg";
 import img_public_17 from "@/assets/public/image/temp/img_public_17.png";
 import img_public_18 from "@/assets/public/image/temp/img_public_18.png";
@@ -851,7 +851,7 @@ onMounted(() => {
     </v-btn>
     <v-btn class="menu-text-color" @click="handleSearchToggle">
       <inline-svg
-        :src="icon_public_96"
+        :src="icon_public_94"
         width="20"
         height="20"
         :transform-source="searchSvgTransform"

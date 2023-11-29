@@ -1049,11 +1049,14 @@ export const lang: langType = {
       },
       about_us: {
         title: "ABOUT US",
-        menu_1: "Terms of Service",
-        menu_2: "Privacy Policy",
-        menu_3: "Bonus Terms",
-        menu_4: "Welcome Bonus",
-        menu_5: "Responsible Gambling",
+        text_1: "TERMS OF SERVICE",
+        text_2: "PRIVACY POLICY",
+        text_3: "RESPONSIBLE GAMBLING",
+        text_4: "BONUS TERMS",
+        text_5: "PAYMENT METHODS",
+        text_6: "REFERRAL-SYSTEM FAQ",
+        text_7: "AML Policy",
+        text_8: "KYC Policy",
       },
       footer_4: {
         text: "The Brazstar.com website offers games with an adventure experience directly owned by Pistis Trade N.V., to be a  user of our site you must be 18 years or older. We are not responsible for violating your local laws regarding online gaming. Play responsibly and have fun at Brazstar.com."
