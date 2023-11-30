@@ -15,6 +15,7 @@ import { userStore } from "@/store/user";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { useRouter } from "vue-router";
 import moment from 'moment-timezone';
+import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
 import img_vipemblem_50_74 from "@/assets/vip/image/img_vipemblem_50-74.png";
@@ -123,13 +124,38 @@ const vipTabs = ref<Array<string>>([
 ])
 
 const vipLevelImgs = ref<Array<any>>([
-  img_vipemblem_1_24,
-  img_vipemblem_25_49,
-  img_vipemblem_50_74,
-  img_vipemblem_75_99,
-  img_vipemblem_100_149,
-  img_vipemblem_159_199,
-  img_vipemblem_200,
+  {
+    image: img_vipemblem_2,
+    content: t('vip.vip_level_content.text_1')
+  },
+  {
+    image: img_vipemblem_1_24,
+    content: t('vip.vip_level_content.text_2')
+  },
+  {
+    image: img_vipemblem_25_49,
+    content: t('vip.vip_level_content.text_3')
+  },
+  {
+    image: img_vipemblem_50_74,
+    content: t('vip.vip_level_content.text_4')
+  },
+  {
+    image: img_vipemblem_75_99,
+    content: t('vip.vip_level_content.text_5')
+  },
+  {
+    image: img_vipemblem_100_149,
+    content: t('vip.vip_level_content.text_6')
+  },
+  {
+    image: img_vipemblem_159_199,
+    content: t('vip.vip_level_content.text_7')
+  },
+  {
+    image: img_vipemblem_200,
+    content: t('vip.vip_level_content.text_8')
+  },
 ]);
 
 const selectedVIPDescriptionIndex = ref<number>(1);
@@ -936,39 +962,70 @@ onMounted(async () => {
               {{ t("vip.slider.title_text") }}
             </div>
             <v-row class="full-height mx-2 mt-0">
-              <v-col cols="3" class="text-center">
+              <v-col cols="3" class="text-center pt-1 px-0">
+                <img :src="vipLevelImgs[0].image" width="49" v-if="item.level == 0" />
                 <img
-                  :src="vipLevelImgs[0]"
+                  :src="vipLevelImgs[1].image"
                   width="49"
-                  v-if="item.level >= 0 && item.level < 25"
+                  v-if="item.level >= 1 && item.level < 25"
                 />
                 <img
-                  :src="vipLevelImgs[1]"
+                  :src="vipLevelImgs[2].image"
                   width="49"
                   v-if="item.level >= 25 && item.level < 50"
                 />
                 <img
-                  :src="vipLevelImgs[2]"
+                  :src="vipLevelImgs[3].image"
                   width="49"
                   v-if="item.level >= 50 && item.level < 75"
                 />
                 <img
-                  :src="vipLevelImgs[3]"
+                  :src="vipLevelImgs[4].image"
                   width="49"
                   v-if="item.level >= 75 && item.level < 99"
                 />
                 <img
-                  :src="vipLevelImgs[4]"
+                  :src="vipLevelImgs[5].image"
                   width="49"
                   v-if="item.level >= 100 && item.level < 149"
                 />
                 <img
-                  :src="vipLevelImgs[5]"
+                  :src="vipLevelImgs[6].image"
                   width="49"
                   v-if="item.level >= 150 && item.level < 200"
                 />
-                <img :src="vipLevelImgs[6]" width="49" v-if="item.level >= 200" />
-                <p class="text-800-14 yellow">VIP {{ item.level }}</p>
+                <img :src="vipLevelImgs[7].image" width="49" v-if="item.level >= 200" />
+                <p class="text-700-14 yellow" v-if="item.level == 0">
+                  {{ vipLevelImgs[0].content }}
+                </p>
+                <p class="text-700-14 yellow" v-if="item.level >= 1 && item.level < 25">
+                  {{ vipLevelImgs[1].content }}
+                </p>
+                <p class="text-700-14 yellow" v-if="item.level >= 25 && item.level < 50">
+                  {{ vipLevelImgs[2].content }}
+                </p>
+                <p class="text-700-14 yellow" v-if="item.level >= 50 && item.level < 75">
+                  {{ vipLevelImgs[3].content }}
+                </p>
+                <p class="text-700-14 yellow" v-if="item.level >= 75 && item.level < 99">
+                  {{ vipLevelImgs[4].content }}
+                </p>
+                <p
+                  class="text-700-14 yellow"
+                  v-if="item.level >= 100 && item.level < 149"
+                >
+                  {{ vipLevelImgs[5].content }}
+                </p>
+                <p
+                  class="text-700-14 yellow"
+                  v-if="item.level >= 150 && item.level < 200"
+                >
+                  {{ vipLevelImgs[6].content }}
+                </p>
+                <p class="text-700-14 yellow" v-if="item.level >= 200">
+                  {{ vipLevelImgs[7].content }}
+                </p>
+                <p class="text-500-9 white">Level {{ item.level }}</p>
               </v-col>
               <v-col cols="9">
                 <div class="deposit-progress-bg">

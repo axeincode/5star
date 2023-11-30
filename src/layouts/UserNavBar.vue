@@ -18,6 +18,7 @@ import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { VipLevel } from "@/interface/vip";
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
+import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
 import img_vipemblem_50_74 from "@/assets/vip/image/img_vipemblem_50-74.png";
@@ -100,13 +101,38 @@ const selectedVipLevel = ref<VipLevel>({
 });
 
 const vipLevelImgs = ref<Array<any>>([
-  img_vipemblem_1_24,
-  img_vipemblem_25_49,
-  img_vipemblem_50_74,
-  img_vipemblem_75_99,
-  img_vipemblem_100_149,
-  img_vipemblem_159_199,
-  img_vipemblem_200,
+  {
+    image: img_vipemblem_2,
+    content: t('vip.vip_level_content.text_1')
+  },
+  {
+    image: img_vipemblem_1_24,
+    content: t('vip.vip_level_content.text_2')
+  },
+  {
+    image: img_vipemblem_25_49,
+    content: t('vip.vip_level_content.text_3')
+  },
+  {
+    image: img_vipemblem_50_74,
+    content: t('vip.vip_level_content.text_4')
+  },
+  {
+    image: img_vipemblem_75_99,
+    content: t('vip.vip_level_content.text_5')
+  },
+  {
+    image: img_vipemblem_100_149,
+    content: t('vip.vip_level_content.text_6')
+  },
+  {
+    image: img_vipemblem_159_199,
+    content: t('vip.vip_level_content.text_7')
+  },
+  {
+    image: img_vipemblem_200,
+    content: t('vip.vip_level_content.text_8')
+  },
 ]);
 
 const userInfo = computed(() => {
@@ -318,9 +344,9 @@ onMounted(async () => {
           <template v-slot:prepend>
             <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
           </template>
-          <v-list-item-title class="ml-2 text-600-10"
-            >{{ t("appBar.id") }}: {{ userInfo.uid }}</v-list-item-title
-          >
+          <v-list-item-title class="ml-2 text-600-10">
+            {{ t("appBar.id") }}: {{ userInfo.uid }}
+          </v-list-item-title>
           <template v-slot:append>
             <div
               style="width: 22px; height: 22px; border-radius: 4px; background: #353652"
@@ -345,44 +371,100 @@ onMounted(async () => {
             <div>
               <div style="height: 30px; justify-content: center; display: flex">
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
-                  v-if="vipInfo.level >= 0 && vipInfo.level < 25"
+                  :src="vipLevelImgs[0].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level == 0"
                 />
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
+                  :src="vipLevelImgs[1].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 1 && vipInfo.level < 25"
+                />
+                <img
+                  :src="vipLevelImgs[2].image"
+                  width="20"
+                  height="24"
                   v-if="vipInfo.level >= 25 && vipInfo.level < 50"
                 />
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
+                  :src="vipLevelImgs[3].image"
+                  width="20"
+                  height="24"
                   v-if="vipInfo.level >= 50 && vipInfo.level < 75"
                 />
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
-                  v-if="vipInfo.level >= 75 && vipInfo.level < 99"
+                  :src="vipLevelImgs[4].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 75 && vipInfo.level < 100"
                 />
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
+                  :src="vipLevelImgs[5].image"
+                  width="20"
+                  height="24"
                   v-if="vipInfo.level >= 100 && vipInfo.level < 149"
                 />
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
+                  :src="vipLevelImgs[6].image"
+                  width="20"
+                  height="24"
                   v-if="vipInfo.level >= 150 && vipInfo.level < 200"
                 />
                 <img
-                  :src="vipLevelImgs[vipInfo.level]"
-                  width="25"
+                  :src="vipLevelImgs[7].image"
+                  width="20"
+                  height="24"
                   v-if="vipInfo.level >= 200"
                 />
               </div>
-              <div class="text-800-10 color-F9BC01 text-center mt-1">
-                VIP {{ vipInfo.level }}
+              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level == 0">
+                {{ vipLevelImgs[0].content }}
               </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 1 && vipInfo.level < 25"
+              >
+                {{ vipLevelImgs[1].content }}
+              </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 25 && vipInfo.level < 50"
+              >
+                {{ vipLevelImgs[2].content }}
+              </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 50 && vipInfo.level < 75"
+              >
+                {{ vipLevelImgs[3].content }}
+              </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 75 && vipInfo.level < 100"
+              >
+                {{ vipLevelImgs[4].content }}
+              </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 100 && vipInfo.level < 150"
+              >
+                {{ vipLevelImgs[5].content }}
+              </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 150 && vipInfo.level < 200"
+              >
+                {{ vipLevelImgs[6].content }}
+              </div>
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 200"
+              >
+                {{ vipLevelImgs[7].content }}
+              </div>
+              <div class="text-400-8 white text-center">Level {{ vipInfo.level }}</div>
             </div>
           </template>
           <v-list-item-title class="ml-2">

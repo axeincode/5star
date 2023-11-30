@@ -620,9 +620,9 @@ const Dashboard = defineComponent({
     };
 
     watch(searchDialogShow, (value: any) => {
-      if (value) {
+      // if (value) {
         setMailMenuShow(value);
-      }
+      // }
     });
 
     watch(gameFilterText, async (value: any) => {

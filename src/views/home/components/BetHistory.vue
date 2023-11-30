@@ -447,8 +447,8 @@ onMounted(() => {
     </v-card>
   </div>
   <div v-else class="mt-4">
-    <div class="d-flex align-center mx-6">
-      <img src="@/assets/public/svg/icon_public_99.svg" />
+    <div class="d-flex align-center mx-4">
+      <!-- <img src="@/assets/public/svg/icon_public_99.svg" /> -->
       <p class="text-800-16 white ml-1">{{ t("home.bet_history.text_1") }}</p>
     </div>
     <div

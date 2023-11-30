@@ -1566,6 +1566,17 @@ export const lang: langType = {
         text_9: "2. Players who open multiple accounts or impersonate an account will be disqualified from the promotion. Balances may be forfeited and accounts will be blocked.",
         text_10: "3. BETFIERY reserves the right to modify, alter, suspend, cancel, reject or cancel this promotion at its sole discretion.",
       }
+    },
+    vip_level_content: {
+      text_1: "Black Iron",
+      text_2: "Bronze",
+      text_3: "Silver",
+      text_4: "Gold",
+      text_5: "Platinum",
+      text_6: "Diamonds",
+      text_7: "Yellow Diamond",
+      text_8: "Blue Diamond",
+      text_9: "",
     }
   },
   exception: {
