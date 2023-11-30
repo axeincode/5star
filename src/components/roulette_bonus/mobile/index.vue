@@ -6,6 +6,7 @@ import { type GetRouletteHistory } from '@/interface/vip';
 import anime, { AnimeInstance } from "animejs";
 import { gameStore } from '@/store/game';
 import { storeToRefs } from 'pinia';
+import moment from "moment-timezone";
 
 const emit = defineEmits<{ (e: 'closeRouletteBonusDialog'): void }>()
 const { t } = useI18n();
@@ -13,33 +14,25 @@ const { width } = useDisplay()
 const { dispatchUserSpinPage, dispatchUserSpin } = gameStore();
 
 const roulettePaidBonus = ref<string>("R$ 1.400.000");
-const spinNumber = ref<number>(10);
 const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
 const winnerToggleSwitch = ref<boolean>(false);
 const marginShow = ref<boolean>(false);
 const muteValue = ref<boolean>(false);
 
-interface rouletteItem {
-    itemid: number | string
-    value: string
-    color: string
-    quantity: string
-}
-
 const rouletteHistory = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
-  return getUserSpinPage.value.award_record;
+  return getUserSpinPage.value.award_record?.slice(0, 4);
 })
 
 const rouletteWinnerHistory = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
-  return getUserSpinPage.value.big_award_record;
+  return getUserSpinPage.value.award_record || [];
 })
 
 const roulettePrizeHistory = computed(() => {
   const { getUserSpinPage } = storeToRefs(gameStore());
-  return getUserSpinPage.value.big_award_record;
+  return getUserSpinPage.value.big_award_record || [];
 })
 
 const wheelMap = computed(() => {
@@ -49,36 +42,13 @@ const wheelMap = computed(() => {
 
 // roulette variables
 const isSpinning = ref<boolean>(false);
-const currentWheelIndex = ref<number>(0);
-const speed = ref<number>(42);
-const currentWheelRotation = ref<number>(0);
 const roulette = ref<HTMLElement | undefined>(undefined);
 
-
-const getRouletteWheelValue = (index: number) => {
-    if (index < 0 && index % 8 == 0) {
-        return wheelMap.name[0];
-    } else {
-        return wheelMap.name[index >= 0 ? index % 8 : 8 - Math.abs(index % 8)];
-    }
-}
-
 const startRoulette = async() => {
-    await dispatchUserSpin({})
-    // spinNumber.value--;
-    speed.value = Math.floor(Math.random() * 10) * 26;
+    await dispatchUserSpin()
     isSpinning.value = true;
-    // const bezier = [0.165, 0.84, 0.44, 1.005, 0.2];
-    const newWheelIndex = currentWheelIndex.value - speed.value;
-    // const result = getRouletteWheelValue(newWheelIndex);
-    if (speed.value == 0) {
-        speed.value = 520
-    }
     let duration_speed = 10000;
-    // setInterval(() => {
-    //   duration_speed = duration_speed - 10000;
-    // }, 300)
-    let newRotaion = currentWheelRotation.value + (360 / 8) * speed.value;
+    let newRotaion = 8 * 360  - (comUserSpin.value.index * 45)
     const animation = anime({
         targets: roulette.value,
         rotate: function () {
@@ -88,21 +58,15 @@ const startRoulette = async() => {
             return duration_speed;
         },
         loop: 1,
-        // easing: `cubicBezier(${bezier.join(",")})`,
         easing: 'easeInOutQuad',
         complete: (...args) => {
-            currentWheelRotation.value = newRotaion;
-            currentWheelIndex.value = newWheelIndex;
             isSpinning.value = false;
-            // rouletteHistory.value.unshift({
-            //     id: rouletteHistory.value.length + 1,
-            //     rouletteTime: "2023/06/20 23:19:00",
-            //     user: "User9110245128",
-            //     rouletteResult: result.value,
-            // })
+            setTimeout(() => {
+              roulette.value.style.transform = 'rotate(0)'
+            }, 1000);
+            dispatchUserSpinPage()
         }
     });
-    await dispatchUserSpinPage({})
 }
 
 // width for mobile
@@ -322,7 +286,7 @@ onMounted(() => {
               cols="5"
               class="px-1 ma-0 text-500-9 gray"
               style="padding-top: 2px; padding-bottom: 2px"
-              >{{ item.created_at }}</v-col
+              >{{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}</v-col
             >
             <v-col
               cols="4"
@@ -400,7 +364,7 @@ onMounted(() => {
             class="ma-0 mx-2 pa-0"
           >
             <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{
-              winnerItem.created_at
+              moment(winnerItem.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
             }}</v-col>
             <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{
               winnerItem.user_name
@@ -433,7 +397,7 @@ onMounted(() => {
             class="ma-0 mx-2 pa-0"
           >
             <v-col cols="5" class="pa-1 ma-0 text-500-10 gray">{{
-              prizeItem.created_at
+              moment(prizeItem.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
             }}</v-col>
             <v-col cols="4" class="pa-1 ma-0 text-500-10 gray">{{
               prizeItem.user_name
@@ -622,7 +586,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-spin-text-position-1 {
       position: absolute;
       top: 34px;
-      left: 71px;
+      left: 76px;
       transform: rotate(90deg);
     }
 
@@ -636,7 +600,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-spin-text-position-3 {
       position: absolute;
       top: 85px;
-      left: 11px;
+      left: 24px;
     }
 
     .m-roulette-bonus-dialog-spin-text-position-4 {
@@ -649,7 +613,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-spin-text-position-5 {
       position: absolute;
       top: 138px;
-      left: 74px;
+      left: 78px;
       transform: rotate(-90deg);
     }
 
@@ -669,7 +633,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-spin-text-position-8 {
       position: absolute;
       top: 45px;
-      left: 120px;
+      left: 114px;
       transform: rotate(135deg);
     }
 

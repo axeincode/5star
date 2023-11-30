@@ -215,7 +215,7 @@ export const gameStore = defineStore({
             await network.sendMsg(route, {}, next, 1, 4);
         },
         // user spin api
-        async dispatchUserSpin(data: any) {
+        async dispatchUserSpin() {
             this.setSuccess(false);
             const route: string = NETWORK.GAME_INFO.SPIN;
             const network: Network = Network.getInstance();
@@ -228,10 +228,10 @@ export const gameStore = defineStore({
                 this.setErrorMessage(handleException(response.code));
                 }
             }
-            await network.sendMsg(route, {}, next, 1, 4);
+            await network.sendMsg(route, {}, next, 1);
         },
         // user spin api
-        async dispatchUserActivityList(data: any) {
+        async dispatchUserActivityList() {
             this.setSuccess(false);
             const route: string = NETWORK.ACTIVITY.USER_ACTIVITY_LIST;
             const network: Network = Network.getInstance();
