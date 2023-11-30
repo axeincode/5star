@@ -325,7 +325,7 @@ onMounted(() => {
 <template>
   <div v-if="mobileWidth > 600" class="mt-4 mx-2">
     <div class="d-flex align-center mx-2">
-      <img src="@/assets/public/svg/icon_public_99.svg" width="32" />
+      <!-- <img src="@/assets/public/svg/icon_public_99.svg" width="32" /> -->
       <p class="text-700-20 white ml-1">{{ t("home.bet_history.text_1") }}</p>
     </div>
     <div
