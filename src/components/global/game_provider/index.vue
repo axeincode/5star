@@ -2,9 +2,11 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const router = useRouter();
 
 const gameProviders = ref<Array<string>>([
   new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
@@ -28,6 +30,10 @@ const mGameProviders = ref<Array<string>>([
 const mobileWidth = computed(() => {
   return width.value;
 });
+
+const handleGameProviderPage = () => {
+  router.push({ name: "Provider" });
+};
 </script>
 
 <template>
@@ -54,7 +60,13 @@ const mobileWidth = computed(() => {
         v-for="(gameProviderItem, gameProviderIndex) in mGameProviders"
         :key="gameProviderIndex"
       >
-        <img :src="gameProviderItem" width="126" height="49" class="mr-5" />
+        <img
+          :src="gameProviderItem"
+          width="126"
+          height="49"
+          class="mr-5"
+          @click="handleGameProviderPage"
+        />
       </v-slide-group-item>
     </v-slide-group>
   </v-row>
