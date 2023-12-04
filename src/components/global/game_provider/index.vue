@@ -1,39 +1,47 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { gameStore } from "@/store/game";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const router = useRouter();
+const route = useRoute();
+const { dispatchGameCategories } = gameStore();
 
-const gameProviders = ref<Array<string>>([
-  new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_02.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_03.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_04.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_05.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_06.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_07.png", import.meta.url).href,
-]);
-
-const mGameProviders = ref<Array<string>>([
-  new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_02.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_03.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_05.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_06.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_gp_07.png", import.meta.url).href,
-]);
+// const gameProviders = ref<Array<string>>([
+//   new URL("@/assets/home/image/img_gp_01.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_gp_02.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_gp_03.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_gp_04.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_gp_05.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_gp_06.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_gp_7.png", import.meta.url).href,
+// ]);
 
 const mobileWidth = computed(() => {
   return width.value;
 });
 
-const handleGameProviderPage = () => {
-  router.push({ name: "Provider" });
+const gameProviders = computed(() => {
+  const { getGameProviders } = storeToRefs(gameStore());
+  return getGameProviders.value;
+});
+
+const handleGameProviderPage = (slug: string) => {
+  router.push({ name: "Provider", query: { slug: slug } });
 };
+
+watch(route, async (to, from) => {
+  await dispatchGameCategories("?type=providers");
+});
+
+onMounted(async () => {
+  await dispatchGameCategories("?type=providers");
+});
 </script>
 
 <template>
@@ -51,21 +59,21 @@ const handleGameProviderPage = () => {
       v-for="(item, index) in gameProviders"
       :key="index"
     >
-      <img :src="item" class="game-provider-img-width" />
+      <img :src="item.pictures" class="game-provider-img-width" />
     </div>
   </v-row>
   <v-row class="ma-2" v-else>
     <v-slide-group>
       <v-slide-group-item
-        v-for="(gameProviderItem, gameProviderIndex) in mGameProviders"
+        v-for="(gameProviderItem, gameProviderIndex) in gameProviders"
         :key="gameProviderIndex"
       >
         <img
-          :src="gameProviderItem"
+          :src="gameProviderItem.pictures"
           width="126"
           height="49"
           class="mr-5"
-          @click="handleGameProviderPage"
+          @click="handleGameProviderPage(gameProviderItem.slug)"
         />
       </v-slide-group-item>
     </v-slide-group>

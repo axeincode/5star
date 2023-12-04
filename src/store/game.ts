@@ -10,7 +10,11 @@ export const gameStore = defineStore({
         success: false as boolean,
         errMessage: '' as string,
         gameCategories: [] as Array<Game.Category>,
-        gameSearchList: {} as Game.GameSearchResponse,
+        gameProviders: [] as Array<Game.Category>,
+        gameSearchList: {
+            list: [],
+            total: 0,
+        } as Game.GameSearchResponse,
         enterGameItem: {
             method: "",
             parames: "",
@@ -35,6 +39,7 @@ export const gameStore = defineStore({
         getSuccess: (state) => state.success,
         getErrMessage: (state) => state.errMessage,
         getGameCategories: (state) => state.gameCategories,
+        getGameProviders: (state) => state.gameProviders,
         getGameSearchList: (state) => state.gameSearchList,
         getEnterGameItem: (state) => state.enterGameItem,
         getSearchGameDialogShow: (state) => state.searchGameDialogShow,
@@ -57,6 +62,9 @@ export const gameStore = defineStore({
         },
         setGameCategories(gameCategories: Array<Game.Category>) {
             this.gameCategories = gameCategories;
+        },
+        setGameProviders(gameProviders: Array<Game.Category>) {
+            this.gameProviders = gameProviders;
         },
         setGameSearchList(gameSearchList: Game.GameSearchResponse) {
             this.gameSearchList = gameSearchList;
@@ -110,7 +118,11 @@ export const gameStore = defineStore({
             const next = (response: Game.GetGameCategoriesResponse) => {
                 if (response.code == 200) {
                     this.setSuccess(true);
-                    this.setGameCategories(response.data);
+                    if (sub_api == "?type=providers") {
+                        this.setGameProviders(response.data);
+                    } else {
+                        this.setGameCategories(response.data);
+                    }
                 } else {
                     this.setErrorMessage(handleException(response.code));
                 }

@@ -5,51 +5,88 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import img_og_03 from "@/assets/home/image/img_og_03.png";
 import { ProgressiveImage } from "vue-progressive-image";
+import { type Search } from "@/interface/game";
+import { gameStore } from "@/store/game";
+import { mailStore } from "@/store/mail";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const route = useRoute();
 const router = useRouter();
+const { dispatchGameSearch } = gameStore();
+const { setMailMenuShow } = mailStore();
+
+const currentPage = ref<number>(1);
+const limit = ref<number>(8);
+const searchLoading = ref<boolean>(false);
+const moreLoading = ref<boolean>(false);
+const slug = ref<string>("");
 
 const mobileWidth: any = computed(() => {
   return width.value;
 });
 
-const providerGames = ref<Array<any>>([
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-  img_og_03,
-]);
+const providerGameList = ref<Array<Search>>([]);
+
+const providerGames = computed(() => {
+  const { getGameSearchList } = storeToRefs(gameStore());
+  getGameSearchList.value.list.map((item) => {
+    item.image = img_og_03;
+  });
+  return getGameSearchList.value;
+});
 
 const goToBackPage = () => {
   router.go(-1);
 };
 
-onMounted(() => {
+const handleMoreGame = async () => {
+  moreLoading.value = true;
+  currentPage.value += 1;
+  await dispatchGameSearch(
+    "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
+  );
+  providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+  moreLoading.value = false;
+};
+
+const handleEnterGame = async (id: number, name: string) => {
+  let replaceName = name.replace(/ /g, "-");
+  if (mobileWidth.value < 600) {
+    setMailMenuShow(true);
+  }
+  router.push(`/game/${id}/${replaceName}`);
+};
+
+onMounted(async () => {
+  searchLoading.value = true;
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
+  slug.value = route.query.slug;
+  await dispatchGameSearch(
+    "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
+  );
+  providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+  searchLoading.value = false;
 });
 </script>
 
 <template>
-  <div class="mx-3">
+  <div
+    class="m-provider-loading-container relative"
+    style="padding-top: 400px"
+    v-if="searchLoading"
+  >
+    <div class="loading-body">
+      <div class="dot-0"></div>
+      <div class="dot-1"></div>
+      <div class="dot-0"></div>
+    </div>
+  </div>
+  <div class="mx-3 m-provider-loading-container" v-else>
     <div class="d-flex align-center">
       <v-btn
         class="text-none m-provider-back-btn"
@@ -75,23 +112,29 @@ onMounted(() => {
       :class="mobileWidth < 600 ? 'm-provider-game-search-text' : ''"
     />
     <v-row class="ma-0">
-      <template v-for="(game, index) in providerGames" :key="index">
+      <template v-for="(game, index) in providerGameList" :key="index">
         <v-col
           cols="4"
           lg="2"
           md="2"
           sm="3"
           class="px-1 relative py-0 m-provider-game-img"
+          v-if="index < 6 * currentPage"
         >
-          <ProgressiveImage :src="game" lazy-placeholder blur="30" />
+          <ProgressiveImage
+            :src="game.image"
+            lazy-placeholder
+            blur="30"
+            @click="handleEnterGame(game.id, game.name)"
+          />
         </v-col>
       </template>
     </v-row>
     <div class="mt-4 text-center text-700-14 gray">
       {{ t("provider.text_3") }}
-      <font class="white">&nbsp;30&nbsp;</font>
+      <font class="white">&nbsp;{{ 6 * currentPage }}&nbsp;</font>
       {{ t("provider.text_4") }}
-      <font class="white">&nbsp;3133&nbsp;</font>
+      <font class="white">&nbsp;{{ providerGames.total }}&nbsp;</font>
       {{ t("provider.text_5") }}
     </div>
     <v-btn
@@ -99,13 +142,47 @@ onMounted(() => {
       variant="outlined"
       :width="mobileWidth < 600 ? '100%' : 164"
       :height="mobileWidth < 600 ? 41 : 48"
+      v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+      @click="handleMoreGame()"
     >
-      <div>{{ t("home.more") }}</div>
+      <div v-if="!moreLoading">{{ t("home.more") }}</div>
+      <div class="m-more-loading-body" v-else>
+        <div class="dot-0"></div>
+        <div class="dot-1"></div>
+        <div class="dot-0"></div>
+      </div>
     </v-btn>
   </div>
 </template>
 
 <style lang="scss">
+@keyframes expandAnimation {
+  0% {
+    scale: 1.3;
+  }
+
+  50% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 1.3;
+  }
+}
+
+@keyframes expandReverseAnimation {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 1.2;
+  }
+
+  100% {
+    scale: 0.8;
+  }
+}
 .m-provider-back-btn {
   background: transparent !important;
   box-shadow: unset !important;
@@ -203,6 +280,78 @@ onMounted(() => {
 @media (max-width: 600px) {
   .v-progressive-image {
     border-radius: 8px 32px;
+  }
+
+  .more-btn-color {
+    .v-btn__content {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.more-btn-color {
+  background: #2f2756 !important;
+  color: #6842ec !important;
+
+  .v-btn__content {
+    font-weight: 700 !important;
+    font-size: 16px;
+  }
+}
+
+.m-provider-loading-container {
+  .loading-body {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .dot-0 {
+      width: 10px;
+      height: 10px;
+      background: #12ff76;
+      border-radius: 10px;
+      margin: 0px 4px;
+      animation: expandAnimation 0.6s 0.1s ease-in infinite;
+    }
+
+    .dot-1 {
+      width: 16px;
+      height: 16px;
+      background: #12ff76;
+      border-radius: 16px;
+      margin: 0px 4px;
+      animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+    }
+  }
+}
+
+.m-more-loading-body {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .dot-0 {
+    width: 10px;
+    height: 10px;
+    background: #12ff76;
+    border-radius: 10px;
+    margin: 0px 4px;
+    animation: expandAnimation 0.6s 0.1s ease-in infinite;
+  }
+
+  .dot-1 {
+    width: 16px;
+    height: 16px;
+    background: #12ff76;
+    border-radius: 16px;
+    margin: 0px 4px;
+    animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
   }
 }
 </style>

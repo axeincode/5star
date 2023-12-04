@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
 import { menuStore } from "@/store/menu";
@@ -12,12 +12,13 @@ import icon_public_100 from "@/assets/public/svg/icon_public_100.svg";
 const casinoIconColor = ref<string>("#7782AA");
 const rewardIconColor = ref<string>("#ffffff");
 const sportIconColor = ref<string>("#7782AA");
-const scale = ref<number>(0);
-const bottom = ref<number>(0);
+const scale = ref<number>(1);
+const bottom = ref<number>(-48);
 
 const { t } = useI18n();
 const { name, width } = useDisplay();
 const router = useRouter();
+const route = useRoute();
 
 const { setSelectedItem } = menuStore();
 const { setSemiCircleShow } = menuStore();
@@ -54,11 +55,9 @@ watch(selectedItem, (newValue) => {
 
 watch(semiCircleShow, (value) => {
   if (value) {
-    scale.value = 1;
     bottom.value = 48;
   } else {
-    scale.value = 0;
-    bottom.value = 0;
+    bottom.value = -48;
   }
 });
 
@@ -95,18 +94,31 @@ const sportSvgTransform = (el: any) => {
 const handleSelectItem = (item: string) => {
   setSelectedItem(item);
   setSemiCircleShow(false);
-  scale.value = 0;
-  bottom.value = 0;
+  bottom.value = -48;
   if (item == t("mobile_menu.casino")) {
     router.push({ name: "Dashboard" });
   }
 };
+
+const handleWindowScroll = () => {
+  setSemiCircleShow(false);
+  bottom.value = -48;
+};
+
+watch(route, (to, from) => {
+  setSemiCircleShow(false);
+  bottom.value = -48;
+});
+
+onMounted(() => {
+  window.addEventListener("scroll", handleWindowScroll);
+});
 </script>
 
 <template>
   <div
     class="m-menu-semicircle-toggle"
-    :style="{ transform: `translateX(-50%) scale(${scale})`, bottom: `${bottom}px` }"
+    :style="{ transform: `translateX(-50%)`, bottom: `${bottom}px` }"
   >
     <div
       class="m-semicircle-item m-semicircle-casino"
@@ -170,11 +182,9 @@ const handleSelectItem = (item: string) => {
   backdrop-filter: blur(8px);
   position: fixed;
   left: 50%;
-  // bottom: 48px;
-  // transform: translateX(-50%);
-  transform-origin: center;
+  // transform-origin: center;
   z-index: 5;
-  transition: transform 0.3s;
+  transition: bottom 0.1s;
   border-radius: 100px 100px 0 0;
   .m-semicircle-item {
     align-items: center;

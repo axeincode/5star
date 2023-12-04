@@ -1632,5 +1632,13 @@ export const lang: langType = {
     text_2: "Higher Returns",
     text_3: "after VIP Upgrade",
     text_4: "Daily Recharge Reward"
+  },
+  provider: {
+    text_1: "Providers",
+    text_2: "Search",
+    text_3: "Displaying",
+    text_4: "of",
+    text_5: "games",
+    text_6: "",
   }
 };
