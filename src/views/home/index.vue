@@ -37,7 +37,6 @@ import Search from "@/views/home/components/Search.vue";
 import MSearch from "@/views/home/components/mobile/Search.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { useNamespace } from "element-plus";
-import { NONAME } from "dns";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -448,7 +447,7 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "original";
           break;
-        case "pgsoft":
+        case "PGSOFT":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -457,7 +456,18 @@ const Dashboard = defineComponent({
           gameFilterIconColor6.value = "#7782AA";
           gameFilterIconColor7.value = "#7782AA";
           filterTabText.value = "paging";
-          selectedCategoryName.value = "pgsoft";
+          selectedCategoryName.value = "PGSOFT";
+          break;
+        case "SOFTSWISS":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#FFFFFF";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "SOFTSWISS";
           break;
         case "slot":
           gameFilterIconColor1.value = "#7782AA";
@@ -757,7 +767,7 @@ const Dashboard = defineComponent({
           gameSearchList.value.list.map(async (gameItem: { image: any; }) => {
             if (item.slug == "original") {
               gameItem.image = state.originalGames[index];
-            } else if (item.slug == "pgsoft") {
+            } else if (item.slug == "PGSOFT") {
               gameItem.image = state.principalGames[index];
             } else if (item.slug == "slot") {
               gameItem.image = state.slots[index];
@@ -792,7 +802,10 @@ const Dashboard = defineComponent({
           case "original":
             item.tranfromFunctionName = "gameTransform4";
             break;
-          case "pgsoft":
+          case "PGSOFT":
+            item.tranfromFunctionName = "gameTransform5";
+            break;
+          case "SOFTSWISS":
             item.tranfromFunctionName = "gameTransform5";
             break;
           case "slot":
@@ -827,7 +840,9 @@ const Dashboard = defineComponent({
             gameSearchList.value.list.map(async (gameItem: { image: any; }) => {
               if (item.slug == "original") {
                 gameItem.image = state.originalGames[index];
-              } else if (item.slug == "pgsoft") {
+              } else if (item.slug == "PGSOFT") {
+                gameItem.image = state.principalGames[index];
+              } else if (item.slug == "SOFTSWISS") {
                 gameItem.image = state.principalGames[index];
               } else if (item.slug == "slot") {
                 gameItem.image = state.slots[index];
@@ -897,7 +912,7 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "original";
           break;
-        case "pgsoft":
+        case "PGSOFT":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -906,7 +921,7 @@ const Dashboard = defineComponent({
           gameFilterIconColor6.value = "#7782AA";
           gameFilterIconColor7.value = "#7782AA";
           filterTabText.value = "paging";
-          selectedCategoryName.value = "pgsoft";
+          selectedCategoryName.value = "PGSOFT";
           break;
         case "slot":
           gameFilterIconColor1.value = "#7782AA";
@@ -1644,7 +1659,7 @@ export default Dashboard;
 
       <!-------------------- game providers -------------->
 
-      <GameProviders />
+      <GameProviders v-if="selectedGameFilterBtn == t('home.button.all_game')" />
 
       <!--------------------- Game History ---------------------->
       <!-- <component :is="gameHistoryComponent" v-if="bannerComponent"></component> -->

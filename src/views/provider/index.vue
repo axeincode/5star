@@ -19,9 +19,11 @@ const { setMailMenuShow } = mailStore();
 
 const currentPage = ref<number>(1);
 const limit = ref<number>(8);
+const loading = ref<boolean>(false);
 const searchLoading = ref<boolean>(false);
 const moreLoading = ref<boolean>(false);
 const slug = ref<string>("");
+const searchText = ref<string>("");
 
 const mobileWidth: any = computed(() => {
   return width.value;
@@ -59,8 +61,37 @@ const handleEnterGame = async (id: number, name: string) => {
   router.push(`/game/${id}/${replaceName}`);
 };
 
-onMounted(async () => {
+const handleInputChange = async (event: any) => {
+  providerGameList.value = [];
   searchLoading.value = true;
+  await dispatchGameSearch(
+    "?game_provider_slug=" + slug.value + "&search=" + searchText.value + "&page=" + currentPage.value + "&limit=" + limit.value
+  );
+  providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+  searchLoading.value = false;
+}
+
+watch(searchText, async (value) => {
+  providerGameList.value = [];
+  if (value) {
+    searchLoading.value = true;
+    await dispatchGameSearch(
+      "?game_provider_slug=" + slug.value + "&search=" + value + "&page=" + currentPage.value + "&limit=" + limit.value
+    );
+    providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+    searchLoading.value = false;
+  } else {
+    searchLoading.value = true;
+    await dispatchGameSearch(
+      "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
+    );
+    providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+    searchLoading.value = false;
+  }
+})
+
+onMounted(async () => {
+  loading.value = true;
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -70,7 +101,7 @@ onMounted(async () => {
     "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
   );
   providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
-  searchLoading.value = false;
+  loading.value = false;
 });
 </script>
 
@@ -78,7 +109,7 @@ onMounted(async () => {
   <div
     class="m-provider-loading-container relative"
     style="padding-top: 400px"
-    v-if="searchLoading"
+    v-if="loading"
   >
     <div class="loading-body">
       <div class="dot-0"></div>
@@ -110,48 +141,70 @@ onMounted(async () => {
       prepend-inner-icon="mdi-magnify"
       color="#7782AA"
       :class="mobileWidth < 600 ? 'm-provider-game-search-text' : ''"
+      v-model="searchText"
     />
-    <v-row class="ma-0">
-      <template v-for="(game, index) in providerGameList" :key="index">
-        <v-col
-          cols="4"
-          lg="2"
-          md="2"
-          sm="3"
-          class="px-1 relative py-0 m-provider-game-img"
-          v-if="index < 6 * currentPage"
-        >
-          <ProgressiveImage
-            :src="game.image"
-            lazy-placeholder
-            blur="30"
-            @click="handleEnterGame(game.id, game.name)"
-          />
-        </v-col>
-      </template>
-    </v-row>
-    <div class="mt-4 text-center text-700-14 gray">
-      {{ t("provider.text_3") }}
-      <font class="white">&nbsp;{{ 6 * currentPage }}&nbsp;</font>
-      {{ t("provider.text_4") }}
-      <font class="white">&nbsp;{{ providerGames.total }}&nbsp;</font>
-      {{ t("provider.text_5") }}
-    </div>
-    <v-btn
-      class="text-none more-btn-color mt-5 text-center"
-      variant="outlined"
-      :width="mobileWidth < 600 ? '100%' : 164"
-      :height="mobileWidth < 600 ? 41 : 48"
-      v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
-      @click="handleMoreGame()"
-    >
-      <div v-if="!moreLoading">{{ t("home.more") }}</div>
-      <div class="m-more-loading-body" v-else>
-        <div class="dot-0"></div>
-        <div class="dot-1"></div>
-        <div class="dot-0"></div>
+    <template v-if="searchLoading">
+      <div class="m-provider-loading-container relative" style="padding-top: 400px">
+        <div class="loading-body">
+          <div class="dot-0"></div>
+          <div class="dot-1"></div>
+          <div class="dot-0"></div>
+        </div>
       </div>
-    </v-btn>
+    </template>
+    <template v-else>
+      <div
+        v-if="providerGameList.length == 0"
+        class="text-400-12 gray text-center mt-4"
+        style="width: 202px; margin: auto"
+      >
+        {{ t("provider.text_6") }}
+      </div>
+      <v-row class="ma-0">
+        <template v-for="(game, index) in providerGameList" :key="index">
+          <v-col
+            cols="4"
+            lg="2"
+            md="2"
+            sm="3"
+            class="px-1 relative py-0 m-provider-game-img"
+            v-if="index < 6 * currentPage"
+          >
+            <ProgressiveImage
+              :src="game.image"
+              lazy-placeholder
+              blur="30"
+              @click="handleEnterGame(game.id, game.name)"
+            />
+          </v-col>
+        </template>
+      </v-row>
+      <div
+        class="mt-4 text-center text-700-14 gray"
+        v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+      >
+        {{ t("provider.text_3") }}
+        <font class="white">&nbsp;{{ 6 * currentPage }}&nbsp;</font>
+        {{ t("provider.text_4") }}
+        <font class="white">&nbsp;{{ providerGames.total }}&nbsp;</font>
+        {{ t("provider.text_5") }}
+      </div>
+      <v-btn
+        class="text-none more-btn-color mt-5 text-center"
+        variant="outlined"
+        :width="mobileWidth < 600 ? '100%' : 164"
+        :height="mobileWidth < 600 ? 41 : 48"
+        v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+        @click="handleMoreGame()"
+      >
+        <div v-if="!moreLoading">{{ t("home.more") }}</div>
+        <div class="m-more-loading-body" v-else>
+          <div class="dot-0"></div>
+          <div class="dot-1"></div>
+          <div class="dot-0"></div>
+        </div>
+      </v-btn>
+    </template>
   </div>
 </template>
 

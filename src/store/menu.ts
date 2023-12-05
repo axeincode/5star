@@ -8,12 +8,14 @@ export const menuStore = defineStore({
     errMessage: '' as string,
     selectedItem: 'Reward' as string,
     semiCircleShow: false as boolean,
+    rewardNavShow: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getSelectedItem: (state) => state.selectedItem,
     getSemiCircleShow: (state) => state.semiCircleShow,
+    getRewardNavShow: (state) => state.rewardNavShow
   },
   actions: {
     setSelectedItem(selectedItem: string) {
@@ -21,6 +23,9 @@ export const menuStore = defineStore({
     },
     setSemiCircleShow(semiCircleShow: boolean) {
         this.semiCircleShow = semiCircleShow;
+    },
+    setRewardNavShow(rewardNavShow: boolean) {
+      this.rewardNavShow = rewardNavShow;
     }
   }
 })

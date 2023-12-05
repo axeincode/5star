@@ -5,6 +5,7 @@ import { useDisplay } from "vuetify";
 import { useRouter, useRoute } from "vue-router";
 import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
+import img_gp_01 from "@/assets/home/image/img_gp_01.png";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -28,6 +29,9 @@ const mobileWidth = computed(() => {
 
 const gameProviders = computed(() => {
   const { getGameProviders } = storeToRefs(gameStore());
+  getGameProviders.value.map((item) => {
+    item.pictures = img_gp_01;
+  });
   return getGameProviders.value;
 });
 

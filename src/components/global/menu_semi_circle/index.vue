@@ -22,6 +22,7 @@ const route = useRoute();
 
 const { setSelectedItem } = menuStore();
 const { setSemiCircleShow } = menuStore();
+const { setRewardNavShow } = menuStore();
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
@@ -97,6 +98,8 @@ const handleSelectItem = (item: string) => {
   bottom.value = -48;
   if (item == t("mobile_menu.casino")) {
     router.push({ name: "Dashboard" });
+  } else if (item == t("mobile_menu.reward")) {
+    setRewardNavShow(true);
   }
 };
 
@@ -183,7 +186,7 @@ onMounted(() => {
   position: fixed;
   left: 50%;
   // transform-origin: center;
-  z-index: 5;
+  z-index: 14;
   transition: bottom 0.1s;
   border-radius: 100px 100px 0 0;
   .m-semicircle-item {

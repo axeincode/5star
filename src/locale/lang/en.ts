@@ -1639,6 +1639,6 @@ export const lang: langType = {
     text_3: "Displaying",
     text_4: "of",
     text_5: "games",
-    text_6: "",
+    text_6: "NO games found. Try some Of our recommended games below.",
   }
 };

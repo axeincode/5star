@@ -5,6 +5,7 @@ import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
 import { authStore } from "@/store/auth";
 import { loginBonusStore } from "@/store/loginBonus";
+import { menuStore } from "@/store/menu";
 import { type GetUserInfo } from "@/interface/user";
 import { storeToRefs } from 'pinia';
 import { useI18n } from "vue-i18n";
@@ -33,6 +34,7 @@ import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
 import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
 import MAccountDialog from "@/views/account/dialog/index.vue";
 import MenuSemiCircle from "@/components/global/menu_semi_circle/index.vue";
+import MReward from "@/components/reward/mobile/index.vue";
 
 // import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 import { mailStore } from "@/store/mail";
@@ -111,6 +113,7 @@ const mobileDialog = ref<boolean>(false);
 const mobileDialogCheck = ref<boolean>(false);
 const accountDialog = ref<boolean>(false);
 const nickNameDialog = ref<boolean>(false);
+const rewardNavShow = ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
@@ -440,6 +443,15 @@ const depositBlurEffectShow = computed(() => {
   return getDepositBlurEffectShow.value
 })
 
+const rewardNavigationShow = computed(() => {
+  const { getRewardNavShow } = storeToRefs(menuStore());
+  return getRewardNavShow.value
+})
+
+watch(rewardNavigationShow, (value) => {
+  rewardNavShow.value = value;
+})
+
 const handleResize = () => {
   mainHeight.value = window.innerHeight;
 }
@@ -639,6 +651,24 @@ onMounted(() => {
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />
     </v-dialog>
+
+    <!----------------------------------- reward dialog --------------------------------->
+
+    <v-navigation-drawer
+      v-model="rewardNavShow"
+      location="bottom"
+      temporary
+      :touchless="true"
+      :style="{
+        height: 'unset',
+        bottom: '0px',
+        zIndex: 13,
+        background: 'unset !important',
+      }"
+      v-if="mobileWidth < 600"
+    >
+      <MReward :rewardNavShow="rewardNavShow" />
+    </v-navigation-drawer>
 
     <!----------------------------------- login bonus dialog --------------------------------->
 
