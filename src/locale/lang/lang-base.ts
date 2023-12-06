@@ -120,7 +120,7 @@ export type langType = {
   navBar: {
     casino: string,
     sport: string,
-    my_vip_perks: string,
+    rewards_center: string,
     more: string,
     live_support: string,
     earn_free_text: string

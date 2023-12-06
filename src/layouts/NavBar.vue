@@ -215,34 +215,59 @@ onMounted(() => {
       </v-list-item>
     </template>
     <v-list density="compact" nav class="mt-1">
-      <v-card color="#211F31" theme="dark" class="mx-1">
-        <v-row class="ma-4 align-center">
-          <span class="card-title">{{ t("navBar.my_vip_perks") }}</span>
-          <span class="ml-16 more-font">{{ t("navBar.more") }}</span>
-          <v-btn class="right-btn" icon="true">
-            <v-icon icon="mdi-chevron-right" />
-          </v-btn>
+      <!-- <v-card color="#211F31" theme="dark" class="mx-1"> -->
+        <v-row class="ma-4 align-center p-space-between">
+          <div>
+            <img src="@/assets/public/svg/icon_public_1001.svg" width="24" />
+            <span class="card-title">{{ t("navBar.rewards_center") }}</span>
+          </div>
+          
+          <!-- <span class="ml-16 more-font">{{ t("navBar.more") }}</span> -->
+          <!-- <v-btn class="right-btn" icon="true"> -->
+            <div>
+              <img src="@/assets/public/svg/icon_public_501.svg" width="24" />
+            </div>
+          <!-- </v-btn> -->
         </v-row>
         <v-row class="mx-2 ma-1">
-          <v-col cols="6" class="pa-1 relative">
+          <v-list-item>
+            <div class="p-vip-login-bonus mt-6" @click="openLoginBonusDialog">
+              <img src="@/assets/public/image/img_public_1.png" class="p-vip-login-bonus-img" />
+              <div class="p-vip-login-bonus-text">
+                <p class="text-900-14 white">{{ t("navBar.login_bonus_text") }}</p>
+                <p class="text-400-12 white" style="line-height: 14px">
+                  {{ t("navBar.unlock_text") }}
+                </p>
+              </div>
+              <img src="@/assets/public/image/img_ci_7.png" width="18" class="p-vip-login-bonus-img-1" />
+            </div>
+            <div class="p-lucky-wheel mt-4" @click="openRouletteBonusDialog">
+              <img src="@/assets/public/image/img_public_2.png" class="p-lucky-wheel-img" />
+              <div class="p-vip-login-bonus-text">
+                <p class="text-900-14 white">{{ t("navBar.lucky_wheel_text") }}</p>
+                <p class="text-400-12 white" style="line-height: 14px">
+                  {{ t("navBar.unlock_text") }}
+                </p>
+              </div>
+            </div>
+          </v-list-item>
+
+
+          <!-- <v-col cols="6" class="pa-1 relative">
             <v-list-item
               value="casino"
               class="ma-0 pa-0"
               height="48px"
               @click="openLoginBonusDialog"
             >
-              <img src="@/assets/public/svg/bg_public_16.svg" class="img-width" />
-              <img
-                src="@/assets/public/image/img_public_01.png"
-                class="navbar-task-img-position"
-                width="46"
-              />
-              <p class="text-700-14 white navbar-task-text-position">
-                {{ t("navBar.task_text") }}
-              </p>
-              <p class="white text-400-12 navbar-unlock-text-left-position">
+            <img src="@/assets/public/image/img_public_1.png" style="width: 55px;" />
+            <div class="m-vip-login-bonus-text">
+              <p class="text-900-10 white">{{ t("navBar.login_bonus_text") }}</p>
+              <p class="text-400-8 white" style="line-height: 6px">
                 {{ t("navBar.unlock_text") }}
               </p>
+            </div>
+            <img src="@/assets/public/image/img_ci_7.png" class="m-vip-login-bonus-img-1" />
             </v-list-item>
           </v-col>
           <v-col cols="6" class="pa-1">
@@ -252,32 +277,27 @@ onMounted(() => {
               height="48px"
               @click="openRouletteBonusDialog"
             >
-              <img src="@/assets/public/svg/bg_public_17.svg" class="spin-img-width" />
-              <img
-                src="@/assets/public/image/img_public_02.png"
-                class="navbar-spin-img-position"
-                width="38"
-              />
-              <p class="text-700-14 white navbar-spin-text-position">
-                {{ t("navBar.spin_text") }}
-              </p>
-              <p class="white text-400-12 navbar-unlock-text-right-position">
-                {{ t("navBar.unlock_text") }}
-              </p>
+              <img src="@/assets/public/image/img_public_2.png" class="m-lucky-wheel-img" />
+              <div class="m-vip-login-bonus-text">
+                <p class="text-900-10 white">{{ t("navBar.lucky_wheel_text") }}</p>
+                <p class="text-400-8 white" style="line-height: 6px">
+                  {{ t("navBar.unlock_text") }}
+                </p>
+              </div>
             </v-list-item>
-          </v-col>
+          </v-col> -->
         </v-row>
-      </v-card>
+      <!-- </v-card> -->
     </v-list>
     <v-list density="compact" nav>
       <v-list-item value="earn free" class="ma-0 pa-0">
-        <img src="@/assets/public/image/img_public_18.png" class="earn-free-img" />
+        <img src="@/assets/public/svg/img_public_20.svg" class="earn-free-img" />
         <img
-          src="@/assets/public/image/img_public_17.png"
+          src="@/assets/public/image/img_public_6.png"
           class="navbar-free-money-img-position"
         />
-        <p class="text-700-16 color-29263C navbar-free-money-text-position">
-          {{ t("navBar.earn_free_text") }}
+        <p class="text-900-14 white navbar-free-money-text-position">
+          {{ t("navBar.refer_earn_text") }}
         </p>
       </v-list-item>
     </v-list>
@@ -467,6 +487,20 @@ onMounted(() => {
   border-radius: 14px;
 }
 
+.p-space-between {
+  justify-content: space-between;
+  cursor: pointer;
+  div {
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: 4px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}
+
 ::deep(.v-navigation-drawer__content) {
   height: 100%;
   overflow-y: auto;
@@ -614,6 +648,56 @@ onMounted(() => {
     font-size: 14px;
     color: #7782aa;
   }
+}
+
+.p-vip-login-bonus {
+  position: relative;
+  width: 230px;
+  height: 48px;
+  background: linear-gradient(266deg, #5421fd 1.95%, #5421fd 53.19%);
+  box-shadow: 0px -4px 0px 0px #3a1aa7 inset;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.p-vip-login-bonus-text {
+  position: absolute;
+  left: 84px;
+  top: 4px;
+}
+
+.p-vip-login-bonus-img {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  left: 0px;
+  bottom: -16px;
+}
+
+.p-vip-login-bonus-img-1 {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 7px;
+  top: -5px;
+}
+
+.p-lucky-wheel {
+  position: relative;
+  width: 230px;
+  height: 48px;
+  border-radius: 8px;
+  background: #6aa82d;
+  box-shadow: 0px -4px 0px 0px #384140 inset;
+  cursor: pointer;
+}
+
+.p-lucky-wheel-img {
+  width: 66px;
+  height: 66px;
+  position: absolute;
+  left: 8px;
+  bottom: -2px;
 }
 
 .vip-club {
@@ -775,14 +859,15 @@ onMounted(() => {
 
 .navbar-free-money-img-position {
   position: absolute;
+  width: 71px;
   left: 40px;
   top: -4px;
 }
 
 .navbar-free-money-text-position {
   position: absolute;
-  left: 85px;
-  top: 8px;
+  left: 120px;
+  top: 28px;
 }
 
 .navbar-task-img-position {

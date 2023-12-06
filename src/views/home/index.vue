@@ -1016,7 +1016,7 @@ export default Dashboard;
     </div>
   </div>
   <!-- game show -->
-  <div class="home-body" :class="mobileWidth > 600 ? 'my-6 mx-6' : 'mx-2'" v-else>
+  <div class="home-body" :class="mobileWidth > 1024 ? 'my-6 mx-6 body-pc-max' : ((mobileWidth > 600 && mobileWidth < 1024) ? 'my-6 mx-6' : 'mx-2')" v-else>
     <!-- <div style="width: 100%; height: 200px;">
       <div v-html="comUserActivityList()[0]?.list_data[0]?.content"></div>
     </div> -->
@@ -1899,6 +1899,12 @@ export default Dashboard;
   }
 }
 
+.body-pc-max {
+  min-width: 1024px;
+  max-width: 1300px;
+  margin: 24px auto !important;
+}
+
 .home-overflow-auto {
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -1990,7 +1996,7 @@ export default Dashboard;
 
 .slider-img-width {
   width: 100%;
-  height: 225px;
+  // height: 225px;
 }
 
 .m-slider-img-width {

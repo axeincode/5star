@@ -65,7 +65,7 @@ const handleScroll = () => {
     <MBonusDashboardDialog />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
-    <MobileMenuLayout v-if="mobileWidth < 600" />
+    <MobileMenuLayout v-if="mobileWidth < 1024" />
   </v-app>
 </template>
 

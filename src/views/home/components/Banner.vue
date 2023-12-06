@@ -117,7 +117,7 @@ export default BannerComponent;
       :navigation="false"
       :virtual="true"
       class="mx-4"
-      style="border-radius: 8px; height: 225px"
+      style="border-radius: 8px;"
       @swiper="getSwiperRef"
     >
       <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
@@ -171,7 +171,7 @@ export default BannerComponent;
 
 <style lang="scss">
 .home-swiper {
-  height: 247px;
+  // height: 247px;
 
   .swiper-pagination-bullet-active {
     width: 18px !important;

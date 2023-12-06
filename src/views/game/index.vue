@@ -670,7 +670,7 @@ onUnmounted(() => {
 }
 
 .home-swiper {
-  height: 247px;
+  // height: 247px;
 
   .swiper-pagination-bullet-active {
     width: 18px !important;
