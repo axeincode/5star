@@ -32,6 +32,7 @@ const { setUserNavBarToggle } = appBarStore();
 const { setBonusDashboardDialogVisible } = appBarStore();
 const { setMailMenuShow } = mailStore();
 const {setSemiCircleShow} = menuStore();
+const { setRewardNavShow } = menuStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -239,6 +240,7 @@ watch(mailMenuShow, async (newValue) => {
     setMainBlurEffectShow(false);
     setNavBarToggle(navbarToggle.value)
     setBonusDashboardDialogVisible(false);
+    setRewardNavShow(false);
     setSemiCircleShow(false);
     menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
     casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
@@ -323,6 +325,7 @@ const handleNavbarToggle = () => {
   setUserNavBarToggle(false);
   setBonusDashboardDialogVisible(false);
   setSemiCircleShow(false);
+  setRewardNavShow(false);
   setMainBlurEffectShow(false);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
@@ -367,6 +370,7 @@ const handlePromoToggle = () => {
   navbarToggle.value = false;
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
+    setRewardNavShow(false);
   setSemiCircleShow(false);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
@@ -388,6 +392,7 @@ const handleSearchToggle = () => {
   promoBtnActive.value = false;
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
+  setRewardNavShow(false);
   setSemiCircleShow(false);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)

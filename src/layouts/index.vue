@@ -7,6 +7,7 @@ import MNavBarLayout from "./MobileNavBar.vue";
 import UserNavBarLayout from "./UserNavBar.vue";
 import RightBarLayout from "./RightBar.vue";
 import AppBarLayout from "./AppBar.vue";
+import RewardBarLayout from "./RewardBar.vue";
 import MainLayout from "./Main.vue";
 import MobileMenuLayout from "./MobileMenu.vue";
 import RefferalLayout from "./RefferalBar.vue";
@@ -63,6 +64,7 @@ const handleScroll = () => {
     <MNavBarLayout v-else />
     <UserNavBarLayout />
     <MBonusDashboardDialog />
+    <RewardBarLayout v-if="mobileWidth < 600" />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
     <MobileMenuLayout v-if="mobileWidth < 1024" />
@@ -70,6 +72,9 @@ const handleScroll = () => {
 </template>
 
 <style lang="scss">
+.v-navigation-drawer__scrim {
+  z-index: 10 !important;
+}
 .v-navigation-drawer {
   background: #29253c !important;
 }

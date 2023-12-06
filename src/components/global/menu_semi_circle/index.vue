@@ -5,6 +5,8 @@ import { useRouter, useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
 import { menuStore } from "@/store/menu";
+import { mailStore } from "@/store/mail";
+import { appBarStore } from "@/store/appBar";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
 import icon_public_100 from "@/assets/public/svg/icon_public_100.svg";
@@ -23,6 +25,9 @@ const route = useRoute();
 const { setSelectedItem } = menuStore();
 const { setSemiCircleShow } = menuStore();
 const { setRewardNavShow } = menuStore();
+const { setMailMenuShow } = mailStore();
+const { setOverlayScrimShow } = appBarStore();
+const { setMainBlurEffectShow } = appBarStore();
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
@@ -98,8 +103,20 @@ const handleSelectItem = (item: string) => {
   bottom.value = -48;
   if (item == t("mobile_menu.casino")) {
     router.push({ name: "Dashboard" });
+    setRewardNavShow(false);
+    setOverlayScrimShow(false);
+    setMainBlurEffectShow(false);
+    setMailMenuShow(false);
   } else if (item == t("mobile_menu.reward")) {
     setRewardNavShow(true);
+    setOverlayScrimShow(true);
+    setMainBlurEffectShow(true);
+    setMailMenuShow(true);
+  } else if (item == t("mobile_menu.sport")) {
+    setRewardNavShow(false);
+    setOverlayScrimShow(false);
+    setMainBlurEffectShow(false);
+    setMailMenuShow(false);
   }
 };
 
