@@ -305,7 +305,7 @@ onMounted(async () => {
     <div class="m-home-search-result pt-8 text-center" v-else>
       <div v-if="searchedGameList.length == 0">
         <img
-          src="@/assets/public/image/img_public_20.png"
+          src="@/assets/public/image/img_se_1.png"
           v-if="searchText.length >= 3 && searchText != ''"
         />
         <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">

@@ -1016,7 +1016,17 @@ export default Dashboard;
     </div>
   </div>
   <!-- game show -->
-  <div class="home-body" :class="mobileWidth > 1024 ? 'my-6 mx-6 body-pc-max' : ((mobileWidth > 600 && mobileWidth < 1024) ? 'my-6 mx-6' : 'mx-2')" v-else>
+  <div
+    class="home-body"
+    :class="
+      mobileWidth > 1024
+        ? 'my-6 mx-6 body-pc-max'
+        : mobileWidth > 600 && mobileWidth < 1024
+        ? 'my-6 mx-6'
+        : 'mx-2'
+    "
+    v-else
+  >
     <!-- <div style="width: 100%; height: 200px;">
       <div v-html="comUserActivityList()[0]?.list_data[0]?.content"></div>
     </div> -->
@@ -1541,7 +1551,7 @@ export default Dashboard;
               </template>
             </template>
             <div class="mt-2" style="height: 200px" v-else>
-              <img src="@/assets/public/image/img_public_20.png" class="text-center" />
+              <img src="@/assets/public/image/img_se_1.png" class="text-center" />
               <p class="text-400-12 gray">{{ t("home.search_dialog.text_2") }}</p>
             </div>
           </v-row>
@@ -1598,7 +1608,7 @@ export default Dashboard;
               </template>
             </template>
             <div class="mt-10" style="height: 200px" v-else>
-              <img src="@/assets/public/image/img_public_20.png" class="text-center" />
+              <img src="@/assets/public/image/img_se_1.png" class="text-center" />
               <p class="text-400-12 gray">{{ t("home.search_dialog.text_2") }}</p>
             </div>
           </v-row>

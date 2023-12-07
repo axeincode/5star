@@ -770,7 +770,7 @@ onMounted(() => {
               <v-col cols="6" md="3">
                 <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
                   <img
-                    src="@/assets/public/image/img_public_22.png"
+                    src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
                   />
                   <p class="text-600-16 white">{{ t("vip.cashback_body.text_11") }}</p>
@@ -783,7 +783,7 @@ onMounted(() => {
               <v-col cols="6" md="3">
                 <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
                   <img
-                    src="@/assets/public/image/img_public_22.png"
+                    src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
                   />
                   <p class="text-600-16 white">{{ t("vip.cashback_body.text_11") }}</p>
@@ -796,7 +796,7 @@ onMounted(() => {
               <v-col cols="6" md="3">
                 <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
                   <img
-                    src="@/assets/public/image/img_public_22.png"
+                    src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
                   />
                   <p class="text-600-16 white">{{ t("vip.cashback_body.text_11") }}</p>
@@ -809,7 +809,7 @@ onMounted(() => {
               <v-col cols="6" md="3">
                 <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
                   <img
-                    src="@/assets/public/image/img_public_22.png"
+                    src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
                   />
                   <p class="text-600-16 white">{{ t("vip.cashback_body.text_11") }}</p>

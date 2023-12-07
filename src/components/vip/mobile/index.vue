@@ -1351,7 +1351,7 @@ onMounted(async () => {
                         style="border-radius: 4px"
                       >
                         <img
-                          src="@/assets/public/image/img_public_22.png"
+                          src="@/assets/vip/image/img_vip_11.png"
                           class="cashback-card-img"
                           width="90"
                           height="85"

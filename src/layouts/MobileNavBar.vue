@@ -1516,8 +1516,8 @@ onMounted(() => {
   }
 
   input:checked + label:after {
-    left: 162px;
-    transform: translateX(-100%);
+    left: 88px;
+    // transform: translateX(-100%);
   }
 
   label:active:after {

@@ -216,44 +216,50 @@ onMounted(() => {
     </template>
     <v-list density="compact" nav class="mt-1">
       <!-- <v-card color="#211F31" theme="dark" class="mx-1"> -->
-        <v-row class="ma-4 align-center p-space-between">
-          <div>
-            <img src="@/assets/public/svg/icon_public_1001.svg" width="24" />
-            <span class="card-title">{{ t("navBar.rewards_center") }}</span>
+      <v-row class="ma-4 align-center p-space-between">
+        <div>
+          <img src="@/assets/public/svg/icon_public_1001.svg" width="24" />
+          <span class="card-title">{{ t("navBar.rewards_center") }}</span>
+        </div>
+
+        <!-- <span class="ml-16 more-font">{{ t("navBar.more") }}</span> -->
+        <!-- <v-btn class="right-btn" icon="true"> -->
+        <div>
+          <img src="@/assets/public/svg/icon_public_501.svg" width="24" />
+        </div>
+        <!-- </v-btn> -->
+      </v-row>
+      <v-row class="mx-2 ma-1">
+        <v-list-item>
+          <div class="p-vip-login-bonus mt-6" @click="openLoginBonusDialog">
+            <img
+              src="@/assets/public/image/img_public_1.png"
+              class="p-vip-login-bonus-img"
+            />
+            <div class="p-vip-login-bonus-text">
+              <p class="text-900-14 white">{{ t("navBar.login_bonus_text") }}</p>
+              <p class="text-400-12 white" style="line-height: 14px">
+                {{ t("navBar.unlock_text") }}
+              </p>
+            </div>
+            <img
+              src="@/assets/public/image/img_ci_7.png"
+              width="18"
+              class="p-vip-login-bonus-img-1"
+            />
           </div>
-          
-          <!-- <span class="ml-16 more-font">{{ t("navBar.more") }}</span> -->
-          <!-- <v-btn class="right-btn" icon="true"> -->
-            <div>
-              <img src="@/assets/public/svg/icon_public_501.svg" width="24" />
+          <div class="p-lucky-wheel mt-4" @click="openRouletteBonusDialog">
+            <img src="@/assets/public/image/img_public_2.png" class="p-lucky-wheel-img" />
+            <div class="p-vip-login-bonus-text">
+              <p class="text-900-14 white">{{ t("navBar.lucky_wheel_text") }}</p>
+              <p class="text-400-12 white" style="line-height: 14px">
+                {{ t("navBar.unlock_text") }}
+              </p>
             </div>
-          <!-- </v-btn> -->
-        </v-row>
-        <v-row class="mx-2 ma-1">
-          <v-list-item>
-            <div class="p-vip-login-bonus mt-6" @click="openLoginBonusDialog">
-              <img src="@/assets/public/image/img_public_1.png" class="p-vip-login-bonus-img" />
-              <div class="p-vip-login-bonus-text">
-                <p class="text-900-14 white">{{ t("navBar.login_bonus_text") }}</p>
-                <p class="text-400-12 white" style="line-height: 14px">
-                  {{ t("navBar.unlock_text") }}
-                </p>
-              </div>
-              <img src="@/assets/public/image/img_ci_7.png" width="18" class="p-vip-login-bonus-img-1" />
-            </div>
-            <div class="p-lucky-wheel mt-4" @click="openRouletteBonusDialog">
-              <img src="@/assets/public/image/img_public_2.png" class="p-lucky-wheel-img" />
-              <div class="p-vip-login-bonus-text">
-                <p class="text-900-14 white">{{ t("navBar.lucky_wheel_text") }}</p>
-                <p class="text-400-12 white" style="line-height: 14px">
-                  {{ t("navBar.unlock_text") }}
-                </p>
-              </div>
-            </div>
-          </v-list-item>
+          </div>
+        </v-list-item>
 
-
-          <!-- <v-col cols="6" class="pa-1 relative">
+        <!-- <v-col cols="6" class="pa-1 relative">
             <v-list-item
               value="casino"
               class="ma-0 pa-0"
@@ -286,7 +292,7 @@ onMounted(() => {
               </div>
             </v-list-item>
           </v-col> -->
-        </v-row>
+      </v-row>
       <!-- </v-card> -->
     </v-list>
     <v-list density="compact" nav>

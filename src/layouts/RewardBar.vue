@@ -8,9 +8,9 @@ import { mailStore } from "@/store/mail";
 import { menuStore } from "@/store/menu";
 import { appBarStore } from "@/store/appBar";
 import img_vip_4 from "@/assets/vip/image/img_vip_4.png";
-import temp_1077 from "@/assets/vip/image/temp_1077.png";
-import temp_1078 from "@/assets/vip/image/temp_1078.png";
-import temp_1079 from "@/assets/vip/image/temp_1079.png";
+import img_public_21 from "@/assets/public/image/img_public_21.png";
+import img_public_22 from "@/assets/public/image/img_public_22.png";
+import img_public_23 from "@/assets/public/image/img_public_23.png";
 import img_public_1 from "@/assets/public/image/img_public_1.png";
 import img_public_2 from "@/assets/public/image/img_public_2.png";
 import img_vip_1 from "@/assets/vip/image/img_vip_1.png";
@@ -34,17 +34,17 @@ const items_1 = ref<Array<any>>([
     value: 2,
   },
   {
-    image: temp_1077,
+    image: img_public_21,
     content: t("reward.text_9"),
     value: 2,
   },
   {
-    image: temp_1078,
+    image: img_public_22,
     content: t("reward.text_10"),
     value: 2,
   },
   {
-    image: temp_1079,
+    image: img_public_23,
     content: t("reward.text_11"),
     value: 2,
   },

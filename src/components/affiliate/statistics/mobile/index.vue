@@ -16,7 +16,7 @@ const summaryTabText = ref<string>("today");
 
 const selectedItem = ref<StatisticsItem>({
   register_user: [],
-  drposit_user: [],
+  deposit_user: [],
   deposit_bonus: 0,
   deposit_amount: [],
   bet_amount: [],
@@ -97,13 +97,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_5") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        {{ selectedItem.drposit_user[0] }}
+        {{ selectedItem.deposit_user[0] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        {{ selectedItem.drposit_user[1] }}
+        {{ selectedItem.deposit_user[1] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        {{ selectedItem.drposit_user[2] }}
+        {{ selectedItem.deposit_user[2] }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-commission-card">
@@ -182,11 +182,11 @@ onMounted(async () => {
   <v-row class="mx-6 m-statistics-summary-tab my-0">
     <v-col
       cols="4"
-      class="text-center"
+      class="text-center text-500-13"
       style="height: 100%"
       :class="
         summaryTabText == 'today'
-          ? 'm-statistics-summary-tab-active black text-600-13'
+          ? 'm-statistics-summary-tab-active black'
           : 'white text-500-13'
       "
       @click="handleSummaryTab('today')"
@@ -195,12 +195,10 @@ onMounted(async () => {
     </v-col>
     <v-col
       cols="4"
-      class="text-center"
+      class="text-center text-500-13"
       style="height: 100%"
       :class="
-        summaryTabText == 'week'
-          ? 'm-statistics-summary-tab-active black text-600-13'
-          : 'white text-500-13'
+        summaryTabText == 'week' ? 'm-statistics-summary-tab-active black' : 'white'
       "
       @click="handleSummaryTab('week')"
     >
@@ -208,12 +206,10 @@ onMounted(async () => {
     </v-col>
     <v-col
       cols="4"
-      class="text-center"
+      class="text-center text-500-13"
       style="height: 100%"
       :class="
-        summaryTabText == 'month'
-          ? 'm-statistics-summary-tab-active black text-600-13'
-          : 'white text-500-13'
+        summaryTabText == 'month' ? 'm-statistics-summary-tab-active black' : 'white'
       "
       @click="handleSummaryTab('month')"
     >

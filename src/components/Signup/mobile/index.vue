@@ -226,10 +226,6 @@ const MSignup = defineComponent({
       state.isShowUsernameValidation = false;
     };
 
-    const handleOnPromoCodeInputFocus = (): void => {
-      // handleValidateEmail();
-    };
-
     const handleOnEmailInputBlur = (): void => {
       // handleValidateEmail();
       state.isShowEmailValidaton = false;
@@ -462,7 +458,6 @@ const MSignup = defineComponent({
       handleOnPasswordInputBlur,
       handleOnUserNameInputFocus,
       handleOnUserNameInputBlur,
-      handleOnPromoCodeInputFocus,
       handleOnEmailInputBlur,
       handleClickContinueButton,
       handleClickConfirmButton,
@@ -591,7 +586,6 @@ export default MSignup;
             variant="solo"
             density="comfortable"
             v-model="formData.promoCode"
-            :onfocus="handleOnPromoCodeInputFocus"
           />
         </v-row>
         <div class="mt-2" style="display: flex; align-items: center; height: 46px">
