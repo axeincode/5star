@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
+    "@types/nprogress": "^0.2.3",
     "animejs": "^3.2.1",
     "axios": "^1.4.0",
     "clipboard-polyfill": "^4.0.1",
@@ -19,6 +20,7 @@
     "js-cookie": "^3.0.5",
     "lodash-es": "^4.17.21",
     "moment-timezone": "^0.5.43",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.0",
     "qrcode.vue": "^3.4.1",
     "roboto-fontface": "*",

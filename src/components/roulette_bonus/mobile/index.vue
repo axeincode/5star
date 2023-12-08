@@ -780,7 +780,7 @@ onMounted(() => {
         }
 
         .prize {
-          left: 194px;
+          right: 27px;
           transition: 0.3s;
           color: #7782aa;
         }
@@ -806,8 +806,8 @@ onMounted(() => {
       }
 
       input:checked + label:after {
-        left: 309px;
-        transform: translateX(-100%);
+        left: 169px;
+        // transform: translateX(-100%);
       }
 
       label:active:after {
