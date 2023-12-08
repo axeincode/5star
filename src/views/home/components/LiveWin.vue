@@ -124,7 +124,7 @@ const mobileWidth = computed(() => {
 onMounted(() => {
   interval.value = setInterval(() => {
     liveWinList.value.push(liveWinList.value[Math.floor(Math.random() * 8)]);
-  }, 600);
+  }, 60000);
 });
 
 // 在頁面銷毀之前先銷毀定時器
@@ -179,7 +179,7 @@ onUnmounted(() => {
     </div>
   </div>
   <div class="home-live-win" v-else>
-    <img src="@/assets/home/svg/live_win.svg" class="live-win-img-width" />
+    <!-- <img src="@/assets/home/svg/live_win.svg" class="live-win-img-width" /> -->
     <div class="live-win-header">
       <inline-svg
         :src="icon_public_91"
@@ -192,8 +192,8 @@ onUnmounted(() => {
     <div class="live-win-body">
       <Swiper
         :modules="modules"
-        :slidesPerView="11"
-        :spaceBetween="8"
+        :slidesPerView="mobileWidth / 100"
+        :spaceBetween="10"
         :autoplay="{
           delay: 600,
           disableOnInteraction: false,
@@ -254,23 +254,32 @@ onUnmounted(() => {
 .home-live-win {
   position: relative;
   margin: 28px 16px 0px 16px;
+  background-image: url('@/assets/home/svg/live_win.svg');
+  background-size: cover;
+  border-radius: 16px;
   .live-win-img-width {
     width: 100%;
   }
   .live-win-header {
-    position: absolute;
-    top: 15px;
-    left: 40px;
+    // position: absolute;
+    // top: 15px;
+    // left: 40px;
     display: flex;
     align-items: center;
+    width: 100%;
+    height: 50px;
   }
   .live-win-body {
-    position: absolute;
-    top: 76px;
+    // position: absolute;
+    // top: 76px;
     width: 100%;
+    .swiper-slide {
+      width: 100px !important;
+    }
   }
   .live-win-img {
-    width: 95%;
+    // width: 95%;
+    height: 100px;
     border-radius: 12px;
   }
   .live-win-level-text {

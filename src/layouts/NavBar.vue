@@ -865,15 +865,15 @@ onMounted(() => {
 
 .navbar-free-money-img-position {
   position: absolute;
-  width: 71px;
-  left: 40px;
-  top: -4px;
+  width: 70px;
+  left: 14px;
+  top: 0px;
 }
 
 .navbar-free-money-text-position {
   position: absolute;
-  left: 120px;
-  top: 28px;
+  left: 100px;
+  top: 30px;
 }
 
 .navbar-task-img-position {

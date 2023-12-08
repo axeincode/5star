@@ -1377,18 +1377,18 @@ export default Dashboard;
             </inline-svg> -->
             {{ item.name }}
           </v-row>
-          <v-row class="ml-4 mr-2 mt-2 mb-0" v-if="mobileWidth > 600">
+          <v-row class="ml-4 mr-2 mt-2 mb-0 pc-game-row" v-if="mobileWidth > 600">
             <template v-if="item.games.length > 0">
               <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
                 <div
-                  style="
+                  class="original-game-img-width pc-game-img-width"
+                  v-if="gameIndex < 7 * item.page_no"
+                >
+                <!-- style="
                     flex: 0 0 14.2857%;
                     max-width: 14.2857%;
                     padding: 0px 8px 8px 0px;
-                  "
-                  class="original-game-img-width"
-                  v-if="gameIndex < 7 * item.page_no"
-                >
+                  " -->
                   <ProgressiveImage
                     :src="gameItem.image"
                     lazy-placeholder
@@ -2118,6 +2118,25 @@ export default Dashboard;
   border-radius: 3px 16px;
   cursor: pointer;
   flex: 10%;
+}
+
+.pc-game-row {
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+.pc-game-img-width {
+  display: flex;
+  .v-progressive-image {
+    div {
+      height: 100%;
+      padding: 0 !important;
+    }
+  }
+  img {
+    position: relative;
+    max-width: 162px;
+  }
 }
 
 .original-game-img-width {

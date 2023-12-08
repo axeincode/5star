@@ -478,7 +478,7 @@ onMounted(async () => {
     app
     dark
     :color="color"
-    :class="[appBarWidth, headerBlurEffectShow ? 'header-bg-blur' : '']"
+    :class="[appBarWidth, headerBlurEffectShow ? 'header-bg-blur' : (mobileWidth > 1200 ? 'pc-header-l' : '')]"
     class="app-bar-height"
   >
     <v-app-bar-nav-icon
@@ -1196,6 +1196,10 @@ onMounted(async () => {
   border-radius: 0px 0px 32px 32px !important;
   height: 68px !important;
   color: #ffffff !important;
+}
+
+.pc-header-l {
+  left: 0 !important;
 }
 
 @media (max-width: 600px) {

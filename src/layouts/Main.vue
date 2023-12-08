@@ -9,6 +9,7 @@ import { menuStore } from "@/store/menu";
 import { type GetUserInfo } from "@/interface/user";
 import { storeToRefs } from 'pinia';
 import { useI18n } from "vue-i18n";
+import AppBarLayout from "./AppBar.vue";
 import Footer from "./Footer.vue";
 import Deposit from "@/components/cash/deposit/index.vue";
 import MDeposit from "@/components/cash/deposit/mobile/index.vue";
@@ -469,6 +470,7 @@ onMounted(() => {
       overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'unset',
     }"
   >
+    <AppBarLayout />
     <!---------------------- Deposit Dialog ----------------------------------------------->
 
     <v-dialog

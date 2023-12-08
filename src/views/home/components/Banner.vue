@@ -189,7 +189,7 @@ export default BannerComponent;
   }
 
   .swiper-pagination {
-    bottom: -8px !important;
+    bottom: -18px !important;
   }
 
   .swiper-button-next {
