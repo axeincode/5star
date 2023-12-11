@@ -26,6 +26,7 @@ const { setMainBlurEffectShow } = appBarStore();
 
 const rewardContainerHeight = ref<number>(590);
 const rewardNavShow = ref<boolean>(false);
+const claimText = ref<string>("");
 
 const items_1 = ref<Array<any>>([
   {
@@ -94,7 +95,7 @@ watch(rewardNavShow, (value) => {
 });
 
 onMounted(() => {
-  rewardContainerHeight.value = window.innerHeight - 202;
+  rewardContainerHeight.value = window.innerHeight - 230;
 });
 </script>
 
@@ -123,11 +124,19 @@ onMounted(() => {
       <div class="m-reward-body-2">
         <p class="text-700-12 white pt-10 mx-4">{{ t("reward.text_3") }}</p>
         <v-row class="mx-2 mt-1">
-          <v-col
-            cols="9"
-            class="m-reward-claim-bg text-400-12 gray py-1 px-2 d-flex align-center"
-          >
-            {{ t("reward.text_4") }}
+          <v-col cols="9" class="text-400-12 gray py-1 px-2 d-flex align-center">
+            <v-text-field
+              :label="t('reward.text_4')"
+              class="form-textfield dark-textfield mx-0 my-0"
+              variant="solo"
+              hide-details
+              filled
+              clearable
+              density="compact"
+              color="#7782AA"
+              :class="mobileWidth < 600 ? 'm-claim-text' : ''"
+              v-model="claimText"
+            />
           </v-col>
           <v-col cols="3" class="pa-1 text-right">
             <v-btn class="text-none m-reward-claim-btn" width="72" height="32">
@@ -318,6 +327,61 @@ onMounted(() => {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+  }
+}
+
+.m-claim-text {
+  height: 36px !important;
+
+  div.v-field.v-field--appended {
+    border-radius: 8px !important;
+    background: #181522 !important;
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+  }
+
+  .v-field__clearable {
+    padding-top: 6px !important;
+  }
+
+  div.v-field__field {
+    box-shadow: none !important;
+    margin-left: 10px;
+  }
+
+  .v-field__overlay {
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+  }
+
+  .v-field {
+    border-radius: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .v-field__prepend-inner {
+    padding-top: 7px !important;
+  }
+
+  .v-field__input {
+    height: 36px !important;
+    min-height: 36px !important;
+    background: #181522 !important;
+  }
+
+  .v-field-label {
+    opacity: 1 !important;
+  }
+
+  .v-field__field {
+    height: 36px !important;
+    padding-left: 0px !important;
+  }
+
+  .v-input__control {
+    height: 36px !important;
+    .mdi:before {
+      font-size: 19px !important;
+      color: #7782aa !important;
+    }
   }
 }
 </style>

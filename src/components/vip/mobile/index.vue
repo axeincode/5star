@@ -665,9 +665,9 @@ const handleVipSwitchLeft = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value - 1 + 10) % 10;
   rewardSwiper.value.slidePrev();
-  // cashbackSwiper.value.slidePrev();
+  cashbackSwiper.value.slidePrev();
   // spinSwiper.value.slidePrev();
-  vipSwiper.value.slidePrev();
+  // vipSwiper.value.slidePrev();
   descriptionSwiper.value.slidePrev();
 }
 
@@ -675,9 +675,9 @@ const handleVipSwitchRight = () => {
   vipSwitch.value = true;
   currentSlide.value = (currentSlide.value + 1 + 10) % 10;
   rewardSwiper.value.slideNext();
-  // cashbackSwiper.value.slideNext();
+  cashbackSwiper.value.slideNext();
   // spinSwiper.value.slideNext();
-  vipSwiper.value.slideNext();
+  // vipSwiper.value.slideNext();
   descriptionSwiper.value.slideNext();
 }
 
