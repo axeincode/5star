@@ -1384,7 +1384,7 @@ export default Dashboard;
                   class="original-game-img-width pc-game-img-width"
                   v-if="gameIndex < 7 * item.page_no"
                 >
-                <!-- style="
+                  <!-- style="
                     flex: 0 0 14.2857%;
                     max-width: 14.2857%;
                     padding: 0px 8px 8px 0px;
