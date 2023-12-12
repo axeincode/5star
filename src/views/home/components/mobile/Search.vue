@@ -677,7 +677,7 @@ onMounted(async () => {
 }
 
 .m-home-search-swiper {
-  padding-bottom: 32px;
+  padding-bottom: 16px;
 
   .m-home-search-swiper-img {
     width: 100%;

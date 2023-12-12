@@ -59,7 +59,7 @@ const handleScroll = () => {
 <template>
   <v-app :class="fixPositionShow ? 'appbar-position-fix' : ''">
     <RefferalLayout v-if="refferalAppBarShow" />
-    <!-- <AppBarLayout /> -->
+    <AppBarLayout />
     <NavBarLayout v-if="mobileWidth > 600" />
     <MNavBarLayout v-else />
     <UserNavBarLayout />
