@@ -192,10 +192,10 @@ const Dashboard = defineComponent({
     const moreLoading = ref<boolean>(false);
     const moreIndex = ref<number>(0);
 
-    const bannerComponent = ref<component>(null);
-    const gameHistoryComponent = ref<component>(null);
-    const liveWinComponent = ref<component>(null);
-    const betHistoryComponent = ref<component>(null);
+    const bannerComponent = ref<any>(null);
+    const gameHistoryComponent = ref<any>(null);
+    const liveWinComponent = ref<any>(null);
+    const betHistoryComponent = ref<any>(null);
 
     const bannerLoad = async () => {
       const bannerValue = await import('@/views/home/components/Banner.vue');
@@ -238,7 +238,7 @@ const Dashboard = defineComponent({
 
     const gameCategories = computed(() => {
       const { getGameCategories } = storeToRefs(gameStore());
-      getGameCategories.value.map((item: { games: never[]; }) => {
+      getGameCategories.value.map((item: any) => {
         item.games = [];
       });
       return getGameCategories.value;

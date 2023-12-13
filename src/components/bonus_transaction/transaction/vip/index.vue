@@ -205,7 +205,7 @@ onMounted(async () => {});
       "
     >
       <div style="float: right !important; width: 100%">
-        <Pagination style="float: right" />
+        <!-- <Pagination style="float: right" /> -->
       </div>
     </v-col>
   </v-row>

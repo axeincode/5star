@@ -478,7 +478,10 @@ onMounted(async () => {
     app
     dark
     :color="color"
-    :class="[appBarWidth, headerBlurEffectShow ? 'header-bg-blur' : (mobileWidth > 1200 ? 'pc-header-l' : '')]"
+    :class="[
+      appBarWidth,
+      headerBlurEffectShow ? 'header-bg-blur' : mobileWidth > 1200 ? 'pc-header-l' : '',
+    ]"
     class="app-bar-height"
   >
     <v-app-bar-nav-icon
@@ -814,7 +817,7 @@ onMounted(async () => {
                   <div class="d-flex">
                     <div class="white">{{ t("appBar.deposit") }}</div>
                     <div class="ml-auto">
-                      <Font>R$ 5642</Font> / <Font color="#F9BC01">R$ 10000</Font>
+                      <font>R$ 5642</font> / <font color="#F9BC01">R$ 10000</font>
                     </div>
                   </div>
                   <div>
@@ -830,7 +833,7 @@ onMounted(async () => {
                   <div class="d-flex">
                     <div class="white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
-                      <Font>R$ 5642</Font> / <Font color="#623AEC">R$ 10000</Font>
+                      <font>R$ 5642</font> / <font color="#623AEC">R$ 10000</font>
                     </div>
                   </div>
                   <div>

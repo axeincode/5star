@@ -85,7 +85,7 @@ const handlePrev = async (page_no: number) => {
   }
 }
 
-const handleCopyID = async (id: number) => {
+const handleCopyID = async (id: string) => {
   clipboard.writeText(id).then(
     () => {
       console.log('Copied to clipboard!');

@@ -22,7 +22,7 @@ const { setActiveAboutIndex } = aboutStore();
 const route = useRoute();
 const router = useRouter();
 
-const activeMenuIndex = ref<number>(0);
+const activeMenuIndex = ref<any>(0);
 const selectedMenuItem = ref<string>(t("about.page.text_2"));
 const aboutMenuShow = ref<boolean>(false);
 
@@ -60,7 +60,6 @@ const activeAboutIndex = computed(() => {
 const selectActiveIndex = (index: number) => {
   activeMenuIndex.value = index;
   selectedMenuItem.value = menuList.value[index];
-  mobileDialogVisible.value = false;
 };
 
 const mobileWidth: any = computed(() => {

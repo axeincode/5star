@@ -472,8 +472,8 @@ onMounted(async () => {
               <div class="d-flex mx-1">
                 <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
                 <div class="ml-auto text-800-8">
-                  <Font>R$ {{ vipInfo.deposit_exp }}</Font> /
-                  <Font color="#F9BC01">R$ {{ selectedVipLevel.deposit_exp }}</Font>
+                  <font>R$ {{ vipInfo.deposit_exp }}</font> /
+                  <font color="#F9BC01">R$ {{ selectedVipLevel.deposit_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
@@ -489,8 +489,8 @@ onMounted(async () => {
               <div class="d-flex mx-1">
                 <div class="white text-500-8">{{ t("appBar.wager") }}</div>
                 <div class="ml-auto text-800-8">
-                  <Font>R$ {{ vipInfo.bet_exp }}</Font> /
-                  <Font color="#623AEC">R$ {{ selectedVipLevel.bet_exp }}</Font>
+                  <font>R$ {{ vipInfo.bet_exp }}</font> /
+                  <font color="#623AEC">R$ {{ selectedVipLevel.bet_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">

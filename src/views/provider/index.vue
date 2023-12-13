@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted, toRefs } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { LocationQueryValue, useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import img_og_03 from "@/assets/home/image/img_og_03.png";
@@ -22,7 +22,7 @@ const limit = ref<number>(8);
 const loading = ref<boolean>(false);
 const searchLoading = ref<boolean>(false);
 const moreLoading = ref<boolean>(false);
-const slug = ref<string>("");
+const slug = ref<any>("");
 const searchText = ref<string>("");
 
 const mobileWidth: any = computed(() => {
@@ -96,7 +96,7 @@ onMounted(async () => {
     top: 0,
     behavior: "smooth",
   });
-  slug.value = route.query.slug;
+  slug.value = route.query.slug ? route.query.slug : "";
   await dispatchGameSearch(
     "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
   );

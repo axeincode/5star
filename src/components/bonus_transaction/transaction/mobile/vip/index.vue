@@ -48,11 +48,6 @@ const transactionVipMenuList = ref<Array<string>>([
 
 const tempHistoryList = [{},{},{},{},{},{}];
 
-const success = computed(() => {
-  const { getSuccess } = storeToRefs(withdrawStore());
-  return getSuccess.value
-})
-
 const mobileWidth = computed(() => {
   return width.value;
 });
@@ -69,7 +64,8 @@ const handleNext = async (page_no: number) => {
   if (currentList.value.length == 0) {
     await dispatchVipRebateHistory({
       page_size: pageSize.value,
-      start_time: vipRebateHistory.value.list[vipRebateHistory.value.list.length - 1].created_at,
+      page_num: 1,
+      start_time: Number(vipRebateHistory.value.list[vipRebateHistory.value.list.length - 1].created_at),
     });
   }
 }
@@ -81,7 +77,8 @@ const handlePrev = async (page_no: number) => {
   if (currentList.value.length == 0) {
     await dispatchVipRebateHistory({
       page_size: pageSize.value,
-      end_time: vipRebateHistory.value.list[0].created_at,
+      page_num: 1,
+      end_time: Number(vipRebateHistory.value.list[0].created_at),
     });
   }
 }

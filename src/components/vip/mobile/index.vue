@@ -437,7 +437,6 @@ watch(mobileWidth, (newValue: number) => {
 })
 
 watch(selectedVIPTab, (newValue: string) => {
-  console.log(':::::::::::::::::::')
   console.log(newValue)
 }, { deep: true })
 
@@ -553,7 +552,11 @@ const vipElement = ref<any | null>(null);
 
 const benefitElement = ref<any | null>(null);
 
+const scrollTimeout = ref<any | null>(null);
+
 const handleWindowScroll = () => {
+
+  clearTimeout(scrollTimeout.value);
 
   const cashPosition = cashbackElement.value?.getBoundingClientRect().top;
 
@@ -600,6 +603,10 @@ const handleWindowScroll = () => {
     }
 
   }
+
+  scrollTimeout.value = setTimeout(() => {
+    isMouseClick.value = false;
+  }, 150)
 }
 
 const tabSelect = ref(false);
@@ -608,7 +615,7 @@ const isMouseClick = ref(false);
 
 const handleSelectVIPTab = (item: string) => {
   selectedVIPTab.value = item
-  // isMouseClick.value = true;
+  isMouseClick.value = true;
   vipSlidePosition.value = true;
   tabSelect.value = true;
   const offset = 174;
@@ -616,11 +623,6 @@ const handleSelectVIPTab = (item: string) => {
   setTimeout(() => {
     switch (item) {
       case t('vip.all_bonus_text'):
-        // rewardElement.value.scrollIntoView({
-        //     behavior: 'smooth',
-        //     block: 'start',
-        //     inline: 'nearest',
-        // });
         const rewardRect = rewardElement.value.getBoundingClientRect().top;
         const rewardPosition = rewardRect - bodyRect - offset;
         window.scrollTo({
@@ -655,10 +657,6 @@ const handleSelectVIPTab = (item: string) => {
     }
 
   }, 10);
-
-  setTimeout(() => {
-    isMouseClick.value = false;
-  }, 2000)
 }
 
 const handleVipSwitchLeft = () => {
@@ -797,16 +795,16 @@ const handleVipSwiperPrevChange = () => {
   // descriptionSlide.value = false;
 }
 
-const handleRewardTouchEnd = (event) => {
+const handleRewardTouchEnd = () => {
   currentSlide.value = rewardSwiper.value.realIndex;
   rewardSlide.value = false;
 }
 
-const handleRewardTouchStart = (event) => {
+const handleRewardTouchStart = (event: any) => {
   touchStartX.value  = event.touches[0].clientX;
 }
 
-const handleRewardTouchMove = () => {
+const handleRewardTouchMove = (event: any) => {
   const touchX = event.touches[0].clientX;
   const deltaX = touchX - touchStartX.value; // Calculate the delta X value
   if (deltaX > 300 && !rewardSlide.value) {
@@ -822,16 +820,16 @@ const handleRewardTouchMove = () => {
   }
 }
 
-const handleCashbackTouchEnd = (event) => {
+const handleCashbackTouchEnd = (event: any) => {
   currentSlide.value = cashbackSwiper.value.realIndex;
   cashbackSlide.value = false;
 }
 
-const handleCashbackTouchStart = (event) => {
+const handleCashbackTouchStart = (event: any) => {
   touchStartX.value  = event.touches[0].clientX;
 }
 
-const handleCashbackTouchMove = () => {
+const handleCashbackTouchMove = (event: any) => {
   const touchX = event.touches[0].clientX;
   const deltaX = touchX - touchStartX.value; // Calculate the delta X value
   if (deltaX > 300 && !cashbackSlide.value) {
@@ -847,16 +845,16 @@ const handleCashbackTouchMove = () => {
   }
 }
 
-const handleVipTouchEnd = (event) => {
+const handleVipTouchEnd = (event: any) => {
   currentSlide.value = vipSwiper.value.realIndex;
   vipSlide.value = false;
 }
 
-const handleVipTouchStart = (event) => {
+const handleVipTouchStart = (event: any) => {
   touchStartX.value  = event.touches[0].clientX;
 }
 
-const handleVipTouchMove = () => {
+const handleVipTouchMove = (event: any) => {
   const touchX = event.touches[0].clientX;
   const deltaX = touchX - touchStartX.value; // Calculate the delta X value
   if (deltaX > 300 && !vipSlide.value) {
@@ -872,16 +870,16 @@ const handleVipTouchMove = () => {
   }
 }
 
-const handleDescriptionTouchEnd = (event) => {
+const handleDescriptionTouchEnd = (event: any) => {
   currentSlide.value = descriptionSwiper.value.realIndex;
   descriptionSlide.value = false;
 }
 
-const handleDescriptionTouchStart = (event) => {
+const handleDescriptionTouchStart = (event: any) => {
   touchStartX.value  = event.touches[0].clientX;
 }
 
-const handleDescriptionTouchMove = () => {
+const handleDescriptionTouchMove = (event: any) => {
   const touchX = event.touches[0].clientX;
   const deltaX = touchX - touchStartX.value; // Calculate the delta X value
   if (deltaX > 300 && !vipSlide.value) {
@@ -899,7 +897,7 @@ const handleDescriptionTouchMove = () => {
 
 const vipRebateAward = async () => {
   if (Number(vipInfo.value.now_cash_back) > 0) {
-    await dispatchVipRebateAward();
+    await dispatchVipRebateAward({});
   }
 }
 
@@ -1118,7 +1116,7 @@ onMounted(async () => {
             :key="index"
             :virtualIndex="index"
           >
-            <div class="reward-body mx-2 pb-4" :class="tabSelect ? 'mt-15' : 'mt-2'">
+            <div class="reward-body mx-2 pb-4" :class="tabSelect ? 'mt-4' : 'mt-4'">
               <div class="text-800-14 white pt-4 mx-4">
                 {{ t("vip.reward_text") }} {{ item.level }}
               </div>
@@ -1276,8 +1274,6 @@ onMounted(async () => {
           @touchstart="handleCashbackTouchStart"
           @touchend="handleCashbackTouchEnd"
           @touchmove="handleCashbackTouchMove"
-          @slide-next-transition-end="handleCashbackSwiperNextChange"
-          @slide-prev-transition-end="handleCashbackSwiperPrevChange"
         >
           <SwiperSlide
             v-for="(item, index) in vipLevels"
@@ -1286,7 +1282,7 @@ onMounted(async () => {
           >
             <div
               class="m-cashback-bonus-body mx-2 pb-4"
-              :class="tabSelect ? 'mt-15' : 'mt-6'"
+              :class="tabSelect ? 'mt-4' : 'mt-4'"
             >
               <div class="text-800-14 white mx-3 pt-4">
                 {{ t("vip.cashback_body.text_1") }}

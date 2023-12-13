@@ -84,7 +84,7 @@ const transactionTabs = ref<Array<string>>([
 const pageSize = ref<number>(8);
 const pageNum = ref<number>(1);
 const vipTimesHistoryIndex = ref<number>(1);
-const selectedTab = ref<string>(t("transaction.tab.game_history"));
+const selectedTab = ref<any>(t("transaction.tab.game_history"));
 
 const transactionTab = computed(() => {
   const { getTransactionTab } = storeToRefs(bonusTransactionStore());

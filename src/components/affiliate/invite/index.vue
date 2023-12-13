@@ -538,7 +538,7 @@ onMounted(() => {
                       class="bonus-progress"
                     >
                       <div class="text-800-16 white">
-                        <Font class="active">{{ slide[index].grade }} / </Font>
+                        <font class="active">{{ slide[index].grade }} / </font>
                         {{ slide[index].totalGrade }}
                       </div>
                     </v-progress-linear>
@@ -583,7 +583,7 @@ onMounted(() => {
                       class="bonus-progress"
                     >
                       <div class="text-800-16 white">
-                        <Font class="active">{{ slide[index1].grade }} / </Font>
+                        <font class="active">{{ slide[index1].grade }} / </font>
                         {{ slide[index1].totalGrade }}
                       </div>
                     </v-progress-linear>
@@ -623,7 +623,7 @@ onMounted(() => {
                       class="bonus-progress"
                     >
                       <div class="text-800-16 white">
-                        <Font class="active">{{ slide[index2].grade }} / </Font>
+                        <font class="active">{{ slide[index2].grade }} / </font>
                         {{ slide[index2].totalGrade }}
                       </div>
                     </v-progress-linear>
@@ -722,7 +722,7 @@ onMounted(() => {
           </div>
           <div class="footer-text-7">
             <span>{{ t("affiliate.invite.invite_text_7") }}</span>
-            <Font color="#F9BC01">{{ Math.ceil(slider) }}</Font>
+            <font color="#F9BC01">{{ Math.ceil(slider) }}</font>
             <span>{{ t("affiliate.invite.invite_text_8") }}</span>
           </div>
           <div :class="[mobileWidth < 600 ? 'px-0 py-3' : 'pa-6']">
