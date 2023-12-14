@@ -927,7 +927,30 @@ onMounted(async () => {
         >
         </inline-svg>
       </div>
-      <p class="text-700-16 white">VIP{{ vipSwitchValue }}</p>
+      <p class="text-700-16 white" v-if="vipSwitchValue == 0">
+        {{ vipLevelImgs[0].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 1 && vipSwitchValue < 25">
+        {{ vipLevelImgs[1].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 25 && vipSwitchValue < 50">
+        {{ vipLevelImgs[2].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 50 && vipSwitchValue < 75">
+        {{ vipLevelImgs[3].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 75 && vipSwitchValue < 99">
+        {{ vipLevelImgs[4].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 100 && vipSwitchValue < 149">
+        {{ vipLevelImgs[5].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 150 && vipSwitchValue < 200">
+        {{ vipLevelImgs[6].content }}
+      </p>
+      <p class="text-700-16 white" v-if="vipSwitchValue >= 200">
+        {{ vipLevelImgs[7].content }}
+      </p>
       <div class="m-vip-switch-right" @click="handleVipSwitchRight">
         <inline-svg
           :src="icon_public_11"
@@ -1117,8 +1140,47 @@ onMounted(async () => {
             :virtualIndex="index"
           >
             <div class="reward-body mx-2 pb-4" :class="tabSelect ? 'mt-4' : 'mt-4'">
-              <div class="text-800-14 white pt-4 mx-4">
-                {{ t("vip.reward_text") }} {{ item.level }}
+              <div class="text-800-14 white pt-4 mx-4" v-if="item.level == 0">
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[0].content }}
+              </div>
+              <div
+                class="text-800-14 white pt-4 mx-4"
+                v-if="item.level >= 1 && item.level < 25"
+              >
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[1].content }}
+              </div>
+              <div
+                class="text-800-14 white pt-4 mx-4"
+                v-if="item.level >= 25 && item.level < 50"
+              >
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[2].content }}
+              </div>
+              <div
+                class="text-800-14 white pt-4 mx-4"
+                v-if="item.level >= 50 && item.level < 75"
+              >
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[3].content }}
+              </div>
+              <div
+                class="text-800-14 white pt-4 mx-4"
+                v-if="item.level >= 75 && item.level < 99"
+              >
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[4].content }}
+              </div>
+              <div
+                class="text-800-14 white pt-4 mx-4"
+                v-if="item.level >= 100 && item.level < 149"
+              >
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[5].content }}
+              </div>
+              <div
+                class="text-800-14 white pt-4 mx-4"
+                v-if="item.level >= 150 && item.level < 200"
+              >
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[6].content }}
+              </div>
+              <div class="text-800-14 white pt-4 mx-4" v-if="item.level >= 200">
+                {{ t("vip.reward_text") }} {{ vipLevelImgs[7].content }}
               </div>
               <v-row class="mt-2 justify-center pb-2 mx-2">
                 <v-col cols="6" md="3" class="d-flex justify-center pa-1">
@@ -1143,7 +1205,7 @@ onMounted(async () => {
                     </div>
                     <div class="mt-2 text-400-9 white">
                       {{ t("vip.reward_card_1.text_2") }}
-                      <Font class="yellow">{{ item.availabe_daily_bonus_time }}</Font>
+                      <font class="yellow">{{ item.availabe_daily_bonus_time }}</font>
                     </div>
                   </div>
                 </v-col>
@@ -1314,13 +1376,59 @@ onMounted(async () => {
               >
                 <div class="pa-2">
                   <v-row class="ma-0 pa-0 align-center">
-                    <v-col cols="4">
-                      <p class="text-500-12 white">
+                    <v-col cols="5">
+                      <p class="text-500-12 white" v-if="item.level == 0">
                         {{ t("vip.cashback_body.text_3") }}
-                        {{ item.level }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p
+                        class="text-500-12 white"
+                        v-if="item.level >= 1 && item.level < 25"
+                      >
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p
+                        class="text-500-12 white"
+                        v-if="item.level >= 25 && item.level < 50"
+                      >
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p
+                        class="text-500-12 white"
+                        v-if="item.level >= 50 && item.level < 75"
+                      >
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p
+                        class="text-500-12 white"
+                        v-if="item.level >= 75 && item.level < 99"
+                      >
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p
+                        class="text-500-12 white"
+                        v-if="item.level >= 100 && item.level < 149"
+                      >
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p
+                        class="text-500-12 white"
+                        v-if="item.level >= 150 && item.level < 200"
+                      >
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
+                      </p>
+                      <p class="text-500-12 white" v-if="item.level >= 200">
+                        {{ t("vip.cashback_body.text_3") }}
+                        {{ vipLevelImgs[0].content }}
                       </p>
                     </v-col>
-                    <v-col cols="8" class="d-flex">
+                    <v-col cols="7" class="d-flex">
                       <p class="text-600-12 text-gray ml-auto" style="width: 115px">
                         {{ t("vip.cashback_body.text_4") }}
                       </p>
@@ -1783,8 +1891,53 @@ onMounted(async () => {
             :key="index"
             :virtualIndex="index"
           >
-            <div class="m-benifit-description-header pa-4 text-700-16 white">
-              VIP{{ item.level }}{{ t("vip.benifit_description_body.text_1") }}
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level == 0"
+            >
+              {{ vipLevelImgs[0].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 1 && item.level < 25"
+            >
+              {{ vipLevelImgs[1].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 25 && item.level < 50"
+            >
+              {{ vipLevelImgs[2].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 50 && item.level < 75"
+            >
+              {{ vipLevelImgs[3].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 75 && item.level < 99"
+            >
+              {{ vipLevelImgs[4].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 100 && item.level < 149"
+            >
+              {{ vipLevelImgs[5].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 150 && item.level < 200"
+            >
+              {{ vipLevelImgs[6].content }}{{ t("vip.benifit_description_body.text_1") }}
+            </div>
+            <div
+              class="m-benifit-description-header pa-4 text-700-16 white"
+              v-if="item.level >= 200"
+            >
+              {{ vipLevelImgs[7].content }}{{ t("vip.benifit_description_body.text_1") }}
             </div>
             <v-row class="mt-2 mx-1">
               <v-col cols="6" class="ma-0 pa-1">
@@ -1846,7 +1999,54 @@ onMounted(async () => {
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
                     <v-col cols="6">
                       <div class="benifit-description-border">
-                        <p class="text-500-12 text-gray">
+                        <p class="text-500-12 text-gray" v-if="item.level == 0">
+                          {{ vipLevelImgs[1].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p
+                          class="text-500-12 text-gray"
+                          v-if="item.level >= 1 && item.level < 25"
+                        >
+                          {{ vipLevelImgs[2].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p
+                          class="text-500-12 text-gray"
+                          v-if="item.level >= 25 && item.level < 50"
+                        >
+                          {{ vipLevelImgs[3].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p
+                          class="text-500-12 text-gray"
+                          v-if="item.level >= 50 && item.level < 75"
+                        >
+                          {{ vipLevelImgs[4].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p
+                          class="text-500-12 text-gray"
+                          v-if="item.level >= 75 && item.level < 99"
+                        >
+                          {{ vipLevelImgs[5].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p
+                          class="text-500-12 text-gray"
+                          v-if="item.level >= 100 && item.level < 149"
+                        >
+                          {{ vipLevelImgs[6].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p
+                          class="text-500-12 text-gray"
+                          v-if="item.level >= 150 && item.level < 200"
+                        >
+                          {{ vipLevelImgs[7].content }}
+                          {{ t("vip.benifit_description_body.text_7") }}
+                        </p>
+                        <p class="text-500-12 text-gray" v-if="item.level >= 200">
+                          {{ vipLevelImgs[7].content }}
                           {{ t("vip.benifit_description_body.text_7") }}
                         </p>
                         <p class="text-700-16 yellow mt-1">R$ 10</p>
@@ -1948,6 +2148,65 @@ onMounted(async () => {
                           {{ t("vip.benifit_description_body.text_16") }}
                         </p>
                         <p class="text-700-16 yellow mt-1">{{ item.withdrawal_fee }}%</p>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row class="my-2 mx-0">
+              <v-col cols="12" class="ma-0 pa-2">
+                <p class="text-700-12 white ml-2">
+                  {{ t("vip.benifit_description_body.text_18") }}
+                </p>
+                <v-card theme="dark" color="#1C1929" class="mt-2">
+                  <v-row class="mx-2 my-0 pa-0 align-center justify-center">
+                    <v-col cols="6" class="py-1">
+                      <div class="benifit-description-border">
+                        <p class="text-500-12 text-gray">
+                          {{ t("vip.benifit_description_body.text_19") }}
+                        </p>
+                        <p class="text-500-12 text-gray">
+                          {{ t("vip.benifit_description_body.text_20") }}
+                        </p>
+                        <p class="text-700-16 yellow mt-1">0.4%</p>
+                      </div>
+                    </v-col>
+                    <v-col cols="6" class="py-1">
+                      <div class="d-flex justify-start">
+                        <div>
+                          <p class="text-500-12 text-gray">
+                            {{ t("vip.benifit_description_body.text_19") }}
+                          </p>
+                          <p class="text-500-12 text-gray">
+                            {{ t("vip.benifit_description_body.text_21") }}
+                          </p>
+                          <p class="text-700-16 yellow mt-1">0.5%</p>
+                        </div>
+                      </div>
+                    </v-col>
+                    <v-col cols="6" class="py-1">
+                      <div class="benifit-description-border">
+                        <div>
+                          <p class="text-500-12 text-gray">
+                            {{ t("vip.benifit_description_body.text_22") }}
+                          </p>
+                          <p class="text-500-12 text-gray">
+                            {{ t("vip.benifit_description_body.text_24") }}
+                          </p>
+                          <p class="text-700-16 yellow mt-1">0.5%</p>
+                        </div>
+                      </div>
+                    </v-col>
+                    <v-col cols="6" class="d-flex justify-start py-1">
+                      <div>
+                        <p class="text-500-12 text-gray">
+                          {{ t("vip.benifit_description_body.text_23") }}
+                        </p>
+                        <p class="text-500-12 text-gray">
+                          {{ t("vip.benifit_description_body.text_24") }}
+                        </p>
+                        <p class="text-700-16 yellow mt-1">0.4%</p>
                       </div>
                     </v-col>
                   </v-row>

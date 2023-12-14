@@ -1524,6 +1524,13 @@ export type langType = {
       text_15: string
       text_16: string
       text_17: string
+      text_18: string
+      text_19: string
+      text_20: string
+      text_21: string
+      text_22: string
+      text_23: string
+      text_24: string
     }
     footer_body: {
       text_1: string

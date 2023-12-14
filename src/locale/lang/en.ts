@@ -1442,7 +1442,7 @@ export const lang: langType = {
     cash_back_text: "Cashback",
     super_carousel_text: "Super Carousel",
     welfare_task: "Welfare Tasks",
-    reward_text: "Reward available for VIP",
+    reward_text: "Reward available for ",
     reward_card_1: {
       daily_free_bonus_text: "Daily Free Bonuses",
       text_1: "Free spin times*",
@@ -1472,7 +1472,7 @@ export const lang: langType = {
     cashback_body: {
       text_1: "My CASHBACK Bonus",
       text_2: "Get my CASHBACK",
-      text_3: "CASHBACK ratio of VIP",
+      text_3: "CASHBACK ratio of ",
       text_4: "How to get CASHBACK bonus?",
       text_5: "Next Level VIP ",
       text_7: "Yesterday’s CASHBACK Bonus",
@@ -1515,7 +1515,7 @@ export const lang: langType = {
       text_4: "Total deposits",
       text_5: "Total Bets",
       text_6: "VIP Level Reward Pack",
-      text_7: "VIP2 Upgrade Bonus",
+      text_7: " Upgrade Bonus",
       text_8: "VIP Weekly Gift Pack",
       text_9: "VIP Monthly Gift Pack",
       text_10: "VIP Cashback Bonus",
@@ -1525,7 +1525,14 @@ export const lang: langType = {
       text_14: "Live Casino",
       text_15: "Free withdrawal amount",
       text_16: "Withdrawal fees",
-      text_17: "Withdrawal Benefits"
+      text_17: "Withdrawal Benefits",
+      text_18: "Withdrawal restrictions",
+      text_19: "Number of ",
+      text_20: "withdrawals per day",
+      text_21: "withdrawals per month",
+      text_22: "Daily Withdrawal ",
+      text_23: "Monthly Withdrawal ",
+      text_24: "Limit"
     },
     footer_body: {
       text_1: "VIP GROUP",
