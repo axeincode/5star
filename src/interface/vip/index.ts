@@ -37,6 +37,7 @@ export interface VipInfo {
 
 export interface VipLevel {
     level: number,
+    rank_id: number,
     protection_conditions: number,
     deposit_exp: number,
     bet_exp: number,
