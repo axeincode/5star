@@ -338,6 +338,13 @@ const vipLevels = computed(() => {
     let deposit_exp = 0;
     let bet_exp = 0;
     let rank_id = 20;
+    let free_spins_times = 0;
+    let availabe_daily_bonus_time = "";
+    let week_award = 0;
+    let collectable_week_bonus_day = 0;
+    let month_award = 0;
+    let collectable_month_bonus_day = 0;
+    let upgrade_award = 0;
     getVipLevels.value.map(item => {
 
       if (item.level == vipInfo.value.level) {
@@ -345,34 +352,40 @@ const vipLevels = computed(() => {
       }
 
       if (i == item.rank_id) {
+
         deposit_exp += Number(item.deposit_exp)
         bet_exp += Number(item.bet_exp)
+        free_spins_times = item.free_spins_times;
+        week_award = item.week_award;
+        month_award = item.month_award;
+        upgrade_award = item.upgrade_award;
+
+        let current_date = moment().format("YYYY-MM-DD");
+        let end_time = moment(current_date + " 23:59:59");
+        const now = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD HH:mm:ss");
+        let duration = moment.duration(end_time.diff(now));
+
+        var hours = duration.hours();
+        var minutes = duration.minutes().toString().length == 1 ? "0" + duration.minutes() : duration.minutes();
+        var seconds = duration.seconds().toString().length == 1 ? "0" + duration.seconds() : duration.seconds();
+
+        availabe_daily_bonus_time = hours + ":" + minutes + ":" + seconds;
+
+        let this_week_end_time = moment(this_week_end_day + " 23:59:59");
+        let week_duration = moment.duration(this_week_end_time.diff(now));
+
+        var days = week_duration.days();
+
+        collectable_week_bonus_day = days;
+
+        let this_month_end_time = moment(this_month_end_day + " 23:59:59");
+        let month_duration = moment.duration(this_month_end_time.diff(now));
+
+        var month_days = month_duration.days();
+
+        collectable_month_bonus_day = month_days;
+
       }
-
-      let current_date = moment().format("YYYY-MM-DD");
-      let end_time = moment(current_date + " 23:59:59");
-      const now = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD HH:mm:ss");
-      let duration = moment.duration(end_time.diff(now));
-
-      var hours = duration.hours();
-      var minutes = duration.minutes().toString().length == 1 ? "0" + duration.minutes() : duration.minutes();
-      var seconds = duration.seconds().toString().length == 1 ? "0" + duration.seconds() : duration.seconds();
-
-      item.availabe_daily_bonus_time = hours + ":" + minutes + ":" + seconds;
-
-      let this_week_end_time = moment(this_week_end_day + " 23:59:59");
-      let week_duration = moment.duration(this_week_end_time.diff(now));
-
-      var days = week_duration.days();
-
-      item.collectable_week_bonus_day = days;
-
-      let this_month_end_time = moment(this_month_end_day + " 23:59:59");
-      let month_duration = moment.duration(this_month_end_time.diff(now));
-
-      var month_days = month_duration.days();
-
-      item.collectable_month_bonus_day = month_days;
 
     })
     if (deposit_exp != 0) {
@@ -388,6 +401,13 @@ const vipLevels = computed(() => {
     vipLevelGroups.value[i].deposit_exp = deposit_exp;
     vipLevelGroups.value[i].bet_exp = bet_exp;
     vipLevelGroups.value[i].rank_id = rank_id;
+    vipLevelGroups.value[i].free_spins_times = free_spins_times;
+    vipLevelGroups.value[i].week_award = week_award;
+    vipLevelGroups.value[i].month_award = month_award;
+    vipLevelGroups.value[i].upgrade_award = upgrade_award;
+    vipLevelGroups.value[i].availabe_daily_bonus_time = availabe_daily_bonus_time;
+    vipLevelGroups.value[i].collectable_week_bonus_day = collectable_week_bonus_day;
+    vipLevelGroups.value[i].collectable_month_bonus_day = collectable_month_bonus_day;
   }
   return getVipLevels.value
 })
@@ -1079,52 +1099,13 @@ onMounted(async () => {
           @slide-prev-transition-end="handleRewardSwiperPrevChange"
         >
           <SwiperSlide
-            v-for="(item, index) in vipLevels"
+            v-for="(item, index) in vipLevelGroups"
             :key="index"
             :virtualIndex="index"
           >
-            <div class="reward-body mx-2 pb-4" :class="tabSelect ? 'mt-4' : 'mt-4'">
-              <div class="text-800-14 white pt-4 mx-4" v-if="item.level == 0">
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[0].content }}
-              </div>
-              <div
-                class="text-800-14 white pt-4 mx-4"
-                v-if="item.level >= 1 && item.level < 25"
-              >
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[1].content }}
-              </div>
-              <div
-                class="text-800-14 white pt-4 mx-4"
-                v-if="item.level >= 25 && item.level < 50"
-              >
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[2].content }}
-              </div>
-              <div
-                class="text-800-14 white pt-4 mx-4"
-                v-if="item.level >= 50 && item.level < 75"
-              >
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[3].content }}
-              </div>
-              <div
-                class="text-800-14 white pt-4 mx-4"
-                v-if="item.level >= 75 && item.level < 99"
-              >
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[4].content }}
-              </div>
-              <div
-                class="text-800-14 white pt-4 mx-4"
-                v-if="item.level >= 100 && item.level < 149"
-              >
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[5].content }}
-              </div>
-              <div
-                class="text-800-14 white pt-4 mx-4"
-                v-if="item.level >= 150 && item.level < 200"
-              >
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[6].content }}
-              </div>
-              <div class="text-800-14 white pt-4 mx-4" v-if="item.level >= 200">
-                {{ t("vip.reward_text") }} {{ vipLevelGroups[7].content }}
+            <div class="reward-body mx-2 pb-4 mt-4" :class="tabSelect ? 'mt-4' : 'mt-4'">
+              <div class="text-800-14 white pt-4 mx-4">
+                {{ t("vip.reward_text") }} {{ item.content }}
               </div>
               <v-row class="mt-2 justify-center pb-2 mx-2">
                 <v-col cols="6" md="3" class="d-flex justify-center pa-1">
