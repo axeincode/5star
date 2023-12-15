@@ -32,7 +32,7 @@ const goToAboutPage = (index: number) => {
 </script>
 
 <template>
-  <div class="my-4" :class="mobileWidth > 600 ? 'mx-8' : 'mx-2'">
+  <div class="my-4" :class="mobileWidth > 600 ? 'mx-8 pc-max' : 'mx-2'">
     <!-------------------- footer bar -------------->
     <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-7'">
       <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
@@ -238,6 +238,11 @@ const goToAboutPage = (index: number) => {
     font-size: 11px;
     font-weight: 500;
   }
+}
+
+.pc-max {
+  max-width: 1300px;
+  margin: 0 auto !important;
 }
 
 .footer-icon-button {

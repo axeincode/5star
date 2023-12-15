@@ -24,6 +24,9 @@ const modules = [Pagination, Autoplay, Navigation];
 
 const svgIconColor = ref<string>("#7782AA");
 const interval = ref<any>(null);
+const liveWinBody = ref(null)
+const winBodyWidth = ref(0)
+const winBodyMargin = ref(0)
 
 /* vip level images */
 const vipLevelImgs = ref<Array<any>>([
@@ -118,6 +121,23 @@ const liveWinList = ref<Array<LiveWinItem>>([
 ]);
 
 const mobileWidth = computed(() => {
+  if (liveWinBody.value) {
+    const s = liveWinBody.value.clientWidth;
+    const st: any = s / 100;
+    const sti = parseInt(st);
+    console.log('zhelli', ((s % 100) / (sti - 1)))
+    // (winBodyWidth % 100) / parseInt(winBodyWidth / 100)
+    if ((s % 100) / (sti) < 8) {
+      // winBodyWidth.value = liveWinBody.value.clientWidth - (sti - 1) * 8;
+      winBodyWidth.value = sti
+      winBodyMargin.value = 8 + ((s % 100) / (st - 1))
+      console.log(winBodyMargin.value)
+    } else {
+      // winBodyWidth.value = liveWinBody.value.clientWidth;
+      winBodyWidth.value = sti
+      winBodyMargin.value = (s % 100) / (st - 1)
+    }
+  }
   return width.value;
 });
 
@@ -189,13 +209,13 @@ onUnmounted(() => {
       ></inline-svg>
       <p class="text-700-22 gray ml-2">{{ t("home.live_win.text_1") }}</p>
     </div>
-    <div class="live-win-body">
+    <div class="live-win-body" ref="liveWinBody">
       <Swiper
         :modules="modules"
-        :slidesPerView="mobileWidth / 100"
-        :spaceBetween="10"
+        :slidesPerView="winBodyWidth"
+        :spaceBetween="winBodyMargin"
         :autoplay="{
-          delay: 600,
+          delay: 600000,
           disableOnInteraction: false,
         }"
         class="mx-2"
@@ -268,6 +288,7 @@ onUnmounted(() => {
     align-items: center;
     width: 100%;
     height: 50px;
+    padding-left: 10px;
   }
   .live-win-body {
     // position: absolute;

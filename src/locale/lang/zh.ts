@@ -122,7 +122,7 @@ export const lang: langType = {
   navBar: {
     casino: 'CASINO',
     sport: 'SPORTS',
-    rewards_center: 'My VIP Perks',
+    rewards_center: 'RewardS Center',
     more: 'More',
     task_text: "TASK",
     unlock_text: "unlocked",

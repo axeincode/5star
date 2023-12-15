@@ -578,7 +578,7 @@ onMounted(() => {
     expand-on-hover
     :scrim-opacity="0.6"
     :touchless="true"
-    class="nav-background pb-100"
+    class="nav-background pb-62"
     :width="192"
     v-model="drawer"
   >
@@ -586,8 +586,8 @@ onMounted(() => {
       <v-list-item
         class="m-casino-toggle"
         :class="refferalAppBarShow ? 'mt-8' : ''"
-        style="height: 56px; visibility: hidden"
       >
+      <!-- style="height: 56px; visibility: hidden" -->
         <input type="checkbox" id="m-casino-toggle" />
         <label for="m-casino-toggle">
           <div class="casino">
@@ -602,6 +602,15 @@ onMounted(() => {
       </v-list-item>
     </template>
     <div class="m-nav-drawer-content" @scroll="navDrawerScroll">
+      <div class="m-space-between">
+        <div>
+          <img src="@/assets/public/svg/icon_public_1001.svg" width="18" />
+          <span class="card-title">{{ t("navBar.rewards_center") }}</span>
+        </div>
+        <div>
+          <img src="@/assets/public/svg/icon_public_501.svg" width="18" />
+        </div>
+      </div>
       <div class="m-vip-login-bonus mt-6" @click="openLoginBonusDialog">
         <img src="@/assets/public/image/img_public_1.png" class="m-vip-login-bonus-img" />
         <div class="m-vip-login-bonus-text">
@@ -1132,6 +1141,23 @@ onMounted(() => {
   opacity: 1 !important;
 }
 
+.m-space-between {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 14px;
+  margin-top: 20px;
+  cursor: pointer;
+  div {
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: 4px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+  }
+}
+
 .m-vip-login-bonus {
   position: relative;
   margin: 0px 14px;
@@ -1226,8 +1252,8 @@ onMounted(() => {
 // casino and sport toggle switch
 .m-casino-toggle {
   label {
-    width: 200px;
-    height: 40px;
+    width: 100%;
+    height: 34px;
     position: relative;
     display: block;
     background: #211f31;
@@ -1254,28 +1280,36 @@ onMounted(() => {
       color: black;
 
       img {
-        width: 20px;
-        height: 24px;
+        width: 16px;
+        // height: 24px;
         margin-right: 4px;
+      }
+
+      p {
+        font-size: 10px;
       }
     }
 
     .sport {
-      left: 120px;
+      left: calc(50% + 10px);
       transition: 0.3s;
       color: #7782aa;
 
       img {
-        width: 20px;
+        width: 16px;
         margin-right: 4px;
+      }
+
+      p {
+        font-size: 10px;
       }
     }
   }
 
   label:after {
     content: "";
-    width: 100px;
-    height: 36px;
+    width: 50%;
+    height: 30px;
     position: absolute;
     top: 2px;
     left: 2px;
@@ -1292,7 +1326,7 @@ onMounted(() => {
   }
 
   input:checked + label:after {
-    left: 198px;
+    left: 100%;
     transform: translateX(-100%);
   }
 
