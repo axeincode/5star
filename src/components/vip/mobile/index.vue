@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, computed, onMounted } from "vue"
+import { ref, watch, computed, onMounted, watchEffect } from "vue"
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { appBarStore } from "@/store/appBar";
@@ -29,6 +29,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
+import { useTimer } from 'vue-timer-hook';
 
 const modules = [Pagination];
 
@@ -63,6 +64,13 @@ const vipSlide = ref<boolean>(false);
 const descriptionSlide = ref<boolean>(false);
 const touchStartX = ref<number>(0);
 const selectedVipLevel = ref<string>(t('vip.vip_level_content.text_1'));
+const timer_value = ref<number>(0);
+
+const time = new Date();
+time.setSeconds(time.getSeconds() + timer_value.value); // 10 minutes timer
+
+const timer = useTimer(Number(time));
+timer.start();
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -127,34 +135,66 @@ const vipTabs = ref<Array<string>>([
 const vipLevelGroups = ref<Array<any>>([
   {
     image: img_vipemblem_2,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_1')
   },
   {
     image: img_vipemblem_1_24,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_2')
   },
   {
     image: img_vipemblem_25_49,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_3')
   },
   {
     image: img_vipemblem_50_74,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_4')
   },
   {
     image: img_vipemblem_75_99,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_5')
   },
   {
     image: img_vipemblem_100_149,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_6')
   },
   {
     image: img_vipemblem_159_199,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_7')
   },
   {
     image: img_vipemblem_200,
+    bet_award_rate: {
+      casino: 0,
+      sport: 0,
+    },
     content: t('vip.vip_level_content.text_8')
   },
 ]);
@@ -344,7 +384,18 @@ const vipLevels = computed(() => {
     let collectable_week_bonus_day = 0;
     let month_award = 0;
     let collectable_month_bonus_day = 0;
-    let upgrade_award = 0;
+    let uprank_award = 0;
+    let bet_award_rate: any = {
+      casino: 0,
+      sport: 0,
+    };
+    let free_withdrawals = 0;
+    let withdrawal_fee = 0;
+    let protection_conditions = 0;
+    let withdrawals_amonut = 0;
+    let withdrawal_times = 0
+    let month_withdrawals_amount = 0;
+    let month_withdrawals_times = 0;
     getVipLevels.value.map(item => {
 
       if (item.level == vipInfo.value.level) {
@@ -355,15 +406,34 @@ const vipLevels = computed(() => {
 
         deposit_exp += Number(item.deposit_exp)
         bet_exp += Number(item.bet_exp)
+        protection_conditions += Number(item.protection_conditions);
         free_spins_times = item.free_spins_times;
         week_award = item.week_award;
         month_award = item.month_award;
-        upgrade_award = item.upgrade_award;
+        uprank_award = item.uprank_award;
+        bet_award_rate = item.bet_award_rate == null ? {
+          casino: 0,
+          sport: 0,
+        } : item.bet_award_rate;
+        free_withdrawals = item.free_withdrawals;
+        withdrawal_fee = item.withdrawal_fee;
+        withdrawals_amonut = item.withdrawals_amonut == undefined || item.withdrawals_amonut == null ? 0 : Number(item.withdrawals_amonut);
+        withdrawal_times = item.withdrawal_times == undefined || item.withdrawal_times == null ? 0 : Number(item.withdrawal_times);
+        month_withdrawals_amount = item.month_withdrawals_amount == undefined || item.month_withdrawals_amount == null ? 0 : Number(item.month_withdrawals_amount);
+        month_withdrawals_times = item.month_withdrawals_times == undefined || item.month_withdrawals_times == null ? 0 : Number(item.month_withdrawals_times);
 
-        let current_date = moment().format("YYYY-MM-DD");
+        let current_date = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
         let end_time = moment(current_date + " 23:59:59");
         const now = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD HH:mm:ss");
         let duration = moment.duration(end_time.diff(now));
+
+        console.log("duration:::::::::::::::", duration.valueOf());
+
+        timer_value.value = Math.floor(Number(duration.valueOf())/1000)
+        const time = new Date();
+        time.setSeconds(time.getSeconds() + timer_value.value);
+        timer.restart(Number(time));
+        console.log("time==========", time.getSeconds())
 
         var hours = duration.hours();
         var minutes = duration.minutes().toString().length == 1 ? "0" + duration.minutes() : duration.minutes();
@@ -400,14 +470,22 @@ const vipLevels = computed(() => {
     }
     vipLevelGroups.value[i].deposit_exp = deposit_exp;
     vipLevelGroups.value[i].bet_exp = bet_exp;
+    vipLevelGroups.value[i].protection_conditions = protection_conditions;
     vipLevelGroups.value[i].rank_id = rank_id;
     vipLevelGroups.value[i].free_spins_times = free_spins_times;
     vipLevelGroups.value[i].week_award = week_award;
     vipLevelGroups.value[i].month_award = month_award;
-    vipLevelGroups.value[i].upgrade_award = upgrade_award;
+    vipLevelGroups.value[i].uprank_award = uprank_award;
     vipLevelGroups.value[i].availabe_daily_bonus_time = availabe_daily_bonus_time;
     vipLevelGroups.value[i].collectable_week_bonus_day = collectable_week_bonus_day;
     vipLevelGroups.value[i].collectable_month_bonus_day = collectable_month_bonus_day;
+    vipLevelGroups.value[i].bet_award_rate = bet_award_rate;
+    vipLevelGroups.value[i].free_withdrawals = free_withdrawals;
+    vipLevelGroups.value[i].withdrawal_fee = withdrawal_fee;
+    vipLevelGroups.value[i].withdrawals_amonut = withdrawals_amonut;
+    vipLevelGroups.value[i].withdrawal_times = withdrawal_times;
+    vipLevelGroups.value[i].month_withdrawals_amount = month_withdrawals_amount;
+    vipLevelGroups.value[i].month_withdrawals_times = month_withdrawals_times;
   }
   return getVipLevels.value
 })
@@ -950,8 +1028,14 @@ const goToTransactionPage = () => {
 onMounted(async () => {
   window.addEventListener('scroll', handleWindowScroll);
   await dispatchVipTasks();
+  console.log(vipLevels.value);
   spinCardHeight2.value = spinCardItem.value?.$el?.clientHeight + 60;
   vipMissionHeight2.value = missionCardItem.value?.$el?.clientHeight + 20;
+  watchEffect(async () => {
+    if(timer.isExpired.value) {
+        console.warn('IsExpired')
+    }
+  })
 })
 </script>
 
@@ -1130,7 +1214,10 @@ onMounted(async () => {
                     </div>
                     <div class="mt-2 text-400-9 white">
                       {{ t("vip.reward_card_1.text_2") }}
-                      <font class="yellow">{{ item.availabe_daily_bonus_time }}</font>
+                      <!-- <font class="yellow">{{ item.availabe_daily_bonus_time }}</font> -->
+                      <font class="yellow"
+                        >{{ timer.hours }}:{{ timer.minutes }}:{{ timer.seconds }}</font
+                      >
                     </div>
                   </div>
                 </v-col>
@@ -1227,7 +1314,7 @@ onMounted(async () => {
                       />
                     </div>
                     <div class="mt-6 text-600-9 white">
-                      {{ t("vip.reward_card_4.text_1") }} R$ {{ item.upgrade_award }}
+                      {{ t("vip.reward_card_4.text_1") }} R$ {{ item.uprank_award }}
                     </div>
                     <div class="mt-2 mx-4">
                       <v-btn
@@ -1263,7 +1350,7 @@ onMounted(async () => {
           @touchmove="handleCashbackTouchMove"
         >
           <SwiperSlide
-            v-for="(item, index) in vipLevels"
+            v-for="(item, index) in vipLevelGroups"
             :key="index"
             :virtualIndex="index"
           >
@@ -1302,55 +1389,9 @@ onMounted(async () => {
                 <div class="pa-2">
                   <v-row class="ma-0 pa-0 align-center">
                     <v-col cols="5">
-                      <p class="text-500-12 white" v-if="item.level == 0">
+                      <p class="text-500-12 white">
                         {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p
-                        class="text-500-12 white"
-                        v-if="item.level >= 1 && item.level < 25"
-                      >
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p
-                        class="text-500-12 white"
-                        v-if="item.level >= 25 && item.level < 50"
-                      >
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p
-                        class="text-500-12 white"
-                        v-if="item.level >= 50 && item.level < 75"
-                      >
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p
-                        class="text-500-12 white"
-                        v-if="item.level >= 75 && item.level < 99"
-                      >
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p
-                        class="text-500-12 white"
-                        v-if="item.level >= 100 && item.level < 149"
-                      >
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p
-                        class="text-500-12 white"
-                        v-if="item.level >= 150 && item.level < 200"
-                      >
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
-                      </p>
-                      <p class="text-500-12 white" v-if="item.level >= 200">
-                        {{ t("vip.cashback_body.text_3") }}
-                        {{ vipLevelGroups[0].content }}
+                        {{ item.content }}
                       </p>
                     </v-col>
                     <v-col cols="7" class="d-flex">
@@ -1369,7 +1410,7 @@ onMounted(async () => {
                       cols="6"
                       md="3"
                       class="pa-1"
-                      v-for="(cashItemKey, index) in Object.keys(item.bet_award_rate)"
+                      v-for="(cashItemKey, index) in Object.keys(item?.bet_award_rate)"
                       :key="index"
                     >
                       <v-card
@@ -1812,65 +1853,13 @@ onMounted(async () => {
           @swiper="getDescriptionSwiperRef"
         >
           <SwiperSlide
-            v-for="(item, index) in vipLevels"
+            v-for="(item, index) in vipLevelGroups"
             :key="index"
             :virtualIndex="index"
           >
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level == 0"
-            >
-              {{ vipLevelGroups[0].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 1 && item.level < 25"
-            >
-              {{ vipLevelGroups[1].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 25 && item.level < 50"
-            >
-              {{ vipLevelGroups[2].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 50 && item.level < 75"
-            >
-              {{ vipLevelGroups[3].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 75 && item.level < 99"
-            >
-              {{ vipLevelGroups[4].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 100 && item.level < 149"
-            >
-              {{ vipLevelGroups[5].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 150 && item.level < 200"
-            >
-              {{ vipLevelGroups[6].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
-            </div>
-            <div
-              class="m-benifit-description-header pa-4 text-700-16 white"
-              v-if="item.level >= 200"
-            >
-              {{ vipLevelGroups[7].content
-              }}{{ t("vip.benifit_description_body.text_1") }}
+            <div class="m-benifit-description-header pa-4 text-700-16 white">
+              {{ item.content }}
+              {{ t("vip.benifit_description_body.text_1") }}
             </div>
             <v-row class="mt-2 mx-1">
               <v-col cols="6" class="ma-0 pa-1">
@@ -1889,14 +1878,14 @@ onMounted(async () => {
                       <p class="text-500-12 text-gray">
                         {{ t("vip.benifit_description_body.text_4") }}
                       </p>
-                      <p class="text-700-16 yellow mt-1">R$ 100</p>
+                      <p class="text-700-16 yellow mt-1">R$ {{ item.deposit_exp }}</p>
                     </v-col>
                     <v-divider></v-divider>
                     <v-col cols="12">
                       <p class="text-500-12 text-gray">
                         {{ t("vip.benifit_description_body.text_5") }}
                       </p>
-                      <p class="text-700-16 yellow mt-1">R$ 800</p>
+                      <p class="text-700-16 yellow mt-1">R$ {{ item.bet_exp }}</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -1917,7 +1906,9 @@ onMounted(async () => {
                       <p class="text-500-12 text-gray">
                         {{ t("vip.benifit_description_body.text_5") }}
                       </p>
-                      <p class="text-700-16 yellow mt-1">R$ 800</p>
+                      <p class="text-700-16 yellow mt-1">
+                        R$ {{ item.protection_conditions }}
+                      </p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -1932,57 +1923,11 @@ onMounted(async () => {
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
                     <v-col cols="6">
                       <div class="benifit-description-border">
-                        <p class="text-500-12 text-gray" v-if="item.level == 0">
-                          {{ vipLevelGroups[1].content }}
+                        <p class="text-500-12 text-gray">
+                          {{ item.content }}
                           {{ t("vip.benifit_description_body.text_7") }}
                         </p>
-                        <p
-                          class="text-500-12 text-gray"
-                          v-if="item.level >= 1 && item.level < 25"
-                        >
-                          {{ vipLevelGroups[2].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p
-                          class="text-500-12 text-gray"
-                          v-if="item.level >= 25 && item.level < 50"
-                        >
-                          {{ vipLevelGroups[3].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p
-                          class="text-500-12 text-gray"
-                          v-if="item.level >= 50 && item.level < 75"
-                        >
-                          {{ vipLevelGroups[4].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p
-                          class="text-500-12 text-gray"
-                          v-if="item.level >= 75 && item.level < 99"
-                        >
-                          {{ vipLevelGroups[5].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p
-                          class="text-500-12 text-gray"
-                          v-if="item.level >= 100 && item.level < 149"
-                        >
-                          {{ vipLevelGroups[6].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p
-                          class="text-500-12 text-gray"
-                          v-if="item.level >= 150 && item.level < 200"
-                        >
-                          {{ vipLevelGroups[7].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p class="text-500-12 text-gray" v-if="item.level >= 200">
-                          {{ vipLevelGroups[7].content }}
-                          {{ t("vip.benifit_description_body.text_7") }}
-                        </p>
-                        <p class="text-700-16 yellow mt-1">R$ 10</p>
+                        <p class="text-700-16 yellow mt-1">R$ {{ item.uprank_award }}</p>
                       </div>
                     </v-col>
                     <v-col cols="6">
@@ -1992,7 +1937,8 @@ onMounted(async () => {
                             {{ t("vip.benifit_description_body.text_8") }}
                           </p>
                           <p class="text-700-16 yellow mt-1">
-                            R$ 10 <span class="text-500-12">+ 1 free spin</span>
+                            R$ {{ item.week_award }}
+                            <span class="text-500-12">+ 1 free spin</span>
                           </p>
                         </div>
                       </div>
@@ -2002,7 +1948,8 @@ onMounted(async () => {
                         {{ t("vip.benifit_description_body.text_9") }}
                       </p>
                       <p class="text-700-16 yellow mt-1">
-                        R$ 30 <span class="text-500-12">+ 5 free spin</span>
+                        R$ {{ item.month_award }}
+                        <span class="text-500-12">+ 5 free spin</span>
                       </p>
                     </v-col>
                   </v-row>
@@ -2016,15 +1963,22 @@ onMounted(async () => {
                 </p>
                 <v-card theme="dark" color="#1C1929" class="mt-2">
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
-                    <v-col cols="6">
-                      <div class="benifit-description-border">
-                        <p class="text-500-12 text-gray">
-                          {{ t("vip.benifit_description_body.text_11") }}
-                        </p>
-                        <p class="text-700-16 yellow mt-1">0.4%</p>
-                      </div>
-                    </v-col>
-                    <v-col cols="6">
+                    <template
+                      v-for="(cashItemKey, index) in Object.keys(item?.bet_award_rate)"
+                      :key="index"
+                    >
+                      <v-col cols="6">
+                        <div :class="index % 2 == 0 ? 'benifit-description-border' : ''">
+                          <p class="text-500-12 text-gray">
+                            {{ cashItemKey }}
+                          </p>
+                          <p class="text-700-16 yellow mt-1">
+                            {{ item.bet_award_rate[cashItemKey] }}%
+                          </p>
+                        </div>
+                      </v-col>
+                    </template>
+                    <!-- <v-col cols="6">
                       <div class="d-flex justify-start">
                         <div>
                           <p class="text-500-12 text-gray">
@@ -2051,7 +2005,7 @@ onMounted(async () => {
                         </p>
                         <p class="text-700-16 yellow mt-1">0.4%</p>
                       </div>
-                    </v-col>
+                    </v-col> -->
                   </v-row>
                 </v-card>
               </v-col>
@@ -2102,7 +2056,9 @@ onMounted(async () => {
                         <p class="text-500-12 text-gray">
                           {{ t("vip.benifit_description_body.text_20") }}
                         </p>
-                        <p class="text-700-16 yellow mt-1">0.4%</p>
+                        <p class="text-700-16 yellow mt-1">
+                          {{ item.withdrawal_times }}%
+                        </p>
                       </div>
                     </v-col>
                     <v-col cols="6" class="py-1">
@@ -2114,7 +2070,9 @@ onMounted(async () => {
                           <p class="text-500-12 text-gray">
                             {{ t("vip.benifit_description_body.text_21") }}
                           </p>
-                          <p class="text-700-16 yellow mt-1">0.5%</p>
+                          <p class="text-700-16 yellow mt-1">
+                            {{ item.month_withdrawals_times }}%
+                          </p>
                         </div>
                       </div>
                     </v-col>
@@ -2127,7 +2085,9 @@ onMounted(async () => {
                           <p class="text-500-12 text-gray">
                             {{ t("vip.benifit_description_body.text_24") }}
                           </p>
-                          <p class="text-700-16 yellow mt-1">0.5%</p>
+                          <p class="text-700-16 yellow mt-1">
+                            {{ item.withdrawals_amonut }}%
+                          </p>
                         </div>
                       </div>
                     </v-col>
@@ -2139,7 +2099,9 @@ onMounted(async () => {
                         <p class="text-500-12 text-gray">
                           {{ t("vip.benifit_description_body.text_24") }}
                         </p>
-                        <p class="text-700-16 yellow mt-1">0.4%</p>
+                        <p class="text-700-16 yellow mt-1">
+                          {{ item.month_withdrawals_times }}%
+                        </p>
                       </div>
                     </v-col>
                   </v-row>
