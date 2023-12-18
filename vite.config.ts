@@ -66,6 +66,12 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
         '.vue',
       ],
     },
+    optimizeDeps: {
+      exclude: ['vuetify'],
+      entries: [
+        './src/**/*.vue',
+      ],
+    },
     css: {
       preprocessorOptions: {
         scss: {

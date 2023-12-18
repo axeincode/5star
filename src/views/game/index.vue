@@ -343,6 +343,9 @@ const mobileWidth = computed(() => {
 
 const enterGameItem = computed(() => {
   const { getEnterGameItem } = storeToRefs(gameStore());
+  if (getEnterGameItem.value.method == "HTML") {
+    getEnterGameItem.value.weburl = atob(getEnterGameItem.value.weburl);
+  }
   return getEnterGameItem.value;
 });
 
@@ -395,8 +398,17 @@ onUnmounted(() => {
         </div>
       </div>
       <iframe
+        v-if="enterGameItem.method == 'HTML'"
         ref="frame"
-        :src="enterGameItem.weburl"
+        :srcdoc="enterGameItem.weburl"
+        :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
+        class="home-game-frame-area"
+        @load="handleIframeLoad"
+      ></iframe>
+      <iframe
+        v-else
+        ref="frame"
+        :srcdoc="enterGameItem.weburl"
         :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
         class="home-game-frame-area"
         @load="handleIframeLoad"
@@ -413,10 +425,18 @@ onUnmounted(() => {
         </div>
       </div>
       <iframe
+        v-if="enterGameItem.method == 'HTML'"
+        :srcdoc="enterGameItem.weburl"
+        class="home-game-frame-area"
+        :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
+        @load="handleIframeLoad"
+      ></iframe>
+      <iframe
         :src="enterGameItem.weburl"
         class="home-game-frame-area"
         :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
         @load="handleIframeLoad"
+        v-else
       ></iframe>
     </div>
     <!--------------------- Game History ---------------------->
