@@ -578,7 +578,7 @@ onMounted(() => {
     expand-on-hover
     :scrim-opacity="0.6"
     :touchless="true"
-    class="nav-background pb-62"
+    class="nav-background pb-100"
     :width="192"
     v-model="drawer"
   >
@@ -586,8 +586,8 @@ onMounted(() => {
       <v-list-item
         class="m-casino-toggle"
         :class="refferalAppBarShow ? 'mt-8' : ''"
+        style="height: 56px; visibility: hidden"
       >
-      <!-- style="height: 56px; visibility: hidden" -->
         <input type="checkbox" id="m-casino-toggle" />
         <label for="m-casino-toggle">
           <div class="casino">
@@ -602,7 +602,7 @@ onMounted(() => {
       </v-list-item>
     </template>
     <div class="m-nav-drawer-content" @scroll="navDrawerScroll">
-      <div class="m-space-between">
+      <!-- <div class="m-space-between">
         <div>
           <img src="@/assets/public/svg/icon_public_1001.svg" width="18" />
           <span class="card-title">{{ t("navBar.rewards_center") }}</span>
@@ -610,7 +610,7 @@ onMounted(() => {
         <div>
           <img src="@/assets/public/svg/icon_public_501.svg" width="18" />
         </div>
-      </div>
+      </div> -->
       <div class="m-vip-login-bonus mt-6" @click="openLoginBonusDialog">
         <img src="@/assets/public/image/img_public_1.png" class="m-vip-login-bonus-img" />
         <div class="m-vip-login-bonus-text">

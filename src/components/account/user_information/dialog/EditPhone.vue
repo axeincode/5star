@@ -39,6 +39,7 @@ const errMessage = computed((): string => {
 })
 
 const validatePhone = (): boolean => {
+    phone.value = (phone.value + '').replace(/[^\d]/g, '')
     return phone.value != "" && phone.value != "+"
 }
 
@@ -100,7 +101,7 @@ const updatePhone = async () => {
         <Header @userDialogHide="emit('userDialogHide')" :title="title" />
         <v-row class="mt-10 relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
             <v-text-field :label="t('account.item.phone_text')" class="form-textfield dark-textfield" variant="solo"
-                density="comfortable" v-model="phone" />
+                density="comfortable" v-model="phone" oninput="value = (value + '').replace(/[^\d]/g, '')" onblur="value = (value + '').replace(/[^\d]/g, '')" onfocus="value = (value + '').replace(/[^\d]/g, '')" />
         </v-row>
         <v-row class="mt-10" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
             <v-btn class="ma-3 mt-8 button-bright text-none" width="-webkit-fill-available" :loading="loading"

@@ -25,6 +25,8 @@ const loading = ref<boolean>(false);
 const notificationShow = ref<boolean>(false);
 const checkIcon = ref<string>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 const notificationText = ref<string>('');
+const emailPartName = ref<string>("");
+const mailCardHeight = ref<number>(0);
 
 const mobileWidth = computed(() => {
     return width.value
@@ -113,6 +115,33 @@ const updateEmail = async () => {
         loading.value = false;
     }
 }
+const handleEmailBlur = () => {
+    setTimeout(() => {
+        mailCardHeight.value = 0;
+    }, 100);
+};
+const mergeEmail = (mail: string) => {
+    email.value = email.value.split("@")[0] + mail;
+    setTimeout(() => {
+        mailCardHeight.value = 0;
+    }, 100);
+};
+const handleEmailChange = () => {
+    if (email.value.includes("@")) {
+        emailPartName.value = email.value.split("@")[0];
+        mailCardHeight.value = 260;
+    } else {
+        setTimeout(() => {
+            mailCardHeight.value = 0;
+        }, 100);
+    }
+};
+const handleEmailFocus = () => {
+    if (email.value.includes("@")) {
+        emailPartName.value = email.value.split("@")[0];
+        mailCardHeight.value = 260;
+    }
+};
 </script>
 
 <template>
@@ -120,8 +149,42 @@ const updateEmail = async () => {
         <Header @userDialogHide="emit('userDialogHide')" :title="title" />
         <v-row class="mt-6 relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
             <v-text-field :label="t('account.item.email_text')" class="form-textfield dark-textfield" variant="solo"
-                density="comfortable" v-model="email" />
+                density="comfortable" v-model="email" :onblur="handleEmailBlur" @input="handleEmailChange" :onfocus="handleEmailFocus" />
         </v-row>
+        <div class="login-mail-card edit-mail" :style="{ height: mailCardHeight + 'px' }">
+          <v-list theme="dark" bg-color="#211F31">
+            <v-list-item
+              class="text-500-16 white"
+              value="gmail"
+              @click="mergeEmail('@gmail.com')"
+              >{{ emailPartName }}@gmail.com</v-list-item
+            >
+            <v-list-item
+              class="text-500-16 white"
+              value="hotmail"
+              @click="mergeEmail('@hotmail.com')"
+              >{{ emailPartName }}@hotmail.com</v-list-item
+            >
+            <v-list-item
+              class="text-500-16 white"
+              value="yahoo"
+              @click="mergeEmail('@yahoo.com')"
+              >{{ emailPartName }}@yahoo.com</v-list-item
+            >
+            <v-list-item
+              class="text-500-16 white"
+              value="icloud"
+              @click="mergeEmail('@icloud.com')"
+              >{{ emailPartName }}@icloud.com</v-list-item
+            >
+            <v-list-item
+              class="text-500-16 white"
+              value="outlook"
+              @click="mergeEmail('@outlook.com')"
+              >{{ emailPartName }}@outlook.com</v-list-item
+            >
+          </v-list>
+        </div>
         <v-row class="relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
             <v-text-field :label="t('account.password.current_text')" class="form-textfield dark-textfield" variant="solo"
                 density="comfortable" :type="isShowCurrentPassword ? 'text' : 'password'" v-model="password" />
@@ -194,5 +257,10 @@ const updateEmail = async () => {
   background-size: 18px;
   color: transparent;
   opacity: 1;
+}
+
+.edit-mail {
+    width: 368px;
+    top: 160px;
 }
 </style>

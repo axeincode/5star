@@ -295,7 +295,7 @@ onMounted(() => {
       </v-row>
       <!-- </v-card> -->
     </v-list>
-    <v-list density="compact" nav>
+    <v-list density="compact" nav class="p-m-list">
       <v-list-item value="earn free" class="ma-0 pa-0">
         <img src="@/assets/public/svg/img_public_20.svg" class="earn-free-img" />
         <img
@@ -654,6 +654,10 @@ onMounted(() => {
     font-size: 14px;
     color: #7782aa;
   }
+}
+
+.p-m-list {
+  padding-left: 0 !important;
 }
 
 .p-vip-login-bonus {
