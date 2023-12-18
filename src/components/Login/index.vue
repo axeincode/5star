@@ -12,6 +12,8 @@ import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { socketStore } from "@/store/socket";
 import { vipStore } from "@/store/vip";
 import { useToast } from "vue-toastification";
+import { useRoute } from "vue-router";
+import { gameStore } from "@/store/game";
 
 const Login = defineComponent({
   components: {
@@ -30,6 +32,8 @@ const Login = defineComponent({
     const { dispatchSocketConnect } = socketStore();
     const { dispatchVipInfo } = vipStore();
     const { dispatchVipLevels } = vipStore();
+    const route = useRoute();
+    const { dispatchGameEnter, getGameBetbyInit, closeKill } = gameStore();
 
     // initiate component state
     const state = reactive({
@@ -131,7 +135,11 @@ const Login = defineComponent({
         //   import.meta.url
         // ).href;
         // state.notificationText = t("login.submit_result.success_text");
-
+        if (route.name == 'BetBy') {
+          await closeKill();
+          await dispatchGameEnter({ id: route.params.id });
+          await getGameBetbyInit();
+        }
         const toast = useToast();
         toast.success(t("login.submit_result.success_text"), {
           timeout: 3000,

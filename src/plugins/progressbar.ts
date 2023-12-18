@@ -1,5 +1,6 @@
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import { gameStore } from "@/store/game";
 NProgress.configure({ showSpinner: false }); // 进度环显示/隐藏
 
 /**
@@ -19,6 +20,10 @@ export default function initProgress(router: {
 }) {
     router.afterEach(cancelTopProgress);
     router.beforeEach((to, from, next) => {
+        if (to.name !== 'BetBy') {
+            const { closeKill } = gameStore();
+            closeKill();
+        }
         tryInitProgress();
         return next();
     });

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useI18n } from 'vue-i18n';
 import { type GetGameOriginalData } from "@/interface/navBar";
 import { setLang } from "@/locale/index";
@@ -12,11 +13,13 @@ import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
 import icon_public_40 from "@/assets/public/svg/icon_public_40.svg";
 import icon_public_46 from "@/assets/public/svg/icon_public_46.svg";
 import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
+import { gameStore } from "@/store/game";
 
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
+const { setLanguage } = gameStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -33,6 +36,7 @@ const offCheckboxColor = ref<string>("#7782AA");
 
 // mobile version name
 const { name, width } = useDisplay()
+const router = useRouter();
 
 const mobileVersion = computed(() => {
     return name.value
@@ -121,14 +125,32 @@ const handleLanguageDropdown = (item: string) => {
     switch (item) {
         case t('navBar.language.english'):
             setLang("en");
+            setLanguage('en');
             break;
         case t('navBar.language.portuguese'):
             setLang("pt");
+            setLanguage('pt');
             break;
         case t('navBar.language.espanola'):
             setLang("es");
+            setLanguage('es');
             break;
     }
+}
+
+const languageText = () => {
+   const item = localStorage.getItem('lang');
+   switch (item) {
+      case 'en':
+        language.value = t('navBar.language.english');
+        break;
+      case 'pt':
+        language.value = t('navBar.language.portuguese');
+        break;
+      case 'es':
+        language.value = t('navBar.language.espanola');
+        break;
+   }
 }
 
 const openRouletteBonusDialog = () => {
@@ -173,8 +195,13 @@ const offIconTransform = (el: any) => {
     return el
 }
 
+const goGameBetBy = () => {
+  router.push(`/betby/9999`);
+}
+
 onMounted(() => {
     drawer.value = mobileWidth.value < 1280 ? false : true;
+    languageText();
 })
 </script>
 
@@ -384,6 +411,7 @@ onMounted(() => {
         prepend-avatar="@/assets/public/svg/icon_public_40.svg"
         :title="t('navBar.sport')"
         value="sport"
+        @click="goGameBetBy"
       ></v-list-item>
     </v-list>
     <v-divider class="divider"></v-divider>

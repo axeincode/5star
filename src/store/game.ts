@@ -3,6 +3,9 @@ import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
 import type * as Game from "@/interface/game";
 import { handleException } from './exception';
+import { authStore } from "@/store/auth";
+import { appBarStore } from "@/store/appBar";
+import { useRoute } from "vue-router";
 
 export const gameStore = defineStore({
     id: 'game',
@@ -33,7 +36,9 @@ export const gameStore = defineStore({
         } as Game.GameHistoryResponse,
         userSpinPage: {},
         userSpin: {},
-        userActivityList: {}
+        userActivityList: {},
+        language: localStorage.getItem('lang') || 'en',
+        betby: null
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -50,7 +55,8 @@ export const gameStore = defineStore({
         gameHistoryItem: (state) => state.gameHistoryItem,
         getUserSpinPage: (state) => state.userSpinPage,
         getUserSpin: (state) => state.userSpin,
-        getUserActivityList: (state) => state.userActivityList
+        getUserActivityList: (state) => state.userActivityList,
+        getLanguage: (state) => state.language
     },
     actions: {
         // set functions
@@ -106,8 +112,43 @@ export const gameStore = defineStore({
             this.userSpin = userSpin
         },
         setUserActivityList(activityList: any) {
-            console.log('這裏呀', activityList)
             this.userActivityList = activityList
+        },
+        setLanguage(lang: string) {
+            this.language = lang;
+        },
+        openDialog() {
+            const { setAuthModalType } = authStore();
+            const { setOverlayScrimShow } = appBarStore();
+            setAuthModalType('login');
+            setOverlayScrimShow(false);
+        },
+        closeKill() {
+            this.betby?.kill();
+        },
+        async getGameBetbyInit() {
+            this.betby = new BTRenderer().initialize(
+            {
+                token: this.enterGameItem.reserve || '',
+                lang: this.language,
+                target: document.getElementById('betby'),
+                brand_id: "2331516940205559808",
+                betSlipOffsetTop: 0,
+                betslipZIndex: 999,
+                themeName: "default",
+                onLogin: () => {
+                    this.openDialog();
+                },
+                onTokenExpired: async() => {
+                    this.closeKill();
+                    await this.dispatchGameEnter({ id: 9999 });
+                    await this.getGameBetbyInit();
+                },
+                onSessionRefresh: async() => {
+                    this.closeKill();
+                    await this.getGameBetbyInit();
+                }
+            });
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {

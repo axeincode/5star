@@ -73,6 +73,7 @@ const offCheckboxColor = ref<string>("#7782AA");
 
 // mobile version name
 const { name, width } = useDisplay()
+const { setLanguage } = gameStore();
 
 const mobileVersion = computed(() => {
   return name.value
@@ -235,14 +236,32 @@ const handleLanguageDropdown = (item: string) => {
   switch (item) {
     case t('navBar.language.english'):
       setLang("en");
+      setLanguage('en');
       break;
     case t('navBar.language.portuguese'):
       setLang("pt");
+      setLanguage('pt');
       break;
     case t('navBar.language.espanola'):
       setLang("es");
+      setLanguage('es');
       break;
   }
+}
+
+const languageText = () => {
+   const item = localStorage.getItem('lang');
+   switch (item) {
+      case 'en':
+        language.value = t('navBar.language.english');
+        break;
+      case 'pt':
+        language.value = t('navBar.language.portuguese');
+        break;
+      case 'es':
+        language.value = t('navBar.language.espanola');
+        break;
+   }
 }
 
 window.addEventListener('scroll', function () {
@@ -567,8 +586,13 @@ const handleNavbarItem = (navbarText: string) => {
   }
 }
 
+const goGameBetBy = () => {
+  router.push(`/betby/9999`);
+}
+
 onMounted(() => {
   drawer.value = mobileWidth.value < 1280 ? false : true;
+  languageText();
 })
 </script>
 
@@ -594,7 +618,7 @@ onMounted(() => {
             <img src="@/assets/public/svg/icon_public_34.svg" />
             <p>{{ t("navBar.casino") }}</p>
           </div>
-          <div class="sport">
+          <div class="sport" @click="goGameBetBy">
             <img src="@/assets/public/svg/icon_public_40.svg" />
             <p>{{ t("navBar.sport") }}</p>
           </div>
