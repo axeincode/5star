@@ -751,7 +751,11 @@ onMounted(() => {
             height="60px"
             width="262px"
           >
-            <img src="@/assets/public/image/img_public_10.png" class="cashback-btn-img" />
+            <img
+              src="@/assets/public/image/img_public_10.png"
+              widh="100"
+              class="cashback-btn-img"
+            />
             {{ t("vip.cashback_body.text_2") }}
           </v-btn>
         </div>

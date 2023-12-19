@@ -13,7 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
-import MConfirm from "@/components/global/confirm/mobile";
+import MConfirm from "@/components/global/confirm/mobile/index.vue";
 
 const emit = defineEmits<{ (e: "closeLoginBonusDialog"): void }>();
 const { t } = useI18n();
@@ -116,13 +116,13 @@ const handleLoginBonus = (day: number, level: number, award: number) => {
 const submitConfirm = async () => {
   await dispatchVipSignInReward();
   if (success.value) {
-    localStorage.setItem("signin_day", selectedDay + 1);
+    localStorage.setItem("signin_day", (selectedDay.value + 1).toString());
   }
 };
 
 onMounted(async () => {
   if (localStorage.getItem("signin_day") == undefined) {
-    localStorage.setItem("signin_day", 0);
+    localStorage.setItem("signin_day", "0");
   } else {
     loginBonusItem.value.signin_day = Number(localStorage.getItem("signin_day"));
   }

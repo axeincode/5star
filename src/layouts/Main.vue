@@ -5,7 +5,7 @@ import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
 import { authStore } from "@/store/auth";
 import { loginBonusStore } from "@/store/loginBonus";
-import { menuStore } from "@/store/menu";
+import { vipStore } from "@/store/vip";
 import { type GetUserInfo } from "@/interface/user";
 import { storeToRefs } from 'pinia';
 import { useI18n } from "vue-i18n";
@@ -34,6 +34,8 @@ import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
 import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
 import MAccountDialog from "@/views/account/dialog/index.vue";
 import MenuSemiCircle from "@/components/global/menu_semi_circle/index.vue";
+import LevelUpDialog from "@/components/level_up/index.vue";
+import MLevelUpDialog from "@/components/level_up/mobile/index.vue";
 
 // import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 import { mailStore } from "@/store/mail";
@@ -83,6 +85,7 @@ const { setGetBonusDialogVisible } = loginBonusStore();
 const { setUserNavBarToggle } = appBarStore();
 const { setMailMenuShow } = mailStore();
 const { setNavBarToggle } = appBarStore();
+const { setLevelUpDialogVisible } = vipStore();
 
 type dialogType = "login" | "signup" | "signout";
 
@@ -112,6 +115,7 @@ const mobileDialog = ref<boolean>(false);
 const mobileDialogCheck = ref<boolean>(false);
 const accountDialog = ref<boolean>(false);
 const nickNameDialog = ref<boolean>(false);
+const levelUpDialog = ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
@@ -397,6 +401,10 @@ const accountDialogVisible = computed(() => {
   const { getAccountDialogShow } = storeToRefs(appBarStore());
   return getAccountDialogShow.value;
 })
+const levelUpDialogVisible = computed(() => {
+  const { getLevelUpDialogVisible }= storeToRefs(vipStore());
+  return getLevelUpDialogVisible.value
+})
 
 const accountDialogClose = () => {
   accountDialog.value = false;
@@ -428,8 +436,20 @@ watch(mailMenuShow, (value) => {
   console.log(value);
 })
 
+watch(levelUpDialogVisible, (value: boolean) => {
+  levelUpDialog.value = value;
+})
+
 const closeReferDialog = () => {
   setRefferalDialogShow(false);
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
+  setOverlayScrimShow(false);
+}
+
+const closeLevelUpDialog = () => {
+  setLevelUpDialogVisible(false);
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
@@ -446,6 +466,7 @@ const handleResize = () => {
 }
 
 onMounted(() => {
+  setLevelUpDialogVisible(true);
   window.addEventListener("resize", handleResize);
   mainHeight.value = window.innerHeight;
   if (overlayScrimShow.value) {
@@ -627,6 +648,18 @@ onMounted(() => {
     >
       <Signout v-if="mobileVersion != 'sm'" @close="closeDialog('signout')" />
       <MSignout v-else @close="closeDialog('signout')" />
+    </v-dialog>
+
+    <!----------------------------------- level up dialog --------------------------------->
+
+    <v-dialog
+      v-model="levelUpDialog"
+      :width="mobileWidth < 600 ? '336' : '471'"
+      :scrim="mobileVersion == 'sm' ? false : true"
+      @click:outside="closeLevelUpDialog"
+    >
+      <LevelUpDialog v-if="mobileWidth > 600" />
+      <MLevelUpDialog v-else />
     </v-dialog>
 
     <!----------------------------------- refferal dialog --------------------------------->

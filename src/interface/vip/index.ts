@@ -151,6 +151,29 @@ export interface VipSignInData {
     vip_level: number
 }
 
+export interface VipLevelUpListData {
+    level: number
+    upgreadegift : number
+    upgrade_award : number
+}
+
+export interface VipLevelUpReceiveData {
+    win_award: number
+    lose_award : Array<number>
+}
+
+export type GetVipLevelUpListResponse = {
+    code: number
+    data: VipLevelUpListData
+    message: string
+}
+
+export type GetVipLevelUpReceiveResponse = {
+    code: number
+    data: VipLevelUpReceiveData
+    message: string
+}
+
 export type GetVipSignInResponse = {
     code: number
     data: VipSignInData

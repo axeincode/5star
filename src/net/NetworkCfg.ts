@@ -79,6 +79,8 @@ export namespace NETWORK {
     static VIP_TIMES_HISTORY = '/user/viptimeshistory' // Get VIP weekly and monthly reward records
     static VIP_SIGNIN_REWARDS = '/user/vipsignin/award'; // Receive VIP sign-in rewards
     static VIP_SIGNIN = '/user/vipsignin'; // Get VIP check-in content
+    static VIP_LEVELUP_LIST = '/user/viplevelup/list'; // Get VIP upgrade reward information
+    static VIP_LEVELUP_RECEIVE = '/user/viplevelup/receive'; // Receive VIP upgrade rewards
   }
 
   // websocket api

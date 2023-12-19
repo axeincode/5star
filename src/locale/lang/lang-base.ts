@@ -1665,4 +1665,13 @@ export type langType = {
     text_16: string
     text_17: string
   }
+  level_up: {
+    text_1: string
+    text_2: string
+    text_3: string
+    text_4: string
+    text_5: string
+    text_6: string
+    text_7: string
+  }
 };

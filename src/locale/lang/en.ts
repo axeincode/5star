@@ -1666,5 +1666,14 @@ export const lang: langType = {
     text_15: "LeveI Up Reward",
     text_16: "chests available",
     text_17: "Refer a friend",
+  },
+  level_up: {
+    text_1: "Level Up!",
+    text_2: "Level",
+    text_3: "Congratulations on leveling up!",
+    text_4: "Now choose your prize:",
+    text_5: "CHOOSE A CHEST",
+    text_6: "Go To Rewards",
+    text_7: "Do Not Show Again"
   }
 };

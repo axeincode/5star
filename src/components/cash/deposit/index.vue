@@ -298,11 +298,13 @@ const overlayScrimShow = computed(() => {
   const { getOverlayScrimShow } = storeToRefs(appBarStore());
   return getOverlayScrimShow.value;
 })
-
 </script>
 
 <template>
-  <div :class="overlayScrimShow ? 'deposit-overlay-show' : 'deposit-overlay-hide'" class="deposit-overlay"></div>
+  <div
+    :class="overlayScrimShow ? 'deposit-overlay-show' : 'deposit-overlay-hide'"
+    class="deposit-overlay"
+  ></div>
   <div class="deposit-container">
     <v-row class="mt-6 ml-16 deposit-text">
       {{ t("deposit_dialog.deposit_currency") }}
@@ -422,7 +424,17 @@ const overlayScrimShow = computed(() => {
         :onblur="handleAmountInputBlur"
         @input="handleAmountInputChange"
       />
-      <ValidationBox v-if="isShowAmountValidaton" />
+      <ValidationBox
+        v-if="isShowAmountValidaton"
+        :validationText2="
+          t('withdraw_dialog.validation.text_2') +
+          selectedPaymentItem.min +
+          ', ' +
+          t('withdraw_dialog.validation.text_3') +
+          selectedPaymentItem.max +
+          '.'
+        "
+      />
     </v-row>
     <v-row class="mt-0 mx-10 align-center">
       <v-col cols="1">
@@ -453,8 +465,13 @@ const overlayScrimShow = computed(() => {
       :checkIcon="checkIcon"
     />
 
-    <v-dialog v-model="promotionDialogVisible" width="326" content-class="m-promotion-dialog-position" @click:outside="handleParticipate">
-        <ParticipatingDialog @promotionDialogHide="handleParticipate" />
+    <v-dialog
+      v-model="promotionDialogVisible"
+      width="326"
+      content-class="m-promotion-dialog-position"
+      @click:outside="handleParticipate"
+    >
+      <ParticipatingDialog @promotionDialogHide="handleParticipate" />
     </v-dialog>
   </div>
 </template>
@@ -463,12 +480,12 @@ const overlayScrimShow = computed(() => {
 // container
 .deposit-container {
   .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset!important;
-
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 
-  .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
-      background: transparent;
+  .form-textfield div.v-field--variant-solo,
+  .v-field--variant-solo-filled {
+    background: transparent;
   }
   background-color: #211f31;
   height: 700px;

@@ -9,6 +9,7 @@ export const vipStore = defineStore({
     state: () => ({
         success: false as boolean,
         errMessage: '' as string,
+        levelUpDialogVisible: false as boolean,
         vipInfo: {} as Vip.VipInfo,
         vipLevels: [] as Array<Vip.VipLevel>,
         vipTasks: [] as Array<Vip.VipTaskItem>,
@@ -31,7 +32,9 @@ export const vipStore = defineStore({
             limited_bet: 0,
             limited_deposit: 0,
             vip_level: 0,
-        } as Vip.VipSignInData
+        } as Vip.VipSignInData,
+        vipLevelUpList: {} as Vip.VipLevelUpListData,
+        vipLevelUpReceive: {} as Vip.VipLevelUpReceiveData
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -43,6 +46,9 @@ export const vipStore = defineStore({
         getVipLevelRewardHistory: (state) => state.vipLevelRewardHistory,
         getVipTimesHistory: (state) => state.vipTimesHistory,
         getVipSignIn: (state) => state.vipSignIn,
+        getLevelUpDialogVisible: (state) => state.levelUpDialogVisible,
+        getVipLevelUpList: (state) => state.vipLevelUpList,
+        getVipLevelUpReceive: (state) => state.vipLevelUpReceive
     },
     actions: {
         // set functions
@@ -72,6 +78,15 @@ export const vipStore = defineStore({
         },
         setVipSignIn(vipSignIn: Vip.VipSignInData) {
             this.vipSignIn = vipSignIn;
+        },
+        setLevelUpDialogVisible(levelUpDialogVisible: boolean) {
+            this.levelUpDialogVisible = levelUpDialogVisible;
+        },
+        setVipLevelUpList(vipLevelUpList: Vip.VipLevelUpListData) {
+            this.vipLevelUpList = vipLevelUpList
+        },
+        setVipLevelUpReceive(vipLevelUpReceive: Vip.VipLevelUpReceiveData) {
+            this.vipLevelUpReceive = vipLevelUpReceive
         },
         // Get VIP check-in content
         async dispatchVipSignIn() {
@@ -229,6 +244,38 @@ export const vipStore = defineStore({
                 }
             }
             await network.sendMsg(route, data, next, 1);
+        },
+        // Get VIP upgrade reward information
+        async dispatchVipLevelUpList() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_LEVELUP_LIST;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelUpListResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipLevelUpList(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        // Receive VIP upgrade rewards
+        async dispatchVipLevelUpReceive() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_LEVELUP_RECEIVE;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipLevelUpReceive(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1);
         },
     }
 })
