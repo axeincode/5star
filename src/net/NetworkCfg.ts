@@ -60,6 +60,7 @@ export namespace NETWORK {
     static GAME_CATEGORY = '/games/categories'; // get game category
     static GAME_SEARCH = '/games/search'; // game search
     static GAME_ENTER = '/user/enter/game'; // game enter
+    static GAME_BIGWIN = '/games/bigwin'; // Get a list of game awards
     static USER_GAME = '/user/games'; // user game
     static FAVORITE_GAME = '/user/setup/game' // favorite game
     static GAME_HISTORY = '/user/gamehistory' // game history

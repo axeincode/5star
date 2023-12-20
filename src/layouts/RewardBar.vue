@@ -15,6 +15,7 @@ import img_public_1 from "@/assets/public/image/img_public_1.png";
 import img_public_2 from "@/assets/public/image/img_public_2.png";
 import img_vip_1 from "@/assets/vip/image/img_vip_1.png";
 import img_vip_3 from "@/assets/vip/image/img_vip_3.png";
+import { vipStore } from "@/store/vip";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -23,6 +24,7 @@ const { setRewardNavShow } = menuStore();
 const { setMailMenuShow } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
+const { setLevelUpDialogVisible } = vipStore();
 
 const rewardContainerHeight = ref<number>(590);
 const rewardNavShow = ref<boolean>(false);
@@ -93,6 +95,11 @@ watch(rewardNavShow, (value) => {
     setMailMenuShow(false);
   }
 });
+
+const showRewardDialog = () => {
+  setLevelUpDialogVisible(true);
+  setRewardNavShow(false);
+};
 
 onMounted(() => {
   rewardContainerHeight.value = window.innerHeight - 230;
@@ -219,6 +226,7 @@ onMounted(() => {
                   class="button-yellow m-reward-bonus-active-btn"
                   width="72"
                   height="32"
+                  @click="showRewardDialog"
                 >
                   {{ t("reward.text_7") }}
                 </v-btn>

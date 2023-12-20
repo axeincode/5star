@@ -38,7 +38,11 @@ export const gameStore = defineStore({
         userSpin: {},
         userActivityList: {},
         language: localStorage.getItem('lang') || 'en',
-        betby: null
+        betby: null,
+        gameBigWinItem: {
+            high_rollers: [],
+            lucky_bets: []
+        } as Game.GameBigWinData
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -56,7 +60,8 @@ export const gameStore = defineStore({
         getUserSpinPage: (state) => state.userSpinPage,
         getUserSpin: (state) => state.userSpin,
         getUserActivityList: (state) => state.userActivityList,
-        getLanguage: (state) => state.language
+        getLanguage: (state) => state.language,
+        getGameBigWinItem: (state) => state.gameBigWinItem
     },
     actions: {
         // set functions
@@ -126,29 +131,32 @@ export const gameStore = defineStore({
         closeKill() {
             this.betby?.kill();
         },
+        setGameBigWinItem(gameBigWinItem: Game.GameBigWinData) {
+            this.gameBigWinItem = gameBigWinItem;
+        },
         async getGameBetbyInit() {
             this.betby = new BTRenderer().initialize(
-            {
-                token: this.enterGameItem.reserve || '',
-                lang: this.language,
-                target: document.getElementById('betby'),
-                brand_id: "2331516940205559808",
-                betSlipOffsetTop: 0,
-                betslipZIndex: 999,
-                themeName: "default",
-                onLogin: () => {
-                    this.openDialog();
-                },
-                onTokenExpired: async() => {
-                    this.closeKill();
-                    await this.dispatchGameEnter({ id: 9999 });
-                    await this.getGameBetbyInit();
-                },
-                onSessionRefresh: async() => {
-                    this.closeKill();
-                    await this.getGameBetbyInit();
-                }
-            });
+                {
+                    token: this.enterGameItem.reserve || '',
+                    lang: this.language,
+                    target: document.getElementById('betby'),
+                    brand_id: "2331516940205559808",
+                    betSlipOffsetTop: 0,
+                    betslipZIndex: 999,
+                    themeName: "default",
+                    onLogin: () => {
+                        this.openDialog();
+                    },
+                    onTokenExpired: async () => {
+                        this.closeKill();
+                        await this.dispatchGameEnter({ id: 9999 });
+                        await this.getGameBetbyInit();
+                    },
+                    onSessionRefresh: async () => {
+                        this.closeKill();
+                        await this.getGameBetbyInit();
+                    }
+                });
         },
         // game categories api
         async dispatchGameCategories(sub_api: string) {
@@ -237,19 +245,19 @@ export const gameStore = defineStore({
         },
         // game history api response
         async dispatchGameHistory(data: any) {
-          this.setSuccess(false);
-          const route: string = NETWORK.GAME_INFO.GAME_HISTORY;
-          const network: Network = Network.getInstance();
-          // response call back function
-          const next = (response: Game.GetGameHistoryResponse) => {
-            if (response.code == 200) {
-              this.setSuccess(true);
-              this.setGameHistoryItem(response.data);
-            } else {
-              this.setErrorMessage(handleException(response.code));
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.GAME_HISTORY;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Game.GetGameHistoryResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setGameHistoryItem(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
             }
-          }
-          await network.sendMsg(route, data, next, 1);
+            await network.sendMsg(route, data, next, 1);
         },
         // user spinpage api
         async dispatchUserSpinPage(data: any) {
@@ -259,10 +267,10 @@ export const gameStore = defineStore({
             // response call back function
             const next = (response: any) => {
                 if (response.code == 200) {
-                this.setSuccess(true);
-                this.setUserSpinPage(response.data);
+                    this.setSuccess(true);
+                    this.setUserSpinPage(response.data);
                 } else {
-                this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(handleException(response.code));
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -275,10 +283,10 @@ export const gameStore = defineStore({
             // response call back function
             const next = (response: any) => {
                 if (response.code == 200) {
-                this.setSuccess(true);
-                this.setUserSpin(response.data);
+                    this.setSuccess(true);
+                    this.setUserSpin(response.data);
                 } else {
-                this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(handleException(response.code));
                 }
             }
             await network.sendMsg(route, {}, next, 1);
@@ -291,10 +299,26 @@ export const gameStore = defineStore({
             // response call back function
             const next = (response: any) => {
                 if (response.code == 200) {
-                this.setSuccess(true);
-                this.setUserActivityList(response.data);
+                    this.setSuccess(true);
+                    this.setUserActivityList(response.data);
                 } else {
-                this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        // Get a list of game awards
+        async dispatchGameBigWin() {
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.GAME_BIGWIN;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Game.GetGameBigWinResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setGameBigWinItem(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);

@@ -16,11 +16,16 @@ const { setLevelUpDialogVisible } = vipStore();
 const { dispatchVipLevelUpList } = vipStore();
 const { dispatchVipLevelUpReceive } = vipStore();
 
-const chestList = ref<Array<any>>([img_vip_1, img_vip_1, img_vip_1]);
+const chestList = ref<Array<any>>([img_vip_1, img_vip_1, img_vip_1, img_vip_1]);
 
 const vipLevelUpList = computed(() => {
   const { getVipLevelUpList } = storeToRefs(vipStore());
   return getVipLevelUpList.value;
+});
+
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(vipStore());
+  return getSuccess.value;
 });
 
 const closeLevelUpDialog = () => {
@@ -32,13 +37,19 @@ const closeLevelUpDialog = () => {
 
 const submitVipLevelUpReceive = async () => {
   await dispatchVipLevelUpReceive();
+  if (success.value) {
+    setLevelUpDialogVisible(false);
+    setMainBlurEffectShow(false);
+    setHeaderBlurEffectShow(false);
+    setOverlayScrimShow(false);
+  }
 };
 
 onMounted(async () => {
   await dispatchVipLevelUpList();
   setTimeout(() => {
     setMainBlurEffectShow(true);
-  }, 1000);
+  }, 100);
   setHeaderBlurEffectShow(true);
   setOverlayScrimShow(true);
 });
@@ -56,15 +67,17 @@ onMounted(async () => {
       <img src="@/assets/public/svg/icon_public_10.svg" />
     </v-btn>
     <div class="mt-3 text-center text-800-16 white">{{ t("level_up.text_1") }}</div>
-    <div class="mt-2 text-800-20 yellow text-center">{{ t("level_up.text_2") }} 3</div>
+    <div class="mt-2 text-800-20 yellow text-center">
+      {{ t("level_up.text_2") }} {{ vipLevelUpList.upgreadegift }}
+    </div>
     <div class="mt-2 text-400-14 white text-center">{{ t("level_up.text_3") }}</div>
     <div class="text-400-14 white text-center">{{ t("level_up.text_4") }}</div>
     <div class="mt-3 mx-3 m-level-up-body">
       <div class="pt-5 text-800-16 white text-center">{{ t("level_up.text_5") }}</div>
       <v-row class="ma-0 pa-0 mt-12">
-        <template v-for="(item, index) in chestList" :key="index">
-          <v-col class="ma-0 pa-0 text-center" cols="4">
-            <img :src="item" width="61" />
+        <template v-for="(i, index) in vipLevelUpList.upgrade_award" :key="index">
+          <v-col class="ma-0 pa-0 text-center" :cols="12 / vipLevelUpList.upgrade_award">
+            <img :src="chestList[index]" width="61" />
           </v-col>
         </template>
       </v-row>

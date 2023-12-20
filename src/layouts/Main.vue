@@ -466,7 +466,6 @@ const handleResize = () => {
 }
 
 onMounted(() => {
-  setLevelUpDialogVisible(true);
   window.addEventListener("resize", handleResize);
   mainHeight.value = window.innerHeight;
   if (overlayScrimShow.value) {

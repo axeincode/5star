@@ -19,11 +19,18 @@ import "swiper/css/navigation";
 import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
+import { gameStore } from "@/store/game";
+import img_public_35 from "@/assets/public/image/img_public_35.png";
+import img_public_26 from "@/assets/public/image/img_public_26.png";
+import img_public_27 from "@/assets/public/image/img_public_27.png";
+import img_public_28 from "@/assets/public/image/img_public_28.png";
+import { type GameBigWinItem } from "@/interface/game";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const selectedBtnText = ref<string>(t("home.bet_history.text_2"));
 const betHistoryInterval = ref<any>(null);
+const { dispatchGameBigWin } = gameStore();
 
 const modules = [Pagination, Virtual, Autoplay, Navigation];
 
@@ -31,6 +38,13 @@ const betHistoryTabList = ref<Array<string>>([
   t("home.bet_history.text_2"),
   t("home.bet_history.text_3"),
   t("home.bet_history.text_4"),
+]);
+
+const imgList = ref<Array<any>>([
+  img_public_35,
+  img_public_26,
+  img_public_27,
+  img_public_28,
 ]);
 
 const allBetHistoryList = ref<Array<any>>([
@@ -276,8 +290,15 @@ const allBetHistoryList = ref<Array<any>>([
   },
 ]);
 
+const selectedBetHistoryList = ref<Array<GameBigWinItem>>([]);
+
 const handleBetHistoryTab = (item: string) => {
   selectedBtnText.value = item;
+  if (item == t("home.bet_history.text_4")) {
+    selectedBetHistoryList.value = gameBigWinItem.value.lucky_bets;
+  } else {
+    selectedBetHistoryList.value = gameBigWinItem.value.high_rollers;
+  }
 };
 
 const mobileWidth = computed(() => {
@@ -288,6 +309,11 @@ const mobileWidth = computed(() => {
 const token = computed(() => {
   const { getToken } = storeToRefs(authStore());
   return getToken.value;
+});
+
+const gameBigWinItem = computed(() => {
+  const { getGameBigWinItem } = storeToRefs(gameStore());
+  return getGameBigWinItem.value;
 });
 
 watch(token, (value) => {
@@ -307,7 +333,7 @@ watch(token, (value) => {
   }
 });
 
-onMounted(() => {
+onMounted(async () => {
   if (token.value != undefined) {
     betHistoryTabList.value = [
       t("home.bet_history.text_2"),
@@ -316,9 +342,11 @@ onMounted(() => {
       t("home.bet_history.text_5"),
     ];
   }
+  await dispatchGameBigWin();
+  selectedBetHistoryList.value = gameBigWinItem.value.high_rollers;
   betHistoryInterval.value = setInterval(() => {
     allBetHistoryList.value.push(allBetHistoryList.value[Math.floor(Math.random() * 10)]);
-  });
+  }, 100);
 });
 </script>
 
@@ -503,28 +531,28 @@ onMounted(() => {
         }"
         :virtual="true"
       >
-        <swiper-slide v-for="(item, index) in allBetHistoryList" :key="index">
+        <swiper-slide v-for="(item, index) in selectedBetHistoryList" :key="index">
           <v-row class="mx-4 mt-1 align-center">
             <v-col cols="4" class="py-1 d-flex align-center">
-              <img :src="item.game.image" width="16" />
+              <img :src="imgList[Math.floor(Math.random() * 4)]" width="16" />
               <p class="text-400-12 gray text-left ml-2 game-text-overflow">
-                {{ item.game.name }}
+                {{ item.game_name }}
               </p>
             </v-col>
             <v-col cols="3" class="py-1 text-center">
               <p
                 class="text-400-12"
-                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
+                :class="Number(item.multiplier) > 1 ? 'color-01983A' : 'gray'"
               >
-                {{ item.multi }}X
+                {{ item.multiplier }}X
               </p>
             </v-col>
             <v-col
               cols="5"
               class="py-1 text-700-12 text-right"
-              :class="item.payout > 10 ? 'color-01983A' : 'gray'"
+              :class="Number(item.win_amount) > 10 ? 'color-01983A' : 'gray'"
             >
-              $ {{ item.payout }}
+              $ {{ item.win_amount }}
             </v-col>
           </v-row>
         </swiper-slide>

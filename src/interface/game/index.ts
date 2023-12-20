@@ -42,6 +42,23 @@ export interface GameHistoryItem {
     profit : number,
 }
 
+export interface GameBigWinItem {
+    game_id: string
+    game_name: string
+    game_icon: string
+    user_name: string
+    user_vip: number
+    bet_amount: string
+    multiplier: string
+    win_amount: string
+    time: number
+}
+
+export interface GameBigWinData {
+    high_rollers: Array<GameBigWinItem>
+    lucky_bets: Array<GameBigWinItem>
+}
+
 export interface GameHistoryResponse {
     total_pages: number
     record: Array<GameHistoryItem>
@@ -50,6 +67,12 @@ export interface GameHistoryResponse {
 export interface GameSearchResponse {
     list: Array<Search>
     total: number
+}
+
+export type GetGameBigWinResponse = {
+    code: number
+    data: GameBigWinData
+    message: string
 }
 
 export type GetGameCategoriesResponse = {
