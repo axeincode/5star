@@ -112,7 +112,6 @@ const Login = defineComponent({
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
-      console.log("???????????????????????");
       const toast = useToast();
       toast.success(t("login.forgotPasswordPage.notification"), {
         timeout: 3000,

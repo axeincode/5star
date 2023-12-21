@@ -91,6 +91,7 @@ const BannerComponent = defineComponent({
       getSwiperRef,
       goToPrev,
       goToNext,
+      refferalAppBarShow,
     };
   },
 });
@@ -117,7 +118,7 @@ export default BannerComponent;
       :navigation="false"
       :virtual="true"
       class="mx-4"
-      style="border-radius: 8px;"
+      style="border-radius: 8px"
       @swiper="getSwiperRef"
     >
       <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">

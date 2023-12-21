@@ -47,7 +47,8 @@ export interface GameBigWinItem {
     game_name: string
     game_icon: string
     user_name: string
-    user_vip: number
+    user_vip_group: number
+    user_vip_level: number
     bet_amount: string
     multiplier: string
     win_amount: string

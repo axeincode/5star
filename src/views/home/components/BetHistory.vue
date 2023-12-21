@@ -25,6 +25,7 @@ import img_public_26 from "@/assets/public/image/img_public_26.png";
 import img_public_27 from "@/assets/public/image/img_public_27.png";
 import img_public_28 from "@/assets/public/image/img_public_28.png";
 import { type GameBigWinItem } from "@/interface/game";
+import vipLevelGroups from "@/utils/VipLevelGroup";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -47,248 +48,248 @@ const imgList = ref<Array<any>>([
   img_public_28,
 ]);
 
-const allBetHistoryList = ref<Array<any>>([
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-      name: "Minesssssss",
-    },
-    player: {
-      image: img_vipemblem_1_24,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 20,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-      name: "Mines",
-    },
-    player: {
-      image: img_vipemblem_1_24,
-      name: "Ar***ra",
-    },
-    multi: "1.50",
-    payout: 12,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-      name: "Mines",
-    },
-    player: {
-      image: img_vipemblem_1_24,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 7,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
-      name: "Mines",
-    },
-    player: {
-      image: img_vipemblem_25_49,
-      name: "Ar***ra",
-    },
-    multi: "10.50",
-    payout: 12.17,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-      name: "Double",
-    },
-    player: {
-      image: img_vipemblem_25_49,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 32,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-      name: "Crash",
-    },
-    player: {
-      image: img_vipemblem_25_49,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 5,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
-      name: "Crash",
-    },
-    player: {
-      image: img_vipemblem_25_49,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 13,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-      name: "Double",
-    },
-    player: {
-      image: img_vipemblem_50_74,
-      name: "Ar***ra",
-    },
-    multi: "3.50",
-    payout: 6.2,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-      name: "Double",
-    },
-    player: {
-      image: img_vipemblem_50_74,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 22.1,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_50_74,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 34.7,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_75_99,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 25,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_75_99,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 4.5,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-      name: "Double",
-    },
-    player: {
-      image: img_vipemblem_75_99,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 22.1,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_75_99,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 133,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_100_149,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 25,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_100_149,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 7.6,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
-      name: "Double",
-    },
-    player: {
-      image: img_vipemblem_100_149,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 22.1,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_159_199,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 133,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_159_199,
-      name: "Ar***ra",
-    },
-    multi: "0.50",
-    payout: 5,
-  },
-  {
-    game: {
-      image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
-      name: "Dice",
-    },
-    player: {
-      image: img_vipemblem_200,
-      name: "Ar***ra",
-    },
-    multi: "234.50",
-    payout: 1.33,
-  },
-]);
+// const allBetHistoryList = ref<Array<any>>([
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+//       name: "Minesssssss",
+//     },
+//     player: {
+//       image: img_vipemblem_1_24,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 20,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+//       name: "Mines",
+//     },
+//     player: {
+//       image: img_vipemblem_1_24,
+//       name: "Ar***ra",
+//     },
+//     multi: "1.50",
+//     payout: 12,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+//       name: "Mines",
+//     },
+//     player: {
+//       image: img_vipemblem_1_24,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 7,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_35.png", import.meta.url).href,
+//       name: "Mines",
+//     },
+//     player: {
+//       image: img_vipemblem_25_49,
+//       name: "Ar***ra",
+//     },
+//     multi: "10.50",
+//     payout: 12.17,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+//       name: "Double",
+//     },
+//     player: {
+//       image: img_vipemblem_25_49,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 32,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
+//       name: "Crash",
+//     },
+//     player: {
+//       image: img_vipemblem_25_49,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 5,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_27.png", import.meta.url).href,
+//       name: "Crash",
+//     },
+//     player: {
+//       image: img_vipemblem_25_49,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 13,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+//       name: "Double",
+//     },
+//     player: {
+//       image: img_vipemblem_50_74,
+//       name: "Ar***ra",
+//     },
+//     multi: "3.50",
+//     payout: 6.2,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+//       name: "Double",
+//     },
+//     player: {
+//       image: img_vipemblem_50_74,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 22.1,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_50_74,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 34.7,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_75_99,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 25,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_75_99,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 4.5,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+//       name: "Double",
+//     },
+//     player: {
+//       image: img_vipemblem_75_99,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 22.1,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_75_99,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 133,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_100_149,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 25,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_100_149,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 7.6,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_26.png", import.meta.url).href,
+//       name: "Double",
+//     },
+//     player: {
+//       image: img_vipemblem_100_149,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 22.1,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_159_199,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 133,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_159_199,
+//       name: "Ar***ra",
+//     },
+//     multi: "0.50",
+//     payout: 5,
+//   },
+//   {
+//     game: {
+//       image: new URL("@/assets/public/image/img_public_28.png", import.meta.url).href,
+//       name: "Dice",
+//     },
+//     player: {
+//       image: img_vipemblem_200,
+//       name: "Ar***ra",
+//     },
+//     multi: "234.50",
+//     payout: 1.33,
+//   },
+// ]);
 
 const selectedBetHistoryList = ref<Array<GameBigWinItem>>([]);
 
@@ -344,9 +345,9 @@ onMounted(async () => {
   }
   await dispatchGameBigWin();
   selectedBetHistoryList.value = gameBigWinItem.value.high_rollers;
-  betHistoryInterval.value = setInterval(() => {
-    allBetHistoryList.value.push(allBetHistoryList.value[Math.floor(Math.random() * 10)]);
-  }, 100);
+  // betHistoryInterval.value = setInterval(() => {
+  //   allBetHistoryList.value.push(allBetHistoryList.value[Math.floor(Math.random() * 10)]);
+  // }, 100);
 });
 </script>
 
@@ -394,10 +395,10 @@ onMounted(async () => {
           <v-col cols="2" class="text-700-16 text-center gray py-0">
             {{ t("home.bet_history.text_9") }}
           </v-col>
-          <v-col cols="2" class="text-700-16 text-right gray py-0">
+          <v-col cols="2" class="text-700-16 text-center gray py-0">
             {{ t("home.bet_history.text_10") }}
           </v-col>
-          <v-col cols="2" class="text-700-16 text-right gray py-0">
+          <v-col cols="2" class="text-700-16 text-center gray py-0">
             {{ t("home.bet_history.text_11") }}
           </v-col>
           <v-col cols="2" class="text-700-16 text-right gray py-0">
@@ -413,18 +414,23 @@ onMounted(async () => {
         :modules="modules"
         :slidesPerView="15"
         :spaceBetween="10"
+        :autoplay="{
+          delay: 600,
+          disableOnInteraction: false,
+        }"
         :virtual="true"
+        class="mt-1"
       >
-        <swiper-slide v-for="(item, index) in allBetHistoryList" :key="index">
-          <v-row class="mx-4 mt-1 align-center">
+        <swiper-slide v-for="(item, index) in selectedBetHistoryList" :key="index">
+          <v-row class="mx-4 my-0 align-center">
             <v-col
               cols="2"
               class="py-1 d-flex align-center"
               style="flex-basis: 0; flex-grow: 1"
             >
-              <img :src="item.game.image" width="22" />
-              <p class="text-500-16 gray text-center ml-2">
-                {{ item.game.name }}
+              <img :src="imgList[Math.floor(Math.random() * 4)]" width="22" />
+              <p class="text-500-16 gray text-center ml-2 game-text-overflow">
+                {{ item.game_name }}
               </p>
             </v-col>
             <v-col
@@ -432,42 +438,32 @@ onMounted(async () => {
               class="py-1 d-flex align-center justify-center"
               style="flex-basis: 0; flex-grow: 1"
             >
-              <img :src="item.player.image" width="22" />
+              <img :src="vipLevelGroups[item.user_vip_group]" width="22" />
               <p class="text-500-16 gray text-center ml-2">
-                {{ item.player.name }}
+                {{ item.user_name }}
               </p>
+            </v-col>
+            <v-col cols="2" class="py-1 text-center" style="flex-basis: 0; flex-grow: 1">
+              <p class="text-500-16 gray">{{ item.time }}s</p>
+            </v-col>
+            <v-col cols="2" class="py-1 text-center" style="flex-basis: 0; flex-grow: 1">
+              <p class="text-500-16 gray">${{ item.bet_amount }}</p>
             </v-col>
             <v-col cols="2" class="py-1 text-right" style="flex-basis: 0; flex-grow: 1">
               <p
                 class="text-500-16"
-                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
+                :class="Number(item.multiplier) > 1 ? 'color-01983A' : 'gray'"
               >
-                {{ item.multi }}X
-              </p>
-            </v-col>
-            <v-col cols="2" class="py-1 text-right" style="flex-basis: 0; flex-grow: 1">
-              <p
-                class="text-500-16"
-                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
-              >
-                {{ item.multi }}X
-              </p>
-            </v-col>
-            <v-col cols="2" class="py-1 text-right" style="flex-basis: 0; flex-grow: 1">
-              <p
-                class="text-500-16"
-                :class="Number(item.multi) > 1 ? 'color-01983A' : 'gray'"
-              >
-                {{ item.multi }}X
+                {{ item.multiplier }}X
               </p>
             </v-col>
             <v-col
               cols="2"
               class="py-1 text-500-16 text-right"
-              :class="item.payout > 10 ? 'color-01983A' : 'gray'"
+              :class="Number(item.win_amount) > 10 ? 'color-01983A' : 'gray'"
               style="flex-basis: 0; flex-grow: 1"
             >
-              $ {{ item.payout }}
+              $ {{ item.win_amount }}
             </v-col>
           </v-row>
         </swiper-slide>
@@ -624,6 +620,12 @@ onMounted(async () => {
   width: 45px;
   overflow: hidden;
   white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .game-text-overflow {
+    width: 100px;
+  }
 }
 
 .m-all-bet-history-height {

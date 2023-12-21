@@ -284,6 +284,7 @@ watch(cashDialog, (newValue) => {
 
 // refferal dialog
 const refferalDialog = ref<boolean>(false);
+
 const refferalDialogVisible = computed(() => {
   const { getRefferalDialogVisible } = storeToRefs(refferalStore());
   return getRefferalDialogVisible.value;
@@ -300,7 +301,6 @@ watch(refferalDialogVisible, (newValue) => {
       setHeaderBlurEffectShow(true);
       setMenuBlurEffectShow(true);
     }, 10);
-
   }
 }, { deep: true });
 
@@ -665,9 +665,10 @@ onMounted(() => {
 
     <v-dialog
       v-model="refferalDialog"
+      persistent
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="mobileVersion == 'sm' ? false : true"
-      @click:outside="closeReferDialog"
+      @click:outside="false"
     >
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />

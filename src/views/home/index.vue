@@ -37,6 +37,7 @@ import Search from "@/views/home/components/Search.vue";
 import MSearch from "@/views/home/components/mobile/Search.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { useNamespace } from "element-plus";
+import { duration } from "moment-timezone";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -196,6 +197,8 @@ const Dashboard = defineComponent({
     const gameHistoryComponent = ref<any>(null);
     const liveWinComponent = ref<any>(null);
     const betHistoryComponent = ref<any>(null);
+
+    const customTransition = ref<string>('custom-slide-transition');
 
     const bannerLoad = async () => {
       const bannerValue = await import('@/views/home/components/Banner.vue');
@@ -997,6 +1000,7 @@ const Dashboard = defineComponent({
       gameHistoryLoad,
       liveWinLoad,
       betHistoryLoad,
+      customTransition,
       gameHistoryComponent,
       // comUserActivityList
     };
@@ -1246,7 +1250,8 @@ export default Dashboard;
           <v-slide-group
             v-model="selectedGameFilterBtn"
             class="mt-4 mb-0"
-            show-arrows
+            :transition="customTransition"
+            :touch="{ velocity: 0.3 }"
             style="
               margin-left: 0px !important;
               margin-right: 0px !important;
@@ -1681,6 +1686,14 @@ export default Dashboard;
 </template>
 
 <style lang="scss">
+.custom-slide-transition-enter-to,
+.custom-slide-transition-leave-to {
+  transform: translateY(0);
+}
+.custom-slide-transition-enter-active,
+.custom-slide-transition-leave-active {
+  transition: transform 0.5s; /* Define the transition speed in seconds */
+}
 @keyframes expandAnimation {
   0% {
     scale: 1.3;

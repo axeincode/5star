@@ -2,6 +2,7 @@
 import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { gameStore } from "@/store/game";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
@@ -10,23 +11,29 @@ import img_vipemblem_75_99 from "@/assets/vip/image/img_vipemblem_75-99.png";
 import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png";
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
-import type * as LiveWinItem from "@/interface/home";
+import img_win_01 from "@/assets/home/image/img_win_01.png";
+import img_win_02 from "@/assets/home/image/img_win_02.png";
+import img_win_03 from "@/assets/home/image/img_win_03.png";
+import { type LiveWinItem } from "@/interface/affiliate/home";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
+import vipLevelGroups from "@/utils/VipLevelGroup";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const modules = [Pagination, Autoplay, Navigation];
+const { dispatchGameBigWin } = gameStore();
 
 const svgIconColor = ref<string>("#7782AA");
 const interval = ref<any>(null);
-const liveWinBody = ref(null)
-const winBodyWidth = ref(0)
-const winBodyMargin = ref(0)
+const liveWinBody = ref<any>({});
+const winBodyWidth = ref<number>(0);
+const winBodyMargin = ref<number>(0);
 
 /* vip level images */
 const vipLevelImgs = ref<Array<any>>([
@@ -38,6 +45,12 @@ const vipLevelImgs = ref<Array<any>>([
   img_vipemblem_159_199,
   img_vipemblem_200,
 ]);
+
+const imgWinList = ref<Array<any>>([
+  img_win_01,
+  img_win_02,
+  img_win_03
+])
 
 /* change svg icon or fill color */
 const svgIconTransform = (el: any) => {
@@ -120,28 +133,34 @@ const liveWinList = ref<Array<LiveWinItem>>([
   },
 ]);
 
+const gameBigWinItem = computed(() => {
+  const { getGameBigWinItem } = storeToRefs(gameStore());
+  return getGameBigWinItem.value;
+});
+
 const mobileWidth = computed(() => {
   if (liveWinBody.value) {
-    const s = liveWinBody.value.clientWidth;
+    const s = liveWinBody.value?.clientWidth;
     const st: any = s / 100;
     const sti = parseInt(st);
-    console.log('zhelli', ((s % 100) / (sti - 1)))
+    console.log("zhelli", (s % 100) / (sti - 1));
     // (winBodyWidth % 100) / parseInt(winBodyWidth / 100)
-    if ((s % 100) / (sti) < 8) {
+    if ((s % 100) / sti < 8) {
       // winBodyWidth.value = liveWinBody.value.clientWidth - (sti - 1) * 8;
-      winBodyWidth.value = sti
-      winBodyMargin.value = 8 + ((s % 100) / (st - 1))
-      console.log(winBodyMargin.value)
+      winBodyWidth.value = sti;
+      winBodyMargin.value = 8 + (s % 100) / (st - 1);
+      console.log(winBodyMargin.value);
     } else {
       // winBodyWidth.value = liveWinBody.value.clientWidth;
-      winBodyWidth.value = sti
-      winBodyMargin.value = (s % 100) / (st - 1)
+      winBodyWidth.value = sti;
+      winBodyMargin.value = (s % 100) / (st - 1);
     }
   }
   return width.value;
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await dispatchGameBigWin();
   interval.value = setInterval(() => {
     liveWinList.value.push(liveWinList.value[Math.floor(Math.random() * 8)]);
   }, 60000);
@@ -150,10 +169,10 @@ onMounted(() => {
 // 在頁面銷毀之前先銷毀定時器
 onUnmounted(() => {
   if (interval.value) {
-    clearInterval(interval.value)
-    interval.value = null
+    clearInterval(interval.value);
+    interval.value = null;
   }
-})
+});
 </script>
 
 <template>
@@ -182,17 +201,17 @@ onUnmounted(() => {
         style="height: auto"
       >
         <SwiperSlide
-          v-for="(item, index) in liveWinList"
+          v-for="(item, index) in gameBigWinItem.lucky_bets"
           :key="index"
           :virtualIndex="index"
         >
           <div class="text-center">
-            <img :src="item.image" class="live-win-img" />
+            <img :src="imgWinList[Math.floor(Math.random() * 3)]" class="live-win-img" />
             <div class="live-win-level-text">
-              <img :src="vipLevelImgs[item.level]" width="12" />
-              <p class="text-500-8 white ml-1">{{ item.game_name }}</p>
+              <img :src="vipLevelGroups[item.user_vip_group]" width="12" />
+              <p class="text-500-8 white ml-1">{{ item.user_name }}</p>
             </div>
-            <div class="text-900-10 color-12FF76">{{ item.betting_amount }}</div>
+            <div class="text-900-10 color-12FF76">${{ item.win_amount }}</div>
           </div>
         </SwiperSlide>
       </Swiper>
@@ -215,24 +234,24 @@ onUnmounted(() => {
         :slidesPerView="winBodyWidth"
         :spaceBetween="winBodyMargin"
         :autoplay="{
-          delay: 600000,
+          delay: 600,
           disableOnInteraction: false,
         }"
         class="mx-2"
         style="height: auto"
       >
         <SwiperSlide
-          v-for="(item, index) in liveWinList"
+          v-for="(item, index) in gameBigWinItem.lucky_bets"
           :key="index"
           :virtualIndex="index"
         >
           <div class="text-center">
-            <img :src="item.image" class="live-win-img" />
+            <img :src="imgWinList[Math.floor(Math.random() * 3)]" class="live-win-img" />
             <div class="live-win-level-text">
-              <img :src="vipLevelImgs[item.level]" width="21" />
-              <p class="text-400-14 white ml-2">{{ item.game_name }}</p>
+              <img :src="vipLevelGroups[item.user_vip_group]" width="21" />
+              <p class="text-400-14 white ml-2">{{ item.user_name }}</p>
             </div>
-            <div class="text-900-18 color-12FF76">{{ item.betting_amount }}</div>
+            <div class="text-900-18 color-12FF76">${{ item.win_amount }}</div>
           </div>
         </SwiperSlide>
       </Swiper>
@@ -274,7 +293,7 @@ onUnmounted(() => {
 .home-live-win {
   position: relative;
   margin: 28px 16px 0px 16px;
-  background-image: url('@/assets/home/svg/live_win.svg');
+  background-image: url("@/assets/home/svg/live_win.svg");
   background-size: cover;
   border-radius: 16px;
   .live-win-img-width {
