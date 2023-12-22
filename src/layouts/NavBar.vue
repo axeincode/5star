@@ -112,9 +112,11 @@ watch(navBarToggle, (newValue) => {
 
 watch(casinoCheckBox, (value: boolean) => {
     if (value) {
+        goGameBetBy();
         casinoCheckboxColor.value = "#7782AA";
         sportCheckboxColor.value = "#ffffff";
     } else {
+        router.push(`/`);
         casinoCheckboxColor.value = "#ffffff";
         sportCheckboxColor.value = "#7782AA";
     }
@@ -196,7 +198,7 @@ const offIconTransform = (el: any) => {
 }
 
 const goGameBetBy = () => {
-  router.push(`/betby/9999`);
+  router.push(`/sports`);
 }
 
 onMounted(() => {

@@ -536,6 +536,7 @@ const handleNavbarItem = (navbarText: string) => {
   navItem.value = navbarText
   switch (navbarText) {
     case t('navBar.sport'):
+      goGameBetBy();
       sportIconColor.value = "#FFFFFF"
       promotionIconColor.value = "#7782AA"
       vipIconColor.value = "#7782AA"
@@ -587,7 +588,7 @@ const handleNavbarItem = (navbarText: string) => {
 }
 
 const goGameBetBy = () => {
-  router.push(`/betby/9999`);
+  router.push(`/sports`);
 }
 
 onMounted(() => {
@@ -618,7 +619,7 @@ onMounted(() => {
             <img src="@/assets/public/svg/icon_public_34.svg" />
             <p>{{ t("navBar.casino") }}</p>
           </div>
-          <div class="sport" @click="goGameBetBy">
+          <div class="sport">
             <img src="@/assets/public/svg/icon_public_40.svg" />
             <p>{{ t("navBar.sport") }}</p>
           </div>

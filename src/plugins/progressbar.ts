@@ -20,7 +20,7 @@ export default function initProgress(router: {
 }) {
     router.afterEach(cancelTopProgress);
     router.beforeEach((to, from, next) => {
-        if (to.name !== 'BetBy') {
+        if (to.name !== 'Sports') {
             const { closeKill } = gameStore();
             closeKill();
         }

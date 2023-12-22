@@ -135,9 +135,9 @@ const Login = defineComponent({
         //   import.meta.url
         // ).href;
         // state.notificationText = t("login.submit_result.success_text");
-        if (route.name == 'BetBy') {
+        if (route.name == 'Sports') {
           await closeKill();
-          await dispatchGameEnter({ id: route.params.id });
+          await dispatchGameEnter({ id: 9999 });
           await getGameBetbyInit();
         }
         const toast = useToast();

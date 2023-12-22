@@ -79,13 +79,13 @@ const routes = [
     ],
   },
   {
-    path: '/betby/:id',
+    path: '/sports',
     component: () => import('@/layouts/index.vue'),
     children: [
       {
         path: '',
-        name: 'BetBy',
-        component: () => import('@/views/betBy/index.vue'),
+        name: 'Sports',
+        component: () => import('@/views/sports/index.vue'),
       },
     ],
   },

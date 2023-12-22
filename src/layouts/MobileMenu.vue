@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { appBarStore } from "@/store/appBar";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
@@ -24,6 +24,7 @@ import img_public_19 from "@/assets/public/image/temp/img_public_19.png";
 const { t } = useI18n();
 const { name, width } = useDisplay()
 const router = useRouter();
+const route = useRoute();
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
@@ -328,8 +329,10 @@ const handleNavbarToggle = () => {
   setRewardNavShow(false);
   setMainBlurEffectShow(false);
   setTimeout(() => {
-    setNavBarToggle(navbarToggle.value)
-    setMainBlurEffectShow(navbarToggle.value);
+    setNavBarToggle(navbarToggle.value);
+    if (mobileWidth.value < 600) {
+      setMainBlurEffectShow(navbarToggle.value);
+    }
   }, 10);
   menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
@@ -655,7 +658,7 @@ onMounted(() => {
 
 <template>
   <v-bottom-navigation
-    v-if="mobileMenuShow"
+    v-if="mobileMenuShow && route.name !== 'Sports'"
     bg-color="#000000"
     grow
     class="mobile-menu-index"

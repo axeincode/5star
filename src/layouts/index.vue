@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { defineAsyncComponent } from "vue";
+import { useRoute } from "vue-router";
 
 import NavBarLayout from "./NavBar.vue";
 import MNavBarLayout from "./MobileNavBar.vue";
@@ -29,7 +30,7 @@ import { appBarStore } from "@/store/appBar";
 // const MBonusDashboardDialog = defineAsyncComponent(
 //   () => import("@/components/vip/mobile/MBonusDashboard.vue")
 // );
-
+const route = useRoute();
 const { width } = useDisplay();
 
 const refferalAppBarShow = computed(() => {
@@ -64,7 +65,7 @@ const handleScroll = () => {
     <MNavBarLayout v-else />
     <UserNavBarLayout />
     <MBonusDashboardDialog />
-    <RewardBarLayout v-if="mobileWidth < 600" />
+    <RewardBarLayout v-if="mobileWidth < 600 && route.name !== 'Sports'" />
     <MainLayout />
     <RightBarLayout v-if="mobileWidth > 600" />
     <MobileMenuLayout v-if="mobileWidth < 1024" />

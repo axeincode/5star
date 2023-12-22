@@ -5,7 +5,8 @@ import type * as Game from "@/interface/game";
 import { handleException } from './exception';
 import { authStore } from "@/store/auth";
 import { appBarStore } from "@/store/appBar";
-import { useRoute } from "vue-router";
+
+type dialogType = "login" | "signup";
 
 export const gameStore = defineStore({
     id: 'game',
@@ -122,10 +123,10 @@ export const gameStore = defineStore({
         setLanguage(lang: string) {
             this.language = lang;
         },
-        openDialog() {
+        openDialog(type: dialogType) {
             const { setAuthModalType } = authStore();
             const { setOverlayScrimShow } = appBarStore();
-            setAuthModalType('login');
+            setAuthModalType(type);
             setOverlayScrimShow(false);
         },
         closeKill() {
@@ -145,7 +146,10 @@ export const gameStore = defineStore({
                     betslipZIndex: 999,
                     themeName: "default",
                     onLogin: () => {
-                        this.openDialog();
+                        this.openDialog('login');
+                    },
+                    onRegister: () => {
+                        this.openDialog('signup');
                     },
                     onTokenExpired: async () => {
                         this.closeKill();

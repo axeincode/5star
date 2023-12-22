@@ -113,6 +113,7 @@ const handleSelectItem = (item: string) => {
     setMainBlurEffectShow(true);
     setMailMenuShow(true);
   } else if (item == t("mobile_menu.sport")) {
+    router.push(`/sports`);
     setRewardNavShow(false);
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
@@ -139,6 +140,7 @@ onMounted(() => {
   <div
     class="m-menu-semicircle-toggle"
     :style="{ transform: `translateX(-50%)`, bottom: `${bottom}px` }"
+    v-if="route.name !== 'Sports'"
   >
     <div
       class="m-semicircle-item m-semicircle-casino"
