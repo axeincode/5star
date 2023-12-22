@@ -675,7 +675,7 @@ onMounted(() => {
 .avatar-img {
   :deep(.v-avatar--density-default) {
     height: 24px;
-    width: 20px;
+    width: 22px;
     border-radius: 0px;
   }
 

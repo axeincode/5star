@@ -41,11 +41,6 @@ const popperOptions = ref<Options>({
   strategy: "fixed",
 });
 
-// const popperOptions = ref({
-//     dayNamesShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-//     dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-// })
-
 const dateFormat = ref("YYYY/MM/DD");
 
 const selectedBonusItem = ref("Invitation Bonus");
@@ -124,7 +119,7 @@ const formsList = ref<Array<any>>([
   },
 ]);
 
-const selectedHistoryConfig = ref<Array<any>>({});
+const selectedHistoryConfig = ref<any>({});
 
 const handleHistoryConfigDropdown = async (item: any) => {
   selectedBonusItem.value = item.name;
@@ -196,6 +191,10 @@ watch(selectedDate, async (value) => {
   });
 }, {deep: true});
 
+const handlePrev = () => {};
+
+const handleNext = () => {};
+
 onMounted(async () => {
   await dispatchInviteHistoryCfg();
   await dispatchUserInviteHistory({
@@ -223,6 +222,8 @@ onMounted(async () => {
         start-placeholder="Start date"
         end-placeholder="End date"
         :popper-options="popperOptions"
+        day-name-format="short"
+        :start-day-of-week="1"
         @change="datePickerShow = false"
         @blur="datePickerShow = false"
       >
@@ -337,7 +338,7 @@ onMounted(async () => {
     </v-table>
   </v-row>
   <v-row class="mt-4 justify-center mx-4 pb-2">
-    <Pagination />
+    <Pagination :length="10" @handlePrev="handlePrev" @handleNext="handleNext" />
   </v-row>
 </template>
 <style lang="scss">
