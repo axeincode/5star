@@ -10,59 +10,63 @@ import { type GetUserInfo } from "@/interface/user";
 import { storeToRefs } from 'pinia';
 import { useI18n } from "vue-i18n";
 import Footer from "./Footer.vue";
-import Deposit from "@/components/cash/deposit/index.vue";
-import MDeposit from "@/components/cash/deposit/mobile/index.vue";
-import Withdraw from "@/components/cash/withdraw/index.vue";
-import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
-import MCashHeader from "@/components/cash/header/mobile/index.vue";
-import CashHeader from "@/components/cash/header/index.vue";
-import Signup from "@/components/Signup/index.vue";
-import MSignup from "@/components/Signup/mobile/index.vue";
-import MNickName from "@/components/Signup/mobile/NickName.vue";
-import Login from "@/components/Login/index.vue";
-import MLogin from "@/components/Login/mobile/index.vue";
-import Signout from "@/components/Signout/index.vue";
-import MSignout from "@/components/Signout/mobile/index.vue";
-import MobileDialog from "@/components/Signout/mobile/Header.vue";
-import RefferalDialog from "@/components/refferal/index.vue";
-import MRefferalDialog from "@/components/refferal/mobile/index.vue";
-import LoginBonusDialog from "@/components/login_bonus/index.vue";
-import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
-import GetBonusDialog from "@/components/get_bonus/index.vue";
-import MGetBonusDialog from "@/components/get_bonus/mobile/index.vue";
-import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
-import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
-import MAccountDialog from "@/views/account/dialog/index.vue";
-import MenuSemiCircle from "@/components/global/menu_semi_circle/index.vue";
-import LevelUpDialog from "@/components/level_up/index.vue";
-import MLevelUpDialog from "@/components/level_up/mobile/index.vue";
 
-// import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
+// import Deposit from "@/components/cash/deposit/index.vue";
+// import MDeposit from "@/components/cash/deposit/mobile/index.vue";
+// import Withdraw from "@/components/cash/withdraw/index.vue";
+// import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
+// import MCashHeader from "@/components/cash/header/mobile/index.vue";
+// import CashHeader from "@/components/cash/header/index.vue";
+// import Signup from "@/components/Signup/index.vue";
+// import MSignup from "@/components/Signup/mobile/index.vue";
+// import MNickName from "@/components/Signup/mobile/NickName.vue";
+// import Login from "@/components/Login/index.vue";
+// import MLogin from "@/components/Login/mobile/index.vue";
+// import Signout from "@/components/Signout/index.vue";
+// import MSignout from "@/components/Signout/mobile/index.vue";
+// import MobileDialog from "@/components/Signout/mobile/Header.vue";
+// import RefferalDialog from "@/components/refferal/index.vue";
+// import MRefferalDialog from "@/components/refferal/mobile/index.vue";
+// import LoginBonusDialog from "@/components/login_bonus/index.vue";
+// import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
+// import GetBonusDialog from "@/components/get_bonus/index.vue";
+// import MGetBonusDialog from "@/components/get_bonus/mobile/index.vue";
+// import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
+// import MRouletteBonusDialog from "@/components/roulette_bonus/mobile/index.vue";
+// import MAccountDialog from "@/views/account/dialog/index.vue";
+// import MenuSemiCircle from "@/components/global/menu_semi_circle/index.vue";
+// import LevelUpDialog from "@/components/level_up/index.vue";
+// import MLevelUpDialog from "@/components/level_up/mobile/index.vue";
+
 import { mailStore } from "@/store/mail";
 import router from '@/router';
 
-
-// const Deposit = defineAsyncComponent(() => import("@/components/cash/deposit/index.vue"));
-// const MDeposit = defineAsyncComponent(() => import("@/components/cash/deposit/mobile/index.vue"));
-// const Withdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/index.vue"));
-// const MWithdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/mobile/index.vue"));
-// const MCashHeader = defineAsyncComponent(() => import("@/components/cash/header/mobile/index.vue"));
-// const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/index.vue"));
-// const Signup = defineAsyncComponent(() => import("@/components/Signup/index.vue"));
-// const MSignup = defineAsyncComponent(() => import("@/components/Signup/mobile/index.vue"));
-// const MNickName = defineAsyncComponent(() => import("@/components/Signup/mobile/NickName.vue"));
-// const Login = defineAsyncComponent(() => import("@/components/Login/index.vue"));
-// const MLogin = defineAsyncComponent(() => import("@/components/Login/mobile/index.vue"));
-// const Signout = defineAsyncComponent(() => import("@/components/Signout/index.vue"));
-// const MSignout = defineAsyncComponent(() => import("@/components/Signout/mobile/index.vue"));
-// const MobileDialog = defineAsyncComponent(() => import("@/components/Signout/mobile/Header.vue"));
-// const RefferalDialog = defineAsyncComponent(() => import("@/components/refferal/index.vue"));
-// const MRefferalDialog = defineAsyncComponent(() => import("@/components/refferal/mobile/index.vue"));
-// const LoginBonusDialog = defineAsyncComponent(() => import("@/components/login_bonus/index.vue"));
-// const MLoginBonusDialog = defineAsyncComponent(() => import("@/components/login_bonus/mobile/index.vue"));
-// const RouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/index.vue"));
-// const MRouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/mobile/index.vue"));
-// const MAccountDialog = defineAsyncComponent(() => import("@/views/account/dialog/index.vue"));
+const GetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/index.vue"));
+const MGetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/mobile/index.vue"));
+const MenuSemiCircle = defineAsyncComponent(() => import("@/components/global/menu_semi_circle/index.vue"));
+const LevelUpDialog = defineAsyncComponent(() => import("@/components/level_up/index.vue"));
+const MLevelUpDialog = defineAsyncComponent(() => import("@/components/level_up/mobile/index.vue"));
+const Deposit = defineAsyncComponent(() => import("@/components/cash/deposit/index.vue"));
+const MDeposit = defineAsyncComponent(() => import("@/components/cash/deposit/mobile/index.vue"));
+const Withdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/index.vue"));
+const MWithdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/mobile/index.vue"));
+const MCashHeader = defineAsyncComponent(() => import("@/components/cash/header/mobile/index.vue"));
+const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/index.vue"));
+const Signup = defineAsyncComponent(() => import("@/components/Signup/index.vue"));
+const MSignup = defineAsyncComponent(() => import("@/components/Signup/mobile/index.vue"));
+const MNickName = defineAsyncComponent(() => import("@/components/Signup/mobile/NickName.vue"));
+const Login = defineAsyncComponent(() => import("@/components/Login/index.vue"));
+const MLogin = defineAsyncComponent(() => import("@/components/Login/mobile/index.vue"));
+const Signout = defineAsyncComponent(() => import("@/components/Signout/index.vue"));
+const MSignout = defineAsyncComponent(() => import("@/components/Signout/mobile/index.vue"));
+const MobileDialog = defineAsyncComponent(() => import("@/components/Signout/mobile/Header.vue"));
+const RefferalDialog = defineAsyncComponent(() => import("@/components/refferal/index.vue"));
+const MRefferalDialog = defineAsyncComponent(() => import("@/components/refferal/mobile/index.vue"));
+const LoginBonusDialog = defineAsyncComponent(() => import("@/components/login_bonus/index.vue"));
+const MLoginBonusDialog = defineAsyncComponent(() => import("@/components/login_bonus/mobile/index.vue"));
+const RouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/index.vue"));
+const MRouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/mobile/index.vue"));
+const MAccountDialog = defineAsyncComponent(() => import("@/views/account/dialog/index.vue"));
 
 const { t } = useI18n();
 const { name, width } = useDisplay();
@@ -558,18 +562,6 @@ onMounted(() => {
         <MDeposit v-else />
       </template>
     </v-dialog>
-
-    <!-----------------------Bonus Dashboard Dialog --------------------------------------->
-
-    <!-- <v-dialog
-      v-model="bonusDashboardDialog"
-      width="340"
-      :scrim="true"
-      transition="scale-transition"
-      @click:outside="closeBonusDashboardDialog"
-    >
-      <MBonusDashboardDialog @closeBonusDashboardDialog="closeBonusDashboardDialog" />
-    </v-dialog> -->
 
     <!-----------------------Authentication Dialog --------------------------------------->
 

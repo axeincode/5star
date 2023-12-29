@@ -31,7 +31,6 @@ import Toast, { POSITION, PluginOptions } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 // Import the English locale (or any other locale you want to customize)
 import 'dayjs/locale/en';

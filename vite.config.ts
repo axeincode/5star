@@ -8,6 +8,7 @@ import legacy from '@vitejs/plugin-legacy';
 import { cacheResource } from "vite-plugin-cache-resource";
 import VitePluginCdn from 'vite-plugin-cdn';
 import { splitVendorChunkPlugin } from 'vite'
+import * as fs from 'fs';
 
 // https://vitejs.dev/config/
 export default (configEnv: ConfigEnv): UserConfigExport => {
@@ -50,7 +51,18 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       splitVendorChunkPlugin(),
     ],
     build: {
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 2000, // 消除打包大小超过500kb警告
+      minify: "terser", // Vite 2.6.x 以上需要配置 minify: "terser", terserOptions 才能生效
+      terserOptions: {
+        compress: {
+          keep_infinity: true, // 防止 Infinity 被压缩成 1/0，这可能会导致 Chrome 上的性能问题
+          drop_console: true, // 生产环境去除 console
+          drop_debugger: true, // 生产环境去除 debugger
+        },
+        format: {
+          comments: false, // 删除注释
+        },
+      },
     },
     resolve: {
       alias: {
@@ -67,10 +79,36 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       ],
     },
     optimizeDeps: {
-      exclude: ['vuetify'],
-      entries: [
+      exclude: ['vuetify/lib'],
+      include: [
         './src/**/*.vue',
+        'vue-i18n',
+        "vue",
+        "vue-router",
+        "pinia",
+        "axios",
+        "vue-inline-svg",
+        "vue3-lazyload",
+        "vue3-carousel",
+        "vue-toastification",
+        "element-plus/es/components",
+        "@vueuse/core",
       ],
+      esbuildOptions: {
+        plugins: [
+          {
+            name: 'replace-feature-flags',
+            setup(build) {
+              build.onLoad({ filter: /vue-i18n/ }, async (args) => {
+                // Replace feature flag globals with boolean literals
+                const code = await fs.promises.readFile(args.path, 'utf-8');
+                const transformedCode = code.replace(/featureFlag/g, 'true'); // Replace featureFlag with the actual flag value
+                return { contents: transformedCode };
+              });
+            },
+          },
+        ],
+      },
     },
     css: {
       preprocessorOptions: {

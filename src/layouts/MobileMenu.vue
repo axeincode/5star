@@ -110,7 +110,6 @@ const calculateBottomDistance = () => {
 };
 
 watchEffect(() => {
-  console.log("sdfsdf");
   calculateBottomDistance();
 });
 
