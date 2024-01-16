@@ -226,6 +226,7 @@ onMounted(async () => {
         :start-day-of-week="1"
         @change="datePickerShow = false"
         @blur="datePickerShow = false"
+        size="small"
       >
         <template #range-separator>
           <img src="@/assets/public/svg/icon_public_83.svg" width="18" />
