@@ -1676,5 +1676,13 @@ export const lang: langType = {
     text_5: "ELIGE UN COFRE",
     text_6: "Ir a Recompensas",
     text_7: "No mostrar de nuevo"
+  },
+  agent: {    
+    text_1: "",
+    text_2: "",
+    text_3: "",
+    text_4: "",
+    text_5: "",
+    text_6: "",
   }
 };

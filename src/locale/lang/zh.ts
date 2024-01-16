@@ -1640,5 +1640,13 @@ export const lang: langType = {
     text_4: "of",
     text_5: "games",
     text_6: "NO games found. Try some Of our recommended games below.",
+  },
+  agent: {    
+    text_1: "",
+    text_2: "",
+    text_3: "",
+    text_4: "",
+    text_5: "",
+    text_6: "",
   }
 };

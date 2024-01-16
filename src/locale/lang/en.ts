@@ -1675,5 +1675,13 @@ export const lang: langType = {
     text_5: "CHOOSE A CHEST",
     text_6: "Go To Rewards",
     text_7: "Do Not Show Again"
+  },
+  agent: {    
+    text_1: "My Referrals",
+    text_2: "FAQ",
+    text_3: "Profit",
+    text_4: "Report",
+    text_5: "Grade",
+    text_6: "",
   }
 };

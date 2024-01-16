@@ -6,19 +6,19 @@ import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
-// import Invite from "@/components/affiliate/invite/index.vue";
-// import MInvite from "@/components/affiliate/invite/mobile/index.vue";
+import Invite from "@/components/affiliate/invite/index.vue";
+import MInvite from "@/components/affiliate/invite/mobile/index.vue";
 // import Statistics from "@/components/affiliate/statistics/index.vue";
 // import MStatistics from "@/components/affiliate/statistics/mobile/index.vue";
 // import Forms from "@/components/affiliate/forms/index.vue";
 // import MForms from "@/components/affiliate/forms/mobile/index.vue";
 
-const Invite = defineAsyncComponent(
-  () => import("@/components/affiliate/invite/index.vue")
-);
-const MInvite = defineAsyncComponent(
-  () => import("@/components/affiliate/invite/mobile/index.vue")
-);
+// const Invite = defineAsyncComponent(
+//   () => import("@/components/affiliate/invite/index.vue")
+// );
+// const MInvite = defineAsyncComponent(
+//   () => import("@/components/affiliate/invite/mobile/index.vue")
+// );
 const Statistics = defineAsyncComponent(
   () => import("@/components/affiliate/statistics/index.vue")
 );
@@ -348,10 +348,10 @@ onMounted(() => {
     display: flex;
     padding: 0px 30px;
     align-items: center;
-    background: #29253c;
+    background: rgb(var(--v-theme-color_29253c));
     height: 48px;
     margin: 0px 16px;
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+    box-shadow: 0px 3px 4px 1px rgba(var(--v-theme-color_000000), 0.21);
     border-radius: 12px;
     font-weight: 400;
     font-size: 12px;

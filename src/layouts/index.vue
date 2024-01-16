@@ -3,33 +3,37 @@ import { ref, computed } from "vue";
 import { defineAsyncComponent } from "vue";
 import { useRoute } from "vue-router";
 
-import NavBarLayout from "./NavBar.vue";
-import MNavBarLayout from "./MobileNavBar.vue";
-import UserNavBarLayout from "./UserNavBar.vue";
-import RightBarLayout from "./RightBar.vue";
+// import NavBarLayout from "./NavBar.vue";
+// import MNavBarLayout from "./MobileNavBar.vue";
+// import UserNavBarLayout from "./UserNavBar.vue";
+// import RightBarLayout from "./RightBar.vue";
 import AppBarLayout from "./AppBar.vue";
-import RewardBarLayout from "./RewardBar.vue";
 import MainLayout from "./Main.vue";
 import MobileMenuLayout from "./MobileMenu.vue";
-import RefferalLayout from "./RefferalBar.vue";
-import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
+// import AgentBarLayout from "./AgentBar.vue";
+// import RewardBarLayout from "./RewardBar.vue";
+// import RefferalLayout from "./RefferalBar.vue";
+// import MBonusDashboardDialog from "@/components/vip/mobile/MBonusDashboard.vue";
 
 import { useDisplay } from "vuetify";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
 
-// const NavBarLayout = defineAsyncComponent(() => import("./NavBar.vue"));
-// const MNavBarLayout = defineAsyncComponent(() => import("./MobileNavBar.vue"));
-// const UserNavBarLayout = defineAsyncComponent(() => import("./UserNavBar.vue"));
-// const RightBarLayout = defineAsyncComponent(() => import("./RightBar.vue"));
+const NavBarLayout = defineAsyncComponent(() => import("./NavBar.vue"));
+const MNavBarLayout = defineAsyncComponent(() => import("./MobileNavBar.vue"));
+const UserNavBarLayout = defineAsyncComponent(() => import("./UserNavBar.vue"));
+const RightBarLayout = defineAsyncComponent(() => import("./RightBar.vue"));
+const RewardBarLayout = defineAsyncComponent(() => import("./RewardBar.vue"));
 // const AppBarLayout = defineAsyncComponent(() => import("./AppBar.vue"));
 // const MainLayout = defineAsyncComponent(() => import("./Main.vue"));
 // const MobileMenuLayout = defineAsyncComponent(() => import("./MobileMenu.vue"));
-// const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
-// const MBonusDashboardDialog = defineAsyncComponent(
-//   () => import("@/components/vip/mobile/MBonusDashboard.vue")
-// );
+const AgentBarLayout = defineAsyncComponent(() => import("./AgentBar.vue"));
+const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
+const MBonusDashboardDialog = defineAsyncComponent(
+  () => import("@/components/vip/mobile/MBonusDashboard.vue")
+);
+
 const route = useRoute();
 const { width } = useDisplay();
 
@@ -37,6 +41,8 @@ const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
   return getRefferalAppBarShow.value;
 });
+
+const agentNavBarToggle = computed(() => {})
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -61,13 +67,18 @@ const handleScroll = () => {
   <v-app :class="fixPositionShow ? 'appbar-position-fix' : ''">
     <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />
-    <NavBarLayout v-if="mobileWidth > 600" />
-    <MNavBarLayout v-else />
+    <template v-if="mobileWidth > 600">
+      <NavBarLayout />
+      <RightBarLayout />
+    </template>
+    <template v-else>
+      <MNavBarLayout />
+      <RewardBarLayout v-if="route.name !== 'Sports'" />
+      <AgentBarLayout/>
+    </template>
     <UserNavBarLayout />
     <MBonusDashboardDialog />
-    <RewardBarLayout v-if="mobileWidth < 600 && route.name !== 'Sports'" />
     <MainLayout />
-    <RightBarLayout v-if="mobileWidth > 600" />
     <MobileMenuLayout v-if="mobileWidth < 1024" />
   </v-app>
 </template>
@@ -76,12 +87,15 @@ const handleScroll = () => {
 .v-navigation-drawer__scrim {
   z-index: 10 !important;
 }
+
 .v-navigation-drawer {
   background: #29253c !important;
 }
+
 .v-application {
   background: #31275c !important;
 }
+
 .appbar-position-fix {
   overflow: hidden !important;
   // position: fixed !important;
@@ -95,6 +109,7 @@ const handleScroll = () => {
   height: 60px !important;
   //flex-direction: unset!important;
 }
+
 .Vue-Toastification__toast {
   align-items: center !important;
   z-index: 1000000000 !important;
