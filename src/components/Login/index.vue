@@ -128,7 +128,7 @@ const Login = defineComponent({
         await dispatchUserBalance();
         await dispatchVipInfo();
         await dispatchVipLevels();
-        await dispatchSocketConnect();
+        // await dispatchSocketConnect();
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(
         //   "@/assets/public/svg/icon_public_18.svg",
@@ -157,6 +157,7 @@ const Login = defineComponent({
           setAuthModalType("");
           emit("close");
         }, 1000);
+        await dispatchSocketConnect();
       } else {
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(

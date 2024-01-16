@@ -97,6 +97,10 @@ const fixPositionShow = computed(() => {
   const { getFixPositionEnable } = storeToRefs(appBarStore());
   return getFixPositionEnable.value;
 });
+
+const handlePrev = () => {};
+
+const handleNext = () => {};
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
@@ -314,7 +318,7 @@ const fixPositionShow = computed(() => {
     </v-col>
     <v-col cols="6" md="8" lg="8" class="d-flex" style="padding-right: 6px">
       <div style="width: 100%">
-        <Pagination />
+        <Pagination :length="10" @handlePrev="handlePrev" @handleNext="handleNext" />
       </div>
     </v-col>
   </v-row>

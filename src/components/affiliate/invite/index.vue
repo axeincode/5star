@@ -234,7 +234,7 @@ onMounted(() => {
             <div style="text-wrap: balance">{{ inviteList[0].content }}</div>
             <v-btn
               icon=""
-              @click="inviteUrlCopy"
+              @click="inviteUrlCopy(inviteList[0].content)"
               width="40"
               height="40"
               class="mt-1 invite-url-copy-btn"
@@ -256,7 +256,7 @@ onMounted(() => {
           <template v-slot:append>
             <v-btn
               icon=""
-              @click="inviteUrlCopy"
+              @click="inviteUrlCopy(inviteList[1].content)"
               class="invite-url-copy-btn"
               width="40"
               height="40"

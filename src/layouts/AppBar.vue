@@ -15,8 +15,11 @@ import { storeToRefs } from "pinia";
 import { type GetUserData } from "@/interface/appBar";
 import { type GetMailData } from '@/interface/mail';
 import { type GetCurrencyItem } from '@/interface/deposit';
+import { useToast } from "vue-toastification";
+import * as clipboard from "clipboard-polyfill";
 import { useDisplay } from 'vuetify'
 import { useRouter } from "vue-router";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
@@ -56,6 +59,7 @@ const color = ref<string>("#29263C");
 const { t } = useI18n();
 const currentLanguage = ref<string>("en");
 const appBarWidth = ref<string>("app-bar-pc");
+const notificationText = ref<string>("");
 
 // logged in user info
 const user = ref<GetUserData>({
@@ -429,6 +433,31 @@ const goGameHistoryPage = () => {
   setTransactionTab(t('transaction.tab.game_history'));
 }
 
+const inviteUrlCopy = (content: string) => {
+  clipboard.writeText(content).then(
+    () => {
+      console.log("Copied to clipboard!");
+      notificationText.value = "Successful replication";
+      const toast = useToast();
+      toast.success(notificationText.value, {
+        timeout: 5000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+    },
+    (error) => {
+      console.error("Could not copy text: ", error);
+    }
+  );
+};
+
 // watches
 watch(currentLanguage, (newLang, oldLang) => {
   setLang(newLang);
@@ -707,10 +736,11 @@ onMounted(async () => {
                 <img src="@/assets/public/svg/icon_public_58.svg" />
               </template>
               <v-list-item-title class="ml-2"
-                >{{ t("appBar.id") }}: {{ userInfo.uid }}</v-list-item-title
+                >{{ t("appBar.id") }}ddd: {{ userInfo.uid }}</v-list-item-title
               >
               <template v-slot:append>
                 <img
+                  @click="inviteUrlCopy(userInfo.uid)"
                   src="@/assets/public/svg/icon_public_71.svg"
                   v-ripple.center
                   class="ml-6"

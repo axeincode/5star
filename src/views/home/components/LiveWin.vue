@@ -2,6 +2,7 @@
 import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { useRouter } from "vue-router";
 import { gameStore } from "@/store/game";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
@@ -28,6 +29,7 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const modules = [Pagination, Autoplay, Navigation];
 const { dispatchGameBigWin } = gameStore();
+const router = useRouter();
 
 const svgIconColor = ref<string>("#7782AA");
 const interval = ref<any>(null);
@@ -159,6 +161,10 @@ const mobileWidth = computed(() => {
   return width.value;
 });
 
+const goGame = (item: any) => {
+  router.push(`/game/${item.game_id}`);
+}
+
 onMounted(async () => {
   await dispatchGameBigWin();
   interval.value = setInterval(() => {
@@ -204,6 +210,7 @@ onUnmounted(() => {
           v-for="(item, index) in gameBigWinItem.lucky_bets"
           :key="index"
           :virtualIndex="index"
+          @click="goGame(item)"
         >
           <div class="text-center">
             <img :src="imgWinList[Math.floor(Math.random() * 3)]" class="live-win-img" />
@@ -244,6 +251,7 @@ onUnmounted(() => {
           v-for="(item, index) in gameBigWinItem.lucky_bets"
           :key="index"
           :virtualIndex="index"
+          @click="goGame(item)"
         >
           <div class="text-center">
             <img :src="imgWinList[Math.floor(Math.random() * 3)]" class="live-win-img" />
@@ -327,6 +335,9 @@ onUnmounted(() => {
     align-items: center;
     margin: 0px 6px;
     justify-content: center;
+  }
+  .text-center {
+    cursor: pointer;
   }
 }
 </style>

@@ -1042,14 +1042,15 @@ export default Dashboard;
       temporary
       :touchless="true"
       :style="{
-        height: 'unset',
+        // height: 'unset',
+        height: '100%',
         top: '0px',
         zIndex: 300000,
         background: 'unset !important',
       }"
       v-if="mobileWidth < 600"
     >
-      <MSearch :searchDialogShow="searchDialogShow" />
+      <MSearch :searchDialogShow="searchDialogShow" @searchCancel="searchDialogShow = false" />
     </v-navigation-drawer>
 
     <div :class="searchDialogShow ? 'home-bg-blur' : ''">
@@ -1090,9 +1091,9 @@ export default Dashboard;
             "
           >
             <v-slide-group-item>
+              <!-- width="159" -->
               <v-btn
                 class="mr-6 text-none"
-                width="159"
                 height="48"
                 :class="
                   selectedGameFilterBtn == t('home.button.all_game')
@@ -1112,136 +1113,71 @@ export default Dashboard;
                 {{ t("home.button.all_game") }}
               </v-btn>
             </v-slide-group-item>
-            <v-slide-group-item>
+            <v-slide-group-item
+              v-for="(item, index) in gameGroupBtnList"
+              :key="index"
+              :value="item.slug"
+            >
               <v-btn
                 class="mr-6 text-none"
-                width="144"
+                width="159"
                 height="48"
                 :class="
-                  selectedGameFilterBtn == t('home.button.favorite')
+                  selectedGameFilterBtn == item.slug
                     ? 'black button-bright'
                     : 'text-gray btn-211f31'
                 "
-                @click="handleGameFilterBtn(t('home.button.favorite'))"
+                @click="handleGameFilterBtn(item.slug)"
               >
                 <inline-svg
-                  :src="icon_public_36"
+                  :src="item.image"
                   width="24"
                   height="24"
                   class="mr-2"
                   :transform-source="gameTransform2"
+                  v-if="item.tranfromFunctionName == 'gameTransform2'"
                 ></inline-svg>
-                {{ t("home.button.favorite") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-6 text-none"
-                width="200"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == t('home.button.recently_played')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.recently_played'))"
-              >
                 <inline-svg
-                  :src="icon_public_35"
+                  :src="item.image"
                   width="24"
                   height="24"
                   class="mr-2"
                   :transform-source="gameTransform3"
+                  v-if="item.tranfromFunctionName == 'gameTransform3'"
                 ></inline-svg>
-                {{ t("home.button.recently_played") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-6 text-none"
-                width="191"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == t('home.button.original_game')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.original_game'))"
-              >
                 <inline-svg
-                  :src="icon_public_37"
+                  :src="item.image"
                   width="24"
                   height="24"
                   class="mr-2"
                   :transform-source="gameTransform4"
+                  v-if="item.tranfromFunctionName == 'gameTransform4'"
                 ></inline-svg>
-                {{ t("home.button.original_game") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-6 text-none"
-                width="134"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == t('home.button.pg_soft')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.pg_soft'))"
-              >
                 <inline-svg
-                  :src="icon_public_95"
+                  :src="item.image"
                   width="24"
                   height="24"
                   class="mr-2"
                   :transform-source="gameTransform5"
+                  v-if="item.tranfromFunctionName == 'gameTransform5'"
                 ></inline-svg>
-                {{ t("home.button.pg_soft") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-6 text-none"
-                width="120"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == t('home.button.slots')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.slots'))"
-              >
                 <inline-svg
-                  :src="icon_public_38"
+                  :src="item.image"
                   width="24"
                   height="24"
                   class="mr-2"
                   :transform-source="gameTransform6"
+                  v-if="item.tranfromFunctionName == 'gameTransform6'"
                 ></inline-svg>
-                {{ t("home.button.slots") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item>
-              <v-btn
-                class="mr-6 text-none"
-                width="171"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == t('home.button.live_casino')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.live_casino'))"
-              >
                 <inline-svg
-                  :src="icon_public_39"
+                  :src="item.image"
                   width="24"
                   height="24"
                   class="mr-2"
                   :transform-source="gameTransform7"
+                  v-if="item.tranfromFunctionName == 'gameTransform7'"
                 ></inline-svg>
-                {{ t("home.button.live_casino") }}
+                {{ item.name }}
               </v-btn>
             </v-slide-group-item>
           </v-slide-group>
@@ -1259,9 +1195,9 @@ export default Dashboard;
             "
           >
             <v-slide-group-item>
+              <!-- width="112" -->
               <v-btn
                 class="mr-3 text-none"
-                width="112"
                 height="36"
                 :class="
                   selectedGameFilterBtn == t('home.button.all_game')

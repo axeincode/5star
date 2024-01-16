@@ -75,6 +75,8 @@ const searchRef = ref<HTMLElement | undefined>(undefined);
 
 const recommendedGameList = ref<Array<Search>>([]);
 
+const emit = defineEmits<{ (e: "searchCancel"): void }>();
+
 const props = defineProps<{ searchDialogShow: boolean }>();
 
 const { searchDialogShow } = toRefs(props);
@@ -252,9 +254,9 @@ watch(searchDialogShow, (value) => {
 });
 
 onMounted(async () => {
-  if (searchRef.value != undefined) {
-    searchRef.value.focus();
-  }
+  // if (searchRef.value != undefined) {
+  //   searchRef.value.focus();
+  // }
   window.addEventListener("resize", handleResize);
   await dispatchGameSearch(
     `?game_categories_slug=recommend&page=${currentPage.value}&limit=${
@@ -271,13 +273,18 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
+  <div class="m-home-search-body">
+    <div class="m-search-header">
+      <span class="m-search-header-icon" @click="emit('searchCancel')"></span>
+      <span>{{ t('home.search') }}</span>
+    </div>
+  <!-- <div
     class="m-home-search-body"
     :style="{
       height: searchContainerHeight >= 590 ? '43vh' : searchContainerHeight - 80 + 'px',
       maxHeight: '643px',
     }"
-  >
+  > -->
     <div class="pt-3">
       <v-text-field
         ref="searchRef"
@@ -514,8 +521,33 @@ onMounted(async () => {
   transition-duration: 0.28s;
 }
 
+.m-search-header {
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  background: var(--BG-5-1C1929, #1c1929);
+  color: #fff;
+  text-align: center;
+  .m-search-header-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .m-search-header-icon::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translate(0, -50%) rotate(45deg);
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+    width: 10px;
+    height: 10px;
+  }
+}
+
 .m-home-search-body {
   width: 100%;
+  height: 100%;
   border-radius: 0px 0px 30px 30px;
   background: var(--Text-Box-1-211F31, #211f31);
   overflow-y: auto;

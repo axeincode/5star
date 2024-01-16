@@ -1,13 +1,42 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, watch, computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { useDisplay } from "vuetify";
 
 const SignupHeader = defineComponent({
   setup() {
     const { t } = useI18n();
+    const { width } = useDisplay();
+    const bodyHeight = ref(0);
+
+    const mobileWidth = computed(() => {
+      return width.value;
+    });
+
+    const handleResize = () => {
+      if (window.visualViewport?.height != undefined) {
+        bodyHeight.value = window.innerHeight - 230;
+      }
+    };
+
+    watch(
+      mobileWidth,
+      (newValue) => {
+        bodyHeight.value = window.innerHeight - 230;
+      },
+      { deep: true }
+    );
+
+    onMounted(() => {
+      if (window.visualViewport?.height != undefined) {
+        bodyHeight.value = window.innerHeight - 230;
+      }
+      window.addEventListener("resize", handleResize);
+    });
 
     return {
       t,
+      bodyHeight
     };
   },
 });
@@ -16,7 +45,7 @@ export default SignupHeader;
 </script>
 
 <template>
-  <v-row class="m-signup-header-container">
+  <v-row class="m-signup-header-container" :style="{ bottom: bodyHeight + 'px' }">
     <v-col cols="10" offset="1" class="pl-10 pt-9">
       <!-- <v-row>
                 <span class="logo-text purple">{{t('main.logo_text_1')}}</span>
@@ -42,7 +71,9 @@ export default SignupHeader;
 
 <style lang="scss">
 .m-signup-header-container {
+  position: absolute;
   z-index: 1;
+  width: 100%;
   height: 172px;
   border-radius: 26px 26px 0px 0px;
   margin: 0px !important;

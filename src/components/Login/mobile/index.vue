@@ -160,7 +160,7 @@ const Login = defineComponent({
         // await dispatchUserInvite();
         await dispatchVipInfo();
         await dispatchVipLevels();
-        await dispatchSocketConnect();
+        // await dispatchSocketConnect();
         setOverlayScrimShow(false);
         setRefferalDialogShow(true);
         const toast = useToast();
@@ -186,6 +186,7 @@ const Login = defineComponent({
           setAuthModalType("");
           emit("close");
         }, 100);
+        await dispatchSocketConnect();
       } else {
         const toast = useToast();
         toast.success(t("login.submit_result.err_text"), {
@@ -295,7 +296,8 @@ export default Login;
 </script>
 
 <template>
-  <div class="m-login-container" :style="{ height: containerHeight + 'px' }">
+  <div class="m-login-container">
+  <!-- <div class="m-login-container" :style="{ height: containerHeight + 'px' }"> -->
     <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" />
     <div
       class="m-login-body px-6"
@@ -307,7 +309,7 @@ export default Login;
       }"
     >
       <!-- SIGN UP FORM  -->
-      <v-form v-if="currentPage === PAGE_TYPE.LOGIN_FORM" ref="form" class="full-width">
+      <v-form v-if="currentPage === PAGE_TYPE.LOGIN_FORM" ref="form" class="full-width" @keyup.enter="handleLoginFormSubmit">
         <v-row class="relative mt-8">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
@@ -364,20 +366,20 @@ export default Login;
             :type="isShowPassword ? 'text' : 'password'"
             v-model="formData.password"
           />
-          <img
-            v-if="isShowPassword"
-            src="@/assets/public/svg/icon_public_07.svg"
-            class="m-disable-password"
-            @click="showPassword"
-            width="16"
-          />
-          <img
-            v-else
-            src="@/assets/public/svg/icon_public_06.svg"
-            class="m-disable-password"
-            @click="showPassword"
-            width="16"
-          />
+          <div v-if="isShowPassword" @click="showPassword" class="m-password-icon">
+            <img
+              src="@/assets/public/svg/icon_public_07.svg"
+              class="m-disable-password"
+              width="16"
+            />
+          </div>
+          <div v-else @click="showPassword" class="m-password-icon">
+            <img
+              src="@/assets/public/svg/icon_public_06.svg"
+              class="m-disable-password"
+              width="16"
+            />
+          </div>
         </div>
         <v-row class="mt-1">
           <p
@@ -600,6 +602,14 @@ export default Login;
   }
 }
 
+.m-password-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 40px;
+}
+
 .m-disable-password {
   position: absolute;
   top: 16px;
@@ -734,7 +744,7 @@ export default Login;
 
     .v-label.v-field-label--floating {
       --v-field-label-scale: 0.88em;
-      font-size: 10px !important;
+      font-size: 8px !important;
       max-width: 100%;
       color: #7782aa !important;
       opacity: 1 !important;
@@ -758,7 +768,7 @@ export default Login;
 
     .v-label.v-field-label--floating {
       --v-field-label-scale: 0.88em;
-      font-size: 10px !important;
+      font-size: 8px !important;
       max-width: 100%;
       color: #7782aa !important;
       opacity: 1 !important;
@@ -782,7 +792,7 @@ export default Login;
 
     .v-label.v-field-label--floating {
       --v-field-label-scale: 0.88em;
-      font-size: 10px !important;
+      font-size: 8px !important;
       max-width: 100%;
       color: #7782aa !important;
       opacity: 1 !important;

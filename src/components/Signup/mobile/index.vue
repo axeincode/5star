@@ -477,10 +477,11 @@ export default MSignup;
 </script>
 
 <template>
-  <div
+  <div class="m-signup-container">
+  <!-- <div
     class="m-signup-container"
     :style="{ height: containerHeight + 'px', overflowY: overflow ? 'auto' : 'unset' }"
-  >
+  > -->
     <SignupHeader v-if="currentPage !== PAGE_TYPE.DISPLAY_NAME" />
     <div
       class="m-signup-body px-6"
@@ -489,7 +490,7 @@ export default MSignup;
       }"
     >
       <!-- SIGN UP FORM  -->
-      <v-form v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" ref="form" class="full-width">
+      <v-form v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" ref="form" class="full-width" @keyup.enter="handleSignupFormSubmit">
         <div class="relative mt-10 pa-0">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
@@ -802,14 +803,14 @@ export default MSignup;
   .v-field__field {
     color: var(--sec-text-7782-aa, #7782aa);
     font-family: "Inter";
-    font-size: 10px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     height: 40px;
 
     input {
-      padding-top: 10px !important;
+      padding-top: 6px !important;
       font-family: "Inter";
       font-size: 12px;
       font-style: normal;
@@ -965,6 +966,7 @@ export default MSignup;
   bottom: 0px;
   width: 100%;
   height: 464px;
+  z-index: 99;
 
   // overflow-y: auto;
   .form-textfield div.v-field__field {
@@ -1088,6 +1090,9 @@ export default MSignup;
   transform-origin: top !important;
 
   .v-field__field {
+    input {
+      padding-top: 2px !important;
+    }
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;
@@ -1100,7 +1105,7 @@ export default MSignup;
 
     .v-label.v-field-label--floating {
       --v-field-label-scale: 0.88em;
-      font-size: 10px !important;
+      font-size: 8px !important;
       max-width: 100%;
       color: #7782aa !important;
       opacity: 1 !important;
@@ -1112,6 +1117,9 @@ export default MSignup;
   transform-origin: top !important;
 
   .v-field__field {
+    input {
+      padding-top: 2px !important;
+    }
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;
@@ -1124,7 +1132,7 @@ export default MSignup;
 
     .v-label.v-field-label--floating {
       --v-field-label-scale: 0.88em;
-      font-size: 10px !important;
+      font-size: 8px !important;
       max-width: 100%;
       color: #7782aa !important;
       opacity: 1 !important;
@@ -1136,6 +1144,9 @@ export default MSignup;
   transform-origin: top !important;
 
   .v-field__field {
+    input {
+      padding-top: 2px !important;
+    }
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;
@@ -1148,7 +1159,7 @@ export default MSignup;
 
     .v-label.v-field-label--floating {
       --v-field-label-scale: 0.88em;
-      font-size: 10px !important;
+      font-size: 8px !important;
       max-width: 100%;
       color: #7782aa !important;
       opacity: 1 !important;

@@ -684,10 +684,12 @@ button:active:enabled {
 }
 
 .button-bright {
-    background: var(--Primary-Button-32CFEC, #32CFEC) !important;
+    background: var(--Primary-Button-32CFEC, #5E44EA) !important;
+    // background: var(--Primary-Button-32CFEC, #32CFEC) !important;
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
-    color: black !important;
+    // color: black !important;
+    color: #fff !important;
 }
 
 .button:disabled {

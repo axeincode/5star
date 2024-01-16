@@ -15,8 +15,8 @@ export interface InviteData {
 export interface InviteHistoryFormData {
     index: number
     page: number
-    first_time: string
-    last_time: string
+    first_time: string | number
+    last_time: string | number
 }
 
 export interface InviteHistoryData {

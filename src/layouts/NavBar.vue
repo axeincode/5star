@@ -17,6 +17,8 @@ import { gameStore } from "@/store/game";
 
 const { setNavBarToggle } = appBarStore();
 const { setRightBarToggle } = appBarStore();
+const { setOverlayScrimShow } = appBarStore();
+const { setRefferalDialogShow } = refferalStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setLanguage } = gameStore();
@@ -62,9 +64,18 @@ const openLoginBonusDialog = () => {
 
 // language array
 const langItems = ref<Array<string>>([
-    t('navBar.language.english'),
-    t('navBar.language.portuguese'),
-    t('navBar.language.espanola')
+  {
+    id: 'en',
+    value: t('navBar.language.english'),
+  },
+  {
+    id: 'pt',
+    value: t('navBar.language.portuguese'),
+  },
+  {
+    id: 'es',
+    value: t('navBar.language.espanola')
+  }
 ])
 
 // game original data array
@@ -122,18 +133,18 @@ watch(casinoCheckBox, (value: boolean) => {
     }
 }, { deep: true });
 
-const handleLanguageDropdown = (item: string) => {
-    language.value = item;
-    switch (item) {
-        case t('navBar.language.english'):
+const handleLanguageDropdown = (item: any) => {
+    language.value = item.value;
+    switch (item.id) {
+        case 'en':
             setLang("en");
             setLanguage('en');
             break;
-        case t('navBar.language.portuguese'):
+        case 'pt':
             setLang("pt");
             setLanguage('pt');
             break;
-        case t('navBar.language.espanola'):
+        case 'es':
             setLang("es");
             setLanguage('es');
             break;
@@ -199,6 +210,12 @@ const offIconTransform = (el: any) => {
 
 const goGameBetBy = () => {
   router.push(`/sports`);
+}
+
+const openRefferalDialogShow = () => {
+  setOverlayScrimShow(false);
+  setRefferalDialogShow(true)
+  // setNavBarToggle(false);
 }
 
 onMounted(() => {
@@ -325,7 +342,7 @@ onMounted(() => {
       <!-- </v-card> -->
     </v-list>
     <v-list density="compact" nav class="p-m-list">
-      <v-list-item value="earn free" class="ma-0 pa-0">
+      <v-list-item value="earn free" class="ma-0 pa-0" @click="openRefferalDialogShow">
         <img src="@/assets/public/svg/img_public_20.svg" class="earn-free-img" />
         <img
           src="@/assets/public/image/img_public_6.png"
@@ -483,9 +500,9 @@ onMounted(() => {
             :value="item"
             class="avatar-img"
             @click="handleLanguageDropdown(item)"
-            :class="language == item ? 'nav-lang-selected-item' : ''"
+            :class="language == item.value ? 'nav-lang-selected-item' : ''"
           >
-            <v-list-item-title>{{ item }}</v-list-item-title>
+            <v-list-item-title>{{ item.value }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -675,7 +692,7 @@ onMounted(() => {
 .avatar-img {
   :deep(.v-avatar--density-default) {
     height: 24px;
-    width: 20px;
+    width: 22px;
     border-radius: 0px;
   }
 

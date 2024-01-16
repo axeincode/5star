@@ -1158,8 +1158,8 @@ onMounted(async () => {
           <v-slide-group-item v-for="(item, index) in vipTabs" :key="index" :value="item">
             <v-btn
               class="ma-2 text-none m-transaction-tab-btn"
-              :class="selectedVIPTab == item ? 'black' : 'text-gray'"
-              :color="selectedVIPTab == item ? '#32CFEC' : 'transparent'"
+              :class="selectedVIPTab == item ? 'white' : 'text-gray'"
+              :color="selectedVIPTab == item ? '#5E44EA' : 'transparent'"
               :width="mobileWidth < 600 ? 110 : 150"
               @click="handleSelectVIPTab(item)"
             >
@@ -2256,7 +2256,9 @@ onMounted(async () => {
   width: 100%;
   height: 163px;
   border-radius: 8px;
-  background: linear-gradient(179deg, #4a32aa 0%, #29263f 100%);
+  // background: linear-gradient(179deg, #4a32aa 0%, #29263f 100%);
+  background: conic-gradient(from 45.24deg at 50.17% 49.69%, #212442 0deg, #212442 178.12deg, #2D2C59 360deg),
+linear-gradient(0deg, #424173, #424173);
 }
 
 .reward-body {
@@ -2271,7 +2273,8 @@ onMounted(async () => {
   height: 202px;
   flex-shrink: 0;
   border-radius: 18px;
-  background: linear-gradient(0deg, #275798 0%, #9419f0 100%);
+  // background: linear-gradient(0deg, #275798 0%, #9419f0 100%);
+  background: linear-gradient(0deg, #212442 0%, #2D2C59 100%);
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 }
@@ -2526,6 +2529,7 @@ onMounted(async () => {
 
 .m-transaction-tab-btn {
   box-shadow: none !important;
+  border-radius: 12px;
 
   .v-btn__content {
     text-align: center;

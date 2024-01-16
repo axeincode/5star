@@ -1,12 +1,13 @@
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, watch, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 
 const LoginHeader = defineComponent({
   setup() {
     const { t } = useI18n();
-    const { name } = useDisplay();
+    const { name, width } = useDisplay();
+    const bodyHeight = ref(0)
 
     const currentLanguage = computed((): string => localStorage.getItem("lang") || "en");
 
@@ -14,10 +15,36 @@ const LoginHeader = defineComponent({
       return name.value;
     });
 
+    const mobileWidth = computed(() => {
+      return width.value;
+    });
+
+    const handleResize = () => {
+      if (window.visualViewport?.height != undefined) {
+        bodyHeight.value = window.innerHeight - 230;
+      }
+    };
+
+    watch(
+      mobileWidth,
+      (newValue) => {
+        bodyHeight.value = window.innerHeight - 230;
+      },
+      { deep: true }
+    );
+
+    onMounted(() => {
+      if (window.visualViewport?.height != undefined) {
+        bodyHeight.value = window.innerHeight - 230;
+      }
+      window.addEventListener("resize", handleResize);
+    });
+
     return {
       t,
       currentLanguage,
       mobileVersion,
+      bodyHeight
     };
   },
 });
@@ -26,7 +53,7 @@ export default LoginHeader;
 </script>
 
 <template>
-  <v-row class="m-login-header-container">
+  <v-row class="m-login-header-container" :style="{ bottom: bodyHeight + 'px' }">
     <img src="@/assets/login/image/img_li_01.png" class="m-logo-image2" width="264" />
     <img src="@/assets/login/image/img_li_02.png" class="m-logo-image3" width="118" />
     <img src="@/assets/login/image/img_li_03.png" class="m-logo-image4" width="177" />
@@ -48,7 +75,9 @@ export default LoginHeader;
 
 <style lang="scss" scoped>
 .m-login-header-container {
+  position: absolute;
   z-index: 1;
+  width: 100%;
   height: 177px;
   margin: 0px !important;
   background: linear-gradient(0deg, #275798 0%, #9419f0 100%);
