@@ -4,6 +4,7 @@ import { agentStore } from "@/store/agent";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
+import MReferral from "@/components/agent/my_referral/index.vue";
 
 const { t } = useI18n();
 
@@ -36,41 +37,59 @@ onMounted(() => {
         </v-btn>
         <div class="m-agent-header">
             <div class="d-flex mx-5 justify-between mt-10">
-                <span @click="handleTab(0)" :class="activeIndex == 0 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">{{ t("agent.text_1") }}</span>
-                <span @click="handleTab(1)"  :class="activeIndex == 1 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">{{ t("agent.text_2") }}</span>
-                <span @click="handleTab(2)"  :class="activeIndex == 2 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">{{ t("agent.text_3") }}</span>
-                <span @click="handleTab(3)" :class="activeIndex == 3 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">{{ t("agent.text_4") }}</span>
-                <span @click="handleTab(4)" :class="activeIndex == 4 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">{{ t("agent.text_5") }}</span>
+                <span @click="handleTab(0)" :class="activeIndex == 0 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">
+                    {{ t("agent.text_1") }}
+                </span>
+                <span @click="handleTab(1)" :class="activeIndex == 1 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">
+                    {{ t("agent.text_2") }}
+                </span>
+                <span @click="handleTab(2)" :class="activeIndex == 2 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">
+                    {{ t("agent.text_3") }}
+                </span>
+                <span @click="handleTab(3)" :class="activeIndex == 3 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">
+                    {{ t("agent.text_4") }}
+                </span>
+                <span @click="handleTab(4)" :class="activeIndex == 4 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">
+                    {{ t("agent.text_5") }}
+                </span>
             </div>
+        </div>
+        <div class="m-agent-body">
+            <MReferral v-if="activeIndex == 0" />
         </div>
     </v-navigation-drawer>
 </template>
 
 <style lang="scss">
 .m-agent-drawer {
-    background: var(--grade-1-black, #15161C) !important;
+    background: $agent_card_bg !important;
     height: 100% !important;
     width: 100% !important;
     top: 0px !important;
     z-index: 100000000 !important;
-}
 
-.m-agent-header {
-    position: fixed;
-    width: 100% !important;
-    top: 0px !important;
-    border-style: none !important;
-    background: var(--grade-2-black, #1D2027) !important;
-    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30) !important;
-    height: 70px !important;
-}
+    .m-agent-header {
+        z-index: 1000;
+        position: fixed;
+        width: 100% !important;
+        top: 0px !important;
+        border-style: none !important;
+        background: $agent_card_notmet_bg !important;
+        box-shadow: $agent_card_notmet_box_shadow !important;
+        height: 70px !important;
+    }
 
-.m-agent-drawer-close-button {
-    box-shadow: none !important;
-    background-color: transparent !important;
-    position: absolute !important;
-    top: 6px;
-    right: 6px;
-    z-index: 100000;
+    .m-agent-drawer-close-button {
+        box-shadow: none !important;
+        background-color: transparent !important;
+        position: absolute !important;
+        top: 6px;
+        right: 6px;
+        z-index: 100000;
+    }
+
+    .m-agent-body {
+        margin-top: 70px;
+    }
 }
 </style>

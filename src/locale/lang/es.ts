@@ -1684,5 +1684,17 @@ export const lang: langType = {
     text_4: "",
     text_5: "",
     text_6: "",
+    text_7: "",
+    text_8: "",
+    text_9: "",
+    text_10: "",
+    text_11: "",
+    text_12: "",
+    text_13: "",
+    text_14: "",
+    text_15: "",
+    text_16: "",
+    text_17: "",
+    text_18: "",
   }
 };
