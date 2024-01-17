@@ -360,13 +360,13 @@ onMounted(async () => {
     <div
       class="bet-history-tabs mt-4"
       style="padding: 0px 2px"
-      :style="{ width: token != undefined ? '516px' : '388px' }"
+      :style="{ minWidth: token != undefined ? '516px' : '388px' }"
     >
-      <template v-for="(item, index) in betHistoryTabList">
+      <template v-for="(item, index) in betHistoryTabList" :key="index">
+        <!-- width="128px" -->
         <v-btn
-          class="text-none"
+          class="text-none btn-width"
           :class="item == selectedBtnText ? 'button-bright' : 'button-transparent'"
-          width="128px"
           height="36px"
           style="border-radius: 8px !important"
           @click="handleBetHistoryTab(item)"
@@ -583,6 +583,9 @@ onMounted(async () => {
       color: #fff;
       font-weight: 700;
     }
+  }
+  .btn-width {
+    min-width: 128px;
   }
 }
 .m-bet-history-tabs {
