@@ -6,8 +6,8 @@ import { useDisplay } from "vuetify";
 import { type GetInvitaionBonusData } from "@/interface/affiliate/invite"
 import { type GetBettingCommissionData } from "@/interface/affiliate/invite"
 import Notification from "@/components/global/notification/index.vue";
-import BonusDialog from "./bonus_dailog/index.vue";
-import MBonusDialog from "./bonus_dailog/mobile/index.vue";
+import BonusDialog from "./bonus_dialog/index.vue";
+import MBonusDialog from "./bonus_dialog/mobile/index.vue";
 import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';

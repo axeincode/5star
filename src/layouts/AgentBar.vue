@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
 import MReferral from "@/components/agent/my_referral/index.vue";
+import MFAQ from "@/components/agent/faq/index.vue";
 
 const { t } = useI18n();
 
@@ -56,6 +57,7 @@ onMounted(() => {
         </div>
         <div class="m-agent-body">
             <MReferral v-if="activeIndex == 0" />
+            <MFAQ v-if="activeIndex == 1" />
         </div>
     </v-navigation-drawer>
 </template>

@@ -10,13 +10,13 @@ import { storeToRefs } from "pinia";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
-import {type InviteData} from "@/interface/invite";
+import { type InviteData } from "@/interface/invite";
 import QrcodeVue from 'qrcode.vue'
 
 const { t } = useI18n();
 const { width } = useDisplay();
-const props = defineProps<{inviteItem: InviteData}>();
-const {inviteItem} = toRefs(props);
+const props = defineProps<{ inviteItem: InviteData }>();
+const { inviteItem } = toRefs(props);
 const size = ref<number>(132)
 
 const notificationText = ref<string>("");
@@ -63,11 +63,11 @@ const inviteUrlCopy = (content: string) => {
 };
 
 watch(inviteItem, (new_value) => {
-    if (inviteItem != undefined) {
-        inviteList.value[0].content = new_value.web_invite_url;
-        inviteList.value[1].content = new_value.invite_code;
-    }
-}, {deep: true});
+  if (inviteItem != undefined) {
+    inviteList.value[0].content = new_value.web_invite_url;
+    inviteList.value[1].content = new_value.invite_code;
+  }
+}, { deep: true });
 </script>
 
 <template>
@@ -77,14 +77,9 @@ watch(inviteItem, (new_value) => {
         <p class="mt-3 m-invite-partner-text text-center">
           {{ t("affiliate.invite.invite_partner") }}
         </p>
-        <v-list-item
-          class="m-invite-url-item"
-          v-for="(item, index) in inviteList"
-          :key="index"
-          :style="{
-            height: index == 0 ? 'unset' : '40px',
-          }"
-        >
+        <v-list-item class="m-invite-url-item" v-for="(item, index) in inviteList" :key="index" :style="{
+          height: index == 0 ? 'unset' : '40px',
+        }">
           <v-list-item-title class="ml-4 text-left" style="line-height: 20px">
             <div class="text-400-10 gray">{{ item.title }}</div>
             <div class="text-600-12">{{ item.content }}</div>
@@ -93,14 +88,8 @@ watch(inviteItem, (new_value) => {
             </div>
           </v-list-item-title>
           <template v-slot:append>
-            <v-btn
-              icon=""
-              @click="inviteUrlCopy(item.content)"
-              class="m-invite-url-copy-btn"
-              bg-color="#353652"
-              width="24"
-              height="24"
-            >
+            <v-btn icon="" @click="inviteUrlCopy(item.content)" class="m-invite-url-copy-btn" bg-color="#353652"
+              width="24" height="24">
               <img src="@/assets/public/svg/icon_public_71.svg" width="16" />
             </v-btn>
           </template>
@@ -119,6 +108,7 @@ watch(inviteItem, (new_value) => {
   margin-top: 16px;
   margin-bottom: 16px;
 }
+
 .v-list-item__append {
   margin-top: 3px;
   display: block !important;

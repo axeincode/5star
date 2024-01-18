@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from 'vue-i18n';
@@ -9,12 +8,16 @@ import MStatistics from "./components/mobile/Statistics.vue";
 import MInviteFooter from "./components/mobile/InviteFooter.vue";
 import { inviteStore } from '@/store/invite';
 import { storeToRefs } from 'pinia';
+import { useToast } from "vue-toastification";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 
 const { dispatchUserInvite } = inviteStore();
 
 const { t } = useI18n()
 const svgColor = ref<string>("#ffffff");
-const size = ref<number>(76);
+const size = ref<number>(64);
+
+const notificationText = ref<string>("");
 
 const svgTransform = (el: any) => {
     for (let node of el.children) {
@@ -84,8 +87,10 @@ onMounted(async () => {
             <div class="text-700-14 text-white text-center mt-3">{{ t('agent.text_9') }}</div>
             <div class="ma-4 d-flex">
                 <div class="m-agent-referral-qr-code">
-                    <QrcodeVue value="http://test" :size="size" style="border-radius: 8px" />
-                    <div class="text-700-10 text-black text-center">{{ t('agent.text_10') }}</div>
+                    <div class="m-agent-referral-qrcode">
+                        <QrcodeVue value="http://test" :size="size" style="margin: 6px" />
+                    </div>
+                    <div class="text-700-10 text-black text-center mt-2">{{ t('agent.text_10') }}</div>
                 </div>
                 <v-card class="m-agent-referral-invitation-code ml-2">
                     <div class="ma-2 text-gray text-400-10">{{ t('agent.text_11') }}</div>
@@ -119,8 +124,8 @@ onMounted(async () => {
                 </div>
             </div>
         </v-card>
-        <MStatistics :inviteItem="inviteItem"/>
-        <MInviteFooter/>
+        <MStatistics :inviteItem="inviteItem" />
+        <MInviteFooter />
     </div>
 </template>
 
@@ -201,5 +206,21 @@ onMounted(async () => {
         bottom: 8px;
         right: 8px;
     }
+}
+
+.Vue-Toastification__container {
+    right: 0 !important;
+    left: unset !important;
+    width: 290px !important;
+    margin-right: 37px;
+    height: 60px !important;
+    z-index: 10000000000000000;
+}
+
+.m-agent-referral-qrcode {
+    width: 76px;
+    height: 76px;
+    background: #ffffff;
+    border-radius: 8px;
 }
 </style>
