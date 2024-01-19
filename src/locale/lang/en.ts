@@ -1727,7 +1727,7 @@ export const lang: langType = {
     text_48: "Total: ",
     text_49: "Valid bets: ",
     text_50: " has no lower level agents So th ere's no profit.",
-    text_51: "",
+    text_51: "E1 has more than 3 levels and no longer contributes to A",
     text_52: "",
     text_53: "",
     text_54: "",

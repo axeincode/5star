@@ -6,6 +6,8 @@ import { useI18n } from "vue-i18n";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
 import MReferral from "@/components/agent/my_referral/index.vue";
 import MFAQ from "@/components/agent/faq/index.vue";
+import MProfit from "@/components/agent/profit/index.vue";
+import MReport from "@/components/agent/report/index.vue";
 
 const { t } = useI18n();
 
@@ -58,6 +60,8 @@ onMounted(() => {
         <div class="m-agent-body">
             <MReferral v-if="activeIndex == 0" />
             <MFAQ v-if="activeIndex == 1" />
+            <MProfit v-if="activeIndex == 2" />
+            <MReport v-if="activeIndex == 3" />
         </div>
     </v-navigation-drawer>
 </template>
@@ -92,6 +96,7 @@ onMounted(() => {
 
     .m-agent-body {
         margin-top: 70px;
+        padding-top: 8px;
     }
 }
 </style>

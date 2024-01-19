@@ -36,7 +36,7 @@ export const inviteStore = defineStore({
     statisticsItem: {
       today_profit: {
         register_user: [],
-        drposit_user: [],
+        deposit_user: [],
         deposit_bonus: 0,
         deposit_amount: [],
         bet_amount: [],
@@ -45,7 +45,7 @@ export const inviteStore = defineStore({
       },
       week_profit: {
         register_user: [],
-        drposit_user: [],
+        deposit_user: [],
         deposit_bonus: 0,
         deposit_amount: [],
         bet_amount: [],
@@ -54,7 +54,7 @@ export const inviteStore = defineStore({
       },
       month_profit: {
         register_user: [],
-        drposit_user: [],
+        deposit_user: [],
         deposit_bonus: 0,
         deposit_amount: [],
         bet_amount: [],

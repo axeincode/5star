@@ -65,7 +65,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="relative pt-2">
+    <div class="relative">
         <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
         <div class="m-my-referral-report-card">
             <div class="report-card-text">
@@ -136,8 +136,8 @@ onMounted(async () => {
     height: 44px;
     background: $agent_referral_report_card_bg;
     border-radius: 12px;
-    top: 78px;
-    right: 20px;
+    top: 66px;
+    right: 12px;
     z-index: -1;
 
     .report-card-text {

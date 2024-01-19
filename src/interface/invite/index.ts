@@ -39,7 +39,7 @@ export interface StatisticsData {
 
 export interface StatisticsItem {
     register_user: Array<number | string>
-    drposit_user: Array<number | string>
+    deposit_user: Array<number | string>
     deposit_bonus: number | string
     deposit_amount: Array<number | string>
     bet_amount: Array<number | string>
