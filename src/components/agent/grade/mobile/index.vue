@@ -47,8 +47,8 @@ onMounted(async () => {
 
 <template>
   <div class="pb-4">
-    <v-row class="mt-6 justify-center mx-16">
-      <div class="text-700-14 white text-center relative">
+    <v-row class="mt-1 justify-center mx-16 mb-0">
+      <div class="text-800-14 white text-center relative">
         {{ t("affiliate.invite.commission_title_text") }}
         <v-menu v-model="commissionMenuShow">
           <template v-slot:activator="{ props }">
@@ -66,11 +66,9 @@ onMounted(async () => {
         </v-menu>
       </div>
     </v-row>
-    <v-row class="mt-4 justify-center px-10 mb-0">
-      <div class="text-400-12 gray text-center">
+      <div class="text-400-12 gray text-center mx-8 mt-4">
         {{ t("affiliate.invite.commission_content_text") }}
       </div>
-    </v-row>
     <MReward :achievementItem="achievementItem" />
     <MAgentRealization :achievementItem="achievementItem" />
   </div>

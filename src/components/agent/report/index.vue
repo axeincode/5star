@@ -237,7 +237,8 @@ onMounted(async () => {
                 </v-list-item>
             </v-list>
         </v-menu>
-        <v-menu offset="10" content-class="m-agent-report-bonus-menu" v-model="cashMenuShow" style="z-index: 1000000000000000;">
+        <v-menu offset="10" content-class="m-agent-report-bonus-menu" v-model="cashMenuShow"
+            style="z-index: 1000000000000000;">
             <template v-slot:activator="{ props }">
                 <v-card theme="dark" class="ml-auto m-agent-report-bonus-menu-card" style="width: 100px;">
                     <v-list-item class="bonus-item" v-bind="props" :title="selectedPageSize" append-icon="mdi-chevron-down"
@@ -292,7 +293,7 @@ onMounted(async () => {
         </v-table>
     </v-row>
     <v-row class="mt-4 justify-center mx-4 pb-2">
-        <Pagination :length="10" @handlePrev="handlePrev" @handleNext="handleNext" />
+        <Pagination :length="30" @handlePrev="handlePrev" @handleNext="handleNext" />
     </v-row>
 </template>
 <style lang="scss">
@@ -308,6 +309,16 @@ onMounted(async () => {
 
     .v-list-item__append>.v-icon {
         margin-inline-start: unset !important;
+    }
+
+    .v-list-item-title {
+        color: #FFF;
+        text-align: center;
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
     }
 }
 
@@ -382,7 +393,8 @@ onMounted(async () => {
 
     .v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>td,
     .v-table .v-table__wrapper>table>tbody>tr:not(:last-child)>th {
-        border-bottom: 1px solid $agent_card_bg;
+        // border-bottom: 1px solid $agent_card_bg;
+        border-bottom: none !important;
     }
 
     .forms-table-header {
@@ -420,7 +432,7 @@ onMounted(async () => {
     .el-date-editor.el-input__wrapper {
         width: 100%;
         height: 40px !important;
-        background: $agent_card_notmet_bg;
+        background: $agent_card_notmet_bg !important;
         box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
         border-radius: 8px !important;
         justify-content: start;

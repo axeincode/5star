@@ -9,11 +9,12 @@ export const achievementStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    achievementItem: {        
-    achievement_progress: 0,
-    achievement_explain: [],
-    award_progress: 0,
-    award_explain: []
+    achievementItem: {
+      achievement_progress: 0,
+      achievement_explain: [],
+      award_progress: 0,
+      award_explain: [],
+      rate: 0,
     } as Achievement.GetAchievementItem,
   }),
   getters: {
@@ -30,7 +31,7 @@ export const achievementStore = defineStore({
       this.errMessage = message
     },
     setAchievementItem(achievementItem: Achievement.GetAchievementItem) {
-        this.achievementItem = achievementItem;
+      this.achievementItem = achievementItem;
     },
     // get achievement item
     async dispatchAchievementList() {

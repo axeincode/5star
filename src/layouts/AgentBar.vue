@@ -1,19 +1,27 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, defineAsyncComponent } from "vue";
 import { agentStore } from "@/store/agent";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
 import MReferral from "@/components/agent/my_referral/index.vue";
-import MFAQ from "@/components/agent/faq/index.vue";
-import MProfit from "@/components/agent/profit/index.vue";
-import MReport from "@/components/agent/report/index.vue";
+// import MFAQ from "@/components/agent/faq/index.vue";
+// import MProfit from "@/components/agent/profit/index.vue";
+// import MReport from "@/components/agent/report/index.vue";
+// import MGrade from "@/components/agent/grade/mobile/index.vue";
+
+const MFAQ = defineAsyncComponent(() => import("@/components/agent/faq/index.vue"));
+const MProfit = defineAsyncComponent(() => import("@/components/agent/profit/index.vue"));
+const MReport = defineAsyncComponent(() => import("@/components/agent/report/index.vue"));
+const MGrade = defineAsyncComponent(() => import("@/components/agent/grade/mobile/index.vue"));
 
 const { t } = useI18n();
 
 const drawer = ref<boolean>(false);
 const { setAgentNavBarToggle } = agentStore();
 const activeIndex = ref<number>(0);
+
+const scrollTop = ref<number>(0);
 
 const agentNavBarToggle = computed(() => {
     const { getAgentNavBarToggle } = storeToRefs(agentStore());
@@ -28,6 +36,11 @@ const handleTab = (index: number) => {
     activeIndex.value = index;
 }
 
+const handleScroll = (event: any) => {
+    console.log("scroll", event.target.scrollTop);
+    scrollTop.value = event.target.scrollTop;
+}
+
 onMounted(() => {
     setAgentNavBarToggle(false)
 })
@@ -38,7 +51,7 @@ onMounted(() => {
         <v-btn class="m-agent-drawer-close-button" icon="true" width="20" height="20" @click="setAgentNavBarToggle(false)">
             <img :src="icon_public_10" width="18" />
         </v-btn>
-        <div class="m-agent-header">
+        <div class="m-agent-header" :class="scrollTop == 0 ? '' : 'm-agent-header-active-bg'">
             <div class="d-flex mx-5 justify-between mt-10">
                 <span @click="handleTab(0)" :class="activeIndex == 0 ? 'text-700-12 text-white' : 'text-400-12 text-gray'">
                     {{ t("agent.text_1") }}
@@ -57,11 +70,12 @@ onMounted(() => {
                 </span>
             </div>
         </div>
-        <div class="m-agent-body">
+        <div class="m-agent-body" @scroll="handleScroll">
             <MReferral v-if="activeIndex == 0" />
             <MFAQ v-if="activeIndex == 1" />
             <MProfit v-if="activeIndex == 2" />
             <MReport v-if="activeIndex == 3" />
+            <MGrade v-if="activeIndex == 4" />
         </div>
     </v-navigation-drawer>
 </template>
@@ -80,9 +94,12 @@ onMounted(() => {
         width: 100% !important;
         top: 0px !important;
         border-style: none !important;
-        background: $agent_card_notmet_bg !important;
-        box-shadow: $agent_card_notmet_box_shadow !important;
         height: 70px !important;
+    }
+
+    .m-agent-header-active-bg {
+        box-shadow: $agent_card_notmet_box_shadow !important;
+        background: $agent_card_notmet_bg !important;
     }
 
     .m-agent-drawer-close-button {
@@ -97,6 +114,8 @@ onMounted(() => {
     .m-agent-body {
         margin-top: 70px;
         padding-top: 8px;
+        height: calc(100vh - 70px);
+        overflow-y: scroll;
     }
 }
 </style>

@@ -176,7 +176,7 @@ const submitNickName = async () => {
     z-index: 102;
 
     .v-btn--disabled {
-        background-color: #353652 !important;
+        background-color: $agent_color_3 !important;
         color: white !important;
     }
 

@@ -65,24 +65,26 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="relative">
-        <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
-        <div class="m-my-referral-report-card">
-            <div class="report-card-text">
-                <inline-svg :src="icon_public_83" width="20" height="20" :transform-source="svgTransform">
-                </inline-svg>
-                <span class="text-400-10 text-white ml-1">{{ t('agent.text_6') }}</span>
+    <div>
+        <div class="relative">
+            <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
+            <div class="m-my-referral-report-card">
+                <div class="report-card-text">
+                    <inline-svg :src="icon_public_83" width="20" height="20" :transform-source="svgTransform">
+                    </inline-svg>
+                    <span class="text-400-10 text-white ml-1">{{ t('agent.text_6') }}</span>
+                </div>
             </div>
+            <v-row class="m-referral-reward-card mx-4">
+                <v-col cols="6">
+                    <div class="text-400-12 text-white">{{ t('agent.text_7') }}</div>
+                </v-col>
+                <v-col cols="6" class="text-right">
+                    <v-btn width="112" height="32">{{ t('agent.text_8') }}</v-btn>
+                </v-col>
+            </v-row>
+            <div class="m-referral-reward-card-1 mx-7 text-700-18 text-white">R$ 999.999.999.00</div>
         </div>
-        <v-row class="m-referral-reward-card mx-4">
-            <v-col cols="6">
-                <div class="text-400-12 text-white">{{ t('agent.text_7') }}</div>
-            </v-col>
-            <v-col cols="6" class="text-right">
-                <v-btn width="112" height="32">{{ t('agent.text_8') }}</v-btn>
-            </v-col>
-        </v-row>
-        <div class="m-referral-reward-card-1 mx-7 text-700-18 text-white">R$ 999.999.999.00</div>
         <v-card class="mx-2 m-agent-referral-partner-card">
             <div class="text-700-14 text-white text-center mt-3">{{ t('agent.text_9') }}</div>
             <div class="ma-4 d-flex">
@@ -132,12 +134,12 @@ onMounted(async () => {
 <style lang="scss">
 .m-my-referral-report-card {
     position: absolute;
-    width: 170px;
+    width: 300px;
     height: 44px;
     background: $agent_referral_report_card_bg;
     border-radius: 12px;
-    top: 66px;
-    right: 12px;
+    bottom: 16.7%;
+    right: 3.1%;
     z-index: -1;
 
     .report-card-text {

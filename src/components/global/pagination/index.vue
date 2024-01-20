@@ -38,14 +38,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <v-pagination
-    v-model="pageNo"
-    :length="length"
-    @next="handleNext"
-    @prev="handlePrev"
-    :total-visible="totalVisible"
-    rounded="circle"
-  ></v-pagination>
+  <v-pagination v-model="pageNo" :length="length" @next="handleNext" @prev="handlePrev" :total-visible="totalVisible"
+    rounded="circle"></v-pagination>
 </template>
 <style lang="scss">
 .v-pagination__prev,
@@ -55,7 +49,7 @@ onMounted(() => {
   .v-btn {
     width: 32px !important;
     height: 32px !important;
-    background: #353652 !important;
+    background: $agent_color_3 !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
     border-radius: 6px !important;
     color: #ffffff;
@@ -66,11 +60,14 @@ onMounted(() => {
   .v-btn {
     width: 32px !important;
     height: 32px !important;
-    background: #353652 !important;
+    background: $agent_color_3 !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
     border-radius: 6px !important;
     font-weight: 600;
     font-size: 16px;
+    .v-btn__content {      
+      color: #FFF;
+    }
   }
 }
 
@@ -78,15 +75,20 @@ onMounted(() => {
   .v-btn {
     width: 32px !important;
     height: 32px !important;
-    background: #32cfec !important;
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
+    background: $agent_card_bar_bg !important;
+    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30) !important;
     border-radius: 6px !important;
     font-weight: 600;
     font-size: 16px;
+
+    .v-btn__content {
+      color: #FFF;
+    }
   }
 }
 
 @media (max-width: 600px) {
+
   .v-pagination__prev,
   .v-pagination__next {
     .v-btn {
@@ -106,6 +108,7 @@ onMounted(() => {
       height: 28px !important;
 
       .v-btn__content {
+        color: #FFF;
         font-weight: 800 !important;
         font-size: 12px !important;
       }
@@ -120,6 +123,7 @@ onMounted(() => {
       height: 28px !important;
 
       .v-btn__content {
+        color: #FFF;
         font-weight: 800 !important;
         font-size: 12px !important;
       }
