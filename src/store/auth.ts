@@ -5,6 +5,7 @@ import type * as SignUp from "@/interface/signup";
 import type * as User from "@/interface/user";
 import { Network } from "@/net/Network";
 import { NetworkData } from '@/net/NetworkData';
+import { Netcfg } from '@/net/NetCfg';
 import { handleException } from './exception';
 
 export const authStore = defineStore({
@@ -62,7 +63,9 @@ export const authStore = defineStore({
     },
     setToken(token: string) {
       const networkData: NetworkData = NetworkData.getInstance();
+      const netCfg: Netcfg = Netcfg.getInstance();
       networkData.setToken(token);
+      netCfg.setToken(token);
       this.token = token;
     },
     removeToken() {

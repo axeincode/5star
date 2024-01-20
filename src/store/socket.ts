@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { NETWORK } from '@/net/NetworkCfg';
-import { Network } from "@/net/Network";
+import { Network } from "@/net/Network1";
 import type * as Socket from "@/interface/socket";
 import { createWebSocket } from '@/plugins/socket';
 
@@ -30,15 +30,16 @@ export const socketStore = defineStore({
     },
     // socket connect check
     async dispatchSocketConnect() {
+      console.log('进来')
       this.setSuccess(false);
       const route: string = NETWORK.WEB_SOCKET.SOCKET_CONNECT;
       const network: Network = Network.getInstance();
-      // network.connect(route);
-      this.socket = createWebSocket(route);
-      this.socket.onopen = this.handleOpen;
-      this.socket.onmessage = this.handleMessage;
-      this.socket.onerror = this.handleError;
-      this.socket.onclose = this.handleClose;
+      network.connect();
+      // this.socket = createWebSocket(route);
+      // this.socket.onopen = this.handleOpen;
+      // this.socket.onmessage = this.handleMessage;
+      // this.socket.onerror = this.handleError;
+      // this.socket.onclose = this.handleClose;
     },
     handleOpen() {
       console.log('WebSocket connection established');
