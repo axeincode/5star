@@ -38,6 +38,7 @@ import MSearch from "@/views/home/components/mobile/Search.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { useNamespace } from "element-plus";
 import { duration } from "moment-timezone";
+import { homeStore } from "@/store/home";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -73,6 +74,7 @@ const Dashboard = defineComponent({
     const { setNavBarToggle } = appBarStore();
     const { setMainBlurEffectShow } = appBarStore();
     const { dispatchSocketConnect } = socketStore();
+    const { setSearchDialogShow } = homeStore();
     const router = useRouter();
     const route = useRoute();
     const instance = getCurrentInstance();
@@ -225,6 +227,19 @@ const Dashboard = defineComponent({
       const { getToken } = storeToRefs(authStore());
       return getToken.value;
     });
+
+    const searchDialogToggle = computed(() => {
+      const { getSearchDialogShow } = storeToRefs(homeStore());
+      return getSearchDialogShow.value
+    })
+
+    watch(searchDialogToggle, (value) => {
+      searchDialogShow.value = value;
+    })
+
+    watch(searchDialogShow, (value) => {
+      setSearchDialogShow(value);
+    })
 
     const mobileVersion = computed(() => {
       return name.value;
@@ -520,26 +535,26 @@ const Dashboard = defineComponent({
         });
       }
       if (mobileWidth.value > 600) {
-        pagingGames.value.map((item: { games: string|any[]; page_no: number; }) => {
+        pagingGames.value.map((item: { games: string | any[]; page_no: number; }) => {
           if (item.games.length > 7) {
             item.games = item.games.slice(0, 7);
             item.page_no = 1;
           }
         });
-        allGames.value.map((item: { games: string|any[]; page_no: number; }) => {
+        allGames.value.map((item: { games: string | any[]; page_no: number; }) => {
           if (item.games.length > 7) {
             item.games = item.games.slice(0, 7);
             item.page_no = 1;
           }
         });
       } else {
-        pagingGames.value.map((item: { games: string|any[]; page_no: number; }) => {
+        pagingGames.value.map((item: { games: string | any[]; page_no: number; }) => {
           if (item.games.length > 6) {
             item.games = item.games.slice(0, 6);
             item.page_no = 1;
           }
         });
-        allGames.value.map((item: { games: string|any[]; page_no: number; }) => {
+        allGames.value.map((item: { games: string | any[]; page_no: number; }) => {
           if (item.games.length > 6) {
             item.games = item.games.slice(0, 6);
             item.page_no = 1;
@@ -617,7 +632,7 @@ const Dashboard = defineComponent({
       // });
       pagingGames.value.map((item: { name: string; games: any[]; page_no: number; }) => {
         if (item.name == 'Favorite') {
-          item.games = item.games.filter((gameItem: { id: string|number; }) => gameItem.id != id);
+          item.games = item.games.filter((gameItem: { id: string | number; }) => gameItem.id != id);
           if (mobileWidth.value > 600) {
             item.page_no = Math.ceil(item.games.length / 7);
           } else {
@@ -634,7 +649,7 @@ const Dashboard = defineComponent({
 
     watch(searchDialogShow, (value: any) => {
       // if (value) {
-        setMailMenuShow(value);
+      setMailMenuShow(value);
       // }
     });
 
@@ -1020,36 +1035,24 @@ export default Dashboard;
     </div>
   </div>
   <!-- game show -->
-  <div
-    class="home-body"
-    :class="
-      mobileWidth > 1024
-        ? 'my-6 mx-6 body-pc-max'
-        : mobileWidth > 600 && mobileWidth < 1024
-        ? 'my-6 mx-6'
-        : 'mx-2'
-    "
-    v-else
-  >
+  <div class="home-body" :class="mobileWidth > 1024
+    ? 'my-6 mx-6 body-pc-max'
+    : mobileWidth > 600 && mobileWidth < 1024
+      ? 'my-6 mx-6'
+      : 'mx-2'
+    " v-else>
     <!-- <div style="width: 100%; height: 200px;">
       <div v-html="comUserActivityList()[0]?.list_data[0]?.content"></div>
     </div> -->
     <!-- game search -->
-    <v-navigation-drawer
-      v-model="searchDialogShow"
-      location="top"
-      class="m-search-bar"
-      temporary
-      :touchless="true"
+    <v-navigation-drawer v-model="searchDialogShow" location="top" class="m-search-bar" temporary :touchless="true"
       :style="{
         // height: 'unset',
         height: '100%',
         top: '0px',
         zIndex: 300000,
         background: 'unset !important',
-      }"
-      v-if="mobileWidth < 600"
-    >
+      }" v-if="mobileWidth < 600">
       <MSearch :searchDialogShow="searchDialogShow" @searchCancel="searchDialogShow = false" />
     </v-navigation-drawer>
 
@@ -1062,225 +1065,89 @@ export default Dashboard;
 
       <!-- input for search -->
       <v-row class="mt-0 home-search-bar" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
-        <v-text-field
-          :placeholder="t('home.search')"
-          class="form-textfield dark-textfield"
-          variant="solo"
-          hide-details
-          filled
-          clearable
-          density="compact"
-          prepend-inner-icon="mdi-magnify"
-          color="#7782AA"
-          :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
-          :onfocus="handleSearchInputFocus"
-        />
+        <v-text-field :placeholder="t('home.search')" class="form-textfield dark-textfield" variant="solo" hide-details
+          filled clearable density="compact" prepend-inner-icon="mdi-magnify" color="#7782AA"
+          :class="mobileWidth < 600 ? 'home-search-text-height' : ''" :onfocus="handleSearchInputFocus" />
       </v-row>
 
       <!-- buttons for filter -->
       <v-row :class="[mobileVersion == 'sm' ? 'mx-2 mb-0' : 'mx-4 mb-0']">
         <template v-if="mobileVersion != 'sm'">
-          <v-slide-group
-            class="mt-2"
-            show-arrows
-            style="
+          <v-slide-group class="mt-2" show-arrows style="
               touch-action: none;
               margin-left: 0px !important;
               margin-right: 0px !important;
               background: none !important;
-            "
-          >
+            ">
             <v-slide-group-item>
               <!-- width="159" -->
-              <v-btn
-                class="mr-6 text-none"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == t('home.button.all_game')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.all_game'))"
-              >
-                <inline-svg
-                  :src="icon_public_34"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform1"
-                >
+              <v-btn class="mr-6 text-none" height="48" :class="selectedGameFilterBtn == t('home.button.all_game')
+                ? 'black button-bright'
+                : 'text-gray btn-211f31'
+                " @click="handleGameFilterBtn(t('home.button.all_game'))">
+                <inline-svg :src="icon_public_34" width="24" height="24" class="mr-2" :transform-source="gameTransform1">
                 </inline-svg>
                 {{ t("home.button.all_game") }}
               </v-btn>
             </v-slide-group-item>
-            <v-slide-group-item
-              v-for="(item, index) in gameGroupBtnList"
-              :key="index"
-              :value="item.slug"
-            >
-              <v-btn
-                class="mr-6 text-none"
-                width="159"
-                height="48"
-                :class="
-                  selectedGameFilterBtn == item.slug
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(item.slug)"
-              >
-                <inline-svg
-                  :src="item.image"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform2"
-                  v-if="item.tranfromFunctionName == 'gameTransform2'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform3"
-                  v-if="item.tranfromFunctionName == 'gameTransform3'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform4"
-                  v-if="item.tranfromFunctionName == 'gameTransform4'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform5"
-                  v-if="item.tranfromFunctionName == 'gameTransform5'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform6"
-                  v-if="item.tranfromFunctionName == 'gameTransform6'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="24"
-                  height="24"
-                  class="mr-2"
-                  :transform-source="gameTransform7"
-                  v-if="item.tranfromFunctionName == 'gameTransform7'"
-                ></inline-svg>
+            <v-slide-group-item v-for="(item, index) in gameGroupBtnList" :key="index" :value="item.slug">
+              <v-btn class="mr-6 text-none" width="159" height="48" :class="selectedGameFilterBtn == item.slug
+                ? 'black button-bright'
+                : 'text-gray btn-211f31'
+                " @click="handleGameFilterBtn(item.slug)">
+                <inline-svg :src="item.image" width="24" height="24" class="mr-2" :transform-source="gameTransform2"
+                  v-if="item.tranfromFunctionName == 'gameTransform2'"></inline-svg>
+                <inline-svg :src="item.image" width="24" height="24" class="mr-2" :transform-source="gameTransform3"
+                  v-if="item.tranfromFunctionName == 'gameTransform3'"></inline-svg>
+                <inline-svg :src="item.image" width="24" height="24" class="mr-2" :transform-source="gameTransform4"
+                  v-if="item.tranfromFunctionName == 'gameTransform4'"></inline-svg>
+                <inline-svg :src="item.image" width="24" height="24" class="mr-2" :transform-source="gameTransform5"
+                  v-if="item.tranfromFunctionName == 'gameTransform5'"></inline-svg>
+                <inline-svg :src="item.image" width="24" height="24" class="mr-2" :transform-source="gameTransform6"
+                  v-if="item.tranfromFunctionName == 'gameTransform6'"></inline-svg>
+                <inline-svg :src="item.image" width="24" height="24" class="mr-2" :transform-source="gameTransform7"
+                  v-if="item.tranfromFunctionName == 'gameTransform7'"></inline-svg>
                 {{ item.name }}
               </v-btn>
             </v-slide-group-item>
           </v-slide-group>
         </template>
         <template v-else>
-          <v-slide-group
-            v-model="selectedGameFilterBtn"
-            class="mt-4 mb-0"
-            :transition="customTransition"
-            :touch="{ velocity: 0.3 }"
-            style="
+          <v-slide-group v-model="selectedGameFilterBtn" class="mt-4 mb-0" :transition="customTransition"
+            :touch="{ velocity: 0.3 }" style="
               margin-left: 0px !important;
               margin-right: 0px !important;
               background: none !important;
-            "
-          >
+            ">
             <v-slide-group-item>
               <!-- width="112" -->
-              <v-btn
-                class="mr-3 text-none"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.all_game')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.all_game'))"
-              >
-                <inline-svg
-                  :src="icon_public_34"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform1"
-                >
+              <v-btn class="mr-3 text-none" height="36" :class="selectedGameFilterBtn == t('home.button.all_game')
+                ? 'black button-bright'
+                : 'text-gray btn-211f31'
+                " @click="handleGameFilterBtn(t('home.button.all_game'))">
+                <inline-svg :src="icon_public_34" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform1">
                 </inline-svg>
                 {{ t("home.button.all_game") }}
               </v-btn>
             </v-slide-group-item>
-            <v-slide-group-item
-              v-for="(item, index) in gameGroupBtnList"
-              :key="index"
-              :value="item.slug"
-            >
-              <v-btn
-                class="mr-3 text-none"
-                width="136"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == item.slug
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(item.slug)"
-              >
-                <inline-svg
-                  :src="item.image"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform2"
-                  v-if="item.tranfromFunctionName == 'gameTransform2'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform3"
-                  v-if="item.tranfromFunctionName == 'gameTransform3'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform4"
-                  v-if="item.tranfromFunctionName == 'gameTransform4'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform5"
-                  v-if="item.tranfromFunctionName == 'gameTransform5'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform6"
-                  v-if="item.tranfromFunctionName == 'gameTransform6'"
-                ></inline-svg>
-                <inline-svg
-                  :src="item.image"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform7"
-                  v-if="item.tranfromFunctionName == 'gameTransform7'"
-                ></inline-svg>
+            <v-slide-group-item v-for="(item, index) in gameGroupBtnList" :key="index" :value="item.slug">
+              <v-btn class="mr-3 text-none" width="136" height="36" :class="selectedGameFilterBtn == item.slug
+                ? 'black button-bright'
+                : 'text-gray btn-211f31'
+                " @click="handleGameFilterBtn(item.slug)">
+                <inline-svg :src="item.image" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform2" v-if="item.tranfromFunctionName == 'gameTransform2'"></inline-svg>
+                <inline-svg :src="item.image" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform3" v-if="item.tranfromFunctionName == 'gameTransform3'"></inline-svg>
+                <inline-svg :src="item.image" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform4" v-if="item.tranfromFunctionName == 'gameTransform4'"></inline-svg>
+                <inline-svg :src="item.image" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform5" v-if="item.tranfromFunctionName == 'gameTransform5'"></inline-svg>
+                <inline-svg :src="item.image" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform6" v-if="item.tranfromFunctionName == 'gameTransform6'"></inline-svg>
+                <inline-svg :src="item.image" width="18" height="18" style="margin-right: 6px"
+                  :transform-source="gameTransform7" v-if="item.tranfromFunctionName == 'gameTransform7'"></inline-svg>
                 {{ item.name }}
               </v-btn>
             </v-slide-group-item>
@@ -1291,13 +1158,8 @@ export default Dashboard;
       <!-- game list -->
       <template v-if="selectedGameFilterBtn == t('home.button.all_game')">
         <template v-for="(item, index) in allGames" :key="index">
-          <v-row
-            class="ml-4 original_game_text"
-            :class="mobileWidth > 600 ? ' mt-12' : ' mt-4'"
-            v-if="item.games.length > 0"
-            style="margin-bottom: 6px !important"
-            @click="handleGameFilterBtn(item.slug)"
-          >
+          <v-row class="ml-4 original_game_text" :class="mobileWidth > 600 ? ' mt-12' : ' mt-4'"
+            v-if="item.games.length > 0" style="margin-bottom: 6px !important" @click="handleGameFilterBtn(item.slug)">
             <!-- <inline-svg
               :src="item.image"
               width="18"
@@ -1321,22 +1183,14 @@ export default Dashboard;
           <v-row class="ml-4 mr-2 mt-2 mb-0 pc-game-row" v-if="mobileWidth > 600">
             <template v-if="item.games.length > 0">
               <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
-                <div
-                  class="original-game-img-width pc-game-img-width"
-                  v-if="gameIndex < 7 * item.page_no"
-                >
+                <div class="original-game-img-width pc-game-img-width" v-if="gameIndex < 7 * item.page_no">
                   <!-- style="
                     flex: 0 0 14.2857%;
                     max-width: 14.2857%;
                     padding: 0px 8px 8px 0px;
                   " -->
-                  <ProgressiveImage
-                    :src="gameItem.image"
-                    lazy-placeholder
-                    blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
-                    style="max-width: unset"
-                  />
+                  <ProgressiveImage :src="gameItem.image" lazy-placeholder blur="30"
+                    @click="handleEnterGame(gameItem.id, gameItem.name)" style="max-width: unset" />
                   <!-- <v-img
                     :src="gameItem.image"
                     class="original-game-img-width"
@@ -1349,28 +1203,13 @@ export default Dashboard;
           <v-row class="mx-1 mt-0 mb-0" v-else>
             <template v-if="item.games.length > 0">
               <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
-                <v-col
-                  cols="4"
-                  lg="2"
-                  md="2"
-                  sm="3"
-                  class="px-1 relative pb-0 original-game-img-width mb-2"
-                  v-if="gameIndex < 6 * item.page_no"
-                >
-                  <ProgressiveImage
-                    :src="gameItem.image"
-                    lazy-placeholder
-                    blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
-                  />
+                <v-col cols="4" lg="2" md="2" sm="3" class="px-1 relative pb-0 original-game-img-width mb-2"
+                  v-if="gameIndex < 6 * item.page_no">
+                  <ProgressiveImage :src="gameItem.image" lazy-placeholder blur="30"
+                    @click="handleEnterGame(gameItem.id, gameItem.name)" />
                   <div class="m-home-favorite-icon" @click="addFavoriteGame(gameItem.id)">
-                    <inline-svg
-                      :src="icon_public_36"
-                      width="16"
-                      height="16"
-                      class="mt-1 ml-1"
-                      :transform-source="favoriteIconTransform"
-                    ></inline-svg>
+                    <inline-svg :src="icon_public_36" width="16" height="16" class="mt-1 ml-1"
+                      :transform-source="favoriteIconTransform"></inline-svg>
                   </div>
                   <!-- <img
                     v-lazy="gameItem.image"
@@ -1382,19 +1221,14 @@ export default Dashboard;
               </template>
             </template>
           </v-row>
-          <v-row
-            class="justify-center"
-            :class="mobileWidth < 600 ? 'pt-4 mx-3 mb-0 mt-0' : 'mt-8 ml-4'"
-            v-if="
-              ((mobileWidth < 600 &&
-                Number(item.game_count) > 6 &&
-                6 * Number(item.page_no) < Number(item.game_count)) ||
-                (mobileWidth > 600 &&
-                  Number(item.game_count) > 7 &&
-                  7 * Number(item.page_no) < Number(item.game_count))) &&
-              item.games.length > 0
-            "
-          >
+          <v-row class="justify-center" :class="mobileWidth < 600 ? 'pt-4 mx-3 mb-0 mt-0' : 'mt-8 ml-4'" v-if="((mobileWidth < 600 &&
+            Number(item.game_count) > 6 &&
+            6 * Number(item.page_no) < Number(item.game_count)) ||
+            (mobileWidth > 600 &&
+              Number(item.game_count) > 7 &&
+              7 * Number(item.page_no) < Number(item.game_count))) &&
+            item.games.length > 0
+            ">
             <div style="width: 100%" class="text-center">
               <template v-if="selectedGameFilterBtn != t('home.button.all_game')">
                 <p class="text-700-14 gray text-center" v-if="mobileWidth < 600">
@@ -1412,15 +1246,10 @@ export default Dashboard;
                   {{ t("home.more_text_3") }}
                 </p>
               </template>
-              <v-btn
-                class="text-none more-btn-color text-center"
-                variant="outlined"
-                :width="mobileWidth < 600 ? '100%' : 164"
-                :height="mobileWidth < 600 ? 41 : 48"
-                @click="
+              <v-btn class="text-none more-btn-color text-center" variant="outlined"
+                :width="mobileWidth < 600 ? '100%' : 164" :height="mobileWidth < 600 ? 41 : 48" @click="
                   handleMoreGame(item.slug, item.page_no, index, selectedGameFilterBtn)
-                "
-              >
+                  ">
                 <div class="loading-body" v-if="moreLoading && index == moreIndex">
                   <div class="dot-0"></div>
                   <div class="dot-1"></div>
@@ -1432,56 +1261,27 @@ export default Dashboard;
           </v-row>
         </template>
       </template>
-      <template
-        v-for="(otherGameItem, otherIndex) in pagingGames"
-        :key="otherIndex"
-        v-else
-      >
+      <template v-for="(otherGameItem, otherIndex) in pagingGames" :key="otherIndex" v-else>
         <template v-if="otherGameItem.slug == selectedCategoryName && paginGameShow">
-          <v-row
-            class="ml-4 mr-2 mt-2 pt-8"
-            v-if="mobileWidth > 600"
-            :class="otherGameItem.games.length > 0 ? '' : 'justify-center'"
-          >
-            <template
-              v-if="
-                otherGameItem.games.length > 0 &&
-                otherGameItem.games != undefined &&
-                otherGameItem.games != null
-              "
-            >
-              <template
-                v-for="(gameItem, gameIndex) in otherGameItem.games"
-                :key="gameIndex"
-              >
-                <div
-                  style="
+          <v-row class="ml-4 mr-2 mt-2 pt-8" v-if="mobileWidth > 600"
+            :class="otherGameItem.games.length > 0 ? '' : 'justify-center'">
+            <template v-if="otherGameItem.games.length > 0 &&
+              otherGameItem.games != undefined &&
+              otherGameItem.games != null
+              ">
+              <template v-for="(gameItem, gameIndex) in otherGameItem.games" :key="gameIndex">
+                <div style="
                     flex: 0 0 14.2857%;
                     max-width: 14.2857%;
                     padding: 0px 8px 8px 0px;
                     position: relative;
-                  "
-                  class="original-game-img-width"
-                  v-if="gameIndex < 7 * otherGameItem.page_no"
-                >
-                  <ProgressiveImage
-                    :src="gameItem.image"
-                    lazy-placeholder
-                    blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
-                  />
-                  <div
-                    v-if="selectedCategoryName == 'favorite'"
-                    class="home-favorite-icon"
-                    @click="cancelFavoriteGame(gameItem.id, otherGameItem.page_no)"
-                  >
-                    <inline-svg
-                      :src="icon_public_36"
-                      width="20"
-                      height="20"
-                      style="margin: 6px 0px 0px 6px"
-                      :transform-source="favoriteIconTransform"
-                    ></inline-svg>
+                  " class="original-game-img-width" v-if="gameIndex < 7 * otherGameItem.page_no">
+                  <ProgressiveImage :src="gameItem.image" lazy-placeholder blur="30"
+                    @click="handleEnterGame(gameItem.id, gameItem.name)" />
+                  <div v-if="selectedCategoryName == 'favorite'" class="home-favorite-icon"
+                    @click="cancelFavoriteGame(gameItem.id, otherGameItem.page_no)">
+                    <inline-svg :src="icon_public_36" width="20" height="20" style="margin: 6px 0px 0px 6px"
+                      :transform-source="favoriteIconTransform"></inline-svg>
                   </div>
                   <!-- <v-img
                   :src="gameItem.image"
@@ -1496,48 +1296,20 @@ export default Dashboard;
               <p class="text-400-12 gray">{{ t("home.search_dialog.text_2") }}</p>
             </div>
           </v-row>
-          <v-row
-            class="mx-1 mt-6"
-            :class="otherGameItem.games.length > 0 ? '' : 'justify-center'"
-            v-else
-          >
-            <template
-              v-if="
-                otherGameItem.games.length > 0 &&
-                otherGameItem.games != undefined &&
-                otherGameItem.games != null
-              "
-            >
-              <template
-                v-for="(gameItem, gameIndex) in otherGameItem.games"
-                :key="gameIndex"
-              >
-                <v-col
-                  cols="4"
-                  lg="2"
-                  md="2"
-                  sm="3"
-                  class="px-1 pb-0 relative original-game-img-width"
-                  v-if="gameIndex < 6 * otherGameItem.page_no"
-                >
-                  <ProgressiveImage
-                    :src="gameItem.image"
-                    lazy-placeholder
-                    blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
-                  />
-                  <div
-                    v-if="selectedCategoryName == 'favorite'"
-                    class="m-home-favorite-icon"
-                    @click="cancelFavoriteGame(gameItem.id, otherGameItem.page_no)"
-                  >
-                    <inline-svg
-                      :src="icon_public_36"
-                      width="16"
-                      height="16"
-                      class="mt-1 ml-1"
-                      :transform-source="favoriteIconTransform"
-                    ></inline-svg>
+          <v-row class="mx-1 mt-6" :class="otherGameItem.games.length > 0 ? '' : 'justify-center'" v-else>
+            <template v-if="otherGameItem.games.length > 0 &&
+              otherGameItem.games != undefined &&
+              otherGameItem.games != null
+              ">
+              <template v-for="(gameItem, gameIndex) in otherGameItem.games" :key="gameIndex">
+                <v-col cols="4" lg="2" md="2" sm="3" class="px-1 pb-0 relative original-game-img-width"
+                  v-if="gameIndex < 6 * otherGameItem.page_no">
+                  <ProgressiveImage :src="gameItem.image" lazy-placeholder blur="30"
+                    @click="handleEnterGame(gameItem.id, gameItem.name)" />
+                  <div v-if="selectedCategoryName == 'favorite'" class="m-home-favorite-icon"
+                    @click="cancelFavoriteGame(gameItem.id, otherGameItem.page_no)">
+                    <inline-svg :src="icon_public_36" width="16" height="16" class="mt-1 ml-1"
+                      :transform-source="favoriteIconTransform"></inline-svg>
                   </div>
                   <!-- <img
                   v-lazy="gameItem.image"
@@ -1553,20 +1325,15 @@ export default Dashboard;
               <p class="text-400-12 gray">{{ t("home.search_dialog.text_2") }}</p>
             </div>
           </v-row>
-          <v-row
-            class="justify-center"
-            :class="mobileWidth < 600 ? 'pt-4 mx-3 mb-0' : 'mt-8 ml-4'"
-            v-if="
-              ((mobileWidth < 600 &&
-                Number(otherGameItem.game_count) > 6 &&
-                6 * Number(otherGameItem.page_no) < Number(otherGameItem.game_count)) ||
-                (mobileWidth > 600 &&
-                  Number(otherGameItem.game_count) > 7 &&
-                  7 * Number(otherGameItem.page_no) <
-                    Number(otherGameItem.game_count))) &&
-              otherGameItem.games.length > 0
-            "
-          >
+          <v-row class="justify-center" :class="mobileWidth < 600 ? 'pt-4 mx-3 mb-0' : 'mt-8 ml-4'" v-if="((mobileWidth < 600 &&
+            Number(otherGameItem.game_count) > 6 &&
+            6 * Number(otherGameItem.page_no) < Number(otherGameItem.game_count)) ||
+            (mobileWidth > 600 &&
+              Number(otherGameItem.game_count) > 7 &&
+              7 * Number(otherGameItem.page_no) <
+              Number(otherGameItem.game_count))) &&
+            otherGameItem.games.length > 0
+            ">
             <div class="text-center" style="width: 100%">
               <p class="text-700-14 gray text-center" v-if="mobileWidth < 600">
                 {{ t("home.more_text_1") }}
@@ -1582,20 +1349,15 @@ export default Dashboard;
                 <font color="white">{{ otherGameItem.game_count }}</font>
                 {{ t("home.more_text_3") }}
               </p>
-              <v-btn
-                class="text-none more-btn-color mt-5 text-center"
-                variant="outlined"
-                :width="mobileWidth < 600 ? '100%' : 164"
-                :height="mobileWidth < 600 ? 41 : 48"
-                @click="
+              <v-btn class="text-none more-btn-color mt-5 text-center" variant="outlined"
+                :width="mobileWidth < 600 ? '100%' : 164" :height="mobileWidth < 600 ? 41 : 48" @click="
                   handleMoreGame(
                     otherGameItem.slug,
                     otherGameItem.page_no,
                     otherIndex,
                     selectedGameFilterBtn
                   )
-                "
-              >
+                  ">
                 <div v-if="!moreLoading">{{ t("home.more") }}</div>
                 <div class="loading-body" v-if="moreLoading && otherIndex == moreIndex">
                   <div class="dot-0"></div>
@@ -1626,10 +1388,13 @@ export default Dashboard;
 .custom-slide-transition-leave-to {
   transform: translateY(0);
 }
+
 .custom-slide-transition-enter-active,
 .custom-slide-transition-leave-active {
-  transition: transform 0.5s; /* Define the transition speed in seconds */
+  transition: transform 0.5s;
+  /* Define the transition speed in seconds */
 }
+
 @keyframes expandAnimation {
   0% {
     scale: 1.3;
@@ -2076,12 +1841,14 @@ export default Dashboard;
 
 .pc-game-img-width {
   display: flex;
+
   .v-progressive-image {
     div {
       height: 100%;
       padding: 0 !important;
     }
   }
+
   img {
     position: relative;
     max-width: 162px;
@@ -2179,7 +1946,7 @@ export default Dashboard;
     visibility: hidden;
   }
 
-  input:checked + label:after {
+  input:checked+label:after {
     left: 274px;
     transform: translateX(-100%);
   }
@@ -2188,14 +1955,14 @@ export default Dashboard;
     width: 136px;
   }
 
-  input:checked + label .winner {
+  input:checked+label .winner {
     color: #7782aa;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
   }
 
-  input:checked + label .prize {
+  input:checked+label .prize {
     color: black;
     font-size: 12px;
     font-style: normal;

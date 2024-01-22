@@ -345,13 +345,15 @@ export const mailStore = defineStore({
                 }
             },
         ] as GetMailData[],
-        mailMenuShow: false as boolean
+        mailMenuShow: false as boolean,
+        mobileMenuMailToggle: false as boolean,
     }),
     getters: {
         getSuccess: (state) => state.success,
         getErrMessage: (state) => state.errMessage,
         getMailList: (state) => state.mailList,
         getMailMenuShow: (state) => state.mailMenuShow,
+        getMobileMenuMailToggle: (state) => state.mobileMenuMailToggle
     },
     actions: {
         setSuccess(success: boolean) {
@@ -365,6 +367,9 @@ export const mailStore = defineStore({
         },
         setMailMenuShow(mailMenuShow: boolean) {
             this.mailMenuShow = mailMenuShow;
+        },
+        setMobileMenuMailToggle(mobileMenuMailToggle: boolean) {
+            this.mobileMenuMailToggle = mobileMenuMailToggle;
         }
     }
 })
