@@ -53,6 +53,7 @@ export namespace NETWORK {
     static ACHIEVEMENT_LIST = '/user/invite/achievement/list';
     static STAGE_AWARD = '/user/invite/stage/achievement/award';
     static ACHIEVEMENT_AWARD = '/user/invite/achievement/award';
+    static ACHIEVEMENT_CONFIG = '/user/invite/achievement/config';
   }
 
   // game api

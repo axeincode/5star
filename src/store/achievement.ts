@@ -49,6 +49,22 @@ export const achievementStore = defineStore({
       }
       await network.sendMsg(route, {}, next, 1);
     },
+    // get achievement config
+    async dispatchAchievementConfig() {
+      this.setSuccess(false);
+      const route: string = NETWORK.ACHIEVEMENT_PAGE.ACHIEVEMENT_CONFIG;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Achievement.GetAchievementResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setAchievementItem(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, {}, next, 1);
+    },
     // get achievement item
     async dispatchStageAward(data: any) {
       this.setSuccess(false);

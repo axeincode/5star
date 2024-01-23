@@ -4,12 +4,14 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import MReward from "./components/Reward.vue";
 import { achievementStore } from "@/store/achievement";
+import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import MAgentRealization from "./components/AgentRealization.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchAchievementList } = achievementStore();
+const { dispatchAchievementConfig } = achievementStore();
 
 const commissionMenuShow = ref<boolean>(false);
 
@@ -21,27 +23,52 @@ const mobileWidth = computed(() => {
   return width.value;
 });
 
+// get Token
+const token = computed(() => {
+  const { getToken } = storeToRefs(authStore());
+  return getToken.value;
+});
+
 const achievementItem = computed(() => {
   const { getAchievementItem } = storeToRefs(achievementStore());
   if (getAchievementItem.value.award_explain.length > 0) {
     getAchievementItem.value.rate =
       (getAchievementItem.value.award_progress * 100) /
-        Number(getAchievementItem.value.award_explain[getAchievementItem.value.award_explain.length - 1].num) >= 99 ? 99 : Math.floor(
-          (getAchievementItem.value.award_progress * 100) /
-          Number(getAchievementItem.value.award_explain[getAchievementItem.value.award_explain.length - 1].num)
-        );
+        Number(
+          getAchievementItem.value.award_explain[
+            getAchievementItem.value.award_explain.length - 1
+          ].num
+        ) >=
+      99
+        ? 99
+        : Math.floor(
+            (getAchievementItem.value.award_progress * 100) /
+              Number(
+                getAchievementItem.value.award_explain[
+                  getAchievementItem.value.award_explain.length - 1
+                ].num
+              )
+          );
   }
   if (getAchievementItem.value.achievement_explain.length > 0) {
     getAchievementItem.value.achievement_explain.map((item) => {
-      item.rate = (getAchievementItem.value.achievement_progress * 100) / Number(item.num) >= 97.8
-        ? 97.8 : Math.floor((getAchievementItem.value.achievement_progress * 100) / Number(item.num));
+      item.rate =
+        (getAchievementItem.value.achievement_progress * 100) / Number(item.num) >= 97.8
+          ? 97.8
+          : Math.floor(
+              (getAchievementItem.value.achievement_progress * 100) / Number(item.num)
+            );
     });
   }
   return getAchievementItem.value;
 });
 
 onMounted(async () => {
-  await dispatchAchievementList();
+  if (token.value) {
+    await dispatchAchievementList();
+  } else {
+    await dispatchAchievementConfig();
+  }
 });
 </script>
 
@@ -52,11 +79,20 @@ onMounted(async () => {
         {{ t("affiliate.invite.commission_title_text") }}
         <v-menu v-model="commissionMenuShow">
           <template v-slot:activator="{ props }">
-            <img src="@/assets/public/svg/icon_public_22.svg" v-bind="props"
-              style="cursor: pointer; position: absolute; top: 2px; right: -21px" width="16" />
+            <img
+              src="@/assets/public/svg/icon_public_22.svg"
+              v-bind="props"
+              style="cursor: pointer; position: absolute; top: 2px; right: -21px"
+              width="16"
+            />
           </template>
-          <v-list theme="dark" bg-color="#211F31" class="px-2" :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
-            style="margin: 0px 8px 0px 3px">
+          <v-list
+            theme="dark"
+            bg-color="#211F31"
+            class="px-2"
+            :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
+            style="margin: 0px 8px 0px 3px"
+          >
             <v-list-item class="pt-4">
               <div class="text-center text-400-12 gray">
                 {{ t("affiliate.invite.help_text_2") }}
@@ -66,9 +102,9 @@ onMounted(async () => {
         </v-menu>
       </div>
     </v-row>
-      <div class="text-400-12 gray text-center mx-8 mt-4">
-        {{ t("affiliate.invite.commission_content_text") }}
-      </div>
+    <div class="text-400-12 gray text-center mx-8 mt-4">
+      {{ t("affiliate.invite.commission_content_text") }}
+    </div>
     <MReward :achievementItem="achievementItem" />
     <MAgentRealization :achievementItem="achievementItem" />
   </div>

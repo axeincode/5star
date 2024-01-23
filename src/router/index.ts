@@ -111,6 +111,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/promo',
+    component: () => import('@/layouts/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Promo',
+        component: () => import('@/views/promo/index.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

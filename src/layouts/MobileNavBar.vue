@@ -613,11 +613,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-navigation-drawer temporary expand-on-hover :scrim-opacity="0.6" :touchless="true" class="nav-background pb-100"
-    :width="192" v-model="drawer">
+  <v-navigation-drawer
+    temporary
+    expand-on-hover
+    :scrim-opacity="0.6"
+    :touchless="true"
+    class="nav-background pb-100"
+    :width="192"
+    v-model="drawer"
+  >
     <template v-slot:prepend>
-      <v-list-item class="m-casino-toggle" :class="refferalAppBarShow ? 'mt-8' : ''"
-        style="height: 56px; visibility: hidden">
+      <v-list-item
+        class="m-casino-toggle"
+        :class="refferalAppBarShow ? 'mt-8' : ''"
+        style="height: 56px; visibility: hidden"
+      >
         <input type="checkbox" id="m-casino-toggle" />
         <label for="m-casino-toggle">
           <div class="casino">
@@ -735,112 +745,215 @@ onMounted(() => {
       <v-list v-model:opened="open">
         <v-list-group value="Casino">
           <template v-slot:activator="{ props }">
-            <v-list-item class="m-user-item1 m-nav-menu white" v-bind="props" link value="casino" :height="40" style="
+            <v-list-item
+              class="m-user-item1 m-nav-menu white"
+              v-bind="props"
+              link
+              value="casino"
+              :height="40"
+              style="
                 margin-bottom: -16px !important;
                 margin-top: -8px !important;
                 padding-left: 10px;
-              ">
+              "
+            >
               <template v-slot:prepend>
-                <inline-svg :src="icon_public_34" width="16" :transform-source="casinoIconTransform"></inline-svg>
+                <inline-svg
+                  :src="icon_public_34"
+                  width="16"
+                  :transform-source="casinoIconTransform"
+                ></inline-svg>
               </template>
-              <v-list-item-title class="ml-2" :class="open.length == 1 ? 'gray' : 'white'">
+              <v-list-item-title
+                class="ml-2"
+                :class="open.length == 1 ? 'gray' : 'white'"
+              >
                 {{ t("navBar.casino") }}
               </v-list-item-title>
             </v-list-item>
           </template>
           <v-card color="#211F31" theme="dark" class="mt-6" style="border-radius: 0px">
             <v-list>
-              <v-list-item class="m-casino-sub-img m-nav-sub-menu" value="favorites"
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="favorites"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.favorites'))">
+                @click="handleGameFilter(t('navBar.casino_sub_menu.favorites'))"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_36" width="16" :transform-source="favoriteIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_36"
+                    width="16"
+                    :transform-source="favoriteIconTransform"
+                  ></inline-svg>
                 </template>
-                <v-list-item-title class="ml-2" :class="activeItem == t('navBar.casino_sub_menu.favorites') ? 'white' : 'gray'
-                  ">
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.favorites') ? 'white' : 'gray'
+                  "
+                >
                   {{ t("navBar.casino_sub_menu.favorites") }}
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="m-casino-sub-img m-nav-sub-menu" value="recently played" v-model="activeItem"
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="recently played"
+                v-model="activeItem"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.recently_played'))">
+                @click="handleGameFilter(t('navBar.casino_sub_menu.recently_played'))"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_35" width="16" :transform-source="recentlyIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_35"
+                    width="16"
+                    :transform-source="recentlyIconTransform"
+                  ></inline-svg>
                 </template>
-                <v-list-item-title class="ml-2" :class="activeItem == t('navBar.casino_sub_menu.recently_played')
-                    ? 'white'
-                    : 'gray'
-                  ">
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.recently_played')
+                      ? 'white'
+                      : 'gray'
+                  "
+                >
                   {{ t("navBar.casino_sub_menu.recently_played") }}
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="m-casino-sub-img m-nav-sub-menu" value="hot"
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="hot"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.hot_text'))">
+                @click="handleGameFilter(t('navBar.casino_sub_menu.hot_text'))"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_95" width="16" :transform-source="hotIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_95"
+                    width="16"
+                    :transform-source="hotIconTransform"
+                  ></inline-svg>
                 </template>
-                <v-list-item-title class="ml-2" :class="activeItem == t('navBar.casino_sub_menu.hot_text') ? 'white' : 'gray'
-                  ">
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.hot_text') ? 'white' : 'gray'
+                  "
+                >
                   {{ t("navBar.casino_sub_menu.hot_text") }}
                 </v-list-item-title>
               </v-list-item>
-              <v-menu location="center" offset="10" content-class="m-original-dropdown" v-model:model-value="originalMenu"
-                transition="slide-x-transition">
+              <v-menu
+                location="center"
+                offset="10"
+                content-class="m-original-dropdown"
+                v-model:model-value="originalMenu"
+                transition="slide-x-transition"
+              >
                 <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" class="m-casino-sub-img m-nav-sub-menu"
-                    :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'" value="game originals"
-                    style="margin-bottom: -4px !important; margin-top: -4px !important">
+                  <v-list-item
+                    v-bind="props"
+                    class="m-casino-sub-img m-nav-sub-menu"
+                    :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+                    value="game originals"
+                    style="margin-bottom: -4px !important; margin-top: -4px !important"
+                  >
                     <template v-slot:prepend>
-                      <inline-svg :src="icon_public_37" width="16" :transform-source="originalIconTransform"></inline-svg>
+                      <inline-svg
+                        :src="icon_public_37"
+                        width="16"
+                        :transform-source="originalIconTransform"
+                      ></inline-svg>
                     </template>
-                    <v-list-item-title class="ml-2" :class="originalMenu ? 'white' : 'gray'">
+                    <v-list-item-title
+                      class="ml-2"
+                      :class="originalMenu ? 'white' : 'gray'"
+                    >
                       {{ t("navBar.casino_sub_menu.game_originals") }}
                     </v-list-item-title>
                   </v-list-item>
                 </template>
                 <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
-                  <v-list-item v-for="(item, i) in originalGames" :key="i" :value="item.name"
-                    class="m-avatar-img m-nav-sub-menu" prepend-avatar="@/assets/public/svg/icon_public_21.svg"
-                    :title="item.name" style="font-size: 11px !important; font-weight: 500 !important"
-                    @click="handleEnterGame(item.id, item.name)">
+                  <v-list-item
+                    v-for="(item, i) in originalGames"
+                    :key="i"
+                    :value="item.name"
+                    class="m-avatar-img m-nav-sub-menu"
+                    prepend-avatar="@/assets/public/svg/icon_public_21.svg"
+                    :title="item.name"
+                    style="font-size: 11px !important; font-weight: 500 !important"
+                    @click="handleEnterGame(item.id, item.name)"
+                  >
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <v-list-item class="m-casino-sub-img m-nav-sub-menu" value="slots"
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="slots"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.slots'))">
+                @click="handleGameFilter(t('navBar.casino_sub_menu.slots'))"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_38" width="16" :transform-source="slotIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_38"
+                    width="16"
+                    :transform-source="slotIconTransform"
+                  ></inline-svg>
                 </template>
-                <v-list-item-title class="ml-2" :class="activeItem == t('navBar.casino_sub_menu.slots') ? 'white' : 'gray'
-                  ">
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.slots') ? 'white' : 'gray'
+                  "
+                >
                   {{ t("navBar.casino_sub_menu.slots") }}
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="m-casino-sub-img m-nav-sub-menu" value="live casino"
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="live casino"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.live_casino'))">
+                @click="handleGameFilter(t('navBar.casino_sub_menu.live_casino'))"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_39" width="16" :transform-source="liveIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_39"
+                    width="16"
+                    :transform-source="liveIconTransform"
+                  ></inline-svg>
                 </template>
-                <v-list-item-title class="ml-2" :class="activeItem == t('navBar.casino_sub_menu.live_casino')
-                    ? 'white'
-                    : 'gray'
-                  ">
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.live_casino')
+                      ? 'white'
+                      : 'gray'
+                  "
+                >
                   {{ t("navBar.casino_sub_menu.live_casino") }}
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item class="m-casino-sub-img m-nav-sub-menu" value="provider"
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="provider"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
-                @click="handleGameFilter(t('navBar.casino_sub_menu.provider_text'))">
+                @click="handleGameFilter(t('navBar.casino_sub_menu.provider_text'))"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_96" width="16" :transform-source="providerIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_96"
+                    width="16"
+                    :transform-source="providerIconTransform"
+                  ></inline-svg>
                 </template>
-                <v-list-item-title class="ml-2" :class="activeItem == t('navBar.casino_sub_menu.provider_text')
-                    ? 'white'
-                    : 'gray'
-                  ">
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.casino_sub_menu.provider_text')
+                      ? 'white'
+                      : 'gray'
+                  "
+                >
                   {{ t("navBar.casino_sub_menu.provider_text") }}
                 </v-list-item-title>
               </v-list-item>
@@ -849,91 +962,169 @@ onMounted(() => {
         </v-list-group>
       </v-list>
       <v-list>
-        <v-list-item class="m-avatar-img m-user-item1 m-nav-menu"
-          style="margin-bottom: -8px !important; padding-left: 10px" @click="handleNavbarItem(t('navBar.sport'))">
+        <v-list-item
+          class="m-avatar-img m-user-item1 m-nav-menu"
+          style="margin-bottom: -8px !important; padding-left: 10px"
+          @click="handleNavbarItem(t('navBar.sport'))"
+        >
           <template v-slot:prepend>
-            <inline-svg :src="icon_public_40" width="16" :transform-source="sportIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_40"
+              width="16"
+              :transform-source="sportIconTransform"
+            ></inline-svg>
           </template>
-          <v-list-item-title class="ml-2" :class="navItem == t('navBar.sport') ? 'white' : 'gray'">
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.sport') ? 'white' : 'gray'"
+          >
             {{ t("navBar.sport") }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
-        <v-list-item class="m-avatar-img m-user-item1 m-nav-menu" style="
+        <v-list-item
+          class="m-avatar-img m-user-item1 m-nav-menu"
+          style="
             margin-bottom: -4px !important;
             margin-top: -8px !important;
             padding-left: 10px;
-          " @click="handleNavbarItem(t('navBar.menu_item_1.promotions'))">
+          "
+          router
+          :to="{ name: 'Promo' }"
+          @click="handleNavbarItem(t('navBar.menu_item_1.promotions'))"
+        >
           <template v-slot:prepend>
-            <inline-svg :src="icon_public_41" width="16" :transform-source="promotionIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_41"
+              width="16"
+              :transform-source="promotionIconTransform"
+            ></inline-svg>
           </template>
-          <v-list-item-title class="ml-2" :class="navItem == t('navBar.menu_item_1.promotions') ? 'white' : 'gray'">
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.menu_item_1.promotions') ? 'white' : 'gray'"
+          >
             {{ t("navBar.menu_item_1.promotions") }}
           </v-list-item-title>
         </v-list-item>
-        <v-list-item class="m-vip-club m-nav-menu" style="
+        <v-list-item
+          class="m-vip-club m-nav-menu"
+          style="
             margin-bottom: -4px !important;
             margin-top: -4px !important;
             padding-left: 10px;
-          " router :to="{ name: 'VIP' }" @click="handleNavbarItem(t('navBar.menu_item_1.vip_club'))">
+          "
+          router
+          :to="{ name: 'VIP' }"
+          @click="handleNavbarItem(t('navBar.menu_item_1.vip_club'))"
+        >
           <template v-slot:prepend>
-            <inline-svg :src="icon_public_42" width="16" :transform-source="vipIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_42"
+              width="16"
+              :transform-source="vipIconTransform"
+            ></inline-svg>
           </template>
           <v-list-item-title class="ml-2">
             {{ t("navBar.menu_item_1.vip_club") }}
           </v-list-item-title>
         </v-list-item>
-        <v-list-item class="m-avatar-img m-user-item1 m-nav-menu" style="
+        <v-list-item
+          class="m-avatar-img m-user-item1 m-nav-menu"
+          style="
             margin-bottom: -4px !important;
             margin-top: -4px !important;
             padding-left: 10px;
-          " @click="handleNavbarItem(t('navBar.menu_item_1.affiliate'))">
+          "
+          @click="handleNavbarItem(t('navBar.menu_item_1.affiliate'))"
+        >
           <template v-slot:prepend>
-            <inline-svg :src="icon_public_43" width="16" :transform-source="affiliateIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_43"
+              width="16"
+              :transform-source="affiliateIconTransform"
+            ></inline-svg>
           </template>
-          <v-list-item-title class="ml-2" :class="navItem == t('navBar.menu_item_1.affiliate') ? 'white' : 'gray'">
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.menu_item_1.affiliate') ? 'white' : 'gray'"
+          >
             {{ t("navBar.menu_item_1.affiliate") }}
           </v-list-item-title>
         </v-list-item>
-        <v-list-item class="m-avatar-img m-user-item1 m-nav-menu" style="
+        <v-list-item
+          class="m-avatar-img m-user-item1 m-nav-menu"
+          style="
             margin-bottom: -8px !important;
             margin-top: -4px !important;
             padding-left: 10px;
-          " @click="handleNavbarItem(t('navBar.menu_item_1.blog'))">
+          "
+          @click="handleNavbarItem(t('navBar.menu_item_1.blog'))"
+        >
           <template v-slot:prepend>
-            <inline-svg :src="icon_public_44" width="16" :transform-source="blogIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_44"
+              width="16"
+              :transform-source="blogIconTransform"
+            ></inline-svg>
           </template>
-          <v-list-item-title class="ml-2" :class="navItem == t('navBar.menu_item_1.blog') ? 'white' : 'gray'">
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.menu_item_1.blog') ? 'white' : 'gray'"
+          >
             {{ t("navBar.menu_item_1.blog") }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
-        <v-list-item class="m-avatar-img m-user-item1 m-nav-menu" style="
+        <v-list-item
+          class="m-avatar-img m-user-item1 m-nav-menu"
+          style="
             margin-bottom: -8px !important;
             margin-top: -4px !important;
             padding-left: 10px;
-          " @click="handleNavbarItem(t('navBar.live_support'))">
+          "
+          @click="handleNavbarItem(t('navBar.live_support'))"
+        >
           <template v-slot:prepend>
-            <inline-svg :src="icon_public_45" width="16" :transform-source="supportIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_45"
+              width="16"
+              :transform-source="supportIconTransform"
+            ></inline-svg>
           </template>
-          <v-list-item-title class="ml-2" :class="navItem == t('navBar.live_support') ? 'white' : 'gray'">
+          <v-list-item-title
+            class="ml-2"
+            :class="navItem == t('navBar.live_support') ? 'white' : 'gray'"
+          >
             {{ t("navBar.live_support") }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
       <v-list>
-        <v-menu location="center" offset="16" content-class="m-language-dropdown m-user-item1"
-          v-model:model-value="languageMenu" transition="slide-x-transition">
+        <v-menu
+          location="center"
+          offset="16"
+          content-class="m-language-dropdown m-user-item1"
+          v-model:model-value="languageMenu"
+          transition="slide-x-transition"
+        >
           <template v-slot:activator="{ props }">
             <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
-              <v-list-item v-bind="props" class="m-casino-sub-img m-nav-menu"
-                :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'">
+              <v-list-item
+                v-bind="props"
+                class="m-casino-sub-img m-nav-menu"
+                :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+              >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_57" width="16" :transform-source="languageIconTransform"></inline-svg>
+                  <inline-svg
+                    :src="icon_public_57"
+                    width="16"
+                    :transform-source="languageIconTransform"
+                  ></inline-svg>
                 </template>
                 <v-list-item-title class="ml-2" :class="languageMenu ? 'white' : 'gray'">
                   {{ language }}
@@ -942,10 +1133,19 @@ onMounted(() => {
             </v-card>
           </template>
           <v-list theme="dark" bg-color="#211F31" width="166" class="text-center">
-            <v-list-item :title="t('navBar.language.title')" class="m-avatar-img m-nav-sub-menu"></v-list-item>
+            <v-list-item
+              :title="t('navBar.language.title')"
+              class="m-avatar-img m-nav-sub-menu"
+            ></v-list-item>
             <v-divider></v-divider>
-            <v-list-item v-for="(item, i) in langItems" :key="i" :value="item" class="m-avatar-img m-nav-sub-menu"
-              @click="handleLanguageDropdown(item)" :class="language == item.value ? 'nav-lang-selected-item' : ''">
+            <v-list-item
+              v-for="(item, i) in langItems"
+              :key="i"
+              :value="item"
+              class="m-avatar-img m-nav-sub-menu"
+              @click="handleLanguageDropdown(item)"
+              :class="language == item.value ? 'nav-lang-selected-item' : ''"
+            >
               <v-list-item-title>{{ item.value }}</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -955,11 +1155,19 @@ onMounted(() => {
         <input type="checkbox" id="m-theme-toggle" v-model="soundCheckBox" />
         <label for="m-theme-toggle">
           <div class="dark">
-            <inline-svg :src="icon_public_46" width="16" :transform-source="onIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_46"
+              width="16"
+              :transform-source="onIconTransform"
+            ></inline-svg>
             <p class="text-700-10 ml-1">{{ t("navBar.sound_mode.on") }}</p>
           </div>
           <div class="light">
-            <inline-svg :src="icon_public_47" width="16" :transform-source="offIconTransform"></inline-svg>
+            <inline-svg
+              :src="icon_public_47"
+              width="16"
+              :transform-source="offIconTransform"
+            ></inline-svg>
             <p class="text-700-10 ml-1">{{ t("navBar.sound_mode.off") }}</p>
           </div>
         </label>
@@ -1025,11 +1233,11 @@ onMounted(() => {
 }
 
 .m-vip-login-bonus-img {
-  width: 70px;
-  height: 70px;
+  width: 38px;
+  height: 38px;
   position: absolute;
-  left: 0px;
-  bottom: -15px;
+  left: 17px;
+  bottom: 2px;
 }
 
 .m-lucky-wheel-img {
@@ -1159,7 +1367,7 @@ onMounted(() => {
     visibility: hidden;
   }
 
-  input:checked+label:after {
+  input:checked + label:after {
     left: 100%;
     transform: translateX(-100%);
   }
@@ -1168,11 +1376,11 @@ onMounted(() => {
     width: 100px;
   }
 
-  input:checked+label .casino {
+  input:checked + label .casino {
     color: #7782aa;
   }
 
-  input:checked+label .sport {
+  input:checked + label .sport {
     color: black;
   }
 }
@@ -1383,7 +1591,7 @@ onMounted(() => {
     visibility: hidden;
   }
 
-  input:checked+label:after {
+  input:checked + label:after {
     left: 88px;
     // transform: translateX(-100%);
   }
@@ -1392,11 +1600,11 @@ onMounted(() => {
     width: 74px;
   }
 
-  input:checked+label .dark {
+  input:checked + label .dark {
     color: #7782aa;
   }
 
-  input:checked+label .light {
+  input:checked + label .light {
     color: white;
   }
 }

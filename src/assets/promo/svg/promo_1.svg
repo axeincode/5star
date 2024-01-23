@@ -1,0 +1,19 @@
+<svg width="60" height="48" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 772544992">
+<g id="Rectangle 2386" filter="url(#filter0_i_16403_42971)">
+<rect width="56" height="48" rx="8" fill="#009B3A"/>
+</g>
+<path id="Polygon 1" d="M60 24L48 30.9282L48 17.0718L60 24Z" fill="#009B3A"/>
+</g>
+<defs>
+<filter id="filter0_i_16403_42971" x="0" y="0" width="56" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="-4"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.054902 0 0 0 0 0.368627 0 0 0 0 0.313726 0 0 0 1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_16403_42971"/>
+</filter>
+</defs>
+</svg>

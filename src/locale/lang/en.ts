@@ -1738,5 +1738,21 @@ export const lang: langType = {
     text_54: "",
     text_55: "",
     text_56: "",
+  },
+  promo: {
+    text_1: "All Events",
+    text_2: "VlP Events",
+    text_3: "Promotions",
+    text_4: "Deposit Bonu$",
+    text_5: "-EverydaY-",
+    text_6: "View details",
+    text_7: "First Deposit",
+    text_8: "Welcome",
+    text_9: "Bonus up to",
+    text_10: "Recharge ",
+    text_11: "now",
+    text_12: "Get Daily Login",
+    text_13: "Bonu$",
+    text_14: "",
   }
 };

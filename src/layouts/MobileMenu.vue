@@ -772,16 +772,35 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-bottom-navigation v-if="mobileMenuShow && route.name !== 'Sports'" bg-color="#000000" grow class="mobile-menu-index"
-    :class="menuBlurEffectShow ? 'menu-bg-blur' : ''" style="height: 60px">
+  <v-bottom-navigation
+    v-if="mobileMenuShow && route.name !== 'Sports'"
+    bg-color="#000000"
+    grow
+    class="mobile-menu-index"
+    :class="menuBlurEffectShow ? 'menu-bg-blur' : ''"
+    style="height: 60px"
+  >
     <v-btn class="menu-text-color" @click="handleNavbarToggle" :ripple="false">
-      <inline-svg :src="icon_public_81" width="20" height="20" :transform-source="menuSvgTransform"></inline-svg>
-      <div class="pt-1 text-600-12" :style="{ color: navbarToggle ? '#6742ec' : '#7782AA' }">
+      <inline-svg
+        :src="icon_public_81"
+        width="20"
+        height="20"
+        :transform-source="menuSvgTransform"
+      ></inline-svg>
+      <div
+        class="pt-1 text-600-12"
+        :style="{ color: navbarToggle ? '#6742ec' : '#7782AA' }"
+      >
         {{ t("mobile_menu.menu") }}
       </div>
     </v-btn>
     <v-btn class="menu-text-color" @click="goHomePage">
-      <inline-svg :src="icon_public_34" width="20" height="20" :transform-source="casinoSvgTransform"></inline-svg>
+      <inline-svg
+        :src="icon_public_34"
+        width="20"
+        height="20"
+        :transform-source="casinoSvgTransform"
+      ></inline-svg>
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.casino") }}
       </div>
@@ -804,75 +823,166 @@ onMounted(() => {
     </v-btn> -->
     <v-btn class="menu-text-color" @click="goToSharePage">
       <div class="m-menu-casino-bg">
-        <img src="@/assets/public/image/temp/img_public_16.png" width="72" class="m-menu-casino-bg-img" />
+        <img
+          src="@/assets/public/image/temp/img_public_16.png"
+          width="72"
+          class="m-menu-casino-bg-img"
+        />
         <img :src="selectedImg" width="46" class="m-menu-casino-body-img" />
         <transition name="fade">
-          <inline-svg :src="selectedIcon" width="22" height="22" :transform-source="iconSvgTransform"
-            class="m-menu-casino-body-icon" :key="selectedIcon"></inline-svg>
+          <inline-svg
+            :src="selectedIcon"
+            width="22"
+            height="22"
+            :transform-source="iconSvgTransform"
+            class="m-menu-casino-body-icon"
+            :key="selectedIcon"
+          ></inline-svg>
         </transition>
-        <div class="m-menu-circle" :style="{ transform: `rotate(${rotation}deg) translate(-50%, -50%)` }">
-          <div class="letter white" ref="casino_1" :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }">
+        <div
+          class="m-menu-circle"
+          :style="{ transform: `rotate(${rotation}deg) translate(-50%, -50%)` }"
+        >
+          <div
+            class="letter white"
+            ref="casino_1"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+          >
             P
           </div>
-          <div class="letter white" ref="casino_2" :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }">
+          <div
+            class="letter white"
+            ref="casino_2"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+          >
             R
           </div>
-          <div class="letter white" ref="casino_2" :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }">
+          <div
+            class="letter white"
+            ref="casino_3"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+          >
             O
           </div>
-          <div class="letter white" ref="casino_3" :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }">
+          <div
+            class="letter white"
+            ref="casino_4"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+          >
             M
           </div>
-          <div class="letter white" ref="casino_4" :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }">
+          <div
+            class="letter white"
+            ref="casino_5"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+          >
             O
           </div>
-          <div class="letter white" ref="casino_5" :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }">
+          <div class="letter white" ref="casino_6"></div>
+          <div
+            class="letter white"
+            ref="reward_1"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+          >
             S
           </div>
-          <div class="letter white" ref="casino_6" :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }">
+          <div
+            class="letter white"
+            ref="reward_2"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+          >
             E
           </div>
-          <div class="letter white" ref="reward_1" :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }">
+          <div
+            class="letter white"
+            ref="reward_3"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+          >
             A
           </div>
-          <div class="letter white" ref="reward_2" :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }">
+          <div
+            class="letter white"
+            ref="reward_4"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+          >
             R
           </div>
-          <div class="letter white" ref="reward_3" :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }">
+          <div
+            class="letter white"
+            ref="reward_5"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+          >
             C
           </div>
-          <div class="letter white" ref="reward_4" :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }">
+          <div
+            class="letter white"
+            ref="reward_6"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+          >
             H
           </div>
-          <div class="letter white" ref="reward_5" :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }">
+          <div class="letter white" ref="mail_1"></div>
+          <div
+            class="letter white"
+            ref="mail_2"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+          >
             M
           </div>
-          <div class="letter white" ref="reward_5" :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }">
+          <div
+            class="letter white"
+            ref="mail_3"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+          >
             A
           </div>
-          <div class="letter white" ref="sport_1" :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }">
+          <div
+            class="letter white"
+            ref="mail_4"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+          >
             I
           </div>
-          <div class="letter white" ref="sport_2" :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }">
+          <div
+            class="letter white"
+            ref="mail_5"
+            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+          >
             L
           </div>
+          <div class="letter white" ref="mail_6"></div>
         </div>
       </div>
     </v-btn>
     <v-btn class="menu-text-color" @click="handleSportsToggle">
-      <inline-svg :src="icon_public_40" width="20" height="20" :transform-source="sportSvgTransform"></inline-svg>
+      <inline-svg
+        :src="icon_public_40"
+        width="20"
+        height="20"
+        :transform-source="sportSvgTransform"
+      ></inline-svg>
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>
     <v-btn class="menu-text-color" @click="handleRewardToggle">
-      <inline-svg :src="icon_public_100" width="20" height="20" :transform-source="rewardSvgTransform"></inline-svg>
+      <inline-svg
+        :src="icon_public_100"
+        width="20"
+        height="20"
+        :transform-source="rewardSvgTransform"
+      ></inline-svg>
       <div class="pt-1 text-600-12">
         {{ t("mobile_menu.reward") }}
       </div>
     </v-btn>
-    <v-menu class="m-mail-menu-overlay" content-class="mobile-mail-menu" :scrim="true" v-model:model-value="mailMenuShow"
-      transition="slide-y-transition">
+    <v-menu
+      class="m-mail-menu-overlay"
+      content-class="mobile-mail-menu"
+      :scrim="true"
+      v-model:model-value="mailMenuShow"
+      transition="slide-y-transition"
+    >
       <template v-slot:activator="{ props }">
         <!-- <v-btn class="menu-text-color" v-bind="props">
           <div class="relative">
@@ -884,11 +994,21 @@ onMounted(() => {
           </div>
         </v-btn> -->
       </template>
-      <v-list theme="dark" bg-color="transparent" class="px-2 m-mail-list"
-        :height="tempMailList.length > 8 ? mailListHeight + 'px' : ''" :width="mobileWidth" @scroll="handleScroll"
-        style="box-shadow: none !important" :style="{ marginLeft: tempMailList.length > 8 ? '6px' : 'auto' }"
-        ref="listContainer">
-        <v-list-item height="36" :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''">
+      <v-list
+        theme="dark"
+        bg-color="transparent"
+        class="px-2 m-mail-list"
+        :height="tempMailList.length > 8 ? mailListHeight + 'px' : ''"
+        :width="mobileWidth"
+        @scroll="handleScroll"
+        style="box-shadow: none !important"
+        :style="{ marginLeft: tempMailList.length > 8 ? '6px' : 'auto' }"
+        ref="listContainer"
+      >
+        <v-list-item
+          height="36"
+          :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''"
+        >
           <v-list-item-title class="ml-2">
             <div class="mail-header-text text-700-14">
               {{ t("mail_dialog.header_text") }}
@@ -896,7 +1016,11 @@ onMounted(() => {
           </v-list-item-title>
         </v-list-item>
         <template v-for="(mailItem, index) in tempMailList" :key="index">
-          <v-list-item class="mail-item" :value="mailItem.mail_content_1.content" height="64">
+          <v-list-item
+            class="mail-item"
+            :value="mailItem.mail_content_1.content"
+            height="64"
+          >
             <template v-slot:prepend>
               <img :src="mailItem.icon" width="20" />
             </template>
@@ -1004,7 +1128,7 @@ onMounted(() => {
   }
 
   .letter:nth-child(4) {
-    transform: rotateZ(265deg) translateY(-26px) rotateZ(-179deg);
+    transform: rotateZ(263deg) translateY(-26px) rotateZ(-185deg);
   }
 
   .letter:nth-child(5) {

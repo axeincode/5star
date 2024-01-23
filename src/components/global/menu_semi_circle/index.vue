@@ -18,9 +18,9 @@ import { homeStore } from "@/store/home";
 const casinoIconColor = ref<string>("#7782AA");
 const rewardIconColor = ref<string>("#ffffff");
 const sportIconColor = ref<string>("#7782AA");
-const promoIconColor = ref<string>('#7782AA');
-const searchIconColor = ref<string>('#7782AA');
-const mailIconColor = ref<string>('#7782AA');
+const promoIconColor = ref<string>("#7782AA");
+const searchIconColor = ref<string>("#7782AA");
+const mailIconColor = ref<string>("#7782AA");
 const scale = ref<number>(1);
 const bottom = ref<number>(-48);
 
@@ -91,26 +91,26 @@ const casinoSvgTransform = (el: any) => {
 
 const searchSvgTransform = (el: any) => {
   for (let node of el.children) {
-    node.setAttribute('fill', searchIconColor.value)
+    node.setAttribute("fill", searchIconColor.value);
     for (let subNode of node.children) {
-      subNode.setAttribute('fill', searchIconColor.value)
+      subNode.setAttribute("fill", searchIconColor.value);
     }
   }
-  return el
-}
+  return el;
+};
 
 const promoSvgTransform = (el: any) => {
   for (let node of el.children) {
-    node.setAttribute('fill', promoIconColor.value)
+    node.setAttribute("fill", promoIconColor.value);
     for (let subNode of node.children) {
-      subNode.setAttribute('fill', promoIconColor.value)
+      subNode.setAttribute("fill", promoIconColor.value);
       for (let moreSubNode of subNode.children) {
-        moreSubNode.setAttribute('fill', promoIconColor.value)
+        moreSubNode.setAttribute("fill", promoIconColor.value);
       }
     }
   }
-  return el
-}
+  return el;
+};
 
 const rewardSvgTransform = (el: any) => {
   for (let node of el.children) {
@@ -134,20 +134,20 @@ const sportSvgTransform = (el: any) => {
 
 const mailSvgTransform = (el: any) => {
   for (let node of el.children) {
-    node.setAttribute('fill', mailIconColor.value)
+    node.setAttribute("fill", mailIconColor.value);
     for (let subNode of node.children) {
-      subNode.setAttribute('fill', mailIconColor.value)
+      subNode.setAttribute("fill", mailIconColor.value);
     }
   }
-  return el
-}
+  return el;
+};
 
 const handleSelectItem = (item: string) => {
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
   if (item == t("mobile_menu.promo")) {
-    // router.push({ name: "Dashboard" });
+    router.push({ name: "Promo" });
     setRewardNavShow(false);
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
@@ -175,29 +175,65 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="m-menu-semicircle-toggle" :style="{ transform: `translateX(-50%)`, bottom: `${bottom}px` }"
-    v-if="route.name !== 'Sports'">
-    <div class="m-semicircle-item m-semicircle-promo" @click="handleSelectItem(t('mobile_menu.promo'))">
-      <div class="relative" style="height: 22px;">
-        <inline-svg :src="icon_public_97" width="22" height="22" :transform-source="promoSvgTransform"></inline-svg>
+  <div
+    class="m-menu-semicircle-toggle"
+    :style="{ transform: `translateX(-50%)`, bottom: `${bottom}px` }"
+    v-if="route.name !== 'Sports'"
+  >
+    <div
+      class="m-semicircle-item m-semicircle-promo"
+      @click="handleSelectItem(t('mobile_menu.promo'))"
+    >
+      <div class="relative" style="height: 22px">
+        <inline-svg
+          :src="icon_public_97"
+          width="22"
+          height="22"
+          :transform-source="promoSvgTransform"
+        ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div class="text-600-12" :class="selectedItem == t('mobile_menu.promo') ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedItem == t('mobile_menu.promo') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.promo") }}
       </div>
     </div>
-    <div class="m-semicircle-item m-semicircle-mail" @click="handleSelectItem(t('mobile_menu.mail'))">
-      <div class="relative" style="height: 22px;">
-        <inline-svg :src="icon_public_55" width="22" height="22" :transform-source="mailSvgTransform"></inline-svg>
+    <div
+      class="m-semicircle-item m-semicircle-mail"
+      @click="handleSelectItem(t('mobile_menu.mail'))"
+    >
+      <div class="relative" style="height: 22px">
+        <inline-svg
+          :src="icon_public_55"
+          width="22"
+          height="22"
+          :transform-source="mailSvgTransform"
+        ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div class="text-600-12" :class="selectedItem == t('mobile_menu.mail') ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedItem == t('mobile_menu.mail') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.mail") }}
       </div>
     </div>
-    <div class="m-semicircle-item m-semicircle-search" @click="handleSelectItem(t('mobile_menu.search'))">
-      <inline-svg :src="icon_public_94" width="22" height="22" :transform-source="searchSvgTransform"></inline-svg>
-      <div class="text-600-12" :class="selectedItem == t('mobile_menu.search') ? 'white' : 'gray'">
+    <div
+      class="m-semicircle-item m-semicircle-search"
+      @click="handleSelectItem(t('mobile_menu.search'))"
+    >
+      <inline-svg
+        :src="icon_public_94"
+        width="22"
+        height="22"
+        :transform-source="searchSvgTransform"
+      ></inline-svg>
+      <div
+        class="text-600-12"
+        :class="selectedItem == t('mobile_menu.search') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.search") }}
       </div>
     </div>
