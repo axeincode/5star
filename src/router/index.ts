@@ -120,6 +120,11 @@ const routes = [
         name: 'Promo',
         component: () => import('@/views/promo/index.vue'),
       },
+      {
+        path: 'detail',
+        name: 'Promo_Detail',
+        component: () => import('@/views/promo/detail/index.vue'),
+      },
     ],
   },
 ]

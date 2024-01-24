@@ -1752,6 +1752,73 @@ export type langType = {
     text_12: string
     text_13: string
     text_14: string
-
+    text_15: string
+    text_16: string
+    text_17: string
+    text_18: string
+    text_19: string
+    text_20: string
+    text_21: string
+    text_22: string
+    text_23: string
+    text_24: string
+    text_25: string
+    text_26: string
+    text_27: string
+    text_28: string
+    text_29: string
+    text_30: string
+    text_31: string
+    text_32: string
+    text_33: string
+    text_34: string
+    text_35: string
+    text_36: string
+    text_37: string
+    text_38: string
+    text_39: string
+    text_40: string
+    text_41: string
+    text_42: string
+    text_43: string
+    text_44: string
+    text_45: string
+    text_46: string
+    text_47: string
+    text_48: string
+    text_49: string
+    text_50: string
+    text_51: string
+    text_52: string
+    text_53: string
+    text_54: string
+    text_55: string
+    text_56: string
+    text_57: string
+    text_58: string
+    text_59: string
+    text_60: string
+    text_61: string
+    text_62: string
+    text_63: string
+    text_64: string
+    text_65: string
+    text_66: string
+    text_67: string
+    text_68: string
+    text_69: string
+    text_70: string
+    text_71: string
+    text_72: string
+    text_73: string
+    text_74: string
+    text_75: string
+    text_76: string
+    text_77: string
+    text_78: string
+    text_79: string
+    text_80: string
+    text_81: string
+    text_82: string
   }
 };

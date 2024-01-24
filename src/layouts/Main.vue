@@ -20,8 +20,8 @@ import Footer from "./Footer.vue";
 // import Signup from "@/components/Signup/index.vue";
 // import MSignup from "@/components/Signup/mobile/index.vue";
 // import MNickName from "@/components/Signup/mobile/NickName.vue";
-// import Login from "@/components/Login/index.vue";
-// import MLogin from "@/components/Login/mobile/index.vue";
+import Login from "@/components/Login/index.vue";
+import MLogin from "@/components/Login/mobile/index.vue";
 // import Signout from "@/components/Signout/index.vue";
 // import MSignout from "@/components/Signout/mobile/index.vue";
 // import MobileDialog from "@/components/Signout/mobile/Header.vue";
@@ -55,8 +55,8 @@ const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/i
 const Signup = defineAsyncComponent(() => import("@/components/Signup/index.vue"));
 const MSignup = defineAsyncComponent(() => import("@/components/Signup/mobile/index.vue"));
 const MNickName = defineAsyncComponent(() => import("@/components/Signup/mobile/NickName.vue"));
-const Login = defineAsyncComponent(() => import("@/components/Login/index.vue"));
-const MLogin = defineAsyncComponent(() => import("@/components/Login/mobile/index.vue"));
+// const Login = defineAsyncComponent(() => import("@/components/Login/index.vue"));
+// const MLogin = defineAsyncComponent(() => import("@/components/Login/mobile/index.vue"));
 const Signout = defineAsyncComponent(() => import("@/components/Signout/index.vue"));
 const MSignout = defineAsyncComponent(() => import("@/components/Signout/mobile/index.vue"));
 const MobileDialog = defineAsyncComponent(() => import("@/components/Signout/mobile/Header.vue"));
@@ -565,7 +565,7 @@ onMounted(() => {
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
-    <!-------------------------------      LOGIN     ------------------------------------>
+    <!-------------------------------      SIGNUP     ------------------------------------>
     <v-dialog
       v-model="mobileDialog"
       :fullscreen="mobileVersion == 'sm'"
@@ -595,7 +595,7 @@ onMounted(() => {
       <MSignup v-else @close="closeDialog('signup')" @switch="switchDialog('signup')" />
     </v-dialog>
 
-    <!-------------------------------      SIGNUP     ------------------------------------>
+    <!-------------------------------      LOGIN     ------------------------------------>
 
     <v-dialog
       v-model="loginDialog"
@@ -772,7 +772,7 @@ onMounted(() => {
 }
 
 .main-background {
-  background: #31275c;
+  background: #1d2027;
 }
 
 .main-bg-blur {

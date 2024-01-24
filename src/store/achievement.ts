@@ -63,7 +63,7 @@ export const achievementStore = defineStore({
           this.setErrorMessage(handleException(response.code));
         }
       }
-      await network.sendMsg(route, {}, next, 1);
+      await network.sendMsg(route, {}, next, 1, 4);
     },
     // get achievement item
     async dispatchStageAward(data: any) {

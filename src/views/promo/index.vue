@@ -1,25 +1,151 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import icon_public_102 from "@/assets/public/svg/icon_public_102.svg";
+import icon_public_42 from "@/assets/public/svg/icon_public_42.svg";
+import icon_public_93 from "@/assets/public/svg/icon_public_93.svg";
+import { useRouter } from "vue-router";
 
 const { t } = useI18n();
+const activeIndex = ref<number>(0);
+const allSvgIconColor = ref<string>("#ffffff");
+const vipSvgIconColor = ref<string>("#7782AA");
+const promotionSvgIconColor = ref<string>("#7782AA");
+
+const handleBtnTab = (index: number) => {
+  activeIndex.value = index;
+  switch (activeIndex.value) {
+    case 0:
+      allSvgIconColor.value = "#ffffff";
+      vipSvgIconColor.value = "#7782AA";
+      promotionSvgIconColor.value = "#7782AA";
+      break;
+    case 1:
+      allSvgIconColor.value = "#7782AA";
+      vipSvgIconColor.value = "#ffffff";
+      promotionSvgIconColor.value = "#7782AA";
+      break;
+    case 2:
+      allSvgIconColor.value = "#7782AA";
+      vipSvgIconColor.value = "#7782AA";
+      promotionSvgIconColor.value = "#ffffff";
+      break;
+  }
+};
+
+const allSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", allSvgIconColor.value);
+    for (let sub_node of node.children) {
+      sub_node.setAttribute("fill", allSvgIconColor.value);
+    }
+  }
+  return el;
+};
+
+const vipSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", vipSvgIconColor.value);
+    for (let sub_node of node.children) {
+      sub_node.setAttribute("fill", vipSvgIconColor.value);
+    }
+  }
+  return el;
+};
+
+const promotionSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", promotionSvgIconColor.value);
+    for (let sub_node of node.children) {
+      sub_node.setAttribute("fill", promotionSvgIconColor.value);
+    }
+  }
+  return el;
+};
+
+onMounted(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+});
 </script>
 
 <template>
   <v-layout class="m-promo-navigation-layout">
     <v-navigation-drawer class="m-promo-navigation-drawer" :width="76">
-      <div class="text-center relative" style="margin-top: 96px !important">
-        <img src="@/assets/promo/svg/promo_1.svg" />
-        <img src="@/assets/public/svg/icon_public_102.svg" class="m-promo-event-icon" />
-        <div class="m-promo-event-text text-600-8 white">{{ t("promo.text_1") }}</div>
+      <div
+        class="text-center relative ml-2"
+        :class="
+          activeIndex == 0
+            ? 'm-promo-navigation-event-card-active'
+            : 'm-promo-navigation-event-card'
+        "
+        style="margin-top: 96px !important"
+        @click="handleBtnTab(0)"
+      >
+        <inline-svg
+          :src="icon_public_102"
+          width="24"
+          height="24"
+          class="mt-1"
+          :transform-source="allSvgTransform"
+        ></inline-svg>
+        <div
+          class="text-600-8"
+          :class="activeIndex == 0 ? 'white' : 'gray'"
+          style="line-height: 0px"
+        >
+          {{ t("promo.text_1") }}
+        </div>
       </div>
-      <div class="mt-8 text-center relative">
-        <img src="@/assets/public/svg/icon_public_42.svg" />
-        <div class="text-600-8 gray">{{ t("promo.text_2") }}</div>
+      <div
+        class="mt-8 text-center relative ml-2"
+        :class="
+          activeIndex == 1
+            ? 'm-promo-navigation-event-card-active'
+            : 'm-promo-navigation-event-card'
+        "
+        @click="handleBtnTab(1)"
+      >
+        <inline-svg
+          :src="icon_public_42"
+          width="24"
+          height="24"
+          class="mt-1"
+          :transform-source="vipSvgTransform"
+        ></inline-svg>
+        <div
+          class="text-600-8"
+          :class="activeIndex == 1 ? 'white' : 'gray'"
+          style="line-height: 0px"
+        >
+          {{ t("promo.text_2") }}
+        </div>
       </div>
-      <div class="mt-8 text-center relative">
-        <img src="@/assets/public/svg/icon_public_93.svg" />
-        <div class="text-600-8 gray">{{ t("promo.text_3") }}</div>
+      <div
+        class="mt-8 text-center relative ml-2"
+        :class="
+          activeIndex == 2
+            ? 'm-promo-navigation-event-card-active'
+            : 'm-promo-navigation-event-card'
+        "
+        @click="handleBtnTab(2)"
+      >
+        <inline-svg
+          :src="icon_public_93"
+          width="24"
+          height="24"
+          class="mt-1"
+          :transform-source="promotionSvgTransform"
+        ></inline-svg>
+        <div
+          class="text-600-8"
+          :class="activeIndex == 2 ? 'white' : 'gray'"
+          style="line-height: 0px"
+        >
+          {{ t("promo.text_3") }}
+        </div>
       </div>
     </v-navigation-drawer>
     <v-main class="m-promo-navigation-body">
@@ -27,7 +153,7 @@ const { t } = useI18n();
         class="m-promo-navigation-card mx-2 relative"
         style="margin-top: 96px !important"
       >
-        <v-card class="m-promo-card-1 relative">
+        <!-- <v-card class="m-promo-card-1 relative">
           <div class="mt-2 ml-3 m-promo-card-text-1">10%</div>
           <div class="ml-3 text-900-16 yellow" style="text-transform: uppercase">
             {{ t("promo.text_4") }}
@@ -39,9 +165,13 @@ const { t } = useI18n();
             {{ t("promo.text_5") }}
           </div>
         </v-card>
-        <img src="@/assets/promo/image/img_ep_1.png" class="m-promo-card-img-1" />
-        <div class="d-flex mx-2 mt-6">
-          <div class="text-800-12 gray d-flex align-center">
+        <img src="@/assets/promo/image/img_ep_1.png" class="m-promo-card-img-1" /> -->
+        <img src="@/assets/promo/image/img_hp_4.png" class="m-promo-card-img" />
+        <div class="d-flex mx-2 mt-1 mb-4">
+          <div
+            class="text-800-12 gray d-flex align-center"
+            @click="$router.push({ name: 'Promo_Detail', query: { index: 0 } })"
+          >
             {{ t("promo.text_6") }}
             <v-icon size="large">mdi-chevron-right</v-icon>
           </div>
@@ -51,7 +181,7 @@ const { t } = useI18n();
         </div>
       </v-card>
       <v-card class="m-promo-navigation-card mx-2 relative mt-4">
-        <v-card class="m-promo-card-2 relative">
+        <!-- <v-card class="m-promo-card-2 relative">
           <div class="mt-3 ml-3 text-900-16 white">
             150%
             <span class="text-900-12 white">{{ t("promo.text_8") }}</span>
@@ -61,9 +191,13 @@ const { t } = useI18n();
           </div>
           <div class="ml-3 m-promo-card-text-2 mt-1">R$1500</div>
         </v-card>
-        <img src="@/assets/promo/image/img_ep_4.png" class="m-promo-card-img-1" />
-        <div class="d-flex mx-2 mt-6">
-          <div class="text-800-12 gray d-flex align-center">
+        <img src="@/assets/promo/image/img_ep_4.png" class="m-promo-card-img-1" /> -->
+        <img src="@/assets/promo/image/img_hp_5.png" class="m-promo-card-img" />
+        <div class="d-flex mx-2 mt-1 mb-4">
+          <div
+            class="text-800-12 gray d-flex align-center"
+            @click="$router.push({ name: 'Promo_Detail', query: { index: 1 } })"
+          >
             {{ t("promo.text_6") }}
             <v-icon size="large">mdi-chevron-right</v-icon>
           </div>
@@ -73,7 +207,7 @@ const { t } = useI18n();
         </div>
       </v-card>
       <v-card class="m-promo-navigation-card mx-2 relative mt-4">
-        <v-card class="m-promo-card-3 relative">
+        <!-- <v-card class="m-promo-card-3 relative">
           <div class="mt-2 ml-3 text-900-14 white">
             {{ t("promo.text_10") }}
             <span class="text-900-20 white">{{ t("promo.text_11") }}</span>
@@ -83,8 +217,12 @@ const { t } = useI18n();
           </div>
           <div class="ml-3 m-promo-card-text-3 mt-1">{{ t("promo.text_13") }}</div>
         </v-card>
-        <img src="@/assets/promo/image/img_ep_2.png" class="m-promo-card-img-1" />
-        <div class="d-flex mx-2 mt-6">
+        <img src="@/assets/promo/image/img_ep_2.png" class="m-promo-card-img-1" /> -->
+        <img src="@/assets/promo/image/img_hp_6.png" class="m-promo-card-img" />
+        <div
+          class="d-flex mx-2 mt-1 mb-4"
+          @click="$router.push({ name: 'Promo_Detail', query: { index: 2 } })"
+        >
           <div class="text-800-12 gray d-flex align-center">
             {{ t("promo.text_6") }}
             <v-icon size="large">mdi-chevron-right</v-icon>
@@ -105,6 +243,34 @@ const { t } = useI18n();
   .m-promo-navigation-drawer {
     background: $agent_card_notmet_bg !important;
     box-shadow: 3px 0px 4px 1px rgba(0, 0, 0, 0.21) !important;
+
+    .m-promo-navigation-event-card-active {
+      width: 56px;
+      height: 48px;
+      border-radius: 8px;
+      background: var(--predominant, #009b3a);
+      box-shadow: 0px -4px 0px 0px #0e5e50 inset;
+    }
+
+    .m-promo-navigation-event-card-active:after {
+      content: "";
+      position: absolute;
+      align-self: center;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -20px;
+      border: 13px solid #009b3a;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-top-width: 6px;
+      border-bottom-width: 6px;
+    }
+
+    .m-promo-navigation-event-card {
+      width: 56px;
+      height: 48px;
+    }
   }
 
   .m-promo-navigation-body {
@@ -112,7 +278,7 @@ const { t } = useI18n();
     background: $agent_card_bg !important;
 
     .m-promo-navigation-card {
-      height: 160px;
+      // height: 160px;
       border-radius: 4px;
       background: $agent_card_notmet_bg;
       box-shadow: none !important;
@@ -175,6 +341,11 @@ const { t } = useI18n();
           line-height: normal;
           text-transform: uppercase;
         }
+      }
+
+      .m-promo-card-img {
+        // height: 106px;
+        width: 100%;
       }
 
       .m-promo-card-img-1 {
