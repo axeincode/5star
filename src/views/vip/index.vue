@@ -13,7 +13,7 @@ const mobileWidth: any = computed(() => {
   return width.value;
 });
 
-const MVIP = defineAsyncComponent(() => import("@/components/vip/mobile/index.vue"));
+const MVIP = defineAsyncComponent(() => import("@/components/vip/mobile/index1.vue"));
 const VIP = defineAsyncComponent(() => import("@/components/vip/index.vue"));
 
 onMounted(() => {
