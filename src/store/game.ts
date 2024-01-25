@@ -37,7 +37,6 @@ export const gameStore = defineStore({
         } as Game.GameHistoryResponse,
         userSpinPage: {},
         userSpin: {},
-        userActivityList: {},
         language: localStorage.getItem('lang') || 'en',
         betby: null,
         gameBigWinItem: {
@@ -60,7 +59,6 @@ export const gameStore = defineStore({
         gameHistoryItem: (state) => state.gameHistoryItem,
         getUserSpinPage: (state) => state.userSpinPage,
         getUserSpin: (state) => state.userSpin,
-        getUserActivityList: (state) => state.userActivityList,
         getLanguage: (state) => state.language,
         getGameBigWinItem: (state) => state.gameBigWinItem
     },
@@ -116,9 +114,6 @@ export const gameStore = defineStore({
         },
         setUserSpin(userSpin: any) {
             this.userSpin = userSpin
-        },
-        setUserActivityList(activityList: any) {
-            this.userActivityList = activityList
         },
         setLanguage(lang: string) {
             this.language = lang;
@@ -294,22 +289,6 @@ export const gameStore = defineStore({
                 }
             }
             await network.sendMsg(route, {}, next, 1);
-        },
-        // user spin api
-        async dispatchUserActivityList() {
-            this.setSuccess(false);
-            const route: string = NETWORK.ACTIVITY.USER_ACTIVITY_LIST;
-            const network: Network = Network.getInstance();
-            // response call back function
-            const next = (response: any) => {
-                if (response.code == 200) {
-                    this.setSuccess(true);
-                    this.setUserActivityList(response.data);
-                } else {
-                    this.setErrorMessage(handleException(response.code));
-                }
-            }
-            await network.sendMsg(route, {}, next, 1, 4);
         },
         // Get a list of game awards
         async dispatchGameBigWin() {

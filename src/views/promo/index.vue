@@ -5,12 +5,15 @@ import icon_public_102 from "@/assets/public/svg/icon_public_102.svg";
 import icon_public_42 from "@/assets/public/svg/icon_public_42.svg";
 import icon_public_93 from "@/assets/public/svg/icon_public_93.svg";
 import { useRouter } from "vue-router";
+import { promoStore } from "@/store/promo";
 
 const { t } = useI18n();
 const activeIndex = ref<number>(0);
 const allSvgIconColor = ref<string>("#ffffff");
 const vipSvgIconColor = ref<string>("#7782AA");
 const promotionSvgIconColor = ref<string>("#7782AA");
+
+const { dispatchUserActivityList } = promoStore();
 
 const handleBtnTab = (index: number) => {
   activeIndex.value = index;
@@ -63,11 +66,12 @@ const promotionSvgTransform = (el: any) => {
   return el;
 };
 
-onMounted(() => {
+onMounted(async () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
+  await dispatchUserActivityList();
 });
 </script>
 
@@ -239,6 +243,7 @@ onMounted(() => {
 <style lang="scss">
 .m-promo-navigation-layout {
   margin-top: -100px;
+  z-index: 13 !important;
 
   .m-promo-navigation-drawer {
     background: $agent_card_notmet_bg !important;
