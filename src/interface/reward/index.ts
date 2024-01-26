@@ -1,14 +1,9 @@
 export interface GetRewardCenterList {
     achievement: string	
-    achievement_status: string
+    achievement_status: number
     cash_back: string
-    cash_back_status: number
     week: string
-    week_status: number
-    vip_url: string
-    level_up_url: string
     level_up_num: number
-    invite_url: string
 }
 
 export interface GetRewardCenterListResponse{

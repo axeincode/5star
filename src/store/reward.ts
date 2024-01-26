@@ -38,7 +38,6 @@ export const rewardStore = defineStore({
             if (response.code == 200) {
                 this.setSuccess(true);
                 this.setRewardList(response.data);
-                console.log(response.data);
             } else {
                 this.setErrorMessage(handleException(response.code));
             }

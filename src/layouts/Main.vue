@@ -665,6 +665,7 @@ onMounted(() => {
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="mobileVersion == 'sm' ? false : true"
       @click:outside="false"
+      style="z-index:10000000000000020"
     >
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />
@@ -677,6 +678,7 @@ onMounted(() => {
       :width="mobileWidth < 600 ? '340' : '471'"
       @click:outside="closeLoginBonusDialog"
       :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
+      style="z-index:10000000000000020"
     >
       <LoginBonusDialog
         v-if="mobileWidth > 600"

@@ -19,6 +19,8 @@ import img_vip_1 from "@/assets/vip/image/img_vip_1.png";
 import img_vip_3 from "@/assets/vip/image/img_vip_3.png";
 import { vipStore } from "@/store/vip";
 import { rewardStore } from "@/store/reward";
+import { refferalStore } from "@/store/refferal";
+import { loginBonusStore } from "@/store/loginBonus";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -30,13 +32,15 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setLevelUpDialogVisible } = vipStore();
 
 const { setAuthModalType } = authStore();
+const { setRefferalDialogShow } = refferalStore();
+const { setLoginBonusDialogVisible } = loginBonusStore();
 
 const { dispatchRewardList } = rewardStore();
 
 const rewardNavShow = ref<boolean>(false);
 const claimText = ref<string>("");
 
-const items_1 = ref<Array<any>>([
+const bonus_items = ref<Array<any>>([
   {
     image: img_vip_4,
     content: t("reward.text_8"),
@@ -103,42 +107,68 @@ watch(rewardNavShow, (value) => {
   }
 });
 
-const showRewardDialog = () => {
-  setLevelUpDialogVisible(true);
-  setRewardNavShow(false);
-  setOverlayScrimShow(true);
-  setMainBlurEffectShow(true);
-  setMailMenuShow(true);
-};
-
-const openDialog = () => {
+const openLoginDialog = () => {
   setAuthModalType("login");
   setOverlayScrimShow(false);
 };
+
+const openRefferalDialog = () => {
+  setOverlayScrimShow(false);
+  setRefferalDialogShow(true)
+}
+
+const handleMyReward = (index:number) => {
+  if(index == 1) {
+    openRefferalDialog();
+  }
+  else {
+
+  }
+}
+
+const openLoginBonusDialog = () => {
+  setLoginBonusDialogVisible(true);
+  setOverlayScrimShow(true);
+  setMainBlurEffectShow(true);
+}
+
+
+const handleBonus = (index:number) => {
+  if(index == 3) {
+    openLoginBonusDialog()
+  }
+
+}
 
 const rewardList = computed(() => {
   const { getRewardList } = storeToRefs(rewardStore());
   return getRewardList.value;
 });
+
 onMounted(async () => {
   if(token.value){
     await dispatchRewardList();
+    bonus_items.value[0].value = rewardList.value.cash_back;
+    bonus_items.value[1].value = rewardList.value.week;
   }
 });
+
 const claimClicked = async () =>{
   await dispatchRewardList();
-  console.log(rewardList.value);
 }
 </script>
 
 <template>
   <v-navigation-drawer v-model="rewardNavShow" location="bottom" temporary :touchless="true"
     class="m-reward-navigation-drawer">
+
     <v-btn class="m-reward-drawer-close-button" icon="true" width="20" height="20" @click="setRewardNavShow(false)">
       <img :src="icon_public_10" width="18" />
     </v-btn>
+
     <div class="m-reward-header" v-if="token">
       <p class="text-700-12 white pt-8 mx-4">{{ t("reward.text_3") }}</p>
+
       <v-row class="mx-4 my-1 align-center ">
         <v-col cols="9" class="text-400-12 py-1 px-0 d-flex align-center">
           <v-text-field class="form-textfield dark-textfield mx-0 my-0" variant="solo" hide-details filled clearable
@@ -150,23 +180,26 @@ const claimClicked = async () =>{
           </v-btn>
         </v-col>
       </v-row>
+
       <v-row class="mx-4 my-2 m-reward-achievement-bonus">
         <v-col cols="3" class="d-flex align-center justify-center">
-          <img src="@/assets/affiliate/statistics/img_agent_8.png" width="54" class="m-reward-achievement-img" />
+          <img src="@/assets/affiliate/statistics/img_agent_8.png" width="54" :class="rewardList.achievement_status == 1 ? '' :  'm-reward-achievement-img'" />
         </v-col>
         <v-col cols="6">
-          <p class="text-400-12 text-gray">
+          <p :class="rewardList.achievement_status == 1 ? 'text-400-12 white' :'text-400-12 text-gray'">
             {{ t("reward.text_6") }}
           </p>
-          <p class="text-800-14 text-gray">R$ 0.00</p>
+          <p :class="rewardList.achievement_status == 1 ? 'text-800-14 active' :'text-800-14 text-gray'">R$ {{ parseFloat(rewardList.achievement).toFixed(2) }}</p>
         </v-col>
         <v-col cols="3" class="d-flex align-center">
-          <v-btn class="m-reward-bonus-btn" width="72" height="32">
+          <v-btn :class="rewardList.achievement_status == 1?'button-yellow m-reward-bonus-active-btn':'m-reward-bonus-btn'" width="72" height="32">
             {{ t("reward.text_7") }}
           </v-btn>
         </v-col>
       </v-row>
+
     </div>
+
     <div class="m-reward-join-card mx-4 relative mt-8" v-else>
       <img src="@/assets/public/image/img_public_25.png" height="159" />
       <img src="@/assets/public/image/img_public_24.png" class="m-reward-pic-img" />
@@ -176,13 +209,15 @@ const claimClicked = async () =>{
         <div>{{ t("reward.text_20") }}</div>
         <div>{{ t("reward.text_21") }}</div>
       </div>
-      <v-btn class="text-none m-reward-join-btn" width="96" height="32" @click="openDialog">
+      <v-btn class="text-none m-reward-join-btn" width="96" height="32" @click="openLoginDialog">
         {{ t("reward.text_22") }}
       </v-btn>
     </div>
+
     <div class="m-reward-body mx-4 mb-4">
       <div class="my-2 text-800-16 white">{{ t("reward.text_18") }}</div>
-      <template v-for="(item, index) in items_1" :key="index">
+
+      <template v-for="(item, index) in bonus_items" :key="index">
         <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
           <v-col cols="3" class="d-flex align-center justify-center py-1">
             <img :src="item.image" :width="index == 0 ? 34 : 38" />
@@ -198,13 +233,15 @@ const claimClicked = async () =>{
             </div>
           </v-col>
           <v-col cols="3" class="d-flex align-center py-1">
-            <v-btn class="button-yellow m-reward-bonus-active-btn" width="72" height="32">
+            <v-btn :class="item.value == 0 && index != 3 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleBonus(index)" :disabled="item.value == 0 && index != 3?true:false">
               {{ t("reward.text_7") }}
             </v-btn>
           </v-col>
         </v-row>
       </template>
+
       <div class="my-2 text-800-16 white">{{ t("reward.text_14") }}</div>
+
       <template v-for="(item, index) in items_2" :key="index">
         <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
           <v-col cols="3" class="d-flex align-center justify-center py-1">
@@ -216,12 +253,12 @@ const claimClicked = async () =>{
                 {{ item.content }}
               </p>
               <p class="text-700-12 white" v-if="index == 0">
-                1 <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
+                {{ rewardList.level_up_num }} <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
               </p>
             </div>
           </v-col>
           <v-col cols="3" class="d-flex align-center py-1">
-            <v-btn class="button-yellow m-reward-bonus-active-btn" width="72" height="32" @click="showRewardDialog">
+            <v-btn :class="rewardList.level_up_num < 0 && index == 0 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleMyReward(index)" :disabled="rewardList.level_up_num < 0 && index == 0?true:false">
               {{ t("reward.text_7") }}
             </v-btn>
           </v-col>
