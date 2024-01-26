@@ -108,4 +108,8 @@ export namespace NETWORK {
   export class ACTIVITY {
     static USER_ACTIVITY_LIST = '/user/activity/list'
   }
+
+  export class Reward{
+    static REWARD_LIST = '/user/reward/center/list'; // reward list
+  }
 }

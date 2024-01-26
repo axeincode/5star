@@ -572,6 +572,7 @@ onMounted(() => {
       transition="dialog-top-transition"
       class="mobile-dialog-toggle-height"
       v-if="mobileVersion == 'sm'"
+      style="z-index:10000000000000010"
     >
       <MobileDialog :mobileDialogCheck="mobileDialogCheck" @switch="switchDialog" />
     </v-dialog>
@@ -586,6 +587,8 @@ onMounted(() => {
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('signup')"
       persistent
+      style="z-index:10000000000000020"
+      
     >
       <Signup
         v-if="mobileVersion != 'sm'"
@@ -608,6 +611,7 @@ onMounted(() => {
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('login')"
       persistent
+      style="z-index:10000000000000020"
     >
       <Login
         v-if="mobileVersion != 'sm'"

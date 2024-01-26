@@ -183,6 +183,7 @@ onMounted(() => {
     <GameProviders />
   </div>
 </template>
+
 <style lang="scss">
 @keyframes expandAnimation {
   0% {

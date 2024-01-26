@@ -18,6 +18,7 @@ import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
 import img_vip_1 from "@/assets/vip/image/img_vip_1.png";
 import img_vip_3 from "@/assets/vip/image/img_vip_3.png";
 import { vipStore } from "@/store/vip";
+import { rewardStore } from "@/store/reward";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -27,6 +28,10 @@ const { setMailMenuShow } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setLevelUpDialogVisible } = vipStore();
+
+const { setAuthModalType } = authStore();
+
+const { dispatchRewardList } = rewardStore();
 
 const rewardNavShow = ref<boolean>(false);
 const claimText = ref<string>("");
@@ -106,8 +111,24 @@ const showRewardDialog = () => {
   setMailMenuShow(true);
 };
 
-onMounted(() => {
+const openDialog = () => {
+  setAuthModalType("login");
+  setOverlayScrimShow(false);
+};
+
+const rewardList = computed(() => {
+  const { getRewardList } = storeToRefs(rewardStore());
+  return getRewardList.value;
 });
+onMounted(async () => {
+  if(token.value){
+    await dispatchRewardList();
+  }
+});
+const claimClicked = async () =>{
+  await dispatchRewardList();
+  console.log(rewardList.value);
+}
 </script>
 
 <template>
@@ -124,7 +145,7 @@ onMounted(() => {
             :class="mobileWidth < 600 ? 'm-claim-text' : ''" v-model="claimText" :placeholder="t('reward.text_4')" />
         </v-col>
         <v-col cols="3" class="pa-1 text-right">
-          <v-btn class="text-none m-reward-claim-btn" width="72" height="32">
+          <v-btn class="text-none m-reward-claim-btn" width="72" height="32" @click="claimClicked">
             {{ t("reward.text_5") }}
           </v-btn>
         </v-col>
@@ -155,7 +176,7 @@ onMounted(() => {
         <div>{{ t("reward.text_20") }}</div>
         <div>{{ t("reward.text_21") }}</div>
       </div>
-      <v-btn class="text-none m-reward-join-btn" width="96" height="32">
+      <v-btn class="text-none m-reward-join-btn" width="96" height="32" @click="openDialog">
         {{ t("reward.text_22") }}
       </v-btn>
     </div>
