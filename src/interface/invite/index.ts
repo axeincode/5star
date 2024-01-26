@@ -1,15 +1,16 @@
 export interface InviteData {
+    bonus_month: number | string
+    bonus_today: number | string
+    bonus_total: number | string
+    bonus_yesterdays: number | string
+    deposit_users: number | string
+    deposit_users_month: number | string
+    deposit_users_today: number | string
+    deposit_users_yesterdays: number | string
     invite_code: string
+    invited_users: number | string
     web_invite_url: string
-    invited_users: string | number
-    deposit_users: string | number
-    bonus_today: string | number
-    bonus_yesterdays: string | number
-    goals_monthly: string | number
-    achievement_progress: string | number
-    achievement_explain: Array<any>
-    bonus_total: string | number
-    bonus_users_total: string | number
+    available_bonus: string | number
 }
 
 export interface InviteHistoryFormData {

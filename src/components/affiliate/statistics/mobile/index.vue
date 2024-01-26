@@ -50,7 +50,7 @@ const statisticsItem = computed(() => {
 });
 
 const inviteAward = async () => {
-  await dispatchInviteAward();
+  await dispatchInviteAward({});
 }
 
 onMounted(async () => {
