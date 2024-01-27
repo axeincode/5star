@@ -1585,7 +1585,49 @@ export const lang: langType = {
         text_7: "Diamante Amarillo",
         text_8: "Diamante Azul",
         text_9: "",
-    }  
+    },
+    vip_level_info: {
+      black_iron: {
+        bonus: '',
+        rebate: '',
+        fee: ''
+      },
+      bronze: {
+        bonus: 'Premio en efectivo de bronce de nivel 2 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: ''
+      },
+      silver: {
+        bonus: 'Premio en efectivo de plata de nivel 25 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: ''
+      },
+      gold: {
+        bonus: 'Premio en efectivo de oro de nivel 50 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: ''
+      },
+      platinum: {
+        bonus: 'Premio en efectivo Platino de nivel 76 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 5,000'
+      },
+      diamonds: {
+        bonus: 'Premio en efectivo de diamantes de nivel 100 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 20,000'
+      },
+      yellow_diamond: {
+        bonus: 'Premio en efectivo de diamante amarillo de nivel 150 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 20,000'
+      },
+      blue_diamond: {
+        bonus: 'Premio en efectivo de diamante azul nivel 200 (bonificación u oro real)',
+        rebate: 'Reembolso de código',
+        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 80,000'
+      }
+    }
   },
   exception: {
     text_1: "fallido",

@@ -1,12 +1,19 @@
 <script lang="ts" setup>
+import { ref, computed } from "vue";
+import { storeToRefs } from "pinia";
+import { vipStore } from "@/store/vip";
 import img_vip_bg from "@/assets/vip/image/Union.png";
+const vipInfo = computed(() => {
+    const { getVipInfo } = storeToRefs(vipStore());
+    return getVipInfo.value
+})
 </script>
 <template>
     <div class="bonus-main">
         <div class="bonus-main-cashback">
             <div class="bonus-main-cashback-l">
                 <span>Cashback</span>
-                <span>R$ 999.999.999.00</span>
+                <span>R$ 0</span>
             </div>
             <div class="bonus-main-cashback-r">
                 <span>CLAIM</span>
@@ -15,7 +22,7 @@ import img_vip_bg from "@/assets/vip/image/Union.png";
         <div class="bonus-main-membership">
             <div class="bonus-main-membership-l">
                 <span>Membership Day</span>
-                <span>R$ 100.000.00</span>
+                <span>R$ {{ vipInfo.week_gift }}</span>
             </div>
             <div class="bonus-main-membership-r">
                 <span>CLAIM</span>
@@ -30,7 +37,7 @@ import img_vip_bg from "@/assets/vip/image/Union.png";
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>VIP Week Gift</span>
-                        <span>R$ 99.00</span>
+                        <span>R$ {{ vipInfo.month_gift }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
                         <span>CLAIM</span>
@@ -44,7 +51,7 @@ import img_vip_bg from "@/assets/vip/image/Union.png";
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>VIP Month Gift</span>
-                        <span>R$ 999.00</span>
+                        <span>R$ {{ vipInfo.uprank_gift }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
                         <span>CLAIM</span>
@@ -58,7 +65,7 @@ import img_vip_bg from "@/assets/vip/image/Union.png";
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>VIP Rank Bonus</span>
-                        <span>R$ 999.999.999.00</span>
+                        <span>R$ 0</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
                         <span>CLAIM</span>

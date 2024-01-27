@@ -1,10 +1,42 @@
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { vipStore } from "@/store/vip";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import telegram_1 from "@/assets/vip/image/telegram_1.png";
-const rate1 = ref(100)
-const rate2 = ref(40)
+const { t } = useI18n();
+const vipInfo = computed(() => {
+    const { getVipInfo } = storeToRefs(vipStore());
+    return getVipInfo.value
+})
+const depositRate = computed(() => {
+    return (vipInfo.deposit_exp / vipInfo.rank_deposit_exp * 100) || 0
+})
+const betRate = computed(() => {
+    return (vipInfo.bet_exp / vipInfo.rank_bet_exp * 100) || 0
+})
+const vipLevelText = (value: number) => {
+    if (value === 0) {
+        return t('vip.vip_level_content.text_1')
+    } else if (value > 0 && value < 25) {
+        return t('vip.vip_level_content.text_2')
+    } else if (value > 24 && value < 50) {
+        return t('vip.vip_level_content.text_3')
+    } else if (value > 49 && value < 75) {
+        return t('vip.vip_level_content.text_4')
+    } else if (value > 74 && value < 100) {
+        return t('vip.vip_level_content.text_5')
+    } else if (value > 99 && value < 150) {
+        return t('vip.vip_level_content.text_6')
+    } else if (value > 149 && value < 200) {
+        return t('vip.vip_level_content.text_7')
+    } else {
+        return t('vip.vip_level_content.text_8')
+    }
+}
+
 </script>
 <template>
     <div class="progress-main">
@@ -15,8 +47,8 @@ const rate2 = ref(40)
                 </div>
                 <div class="progress-main-card-t-info">
                     <div class="progress-main-card-t-info-title">
-                        <span>Bronze</span>
-                        <span>Level 13</span>
+                        <span>{{ vipLevelText(vipInfo.level) }}</span>
+                        <span>Level {{ vipInfo.level }}</span>
                     </div>
                     <div class="progress-main-card-t-info-content">
                         Get rewarded every time you fill the progress bar. Leveling upentitles you to bigger and better rewa rds！
@@ -26,16 +58,16 @@ const rate2 = ref(40)
             <div class="progress-main-card-m">
                 <div class="progress-main-card-m-title">
                     <div class="progress-main-card-m-title-price">
-                        <span>R$ 10000</span>
+                        <span>R$ {{ vipInfo.deposit_exp }}</span>
                         <span> / </span>
-                        <span>R$ 10000</span>
+                        <span>R$ {{ vipInfo.rank_deposit_exp }}</span>
                     </div>
                 </div>
                 <div class="progress-main-card-m-info">
                     <span>Deposit</span>
                     <div class="progress-main-card-m-info-rate">
                         <v-progress-linear
-                            v-model="rate1"
+                            v-model="depositRate"
                             height="16"
                             class="progress-main-card-m-info-rate-color"
                         >
@@ -46,16 +78,16 @@ const rate2 = ref(40)
             <div class="progress-main-card-b">
                 <div class="progress-main-card-b-title">
                     <div class="progress-main-card-b-title-price">
-                        <span>R$ 5642</span>
+                        <span>R$ {{ vipInfo.bet_exp }}</span>
                         <span> / </span>
-                        <span>R$ 10000</span>
+                        <span>R$ {{ vipInfo.rank_bet_exp }}</span>
                     </div>
                 </div>
                 <div class="progress-main-card-b-info">
                     <span>Wager</span>
                     <div class="progress-main-card-b-info-rate">
                         <v-progress-linear
-                            v-model="rate2"
+                            v-model="betRate"
                             height="16"
                             class="progress-main-card-b-info-rate-color"
                         >
@@ -71,7 +103,7 @@ const rate2 = ref(40)
                     <span>COLLECT ALL</span>
                 </div>
                 <div class="progress-main-reward-bg-b">
-                    R$ 999.999.999.00
+                    R$ 0
                 </div>
             </div>
             
@@ -180,6 +212,9 @@ const rate2 = ref(40)
                             background: #F9BC01;
                             border-radius: 20px;
                         }
+                        ::v-deep(.v-progress-linear__background) {
+                            border-radius: 20px;
+                        }
                     }
                 }
             }
@@ -218,6 +253,9 @@ const rate2 = ref(40)
                     &-color {
                         ::v-deep(.v-progress-linear__determinate) {
                             background: #009B3A;
+                            border-radius: 20px;
+                        }
+                        ::v-deep(.v-progress-linear__background) {
                             border-radius: 20px;
                         }
                     }
@@ -276,7 +314,7 @@ const rate2 = ref(40)
             align-items: center;
             position: absolute;
             width: 170px;
-            height: 22px;
+            height: 24px;
             right: 14px;
             bottom: 4px;
             background-image: url("@/assets/vip/image/Rectangle_2428.png");

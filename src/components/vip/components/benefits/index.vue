@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
 import img_vipemblem_1 from "@/assets/vip/image/img_vipemblem_1.png";
 import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
@@ -9,54 +10,81 @@ import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png"
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 
+const { t } = useI18n();
+
 const vipCardInfo = [
     {
         icon: img_vipemblem_1,
-        title: 'black iron',
+        title: t('vip.vip_level_content.text_1'),
         vip: '(VIP 0)',
-        status: []
+        info: []
     },
     {
         icon: img_vipemblem_1_24,
-        title: 'Bronze',
+        title: t('vip.vip_level_content.text_2'),
         vip: '(VIP1-24)',
-        status: ['Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.bronze.bonus'), 
+            t('vip.vip_level_info.bronze.rebate'),
+        ]
     },
     {
         icon: img_vipemblem_25_49,
-        title: 'Silver',
+        title: t('vip.vip_level_content.text_3'),
         vip: '(VIP25-49)',
-        status: ['Daily Spin Enabled', 'Daily Spin Enabled', 'Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.silver.bonus'), 
+            t('vip.vip_level_info.silver.rebate'),
+        ]
     },
     {
         icon: img_vipemblem_50_74,
-        title: 'Gold',
+        title: t('vip.vip_level_content.text_4'),
         vip: '(VIP50-74)',
-        status: ['Daily Spin Enabled', 'Daily Spin Enabled', 'Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.gold.bonus'), 
+            t('vip.vip_level_info.gold.rebate'),
+        ]
     },
     {
         icon: img_vipemblem_75_99,
-        title: 'Platinum',
+        title: t('vip.vip_level_content.text_5'),
         vip: '(VIP75-99)',
-        status: ['Daily Spin Enabled', 'Daily Spin Enabled', 'Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.platinum.bonus'), 
+            t('vip.vip_level_info.platinum.rebate'),
+            t('vip.vip_level_info.platinum.fee'),
+        ]
     },
     {
         icon: img_vipemblem_100_149,
-        title: 'Diamonds',
+        title: t('vip.vip_level_content.text_6'),
         vip: '(VIP100-149)',
-        status: ['Daily Spin Enabled', 'Daily Spin Enabled', 'Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.diamonds.bonus'), 
+            t('vip.vip_level_info.diamonds.rebate'),
+            t('vip.vip_level_info.diamonds.fee'),
+        ]
     },
     {
         icon: img_vipemblem_159_199,
-        title: 'Yellow Diamond',
+        title: t('vip.vip_level_content.text_7'),
         vip: '(VIP150-199)',
-        status: ['Daily Spin Enabled', 'Daily Spin Enabled', 'Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.yellow_diamond.bonus'), 
+            t('vip.vip_level_info.yellow_diamond.rebate'),
+            t('vip.vip_level_info.yellow_diamond.fee'),
+        ]
     },
     {
         icon: img_vipemblem_200,
-        title: 'Blue Diamond',
+        title: t('vip.vip_level_content.text_8'),
         vip: '(VIP200)',
-        status: ['Daily Spin Enabled', 'Daily Spin Enabled', 'Daily Spin Enabled']
+        info: [
+            t('vip.vip_level_info.blue_diamond.bonus'), 
+            t('vip.vip_level_info.blue_diamond.rebate'),
+            t('vip.vip_level_info.blue_diamond.fee'),
+        ]
     }
 ]
 </script>
@@ -72,7 +100,7 @@ const vipCardInfo = [
                             <span>{{ item.vip }}</span>
                         </div>
                         <div class="benefits-main-card-content-info-status">
-                            <span v-for="subItem in item.status" :key="subItem">
+                            <span v-for="subItem in item.info" :key="subItem">
                                 <i v-if="subItem"></i>
                                 {{ subItem }}
                             </span>

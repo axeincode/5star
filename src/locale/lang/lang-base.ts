@@ -1582,6 +1582,48 @@ export type langType = {
       text_7: string
       text_8: string
       text_9: string
+    },
+    vip_level_info: {
+      black_iron: {
+        bonus: string,
+        rebate: string,
+        fee: string
+      },
+      bronze: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      },
+      silver: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      },
+      gold: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      },
+      platinum: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      },
+      diamonds: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      },
+      yellow_diamond: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      },
+      blue_diamond: {
+        bonus: string,
+        rebate: string,
+        fee: string,
+      }
     }
   }
   exception: {

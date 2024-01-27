@@ -1577,6 +1577,48 @@ export const lang: langType = {
       text_7: "Yellow Diamond",
       text_8: "Blue Diamond",
       text_9: "",
+    },
+    vip_level_info: {
+      black_iron: {
+        bonus: '',
+        rebate: '',
+        fee: ''
+      },
+      bronze: {
+        bonus: 'Level 2 Bronze Cash Prize (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: ''
+      },
+      silver: {
+        bonus: 'Level 25 Silver Cash Prize (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: ''
+      },
+      gold: {
+        bonus: 'Level 50 gold cash prize (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: ''
+      },
+      platinum: {
+        bonus: 'Level 76 Platinum Cash Award (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: 'Discount on withdrawal fees, 5,000 fee-free withdrawal limit'
+      },
+      diamonds: {
+        bonus: 'Level 100 diamond cash prize (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: 'Discount on withdrawal fees, 20,000 fee-free withdrawal limit'
+      },
+      yellow_diamond: {
+        bonus: 'Level 150 yellow diamond cash prize (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: 'Discount on withdrawal fees, 20,000 fee-free withdrawal limit'
+      },
+      blue_diamond: {
+        bonus: 'Level 200 blue diamond cash prize (bonus or real gold)',
+        rebate: 'Code rebate',
+        fee: 'Discount on withdrawal fees, 80,000 fee-free withdrawal limit'
+      }
     }
   },
   exception: {

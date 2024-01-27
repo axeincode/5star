@@ -34,7 +34,8 @@ export const vipStore = defineStore({
             vip_level: 0,
         } as Vip.VipSignInData,
         vipLevelUpList: {} as Vip.VipLevelUpListData,
-        vipLevelUpReceive: {} as Vip.VipLevelUpReceiveData
+        vipLevelUpReceive: {} as Vip.VipLevelUpReceiveData,
+        vipNavBarToggle: '',
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -48,7 +49,8 @@ export const vipStore = defineStore({
         getVipSignIn: (state) => state.vipSignIn,
         getLevelUpDialogVisible: (state) => state.levelUpDialogVisible,
         getVipLevelUpList: (state) => state.vipLevelUpList,
-        getVipLevelUpReceive: (state) => state.vipLevelUpReceive
+        getVipLevelUpReceive: (state) => state.vipLevelUpReceive,
+        getVipNavBarToggle: (state) => state.vipNavBarToggle,
     },
     actions: {
         // set functions
@@ -87,6 +89,10 @@ export const vipStore = defineStore({
         },
         setVipLevelUpReceive(vipLevelUpReceive: Vip.VipLevelUpReceiveData) {
             this.vipLevelUpReceive = vipLevelUpReceive
+        },
+        setVipNavBarToggle(vipNavBarToggle: string) {
+            this.vipNavBarToggle = vipNavBarToggle;
+            localStorage.setItem('vipBar', vipNavBarToggle);
         },
         // Get VIP check-in content
         async dispatchVipSignIn() {

@@ -44,6 +44,8 @@ const { setMailMenuShow } = mailStore();
 const { dispatchVipInfo } = vipStore();
 const { dispatchVipLevels } = vipStore();
 const { setDepositWithdrawToggle } = appBarStore();
+const { setVipNavBarToggle } = vipStore();
+const { setNavBarToggle } = appBarStore();
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -246,7 +248,11 @@ const goAccountPage = () => {
 }
 
 const goVIPPage = () => {
-  router.push({ name: "VIP" })
+  // router.push({ name: "VIP" })
+  setVipNavBarToggle('1');
+  setNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setOverlayScrimShow(false);
 }
 
 watch(userNavBarToggle, (newValue) => {

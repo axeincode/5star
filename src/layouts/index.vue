@@ -30,6 +30,7 @@ const RightBarLayout = defineAsyncComponent(() => import("./RightBar.vue"));
 const RewardBarLayout = defineAsyncComponent(() => import("./RewardBar.vue"));
 const AgentBarLayout = defineAsyncComponent(() => import("./AgentBar.vue"));
 const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
+const VipBar = defineAsyncComponent(() => import("./VipBar.vue"));
 const MBonusDashboardDialog = defineAsyncComponent(
   () => import("@/components/vip/mobile/MBonusDashboard.vue")
 );
@@ -61,6 +62,7 @@ const bonusDashboardDialogShow = computed(() => {
 const handleScroll = () => {
   console.log("scroll");
 };
+
 </script>
 
 <template>
@@ -75,6 +77,7 @@ const handleScroll = () => {
       <MNavBarLayout />
       <RewardBarLayout v-if="route.name !== 'Sports'" />
       <AgentBarLayout/>
+      <VipBar />
     </template>
     <UserNavBarLayout />
     <MBonusDashboardDialog />

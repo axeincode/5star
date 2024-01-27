@@ -28,17 +28,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="m-home-loading" v-if="loading">
+  <!-- <div class="m-home-loading" v-if="loading">
     <div class="loading-body">
       <div class="dot-0"></div>
       <div class="dot-1"></div>
       <div class="dot-0"></div>
     </div>
   </div>
-  <div v-else>
+  <div v-else> -->
     <VIP v-if="mobileWidth > 600" />
     <MVIP v-else />
-  </div>
+  <!-- </div> -->
 </template>
 
 <style lang="scss">

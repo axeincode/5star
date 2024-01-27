@@ -10,6 +10,7 @@ import { refferalStore } from "@/store/refferal";
 import { mailStore } from "@/store/mail";
 import { gameStore } from "@/store/game";
 import { agentStore } from "@/store/agent";
+import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
@@ -44,6 +45,7 @@ const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setGameFilterText } = gameStore();
 const { setAgentNavBarToggle } = agentStore();
+const { setVipNavBarToggle } = vipStore();
 
 const { t } = useI18n();
 const open = ref<Array<string>>(['']);
@@ -570,6 +572,10 @@ const handleNavbarItem = (navbarText: string) => {
       affiliateIconColor.value = "#7782AA"
       blogIconColor.value = "#7782AA"
       supportIconColor.value = "#7782AA"
+      setVipNavBarToggle('1');
+      setNavBarToggle(false);
+      setMainBlurEffectShow(false);
+      setOverlayScrimShow(false);
       break;
     case t('navBar.menu_item_1.affiliate'):
       sportIconColor.value = "#7782AA"
@@ -1016,10 +1022,10 @@ onMounted(() => {
             margin-top: -4px !important;
             padding-left: 10px;
           "
-          router
-          :to="{ name: 'VIP' }"
           @click="handleNavbarItem(t('navBar.menu_item_1.vip_club'))"
         >
+        <!-- router
+          :to="{ name: 'VIP' }" -->
           <template v-slot:prepend>
             <inline-svg
               :src="icon_public_42"
