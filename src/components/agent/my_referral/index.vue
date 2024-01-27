@@ -149,7 +149,7 @@ onMounted(async () => {
     <div class="relative">
       <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
       <div class="m-my-referral-report-card">
-        <div class="report-card-text" @click="goReportTab">
+        <div class="report-card-text">
           <inline-svg
             :src="icon_public_83"
             width="20"
@@ -160,6 +160,7 @@ onMounted(async () => {
           <span class="text-400-10 text-white ml-1">{{ t("agent.text_6") }}</span>
         </div>
       </div>
+      <div class="m-my-referral-report-btn" @click="goReportTab"></div>
       <v-row class="m-referral-reward-card mx-4" style="margin-top: -18px">
         <v-col cols="6">
           <div class="text-400-12 text-white">{{ t("agent.text_7") }}</div>
@@ -252,6 +253,15 @@ onMounted(async () => {
     top: 17px;
     right: 44px;
   }
+}
+
+.m-my-referral-report-btn {
+  position: absolute;
+  width: 130px;
+  height: 30px;
+  bottom: 16.7%;
+  right: 3.1%;
+  z-index: 2;
 }
 
 .m-referral-reward-card {

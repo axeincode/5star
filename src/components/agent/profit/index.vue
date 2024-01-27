@@ -122,13 +122,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.deposit_amount[0]).toFixed(2) }}
+        R$ {{ selectedItem.deposit_amount[0] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.deposit_amount[1]).toFixed(2) }}
+        R$ {{ selectedItem.deposit_amount[1] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.deposit_amount[2]).toFixed(2) }}
+        R$ {{ selectedItem.deposit_amount[2] }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-agent-profit-user-card">
@@ -138,13 +138,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.bet_amount[0]).toFixed(2) }}
+        R$ {{ selectedItem.bet_amount[0] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.bet_amount[1]).toFixed(2) }}
+        R$ {{ selectedItem.bet_amount[1] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.bet_amount[2]).toFixed(2) }}
+        R$ {{ selectedItem.bet_amount[2] }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-agent-profit-commission-card">
@@ -154,13 +154,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.bet_bonus[0]).toFixed(2) }}
+        R$ {{ selectedItem.bet_bonus[0] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.bet_bonus[1]).toFixed(2) }}
+        R$ {{ selectedItem.bet_bonus[1] }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.bet_bonus[2]).toFixed(2) }}
+        R$ {{ selectedItem.bet_bonus[2] }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-agent-profit-user-card">
@@ -170,7 +170,7 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_11") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.achievement_award).toFixed(2) }}
+        R$ {{ selectedItem.achievement_award }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
