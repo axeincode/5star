@@ -1739,7 +1739,7 @@ export const lang: langType = {
     text_11: "Copy the invitation code",
     text_12: "facebook",
     text_13: "telegram",
-    text_14: "Whats APP",
+    text_14: "Whats App",
     text_15: "Twitter",
     text_16: "Email",
     text_17: "Total:",

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, defineAsyncComponent } from "vue";
 import { agentStore } from "@/store/agent";
+import { mailStore } from "@/store/mail";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
@@ -17,10 +18,12 @@ const MGrade = defineAsyncComponent(
   () => import("@/components/agent/grade/mobile/index.vue")
 );
 
+const { setMailMenuShow } = mailStore();
+const { setAgentNavBarToggle } = agentStore();
+
 const { t } = useI18n();
 
 const drawer = ref<boolean>(false);
-const { setAgentNavBarToggle } = agentStore();
 const activeIndex = ref<number>(0);
 
 const scrollTop = ref<number>(0);
@@ -46,8 +49,13 @@ const goReportTab = (index: number) => {
   activeIndex.value = index;
 };
 
-onMounted(() => {
+const closeAgentNavBarToggle = () => {
   setAgentNavBarToggle(false);
+  setMailMenuShow(false);
+};
+
+onMounted(() => {
+  // setAgentNavBarToggle(false);
 });
 </script>
 
@@ -64,7 +72,7 @@ onMounted(() => {
       icon="true"
       width="20"
       height="20"
-      @click="setAgentNavBarToggle(false)"
+      @click="closeAgentNavBarToggle"
     >
       <img :src="icon_public_10" width="18" />
     </v-btn>

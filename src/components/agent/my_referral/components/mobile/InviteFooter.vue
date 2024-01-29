@@ -12,7 +12,7 @@ const mobileWidth = computed(() => {
 });
 </script>
 <template>
-  <v-card class="m-agent-referral-footer-card-bg ma-2 pa-3 py-5">
+  <v-card class="m-agent-referral-footer-card-bg ma-2 pa-3 py-5 mb-4">
     <v-row class="mx-1 align-center">
       <v-col cols="12" md="6" lg="6">
         <div class="mt-4 text-800-12 white">
@@ -29,7 +29,11 @@ const mobileWidth = computed(() => {
         </div>
       </v-col>
       <v-col cols="12" md="6" lg="6" class="d-flex align-center justify-center">
-        <img src="@/assets/affiliate/invite/image/img_agent_03.png" class="mt-4 m-invite-img-3" width="281" />
+        <img
+          src="@/assets/affiliate/invite/image/img_agent_03.png"
+          class="mt-4 m-invite-img-3"
+          width="281"
+        />
       </v-col>
     </v-row>
   </v-card>
@@ -37,7 +41,11 @@ const mobileWidth = computed(() => {
 
 <style lang="scss">
 .m-agent-referral-footer-card-bg {
-  background: linear-gradient(52deg, $agent_color_1 22.05%, $agent_color_2 100%) !important;
+  background: linear-gradient(
+    52deg,
+    $agent_color_1 22.05%,
+    $agent_color_2 100%
+  ) !important;
   border-radius: 8px !important;
 }
 </style>

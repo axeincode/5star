@@ -60,7 +60,7 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">50</span>
+            <span class="text-700-12 text-white">50&nbsp;&nbsp;</span>
           </div>
           <div class="text-400-10 text-gray text-center mt-2">
             {{ t("agent.text_48") }}
@@ -124,7 +124,7 @@ const { t } = useI18n();
             </div>
           </div>
           <div class="d-flex align-center mx-2 justify-center">
-            <span class="text-400-12 text-gray">C1</span>
+            <span class="text-400-12 text-gray">C3</span>
             <div>
               <div class="text-400-10 text-gray" style="line-height: 12px">
                 {{ t("agent.text_46") }}
@@ -136,7 +136,7 @@ const { t } = useI18n();
             <span class="text-700-12 text-white">300</span>
           </div>
           <div class="d-flex align-center mx-2 justify-center mt-1">
-            <span class="text-400-12 text-gray">D1</span>
+            <span class="text-400-12 text-gray">D3</span>
             <div>
               <div class="text-400-10 text-gray" style="line-height: 12px">
                 {{ t("agent.text_46") }}
@@ -145,10 +145,10 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">150</span>
+            <span class="text-700-12 text-white">45&nbsp;&nbsp;</span>
           </div>
           <div class="d-flex align-center mx-2 justify-center mt-1">
-            <span class="text-400-12 text-gray">E1</span>
+            <span class="text-400-12 text-gray">D4</span>
             <div>
               <div class="text-400-10 text-gray" style="line-height: 12px">
                 {{ t("agent.text_46") }}
@@ -157,11 +157,11 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">50</span>
+            <span class="text-700-12 text-white">50&nbsp;&nbsp;</span>
           </div>
           <div class="text-400-10 text-gray text-center mt-2">
             {{ t("agent.text_48") }}
-            <span class="text-700-12 text-white">500</span>
+            <span class="text-700-12 text-white">4845</span>
           </div>
         </v-card>
         <div class="text-400-10 text-gray mt-2 text-center">{{ t("agent.text_49") }}</div>
@@ -204,7 +204,7 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">150</span>
+            <span class="text-700-12 text-white">300</span>
           </div>
           <div class="d-flex align-center mx-2 justify-center mt-1">
             <span class="text-400-12 text-gray">E1</span>
@@ -216,11 +216,11 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">50</span>
+            <span class="text-700-12 text-white">150</span>
           </div>
           <div class="text-400-10 text-gray text-center mt-2">
             {{ t("agent.text_48") }}
-            <span class="text-700-12 text-white">500</span>
+            <span class="text-700-12 text-white">450</span>
           </div>
         </v-card>
         <div class="text-400-10 text-gray mt-2 text-center">{{ t("agent.text_49") }}</div>
@@ -240,7 +240,7 @@ const { t } = useI18n();
             <div class="m-agent-faq-center-sub-card-text">
               <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">150</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B1:</div>
+              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B3:</div>
               <div class="text-700-12 text-center">300</div>
             </div>
           </div>
@@ -253,7 +253,7 @@ const { t } = useI18n();
             </div>
           </div>
           <div class="d-flex align-center mx-2 justify-center">
-            <span class="text-400-12 text-gray">D1</span>
+            <span class="text-400-12 text-gray">D3</span>
             <div>
               <div class="text-400-10 text-gray" style="line-height: 12px">
                 {{ t("agent.text_46") }}
@@ -262,10 +262,10 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">150</span>
+            <span class="text-700-12 text-white">90&nbsp;&nbsp;&nbsp;&nbsp;</span>
           </div>
           <div class="d-flex align-center mx-2 justify-center mt-1">
-            <span class="text-400-12 text-gray">E1</span>
+            <span class="text-400-12 text-gray">D4</span>
             <div>
               <div class="text-400-10 text-gray" style="line-height: 12px">
                 {{ t("agent.text_46") }}
@@ -274,11 +274,11 @@ const { t } = useI18n();
                 {{ t("agent.text_47") }}
               </div>
             </div>
-            <span class="text-700-12 text-white">50</span>
+            <span class="text-700-12 text-white">9000</span>
           </div>
           <div class="text-400-10 text-gray text-center mt-2">
             {{ t("agent.text_48") }}
-            <span class="text-700-12 text-white">500</span>
+            <span class="text-700-12 text-white">9090</span>
           </div>
         </v-card>
         <div class="text-400-10 text-gray mt-2 text-center">{{ t("agent.text_49") }}</div>
@@ -339,9 +339,9 @@ const { t } = useI18n();
             <div class="m-agent-faq-center-sub-card-text">
               <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">15</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B2:</div>
+              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B3:</div>
               <div class="text-700-12 text-center">45</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}C2:</div>
+              <div class="text-400-10 text-center">{{ t("agent.text_45") }}C3:</div>
               <div class="text-700-12 text-center">90</div>
             </div>
           </div>

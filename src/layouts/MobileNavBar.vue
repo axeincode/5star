@@ -588,6 +588,10 @@ const handleNavbarItem = (navbarText: string) => {
       setNavBarToggle(false);
       setMainBlurEffectShow(false);
       setOverlayScrimShow(false);
+      setTimeout(() => {
+        setMailMenuShow(false);
+        setMailMenuShow(true);
+      }, 200)
       break;
     case t('navBar.menu_item_1.blog'):
       sportIconColor.value = "#7782AA"
@@ -1024,7 +1028,7 @@ onMounted(() => {
           "
           @click="handleNavbarItem(t('navBar.menu_item_1.vip_club'))"
         >
-        <!-- router
+          <!-- router
           :to="{ name: 'VIP' }" -->
           <template v-slot:prepend>
             <inline-svg

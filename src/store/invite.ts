@@ -9,7 +9,20 @@ export const inviteStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    inviteItem: {} as Invite.InviteData,
+    inviteItem: {
+      bonus_month: 0,
+      bonus_today: 0,
+      bonus_total: 0,
+      bonus_yesterdays: 0,
+      deposit_users: 0,
+      deposit_users_month: 0,
+      deposit_users_today: 0,
+      deposit_users_yesterdays: 0,
+      invite_code: "",
+      invited_users: 0,
+      web_invite_url: import.meta.env.VITE_BASE_URL,
+      available_bonus: 0,
+    } as Invite.InviteData,
     personalInvitationInfo: {
       total_profit: "19,34",
       invitation_bonus: 25.916,
