@@ -11,3 +11,9 @@ export interface GetRewardCenterListResponse{
     data: GetRewardCenterList
     message: string
 }
+
+export interface GetBonusResponse{
+    code:number
+    data:any
+    message:string
+}

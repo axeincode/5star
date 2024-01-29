@@ -1713,6 +1713,8 @@ export const lang: langType = {
     text_20: "Join us and",
     text_21: "find your own treasure!",
     text_22: "Join Now",
+    success_text: "Get Bonus Succesfully",
+    err_text: "Can't Get Bonus",
   },
   level_up: {
     text_1: "Level Up!",

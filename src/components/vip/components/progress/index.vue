@@ -4,9 +4,14 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
+import { useToast } from "vue-toastification";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import telegram_1 from "@/assets/vip/image/telegram_1.png";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 const { t } = useI18n();
+const { dispatchVipLevelAward } = vipStore();
+const { dispatchVipInfo } = vipStore();
 const vipInfo = computed(() => {
     const { getVipInfo } = storeToRefs(vipStore());
     return getVipInfo.value
@@ -36,6 +41,73 @@ const vipLevelText = (value: number) => {
         return t('vip.vip_level_content.text_8')
     }
 }
+
+const awardValue = () => {
+    if (vipInfo.week_gift > 0) {
+        return vipInfo.week_gift;
+    } else if (vipInfo.month_gift > 0) {
+        return vipInfo.month_gift;
+    } else if (vipInfo.uprank_gift > 0) {
+        return vipInfo.uprank_gift;
+    } else {
+        return 0;
+    }
+}
+
+const alertMessage = (message:string, type: number) => {
+  const toast = useToast();
+  toast.success(message, { 
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: type == 1 ? SuccessIcon : WarningIcon,
+      rtl: false,
+  });
+}
+
+const errVIPMessage = computed((): string => {
+    const { getErrMessage } = storeToRefs(vipStore());
+    return getErrMessage.value
+})
+
+const submitVipLevelAward = async () => {
+    if (vipInfo.week_gift > 0) {
+        await dispatchVipLevelAward({
+            type: 1
+        }).then(() => {
+            alertMessage(t('reward.success_text'), 1);
+            dispatchVipInfo();
+        }).catch(()=>{
+            alertMessage(errVIPMessage.value, 0);
+        });
+    }
+    if (vipInfo.month_gift > 0) {
+        await dispatchVipLevelAward({
+            type: 2
+        }).then(() => {
+            alertMessage(t('reward.success_text'), 1);
+            dispatchVipInfo();
+        }).catch(()=>{
+            alertMessage(errVIPMessage.value, 0);
+        });
+    }
+    if (vipInfo.uprank_gift > 0) {
+        await dispatchVipLevelAward({
+            type: 3
+        }).then(() => {
+            alertMessage(t('reward.success_text'), 1);
+            dispatchVipInfo();
+        }).catch(()=>{
+            alertMessage(errVIPMessage.value, 0);
+        });
+    }
+}
+
 
 </script>
 <template>
@@ -97,13 +169,15 @@ const vipLevelText = (value: number) => {
             </div>
         </div>
         <div class="progress-main-reward">
+            <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
             <div class="progress-main-reward-bg">
                 <div class="progress-main-reward-bg-t">
                     <span>Rewards available</span>
-                    <span>COLLECT ALL</span>
+                    <span v-if="awardValue() > 0" @click="submitVipLevelAward">CLAIM</span>
+                    <span class="available-button" v-else>CLAIM</span>
                 </div>
                 <div class="progress-main-reward-bg-b">
-                    R$ 0
+                    R$ {{ awardValue() }}
                 </div>
             </div>
             
@@ -152,6 +226,7 @@ const vipLevelText = (value: number) => {
         border: 1px solid #23262F;
         background: linear-gradient(0deg, #23262F, #23262F),
         conic-gradient(from 45.08deg at 50.17% 49.69%, #1D2027 0deg, #23262F 360deg);
+        border-radius: 8px;
         &-t {
             display: flex;
             &-icon {
@@ -266,8 +341,8 @@ const vipLevelText = (value: number) => {
     &-reward {
         position: relative;
         height: 96px;
-        margin-top: 6px;
         z-index: auto;
+        margin: 6px -8px 0 -8px;
         &-bg {
             display: flex;
             flex-direction: column;
@@ -277,13 +352,18 @@ const vipLevelText = (value: number) => {
             left: 0;
             top: 0;
             width: 100%;
-            height: 96px;
-            background-image: url("@/assets/vip/image/img_public_26.png");
+            height: 104px;
+            background-image: url("@/assets/public/svg/img_public_26.svg");
             background-size: 100%;
             z-index: 9;
             &-t {
                 display: flex;
                 justify-content: space-between;
+                .available-button {
+                    background: #23262F !important;
+                    box-shadow: 0px 4px 6px 1px #0000004D !important;
+                    color: #7782AA !important;
+                }
                 span:nth-child(1) {
                     font-size: 12px;
                     font-weight: 400;
@@ -300,6 +380,7 @@ const vipLevelText = (value: number) => {
                     font-size: 12px;
                     font-weight: 700;
                     color: #000;
+                    cursor: pointer;
                 }
             }
             &-b {
@@ -314,13 +395,14 @@ const vipLevelText = (value: number) => {
             align-items: center;
             position: absolute;
             width: 170px;
-            height: 24px;
+            height: 44px;
             right: 14px;
-            bottom: 4px;
+            bottom: -8px;
             background-image: url("@/assets/vip/image/Rectangle_2428.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
             z-index: 8;
+            padding-top: 14px;
             img {
                 width: 12px;
                 height: 12px;
@@ -331,6 +413,7 @@ const vipLevelText = (value: number) => {
                 font-weight: 400;
                 color: #fff;
                 margin-right: 10px;
+                cursor: pointer;
             }
         }
     }

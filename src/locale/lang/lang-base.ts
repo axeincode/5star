@@ -1711,6 +1711,8 @@ export type langType = {
     text_20: string
     text_21: string
     text_22: string
+    success_text: string
+    err_text: string
   }
   level_up: {
     text_1: string

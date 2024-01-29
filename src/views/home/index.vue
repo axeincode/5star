@@ -1180,6 +1180,7 @@ export default Dashboard;
             </inline-svg> -->
             {{ item.name }}
           </v-row>
+          
           <v-row class="ml-4 mr-2 mt-2 mb-0 pc-game-row" v-if="mobileWidth > 600">
             <template v-if="item.games.length > 0">
               <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
@@ -1221,6 +1222,7 @@ export default Dashboard;
               </template>
             </template>
           </v-row>
+
           <v-row class="justify-center" :class="mobileWidth < 600 ? 'pt-4 mx-3 mb-0 mt-0' : 'mt-8 ml-4'" v-if="((mobileWidth < 600 &&
             Number(item.game_count) > 6 &&
             6 * Number(item.page_no) < Number(item.game_count)) ||
@@ -1261,6 +1263,7 @@ export default Dashboard;
           </v-row>
         </template>
       </template>
+      
       <template v-for="(otherGameItem, otherIndex) in pagingGames" :key="otherIndex" v-else>
         <template v-if="otherGameItem.slug == selectedCategoryName && paginGameShow">
           <v-row class="ml-4 mr-2 mt-2 pt-8" v-if="mobileWidth > 600"
@@ -1380,6 +1383,7 @@ export default Dashboard;
       <!--------------------- Bet History ---------------------->
       <component :is="betHistoryComponent" v-if="bannerComponent"></component>
     </div>
+    
   </div>
 </template>
 

@@ -34,15 +34,6 @@ watch(vipNavBarToggle, (value: string) => {
     }
 })
 
-const handleTab = (index: number) => {
-    activeIndex.value = index;
-}
-
-const handleScroll = (event: any) => {
-    console.log("scroll", event.target.scrollTop);
-    scrollTop.value = event.target.scrollTop;
-}
-
 onMounted(() => {
     if (localStorage.getItem('vipBar') === '1') {
         vipDrawer.value = true;
@@ -84,7 +75,7 @@ onMounted(() => {
     height: 100% !important;
     width: 100% !important;
     top: 0px !important;
-    z-index: 100000000 !important;
+    z-index: 10000 !important;
 
     .m-vip-drawer-close-button {
         box-shadow: none !important;
@@ -92,7 +83,7 @@ onMounted(() => {
         position: absolute !important;
         top: 16px;
         right: 16px;
-        z-index: 100000;
+        z-index: 99;
     }
 }
 </style>

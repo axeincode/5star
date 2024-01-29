@@ -21,6 +21,9 @@ import { vipStore } from "@/store/vip";
 import { rewardStore } from "@/store/reward";
 import { refferalStore } from "@/store/refferal";
 import { loginBonusStore } from "@/store/loginBonus";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -29,13 +32,13 @@ const { setRewardNavShow } = menuStore();
 const { setMailMenuShow } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
-const { setLevelUpDialogVisible } = vipStore();
+const { setLevelUpDialogVisible, dispatchVipRebateAward, dispatchVipLevelAward } = vipStore();
 
 const { setAuthModalType } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 
-const { dispatchRewardList } = rewardStore();
+const { dispatchRewardList, dispatchReceiveAchievementBonus } = rewardStore();
 
 const rewardNavShow = ref<boolean>(false);
 const claimText = ref<string>("");
@@ -117,27 +120,78 @@ const openRefferalDialog = () => {
   setRefferalDialogShow(true)
 }
 
-const handleMyReward = (index:number) => {
+
+const errVIPMessage = computed((): string => {
+    const { getErrMessage } = storeToRefs(vipStore());
+    return getErrMessage.value
+})
+
+const handleAhivBonus = async () => {
+  await dispatchReceiveAchievementBonus().then(()=>{
+    alertMessage(t('reward.success_text'), 1);
+  }).catch(()=>{
+    alertMessage(t('reward.err_text'), 0);
+  });
+  
+  await getRewardList();
+}
+
+const handleMyReward = async (index:number) => {
+  if(index == 0) {
+    await dispatchVipLevelAward({
+      type: 3
+    }).then(()=>{
+        alertMessage(t('reward.success_text'), 1);
+      }).catch(()=>{
+        alertMessage(errVIPMessage.value, 0);
+      });
+    await getRewardList();
+  }
   if(index == 1) {
     openRefferalDialog();
   }
-  else {
 
+}
+
+const handleBonus = async (index:number) => {
+  if(index != 3) {
+    if(index == 0){
+      await dispatchVipRebateAward({}).then(()=>{
+        alertMessage(t('reward.success_text'), 1);
+      }).catch(()=>{
+        alertMessage(errVIPMessage.value, 0);
+      });
+    }
+    if(index == 1){
+      await dispatchVipLevelAward({
+        type: 1
+      }).then(()=>{
+        alertMessage(t('reward.success_text'), 1);
+      }).catch(()=>{
+        alertMessage(errVIPMessage.value, 0);
+      });
+    }
+    if(index == 2){
+      await dispatchVipLevelAward({
+        type: 2
+      }).then(()=>{
+        alertMessage(t('reward.success_text'), 1);
+      }).catch(()=>{
+        alertMessage(errVIPMessage.value, 0);
+      });
+    }
+    await getRewardList();
   }
-}
 
-const openLoginBonusDialog = () => {
-  setLoginBonusDialogVisible(true);
-  setOverlayScrimShow(true);
-  setMainBlurEffectShow(true);
-}
-
-
-const handleBonus = (index:number) => {
   if(index == 3) {
     openLoginBonusDialog()
   }
 
+}
+const openLoginBonusDialog = () => {
+  setLoginBonusDialogVisible(true);
+  setOverlayScrimShow(true);
+  setMainBlurEffectShow(true);
 }
 
 const rewardList = computed(() => {
@@ -145,125 +199,153 @@ const rewardList = computed(() => {
   return getRewardList.value;
 });
 
+const getRewardList = async() => {
+  await dispatchRewardList();
+  bonus_items.value[0].value = rewardList.value.cash_back == undefined ? '0' : rewardList.value.cash_back;
+  bonus_items.value[1].value = rewardList.value.week == undefined ? '0' : rewardList.value.week;
+}
+
+const alertMessage = (message:string, type: number) => {
+  const toast = useToast();
+  toast.success(message, { 
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: type == 1 ? SuccessIcon : WarningIcon,
+      rtl: false,
+  });
+}
+const claimClicked = async () =>{
+}
+
+const scrollTop = ref<number>(0);
+const handleScroll = (event: any) => {
+  scrollTop.value = event.target.scrollTop;
+};
+
+
 onMounted(async () => {
   if(token.value){
-    await dispatchRewardList();
-    bonus_items.value[0].value = rewardList.value.cash_back;
-    bonus_items.value[1].value = rewardList.value.week;
+    await getRewardList();
   }
 });
 
-const claimClicked = async () =>{
-  await dispatchRewardList();
-}
 </script>
 
 <template>
   <v-navigation-drawer v-model="rewardNavShow" location="bottom" temporary :touchless="true"
     class="m-reward-navigation-drawer">
 
-    <v-btn class="m-reward-drawer-close-button" icon="true" width="20" height="20" @click="setRewardNavShow(false)">
+    <div :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'">
+      <v-btn class="m-reward-drawer-close-button" icon="true" width="20" height="20" @click="setRewardNavShow(false)">
       <img :src="icon_public_10" width="18" />
     </v-btn>
-
-    <div class="m-reward-header" v-if="token">
-      <p class="text-700-12 white pt-8 mx-4">{{ t("reward.text_3") }}</p>
-
-      <v-row class="mx-4 my-1 align-center ">
-        <v-col cols="9" class="text-400-12 py-1 px-0 d-flex align-center">
-          <v-text-field class="form-textfield dark-textfield mx-0 my-0" variant="solo" hide-details filled clearable
-            :class="mobileWidth < 600 ? 'm-claim-text' : ''" v-model="claimText" :placeholder="t('reward.text_4')" />
-        </v-col>
-        <v-col cols="3" class="pa-1 text-right">
-          <v-btn class="text-none m-reward-claim-btn" width="72" height="32" @click="claimClicked">
-            {{ t("reward.text_5") }}
-          </v-btn>
-        </v-col>
-      </v-row>
-
-      <v-row class="mx-4 my-2 m-reward-achievement-bonus">
-        <v-col cols="3" class="d-flex align-center justify-center">
-          <img src="@/assets/affiliate/statistics/img_agent_8.png" width="54" :class="rewardList.achievement_status == 1 ? '' :  'm-reward-achievement-img'" />
-        </v-col>
-        <v-col cols="6">
-          <p :class="rewardList.achievement_status == 1 ? 'text-400-12 white' :'text-400-12 text-gray'">
-            {{ t("reward.text_6") }}
-          </p>
-          <p :class="rewardList.achievement_status == 1 ? 'text-800-14 active' :'text-800-14 text-gray'">R$ {{ parseFloat(rewardList.achievement).toFixed(2) }}</p>
-        </v-col>
-        <v-col cols="3" class="d-flex align-center">
-          <v-btn :class="rewardList.achievement_status == 1?'button-yellow m-reward-bonus-active-btn':'m-reward-bonus-btn'" width="72" height="32">
-            {{ t("reward.text_7") }}
-          </v-btn>
-        </v-col>
-      </v-row>
-
     </div>
 
-    <div class="m-reward-join-card mx-4 relative mt-8" v-else>
-      <img src="@/assets/public/image/img_public_25.png" height="159" />
-      <img src="@/assets/public/image/img_public_24.png" class="m-reward-pic-img" />
-      <img src="@/assets/public/image/img_public_5.png" class="m-reward-money-img" />
-      <div class="m-reward-join-text text-700-14 white">
-        <div>{{ t("reward.text_19") }}</div>
-        <div>{{ t("reward.text_20") }}</div>
-        <div>{{ t("reward.text_21") }}</div>
+    <div class="m-reward-total-body" @scroll="handleScroll">
+      <div class="m-reward-header" v-if="token">
+        <p class="text-700-12 white pt-8 mx-4">{{ t("reward.text_3") }}</p>
+
+        <v-row class="mx-4 my-1 align-center ">
+          <v-col cols="9" class="text-400-12 py-1 px-0 d-flex align-center">
+            <v-text-field class="form-textfield dark-textfield mx-0 my-0" variant="solo" hide-details filled clearable
+              :class="mobileWidth < 600 ? 'm-claim-text' : ''" v-model="claimText" :placeholder="t('reward.text_4')" />
+          </v-col>
+          <v-col cols="3" class="pa-1 text-right">
+            <v-btn class="text-none m-reward-claim-btn" width="72" height="32" @click="claimClicked">
+              {{ t("reward.text_5") }}
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row class="mx-4 my-2 m-reward-achievement-bonus">
+          <v-col cols="3" class="d-flex align-center justify-center">
+            <img src="@/assets/affiliate/statistics/img_agent_8.png" width="54" :class="rewardList.achievement_status == 1 ? '' :  'm-reward-achievement-img'" />
+          </v-col>
+          <v-col cols="6">
+            <p :class="rewardList.achievement_status == 1 ? 'text-400-12 white' :'text-400-12 text-gray'">
+              {{ t("reward.text_6") }}
+            </p>
+            <p :class="rewardList.achievement_status == 1 ? 'text-800-14 active' :'text-800-14 text-gray'">R$ {{ rewardList.achievement == undefined? '0.00' : parseFloat(rewardList.achievement).toFixed(2) }}</p>
+          </v-col>
+          <v-col cols="3" class="d-flex align-center">
+            <v-btn :class="rewardList.achievement_status == 1?'button-yellow m-reward-bonus-active-btn':'m-reward-bonus-btn'" width="72" height="32" :disabled="rewardList.achievement_status == 1?false:true" @click="handleAhivBonus">
+              {{ t("reward.text_7") }}
+            </v-btn>
+          </v-col>
+        </v-row>
       </div>
-      <v-btn class="text-none m-reward-join-btn" width="96" height="32" @click="openLoginDialog">
-        {{ t("reward.text_22") }}
-      </v-btn>
-    </div>
 
-    <div class="m-reward-body mx-4 mb-4">
-      <div class="my-2 text-800-16 white">{{ t("reward.text_18") }}</div>
+      <div class="m-reward-join-card mx-4 relative mt-8" v-else>
+        <img src="@/assets/public/image/img_public_25.png" height="159" />
+        <img src="@/assets/public/image/img_public_24.png" class="m-reward-pic-img" />
+        <img src="@/assets/public/image/img_public_5.png" class="m-reward-money-img" />
+        <div class="m-reward-join-text text-700-14 white">
+          <div>{{ t("reward.text_19") }}</div>
+          <div>{{ t("reward.text_20") }}</div>
+          <div>{{ t("reward.text_21") }}</div>
+        </div>
+        <v-btn class="text-none m-reward-join-btn" width="96" height="32" @click="openLoginDialog">
+          {{ t("reward.text_22") }}
+        </v-btn>
+      </div>
 
-      <template v-for="(item, index) in bonus_items" :key="index">
-        <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
-          <v-col cols="3" class="d-flex align-center justify-center py-1">
-            <img :src="item.image" :width="index == 0 ? 34 : 38" />
-          </v-col>
-          <v-col cols="6" class="py-1 d-flex align-center">
-            <div>
-              <p class="text-400-12 white">
-                {{ item.content }}
-              </p>
-              <p class="text-800-14 active" v-if="item.value != ''">
-                R$ {{ Number(item.value).toFixed(2) }}
-              </p>
-            </div>
-          </v-col>
-          <v-col cols="3" class="d-flex align-center py-1">
-            <v-btn :class="item.value == 0 && index != 3 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleBonus(index)" :disabled="item.value == 0 && index != 3?true:false">
-              {{ t("reward.text_7") }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </template>
+      <div class="m-reward-body mx-4 mb-4">
+        <div class="my-2 text-800-16 white">{{ t("reward.text_18") }}</div>
 
-      <div class="my-2 text-800-16 white">{{ t("reward.text_14") }}</div>
+        <template v-for="(item, index) in bonus_items" :key="index">
+          <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
+            <v-col cols="3" class="d-flex align-center justify-center py-1">
+              <img :src="item.image" :width="index == 0 ? 34 : 38" />
+            </v-col>
+            <v-col cols="6" class="py-1 d-flex align-center">
+              <div>
+                <p class="text-400-12 white">
+                  {{ item.content }}
+                </p>
+                <p class="text-800-14 active" v-if="item.value != ''">
+                  R$ {{ Number(item.value).toFixed(2) }}
+                </p>
+              </div>
+            </v-col>
+            <v-col cols="3" class="d-flex align-center py-1">
+              <v-btn :class="item.value == 0 && index != 3 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleBonus(index)" :disabled="item.value == 0 && index != 3?true:false">
+                {{ t("reward.text_7") }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
 
-      <template v-for="(item, index) in items_2" :key="index">
-        <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
-          <v-col cols="3" class="d-flex align-center justify-center py-1">
-            <img :src="item.image" width="38" />
-          </v-col>
-          <v-col cols="6" class="py-1 d-flex align-center">
-            <div>
-              <p class="text-700-12 color-F9BC01">
-                {{ item.content }}
-              </p>
-              <p class="text-700-12 white" v-if="index == 0">
-                {{ rewardList.level_up_num }} <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
-              </p>
-            </div>
-          </v-col>
-          <v-col cols="3" class="d-flex align-center py-1">
-            <v-btn :class="rewardList.level_up_num < 0 && index == 0 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleMyReward(index)" :disabled="rewardList.level_up_num < 0 && index == 0?true:false">
-              {{ t("reward.text_7") }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </template>
+        <div class="my-2 text-800-16 white">{{ t("reward.text_14") }}</div>
+
+        <template v-for="(item, index) in items_2" :key="index">
+          <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
+            <v-col cols="3" class="d-flex align-center justify-center py-1">
+              <img :src="item.image" width="38" />
+            </v-col>
+            <v-col cols="6" class="py-1 d-flex align-center">
+              <div>
+                <p class="text-700-12 color-F9BC01">
+                  {{ item.content }}
+                </p>
+                <p class="text-700-12 white" v-if="index == 0">
+                  {{ rewardList.level_up_num }} <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
+                </p>
+              </div>
+            </v-col>
+            <v-col cols="3" class="d-flex align-center py-1">
+              <v-btn :class="rewardList.level_up_num <= 0 && index == 0 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleMyReward(index)" :disabled="rewardList.level_up_num <= 0 && index == 0?true:false">
+                {{ t("reward.text_7") }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
+      </div>
     </div>
   </v-navigation-drawer>
 </template>
@@ -274,7 +356,23 @@ const claimClicked = async () =>{
   bottom: 0px !important;
   z-index: 10000000000000000 !important;
   background: $agent_card_bg !important;
+  .m-reward-menu{
+    z-index: 1000;
+    position: fixed;
+    width: 100% !important;
+    top: 0px !important;
+    border-style: none !important;
+    height: 30px !important;
 
+  }
+  .m-reward-menu-active-bg{
+    box-shadow: $agent_card_notmet_box_shadow !important;
+    background: $agent_card_notmet_bg !important;
+    width: 100% !important;
+    height: 30px !important;
+    position: fixed;
+    z-index: 100000000 !important;
+  }
   .m-reward-drawer-close-button {
     box-shadow: none !important;
     background-color: transparent !important;
@@ -283,7 +381,11 @@ const claimClicked = async () =>{
     right: 6px;
     z-index: 100000;
   }
-
+  .m-reward-total-body{
+    margin-top: 5px;
+    height: calc(100vh - 5px);
+    overflow-y: scroll;
+  }
   .m-reward-header {
     .m-reward-achievement-bonus {
       border-radius: 8px;

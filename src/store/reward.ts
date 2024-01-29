@@ -44,5 +44,20 @@ export const rewardStore = defineStore({
         }
         await network.sendMsg(route, {}, next, 1, 4);
     },
+
+    async dispatchReceiveAchievementBonus() {
+      this.setSuccess(false);
+      const route: string = NETWORK.Reward.RECIEVE_ACHIV_BONUS;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Reward.GetBonusResponse) => {
+          if (response.code == 200) {
+              this.setSuccess(true);
+          } else {
+              this.setErrorMessage(handleException(response.code));
+          }
+      }
+      await network.sendMsg(route, {}, next, 1);
+    }
   }
 })
