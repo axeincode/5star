@@ -17,8 +17,7 @@ import img_agentemblem_12 from "@/assets/affiliate/achievement/img_agentemblem_1
 import img_agentemblem_13 from "@/assets/affiliate/achievement/img_agentemblem_13.png";
 import img_agentemblem_14 from "@/assets/affiliate/achievement/img_agentemblem_14.png";
 import img_agentemblem_15 from "@/assets/affiliate/achievement/img_agentemblem_15.png";
-import { type GetAchievementItem } from "@/interface/achievement";
-import { type ExplainItem } from "@/interface/achievement";
+import { type AchievementItem, type GetAchievementItem } from "@/interface/achievement";
 import { achievementStore } from "@/store/achievement";
 
 const { t } = useI18n();
@@ -110,57 +109,96 @@ const mobileWidth = computed(() => {
   return width.value;
 });
 
-const achievementAward = async (achievement_item: ExplainItem, achievement_progress: number) => {
+const achievementAward = async (achievement_item: AchievementItem, achievement_progress: number) => {
   console.log(achievement_item);
-  if (achievement_item.num <= achievement_progress && achievement_item.status == 1) {
+  if (achievement_item.num <= achievement_progress && achievement_item.state == 1) {
     await dispatchAchievementAward({ index: achievement_item.index });
   }
 }
 </script>
 
 <template>
-  <v-card class="m-achievement-realization-card mx-4 mt-2" v-for="(item, index) in achievementItem.achievement_explain"
-    :key="index">
+  <v-card
+    class="m-achievement-realization-card mx-4 mt-2"
+    v-for="(item, index) in achievementItem.achievement_explain"
+    :key="index"
+  >
     <v-row class="mx-0">
       <v-col cols="5" class="text-center">
-        <img :src="realizationItem[index].img" width="50" :class="item.num <= achievementItem.achievement_progress && item.status == 1
-          ? ''
-          : 'img-gray opacity-3'
-          " />
-        <p class="text-900-18" :class="item.num <= achievementItem.achievement_progress && item.status == 1
-          ? 'color-F9BC01'
-          : 'color-414968'
-          ">
+        <img
+          :src="realizationItem[index].img"
+          width="50"
+          :class="
+            item.num <= achievementItem.achievement_progress && item.state == 1
+              ? ''
+              : 'img-gray opacity-3'
+          "
+        />
+        <p
+          class="text-900-18"
+          :class="
+            item.num <= achievementItem.achievement_progress && item.state == 1
+              ? 'color-F9BC01'
+              : 'color-414968'
+          "
+        >
           R$ {{ item.award }}
         </p>
       </v-col>
       <v-col cols="7" class="text-center">
-        <p class="text-700-12 mt-4" :class="item.num <= achievementItem.achievement_progress && item.status == 1
-          ? 'white'
-          : 'color-414968'
-          ">
-          {{ t("affiliate.achievement.text_2") }} {{ item.num }}
-        </p>
-        <div class="mt-2" :class="item.num <= achievementItem.achievement_progress && item.status == 1
-          ? 'm-achievement-realization-progress-active-bg'
-          : 'm-achievement-realization-progress-bg'
-          ">
-          <v-progress-linear v-model="item.rate" height="24" class="m-achievement-realization-progress">
-            <div class="text-800-10" :class="item.num <= achievementItem.achievement_progress && item.status == 1
+        <p
+          class="text-700-12 mt-4"
+          :class="
+            item.num <= achievementItem.achievement_progress && item.state == 1
               ? 'white'
               : 'color-414968'
-              ">
-              {{ achievementItem.achievement_progress }}
+          "
+        >
+          {{ t("affiliate.achievement.text_2") }} {{ item.num }}
+        </p>
+        <div
+          class="mt-2"
+          :class="
+            item.num <= achievementItem.achievement_progress && item.state == 1
+              ? 'm-achievement-realization-progress-active-bg'
+              : 'm-achievement-realization-progress-bg'
+          "
+        >
+          <v-progress-linear
+            v-model="item.rate"
+            height="24"
+            class="m-achievement-realization-progress"
+          >
+            <div
+              class="text-800-10"
+              :class="
+                item.num <= achievementItem.achievement_progress && item.state == 1
+                  ? 'white'
+                  : 'color-414968'
+              "
+            >
+              {{
+                Number(achievementItem.achievement_progress) > Number(item.num)
+                  ? item.num
+                  : achievementItem.achievement_progress
+              }}
               /
               {{ item.num }}
             </div>
           </v-progress-linear>
         </div>
-        <v-btn class="text-none mt-3" width="132" height="32" :class="item.num <= achievementItem.achievement_progress && item.status == 1
-          ? 'm-achievement-realization-active-btn'
-          : 'm-achievement-realization-btn'
-          " :disabled="item.num > achievementItem.achievement_progress && item.status != 1"
-          @click="achievementAward(item, achievementItem.achievement_progress)">
+        <v-btn
+          class="text-none mt-3"
+          width="132"
+          height="32"
+          :class="
+            item.num <= achievementItem.achievement_progress && item.state == 1
+              ? 'm-achievement-realization-active-btn'
+              : 'm-achievement-realization-btn'
+          "
+          :disabled="item.num > achievementItem.achievement_progress && item.state != 1"
+          @click="achievementAward(item, achievementItem.achievement_progress)"
+        >
           {{ t("affiliate.achievement.text_3") }}
         </v-btn>
       </v-col>
@@ -215,10 +253,10 @@ const achievementAward = async (achievement_item: ExplainItem, achievement_progr
 .m-achievement-realization-active-btn {
   border-radius: 8px;
   background: $agent_card_bonuses_text_color;
-  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30);
+  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
   .v-btn__content {
-    color: #FFF;
+    color: #fff;
     font-family: Inter;
     font-size: 10px;
     font-style: normal;
@@ -231,7 +269,7 @@ const achievementAward = async (achievement_item: ExplainItem, achievement_progr
 .m-achievement-realization-btn {
   border-radius: 4px;
   background: $agent_color_3 !important;
-  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30) !important;
+  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3) !important;
 
   .v-btn__content {
     color: #414968;

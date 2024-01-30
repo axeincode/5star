@@ -297,7 +297,7 @@ export default Login;
 
 <template>
   <div class="m-login-container">
-  <!-- <div class="m-login-container" :style="{ height: containerHeight + 'px' }"> -->
+    <!-- <div class="m-login-container" :style="{ height: containerHeight + 'px' }"> -->
     <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" />
     <div
       class="m-login-body px-6"
@@ -309,7 +309,12 @@ export default Login;
       }"
     >
       <!-- SIGN UP FORM  -->
-      <v-form v-if="currentPage === PAGE_TYPE.LOGIN_FORM" ref="form" class="full-width" @keyup.enter="handleLoginFormSubmit">
+      <v-form
+        v-if="currentPage === PAGE_TYPE.LOGIN_FORM"
+        ref="form"
+        class="full-width"
+        @keyup.enter="handleLoginFormSubmit"
+      >
         <v-row class="relative mt-8">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"

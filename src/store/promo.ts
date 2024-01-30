@@ -9,7 +9,15 @@ export const promoStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    userActivityList: {} as Promo.PromoGroupData,
+    userActivityList: {
+      group_data: [
+        {
+          group_id: 0,
+          group_name: "",
+          list_data: []
+        }
+      ]
+    } as Promo.PromoGroupData,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -19,29 +27,29 @@ export const promoStore = defineStore({
   actions: {
     // set functions
     setSuccess(success: boolean) {
-        this.success = success
+      this.success = success
     },
     setErrorMessage(message: string) {
-        this.errMessage = message
+      this.errMessage = message
     },
     setUserActivityList(activityList: any) {
-        this.userActivityList = activityList
+      this.userActivityList = activityList
     },
     // user spin api
     async dispatchUserActivityList() {
-        this.setSuccess(false);
-        const route: string = NETWORK.ACTIVITY.USER_ACTIVITY_LIST;
-        const network: Network = Network.getInstance();
-        // response call back function
-        const next = (response: any) => {
-            if (response.code == 200) {
-                this.setSuccess(true);
-                this.setUserActivityList(response.data);
-            } else {
-                this.setErrorMessage(handleException(response.code));
-            }
+      this.setSuccess(false);
+      const route: string = NETWORK.ACTIVITY.USER_ACTIVITY_LIST;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: any) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setUserActivityList(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
         }
-        await network.sendMsg(route, {}, next, 1, 4);
+      }
+      await network.sendMsg(route, {}, next, 1, 4);
     },
   }
 })

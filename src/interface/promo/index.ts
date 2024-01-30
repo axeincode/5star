@@ -7,11 +7,13 @@ export interface PromoData {
 export interface PromoListData {
     id: number
     name: string
-    image: string
-    type: number
-    jump: string
+    image_path: string
+    text: string
+    desc: string
+    countdown: boolean
     content: string
-    is_show: boolean
+    click_feedback: number
+    button_path: string
 }
 
 export interface PromoGroupData {

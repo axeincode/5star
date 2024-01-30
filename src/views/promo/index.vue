@@ -6,6 +6,7 @@ import icon_public_42 from "@/assets/public/svg/icon_public_42.svg";
 import icon_public_93 from "@/assets/public/svg/icon_public_93.svg";
 import { useRouter } from "vue-router";
 import { promoStore } from "@/store/promo";
+import { storeToRefs } from "pinia";
 
 const { t } = useI18n();
 const activeIndex = ref<number>(0);
@@ -14,6 +15,11 @@ const vipSvgIconColor = ref<string>("#7782AA");
 const promotionSvgIconColor = ref<string>("#7782AA");
 
 const { dispatchUserActivityList } = promoStore();
+
+const promoList = computed(() => {
+  const { getUserActivityList } = storeToRefs(promoStore());
+  return getUserActivityList.value;
+});
 
 const handleBtnTab = (index: number) => {
   activeIndex.value = index;
@@ -156,20 +162,31 @@ onMounted(async () => {
       <v-card
         class="m-promo-navigation-card mx-2 relative"
         style="margin-top: 96px !important"
+        v-for="(item, index) in promoList.group_data[0].list_data"
       >
-        <!-- <v-card class="m-promo-card-1 relative">
-          <div class="mt-2 ml-3 m-promo-card-text-1">10%</div>
-          <div class="ml-3 text-900-16 yellow" style="text-transform: uppercase">
-            {{ t("promo.text_4") }}
-          </div>
+        <img :src="item.image_path" class="m-promo-card-img" />
+        <div class="d-flex mx-2 mt-1 mb-4">
           <div
-            class="text-700-10 white text-center mt-1"
-            style="letter-spacing: 13px; text-transform: uppercase"
+            class="text-800-12 gray d-flex align-center"
+            @click="$router.push({ name: 'Promo_Detail', query: { id: item.id } })"
           >
-            {{ t("promo.text_5") }}
+            {{ t("promo.text_6") }}
+            <v-icon size="large">mdi-chevron-right</v-icon>
           </div>
-        </v-card>
-        <img src="@/assets/promo/image/img_ep_1.png" class="m-promo-card-img-1" /> -->
+          <v-btn
+            class="text-none m-promo-deposit-btn"
+            width="122"
+            height="32"
+            v-if="item.button_path != ''"
+          >
+            {{ t("promo.text_7") }}
+          </v-btn>
+        </div>
+      </v-card>
+      <!-- <v-card
+        class="m-promo-navigation-card mx-2 relative"
+        style="margin-top: 96px !important"
+      >
         <img src="@/assets/promo/image/img_hp_4.png" class="m-promo-card-img" />
         <div class="d-flex mx-2 mt-1 mb-4">
           <div
@@ -185,17 +202,6 @@ onMounted(async () => {
         </div>
       </v-card>
       <v-card class="m-promo-navigation-card mx-2 relative mt-4">
-        <!-- <v-card class="m-promo-card-2 relative">
-          <div class="mt-3 ml-3 text-900-16 white">
-            150%
-            <span class="text-900-12 white">{{ t("promo.text_8") }}</span>
-          </div>
-          <div class="ml-3 text-900-14 white">
-            {{ t("promo.text_9") }}
-          </div>
-          <div class="ml-3 m-promo-card-text-2 mt-1">R$1500</div>
-        </v-card>
-        <img src="@/assets/promo/image/img_ep_4.png" class="m-promo-card-img-1" /> -->
         <img src="@/assets/promo/image/img_hp_5.png" class="m-promo-card-img" />
         <div class="d-flex mx-2 mt-1 mb-4">
           <div
@@ -211,17 +217,6 @@ onMounted(async () => {
         </div>
       </v-card>
       <v-card class="m-promo-navigation-card mx-2 relative mt-4">
-        <!-- <v-card class="m-promo-card-3 relative">
-          <div class="mt-2 ml-3 text-900-14 white">
-            {{ t("promo.text_10") }}
-            <span class="text-900-20 white">{{ t("promo.text_11") }}</span>
-          </div>
-          <div class="ml-3 text-900-14 white" style="text-transform: uppercase">
-            {{ t("promo.text_12") }}
-          </div>
-          <div class="ml-3 m-promo-card-text-3 mt-1">{{ t("promo.text_13") }}</div>
-        </v-card>
-        <img src="@/assets/promo/image/img_ep_2.png" class="m-promo-card-img-1" /> -->
         <img src="@/assets/promo/image/img_hp_6.png" class="m-promo-card-img" />
         <div
           class="d-flex mx-2 mt-1 mb-4"
@@ -235,7 +230,7 @@ onMounted(async () => {
             {{ t("promo.text_7") }}
           </v-btn>
         </div>
-      </v-card>
+      </v-card> -->
     </v-main>
   </v-layout>
 </template>

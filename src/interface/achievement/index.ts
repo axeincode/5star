@@ -1,8 +1,16 @@
 export interface GetAchievementItem {
     achievement_progress: number
-    achievement_explain: Array<ExplainItem>
+    achievement_explain: Array<AchievementItem>
     award_progress: number
     award_explain: Array<ExplainItem>
+    rate: number
+}
+
+export interface AchievementItem {
+    index: number
+    num: number
+    award: number
+    state: number
     rate: number
 }
 
