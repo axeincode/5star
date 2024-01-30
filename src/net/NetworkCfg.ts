@@ -113,4 +113,8 @@ export namespace NETWORK {
     static REWARD_LIST = '/user/reward/center/list'; // reward list
     static RECIEVE_ACHIV_BONUS = '/user/reward/center/invite/receive'; // Acheivement Bonus
   }
+
+  export class Banner{
+    static BANNER_LIST = '/user/banner/list'; // banner list
+  }
 }

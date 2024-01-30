@@ -1,9 +1,11 @@
 <script lang="ts">
-import { defineComponent, ref, toRefs, reactive, computed, watch } from "vue";
+import { defineComponent, ref, toRefs, reactive, computed, watch, onMounted, defineEmits } from "vue";
 import { storeToRefs } from "pinia";
 import { refferalStore } from "@/store/refferal";
 import { useDisplay } from "vuetify";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { bannerStore } from "@/store/banner";
+import { authStore } from "@/store/auth";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -20,7 +22,7 @@ const BannerComponent = defineComponent({
     Pagination,
     Navigation,
   },
-  setup() {
+  setup(components, {emit}) {
     /**
      * 提取width属性
      * Extract width attribute
@@ -31,6 +33,7 @@ const BannerComponent = defineComponent({
      * Initialize swiper
      */
     const swiper = ref<any>(null);
+    const { dispatchBannerList } = bannerStore();
     const state = reactive({
       /**
        * 初始化banner的值
@@ -83,6 +86,39 @@ const BannerComponent = defineComponent({
       return getRefferalAppBarShow.value;
     });
 
+        // get Token
+    const token = computed(() => {
+      const { getToken } = storeToRefs(authStore());
+      return getToken.value;
+    });
+
+    onMounted(async ()=>{
+      if(token.value != undefined){
+        await dispatchBannerList();
+        const { getBannerList } = storeToRefs(bannerStore());
+        state.slides.length = 0;
+        getBannerList.value.forEach(element => {
+          state.slides.push(new URL(element.image_path, import.meta.url).href);
+        });
+      }
+    })
+    const slideImageClick = (index:number) => {
+      const { getBannerList } = storeToRefs(bannerStore());
+      let type : number = getBannerList.value[index].click_feedback;
+      if(type == 5){
+        window.location.href = getBannerList.value[index].content;
+      }
+      if(type == 6){
+        window.location.href = getBannerList.value[index].content;
+      }
+      if(type == 7){
+        emit('handleBannerCategory', getBannerList.value[index].content);
+      }
+      if(type == 8){
+        window.location.href = "game/" + getBannerList.value[index].content;
+      }
+
+    }
     return {
       ...toRefs(state),
       mobileWidth,
@@ -91,6 +127,7 @@ const BannerComponent = defineComponent({
       getSwiperRef,
       goToPrev,
       goToNext,
+      slideImageClick,
       refferalAppBarShow,
     };
   },
@@ -163,6 +200,7 @@ export default BannerComponent;
           :src="slide"
           class="m-slider-img-width"
           :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
+          @click="slideImageClick(index)"
         />
       </swiper-slide>
     </swiper>

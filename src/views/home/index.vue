@@ -39,6 +39,7 @@ import { ProgressiveImage } from "vue-progressive-image";
 import { useNamespace } from "element-plus";
 import { duration } from "moment-timezone";
 import { homeStore } from "@/store/home";
+import { toUpper } from "lodash-es";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -757,7 +758,10 @@ const Dashboard = defineComponent({
     //   }
     //   return []
     // }
-
+    
+    const handleBannerCategory = (category:string) =>{
+      handleGameFilterBtn(category.toUpperCase());
+    }
     onMounted(async () => {
       loading.value = true;
       window.scrollTo({
@@ -1017,6 +1021,7 @@ const Dashboard = defineComponent({
       betHistoryLoad,
       customTransition,
       gameHistoryComponent,
+      handleBannerCategory,
       // comUserActivityList
     };
   },
@@ -1058,7 +1063,7 @@ export default Dashboard;
 
     <div :class="searchDialogShow ? 'home-bg-blur' : ''">
       <!-- 这里是banner -->
-      <component :is="bannerComponent"></component>
+      <component :is="bannerComponent"  @handleBannerCategory="handleBannerCategory"></component>
 
       <!-- Live Win Component -->
       <component :is="liveWinComponent"></component>
