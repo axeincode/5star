@@ -23,6 +23,7 @@ import icon_public_37 from "@/assets/public/svg/icon_public_37.svg";
 import icon_public_95 from "@/assets/public/svg/icon_public_95.svg";
 import icon_public_38 from "@/assets/public/svg/icon_public_38.svg";
 import icon_public_39 from "@/assets/public/svg/icon_public_39.svg";
+import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
 import img_public_42 from "@/assets/public/image/img_public_42.png";
 import { mailStore } from "@/store/mail";
 import { refferalStore } from "@/store/refferal";
@@ -35,6 +36,7 @@ import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
 import Search from "@/views/home/components/Search.vue";
 import MSearch from "@/views/home/components/mobile/Search.vue";
+import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { useNamespace } from "element-plus";
 import { duration } from "moment-timezone";
@@ -60,6 +62,7 @@ const Dashboard = defineComponent({
     GameProviders,
     Search,
     MSearch,
+    MGameConfirm,
     ProgressiveImage,
   },
   setup() {
@@ -171,10 +174,17 @@ const Dashboard = defineComponent({
 
     const selectedGameFilterBtn = ref<any>(t("home.button.all_game"));
     const searchDialogShow = ref<boolean>(false);
+    const gameConfirmDialogShow = ref<boolean>(false);
     const filterTabText = ref<string>("lobby");
     const gameGroupBtnList = ref<Array<any>>([]);
     const selectedCategoryName = ref<any>("");
     const loading = ref<boolean>(false);
+    const selectedGameItem = ref<Game.GameItem>({
+      id: 0,
+      name: "",
+      image: "",
+      provider: "",
+    })
 
     const whiteColor = ref<string>("#ffffff");
 
@@ -645,14 +655,20 @@ const Dashboard = defineComponent({
 
     const handleSearchInputFocus = () => {
       searchDialogShow.value = true;
-      setMailMenuShow(true);
     };
 
-    watch(searchDialogShow, (value: any) => {
-      // if (value) {
+    const showGameConfirmationDialog = (game_item: Game.GameItem) => {
+      gameConfirmDialogShow.value = true;
+      selectedGameItem.value = game_item;
+    }
+
+    watch(searchDialogShow, (value: boolean) => {
       setMailMenuShow(value);
-      // }
     });
+
+    watch(gameConfirmDialogShow, (value: boolean) => {
+      setMailMenuShow(value);
+    })
 
     watch(gameFilterText, async (value: any) => {
       selectedGameFilterBtn.value = value;
@@ -759,7 +775,7 @@ const Dashboard = defineComponent({
     //   return []
     // }
 
-    const handleBannerCategory = (category:string) =>{
+    const handleBannerCategory = (category: string) => {
       handleGameFilterBtn(category.toUpperCase());
     }
     onMounted(async () => {
@@ -812,8 +828,11 @@ const Dashboard = defineComponent({
       if (token.value != undefined) {
         await dispatchSocketConnect();
       }
+
       await dispatchGameCategories("?type=paging");
+
       gameGroupBtnList.value = gameCategories.value;
+
       gameGroupBtnList.value.map((item: { slug: any; tranfromFunctionName: string; }) => {
         switch (item.slug) {
           case "favorite":
@@ -839,7 +858,9 @@ const Dashboard = defineComponent({
             break;
         }
       });
+
       pagingGames.value = gameCategories.value;
+
       await Promise.all(
         pagingGames.value.map(async (item: { slug: string; page_no: number; games: any; game_count: any; }) => {
           if (item.slug == "favorite" || item.slug == "history") {
@@ -986,6 +1007,7 @@ const Dashboard = defineComponent({
       icon_public_95,
       icon_public_38,
       icon_public_39,
+      icon_public_10,
       img_public_42,
       gameCategories,
       handleEnterGame,
@@ -1000,6 +1022,7 @@ const Dashboard = defineComponent({
       gameTransform7,
       handleMoreGame,
       handleSearchInputFocus,
+      showGameConfirmationDialog,
       searchDialogShow,
       selectedCategoryName,
       favoriteIconTransform,
@@ -1023,6 +1046,8 @@ const Dashboard = defineComponent({
       customTransition,
       gameHistoryComponent,
       handleBannerCategory,
+      gameConfirmDialogShow,
+      selectedGameItem,
       // comUserActivityList
     };
   },
@@ -1055,6 +1080,7 @@ export default Dashboard;
     <!-- <div style="width: 100%; height: 200px;">
       <div v-html="comUserActivityList()[0]?.list_data[0]?.content"></div>
     </div> -->
+
     <!-- game search -->
     <v-navigation-drawer
       v-model="searchDialogShow"
@@ -1077,7 +1103,35 @@ export default Dashboard;
       />
     </v-navigation-drawer>
 
-    <div :class="searchDialogShow ? 'home-bg-blur' : ''">
+    <!-- game confirmation dialog -->
+
+    <v-navigation-drawer
+      v-model="gameConfirmDialogShow"
+      location="bottom"
+      class="m-game-confirm-bar"
+      temporary
+      :touchless="true"
+      :style="{
+        height: 'unset',
+        bottom: '0px',
+        zIndex: 300000,
+        background: 'unset !important',
+      }"
+      v-if="mobileWidth < 600"
+    >
+      <v-btn
+        class="m-game-confirm-drawer-close-button"
+        icon="true"
+        width="24"
+        height="24"
+        @click="gameConfirmDialogShow = false"
+      >
+        <inline-svg :src="icon_public_10" width="20" height="20"></inline-svg>
+      </v-btn>
+      <MGameConfirm :selectedGameItem="selectedGameItem" />
+    </v-navigation-drawer>
+
+    <div :class="searchDialogShow || gameConfirmDialogShow ? 'home-bg-blur' : ''">
       <!-- 这里是banner -->
       <component
         :is="bannerComponent"
@@ -1353,23 +1407,13 @@ export default Dashboard;
                   class="original-game-img-width pc-game-img-width"
                   v-if="gameIndex < 7 * item.page_no"
                 >
-                  <!-- style="
-                    flex: 0 0 14.2857%;
-                    max-width: 14.2857%;
-                    padding: 0px 8px 8px 0px;
-                  " -->
                   <ProgressiveImage
                     :src="gameItem.image"
                     lazy-placeholder
                     blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
                     style="max-width: unset"
-                  />
-                  <!-- <v-img
-                    :src="gameItem.image"
-                    class="original-game-img-width"
                     @click="handleEnterGame(gameItem.id, gameItem.name)"
-                  /> -->
+                  />
                 </div>
               </template>
             </template>
@@ -1389,7 +1433,7 @@ export default Dashboard;
                     :src="gameItem.image"
                     lazy-placeholder
                     blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
+                    @click="showGameConfirmationDialog(gameItem)"
                   />
                   <div class="m-home-favorite-icon" @click="addFavoriteGame(gameItem.id)">
                     <inline-svg
@@ -1467,7 +1511,12 @@ export default Dashboard;
         :key="otherIndex"
         v-else
       >
-        <template v-if="otherGameItem.slug == selectedCategoryName && paginGameShow">
+        <template
+          v-if="
+            otherGameItem.slug.toLocaleLowerCase() ==
+              selectedCategoryName.toLocaleLowerCase() && paginGameShow
+          "
+        >
           <v-row
             class="ml-4 mr-2 mt-2 pt-8"
             v-if="mobileWidth > 600"
@@ -1720,6 +1769,7 @@ export default Dashboard;
 .v-progressive-image-main {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .home-game-record-name-text {
@@ -1834,6 +1884,7 @@ export default Dashboard;
   .v-progressive-image {
     border-radius: 8px 46px;
     background: #211f31;
+    aspect-ratio: 0.74152;
   }
 
   .v-progressive-image-loading {
@@ -2266,6 +2317,10 @@ export default Dashboard;
 }
 
 .m-search-bar {
+  box-shadow: none !important;
+}
+
+.m-game-confirm-bar {
   box-shadow: none !important;
 }
 </style>

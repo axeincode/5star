@@ -1819,50 +1819,9 @@ export type langType = {
     text_35: string
     text_36: string
     text_37: string
-    text_38: string
-    text_39: string
-    text_40: string
-    text_41: string
-    text_42: string
-    text_43: string
-    text_44: string
-    text_45: string
-    text_46: string
-    text_47: string
-    text_48: string
-    text_49: string
-    text_50: string
-    text_51: string
-    text_52: string
-    text_53: string
-    text_54: string
-    text_55: string
-    text_56: string
-    text_57: string
-    text_58: string
-    text_59: string
-    text_60: string
-    text_61: string
-    text_62: string
-    text_63: string
-    text_64: string
-    text_65: string
-    text_66: string
-    text_67: string
-    text_68: string
-    text_69: string
-    text_70: string
-    text_71: string
-    text_72: string
-    text_73: string
-    text_74: string
-    text_75: string
-    text_76: string
-    text_77: string
-    text_78: string
-    text_79: string
-    text_80: string
-    text_81: string
-    text_82: string
+  },
+  game_confirm: {
+    text_1: string
+    text_2: string
   }
 };

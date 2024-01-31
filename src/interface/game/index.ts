@@ -14,6 +14,13 @@ export interface Search {
     provider: string
 }
 
+export interface GameItem {
+    id: number
+    name: string
+    image: string
+    provider: string
+}
+
 export interface GameEnterBody {
     id: any
 }

@@ -238,6 +238,7 @@ onMounted(() => {
   }
 
   .v-progressive-image {
+    aspect-ratio: 0.74152;
     background: transparent !important;
   }
 

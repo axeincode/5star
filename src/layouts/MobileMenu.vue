@@ -63,10 +63,10 @@ const mailListHeight = ref<number>(0);
 const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
 const shareIconIndex = ref<number>(0);
 
-const rotation = ref<number>(30);
+const rotation = ref<number>(270);
 
 const selectedImg = ref<any>(img_public_17);
-const selectedIcon = ref<any>(icon_public_100);
+const selectedIcon = ref<any>(icon_public_97);
 const selectedIconColor = ref<string>("#ffffff");
 
 const casino_1 = ref<HTMLElement | undefined>(undefined);

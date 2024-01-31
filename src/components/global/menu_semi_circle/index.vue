@@ -16,9 +16,9 @@ import icon_public_55 from "@/assets/public/svg/icon_public_55.svg";
 import { homeStore } from "@/store/home";
 
 const casinoIconColor = ref<string>("#7782AA");
-const rewardIconColor = ref<string>("#ffffff");
+const rewardIconColor = ref<string>("#7782AA");
 const sportIconColor = ref<string>("#7782AA");
-const promoIconColor = ref<string>("#7782AA");
+const promoIconColor = ref<string>("#ffffff");
 const searchIconColor = ref<string>("#7782AA");
 const mailIconColor = ref<string>("#7782AA");
 const scale = ref<number>(1);

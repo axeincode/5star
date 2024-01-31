@@ -6,7 +6,7 @@ export const menuStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    selectedItem: 'Search' as string,
+    selectedItem: 'Promo' as string,
     semiCircleShow: false as boolean,
     rewardNavShow: false as boolean,
   }),
