@@ -9,49 +9,65 @@ import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import telegram_1 from "@/assets/vip/image/telegram_1.png";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useRouter } from "vue-router";
+import { bonusTransactionStore } from "@/store/bonusTransaction";
+import { refferalStore } from "@/store/refferal";
+import { appBarStore } from "@/store/appBar";
 const { t } = useI18n();
 const { dispatchVipLevelAward } = vipStore();
 const { dispatchVipInfo } = vipStore();
+const { setVipNavBarToggle } = vipStore();
+const { setBonusTabIndex } = bonusTransactionStore();
+const { setDepositWithdrawToggle } = appBarStore();
+const { setNavBarToggle } = appBarStore();
+const { setUserNavBarToggle } = appBarStore();
+const { setDepositDialogToggle } = appBarStore();
+const { setCashDialogToggle } = appBarStore();
+const { setRefferalDialogShow } = refferalStore();
+const vipButtonTipShow = ref(true);
+const router = useRouter();
 const vipInfo = computed(() => {
     const { getVipInfo } = storeToRefs(vipStore());
     return getVipInfo.value
 })
 const depositRate = computed(() => {
-    return (vipInfo.deposit_exp / vipInfo.rank_deposit_exp * 100) || 0
+    return vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100
 })
 const betRate = computed(() => {
-    return (vipInfo.bet_exp / vipInfo.rank_bet_exp * 100) || 0
+    return vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100
 })
+
+const vipLevels = computed(() => {
+  const { getVipLevels } = storeToRefs(vipStore());
+  return getVipLevels.value;
+});
+
 const vipLevelText = (value: number) => {
-    if (value === 0) {
-        return t('vip.vip_level_content.text_1')
-    } else if (value > 0 && value < 25) {
-        return t('vip.vip_level_content.text_2')
-    } else if (value > 24 && value < 50) {
-        return t('vip.vip_level_content.text_3')
-    } else if (value > 49 && value < 75) {
-        return t('vip.vip_level_content.text_4')
-    } else if (value > 74 && value < 100) {
-        return t('vip.vip_level_content.text_5')
-    } else if (value > 99 && value < 150) {
-        return t('vip.vip_level_content.text_6')
-    } else if (value > 149 && value < 200) {
-        return t('vip.vip_level_content.text_7')
-    } else {
-        return t('vip.vip_level_content.text_8')
+    for (let i in vipLevels.value) {
+        if (vipLevels.value[i].level === value) {
+            return vipLevels.value[i].rank_name;
+        }
     }
 }
 
 const awardValue = () => {
-    if (vipInfo.week_gift > 0) {
-        return vipInfo.week_gift;
-    } else if (vipInfo.month_gift > 0) {
-        return vipInfo.month_gift;
-    } else if (vipInfo.uprank_gift > 0) {
-        return vipInfo.uprank_gift;
-    } else {
-        return 0;
+    let val = 0;
+    if (vipInfo.value.week_gift > 0) {
+        val = val + vipInfo.value.week_gift;
     }
+    if (vipInfo.value.month_gift > 0) {
+        val = val + vipInfo.value.month_gift;
+    }
+    if (vipInfo.value.uprank_gift > 0) {
+        val = val + vipInfo.value.uprank_gift;
+    }
+    if (vipInfo.value.now_cash_back > 0) {
+        val = val + vipInfo.value.now_cash_back;
+    }
+    if (vipInfo.value.membership_day_gift > 0) {
+        val = val + vipInfo.value.membership_day_gift;
+    }
+    return val;
 }
 
 const alertMessage = (message:string, type: number) => {
@@ -76,7 +92,7 @@ const errVIPMessage = computed((): string => {
 })
 
 const submitVipLevelAward = async () => {
-    if (vipInfo.week_gift > 0) {
+    if (vipInfo.value.week_gift > 0) {
         await dispatchVipLevelAward({
             type: 1
         }).then(() => {
@@ -86,7 +102,7 @@ const submitVipLevelAward = async () => {
             alertMessage(errVIPMessage.value, 0);
         });
     }
-    if (vipInfo.month_gift > 0) {
+    if (vipInfo.value.month_gift > 0) {
         await dispatchVipLevelAward({
             type: 2
         }).then(() => {
@@ -96,7 +112,7 @@ const submitVipLevelAward = async () => {
             alertMessage(errVIPMessage.value, 0);
         });
     }
-    if (vipInfo.uprank_gift > 0) {
+    if (vipInfo.value.uprank_gift > 0) {
         await dispatchVipLevelAward({
             type: 3
         }).then(() => {
@@ -106,6 +122,55 @@ const submitVipLevelAward = async () => {
             alertMessage(errVIPMessage.value, 0);
         });
     }
+    if (vipInfo.value.now_cash_back > 0) {
+        await dispatchVipLevelAward({
+            type: 4
+        }).then(() => {
+            alertMessage(t('reward.success_text'), 1);
+            dispatchVipInfo();
+        }).catch(()=>{
+            alertMessage(errVIPMessage.value, 0);
+        });
+    }
+    if (vipInfo.value.membership_day_gift > 0) {
+        await dispatchVipLevelAward({
+            type: 5
+        }).then(() => {
+            alertMessage(t('reward.success_text'), 1);
+            dispatchVipInfo();
+        }).catch(()=>{
+            alertMessage(errVIPMessage.value, 0);
+        });
+    }
+}
+
+const goPath = () => {
+    setVipNavBarToggle('0');
+    router.push({name: "Bonuses And Transactions", query: { tab: "VIP" }});
+    setBonusTabIndex(1);
+}
+
+const goTelegram = () => {
+    window.location.href = `https://t.me/${vipInfo.value.telegram}`
+}
+
+const getVipButtonShow = (show: boolean) => {
+    vipButtonTipShow.value = show;
+}
+
+const depositDialogShow = () => {
+    vipButtonTipShow.value = true;
+    setVipNavBarToggle('0');
+    setDepositWithdrawToggle(true);
+    setNavBarToggle(false);
+    setUserNavBarToggle(false);
+    setDepositDialogToggle(true);
+    setCashDialogToggle(true);
+}
+
+const refferalDialog = () => {
+    vipButtonTipShow.value = true;
+    setRefferalDialogShow(true);
 }
 
 
@@ -168,22 +233,34 @@ const submitVipLevelAward = async () => {
                 </div>
             </div>
         </div>
-        <div class="progress-main-reward">
+        <div class="progress-main-reward" v-if="vipButtonTipShow">
             <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
             <div class="progress-main-reward-bg">
                 <div class="progress-main-reward-bg-t">
                     <span>Rewards available</span>
                     <span v-if="awardValue() > 0" @click="submitVipLevelAward">CLAIM</span>
-                    <span class="available-button" v-else>CLAIM</span>
+                    <span class="available-button" v-else @click="getVipButtonShow(false)">CLAIM</span>
                 </div>
                 <div class="progress-main-reward-bg-b">
                     R$ {{ awardValue() }}
                 </div>
             </div>
             
-            <div class="progress-main-reward-svg">
+            <div class="progress-main-reward-svg"></div>
+
+            <div class="progress-main-reward-view">
                 <img src="@/assets/public/svg/icon_public_83.svg" />
-                <span>View Records</span>
+                <span @click="goPath">View Records</span>
+            </div>
+        </div>
+        <div class="progress-main-tip" v-else>
+            <div class="progress-main-tip-title">No Claims</div>
+            <div class="progress-main-tip-content">
+                You must have made a deposit or referred a friend in the last 30 days to receive the bonus
+            </div>
+            <div class="progress-main-tip-button">
+                <span @click="refferalDialog">REFER</span>
+                <span @click="depositDialogShow">DEPOSIT</span>
             </div>
         </div>
         <div class="progress-main-group">
@@ -197,7 +274,7 @@ const submitVipLevelAward = async () => {
                 </div>
             </div>
             <div class="progress-main-group-b">
-                <span>Join in now</span>
+                <span @click="goTelegram">Join in now</span>
             </div>
         </div>
         <div class="progress-main-faq">
@@ -208,8 +285,8 @@ const submitVipLevelAward = async () => {
                 </el-collapse-item>
             </el-collapse>
             <el-collapse class="progress-main-faq-collapse">
-                <el-collapse-item title='What is an " Evolution Bonus"?' name="1">
-                    <div>What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?</div>
+                <el-collapse-item title='What is an " Weekly Bounes"?' name="1">
+                    <div>What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?</div>
                 </el-collapse-item>
             </el-collapse>
         </div>
@@ -340,7 +417,7 @@ const submitVipLevelAward = async () => {
     }
     &-reward {
         position: relative;
-        height: 96px;
+        height: 104px;
         z-index: auto;
         margin: 6px -8px 0 -8px;
         &-bg {
@@ -397,7 +474,7 @@ const submitVipLevelAward = async () => {
             width: 170px;
             height: 44px;
             right: 14px;
-            bottom: -8px;
+            bottom: 0px;
             background-image: url("@/assets/vip/image/Rectangle_2428.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -413,6 +490,86 @@ const submitVipLevelAward = async () => {
                 font-weight: 400;
                 color: #fff;
                 margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+        &-view {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: absolute;
+            width: 170px;
+            height: 44px;
+            right: 14px;
+            bottom: 0px;
+            z-index: 10;
+            padding-top: 14px;
+            img {
+                width: 12px;
+                height: 12px;
+                margin-right: 10px;
+            }
+            span {
+                font-size: 10px;
+                font-weight: 400;
+                color: #fff;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+    &-tip {
+        margin-top: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 104px;
+        border-radius: 8px;
+        background: #1D2027;
+        &-title {
+            display: flex;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+        &-content {
+            width: 86%;
+            margin: 4px auto;
+            font-size: 10px;
+            font-weight: 400;
+            color: #7782AA;
+        }
+        &-button {
+            display: flex;
+            justify-content: center;
+            span:nth-child(1) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 112px;
+                height: 32px;
+                border-radius: 8px;
+                background: #009B3A;
+                box-shadow: 0px 4px 6px 1px #0000004D;
+                font-size: 12px;
+                font-weight: 700;
+                color: #fff;
+                cursor: pointer;
+            }
+            span:nth-child(2) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 112px;
+                height: 32px;
+                border-radius: 8px;
+                background: #009B3A;
+                box-shadow: 0px 4px 6px 1px #0000004D;
+                font-size: 12px;
+                font-weight: 700;
+                color: #fff;
+                margin-left: 16px;
                 cursor: pointer;
             }
         }

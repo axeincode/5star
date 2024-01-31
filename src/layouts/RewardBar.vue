@@ -354,7 +354,7 @@ onMounted(async () => {
 .m-reward-navigation-drawer {
   height: 100vh !important;
   bottom: 0px !important;
-  z-index: 10000000000000000 !important;
+  z-index: 2147483645 !important;
   background: $agent_card_bg !important;
   .m-reward-menu{
     z-index: 1000;

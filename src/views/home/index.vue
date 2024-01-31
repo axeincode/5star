@@ -768,6 +768,7 @@ const Dashboard = defineComponent({
         top: 0,
         behavior: "smooth",
       });
+      await dispatchGameCategories(`?type=sports`);
       await dispatchGameCategories(`?type=${filterTabText.value}`);
       // await dispatchUserActivityList({})
       await bannerLoad();

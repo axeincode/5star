@@ -246,7 +246,7 @@ const offIconTransform = (el: any) => {
 
 const handleLanguageDropdown = (item: any) => {
   language.value = item.value;
-  switch (item) {
+  switch (item.id) {
     case 'en':
       setLang("en");
       setLanguage('en');

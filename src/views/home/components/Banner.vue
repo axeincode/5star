@@ -39,16 +39,27 @@ const BannerComponent = defineComponent({
        * 初始化banner的值
        * Initialize the value of banner
        */
-      slides: [
-        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-      ],
     });
+    const slides = computed (()=>{
+      let res:Array<any> = [
+        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
+        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
+      ];
+      if(token.value!= undefined)
+      {
+        const { getBannerList } = storeToRefs(bannerStore());
+        res.length = 0;
+        getBannerList.value.forEach(element => {
+          res.push(new URL(element.image_path, import.meta.url).href);
+        });
+      }
+      return res;
+    })
     /**
      * 获取swiper的属性
      * Get the properties of swiper
@@ -86,7 +97,7 @@ const BannerComponent = defineComponent({
       return getRefferalAppBarShow.value;
     });
 
-        // get Token
+    // get Token
     const token = computed(() => {
       const { getToken } = storeToRefs(authStore());
       return getToken.value;
@@ -95,11 +106,6 @@ const BannerComponent = defineComponent({
     onMounted(async ()=>{
       if(token.value != undefined){
         await dispatchBannerList();
-        const { getBannerList } = storeToRefs(bannerStore());
-        state.slides.length = 0;
-        getBannerList.value.forEach(element => {
-          state.slides.push(new URL(element.image_path, import.meta.url).href);
-        });
       }
     })
     const slideImageClick = (index:number) => {
@@ -129,6 +135,7 @@ const BannerComponent = defineComponent({
       goToNext,
       slideImageClick,
       refferalAppBarShow,
+      slides,
     };
   },
 });

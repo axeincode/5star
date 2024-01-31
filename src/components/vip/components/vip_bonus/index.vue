@@ -6,14 +6,10 @@ import { vipStore } from "@/store/vip";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
-import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
-import icon_public_87 from "@/assets/public/svg/icon_public_87.svg";
 
 const { t } = useI18n();
 const { dispatchVipLevelAward } = vipStore();
 const { dispatchVipInfo } = vipStore();
-const vipOverlay = ref(true);
-const vipCheckboxVal = ref(false);
 const vipInfo = computed(() => {
     const { getVipInfo } = storeToRefs(vipStore());
     return getVipInfo.value
@@ -50,22 +46,6 @@ const submitVipLevelAward = async (awardType: number) => {
     alertMessage(errVIPMessage.value, 0);
   });
 }
-
-watch(vipCheckboxVal, (value: boolean) => {
-    if (value) {
-        localStorage.setItem("vipCheckbox", '1');
-    } else {
-        localStorage.setItem("vipCheckbox", '0');
-    }
-})
-
-onMounted(() => {
-    if (localStorage.getItem('vipCheckbox') === '1') {
-        vipOverlay.value = true;
-    } else {
-        vipOverlay.value = false;
-    }
-})
 </script>
 <template>
     <div class="bonus-main">
@@ -75,7 +55,7 @@ onMounted(() => {
                 <span>R$ 0</span>
             </div>
             <div class="bonus-main-cashback-r">
-                <span v-if="vipInfo.membership > 0">CLAIM</span>
+                <span v-if="vipInfo.now_cash_back > 0">CLAIM</span>
                 <span class="available-button" v-else>CLAIM</span>
             </div>
         </div>
@@ -85,7 +65,7 @@ onMounted(() => {
                 <span>R$ 0</span>
             </div>
             <div class="bonus-main-membership-r">
-                <span v-if="vipInfo.membership > 0">CLAIM</span>
+                <span v-if="vipInfo.membership_day_gift > 0">CLAIM</span>
                 <span class="available-button" v-else>CLAIM</span>
             </div>
             <div class="bonus-main-membership-tip">
@@ -141,182 +121,10 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    <v-overlay
-        v-model="vipOverlay"
-        contained
-        class="align-center justify-center"
-    >
-        <div class="vip-overlay">
-            <div class="vip-overlay-header">
-                <span>Level Up!</span>
-                <v-btn class="vip-overlay-header-close" icon="true" width="20" height="20" @click="setVipNavBarToggle('0')">
-                    <img :src="icon_public_10" width="18" />
-                </v-btn>
-            </div>
-            <div class="vip-overlay-level">
-                <span>Level 0 - Level 13</span>
-            </div>
-            <div class="vip-overlay-tip">
-                <span>Congratulations on leveling up!</span>
-            </div>
-            <div class="vip-overlay-content">
-                <div class="vip-overlay-content-title">Congrats on the award!</div>
-                <div class="vip-overlay-content-icon">
-                    <img :src="icon_public_87" width="20" />
-                    <span>MXN</span>
-                </div>
-                <div class="vip-overlay-content-price">
-                    <span>20.00</span>
-                </div>
-            </div>
-            <div class="vip-overlay-button">
-                <v-btn
-                    color="success"
-                    @click="overlay = false"
-                >
-                    Go To Rewards
-                </v-btn>
-            </div>
-            <div class="vip-overlay-checkbox">
-                <v-checkbox
-                    v-model="vipCheckboxVal"
-                    label="Do Not Show Again"
-                ></v-checkbox>
-            </div>
-        </div>
-    </v-overlay>
 </template>
 
-<style>
-.custom-checkbox .v-icon {
-  background-image: url("@/assets/public/svg/icon_public_10.svg"); /* 这里替换成你想要显示的图片路径 */
-}
-</style>
-
 <style lang="scss" scoped>
-::v-deep(.v-overlay__content) {
-    width: 100%;
-    top: auto;
-}
-.vip-overlay {
-    width: 90%;
-    height: 411px;
-    margin: 0 auto;
-    border: 1px solid #23262F;
-    background: linear-gradient(0deg, #23262F, #23262F),
-    conic-gradient(from 45.08deg at 50.17% 49.69%, #1D2027 0deg, #23262F 360deg);
-    border-radius: 8px;
-    &-header {
-        position: relative;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        span {
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-        }
-        &-close {
-            box-shadow: none !important;
-            background-color: transparent !important;
-            position: absolute !important;
-            top: 16px;
-            right: 16px;
-            z-index: 99;
-        }
-    }
-    &-level {
-        line-height: 30px;
-        width: 100%;
-        text-align: center;
-        span {
-            font-size: 20px;
-            font-weight: 800;
-            color: #F9BC01;
-        }
-    }
-    &-tip {
-        line-height: 30px;
-        width: 100%;
-        text-align: center;
-        span {
-            font-size: 14px;
-            font-weight: 400;
-            color: #fff;
-        }
-    }
-    &-content {
-        width: 92%;
-        height: 155px;
-        margin: 20px auto;
-        background: #15161C;
-        box-shadow: 0px 0px 6px 1px #00000059 inset;
-        border-radius: 8px;
-        background-image: url("@/assets/vip/image/img_vip_5.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-position-y: 36px;
-        &-title {
-            line-height: 50px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-        }
-        &-icon {
-            display: flex;
-            height: 40px;
-            justify-content: center;
-            align-items: center;
-            span {
-                font-size: 12px;
-                font-weight: 600;
-                color: #fff;
-                margin-left: 10px;
-            }
-        }
-        &-price {
-            display: flex;
-            justify-content: center;
-            span {
-                font-size: 36px;
-                font-weight: 800;
-                color: #F9BC01;
-            }
-        }
-    }
-    &-button {
-        width: 92%;
-        margin: 0 auto;
-        ::v-deep(.v-btn) {
-            width: 100%;
-            height: 48px;
-            border-radius: 8px;
-        }
-        ::v-deep(.v-btn__content) {
-            font-size: 14px;
-            font-weight: 700;
-        }
-    }
-    &-checkbox {
-        display: grid;
-        justify-content: center;
-        ::v-deep(.v-label) {
-            font-size: 12px;
-            font-weight: 600;
-            color: #fff;
-            opacity: 1;
-        }
-        ::v-deep(.v-selection-control--density-default .v-icon) {
-            background-image: url("@/assets/public/svg/icon_public_checkbox_true.svg");
-            background-size: 100%;
-        }
-        ::v-deep(.v-selection-control__input > .mdi-checkbox-blank-outline) {
-            background-image: url("@/assets/public/svg/icon_public_checkbox_false.svg");
-            background-size: 100%;
-        }
-    }
-}
+
 .bonus-main {
     margin: 0 16px;
     &-cashback {

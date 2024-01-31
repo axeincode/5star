@@ -17,6 +17,7 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
+import { bannerStore } from "@/store/banner";
 
 const Login = defineComponent({
   components: {
@@ -42,7 +43,8 @@ const Login = defineComponent({
     const { dispatchVipInfo } = vipStore();
     const { dispatchVipLevels } = vipStore();
     const { width } = useDisplay();
-
+    const { dispatchBannerList } = bannerStore();
+    
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
@@ -160,6 +162,7 @@ const Login = defineComponent({
         // await dispatchUserInvite();
         await dispatchVipInfo();
         await dispatchVipLevels();
+        await dispatchBannerList();
         // await dispatchSocketConnect();
         setOverlayScrimShow(false);
         setRefferalDialogShow(true);

@@ -148,7 +148,7 @@ export const gameStore = defineStore({
                     },
                     onTokenExpired: async () => {
                         this.closeKill();
-                        await this.dispatchGameEnter({ id: 9999 });
+                        await this.dispatchGameEnter({ id: '9999' });
                         await this.getGameBetbyInit();
                     },
                     onSessionRefresh: async () => {

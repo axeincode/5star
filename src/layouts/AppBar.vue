@@ -54,7 +54,7 @@ const { name, width } = useDisplay()
 const router = useRouter();
 
 type dialogType = "login" | "signup";
-const color = ref<string>("#29263C");
+const color = ref<string>("#1D2027");
 // translation
 const { t } = useI18n();
 const currentLanguage = ref<string>("en");
@@ -517,6 +517,7 @@ onMounted(async () => {
       @click.stop="setNavBarToggle(true)"
       v-if="!navBarToggle && mobileWidth > 600"
     ></v-app-bar-nav-icon>
+    
     <v-toolbar-title v-if="mobileWidth > 800">
       <img
         src="@/assets/public/image/logo_public_01.png"
@@ -527,6 +528,7 @@ onMounted(async () => {
         <img src="@/assets/public/image/logo_public_01.png" />
       </v-btn> -->
     </v-toolbar-title>
+    
     <v-toolbar-title v-else>
       <img
         src="@/assets/public/image/logo_public_03.png"
@@ -609,7 +611,7 @@ onMounted(async () => {
               </v-list-item>
             </v-card>
             <v-card
-              color="#211F31"
+              color="#15161C"
               theme="dark"
               class="m-user-card-height"
               style="border-radius: 8px"
@@ -1226,7 +1228,7 @@ onMounted(async () => {
 }
 
 .app-bar-height {
-  border-radius: 0px 0px 32px 32px !important;
+  border-radius: 0px 0px 8px 8px !important;
   height: 68px !important;
   color: #ffffff !important;
 }
@@ -1278,7 +1280,6 @@ onMounted(async () => {
 .app-bar-login-btn {
   width: 120px;
   height: 46px !important;
-  background-color: #29263c;
   margin-right: 6px;
 }
 
@@ -1299,16 +1300,18 @@ onMounted(async () => {
 
 .app-bar-signup-btn {
   width: 120px;
-  height: 46px !important;
-  background-color: #5524fd !important;
+  height: 48px !important;
+  border-radius: 8px !important;
+  background-color: #009B3A !important;
 }
 
 .app-bar-signup-btn-mobile {
-  width: 96px;
+  width: 91px;
   height: 40px !important;
-  border-radius: 12px;
-  border: 1px solid #8664f7;
-  background: linear-gradient(0deg, #5524fd 0%, #6d44f7 100%);
+  border-radius: 8px;
+  background: #009B3A;
+  //border: 1px solid #8664f7;
+  //background: linear-gradient(0deg, #5524fd 0%, #6d44f7 100%);
 
   .v-btn__content {
     font-weight: 700;
@@ -1573,9 +1576,10 @@ onMounted(async () => {
   width: 53px;
   height: 33px;
   flex-shrink: 0;
-  border-radius: 9px;
-  border: 1px solid #8664f7;
-  background: linear-gradient(0deg, #5524fd 0%, #6d44f7 100%);
+  border-radius: 8px;
+  //border: 1px solid #8664f7;
+  //background: linear-gradient(0deg, #5524fd 0%, #6d44f7 100%);
+  background: #009B3A;
 }
 
 .deposit-text-position {

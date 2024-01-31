@@ -24,7 +24,7 @@ watch(getLang, async(oldVal: string, newVal: string) => {
     if (oldVal !== newVal) {
         betbyShow.value = true;
         await closeKill();
-        await dispatchGameEnter({ id: 9999 });
+        await dispatchGameEnter({ id: '9999' });
         await getGameBetbyInit();
         betbyShow.value = false;
     }
@@ -38,7 +38,7 @@ onMounted(async () => {
         top: 0,
         behavior: "smooth",
     });
-    await dispatchGameEnter({ id: 9999 });
+    await dispatchGameEnter({ id: '9999' });
     await getGameBetbyInit();
     betbyShow.value = false;
 });

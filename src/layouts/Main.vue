@@ -67,6 +67,7 @@ const MLoginBonusDialog = defineAsyncComponent(() => import("@/components/login_
 const RouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/index.vue"));
 const MRouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/mobile/index.vue"));
 const MAccountDialog = defineAsyncComponent(() => import("@/views/account/dialog/index.vue"));
+const VipUpgradeDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_upgrade_dialog/index.vue"));
 
 const { t } = useI18n();
 const { name, width } = useDisplay();
@@ -665,7 +666,7 @@ onMounted(() => {
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="mobileVersion == 'sm' ? false : true"
       @click:outside="false"
-      style="z-index:10000000000000020"
+      style="z-index: 2147483646;"
     >
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />
@@ -727,6 +728,8 @@ onMounted(() => {
       />
     </v-dialog>
 
+    <VipUpgradeDialog />
+
     <!------------------------------ Main Page ------------------------------------------->
 
     <router-view />
@@ -748,6 +751,21 @@ onMounted(() => {
   </v-main>
 </template>
 <style lang="scss">
+
+.Vue-Toastification__toast {
+  align-items: center !important;
+  z-index: 2147483647 !important;
+  top: 70px;
+  right: -20px !important;
+  width: 320px !important;
+  height: 60px;
+  border: none;
+  border-radius: 16px 0px 0px 16px;
+  background: var(--bg-2, #181522);
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+}
+
+
 .el-backtop {
   width: 44px;
   height: 44px;

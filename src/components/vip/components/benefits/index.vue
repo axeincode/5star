@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { vipStore } from "@/store/vip";
 import img_vipemblem_1 from "@/assets/vip/image/img_vipemblem_1.png";
 import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
@@ -12,16 +15,21 @@ import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 
 const { t } = useI18n();
 
+const vipLevels = computed(() => {
+  const { getVipLevels } = storeToRefs(vipStore());
+  return getVipLevels.value;
+});
+
 const vipCardInfo = [
     {
         icon: img_vipemblem_1,
-        title: t('vip.vip_level_content.text_1'),
+        title: vipLevels.value[0].rank_name,
         vip: '(VIP 0)',
         info: []
     },
     {
         icon: img_vipemblem_1_24,
-        title: t('vip.vip_level_content.text_2'),
+        title: vipLevels.value[1].rank_name,
         vip: '(VIP1-24)',
         info: [
             t('vip.vip_level_info.bronze.bonus'), 
@@ -30,7 +38,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_25_49,
-        title: t('vip.vip_level_content.text_3'),
+        title: vipLevels.value[25].rank_name,
         vip: '(VIP25-49)',
         info: [
             t('vip.vip_level_info.silver.bonus'), 
@@ -39,8 +47,8 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_50_74,
-        title: t('vip.vip_level_content.text_4'),
-        vip: '(VIP50-74)',
+        title: vipLevels.value[50].rank_name,
+        vip: '(VIP50-75)',
         info: [
             t('vip.vip_level_info.gold.bonus'), 
             t('vip.vip_level_info.gold.rebate'),
@@ -48,8 +56,8 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_75_99,
-        title: t('vip.vip_level_content.text_5'),
-        vip: '(VIP75-99)',
+        title: vipLevels.value[76].rank_name,
+        vip: '(VIP76-99)',
         info: [
             t('vip.vip_level_info.platinum.bonus'), 
             t('vip.vip_level_info.platinum.rebate'),
@@ -58,7 +66,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_100_149,
-        title: t('vip.vip_level_content.text_6'),
+        title: vipLevels.value[100].rank_name,
         vip: '(VIP100-149)',
         info: [
             t('vip.vip_level_info.diamonds.bonus'), 
@@ -68,7 +76,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_159_199,
-        title: t('vip.vip_level_content.text_7'),
+        title: vipLevels.value[159].rank_name,
         vip: '(VIP150-199)',
         info: [
             t('vip.vip_level_info.yellow_diamond.bonus'), 
@@ -78,7 +86,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_200,
-        title: t('vip.vip_level_content.text_8'),
+        title: vipLevels.value[200].rank_name,
         vip: '(VIP200)',
         info: [
             t('vip.vip_level_info.blue_diamond.bonus'), 
