@@ -379,7 +379,10 @@ onMounted(async () => {
   recordScrollInterval.value = setInterval(() => {
     recordList.value.push(recordList.value[Math.floor(Math.random() * 10)]);
   }, 600);
-  await dispatchGameEnter({ id: route.params.id });
+  await dispatchGameEnter({
+    id: route.params.id,
+    demo: route.params.demo == "true" ? true : false,
+  });
 });
 
 onUnmounted(() => {

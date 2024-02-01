@@ -12,6 +12,7 @@ export interface Search {
     name: string
     image: string
     provider: string
+    is_demo: boolean
 }
 
 export interface GameItem {
@@ -19,10 +20,12 @@ export interface GameItem {
     name: string
     image: string
     provider: string
+    is_demo: boolean
 }
 
 export interface GameEnterBody {
-    id: any
+    id: string | Array<string>
+    demo: boolean
 }
 
 export interface GameUserBody {
@@ -75,6 +78,12 @@ export interface GameHistoryResponse {
 export interface GameSearchResponse {
     list: Array<Search>
     total: number
+}
+
+export type GetGameFavoriteListResponse = {
+    code: number
+    data: Array<number | string>
+    message: string
 }
 
 export type GetGameBigWinResponse = {

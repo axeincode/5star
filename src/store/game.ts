@@ -42,7 +42,8 @@ export const gameStore = defineStore({
         gameBigWinItem: {
             high_rollers: [],
             lucky_bets: []
-        } as Game.GameBigWinData
+        } as Game.GameBigWinData,
+        favoriteGameList: [] as Array<number | string>
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -60,7 +61,8 @@ export const gameStore = defineStore({
         getUserSpinPage: (state) => state.userSpinPage,
         getUserSpin: (state) => state.userSpin,
         getLanguage: (state) => state.language,
-        getGameBigWinItem: (state) => state.gameBigWinItem
+        getGameBigWinItem: (state) => state.gameBigWinItem,
+        getFavoriteGameList: (state) => state.favoriteGameList,
     },
     actions: {
         // set functions
@@ -117,6 +119,9 @@ export const gameStore = defineStore({
         },
         setLanguage(lang: string) {
             this.language = lang;
+        },
+        setFavoriteGameList(favoriteGameList: Array<number | string>) {
+            this.favoriteGameList = favoriteGameList
         },
         openDialog(type: dialogType) {
             const { setAuthModalType } = authStore();
@@ -300,6 +305,22 @@ export const gameStore = defineStore({
                 if (response.code == 200) {
                     this.setSuccess(true);
                     this.setGameBigWinItem(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        // Get a list of game awards
+        async dispatchGameFavoriteList() {
+            this.setSuccess(false);
+            const route: string = NETWORK.GAME_INFO.FAVORITE_GAME_LIST;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Game.GetGameFavoriteListResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setFavoriteGameList(response.data);
                 } else {
                     this.setErrorMessage(handleException(response.code));
                 }

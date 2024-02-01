@@ -69,6 +69,7 @@ const Dashboard = defineComponent({
     const { t } = useI18n();
     const { name, width } = useDisplay();
     const { dispatchGameCategories } = gameStore();
+    const { dispatchGameFavoriteList } = gameStore();
     const { dispatchGameSearch } = gameStore();
     const { dispatchGameEnter } = gameStore();
     const { dispatchUserGame } = gameStore();
@@ -170,6 +171,7 @@ const Dashboard = defineComponent({
         new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
       ],
       paginGameShow: false,
+      is_favorite: false
     });
 
     const selectedGameFilterBtn = ref<any>(t("home.button.all_game"));
@@ -184,6 +186,7 @@ const Dashboard = defineComponent({
       name: "",
       image: "",
       provider: "",
+      is_demo: false
     })
 
     const whiteColor = ref<string>("#ffffff");
@@ -238,6 +241,11 @@ const Dashboard = defineComponent({
       const { getToken } = storeToRefs(authStore());
       return getToken.value;
     });
+
+    const favoriteGameList = computed(() => {
+      const { getFavoriteGameList } = storeToRefs(gameStore());
+      return getFavoriteGameList.value
+    })
 
     const searchDialogToggle = computed(() => {
       const { getSearchDialogShow } = storeToRefs(homeStore());
@@ -376,9 +384,9 @@ const Dashboard = defineComponent({
 
     const favoriteIconTransform = (el: any) => {
       for (let node of el.children) {
-        node.setAttribute("fill", "#D42763");
+        node.setAttribute("fill", "#F9BC01");
         for (let subNode of node.children) {
-          subNode.setAttribute("fill", "#D42763");
+          subNode.setAttribute("fill", "#F9BC01");
         }
       }
       return el;
@@ -400,11 +408,6 @@ const Dashboard = defineComponent({
     };
 
     const handleEnterGame = async (id: number, name: string) => {
-
-      const token = computed(() => {
-        const { getToken } = storeToRefs(authStore());
-        return getToken.value;
-      });
       if (token.value != undefined) {
         let replaceName = name.replace(/ /g, "-");
 
@@ -633,14 +636,7 @@ const Dashboard = defineComponent({
       await dispatchFavoriteGame({
         del_game: id,
       });
-      // await dispatchUserGame({
-      //   game_categories_slug: selectedCategoryName.value,
-      //   page: currentPage.value,
-      //   limit: limit.value * page_no,
-      // });
-      // gameSearchList.value.list.map((item) => {
-      //   item.image = state.testGames[Math.floor(Math.random() * 28)];
-      // });
+      await dispatchGameFavoriteList();
       pagingGames.value.map((item: { name: string; games: any[]; page_no: number; }) => {
         if (item.name == 'Favorite') {
           item.games = item.games.filter((gameItem: { id: string | number; }) => gameItem.id != id);
@@ -658,6 +654,8 @@ const Dashboard = defineComponent({
     };
 
     const showGameConfirmationDialog = (game_item: Game.GameItem) => {
+      state.is_favorite = favoriteGameList.value.some(item => item == game_item.id);
+      console.log(state.is_favorite);
       gameConfirmDialogShow.value = true;
       selectedGameItem.value = game_item;
     }
@@ -861,6 +859,10 @@ const Dashboard = defineComponent({
 
       pagingGames.value = gameCategories.value;
 
+      await dispatchGameFavoriteList();
+
+      console.log("favoritegameList: ", favoriteGameList.value);
+
       await Promise.all(
         pagingGames.value.map(async (item: { slug: string; page_no: number; games: any; game_count: any; }) => {
           if (item.slug == "favorite" || item.slug == "history") {
@@ -1013,6 +1015,7 @@ const Dashboard = defineComponent({
       handleEnterGame,
       selectedGameFilterBtn,
       handleGameFilterBtn,
+      favoriteGameList,
       gameTransform1,
       gameTransform2,
       gameTransform3,
@@ -1128,7 +1131,11 @@ export default Dashboard;
       >
         <inline-svg :src="icon_public_10" width="20" height="20"></inline-svg>
       </v-btn>
-      <MGameConfirm :selectedGameItem="selectedGameItem" />
+      <MGameConfirm
+        :selectedGameItem="selectedGameItem"
+        :is_favorite="is_favorite"
+        @closeGameConfirmDialog="gameConfirmDialogShow = false"
+      />
     </v-navigation-drawer>
 
     <div :class="searchDialogShow || gameConfirmDialogShow ? 'home-bg-blur' : ''">
@@ -1435,15 +1442,6 @@ export default Dashboard;
                     blur="30"
                     @click="showGameConfirmationDialog(gameItem)"
                   />
-                  <div class="m-home-favorite-icon" @click="addFavoriteGame(gameItem.id)">
-                    <inline-svg
-                      :src="icon_public_36"
-                      width="16"
-                      height="16"
-                      class="mt-1 ml-1"
-                      :transform-source="favoriteIconTransform"
-                    ></inline-svg>
-                  </div>
                   <!-- <img
                     v-lazy="gameItem.image"
                     :data-src="gameItem.image"
@@ -1612,9 +1610,8 @@ export default Dashboard;
                   >
                     <inline-svg
                       :src="icon_public_36"
-                      width="16"
-                      height="16"
-                      class="mt-1 ml-1"
+                      width="18"
+                      height="18"
                       :transform-source="favoriteIconTransform"
                     ></inline-svg>
                   </div>
@@ -1861,6 +1858,13 @@ export default Dashboard;
   background: #29263c;
   border-radius: 24px;
   filter: drop-shadow(0px 2.25px 3px rgba(0, 0, 0, 0.21));
+
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .home-favorite-icon:active {
@@ -2189,8 +2193,8 @@ export default Dashboard;
 }
 
 .more-btn-color {
-  background:transparent !important;
-  color: #009B3A !important;
+  background: transparent !important;
+  color: #009b3a !important;
 
   .v-btn__content {
     font-weight: 700 !important;
@@ -2253,7 +2257,7 @@ export default Dashboard;
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #009B3A;
+    background: #009b3a;
     border-radius: 8px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -2314,8 +2318,9 @@ export default Dashboard;
   .form-textfield .v-field__overlay {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
-  .form-textfield div.v-field.v-field--appended{
-    background-color: #1D2027;
+
+  .form-textfield div.v-field.v-field--appended {
+    background-color: #1d2027;
     border-radius: 8px;
   }
 }
