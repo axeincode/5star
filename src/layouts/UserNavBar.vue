@@ -46,6 +46,7 @@ const { dispatchVipLevels } = vipStore();
 const { setDepositWithdrawToggle } = appBarStore();
 const { setVipNavBarToggle } = vipStore();
 const { setNavBarToggle } = appBarStore();
+const { dispatchVipLevelAward } = vipStore();
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -327,6 +328,7 @@ const handleScroll = () => {
 onMounted(async () => {
   await dispatchVipInfo();
   await dispatchVipLevels();
+  await dispatchVipLevelAward();
 })
 </script>
 

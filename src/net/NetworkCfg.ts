@@ -83,6 +83,12 @@ export namespace NETWORK {
     static VIP_SIGNIN = '/user/vipsignin'; // Get VIP check-in content
     static VIP_LEVELUP_LIST = '/user/viplevelup/list'; // Get VIP upgrade reward information
     static VIP_LEVELUP_RECEIVE = '/user/viplevelup/receive'; // Receive VIP upgrade rewards
+    static USER_VIP_CYCLEAWARD_LIST = '/user/vip/cycleaward/list';  // Get periodic rewards  获取周期性奖励
+    static USER_VIP_CYCLEAWARD_RECEIVE = '/user/vip/cycleaward/receive';  // Receive periodic rewards  领取周期性奖励
+    static USER_VIP_LEVELAWARD_LIST = '/user/vip/levelaward/list';  // Get level-related rewards  获取等级相关奖励
+    static USER_VIP_LEVELAWARD_RECEIVE = '/user/vip/levelaward/receive';  // Receive level-related rewards  领取等级相关奖励
+    static USER_VIP_BETAWARD_LIST = '/user/vip/betaward/list';  // Get coding rebates  获取打码返利
+    static USER_VIP_BETAWARD_RECEIVE = '/user/vip/betaward/receive';  // Get coding rebates  领取打码返利
   }
 
   // websocket api
