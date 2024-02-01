@@ -159,7 +159,7 @@ const mobileWidth: any = computed(() => {
     font-size: 14px;
   }
   .m-about-responsible-link {
-    color: #32cfec;
+    color: #009B3A;
     text-decoration-line: underline;
   }
 }

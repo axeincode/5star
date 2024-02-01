@@ -566,7 +566,7 @@ onMounted(() => {
       position: absolute;
       top: 2px;
       left: 2px;
-      background: #32cfec;
+      background: #009B3A;
       border-radius: 18px;
       box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
       transition: 0.3s;
@@ -777,7 +777,7 @@ onMounted(() => {
   }
 
   .personal-btn-ready {
-    background: #32cfec;
+    background: #009B3A;
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 

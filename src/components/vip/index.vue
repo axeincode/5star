@@ -581,7 +581,7 @@ onMounted(() => {
               class="ma-2 text-none transaction-tab-btn"
               :class="isSelected ? 'white' : 'text-gray'"
               rounded
-              :color="isSelected ? '#32CFEC' : 'transparent'"
+              :color="isSelected ? '#009B3A' : 'transparent'"
               @click="toggle"
               :width="mobileWidth < 600 ? 120 : 150"
             >

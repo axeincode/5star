@@ -77,7 +77,7 @@ export default SignupHeader;
   height: 172px;
   border-radius: 26px 26px 0px 0px;
   margin: 0px !important;
-  background: linear-gradient(0deg, #f08734 0%, #c6428b 100%), #5904d9;
+  background: linear-gradient(0deg, #0075FF 0%, #7EE09A 100%), #5904d9;
 
   .v-col {
     z-index: 1;

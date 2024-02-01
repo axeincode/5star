@@ -202,7 +202,7 @@ onMounted(async () => {
 }
 .statistics-summary-tab-active {
   border-radius: 0px 0px 8px 8px;
-  background: var(--Primary-Button-32CFEC, #32cfec);
+  background: var(--Primary-Button-32CFEC, #009B3A);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 }
 .statistics-receive-card {

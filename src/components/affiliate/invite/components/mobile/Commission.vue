@@ -76,7 +76,7 @@ watch(slider, (newValue) => {
           <div class="mx-2 py-3">
             <v-slider
               v-model="slider"
-              color="#32CFEC"
+              color="#009B3A"
               class="align-center"
               rounded="rounded-xl"
               :max="max"

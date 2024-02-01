@@ -32,7 +32,7 @@ const goToAboutPage = (index: number) => {
 </script>
 
 <template>
-  <div class="my-4" :class="mobileWidth > 600 ? 'mx-8 pc-max' : 'mx-2'">
+  <div class="my-4 footer" :class="mobileWidth > 600 ? 'mx-8 pc-max' : 'mx-2'">
     <!-------------------- footer bar -------------->
     <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-7'">
       <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
@@ -168,7 +168,7 @@ const goToAboutPage = (index: number) => {
       </v-col>
     </v-row>
     <v-row class="mx-2 mt-6">
-      <v-card color="#211F31" theme="dark" class="justify-center">
+      <v-card color="#15161C" theme="dark" class="justify-center">
         <v-row class="align-center">
           <v-col
             cols="12"
@@ -202,7 +202,7 @@ const goToAboutPage = (index: number) => {
       </v-card>
     </v-row>
     <v-row
-      class="mt-8 mb-8 justify-center"
+      class="pt-8 pb-8 justify-center"
       :class="mobileWidth > 600 ? 'footer-6-text' : 'text-400-12 gray'"
     >
       {{ t("home.footer.footer_6.text") }}
@@ -212,7 +212,12 @@ const goToAboutPage = (index: number) => {
 
 <style lang="scss">
 // footer bar class
-
+.footer {
+  width: 100%;
+  position: relative;
+  left: -8px;
+  background: #1D2027;
+}
 .footer-title {
   font-weight: 700;
   font-size: 16px;

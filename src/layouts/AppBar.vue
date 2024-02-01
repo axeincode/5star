@@ -644,7 +644,7 @@ onMounted(async () => {
                     </template>
                     <v-list
                       theme="dark"
-                      bg-color="#211F31"
+                      bg-color="#23262F"
                       class="px-2"
                       :width="currencyMenuWidth"
                     >
@@ -1129,6 +1129,7 @@ onMounted(async () => {
 .m-currency-menu {
   .v-overlay__content {
     left: 10px !important;
+    border-radius: 8px !important;
   }
 
   .v-overlay__scrim {

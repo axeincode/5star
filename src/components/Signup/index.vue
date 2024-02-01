@@ -655,7 +655,7 @@ export default Signup;
 }
 
 .signup-btn {
-  background: #32cfec;
+  background: #009B3A;
 }
 
 .signup-btn:hover:enabled {
@@ -753,7 +753,7 @@ export default Signup;
   font-weight: 800;
   font-size: 16px;
   line-height: 19px;
-  color: #32cfec;
+  color: #009B3A;
 }
 
 // agreement

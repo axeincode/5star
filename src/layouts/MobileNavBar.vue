@@ -688,7 +688,7 @@ onMounted(() => {
         </p>
       </div>
       <!-- <v-list density="compact" nav class="mt-1 px-0">
-        <v-card color="#211F31" theme="dark" style="border-radius: 0px">
+        <v-card color="#15161C" theme="dark" style="border-radius: 0px">
           <v-row class="ma-2 align-center">
             <span class="m-card-title">{{ t("navBar.my_vip_perks") }}</span>
             <span class="ml-15 m-more-font">{{ t("navBar.more") }}</span>
@@ -782,7 +782,7 @@ onMounted(() => {
               </v-list-item-title>
             </v-list-item>
           </template>
-          <v-card color="#211F31" theme="dark" class="mt-6" style="border-radius: 0px">
+          <v-card color="#15161C" theme="dark" class="mt-6" style="border-radius: 0px">
             <v-list>
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
@@ -883,7 +883,7 @@ onMounted(() => {
                     </v-list-item-title>
                   </v-list-item>
                 </template>
-                <v-list theme="dark" bg-color="#211F31" width="166" class="ml-6">
+                <v-list theme="dark" bg-color="#15161C" width="166" class="ml-6">
                   <v-list-item
                     v-for="(item, i) in originalGames"
                     :key="i"
@@ -1123,7 +1123,7 @@ onMounted(() => {
           transition="slide-x-transition"
         >
           <template v-slot:activator="{ props }">
-            <v-card color="#211F31" theme="dark" class="mx-2 m-language-item" height="40">
+            <v-card color="#15161C" theme="dark" class="mx-2 m-language-item" height="40">
               <v-list-item
                 v-bind="props"
                 class="m-casino-sub-img m-nav-menu"
@@ -1142,7 +1142,7 @@ onMounted(() => {
               </v-list-item>
             </v-card>
           </template>
-          <v-list theme="dark" bg-color="#211F31" width="166" class="text-center">
+          <v-list theme="dark" bg-color="#15161C" width="166" class="text-center">
             <v-list-item
               :title="t('navBar.language.title')"
               class="m-avatar-img m-nav-sub-menu"
@@ -1215,8 +1215,8 @@ onMounted(() => {
   margin: 0px 14px;
   width: 164px;
   height: 32px;
-  background: linear-gradient(266deg, #5421fd 1.95%, #5421fd 53.19%);
-  box-shadow: 0px -4px 0px 0px #3a1aa7 inset;
+  background: #009B3A;
+  box-shadow: 0px 4px 0px 0px #0E5E50;
   border-radius: 4px;
 }
 
@@ -1272,8 +1272,8 @@ onMounted(() => {
   width: 164px;
   height: 32px;
   border-radius: 4px;
-  background: #6aa82d;
-  box-shadow: 0px -4px 0px 0px #384140 inset;
+  background: #F9BC01;
+  box-shadow: 0px -4px 0px 0px #D99504 inset;
 }
 
 .nav-lang-selected-item {
@@ -1298,7 +1298,7 @@ onMounted(() => {
 }
 
 .m-nav-background {
-  background: #29253c;
+  background: #1D2027;
 }
 
 // casino and sport toggle switch
@@ -1308,7 +1308,7 @@ onMounted(() => {
     height: 34px;
     position: relative;
     display: block;
-    background: #211f31;
+    background: #15161C;
     border-radius: 20px !important;
     box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4),
       inset 0px -5px 15px rgba(255, 255, 255, 0.4);
@@ -1365,7 +1365,7 @@ onMounted(() => {
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #32cfec;
+    background: #009B3A;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -1514,7 +1514,7 @@ onMounted(() => {
 
 .m-language-item {
   border-radius: 8px;
-  background: var(--text-box-1211-f-31, #211f31);
+  background: var(--text-box-1211-f-31, #15161C);
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 
@@ -1542,7 +1542,7 @@ onMounted(() => {
     height: 30px;
     position: absolute;
     display: block;
-    background: #211f31;
+    background: #15161C;
     border-radius: 20px !important;
     cursor: pointer;
     transition: 0.3s;
@@ -1631,7 +1631,7 @@ onMounted(() => {
   top: 50%;
   transform: translateY(-50%);
   left: -2px;
-  border: 13px solid #211f31;
+  border: 13px solid #15161C;
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;
@@ -1652,7 +1652,7 @@ onMounted(() => {
   top: 50%;
   transform: translateY(-50%);
   left: -26px;
-  border: 13px solid #211f31;
+  border: 13px solid #15161C;
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;

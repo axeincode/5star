@@ -492,17 +492,17 @@ onMounted(async () => {
       </template>
     </div>
     <v-card
-      color="#211F32"
+      color="#1D2027"
       theme="dark"
       height="440"
       class="mt-2 mx-2 m-all-bet-history-height"
     >
       <v-card
-        color="#29253C"
+        color="#23262F"
         theme="dark"
         height="32"
         class="mx-1 mt-1"
-        style="border-radius: 16px"
+        style="border-radius: 8px"
       >
         <v-row class="mx-3 my-0 align-center" style="height: 100%">
           <v-col cols="4" class="text-700-12 gray py-0">
@@ -594,7 +594,7 @@ onMounted(async () => {
   margin: 0px 10px;
   height: 32px;
   border-radius: 8px;
-  background: #211f32;
+  background: #23262F;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   .button-transparent {
@@ -634,7 +634,7 @@ onMounted(async () => {
 }
 
 .m-all-bet-history-height {
-  border-radius: 16px;
+  border-radius: 8px;
   .swiper-wrapper {
     height: 406px;
 

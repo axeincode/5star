@@ -80,7 +80,7 @@ export default LoginHeader;
   width: 100%;
   height: 177px;
   margin: 0px !important;
-  background: linear-gradient(0deg, #275798 0%, #9419f0 100%);
+  background: linear-gradient(0deg, #0075FF 0%, #7EE09A 100%);
   border-radius: 26px 26px 0px 0px;
 
   .v-col {

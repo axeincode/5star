@@ -367,7 +367,7 @@ onMounted(async () => {
 
 .m-statistics-receive-btn {
   border-radius: 9px;
-  background: var(--primary-button-32-cfec, #32cfec);
+  background: var(--primary-button-32-cfec, #009B3A);
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -413,7 +413,7 @@ onMounted(async () => {
 
 .m-statistics-tab-active {
   width: 100px !important;
-  background: #32cfec !important;
+  background: #009B3A !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
   border-radius: 8px 8px 0px 0px !important;
 

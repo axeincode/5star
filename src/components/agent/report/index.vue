@@ -637,7 +637,7 @@ onMounted(async () => {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 8px;
-    border: 1px solid #32cfec;
+    border: 1px solid #009B3A;
   }
 }
 </style>

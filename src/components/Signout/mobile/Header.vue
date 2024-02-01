@@ -101,13 +101,14 @@ onUnmounted(() => {
 
 .mobile-dialog-width {
   width: 280px;
-  background: #2e274c;
+  background: #1D2027;
   margin: auto;
   height: 100%;
-  border-radius: 0px 0px 32px 32px;
+  border-radius: 0px 0px 24px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.5);
 }
 
 .mobile-dialog-toggle {
@@ -119,7 +120,7 @@ onUnmounted(() => {
     height: 40px;
     position: relative;
     display: block;
-    background: #211f31;
+    background: #15161C;
     border-radius: 20px !important;
     cursor: pointer;
     transition: 0.1s;
@@ -138,7 +139,7 @@ onUnmounted(() => {
     .login {
       left: 36px;
       transition: 0.3s;
-      color: black;
+      color: white;
 
       img {
         width: 20px;
@@ -150,7 +151,7 @@ onUnmounted(() => {
     .register {
       left: 125px;
       transition: 0.3s;
-      color: #7782aa;
+      color: white;
 
       img {
         width: 20px;
@@ -166,7 +167,7 @@ onUnmounted(() => {
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #32cfec;
+    background: #009B3A;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -192,7 +193,7 @@ onUnmounted(() => {
   }
 
   input:checked + label .register {
-    color: black;
+    color: white;
   }
 }
 </style>

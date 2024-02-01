@@ -273,7 +273,7 @@ onMounted(async () => {
     height: 20px;
     flex-shrink: 0;
     border-radius: 30px;
-    background: var(--primary-button-32-cfec, #32cfec);
+    background: var(--primary-button-32-cfec, #009B3A);
     box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11);
   }
 
@@ -294,7 +294,7 @@ onMounted(async () => {
     visibility: hidden;
   }
   .v-slider-thumb--pressed > div {
-    background-color: #32cfec;
+    background-color: #009B3A;
   }
 }
 

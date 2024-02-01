@@ -796,7 +796,7 @@ onMounted(() => {
 }
 
 .main-background {
-  background: #1d2027;
+  background: #15161C;;
 }
 
 .main-bg-blur {

@@ -1973,7 +1973,7 @@ export default Dashboard;
 
 @media (max-width: 600px) {
   .btn-211f31 {
-    border-radius: 10px !important;
+    border-radius: 8px !important;
 
     .v-btn__content {
       font-size: 12px;
@@ -1981,7 +1981,7 @@ export default Dashboard;
   }
 
   .button-bright {
-    border-radius: 10px !important;
+    border-radius: 8px !important;
 
     .v-btn__content {
       font-size: 12px;
@@ -2189,8 +2189,8 @@ export default Dashboard;
 }
 
 .more-btn-color {
-  background: #2f2756 !important;
-  color: #6842ec !important;
+  background:transparent !important;
+  color: #009B3A !important;
 
   .v-btn__content {
     font-weight: 700 !important;
@@ -2253,7 +2253,7 @@ export default Dashboard;
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #32cfec;
+    background: #009B3A;
     border-radius: 8px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -2313,6 +2313,10 @@ export default Dashboard;
 .home-search-bar {
   .form-textfield .v-field__overlay {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+  }
+  .form-textfield div.v-field.v-field--appended{
+    background-color: #1D2027;
+    border-radius: 8px;
   }
 }
 

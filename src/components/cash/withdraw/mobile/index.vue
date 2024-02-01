@@ -618,7 +618,7 @@ onMounted(async () => {
   }
 
   .deposit-amout-btn-black {
-    background: #32cfec;
+    background: #009B3A;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;
@@ -729,7 +729,7 @@ onMounted(async () => {
 }
 
 .m-deposit-btn-ready {
-  background: #32cfec;
+  background: #009B3A;
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 

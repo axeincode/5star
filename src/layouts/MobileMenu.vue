@@ -774,7 +774,7 @@ onMounted(() => {
 <template>
   <v-bottom-navigation
     v-if="mobileMenuShow && route.name !== 'Sports'"
-    bg-color="#000000"
+    bg-color="#010102"
     grow
     class="mobile-menu-index"
     :class="menuBlurEffectShow ? 'menu-bg-blur' : ''"

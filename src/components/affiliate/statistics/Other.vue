@@ -377,7 +377,7 @@ const mobileWidth = computed(() => {
 }
 
 .statistics-tab-active {
-  background: #32cfec !important;
+  background: #009B3A !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
   border-radius: 8px 8px 0px 0px !important;
   font-weight: 700;

@@ -96,7 +96,7 @@ const handleScroll = () => {
 }
 
 .v-application {
-  background: #31275c !important;
+  background: black !important;
 }
 
 .appbar-position-fix {

@@ -554,7 +554,7 @@ onMounted(async () => {
 
 <style lang="scss">
 .nav-background {
-  background: #29253c !important;
+  background: #1D2027 !important;
   color: #7782aa !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -564,7 +564,7 @@ onMounted(async () => {
 }
 
 .user-nav-background {
-  background: #211f31 !important;
+  background: #1D2027 !important;
   color: #7782aa !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -584,7 +584,7 @@ onMounted(async () => {
   height: 36px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: var(--secondary-button-353652, #353652);
+  background: var(--secondary-button-353652, #23262F);
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);

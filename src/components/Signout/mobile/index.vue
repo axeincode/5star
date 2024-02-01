@@ -106,7 +106,7 @@ onMounted(() => {
 
   .m-signout-animation-container {
     border-radius: 20px 20px 16px 16px;
-    background: #2e274c;
+    background: #1D2027 !important;
     width: 328px;
     height: 201px;
     animation-name: signoutHeightFrame;
@@ -120,7 +120,7 @@ onMounted(() => {
       position: absolute;
       top: 0px;
       border-radius: 20px;
-      background: linear-gradient(180deg, #8218ea 0%, #2c549c 100%);
+      background: linear-gradient(180deg, #7EE09A 0%, #0075FF 100%);
       text-align: center;
       height: 201px;
       animation-name: scaling;

@@ -901,8 +901,9 @@ export default MSignup;
 }
 
 .m-signup-btn {
-  background: #32cfec;
-
+  background: #009B3A;
+  color: white;
+  border-radius: 8px !important;
   .v-btn__content {
     text-align: center;
     font-family: "Inter";
@@ -914,12 +915,12 @@ export default MSignup;
 }
 
 .m-signup-btn:hover:enabled {
-  background: #0cb6fa;
+  background: #009B3A;
 }
 
 .m-signup-disabled-btn {
-  border-radius: 12px;
-  background: var(--Secondary-Button, #353652);
+  border-radius: 8px;
+  background: var(--Secondary-Button, #23262F );
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
   .v-btn__content {
@@ -961,7 +962,7 @@ export default MSignup;
 // wrapper
 .m-signup-body {
   border-radius: 26px 26px 0px 0px;
-  background: var(--bg-2-e-274-c, #2e274c);
+  background: var(--bg-2-e-274-c, #1D2027);
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -970,6 +971,7 @@ export default MSignup;
 
   // overflow-y: auto;
   .form-textfield div.v-field__field {
+    background: #15161C;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
@@ -1012,14 +1014,14 @@ export default MSignup;
   top: 12px;
   text-align: center;
   width: 120px;
-  background-color: #2e274c;
+  background-color: #1D2027;
   margin: auto;
   z-index: 1;
 }
 
 // social icon list component
 .social-icon-wrapper {
-  background-color: #2e274c !important;
+  background-color: #1D2027 !important;
 
   .v-sheet {
     border-radius: 50px !important;
@@ -1050,7 +1052,7 @@ export default MSignup;
   font-weight: 800;
   font-size: 16px;
   line-height: 19px;
-  color: #32cfec;
+  color: #009B3A;
 }
 
 // agreement
@@ -1066,7 +1068,7 @@ export default MSignup;
 
 .m-agreement-checkbox {
   i.v-icon {
-    color: #211f31;
+    color: #15161C;
     background-color: #01983a;
     width: 16px;
     height: 16px;
@@ -1144,6 +1146,7 @@ export default MSignup;
   transform-origin: top !important;
 
   .v-field__field {
+    background: #15161C;
     input {
       padding-top: 2px !important;
     }

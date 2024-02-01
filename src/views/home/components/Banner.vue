@@ -45,10 +45,6 @@ const BannerComponent = defineComponent({
         new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
         new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
         new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
       ];
       if(token.value!= undefined)
       {
@@ -169,6 +165,7 @@ export default BannerComponent;
         <img
           :src="slide"
           class="slider-img-width"
+          
           :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
         />
       </swiper-slide>

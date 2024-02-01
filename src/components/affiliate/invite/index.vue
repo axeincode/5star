@@ -728,7 +728,7 @@ onMounted(() => {
           <div :class="[mobileWidth < 600 ? 'px-0 py-3' : 'pa-6']">
             <v-slider
               v-model="slider"
-              color="#32CFEC"
+              color="#009B3A"
               class="align-center"
               :max="max"
               :min="min"

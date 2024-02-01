@@ -596,7 +596,7 @@ onMounted(async () => {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 4px;
-    border: 1px solid var(--primary-button-32-cfec, #32cfec);
+    border: 1px solid var(--primary-button-32-cfec, #009B3A);
   }
 }
 
@@ -706,7 +706,7 @@ onMounted(async () => {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 4px;
-    border: 1px solid var(--primary-button-32-cfec, #32cfec);
+    border: 1px solid var(--primary-button-32-cfec, #009B3A);
   }
 }
 </style>

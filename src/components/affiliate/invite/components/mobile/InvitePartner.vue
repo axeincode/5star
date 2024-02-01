@@ -110,7 +110,7 @@ watch(inviteItem, (new_value) => {
 }
 
 .v-list-item__append {
-  margin-top: 3px;
+  margin-top: 13px;
   display: block !important;
   align-self: baseline;
 }

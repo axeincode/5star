@@ -244,7 +244,7 @@ const achievementAward = async (achievement_item: ExplainItem, achievement_progr
 }
 .m-achievement-realization-active-btn {
   border-radius: 8px;
-  background: #32cfec;
+  background: #009B3A;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
     color: #000;

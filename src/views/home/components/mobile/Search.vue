@@ -525,7 +525,7 @@ onMounted(async () => {
   position: relative;
   height: 50px;
   line-height: 50px;
-  background: var(--BG-5-1C1929, #1c1929);
+  background: var(--BG-5-1C1929, #15161C);
   color: #fff;
   text-align: center;
   .m-search-header-icon {
@@ -549,7 +549,7 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   border-radius: 0px 0px 30px 30px;
-  background: var(--Text-Box-1-211F31, #211f31);
+  background: var(--Text-Box-1-211F31, #1D2027);
   overflow-y: auto;
 
   .m-home-search-game:active {
@@ -566,7 +566,7 @@ onMounted(async () => {
 
   .form-textfield div.v-field.v-field--appended {
     border-radius: 10px;
-    background: var(--BG-5-1C1929, #1c1929);
+    background: var(--BG-5-1C1929, #15161C);
     height: 40px;
 
     /* Text Box */
@@ -575,7 +575,7 @@ onMounted(async () => {
 
   .form-textfield div.v-field__field {
     color: white;
-    background: var(--BG-5-1C1929, #1c1929);
+    background: var(--BG-5-1C1929, #15161C);
     padding-left: 0px;
   }
 
@@ -663,7 +663,7 @@ onMounted(async () => {
     width: 24px;
     height: 24px;
     border-radius: 46px;
-    background: #29253c;
+    background: #1D2027;
     right: 12px;
     top: 20px;
     /* Button Shadow */
@@ -687,7 +687,7 @@ onMounted(async () => {
     width: 24px;
     height: 24px;
     border-radius: 46px;
-    background: #29253c;
+    background: #1D2027;
     right: 46px;
     top: 20px;
     left: unset;

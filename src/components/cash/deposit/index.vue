@@ -512,7 +512,7 @@ const overlayScrimShow = computed(() => {
   }
 
   .deposit-amout-btn-black {
-    background: #32cfec;
+    background: #009B3A;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;

@@ -331,7 +331,7 @@ export default Login;
           />
         </v-row>
         <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
-          <v-list theme="dark" bg-color="#211F31">
+          <v-list theme="dark" bg-color="#15161C">
             <v-list-item
               class="text-600-12 white"
               value="gmail"
@@ -646,7 +646,7 @@ export default Login;
 // wrapper
 .m-login-body {
   border-radius: 26px 26px 0px 0px;
-  background: var(--bg-2-e-274-c, #2e274c);
+  background: var(--bg-2-e-274-c, #1D2027);
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -677,7 +677,7 @@ export default Login;
   top: 12px;
   text-align: center;
   width: 120px;
-  background-color: #2e274c;
+  background-color: #1D2027;
   margin: auto;
   z-index: 1;
 }
@@ -709,7 +709,7 @@ export default Login;
 
 // social icon list component
 .social-icon-wrapper {
-  background-color: #2e274c !important;
+  background-color: #1D2027 !important;
 
   .v-sheet {
     border-radius: 50px !important;
