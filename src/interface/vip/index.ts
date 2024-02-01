@@ -227,3 +227,42 @@ export type GetVipTimesHistoryResponse = {
     data: VipTimesHistoryData
     message: string
 }
+
+export type VipCycleawardListData = {
+    membership_day_gift: number
+    day_gift: number
+    week_gift: number
+    month_gift: number
+}
+
+export type VipCycleawardReceiveRequest = {
+    type: number
+}
+
+export type VipLevelAwardData = {
+    level_up_num: number
+    level: number
+    upgrade_gift: number
+    rank_up_num: number
+    rank: number
+    uprank_gift: number
+}
+
+export type VipLevelAwardReceiveRequest = {
+    type: number
+}
+
+export type vipBetawardListData = {
+    now_cash_back: string
+    yesterday_cash_back: string
+    history_cash_back: string
+}
+
+export type VipBetawardReceiveRequest = {
+    type: number
+}
+
+export type SuccessMessageParams = {
+    message: string
+    type: number
+}

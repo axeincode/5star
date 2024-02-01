@@ -42,6 +42,7 @@ const Login = defineComponent({
     const { dispatchUserInvite } = inviteStore();
     const { dispatchVipInfo } = vipStore();
     const { dispatchVipLevels } = vipStore();
+    const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
     const { dispatchBannerList } = bannerStore();
     
@@ -162,6 +163,7 @@ const Login = defineComponent({
         // await dispatchUserInvite();
         await dispatchVipInfo();
         await dispatchVipLevels();
+        await dispatchVipLevelAward();
         await dispatchBannerList();
         // await dispatchSocketConnect();
         setOverlayScrimShow(false);

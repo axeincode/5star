@@ -1,8 +1,12 @@
 import { defineStore } from 'pinia'
+import { i18n } from "@/locale/index";
 import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
 import type * as Vip from "@/interface/vip";
 import { handleException } from './exception';
+import { useToast } from "vue-toastification";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 
 export const vipStore = defineStore({
     id: 'vip',
@@ -35,7 +39,10 @@ export const vipStore = defineStore({
         } as Vip.VipSignInData,
         vipLevelUpList: {} as Vip.VipLevelUpListData,
         vipLevelUpReceive: {} as Vip.VipLevelUpReceiveData,
-        vipNavBarToggle: '',
+        vipNavBarToggle: '' as string,
+        vipCycleawardList: {} as Vip.VipCycleawardListData,
+        vipLevelAward: {} as Vip.VipLevelAwardData,
+        vipBetawardList: {} as Vip.vipBetawardListData,
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -51,6 +58,9 @@ export const vipStore = defineStore({
         getVipLevelUpList: (state) => state.vipLevelUpList,
         getVipLevelUpReceive: (state) => state.vipLevelUpReceive,
         getVipNavBarToggle: (state) => state.vipNavBarToggle,
+        getVipCycleawardList: (state) => state.vipCycleawardList,
+        getVipLevelAward: (state) => state.vipLevelAward,
+        getVipBetawardList: (state) => state.vipBetawardList
     },
     actions: {
         // set functions
@@ -93,6 +103,34 @@ export const vipStore = defineStore({
         setVipNavBarToggle(vipNavBarToggle: string) {
             this.vipNavBarToggle = vipNavBarToggle;
             localStorage.setItem('vipBar', vipNavBarToggle);
+        },
+        // Storing periodic rewards  存储周期性奖励
+        setVipCycleawardList(vipCycleawardList: Vip.VipCycleawardListData) {
+            this.vipCycleawardList = vipCycleawardList;
+        },
+        // Storage level related rewards  存储等级相关奖励
+        setVipLevelAward(vipLevelAward: Vip.VipLevelAwardData) {
+            this.vipLevelAward = vipLevelAward;
+        },
+        // Storage coding rebate  存储打码返利
+        setVipBetawardList(vipBetawardList: Vip.vipBetawardListData) {
+            this.vipBetawardList = vipBetawardList;
+        },
+        // Reward collection prompt information  奖励领取提示信息  
+        alertMessage(successMessage: Vip.SuccessMessageParams) {
+            const toast = useToast();
+            toast.success(successMessage.message, { 
+                timeout: 3000,
+                closeOnClick: false,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: successMessage.type == 1 ? SuccessIcon : WarningIcon,
+                rtl: false,
+            });
         },
         // Get VIP check-in content
         async dispatchVipSignIn() {
@@ -173,21 +211,21 @@ export const vipStore = defineStore({
             }
             await network.sendMsg(route, {}, next, 1, 4);
         },
-        // user vip level award api
-        async dispatchVipLevelAward(data: any) {
-            this.setSuccess(false);
-            const route: string = NETWORK.VIP_INFO.VIP_LEVEL_AWARD;
-            const network: Network = Network.getInstance();
-            // response call back function
-            const next = (response: Vip.GetVipLevelAwardResponse) => {
-                if (response.code == 200) {
-                    this.setSuccess(true);
-                } else {
-                    this.setErrorMessage(handleException(response.code));
-                }
-            }
-            await network.sendMsg(route, data, next, 1);
-        },
+        // // user vip level award api
+        // async dispatchVipLevelAward(data: any) {
+        //     this.setSuccess(false);
+        //     const route: string = NETWORK.VIP_INFO.VIP_LEVEL_AWARD;
+        //     const network: Network = Network.getInstance();
+        //     // response call back function
+        //     const next = (response: Vip.GetVipLevelAwardResponse) => {
+        //         if (response.code == 200) {
+        //             this.setSuccess(true);
+        //         } else {
+        //             this.setErrorMessage(handleException(response.code));
+        //         }
+        //     }
+        //     await network.sendMsg(route, data, next, 1);
+        // },
         // receive VIP code rebate rewards
         async dispatchVipRebateAward(data: any) {
             this.setSuccess(false);
@@ -283,5 +321,125 @@ export const vipStore = defineStore({
             }
             await network.sendMsg(route, {}, next, 1);
         },
+        /**
+         * Get periodic rewards  获取周期性奖励
+         */
+        async dispatchVipCycleawardList() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.USER_VIP_CYCLEAWARD_LIST;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipCycleawardList(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        /**
+         * Receive periodic rewards  领取周期性奖励
+         * @param data Reward type 1: Member day 2: Daily reward 3: Weekly reward 4: Monthly reward
+         * @param data 领取奖励类型 1: 会员日 2: 日奖励 3:周奖励 4: 月奖励
+         */
+        async dispatchVipCycleawardReceive(data: Vip.VipCycleawardReceiveRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.USER_VIP_CYCLEAWARD_RECEIVE;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
+                    this.dispatchVipCycleawardList();
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                    this.alertMessage({ message: response.message, type: 0 });
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
+        /**
+         * Get level-related rewards  获取等级相关奖励
+         */
+        async dispatchVipLevelAward() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.USER_VIP_LEVELAWARD_LIST;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelAwardResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipLevelAward(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        /**
+         * Receive level-related rewards  领取等级相关奖励
+         * @param data Reward type 5: Upgrade reward 6: Upgrade reward
+         * @param data 领取奖励类型 5: 升级奖励 6: 升段奖励
+         */
+        async dispatchVipLevelAwardReceive(data: Vip.VipLevelAwardReceiveRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.USER_VIP_LEVELAWARD_RECEIVE;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
+                    this.dispatchVipLevelAward();
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                    this.alertMessage({ message: response.message, type: 0 });
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
+        /**
+         * Get coding rebates  获取打码返利
+         */
+        async dispatchVipBetawardList() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.USER_VIP_BETAWARD_LIST;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelAwardResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipBetawardList(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        /**
+         * Get coding rebates  领取打码返利
+         * @param data Reward type 7: Coding rewards
+         * @param data 领取奖励类型 7: 打码奖励
+         */
+        async dispatchVipBetawardReceive(data: Vip.VipBetawardReceiveRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.USER_VIP_BETAWARD_RECEIVE;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
+                    this.dispatchVipBetawardList();
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                    this.alertMessage({ message: response.message, type: 0 });
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        }
     }
 })

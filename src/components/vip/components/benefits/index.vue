@@ -4,7 +4,6 @@ import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
 import img_vipemblem_1 from "@/assets/vip/image/img_vipemblem_1.png";
-import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
 import img_vipemblem_50_74 from "@/assets/vip/image/img_vipemblem_50-74.png";

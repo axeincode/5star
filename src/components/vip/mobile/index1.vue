@@ -6,7 +6,7 @@ import { vipStore } from "@/store/vip";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
 const vipTab = ref('Progress');
 const vipNavigation = ref(null);
-const { dispatchVipInfo } = vipStore();
+const { dispatchVipInfo, dispatchVipCycleawardList, dispatchVipBetawardList, dispatchVipLevelAward } = vipStore();
 const vipItems = [
     'Progress',
     'Benefits',
@@ -25,9 +25,17 @@ const vipNavBarToggle = computed(() => {
     return getVipNavBarToggle.value
 })
 
+// VIP related request initialization  vip相关请求初始化
+const initVip = async () => {
+    await dispatchVipInfo();
+    await dispatchVipLevelAward();
+    await dispatchVipCycleawardList();
+    await dispatchVipBetawardList();
+}
+
 watch(vipNavBarToggle, (value: string) => {
     if (value === '1') {
-        dispatchVipInfo();
+        initVip();
         vipDrawer.value = true;
         document.body.style.height = vipNavigation.value.getBoundingClientRect().height + 'px';
     } else {
@@ -36,14 +44,15 @@ watch(vipNavBarToggle, (value: string) => {
     }
 })
 
-onMounted(() => {
-    dispatchVipInfo();
+onMounted(async () => {
     if (localStorage.getItem('vipBar') === '1') {
         vipDrawer.value = true;
         document.body.style.height = vipNavigation.value.getBoundingClientRect().height + 'px';
     } else {
         vipDrawer.value = false;
     }
+    await dispatchVipCycleawardList();
+    await dispatchVipBetawardList();
 })
 </script>
 

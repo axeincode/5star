@@ -3,49 +3,30 @@ import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
-import { useToast } from "vue-toastification";
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
-import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 
 const { t } = useI18n();
-const { dispatchVipLevelAward } = vipStore();
-const { dispatchVipInfo } = vipStore();
-const vipInfo = computed(() => {
-    const { getVipInfo } = storeToRefs(vipStore());
-    return getVipInfo.value
+const { dispatchVipCycleawardReceive } = vipStore();
+const { dispatchVipLevelAwardReceive } = vipStore();
+const { dispatchVipBetawardReceive } = vipStore();
+
+// periodic rewards  周期性奖励
+const vipCycleawardList = computed(() => {
+    const { getVipCycleawardList } = storeToRefs(vipStore());
+    return getVipCycleawardList.value;
 })
 
-const alertMessage = (message:string, type: number) => {
-  const toast = useToast();
-  toast.success(message, { 
-      timeout: 3000,
-      closeOnClick: false,
-      pauseOnFocusLoss: false,
-      pauseOnHover: false,
-      draggable: false,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: type == 1 ? SuccessIcon : WarningIcon,
-      rtl: false,
-  });
-}
-
-const errVIPMessage = computed((): string => {
-    const { getErrMessage } = storeToRefs(vipStore());
-    return getErrMessage.value
+// Level related rewards  等级相关奖励
+const vipLevelAward = computed(() => {
+    const { getVipLevelAward } = storeToRefs(vipStore());
+    return getVipLevelAward.value;
 })
 
-const submitVipLevelAward = async (awardType: number) => {
-  await dispatchVipLevelAward({
-    type: awardType
-  }).then(() => {
-    alertMessage(t('reward.success_text'), 1);
-    dispatchVipInfo();
-  }).catch(()=>{
-    alertMessage(errVIPMessage.value, 0);
-  });
-}
+// Code rebate  打码返利
+const vipBetawardList = computed(() => {
+    const { getVipBetawardList } = storeToRefs(vipStore());
+    return getVipBetawardList.value;
+})
+
 </script>
 <template>
     <div class="bonus-main">
@@ -55,7 +36,7 @@ const submitVipLevelAward = async (awardType: number) => {
                 <span>R$ 0</span>
             </div>
             <div class="bonus-main-cashback-r">
-                <span v-if="vipInfo.now_cash_back > 0">CLAIM</span>
+                <span v-if="+vipBetawardList.now_cash_back > 0" @click="dispatchVipBetawardReceive({ type: 7 })">CLAIM</span>
                 <span class="available-button" v-else>CLAIM</span>
             </div>
         </div>
@@ -65,7 +46,7 @@ const submitVipLevelAward = async (awardType: number) => {
                 <span>R$ 0</span>
             </div>
             <div class="bonus-main-membership-r">
-                <span v-if="vipInfo.membership_day_gift > 0">CLAIM</span>
+                <span v-if="+vipCycleawardList.membership_day_gift > 0" @click="dispatchVipCycleawardReceive({ type: 2 })">CLAIM</span>
                 <span class="available-button" v-else>CLAIM</span>
             </div>
             <div class="bonus-main-membership-tip">
@@ -78,10 +59,10 @@ const submitVipLevelAward = async (awardType: number) => {
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>VIP Week Gift</span>
-                        <span>R$ {{ vipInfo.week_gift }}</span>
+                        <span>R$ {{ vipCycleawardList.week_gift }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
-                        <span v-if="vipInfo.week_gift > 0" @click="submitVipLevelAward(1)">CLAIM</span>
+                        <span v-if="+vipCycleawardList.week_gift > 0" @click="dispatchVipCycleawardReceive({ type: 3 })">CLAIM</span>
                         <span class="available-button" v-else>CLAIM</span>
                     </div>
                 </div>
@@ -93,10 +74,10 @@ const submitVipLevelAward = async (awardType: number) => {
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>VIP Month Gift</span>
-                        <span>R$ {{ vipInfo.month_gift }}</span>
+                        <span>R$ {{ vipCycleawardList.month_gift }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
-                        <span v-if="vipInfo.month_gift > 0" @click="submitVipLevelAward(2)">CLAIM</span>
+                        <span v-if="+vipCycleawardList.month_gift > 0" @click="dispatchVipCycleawardReceive({ type: 4 })">CLAIM</span>
                         <span class="available-button" v-else>CLAIM</span>
                     </div>
                 </div>
@@ -108,10 +89,10 @@ const submitVipLevelAward = async (awardType: number) => {
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>VIP Rank Bonus</span>
-                        <span>R$ {{ vipInfo.uprank_gift }}</span>
+                        <span>R$ {{ vipLevelAward.uprank_gift }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
-                        <span v-if="vipInfo.uprank_gift > 0" @click="submitVipLevelAward(3)">CLAIM</span>
+                        <span v-if="+vipLevelAward.uprank_gift > 0" @click="dispatchVipLevelAwardReceive({ type: 6 })">CLAIM</span>
                         <span class="available-button" v-else>CLAIM</span>
                     </div>
                 </div>

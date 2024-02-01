@@ -4,19 +4,24 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
-import { useToast } from "vue-toastification";
+import img_vipemblem_1 from "@/assets/vip/image/img_vipemblem_1.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
+import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
+import img_vipemblem_50_74 from "@/assets/vip/image/img_vipemblem_50-74.png";
+import img_vipemblem_75_99 from "@/assets/vip/image/img_vipemblem_75-99.png";
+import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png";
+import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
+import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import telegram_1 from "@/assets/vip/image/telegram_1.png";
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
-import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useRouter } from "vue-router";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { refferalStore } from "@/store/refferal";
 import { appBarStore } from "@/store/appBar";
 const { t } = useI18n();
-const { dispatchVipLevelAward } = vipStore();
-const { dispatchVipInfo } = vipStore();
 const { setVipNavBarToggle } = vipStore();
+const { dispatchVipCycleawardReceive } = vipStore();
+const { dispatchVipLevelAwardReceive } = vipStore();
+const { dispatchVipBetawardReceive } = vipStore();
 const { setBonusTabIndex } = bonusTransactionStore();
 const { setDepositWithdrawToggle } = appBarStore();
 const { setNavBarToggle } = appBarStore();
@@ -26,22 +31,48 @@ const { setCashDialogToggle } = appBarStore();
 const { setRefferalDialogShow } = refferalStore();
 const vipButtonTipShow = ref(true);
 const router = useRouter();
+
+// member information  会员信息
 const vipInfo = computed(() => {
     const { getVipInfo } = storeToRefs(vipStore());
     return getVipInfo.value
 })
+
+// periodic rewards  周期性奖励
+const vipCycleawardList = computed(() => {
+    const { getVipCycleawardList } = storeToRefs(vipStore());
+    return getVipCycleawardList.value;
+})
+
+// Level related rewards  等级相关奖励
+const vipLevelAward = computed(() => {
+    const { getVipLevelAward } = storeToRefs(vipStore());
+    return getVipLevelAward.value;
+})
+
+// Code rebate  打码返利
+const vipBetawardList = computed(() => {
+    const { getVipBetawardList } = storeToRefs(vipStore());
+    return getVipBetawardList.value;
+})
+
+// Recharge progress bar  充值进度条
 const depositRate = computed(() => {
     return vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100
 })
+
+// Betting progress bar  投注进度条
 const betRate = computed(() => {
     return vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100
 })
 
+// vip level  vip等级
 const vipLevels = computed(() => {
   const { getVipLevels } = storeToRefs(vipStore());
   return getVipLevels.value;
 });
 
+// Match VIP level name  匹配vip等级名称
 const vipLevelText = (value: number) => {
     for (let i in vipLevels.value) {
         if (vipLevels.value[i].level === value) {
@@ -50,114 +81,91 @@ const vipLevelText = (value: number) => {
     }
 }
 
+const vipLevelImg = (value: number) => {
+    if (value === 0) {
+        return img_vipemblem_1;
+    }
+    if (value > 0 && value < 25) {
+        return img_vipemblem_1_24;
+    }
+    if (value > 25 && value < 50) {
+        return img_vipemblem_25_49;
+    }
+    if (value > 49 && value < 76) {
+        return img_vipemblem_50_74;
+    }
+    if (value > 75 && value < 100) {
+        return img_vipemblem_75_99;
+    }
+    if (value > 99 && value < 150) {
+        return img_vipemblem_100_149;
+    }
+    if (value > 149 && value < 200) {
+        return img_vipemblem_159_199;
+    }
+    if (value === 200) {
+        return img_vipemblem_200;
+    }
+}
+
+// All available reward amounts  所有可领取奖励金额
 const awardValue = () => {
     let val = 0;
-    if (vipInfo.value.week_gift > 0) {
-        val = val + vipInfo.value.week_gift;
+    if (vipCycleawardList.value.membership_day_gift > 0) {
+        val = val + vipCycleawardList.value.membership_day_gift * 1;
     }
-    if (vipInfo.value.month_gift > 0) {
-        val = val + vipInfo.value.month_gift;
+    if (vipCycleawardList.value.week_gift > 0) {
+        val = val + vipCycleawardList.value.week_gift * 1;
     }
-    if (vipInfo.value.uprank_gift > 0) {
-        val = val + vipInfo.value.uprank_gift;
+    if (vipCycleawardList.value.month_gift > 0) {
+        val = val + vipCycleawardList.value.month_gift * 1;
     }
-    if (vipInfo.value.now_cash_back > 0) {
-        val = val + vipInfo.value.now_cash_back;
+    if (vipLevelAward.value.uprank_gift > 0) {
+        val = val + vipLevelAward.value.uprank_gift * 1;
     }
-    if (vipInfo.value.membership_day_gift > 0) {
-        val = val + vipInfo.value.membership_day_gift;
+    if (vipBetawardList.value.now_cash_back > 0) {
+        val = val + vipBetawardList.value.now_cash_back * 1;
     }
     return val;
 }
 
-const alertMessage = (message:string, type: number) => {
-  const toast = useToast();
-  toast.success(message, { 
-      timeout: 3000,
-      closeOnClick: false,
-      pauseOnFocusLoss: false,
-      pauseOnHover: false,
-      draggable: false,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: type == 1 ? SuccessIcon : WarningIcon,
-      rtl: false,
-  });
-}
-
-const errVIPMessage = computed((): string => {
-    const { getErrMessage } = storeToRefs(vipStore());
-    return getErrMessage.value
-})
-
+// Receive rewards with one click  一键领取奖励
 const submitVipLevelAward = async () => {
-    if (vipInfo.value.week_gift > 0) {
-        await dispatchVipLevelAward({
-            type: 1
-        }).then(() => {
-            alertMessage(t('reward.success_text'), 1);
-            dispatchVipInfo();
-        }).catch(()=>{
-            alertMessage(errVIPMessage.value, 0);
-        });
+    if (+vipCycleawardList.value.membership_day_gift > 0) {
+        await dispatchVipCycleawardReceive({ type: 2 });
     }
-    if (vipInfo.value.month_gift > 0) {
-        await dispatchVipLevelAward({
-            type: 2
-        }).then(() => {
-            alertMessage(t('reward.success_text'), 1);
-            dispatchVipInfo();
-        }).catch(()=>{
-            alertMessage(errVIPMessage.value, 0);
-        });
+    if (+vipCycleawardList.value.week_gift > 0) {
+        await dispatchVipCycleawardReceive({ type: 3 });
     }
-    if (vipInfo.value.uprank_gift > 0) {
-        await dispatchVipLevelAward({
-            type: 3
-        }).then(() => {
-            alertMessage(t('reward.success_text'), 1);
-            dispatchVipInfo();
-        }).catch(()=>{
-            alertMessage(errVIPMessage.value, 0);
-        });
+    if (+vipCycleawardList.value.month_gift > 0) {
+        await dispatchVipCycleawardReceive({ type: 4 });
     }
-    if (vipInfo.value.now_cash_back > 0) {
-        await dispatchVipLevelAward({
-            type: 4
-        }).then(() => {
-            alertMessage(t('reward.success_text'), 1);
-            dispatchVipInfo();
-        }).catch(()=>{
-            alertMessage(errVIPMessage.value, 0);
-        });
+    if (+vipLevelAward.value.uprank_gift > 0) {
+        await dispatchVipLevelAwardReceive({ type: 6 });
     }
-    if (vipInfo.value.membership_day_gift > 0) {
-        await dispatchVipLevelAward({
-            type: 5
-        }).then(() => {
-            alertMessage(t('reward.success_text'), 1);
-            dispatchVipInfo();
-        }).catch(()=>{
-            alertMessage(errVIPMessage.value, 0);
-        });
+    if (+vipBetawardList.value.now_cash_back > 0) {
+        await dispatchVipBetawardReceive({ type: 7 });
     }
 }
 
+// Route jump  路由跳转
 const goPath = () => {
     setVipNavBarToggle('0');
     router.push({name: "Bonuses And Transactions", query: { tab: "VIP" }});
     setBonusTabIndex(1);
 }
 
+// Telegram jump  Telegram跳转
 const goTelegram = () => {
     window.location.href = `https://t.me/${vipInfo.value.telegram}`
 }
 
+// vip prompt information status  vip提示信息状态
 const getVipButtonShow = (show: boolean) => {
     vipButtonTipShow.value = show;
 }
 
+// Jump to the recharge pop-up window  跳转到充值弹窗
 const depositDialogShow = () => {
     vipButtonTipShow.value = true;
     setVipNavBarToggle('0');
@@ -168,6 +176,7 @@ const depositDialogShow = () => {
     setCashDialogToggle(true);
 }
 
+// Fission pop-up window pops up  弹出裂变弹窗
 const refferalDialog = () => {
     vipButtonTipShow.value = true;
     setRefferalDialogShow(true);
@@ -180,7 +189,7 @@ const refferalDialog = () => {
         <div class="progress-main-card">
             <div class="progress-main-card-t">
                 <div class="progress-main-card-t-icon">
-                    <img :src="img_vipemblem_1_24" />
+                    <img :src="vipLevelImg(vipInfo.level)" />
                 </div>
                 <div class="progress-main-card-t-info">
                     <div class="progress-main-card-t-info-title">

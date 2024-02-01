@@ -2,24 +2,39 @@
 import { ref, computed, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
-const vipOverlay = ref(true);
+const { dispatchVipLevelAwardReceive } = vipStore();
+const vipOverlay = ref(false);
 const vipCheckboxVal = ref(false);
 
 const vipInfo = computed(() => {
     const { getVipInfo } = storeToRefs(vipStore());
-    return getVipInfo.value
+    return getVipInfo.value;
 })
 
-watch(vipCheckboxVal, (value: boolean) => {
-    if (value) {
-        localStorage.setItem("vipCheckbox", '1');
+// Level related rewards  等级相关奖励
+const vipLevelAward = computed(() => {
+    const { getVipLevelAward } = storeToRefs(vipStore());
+    return getVipLevelAward.value;
+})
+
+// watch(vipCheckboxVal, (value: boolean) => {
+//     if (value) {
+//         localStorage.setItem("vipCheckbox", '1');
+//     } else {
+//         localStorage.setItem("vipCheckbox", '0');
+//     }
+// })
+
+watch(vipLevelAward.upgrade_gift, (value: string) => {
+    if (+value > 0) {
+        vipOverlay.value = true;
     } else {
-        localStorage.setItem("vipCheckbox", '0');
+        vipOverlay.value = false;
     }
 })
 
 onMounted(() => {
-    if (vipInfo.value.uprank_gift > 0) {
+    if (+vipLevelAward.value.upgrade_gift > 0) {
         vipOverlay.value = true;
     }
     // if (localStorage.getItem('vipCheckbox') === '1') {
@@ -44,25 +59,26 @@ onMounted(() => {
                 </v-btn>
             </div>
             <div class="vip-overlay-level">
-                <span>Level 0 - Level 13</span>
+                <span>Level {{ vipLevelAward.level - vipLevelAward.level_up_num }} - Level {{ vipLevelAward.level }}</span>
             </div>
             <div class="vip-overlay-tip">
                 <span>Congratulations on leveling up!</span>
             </div>
             <div class="vip-overlay-content">
+                <div class="vip-overlay-content-image"></div>
                 <div class="vip-overlay-content-title">Congrats on the award!</div>
                 <div class="vip-overlay-content-icon">
                     <img src="@/assets/public/svg/icon_public_87.svg" width="20" />
                     <span>MXN</span>
                 </div>
                 <div class="vip-overlay-content-price">
-                    <span>20</span>
+                    <span>{{ vipLevelAward.upgrade_gift }}</span>
                 </div>
             </div>
             <div class="vip-overlay-button">
                 <v-btn
                     color="success"
-                    @click="vipOverlay = false"
+                    @click="dispatchVipLevelAwardReceive({ type: 5 })"
                 >
                     Get It Right Now
                 </v-btn>
@@ -78,6 +94,18 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@keyframes zoomInOut {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+        z-index: 999;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        z-index: -1;
+    }
+}
 .vip-position {
     position: fixed !important;
     z-index: 99999 !important;
@@ -134,16 +162,24 @@ onMounted(() => {
         }
     }
     &-content {
+        position: relative;
         width: 92%;
         height: 155px;
         margin: 20px auto;
         background: #15161C;
         box-shadow: 0px 0px 6px 1px #00000059 inset;
         border-radius: 8px;
-        background-image: url("@/assets/vip/image/img_vip_5.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-position-y: 36px;
+        &-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: zoomInOut 2s;
+            background-image: url("@/assets/vip/image/img_vip_5.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-position-y: 36px;
+            z-index: -1;
+        }
         &-title {
             line-height: 50px;
             text-align: center;
