@@ -228,7 +228,7 @@ onMounted(() => {
                     height: 32px;
                     font-size: 14px;
                     font-weight: 700;
-                    border-radius: 12px;
+                    border-radius: 8px;
                     background: rgba(249, 188, 1, 1);
                     color: #000;
                     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -399,7 +399,7 @@ onMounted(() => {
                     height: 32px;
                     font-size: 14px;
                     font-weight: 700;
-                    border-radius: 12px;
+                    border-radius: 8px;
                     background: rgba(249, 188, 1, 1);
                     color: #000;
                     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);

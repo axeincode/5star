@@ -597,10 +597,10 @@ onMounted(async () => {
     <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
       <template v-slot:activator="{ props }">
         <v-card
-          color="#1C1929"
+          color="#15161C"
           theme="dark"
           class="mx-4 mt-4 m-deposit-card-height"
-          style="border-radius: 12px"
+          style="border-radius: 8px"
         >
           <v-list-item
             v-bind="props"
@@ -617,7 +617,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#181522" class="px-2">
+      <v-list theme="dark" bg-color="#15161C" class="px-2">
         <v-list-item
           class="currency-item pl-6"
           :value="currencyItem.name"
@@ -643,10 +643,10 @@ onMounted(async () => {
     <v-menu offset="4" class="mt-1" v-model:model-value="paymentMenuShow">
       <template v-slot:activator="{ props }">
         <v-card
-          color="#1C1929"
+          color="#15161C"
           theme="dark"
           class="mx-4 mt-4 m-deposit-card-height"
-          style="border-radius: 12px"
+          style="border-radius: 8px"
         >
           <v-list-item
             v-bind="props"
@@ -663,7 +663,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#181522">
+      <v-list theme="dark" bg-color="#15161C">
         <v-row class="m-payment-width-370 px-1">
           <v-col
             cols="6"
@@ -671,7 +671,7 @@ onMounted(async () => {
             :key="paymentIndex"
             class="pa-1"
           >
-            <v-card color="#1C1929" theme="dark" class="text-center">
+            <v-card color="#23262F" theme="dark" class="text-center">
               <v-list-item
                 class="payment-select-item pa-2"
                 :value="paymentItem.name"
@@ -733,7 +733,7 @@ onMounted(async () => {
         variant="solo"
         density="comfortable"
         color="#7782AA"
-        style="border-radius: 12px"
+        style="border-radius: 8px"
         v-model="depositAmount"
         :onfocus="handleAmountInputFocus"
         :onblur="handleAmountInputBlur"
@@ -822,7 +822,7 @@ onMounted(async () => {
     background: transparent;
   }
 
-  background-color: #211f31;
+  background-color: #1D2027;
   height: 100%;
 
   .m-deposit-card-height {
@@ -850,7 +850,7 @@ onMounted(async () => {
     border-radius: 4px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
     width: 100% !important;
-
+    color:white !important;
     .v-btn__content {
       font-family: Inter;
       font-size: 12px;
@@ -861,7 +861,7 @@ onMounted(async () => {
   }
 
   .m-deposit-amout-btn-white {
-    background: #353652;
+    background: #23262F;
     border-radius: 4px;
     color: #ffffff;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
@@ -899,7 +899,7 @@ onMounted(async () => {
 
   .m-deposit-btn {
     text-align: center;
-    background: #353652;
+    background: #23262F;
 
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -921,12 +921,12 @@ onMounted(async () => {
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
     .v-btn__content {
-      color: #000000;
+      color: white;
     }
   }
 
   .dark-textfield .v-field__field {
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
   }
 
   .v-field--variant-solo {
@@ -940,7 +940,7 @@ onMounted(async () => {
 
   .amount-checkbox {
     i.v-icon {
-      color: #1c1929;
+      color: #15161C;
       background-color: #01983a;
       width: 16px;
       height: 16px;
@@ -949,7 +949,7 @@ onMounted(async () => {
     }
 
     i.mdi-checkbox-blank-outline {
-      background-color: #1c1929;
+      background-color: #15161C;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }

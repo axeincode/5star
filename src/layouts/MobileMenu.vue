@@ -1378,9 +1378,9 @@ onMounted(() => {
 
   .mail-item {
     margin-top: 4px !important;
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
     padding: 14px 20px !important;
-    border-radius: 12px !important;
+    border-radius: 8px !important;
     animation-name: mailScaling;
     animation-duration: 0.3s;
     animation-timing-function: linear;

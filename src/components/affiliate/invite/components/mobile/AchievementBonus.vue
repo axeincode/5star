@@ -141,7 +141,7 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <v-card color="#29253C" class="mt-5 mx-3 px-3 pt-4">
+  <v-card color="#1D2027" class="mt-5 mx-3 px-3 pt-4">
     <v-row class="justify-center mt-1">
       <div class="text-700-14 white">{{ t("affiliate.invite.achivement_bonus") }}</div>
       <img
@@ -199,7 +199,7 @@ onMounted(async () => {
           </v-btn>
         </template>
         <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
-          <v-sheet color="#29253C" height="100%" tile>
+          <v-sheet color="#1D2027" height="100%" tile>
             <v-row align="center" justify="center" class="mx-10 justify-center">
               <v-col
                 v-for="(i, index) in 3"
@@ -207,7 +207,7 @@ onMounted(async () => {
                 cols="4"
                 v-if="mobileWidth > 960"
               >
-                <v-card color="#211F31" class="mt-4 relative m-invite-carousel-card">
+                <v-card color="#1D2027" class="mt-4 relative m-invite-carousel-card">
                   <div class="m-invite-carousel-card-header"></div>
                   <img
                     :src="slide[index].headerImg"
@@ -252,7 +252,7 @@ onMounted(async () => {
                 cols="6"
                 v-else-if="mobileWidth > 600 && mobileWidth <= 960"
               >
-                <v-card color="#211F31" class="mt-4 relative m-invite-carousel-card">
+                <v-card color="#1D2027" class="mt-4 relative m-invite-carousel-card">
                   <div class="m-invite-carousel-card-header"></div>
                   <img
                     :src="slide[index1].headerImg"
@@ -292,7 +292,7 @@ onMounted(async () => {
                 </v-card>
               </v-col>
               <v-col v-for="(i, index2) in 1" :key="index2" cols="12" v-else>
-                <v-card color="#211F31" class="mt-4 relative m-invite-carousel-card">
+                <v-card color="#1D2027" class="mt-4 relative m-invite-carousel-card">
                   <div class="m-invite-carousel-card-header"></div>
                   <img
                     :src="slide[index2].headerImg"

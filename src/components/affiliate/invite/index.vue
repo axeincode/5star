@@ -222,7 +222,7 @@ onMounted(() => {
   <v-row class="mx-2 mt-2 align-center">
     <v-col cols="12" md="5" lg="5" class="ma-0 pa-0" style="height: 100%">
       <v-card
-        color="#29253C"
+        color="#1D2027"
         theme="dark"
         class="text-center pb-4"
         style="box-shadow: unset"
@@ -269,12 +269,12 @@ onMounted(() => {
     </v-col>
     <v-col cols="12" md="7" lg="7">
       <v-card
-        color="#29253C"
+        color="#1D2027"
         theme="dark"
         class="text-center pa-2"
         style="box-shadow: unset"
       >
-        <v-card color="#1C1929" class="pa-5 mb-2" style="box-shadow: unset">
+        <v-card color="#15161C" class="pa-5 mb-2" style="box-shadow: unset">
           <v-row>
             <v-col cols="6" md="3" lg="3" class="text-center py-1">
               <div class="invite-url-title">{{ t("affiliate.invite.text_1") }}</div>
@@ -312,7 +312,7 @@ onMounted(() => {
             </v-col>
           </v-row>
         </v-card>
-        <v-card color="#1C1929" class="pa-5 mb-2" style="box-shadow: unset">
+        <v-card color="#15161C" class="pa-5 mb-2" style="box-shadow: unset">
           <v-row>
             <v-col cols="6" md="3" lg="3" class="text-center py-1">
               <div class="invite-url-title">
@@ -352,7 +352,7 @@ onMounted(() => {
             </v-col>
           </v-row>
         </v-card>
-        <v-card color="#1C1929" class="pa-5 mb-3" style="box-shadow: unset">
+        <v-card color="#15161C" class="pa-5 mb-3" style="box-shadow: unset">
           <v-row>
             <v-col cols="12" class="text-center py-1">
               <div class="invite-url-title">{{ t("affiliate.invite.text_9") }}</div>
@@ -464,7 +464,7 @@ onMounted(() => {
       </div>
     </v-row>
   </v-card>
-  <!-- <v-card color="#29253C" class="mt-5 mx-3 pa-3 py-5">
+  <!-- <v-card color="#1D2027" class="mt-5 mx-3 pa-3 py-5">
     <v-row class="justify-center">
       <div class="premiums-text">{{ t("affiliate.invite.achivement_bonus") }}</div>
       <img
@@ -516,7 +516,7 @@ onMounted(() => {
           </v-btn>
         </template>
         <v-carousel-item v-for="(slide, slideIndex) in slides" :key="slideIndex">
-          <v-sheet color="#29253C" height="100%" tile>
+          <v-sheet color="#1D2027" height="100%" tile>
             <v-row align="center" justify="center" class="mx-10 justify-center">
               <v-col
                 v-for="(i, index) in 3"
@@ -524,7 +524,7 @@ onMounted(() => {
                 cols="4"
                 v-if="mobileWidth > 960"
               >
-                <v-card color="#211F31" class="mt-4 relative invite-carousel-card">
+                <v-card color="#1D2027" class="mt-4 relative invite-carousel-card">
                   <div class="invite-carousel-card-header"></div>
                   <img :src="slide[index].headerImg" class="invite-carousel-header-img" />
                   <div class="invite-carousel-header-text">
@@ -566,7 +566,7 @@ onMounted(() => {
                 cols="6"
                 v-else-if="mobileWidth > 600 && mobileWidth <= 960"
               >
-                <v-card color="#211F31" class="mt-4 relative invite-carousel-card">
+                <v-card color="#1D2027" class="mt-4 relative invite-carousel-card">
                   <div class="invite-carousel-card-header"></div>
                   <img
                     :src="slide[index1].headerImg"
@@ -606,7 +606,7 @@ onMounted(() => {
                 </v-card>
               </v-col>
               <v-col v-for="(i, index2) in 1" :key="index2" cols="12" v-else>
-                <v-card color="#211F31" class="mt-4 relative invite-carousel-card">
+                <v-card color="#1D2027" class="mt-4 relative invite-carousel-card">
                   <div class="invite-carousel-card-header"></div>
                   <img
                     :src="slide[index2].headerImg"
@@ -665,7 +665,7 @@ onMounted(() => {
           style="cursor: pointer"
         />
       </template>
-      <v-list theme="dark" bg-color="#211F31" class="px-2" width="400">
+      <v-list theme="dark" bg-color="#1D2027" class="px-2" width="400">
         <p class="pa-4 invite-url-title">{{ t("affiliate.invite.help_text_2") }}</p>
       </v-list>
     </v-menu>
@@ -780,9 +780,9 @@ onMounted(() => {
 
 .invite-url-item {
   margin: 16px 12px !important;
-  background-color: #1c1929 !important;
+  background-color: #15161C !important;
   padding: 4px 8px !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-list-item__content {
     height: 100%;
@@ -794,7 +794,7 @@ onMounted(() => {
 }
 
 .invite-receive-btn {
-  background: #353652 !important;
+  background: #23262F !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
   border-radius: 16px !important;
   font-weight: 700 !important;
@@ -821,7 +821,7 @@ onMounted(() => {
 }
 
 .invite-border {
-  border-right: 2px solid #414968;
+  border-right: 2px solid #23262F;
 }
 
 .invite-url-right-text {
@@ -842,7 +842,7 @@ onMounted(() => {
 
 .invite-url-copy-btn {
   border-radius: 4px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
 }
 
 .invite-revenu-cash-text {
@@ -888,9 +888,9 @@ onMounted(() => {
 }
 
 .invitation-bonus-table-bg {
-  background-color: #211f31 !important;
+  background-color: #1D2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -1014,8 +1014,8 @@ onMounted(() => {
 }
 
 .footer-body-bg {
-  background: #211f31;
-  border-radius: 12px;
+  background: #1D2027;
+  border-radius: 8px;
 }
 
 .footer-body-cash-text {
@@ -1037,7 +1037,7 @@ onMounted(() => {
 }
 
 .bonus-progress-bg .v-progress-linear {
-  background: #211f31 !important;
+  background: #1D2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 20px !important;
 }

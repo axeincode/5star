@@ -116,7 +116,7 @@ const submitSuspend = async () => {
 <style lang="scss">
 // account dialog container
 .suspend-dialog-container {
-  background-color: #1c1929;
+  background-color: #15161C;
   border-radius: 16px !important;
   height: 220px;
 }
@@ -136,7 +136,7 @@ const submitSuspend = async () => {
 .suspend-cancel-btn {
   // button
   button {
-    background: #414968 !important;
+    background: #23262F !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 

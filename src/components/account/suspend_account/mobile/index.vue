@@ -91,12 +91,12 @@ const confirmDailogShow = () => {
 
 <style lang="scss">
 .m-suspend-menu {
-  background-color: #211f31;
+  background-color: #1D2027;
   border-radius: 0px 0px 12px 12px !important;
   height: 400px;
 
   .v-field__field {
-    background: #1c1929 !important;
+    background: #15161C !important;
   }
 
   .form-textfield div.v-field__field {

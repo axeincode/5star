@@ -116,7 +116,7 @@ const depositDialogShow = () => {
   .m-get-bonus-dialog-card-1 {
     height: 137px;
     border-radius: 14px;
-    background: #211f31;
+    background: #1D2027;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
   .m-get-bonus-dialog-btn {

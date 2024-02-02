@@ -55,7 +55,7 @@ onMounted(async () => {
             <img src="@/assets/public/svg/icon_public_22.svg" v-bind="props"
               style="cursor: pointer; position: absolute; top: 2px; right: -21px" width="16" />
           </template>
-          <v-list theme="dark" bg-color="#211F31" class="px-2" :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
+          <v-list theme="dark" bg-color="#1D2027" class="px-2" :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
             style="margin: 0px 8px 0px 3px">
             <v-list-item class="pt-4">
               <div class="text-center text-400-12 gray">

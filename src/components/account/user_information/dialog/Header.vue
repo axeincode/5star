@@ -35,12 +35,12 @@ const userDialogHide = () => {
 <style lang="scss">
 // header container
 .account-header {
-    background-color: #211F31;
+    background-color: #1D2027;
     border-radius: 16px !important;
 
     .header {
         text-align: center;
-        background: #29253C;
+        background: #1D2027;
         border-radius: 16px 16px 0px 0px;
         height: 72px;
     }

@@ -159,7 +159,7 @@ onMounted(() => {
             </div>
           </v-btn>
         </template>
-        <v-list theme="dark" bg-color="#211F31" width="324" height="435">
+        <v-list theme="dark" bg-color="#1D2027" width="324" height="435">
           <p class="text-900-14 gray mt-4 text-center">
             {{ t("vip.roulette_bonus.help_menu.title_text") }}
           </p>
@@ -444,7 +444,7 @@ onMounted(() => {
   float: right;
   top: -30px;
   right: 70px;
-  border: 17px solid #211f31;
+  border: 17px solid #1D2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -475,7 +475,7 @@ onMounted(() => {
     background: #29263c;
 
     .m-roulette-bonus-dialog-sound-bg-1 {
-      background: #211f31;
+      background: #1D2027;
       border-radius: 34px;
       position: relative;
       z-index: 2000;
@@ -484,7 +484,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-sound-bg-2 {
       width: 28px;
       height: 28px;
-      background: #29253c;
+      background: #1D2027;
       border-radius: 28px;
       position: absolute;
       left: 50%;
@@ -513,7 +513,7 @@ onMounted(() => {
     justify-content: end;
 
     .m-roulette-bonus-dialog-help-bg {
-      background: #211f31;
+      background: #1D2027;
       border-radius: 34px;
       position: relative;
       z-index: 2000;
@@ -522,7 +522,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-help-bg-2 {
       width: 28px;
       height: 28px;
-      background: #29253c;
+      background: #1D2027;
       border-radius: 28px;
       position: absolute;
       left: 50%;
@@ -538,7 +538,7 @@ onMounted(() => {
     }
 
     .m-roulette-bonus-dialog-close-bg {
-      background: #211f31;
+      background: #1D2027;
       border-radius: 34px;
       position: relative;
       z-index: 2000;
@@ -547,7 +547,7 @@ onMounted(() => {
     .m-roulette-bonus-dialog-close-bg-2 {
       width: 28px;
       height: 28px;
-      background: #29253c;
+      background: #1D2027;
       border-radius: 28px;
       position: absolute;
       left: 50%;
@@ -659,7 +659,7 @@ onMounted(() => {
       width: 312px;
       height: 60px;
       border-radius: 10px;
-      background: #211f31;
+      background: #1D2027;
       /* Text Box */
       box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
     }
@@ -690,7 +690,7 @@ onMounted(() => {
         width: 26px;
         height: 26px;
         flex-shrink: 0;
-        background: #211f31;
+        background: #1D2027;
         border-radius: 30px;
       }
     }
@@ -704,15 +704,15 @@ onMounted(() => {
       width: 312px;
       height: 82px;
       border-radius: 10px;
-      background: #211f31;
+      background: #1D2027;
       /* Text Box */
       box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
     }
 
     .m-roulette-bonus-dialog-body-4 {
-      border-radius: 12px;
+      border-radius: 8px;
       border: 1px solid #693ff8;
-      background: #1c1929;
+      background: #15161C;
       box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
       position: absolute;
       top: 402px;
@@ -736,7 +736,7 @@ onMounted(() => {
   .m-roulette-bonus-dialog-winner-body {
     width: 100%;
     border-radius: 24px;
-    background: #29253c;
+    background: #1D2027;
     position: absolute;
     bottom: 0;
     z-index: 1;
@@ -756,7 +756,7 @@ onMounted(() => {
         position: relative;
         display: block;
         border-radius: 50px;
-        background: #211f31;
+        background: #1D2027;
         box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
         cursor: pointer;
         transition: 0.3s;
@@ -830,8 +830,8 @@ onMounted(() => {
       transform: translateX(-50%);
       width: 312px;
       height: 153px;
-      border-radius: 12px;
-      background: #211f31;
+      border-radius: 8px;
+      background: #1D2027;
       /* Text Box */
       box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
       overflow-y: auto;

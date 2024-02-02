@@ -226,7 +226,7 @@ onMounted(() => {
             <v-icon class="header-mdi-icon" v-else>mdi-chevron-down</v-icon>
           </v-btn>
         </template>
-        <v-list theme="dark" bg-color="#29253C" class="px-2" width="471">
+        <v-list theme="dark" bg-color="#1D2027" class="px-2" width="471">
           <v-list-item class="pt-4">
             <div class="text-center deposit-text">
               {{ t("deposit_dialog.personal_information.header_text") }}
@@ -330,12 +330,12 @@ onMounted(() => {
 <style lang="scss">
 // header container
 .cash-header {
-  background-color: #211f31;
+  background-color: #1D2027;
   border-radius: 16px !important;
 
   .header {
     text-align: center;
-    background: #29253c;
+    background: #1D2027;
     border-radius: 16px 16px 0px 0px;
     height: 80px;
   }
@@ -343,7 +343,7 @@ onMounted(() => {
   .deposit-header-btn {
     width: 100px !important;
     height: 80px !important;
-    background: #29253c !important;
+    background: #1D2027 !important;
     box-shadow: none !important;
     border: none !important;
   }
@@ -375,7 +375,7 @@ onMounted(() => {
       height: 40px;
       position: relative;
       display: block;
-      background: #211f31;
+      background: #1D2027;
       border-radius: 20px !important;
       // box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
       cursor: pointer;
@@ -459,7 +459,7 @@ onMounted(() => {
   }
 
   .dark-textfield .v-field__field {
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
   }
 
   .v-field--variant-solo {
@@ -506,7 +506,7 @@ onMounted(() => {
   width: 48px;
   height: 48px;
   border-radius: 48px;
-  background: #211f31;
+  background: #1D2027;
 }
 
 .deposit-header-account-bg-1 {
@@ -518,7 +518,7 @@ onMounted(() => {
   height: 38px;
   flex-shrink: 0;
   border-radius: 38px;
-  background: #29253c;
+  background: #1D2027;
 }
 
 .deposit-header-account-position {
@@ -538,7 +538,7 @@ onMounted(() => {
   text-align: center;
   width: 176px;
   border-radius: 16px;
-  background: #353652;
+  background: #23262F;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);

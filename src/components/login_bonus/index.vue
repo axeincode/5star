@@ -230,7 +230,7 @@ const handleLoginBonus = (day: number) => {
     width: 447px;
     height: 547px;
     border-radius: 14px;
-    background: #211F31;
+    background: #1D2027;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
     z-index: 20;
 }
@@ -374,7 +374,7 @@ const handleLoginBonus = (day: number) => {
 }
 
 .left-login-bonus-button {
-    background: #211F31;
+    background: #1D2027;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }

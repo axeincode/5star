@@ -152,7 +152,7 @@ const handleEmailFocus = () => {
                 density="comfortable" v-model="email" :onblur="handleEmailBlur" @input="handleEmailChange" :onfocus="handleEmailFocus" />
         </v-row>
         <div class="login-mail-card edit-mail" :style="{ height: mailCardHeight + 'px' }">
-          <v-list theme="dark" bg-color="#211F31">
+          <v-list theme="dark" bg-color="#1D2027">
             <v-list-item
               class="text-500-16 white"
               value="gmail"

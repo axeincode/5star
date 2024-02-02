@@ -487,7 +487,7 @@ onMounted(async () => {
   align-items: center;
   gap: 10px;
   border-radius: 6px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -510,7 +510,7 @@ onMounted(async () => {
   width: 28px;
   height: 28px;
   border-radius: 3px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 }

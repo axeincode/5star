@@ -240,8 +240,8 @@ onMounted(async () => {
 <style lang="scss">
 .m-statistics-summary-card {
   margin: 16px 16px 0px 16px;
-  border-radius: 12px;
-  background: #29253c;
+  border-radius: 8px;
+  background: #1D2027;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   overflow-x: auto;
 }
@@ -250,14 +250,14 @@ onMounted(async () => {
   width: 600px;
   height: 32px;
   border-radius: 8px;
-  background: #211f31;
+  background: #1D2027;
 }
 .m-statistics-user-card {
   align-items: center;
   width: 600px;
   height: 48px;
   border-radius: 8px;
-  background: #211f31;
+  background: #1D2027;
 }
 .m-statistics-commission-card {
   align-items: center;
@@ -269,7 +269,7 @@ onMounted(async () => {
 .m-statistics-summary-tab {
   height: 64px;
   border-radius: 0px 0px 8px 8px;
-  background: #29253c;
+  background: #1D2027;
   align-items: center;
   justify-content: center;
 }
@@ -280,14 +280,14 @@ onMounted(async () => {
 }
 .m-statistics-receive-card {
   height: 101px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: linear-gradient(180deg, #2e68af 0%, #21a68b 100%);
   align-items: center;
   justify-content: center;
 }
 .m-statistics-receive-btn {
   border-radius: 9px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
     color: #fff;

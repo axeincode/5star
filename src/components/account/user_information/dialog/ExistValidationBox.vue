@@ -35,9 +35,9 @@ export default ValidationBox
     position: absolute;
     bottom: 64px;
     width: 94%;
-    background: #211F31;
+    background: #1D2027;
     // box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
+    border-radius: 8px;
     margin: 12px; // wrapped by v-row
     padding-bottom: 0px !important;
     z-index: 2;
@@ -64,7 +64,7 @@ export default ValidationBox
     right: 50%;
     width: 0px;
     height: 0px;
-    border: 9px solid #211f31;
+    border: 9px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-bottom-color: transparent;

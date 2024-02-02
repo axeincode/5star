@@ -123,7 +123,7 @@ const handleVerifyCode = () => {
     </v-row>
     <v-row class="mx-3 mt-6">
       <v-col cols="12" class="pa-0">
-        <v-card color="#1C1929" theme="dark" class="m-user-info-item">
+        <v-card color="#15161C" theme="dark" class="m-user-info-item">
           <v-list-item style="height: 100%; top: -3px !important">
             <v-list-item-title class="ml-2" style="line-height: 18px">
               <div class="text-400-10 text-gray">
@@ -142,7 +142,7 @@ const handleVerifyCode = () => {
     </v-row>
     <v-row class="mx-3 mt-8">
       <v-col cols="12" class="pa-0">
-        <v-card color="#1C1929" theme="dark" class="m-user-info-item">
+        <v-card color="#15161C" theme="dark" class="m-user-info-item">
           <v-list-item style="height: 100%; top: -3px !important">
             <v-list-item-title class="ml-2" style="line-height: 18px">
               <div class="text-400-10 text-gray">{{ t("account.item.email_text") }}</div>
@@ -174,7 +174,7 @@ const handleVerifyCode = () => {
     </v-row>
     <v-row class="mx-3 mt-8">
       <v-col cols="12" class="pa-0">
-        <v-card color="#1C1929" theme="dark" class="m-user-info-item">
+        <v-card color="#15161C" theme="dark" class="m-user-info-item">
           <v-list-item style="height: 100%; top: -3px !important">
             <v-list-item-title class="ml-2" style="line-height: 18px">
               <div class="text-400-10 text-gray">
@@ -196,7 +196,7 @@ const handleVerifyCode = () => {
         <div class="mt-4">
           <v-row>
             <v-col cols="4" lg="3">
-              <v-card color="#1C1929" theme="dark" class="m-user-info-item">
+              <v-card color="#15161C" theme="dark" class="m-user-info-item">
                 <v-list-item
                   :value="t('account.item.area_text')"
                   class="text-center"
@@ -220,7 +220,7 @@ const handleVerifyCode = () => {
               </v-card>
             </v-col>
             <v-col cols="8" lg="9" class="pl-0">
-              <v-card color="#1C1929" theme="dark" class="m-user-info-item">
+              <v-card color="#15161C" theme="dark" class="m-user-info-item">
                 <v-list-item style="height: 100%; top: -3px !important">
                   <v-list-item-title class="ml-2">
                     <div class="text-600-12 text-gray">{{ userInfo.phone }}</div>
@@ -277,7 +277,7 @@ const handleVerifyCode = () => {
 .m-account-speaker-bg {
   width: 44px;
   height: 44px;
-  background: #4931a5;
+  background: #009B3A;
   border-radius: 44px;
   position: absolute;
   right: 20px;
@@ -314,15 +314,15 @@ const handleVerifyCode = () => {
 
 .m-email-verify-btn-color {
   width: 100%;
-  background: #2f2756;
-  border: 1px solid #6842ec;
-  border-radius: 12px;
+  background: transparent;
+  border: 1px solid #009B3A;
+  border-radius: 8px;
 
   .v-btn__content {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #6842ec;
+    color: #009B3A;
   }
 }
 

@@ -244,6 +244,6 @@ const handleClose = () => {
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #211F31;
+    color: #1D2027;
 }
 </style>

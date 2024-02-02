@@ -168,7 +168,7 @@ const mobileWidth = computed(() => {
 <style lang="scss">
 .achievement-realization-card {
   border-radius: 8px;
-  background: #29253c;
+  background: #1D2027;
   height: 72px;
   box-shadow: none;
 }
@@ -176,7 +176,7 @@ const mobileWidth = computed(() => {
   .v-progress-linear {
     width: 280px;
     border-radius: 30px;
-    background: #211f31;
+    background: #1D2027;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
   .v-progress-linear__determinate {
@@ -185,14 +185,14 @@ const mobileWidth = computed(() => {
     left: 2px;
     border-radius: 30px;
     height: 20px;
-    background: linear-gradient(0deg, #1c1929 0%, #393a71 100%);
+    background: linear-gradient(0deg, #15161C 0%, #393a71 100%);
   }
 }
 .achievement-realization-progress-active-bg {
   .v-progress-linear {
     width: 280px;
     border-radius: 30px;
-    background: #211f31;
+    background: #1D2027;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
   .v-progress-linear__determinate {
@@ -219,10 +219,10 @@ const mobileWidth = computed(() => {
 }
 .achievement-realization-btn {
   border-radius: 8px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
-    color: #414968;
+    color: #23262F;
     font-family: Inter;
     font-size: 16px;
     font-style: normal;

@@ -81,7 +81,7 @@ onMounted(() => {
                 {{ t('refferal.description.text_2') }}
             </div>
             <div class="mt-6 mx-10">
-                <v-card height="420" theme="dark" color="#211F31" class="overflow-y-auto">
+                <v-card height="420" theme="dark" color="#1D2027" class="overflow-y-auto">
                     <div class="mx-4 mt-4 text-600-16 text-gray">
                         {{ t('refferal.description.term_text') }}
                     </div>
@@ -125,7 +125,7 @@ onMounted(() => {
                     {{ t('refferal.dialog.body.text_2') }}{{ refferalCode }}{{ t('refferal.dialog.body.text_3') }}
                 </div>
                 <div class="text-center mt-6 mx-12">
-                    <v-card theme="dark" color="#211F31" height="48">
+                    <v-card theme="dark" color="#1D2027" height="48">
                         <div class="text-400-14 text-gray mt-4">{{ siteUrl }}</div>
                     </v-card>
                 </div>

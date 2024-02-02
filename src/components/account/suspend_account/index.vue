@@ -70,7 +70,7 @@ const confirmDailogShow = () => {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 10px solid #211F31;
+    border-right: 10px solid #1D2027;
 }
 .suspend-account-body{
     .form-textfield div.v-field__field {
@@ -80,12 +80,12 @@ const confirmDailogShow = () => {
 }
 
 .suspend-menu {
-    background-color: #211F31;
+    background-color: #1D2027;
     border-radius: 0px 0px 12px 12px !important;
     height: 600px;
 
     .v-field__field {
-        background: #1C1929 !important;
+        background: #15161C !important;
     }
 }
 .suspend-dialog-position {

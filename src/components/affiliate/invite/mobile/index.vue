@@ -232,7 +232,7 @@ onMounted(async () => {
         </template>
         <v-list
           theme="dark"
-          bg-color="#211F31"
+          bg-color="#1D2027"
           class="px-2"
           :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
           style="margin: 0px 8px 0px 3px"
@@ -322,18 +322,18 @@ onMounted(async () => {
 
 .m-invite-url-item {
   margin: 16px 12px !important;
-  background-color: #211f31 !important;
+  background-color: #1D2027 !important;
   padding: 4px 8px !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 }
 
 .m-invite-url-copy-btn {
   border-radius: 4px;
-  background: var(--secondary-button-353652, #353652);
+  background: var(--secondary-button-353652, #23262F);
 }
 
 .invite-receive-btn {
-  background: #353652 !important;
+  background: #23262F !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
   border-radius: 16px !important;
   font-weight: 700 !important;
@@ -363,7 +363,7 @@ onMounted(async () => {
 }
 
 .m-invite-border {
-  border-right: 2px solid #414968;
+  border-right: 2px solid #23262F;
 }
 
 .invite-right-card-bg {
@@ -419,9 +419,9 @@ onMounted(async () => {
 }
 
 .invitation-bonus-table-bg {
-  background-color: #211f31 !important;
+  background-color: #1D2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -493,7 +493,7 @@ onMounted(async () => {
   height: 300px;
   flex-shrink: 0;
   border-radius: 30px;
-  background: #29253c;
+  background: #1D2027;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -563,8 +563,8 @@ onMounted(async () => {
 
 .m-footer-body-bg {
   margin-top: -7px;
-  background: #211f31;
-  border-radius: 12px;
+  background: #1D2027;
+  border-radius: 8px;
 }
 
 .footer-body-cash-text {
@@ -586,7 +586,7 @@ onMounted(async () => {
 }
 
 .bonus-progress-bg .v-progress-linear {
-  background: #211f31 !important;
+  background: #1D2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 20px !important;
 }

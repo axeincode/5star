@@ -759,7 +759,7 @@ onMounted(() => {
             {{ t("vip.cashback_body.text_2") }}
           </v-btn>
         </div>
-        <v-card theme="dark" color="#1C1929" class="mt-6 mx-4">
+        <v-card theme="dark" color="#15161C" class="mt-6 mx-4">
           <div class="pa-6">
             <v-row class="ma-0 pa-0 align-center">
               <p class="text-500-16 white">
@@ -772,7 +772,7 @@ onMounted(() => {
             </v-row>
             <v-row class="pa-3">
               <v-col cols="6" md="3">
-                <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
+                <v-card theme="dark" color="#1D2027" class="text-center pa-2 relative">
                   <img
                     src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
@@ -785,7 +785,7 @@ onMounted(() => {
                 </v-card>
               </v-col>
               <v-col cols="6" md="3">
-                <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
+                <v-card theme="dark" color="#1D2027" class="text-center pa-2 relative">
                   <img
                     src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
@@ -798,7 +798,7 @@ onMounted(() => {
                 </v-card>
               </v-col>
               <v-col cols="6" md="3">
-                <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
+                <v-card theme="dark" color="#1D2027" class="text-center pa-2 relative">
                   <img
                     src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
@@ -811,7 +811,7 @@ onMounted(() => {
                 </v-card>
               </v-col>
               <v-col cols="6" md="3">
-                <v-card theme="dark" color="#29253C" class="text-center pa-2 relative">
+                <v-card theme="dark" color="#1D2027" class="text-center pa-2 relative">
                   <img
                     src="@/assets/vip/image/img_vip_11.png"
                     class="cashback-card-img"
@@ -826,7 +826,7 @@ onMounted(() => {
             </v-row>
           </div>
         </v-card>
-        <v-card theme="dark" color="#1C1929" class="mt-6 mx-4">
+        <v-card theme="dark" color="#15161C" class="mt-6 mx-4">
           <div class="pa-6">
             <v-row class="pa-3 align-center">
               <v-col cols="6" md="3">
@@ -867,7 +867,7 @@ onMounted(() => {
           {{ t("vip.super_spin_body.text_1") }}
           <v-card
             theme="dark"
-            color="#1C1929"
+            color="#15161C"
             class="ml-auto d-flex align-center"
             height="60"
             width="470"
@@ -885,7 +885,7 @@ onMounted(() => {
           </v-card>
         </div>
         <div
-          color="#1C1929"
+          color="#15161C"
           class="ma-4 pa-6 spin-game-card box"
           :style="{
             height: spinCardShow ? spinCardHeight2 + 'px' : spinCardHeight1 + 'px',
@@ -901,7 +901,7 @@ onMounted(() => {
               :key="index"
               class="text-center d-flex justify-center"
             >
-              <v-card theme="dark" color="#29253C" class="py-10" width="210" height="256">
+              <v-card theme="dark" color="#1D2027" class="py-10" width="210" height="256">
                 <img :src="item.image" />
                 <p class="text-600-16 white mt-4">{{ item.title }}</p>
                 <p class="text-500-12 text-gray mt-4">{{ item.content }}</p>
@@ -936,7 +936,7 @@ onMounted(() => {
           </p>
         </div>
         <div
-          color="#1C1929"
+          color="#15161C"
           class="ma-4 pa-6 spin-game-card box"
           :style="{
             height: missionCardShow ? vipMissionHeight2 + 'px' : vipMissionHeight1 + 'px',
@@ -953,7 +953,7 @@ onMounted(() => {
             >
               <v-card
                 theme="dark"
-                color="#29253C"
+                color="#1D2027"
                 class="py-5"
                 width="210"
                 height="256"
@@ -976,7 +976,7 @@ onMounted(() => {
               </v-card>
               <v-card
                 theme="dark"
-                color="#29253C"
+                color="#1D2027"
                 class="py-5"
                 width="210"
                 height="256"
@@ -1062,7 +1062,7 @@ onMounted(() => {
               </v-card>
               <v-card
                 theme="dark"
-                color="#29253C"
+                color="#1D2027"
                 class="py-5"
                 width="210"
                 height="256"
@@ -1091,7 +1091,7 @@ onMounted(() => {
               </v-card>
               <v-card
                 theme="dark"
-                color="#29253C"
+                color="#1D2027"
                 class="py-5"
                 width="210"
                 height="256"
@@ -1152,7 +1152,7 @@ onMounted(() => {
                 </p>
                 <v-card
                   theme="dark"
-                  color="#1C1929"
+                  color="#15161C"
                   class="mt-2"
                   :height="mobileWidth > 960 ? 75 : undefined"
                 >
@@ -1180,7 +1180,7 @@ onMounted(() => {
                 <p class="text-700-16 white ml-6">
                   {{ t("vip.benifit_description_body.text_3") }}
                 </p>
-                <v-card theme="dark" color="#1C1929" class="mt-2">
+                <v-card theme="dark" color="#15161C" class="mt-2">
                   <v-row class="mx-4 my-0 pa-0 align-center">
                     <v-col cols="12">
                       <p class="text-500-16 text-gray">
@@ -1199,7 +1199,7 @@ onMounted(() => {
                 </p>
                 <v-card
                   theme="dark"
-                  color="#1C1929"
+                  color="#15161C"
                   class="mt-2"
                   :height="mobileWidth > 960 ? 75 : undefined"
                 >
@@ -1241,7 +1241,7 @@ onMounted(() => {
                 </p>
                 <v-card
                   theme="dark"
-                  color="#1C1929"
+                  color="#15161C"
                   class="mt-2"
                   :height="mobileWidth > 960 ? 75 : undefined"
                 >
@@ -1293,7 +1293,7 @@ onMounted(() => {
                 </p>
                 <v-card
                   theme="dark"
-                  color="#1C1929"
+                  color="#15161C"
                   class="mt-2"
                   :height="mobileWidth > 960 ? 75 : undefined"
                 >
@@ -1377,21 +1377,21 @@ onMounted(() => {
 <style lang="scss">
 .vip-container {
   margin: -20px 40px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .vip-container-1 {
   margin: -20px 40px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .m-vip-container {
   margin: -20px 0px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
@@ -1400,7 +1400,7 @@ onMounted(() => {
   padding-top: 30px;
 
   .v-slide-group {
-    background: #1c1929 !important;
+    background: #15161C !important;
     margin: 0px !important;
     border-radius: 0px !important;
   }
@@ -1429,7 +1429,7 @@ onMounted(() => {
 
 .reward-body {
   border-radius: 8px;
-  background: #29253c;
+  background: #1D2027;
 }
 
 .reward-card {
@@ -1518,7 +1518,7 @@ onMounted(() => {
   /* Set the transition properties */
   transition: height 0.3s ease-out;
   border-radius: 8px;
-  background: #1c1929;
+  background: #15161C;
   overflow: hidden;
 }
 
@@ -1592,14 +1592,14 @@ onMounted(() => {
 .mission-progress-bg {
   .v-progress-linear {
     border-radius: 8px;
-    background: #1c1929 !important;
+    background: #15161C !important;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
 
   .v-progress-linear__background {
     border-radius: 8px;
-    background: #1c1929 !important;
+    background: #15161C !important;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
@@ -1617,7 +1617,7 @@ onMounted(() => {
 
 .benifit-description-body {
   border-radius: 8px;
-  background: #29253c;
+  background: #1D2027;
 
   .benifit-description-header {
     border-radius: 8px;

@@ -29,7 +29,7 @@ const mobileWidth = computed(() => {
 
 <template>
   <v-card
-    color="#29253C"
+    color="#1D2027"
     theme="dark"
     class="text-center m-social-community-card mx-4 mt-6 px-8 py-4"
   >

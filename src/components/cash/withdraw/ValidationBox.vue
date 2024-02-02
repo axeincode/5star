@@ -44,9 +44,9 @@ const mobileWidth = computed(() => {
   position: absolute;
   bottom: 64px;
   width: 94%;
-  background: #1c1929;
+  background: #15161C;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
-  border-radius: 12px;
+  border-radius: 8px;
   margin: 12px;
   padding-bottom: 0px !important;
   z-index: 2;
@@ -66,9 +66,9 @@ const mobileWidth = computed(() => {
   position: absolute;
   bottom: 64px;
   width: 380px;
-  background: #1c1929;
+  background: #15161C;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
-  border-radius: 12px;
+  border-radius: 8px;
   margin: 12px;
   padding-bottom: 0px !important;
   margin-left: 58px;
@@ -96,7 +96,7 @@ const mobileWidth = computed(() => {
   right: 172px;
   width: 0px;
   height: 0px;
-  border: 9px solid #1c1929;
+  border: 9px solid #15161C;
   border-right-color: transparent;
   border-left-color: transparent;
   border-bottom-color: transparent;
@@ -116,7 +116,7 @@ const mobileWidth = computed(() => {
   right: 172px;
   width: 0px;
   height: 0px;
-  border: 9px solid #1c1929;
+  border: 9px solid #15161C;
   border-right-color: transparent;
   border-left-color: transparent;
   border-bottom-color: transparent;

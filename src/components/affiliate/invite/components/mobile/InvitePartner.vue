@@ -73,7 +73,7 @@ watch(inviteItem, (new_value) => {
 <template>
   <v-row class="mx-4 mt-2 mb-1 align-center">
     <v-col cols="12" md="5" lg="5" class="ma-0 pa-0" style="height: 100%">
-      <v-card color="#29253C" theme="dark" class="text-center">
+      <v-card color="#1D2027" theme="dark" class="text-center">
         <p class="mt-3 m-invite-partner-text text-center">
           {{ t("affiliate.invite.invite_partner") }}
         </p>
@@ -88,7 +88,7 @@ watch(inviteItem, (new_value) => {
             </div>
           </v-list-item-title>
           <template v-slot:append>
-            <v-btn icon="" @click="inviteUrlCopy(item.content)" class="m-invite-url-copy-btn" bg-color="#353652"
+            <v-btn icon="" @click="inviteUrlCopy(item.content)" class="m-invite-url-copy-btn" bg-color="#23262F"
               width="24" height="24">
               <img src="@/assets/public/svg/icon_public_71.svg" width="16" />
             </v-btn>
@@ -110,7 +110,7 @@ watch(inviteItem, (new_value) => {
 }
 
 .v-list-item__append {
-  margin-top: 13px;
+  margin-top: 7px;
   display: block !important;
   align-self: baseline;
 }

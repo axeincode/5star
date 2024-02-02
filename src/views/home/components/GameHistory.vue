@@ -784,11 +784,11 @@ export default GameHistoryComponent;
       </div>
       <v-card color="#211F32" theme="dark" class="home-lucky-jackpot-height mt-4">
         <v-card
-          color="#29253C"
+          color="#1D2027"
           theme="dark"
           height="64"
           class="mx-2 mt-2"
-          style="border-radius: 16px; background: #29253c; box-shadow: unset"
+          style="border-radius: 16px; background: #1D2027; box-shadow: unset"
         >
           <v-row class="mx-3 my-2 align-center">
             <v-col cols="4" class="text-700-16 gray">{{ t("home.rank_text") }}</v-col>
@@ -831,11 +831,11 @@ export default GameHistoryComponent;
       </div>
       <v-card color="#211F32" theme="dark" class="home-lucky-jackpot-height mt-4">
         <v-card
-          color="#29253C"
+          color="#1D2027"
           theme="dark"
           height="64"
           class="mx-2 mt-2"
-          style="border-radius: 16px; background: #29253c; box-shadow: unset"
+          style="border-radius: 16px; background: #1D2027; box-shadow: unset"
         >
           <v-row class="mx-3 my-2 align-center">
             <v-col cols="4" class="text-700-16 gray">{{ t("home.game_text") }}</v-col>
@@ -924,7 +924,7 @@ export default GameHistoryComponent;
         class="mt-4 mx-2"
         v-if="!historyToggleSwitch"
       >
-        <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
+        <v-card color="#1D2027" theme="dark" height="40" class="mx-2 mt-2">
           <v-row class="mx-3 my-2 align-center">
             <v-col cols="3" class="text-700-14 gray py-0">{{
               t("home.rank_text")
@@ -966,7 +966,7 @@ export default GameHistoryComponent;
         class="mt-4 mx-2 m-home-lucky-jackpot-height"
         v-else
       >
-        <v-card color="#29253C" theme="dark" height="40" class="mx-2 mt-2">
+        <v-card color="#1D2027" theme="dark" height="40" class="mx-2 mt-2">
           <v-row class="mx-3 my-2 align-center">
             <v-col cols="4" class="text-700-14 gray py-0">{{
               t("home.game_text")

@@ -136,7 +136,7 @@ const fixPositionShow = computed(() => {
   <v-row class="mt-6 justify-end mx-6">
     <v-menu offset="10" class="bonus-menu" v-model="bonusMenuShow">
       <template v-slot:activator="{ props }">
-        <v-card color="#1C1929" theme="dark">
+        <v-card color="#15161C" theme="dark">
           <v-list-item
             class="bonus-item"
             v-bind="props"
@@ -147,7 +147,7 @@ const fixPositionShow = computed(() => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#211F31">
+      <v-list theme="dark" bg-color="#1D2027">
         <v-list-item
           v-for="(item, i) in bonusItems"
           :key="i"
@@ -182,7 +182,7 @@ const fixPositionShow = computed(() => {
     </div>
     <v-menu offset="10" class="bonus-menu" v-model="cashMenuShow">
       <template v-slot:activator="{ props }">
-        <v-card color="#1C1929" theme="dark" class="ml-2">
+        <v-card color="#15161C" theme="dark" class="ml-2">
           <v-list-item
             class="bonus-item"
             v-bind="props"
@@ -193,7 +193,7 @@ const fixPositionShow = computed(() => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#211F31">
+      <v-list theme="dark" bg-color="#1D2027">
         <v-list-item
           v-for="(item, i) in cashItems"
           :key="i"
@@ -244,7 +244,7 @@ const fixPositionShow = computed(() => {
     align-self: center;
     float: right;
     top: -16px;
-    border: 9px solid #211f31;
+    border: 9px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -276,9 +276,9 @@ tbody {
 }
 
 .forms-bonus-table-bg {
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 
   .v-table__wrapper {
@@ -288,11 +288,11 @@ tbody {
 
 .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
 .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-  border-bottom: 1px solid #414968;
+  border-bottom: 1px solid #23262F;
 }
 
 .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-  background: #414968;
+  background: #23262F;
 }
 
 .forms-table-header {
@@ -321,9 +321,9 @@ tbody {
 
 .el-date-editor.el-input__wrapper {
   height: 48px !important;
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   justify-content: start;
 }
 

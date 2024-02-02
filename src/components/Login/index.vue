@@ -259,7 +259,7 @@ export default Login;
           />
         </v-row>
         <div class="login-mail-card" :style="{ height: mailCardHeight + 'px' }">
-          <v-list theme="dark" bg-color="#211F31">
+          <v-list theme="dark" bg-color="#1D2027">
             <v-list-item
               class="text-500-16 white"
               value="gmail"
@@ -437,7 +437,7 @@ export default Login;
   top: 272px;
   left: 50%;
   transform: translateX(-50%);
-  background: #211f31;
+  background: #1D2027;
   width: 375px;
   border-radius: 16px;
   z-index: 200;
@@ -489,7 +489,7 @@ export default Login;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
-  color: #414968;
+  color: #23262F;
   position: relative;
   top: 12px;
   text-align: center;

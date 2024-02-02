@@ -35,7 +35,7 @@ const mobileWidth = computed(() => {
           </template>
           <v-list
             theme="dark"
-            bg-color="#211F31"
+            bg-color="#1D2027"
             class="px-2"
             :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
             style="margin: 0px 8px 0px 3px"

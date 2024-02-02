@@ -289,7 +289,7 @@ onUnmounted(() => {
   }
   .live-win-img {
     width: 95%;
-    border-radius: 12px;
+    border-radius: 8px;
   }
   .live-win-level-text {
     display: flex;
@@ -328,7 +328,7 @@ onUnmounted(() => {
   .live-win-img {
     // width: 95%;
     height: 100px;
-    border-radius: 12px;
+    border-radius: 8px;
   }
   .live-win-level-text {
     display: flex;

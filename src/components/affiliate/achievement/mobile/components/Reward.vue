@@ -103,7 +103,7 @@ const achievementAward = async (award_item: ExplainItem, award_progress: number)
 <style lang="scss">
 .m-achievement-reward-card {
   margin-top: 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: linear-gradient(90deg, #29263f 0%, #4a32aa 100%);
   text-align: center;
   box-shadow: none;
@@ -118,7 +118,7 @@ const achievementAward = async (award_item: ExplainItem, award_progress: number)
   position: relative;
   .v-progress-linear {
     border-radius: 10px;
-    background: #1c1929;
+    background: #15161C;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
   .v-progress-linear__determinate {

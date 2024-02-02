@@ -254,7 +254,7 @@ onMounted(() => {
   <v-navigation-drawer class="right-nav-background" location="right" width="340"
     v-model="drawer" :fullWidth="mobileVersion == 'sm'" :class="[mobileWidth < 600 ? 'pb-14' : '']">
     <template v-slot:prepend>
-      <v-card color="#211F31" theme="dark" class="right-bar-card-border">
+      <v-card color="#1D2027" theme="dark" class="right-bar-card-border">
         <v-row class="ma-2 mt-3 align-center">
           <v-btn class="right-btn" icon="true" @click.stop="setRightBarToggle(false)">
             <v-icon icon="mdi-close" class="card-close-icon" />
@@ -269,7 +269,7 @@ onMounted(() => {
                 </v-list-item>
               </v-card>
             </template>
-            <v-list theme="dark" bg-color="#211F31">
+            <v-list theme="dark" bg-color="#1D2027">
               <v-list-item v-for="(item, i) in sportItems" :key="i" :value="item" class="sport-item"
                 @click="handleDropdown(item)">
                 <v-list-item-title>{{ item }}</v-list-item-title>
@@ -298,7 +298,7 @@ onMounted(() => {
             </div>
             <div class="chat-content">
               <div class="chat-name mt-3">{{ messageItem.sender }}</div>
-              <v-card color="#353652" theme="dark" class="pa-2 chat-content-border">
+              <v-card color="#23262F" theme="dark" class="pa-2 chat-content-border">
                 <span class="receiver-color">@{{ messageItem.receiver }}</span>
                 <span>{{ messageItem.message }}</span>
               </v-card>
@@ -347,7 +347,7 @@ onMounted(() => {
 
 <style lang="scss">
 .right-nav-background {
-  background-color: #29253C !important;
+  background-color: #1D2027 !important;
   color: #7782AA !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -400,7 +400,7 @@ onMounted(() => {
     align-self: center;
     float: right;
     top: -16px;
-    border: 9px solid #211f31;
+    border: 9px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;

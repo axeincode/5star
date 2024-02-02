@@ -150,7 +150,6 @@ const submitPassword = async () => {
 </script>
 
 <template>
-    <div class="m-user-dialog-header"></div>
     <div class="m-user-container">
         <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
         <v-row class="mt-4 relative" :class="mobileWidth < 600 ? 'mx-2' : 'mx-10'">
@@ -203,8 +202,8 @@ const submitPassword = async () => {
     .form-textfield div.v-field__field {
         box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
     }
-    border-radius: 20px;
-    background: #29253C;
+    border-radius: 8px;
+    background: #1D2027;
     height: 422px;
     position: relative;
     z-index: 102;
@@ -244,7 +243,7 @@ const submitPassword = async () => {
     height: 74px;
     flex-shrink: 0;
     border-radius: 16px 16px 0px 0px;
-    background: #211F31;
+    background: #1D2027;
     position: absolute;
     top: -14px;
     left: 50%;

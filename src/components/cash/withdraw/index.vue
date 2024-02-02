@@ -291,7 +291,7 @@ const overlayScrimShow = computed(() => {
     </v-row>
     <v-menu offset="4" class="mt-1">
       <template v-slot:activator="{ props }">
-        <v-card color="#1C1929" theme="dark" class="mx-12 mt-4 deposit-card-height">
+        <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
           <v-list-item
             v-bind="props"
             class="currency-item deposit-card-height"
@@ -307,7 +307,7 @@ const overlayScrimShow = computed(() => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#211F31" class="px-2">
+      <v-list theme="dark" bg-color="#1D2027" class="px-2">
         <v-list-item
           class="currency-item pl-6"
           :value="currencyItem.name"
@@ -327,7 +327,7 @@ const overlayScrimShow = computed(() => {
     </v-row>
     <v-menu offset="4" class="mt-1">
       <template v-slot:activator="{ props }">
-        <v-card color="#1C1929" theme="dark" class="mx-12 mt-4 deposit-card-height">
+        <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
           <v-list-item
             v-bind="props"
             class="payment-item deposit-card-height"
@@ -350,7 +350,7 @@ const overlayScrimShow = computed(() => {
             v-for="(paymentItem, paymentIndex) in paymentList"
             :key="paymentIndex"
           >
-            <v-card color="#1C1929" theme="dark" class="deposit-card-height text-center">
+            <v-card color="#15161C" theme="dark" class="deposit-card-height text-center">
               <v-list-item
                 class="payment-select-item pa-2"
                 :value="paymentItem.name"
@@ -437,7 +437,7 @@ const overlayScrimShow = computed(() => {
   .form-textfield div.v-field--variant-solo, .v-field--variant-solo-filled {
       background: transparent;
   }
-  background-color: #211f31;
+  background-color: #1D2027;
   height: 700px;
   border-radius: 0px 0px 16px 16px;
 
@@ -471,7 +471,7 @@ const overlayScrimShow = computed(() => {
   }
 
   .deposit-amout-btn-white {
-    background: #353652;
+    background: #23262F;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;
@@ -499,7 +499,7 @@ const overlayScrimShow = computed(() => {
   }
 
   .dark-textfield .v-field__field {
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
   }
 
   .v-field--variant-solo {
@@ -508,7 +508,7 @@ const overlayScrimShow = computed(() => {
 
   .amount-checkbox {
     i.v-icon {
-      color: #1c1929;
+      color: #15161C;
       background-color: #01983a;
       width: 16px;
       height: 16px;
@@ -517,7 +517,7 @@ const overlayScrimShow = computed(() => {
     }
 
     i.mdi-checkbox-blank-outline {
-      background-color: #1c1929;
+      background-color: #15161C;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }

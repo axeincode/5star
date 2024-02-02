@@ -130,10 +130,10 @@ const mobileWidth: any = computed(() => {
     border-bottom: unset !important;
   }
   .el-collapse-item {
-    border-bottom: 2px solid #29263c;
+    border-bottom: 2px solid #1D2027;
   }
   .el-collapse-item__header {
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
     border-bottom: unset !important;
     color: var(--White-BG, #fff);
     font-family: Inter;
@@ -143,7 +143,7 @@ const mobileWidth: any = computed(() => {
     line-height: normal;
   }
   .el-collapse-item__wrap {
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
   }
   .el-collapse-item__content {
     padding-bottom: 16px;

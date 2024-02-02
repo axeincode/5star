@@ -56,7 +56,7 @@ onMounted(async () => {
       <v-col cols="12" class="text-center pt-0 justify-center">
         <v-card
           theme="dark"
-          color="#1C1929"
+          color="#15161C"
           class="ma-4 text-center m-statistics-card-border"
         >
           <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -68,7 +68,7 @@ onMounted(async () => {
         </v-card>
         <v-card
           theme="dark"
-          color="#1C1929"
+          color="#15161C"
           class="ma-4 text-center m-statistics-card-border"
         >
           <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -80,7 +80,7 @@ onMounted(async () => {
         </v-card>
         <v-card
           theme="dark"
-          color="#1C1929"
+          color="#15161C"
           class="ma-4 text-center m-statistics-card-border"
         >
           <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -92,7 +92,7 @@ onMounted(async () => {
         </v-card>
         <v-card
           theme="dark"
-          color="#1C1929"
+          color="#15161C"
           class="ma-4 text-center m-statistics-card-border"
         >
           <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -112,7 +112,7 @@ onMounted(async () => {
   </v-card>
   <v-tabs
     v-model="profitTab"
-    bg-color="#211F31"
+    bg-color="#1D2027"
     class="mt-4 mx-6"
     style="height: 64px !impoartant"
   >
@@ -159,7 +159,7 @@ onMounted(async () => {
           <v-col cols="12" class="text-center pt-0">
             <v-card
               theme="dark"
-              color="#1C1929"
+              color="#15161C"
               class="ma-4 text-center m-statistics-card-border"
             >
               <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -171,7 +171,7 @@ onMounted(async () => {
             </v-card>
             <v-card
               theme="dark"
-              color="#1C1929"
+              color="#15161C"
               class="ma-4 text-center m-statistics-card-border"
             >
               <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -224,7 +224,7 @@ onMounted(async () => {
           <v-col cols="12" class="text-center pt-0">
             <v-card
               theme="dark"
-              color="#1C1929"
+              color="#15161C"
               class="ma-4 text-center m-statistics-card-border"
             >
               <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -236,7 +236,7 @@ onMounted(async () => {
             </v-card>
             <v-card
               theme="dark"
-              color="#1C1929"
+              color="#15161C"
               class="ma-4 text-center m-statistics-card-border"
             >
               <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -289,7 +289,7 @@ onMounted(async () => {
           <v-col cols="12" class="text-center pt-0">
             <v-card
               theme="dark"
-              color="#1C1929"
+              color="#15161C"
               class="ma-4 text-center m-statistics-card-border"
             >
               <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -301,7 +301,7 @@ onMounted(async () => {
             </v-card>
             <v-card
               theme="dark"
-              color="#1C1929"
+              color="#15161C"
               class="ma-4 text-center m-statistics-card-border"
             >
               <p class="m-statistics-profit-cash-text-1" style="margin-top: 11px">
@@ -428,7 +428,7 @@ onMounted(async () => {
 
 .m-statistics-tab {
   width: 100px !important;
-  background: #29253c !important;
+  background: #1D2027 !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
   border-radius: 8px 8px 0px 0px !important;
   color: #ffffff;

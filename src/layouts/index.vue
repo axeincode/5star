@@ -92,7 +92,7 @@ const handleScroll = () => {
 }
 
 .v-navigation-drawer {
-  background: #29253c !important;
+  background: #1D2027 !important;
 }
 
 .v-application {

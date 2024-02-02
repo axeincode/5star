@@ -227,6 +227,6 @@ const emit = defineEmits<{ (e: 'close'): void }>()
 .bonus-dialog-text-3 {
     font-weight: 800;
     font-size: 16px;
-    color: #211F31;
+    color: #1D2027;
 }
 </style>

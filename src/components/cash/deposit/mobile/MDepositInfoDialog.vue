@@ -83,7 +83,7 @@ const handleCopyUrlCode = async () => {
             <v-btn
               icon=""
               class="m-deposit-url-copy-btn ml-2"
-              bg-color="#353652"
+              bg-color="#23262F"
               width="24"
               height="24"
               @click="handleCopyUrlCode"
@@ -125,7 +125,7 @@ const handleCopyUrlCode = async () => {
   width: 328px;
   height: 545px;
   border-radius: 20px;
-  background: #29253c;
+  background: #1D2027;
   overflow-y: auto;
   position: relative;
 
@@ -138,8 +138,8 @@ const handleCopyUrlCode = async () => {
   .m-deposit-channel-info {
     width: 288px;
     height: 252px;
-    border-radius: 12px;
-    background: var(--BG-5-1C1929, #1c1929);
+    border-radius: 8px;
+    background: var(--BG-5-1C1929, #15161C);
 
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -158,7 +158,7 @@ const handleCopyUrlCode = async () => {
 
   .m-deposit-url-copy-btn {
     border-radius: 4px;
-    background: var(--secondary-button-353652, #353652);
+    background: var(--secondary-button-353652, #23262F);
   }
 }
 

@@ -310,7 +310,7 @@ onMounted(async () => {
 
 .v-progressive-image {
   border-radius: 8px 46px;
-  background: #211f31;
+  background: #1D2027;
 }
 
 .v-progressive-image-loading {

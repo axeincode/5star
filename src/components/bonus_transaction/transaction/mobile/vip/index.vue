@@ -284,7 +284,7 @@ onMounted(async () => {
         location="top"
       >
         <template v-slot:activator="{ props }">
-          <v-card color="#1C1929" theme="dark" class="m-transaction-vip-menu-card">
+          <v-card color="#15161C" theme="dark" class="m-transaction-vip-menu-card">
             <v-list-item
               class="bonus-item text-700-12 px-2"
               v-bind="props"
@@ -297,7 +297,7 @@ onMounted(async () => {
             </v-list-item>
           </v-card>
         </template>
-        <v-list theme="dark" bg-color="#211F31" width="167">
+        <v-list theme="dark" bg-color="#1D2027" width="167">
           <v-list-item
             v-for="(item, i) in transactionVipMenuList"
             :key="i"
@@ -341,7 +341,7 @@ onMounted(async () => {
   bottom: -24px;
   left: 50%;
   transform: translateX(-50%);
-  border: 13px solid #211f31;
+  border: 13px solid #1D2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-bottom-color: transparent;
@@ -353,21 +353,21 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   border-radius: 27px;
-  background: #1c1929;
+  background: #15161C;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   .v-list-item__content {
     height: 24px;
   }
 }
 .m-transaction-vip-menu-selected-item {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #00b25c;
 }
 .m-transaction-vip-menu-card {
   width: 167px;
   height: 32px;
-  border-radius: 12px;
-  background: var(--BG-5-1C1929, #1c1929) !important;
+  border-radius: 8px;
+  background: var(--BG-5-1C1929, #15161C) !important;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   .v-list-item__content {
@@ -387,9 +387,9 @@ onMounted(async () => {
   }
 }
 .m-forms-bonus-table-bg {
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -399,13 +399,13 @@ onMounted(async () => {
 
 .m-forms-bonus-table1 {
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #414968;
+    background: #23262F;
     height: 46px !important;
   }
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #414968;
+    border-bottom: 1px solid #23262F;
   }
 
   .forms-table-header {

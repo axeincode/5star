@@ -272,7 +272,7 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
   box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3) !important;
 
   .v-btn__content {
-    color: #414968;
+    color: #23262F;
     font-family: Inter;
     font-size: 10px;
     font-style: normal;
