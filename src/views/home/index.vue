@@ -171,7 +171,7 @@ const Dashboard = defineComponent({
         new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
       ],
       paginGameShow: false,
-      is_favorite: false
+      is_favorite: false,
     });
 
     const selectedGameFilterBtn = ref<any>(t("home.button.all_game"));
