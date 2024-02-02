@@ -21,6 +21,7 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
+import { useRoute } from "vue-router";
 
 const MSignup = defineComponent({
   components: {
@@ -44,6 +45,7 @@ const MSignup = defineComponent({
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
     const { width } = useDisplay();
+    const route = useRoute();
 
     // initiate component state
     const state = reactive({
@@ -427,6 +429,8 @@ const MSignup = defineComponent({
     };
 
     onMounted(() => {
+      console.log("promo code::::::::::::::::::::", route.query.code);
+      state.formData.promoCode = route.query.code ? route.query.code.toString() : "";
       if (window.visualViewport?.height != undefined) {
         state.containerHeight = window.visualViewport?.height - 54;
         state.bodyHeight = window.innerHeight - 194;
@@ -478,7 +482,7 @@ export default MSignup;
 
 <template>
   <div class="m-signup-container">
-  <!-- <div
+    <!-- <div
     class="m-signup-container"
     :style="{ height: containerHeight + 'px', overflowY: overflow ? 'auto' : 'unset' }"
   > -->
@@ -490,7 +494,12 @@ export default MSignup;
       }"
     >
       <!-- SIGN UP FORM  -->
-      <v-form v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" ref="form" class="full-width" @keyup.enter="handleSignupFormSubmit">
+      <v-form
+        v-if="currentPage === PAGE_TYPE.SIGNUP_FORM"
+        ref="form"
+        class="full-width"
+        @keyup.enter="handleSignupFormSubmit"
+      >
         <div class="relative mt-10 pa-0">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
@@ -892,7 +901,7 @@ export default MSignup;
   top: 43px;
   left: 50%;
   transform: translateX(-50%);
-  background: #1D2027;
+  background: #1d2027;
   width: 100%;
   border-radius: 16px;
   z-index: 200;
@@ -901,7 +910,7 @@ export default MSignup;
 }
 
 .m-signup-btn {
-  background: #009B3A;
+  background: #009b3a;
   color: white;
   border-radius: 8px !important;
   .v-btn__content {
@@ -915,12 +924,12 @@ export default MSignup;
 }
 
 .m-signup-btn:hover:enabled {
-  background: #009B3A;
+  background: #009b3a;
 }
 
 .m-signup-disabled-btn {
   border-radius: 8px;
-  background: var(--Secondary-Button, #23262F );
+  background: var(--Secondary-Button, #23262f);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
   .v-btn__content {
@@ -962,7 +971,7 @@ export default MSignup;
 // wrapper
 .m-signup-body {
   border-radius: 26px 26px 0px 0px;
-  background: var(--bg-2-e-274-c, #1D2027);
+  background: var(--bg-2-e-274-c, #1d2027);
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -971,7 +980,7 @@ export default MSignup;
 
   // overflow-y: auto;
   .form-textfield div.v-field__field {
-    background: #15161C;
+    background: #15161c;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
@@ -1009,19 +1018,19 @@ export default MSignup;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #23262F;
+  color: #23262f;
   position: relative;
   top: 12px;
   text-align: center;
   width: 120px;
-  background-color: #1D2027;
+  background-color: #1d2027;
   margin: auto;
   z-index: 1;
 }
 
 // social icon list component
 .social-icon-wrapper {
-  background-color: #1D2027 !important;
+  background-color: #1d2027 !important;
 
   .v-sheet {
     border-radius: 50px !important;
@@ -1052,7 +1061,7 @@ export default MSignup;
   font-weight: 800;
   font-size: 16px;
   line-height: 19px;
-  color: #009B3A;
+  color: #009b3a;
 }
 
 // agreement
@@ -1068,7 +1077,7 @@ export default MSignup;
 
 .m-agreement-checkbox {
   i.v-icon {
-    color: #15161C;
+    color: #15161c;
     background-color: #01983a;
     width: 16px;
     height: 16px;
@@ -1077,7 +1086,7 @@ export default MSignup;
   }
 
   i.mdi-checkbox-blank-outline {
-    background-color: #1D2027;
+    background-color: #1d2027;
     box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
     border-radius: 4px;
   }
@@ -1146,7 +1155,7 @@ export default MSignup;
   transform-origin: top !important;
 
   .v-field__field {
-    background: #15161C;
+    background: #15161c;
     input {
       padding-top: 2px !important;
     }

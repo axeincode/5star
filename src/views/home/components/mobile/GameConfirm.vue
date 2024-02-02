@@ -14,7 +14,7 @@ import icon_public_103 from "@/assets/public/svg/icon_public_103.svg";
 const { t } = useI18n();
 const router = useRouter();
 
-const emit = defineEmits<{ (e: "closeGameConfirmDialog"): void }>();
+const emit = defineEmits<{ (e: "closeGameConfirmDialog"): void, (e: "refreshGameFavoriteList", id: number | string): void }>();
 
 const props = defineProps<{ selectedGameItem: GameItem, is_favorite: boolean }>();
 
@@ -66,9 +66,16 @@ const addFavoriteGame = async (id: string | number) => {
     openDialog("login");
     return;
   }
-  await dispatchFavoriteGame({
-    add_game: id,
-  });
+  if (is_favorite.value) {
+    await dispatchFavoriteGame({
+      del_game: id,
+    });
+    emit("refreshGameFavoriteList", id);
+  } else {
+    await dispatchFavoriteGame({
+      add_game: id,
+    });
+  }
   await dispatchGameFavoriteList()
   if (success.value) {
     favoriteSvgIconColor.value = favoriteSvgIconColor.value == "#7782AA" ? "#F9BC01" : "#7782AA";
@@ -80,7 +87,7 @@ const handleEnterGame = async (id: number, name: string, is_demo: string) => {
     let replaceName = name.replace(/ /g, "-");
     setMailMenuShow(true);
     // router.push(`/game/${id}/${replaceName}/${is_demo}`);
-    router.push({name: "Game", params: {id: id, name: replaceName, demo: is_demo}});
+    router.push({ name: "Game", params: { id: id, name: replaceName, demo: is_demo } });
   } else {
     setAuthModalType('login');
   }

@@ -1142,12 +1142,15 @@ onMounted(() => {
               </v-list-item>
             </v-card>
           </template>
-          <v-list theme="dark" bg-color="#15161C" width="166" class="text-center">
+          <v-list theme="dark" bg-color="#15161C" width="166" class="text-center pt-0">
             <v-list-item
               :title="t('navBar.language.title')"
               class="m-avatar-img m-nav-sub-menu"
             ></v-list-item>
-            <v-divider></v-divider>
+            <v-divider
+              style="margin: auto; width: 134px; border: 1px solid black !important"
+              class="mb-2"
+            ></v-divider>
             <v-list-item
               v-for="(item, i) in langItems"
               :key="i"
@@ -1215,8 +1218,8 @@ onMounted(() => {
   margin: 0px 14px;
   width: 164px;
   height: 32px;
-  background: #009B3A;
-  box-shadow: 0px 4px 0px 0px #0E5E50;
+  background: #009b3a;
+  box-shadow: 0px 4px 0px 0px #0e5e50;
   border-radius: 4px;
 }
 
@@ -1272,8 +1275,8 @@ onMounted(() => {
   width: 164px;
   height: 32px;
   border-radius: 4px;
-  background: #F9BC01;
-  box-shadow: 0px -4px 0px 0px #D99504 inset;
+  background: #f9bc01;
+  box-shadow: 0px -4px 0px 0px #d99504 inset;
 }
 
 .nav-lang-selected-item {
@@ -1298,7 +1301,7 @@ onMounted(() => {
 }
 
 .m-nav-background {
-  background: #1D2027;
+  background: #1d2027;
 }
 
 // casino and sport toggle switch
@@ -1308,7 +1311,7 @@ onMounted(() => {
     height: 34px;
     position: relative;
     display: block;
-    background: #15161C;
+    background: #15161c;
     border-radius: 20px !important;
     box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4),
       inset 0px -5px 15px rgba(255, 255, 255, 0.4);
@@ -1365,7 +1368,7 @@ onMounted(() => {
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #009B3A;
+    background: #009b3a;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -1507,14 +1510,13 @@ onMounted(() => {
 }
 
 .divider {
-  width: 180px;
+  width: 122px;
   margin: auto;
-  border-width: thin;
 }
 
 .m-language-item {
   border-radius: 8px;
-  background: var(--text-box-1211-f-31, #15161C);
+  background: var(--text-box-1211-f-31, #15161c);
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 
@@ -1542,7 +1544,7 @@ onMounted(() => {
     height: 30px;
     position: absolute;
     display: block;
-    background: #15161C;
+    background: #15161c;
     border-radius: 20px !important;
     cursor: pointer;
     transition: 0.3s;
@@ -1589,7 +1591,7 @@ onMounted(() => {
     position: absolute;
     top: 1px;
     left: 1px;
-    background: #1D2027;
+    background: #1d2027;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -1631,7 +1633,7 @@ onMounted(() => {
   top: 50%;
   transform: translateY(-50%);
   left: -2px;
-  border: 13px solid #15161C;
+  border: 13px solid #15161c;
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;
@@ -1651,8 +1653,8 @@ onMounted(() => {
   align-self: center;
   top: 50%;
   transform: translateY(-50%);
-  left: -26px;
-  border: 13px solid #15161C;
+  left: -24px;
+  border: 13px solid #15161c;
   border-left-color: transparent;
   border-top-color: transparent;
   border-bottom-color: transparent;

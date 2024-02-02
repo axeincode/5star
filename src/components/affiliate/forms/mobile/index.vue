@@ -126,7 +126,7 @@ const handleHistoryConfigDropdown = async (item: any) => {
   selectedHistoryConfig.value = item;
   await dispatchUserInviteHistory({
     index: selectedHistoryConfig.value.index,
-    page: selectedPageSize.value,
+    size: selectedPageSize.value,
     first_time: moment(selectedDate.value[0]).valueOf(),
     last_time: moment(selectedDate.value[1]).valueOf()
   });
@@ -136,7 +136,7 @@ const handlePageDropdown = async (item: number) => {
   selectedPageSize.value = item;
   await dispatchUserInviteHistory({
     index: selectedHistoryConfig.value.index,
-    page: selectedPageSize.value,
+    size: selectedPageSize.value,
     first_time: moment(selectedDate.value[0]).valueOf(),
     last_time: moment(selectedDate.value[1]).valueOf()
   });
@@ -185,7 +185,7 @@ const fixPositionShow = computed(() => {
 watch(selectedDate, async (value) => {
   await dispatchUserInviteHistory({
     index: selectedHistoryConfig.value.index,
-    page: selectedPageSize.value,
+    size: selectedPageSize.value,
     first_time: moment(value[0]).valueOf(),
     last_time: moment(value[1]).valueOf()
   });
@@ -199,7 +199,7 @@ onMounted(async () => {
   await dispatchInviteHistoryCfg();
   await dispatchUserInviteHistory({
     index: inviteHistoryConfig.value.list[0].index,
-    page: selectedPageSize.value,
+    size: selectedPageSize.value,
     first_time: moment(selectedDate.value[0]).valueOf(),
     last_time: moment(selectedDate.value[1]).valueOf()
   });
@@ -357,7 +357,7 @@ onMounted(async () => {
   align-self: center;
   float: right;
   top: -16px;
-  border: 9px solid #15161C;
+  border: 9px solid #15161c;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -367,12 +367,12 @@ onMounted(async () => {
 
 .m-bonus-menu-selected-item {
   border-radius: 8px;
-  background: #1D2027;
+  background: #1d2027;
 }
 
 .m-bonus-menu-card {
   border-radius: 8px;
-  background: var(--bg-51-c-1929, #15161C);
+  background: var(--bg-51-c-1929, #15161c);
 
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -399,7 +399,7 @@ onMounted(async () => {
 
 .m-forms-bonus-table-bg {
   padding: 8px;
-  background: #15161C !important;
+  background: #15161c !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
   width: 100% !important;
@@ -413,13 +413,13 @@ onMounted(async () => {
 
 .m-forms-bonus-table {
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #23262F;
+    background: #23262f;
     height: 36px !important;
   }
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #23262F;
+    border-bottom: 1px solid #23262f;
   }
 
   .forms-table-header {
@@ -455,7 +455,7 @@ onMounted(async () => {
   .el-date-editor.el-input__wrapper {
     width: 264px;
     height: 40px !important;
-    background: #15161C !important;
+    background: #15161c !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 8px !important;
     justify-content: start;
@@ -596,7 +596,7 @@ onMounted(async () => {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 4px;
-    border: 1px solid var(--primary-button-32-cfec, #009B3A);
+    border: 1px solid var(--primary-button-32-cfec, #009b3a);
   }
 }
 
@@ -706,7 +706,7 @@ onMounted(async () => {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 4px;
-    border: 1px solid var(--primary-button-32-cfec, #009B3A);
+    border: 1px solid var(--primary-button-32-cfec, #009b3a);
   }
 }
 </style>

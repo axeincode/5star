@@ -29,9 +29,9 @@ const mobileWidth = computed(() => {
 
 const gameProviders = computed(() => {
   const { getGameProviders } = storeToRefs(gameStore());
-  getGameProviders.value.map((item) => {
-    item.pictures = img_gp_01;
-  });
+  // getGameProviders.value.map((item) => {
+  //   item.pictures = img_gp_01;
+  // });
   return getGameProviders.value;
 });
 

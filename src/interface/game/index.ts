@@ -1,5 +1,6 @@
 export interface Category {
     image: string
+    pictures: string
     game_count: string | number
     name: string
     slug: string

@@ -33,9 +33,9 @@ const providerGameList = ref<Array<Search>>([]);
 
 const providerGames = computed(() => {
   const { getGameSearchList } = storeToRefs(gameStore());
-  getGameSearchList.value.list.map((item) => {
-    item.image = img_og_03;
-  });
+  // getGameSearchList.value.list.map((item) => {
+  //   item.image = img_og_03;
+  // });
   return getGameSearchList.value;
 });
 
@@ -98,7 +98,7 @@ onMounted(async () => {
   });
   slug.value = route.query.slug ? route.query.slug : "";
   await dispatchGameSearch(
-    "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
+    "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
   );
   providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
   loading.value = false;
@@ -308,9 +308,16 @@ onMounted(async () => {
   transition-duration: 0.28s;
 }
 
+.v-progressive-image-main {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .v-progressive-image {
   border-radius: 8px 46px;
-  background: #1D2027;
+  background: #1d2027;
+  aspect-ratio: 0.74152;
 }
 
 .v-progressive-image-loading {

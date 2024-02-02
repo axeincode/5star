@@ -411,7 +411,7 @@ onUnmounted(() => {
       <iframe
         v-else
         ref="frame"
-        :srcdoc="enterGameItem.weburl"
+        :src="enterGameItem.weburl"
         :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
         class="home-game-frame-area"
         @load="handleIframeLoad"
@@ -455,7 +455,7 @@ onUnmounted(() => {
             theme="dark"
             height="64"
             class="mx-2 mt-2"
-            style="border-radius: 16px; background: #1D2027; box-shadow: unset"
+            style="border-radius: 16px; background: #1d2027; box-shadow: unset"
           >
             <v-row class="mx-3 my-2 align-center">
               <v-col cols="4" class="text-700-16 gray">{{ t("home.rank_text") }}</v-col>
@@ -502,7 +502,7 @@ onUnmounted(() => {
             theme="dark"
             height="64"
             class="mx-2 mt-2"
-            style="border-radius: 16px; background: #1D2027; box-shadow: unset"
+            style="border-radius: 16px; background: #1d2027; box-shadow: unset"
           >
             <v-row class="mx-3 my-2 align-center">
               <v-col cols="4" class="text-700-16 gray">{{ t("home.game_text") }}</v-col>

@@ -77,9 +77,14 @@ watch(inviteItem, (new_value) => {
         <p class="mt-3 m-invite-partner-text text-center">
           {{ t("affiliate.invite.invite_partner") }}
         </p>
-        <v-list-item class="m-invite-url-item" v-for="(item, index) in inviteList" :key="index" :style="{
-          height: index == 0 ? 'unset' : '40px',
-        }">
+        <v-list-item
+          class="m-invite-url-item"
+          v-for="(item, index) in inviteList"
+          :key="index"
+          :style="{
+            height: index == 0 ? 'unset' : '40px',
+          }"
+        >
           <v-list-item-title class="ml-4 text-left" style="line-height: 20px">
             <div class="text-400-10 gray">{{ item.title }}</div>
             <div class="text-600-12">{{ item.content }}</div>
@@ -88,8 +93,14 @@ watch(inviteItem, (new_value) => {
             </div>
           </v-list-item-title>
           <template v-slot:append>
-            <v-btn icon="" @click="inviteUrlCopy(item.content)" class="m-invite-url-copy-btn" bg-color="#23262F"
-              width="24" height="24">
+            <v-btn
+              icon=""
+              @click="inviteUrlCopy(item.content)"
+              class="m-invite-url-copy-btn"
+              bg-color="#23262F"
+              width="24"
+              height="24"
+            >
               <img src="@/assets/public/svg/icon_public_71.svg" width="16" />
             </v-btn>
           </template>
@@ -110,8 +121,8 @@ watch(inviteItem, (new_value) => {
 }
 
 .v-list-item__append {
-  margin-top: 7px;
-  display: block !important;
-  align-self: baseline;
+  // margin-top: 7px;
+  // display: block !important;
+  // align-self: baseline;
 }
 </style>

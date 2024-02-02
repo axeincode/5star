@@ -9,6 +9,11 @@ textarea {
     /* 适用于WebKit浏览器（如Safari） */
 }
 
+.v-divider {
+    opacity: 1;
+    border: 1px solid #15161C !important;
+}
+
 .mx-80 {
     margin-right: 80px !important;
     margin-left: 80px !important;

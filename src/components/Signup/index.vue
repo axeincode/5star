@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, ref } from "vue";
+import { defineComponent, reactive, toRefs, computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import ValidationBox from "@/components/Signup/ValidationBox.vue";
 import SignupHeader from "@/components/Signup/Header.vue";
@@ -13,6 +13,7 @@ import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { socketStore } from "@/store/socket";
 import { useToast } from "vue-toastification";
+import { useRoute } from "vue-router";
 
 const Signup = defineComponent({
   components: {
@@ -29,6 +30,8 @@ const Signup = defineComponent({
     const { dispatchUserProfile } = authStore();
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
+
+    const route = useRoute();
 
     // initiate component state
     const state = reactive({
@@ -224,17 +227,17 @@ const Signup = defineComponent({
         // ).href;
         // state.notificationText = t("signup.submit_result.success_text");
         const toast = useToast();
-        toast.success( t("signup.submit_result.success_text"), { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: SuccessIcon,
-            rtl: false,
+        toast.success(t("signup.submit_result.success_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
         });
 
         setTimeout(() => {
@@ -249,17 +252,17 @@ const Signup = defineComponent({
         // state.notificationText = errMessage.value;
 
         const toast = useToast();
-        toast.success( errMessage.value, { 
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: WarningIcon,
-            rtl: false,
+        toast.success(errMessage.value, {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
         });
       }
     };
@@ -302,6 +305,11 @@ const Signup = defineComponent({
         state.mailCardHeight = 0;
       }, 100);
     };
+
+    onMounted(() => {
+      console.log("promo code::::::::::::::::::::", route.query.code);
+      state.formData.promoCode = route.query.code ? route.query.code.toString() : "";
+    });
 
     return {
       t,
@@ -641,7 +649,7 @@ export default Signup;
   top: 274px;
   left: 50%;
   transform: translateX(-50%);
-  background: #1D2027;
+  background: #1d2027;
   width: 375px;
   border-radius: 16px;
   z-index: 200;
@@ -650,12 +658,12 @@ export default Signup;
 }
 
 .signup-btn:disabled {
-  background: #23262F;
+  background: #23262f;
   cursor: default;
 }
 
 .signup-btn {
-  background: #009B3A;
+  background: #009b3a;
 }
 
 .signup-btn:hover:enabled {
@@ -712,7 +720,7 @@ export default Signup;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
-  color: #23262F;
+  color: #23262f;
   position: relative;
   top: 12px;
   text-align: center;
@@ -753,7 +761,7 @@ export default Signup;
   font-weight: 800;
   font-size: 16px;
   line-height: 19px;
-  color: #009B3A;
+  color: #009b3a;
 }
 
 // agreement
@@ -769,7 +777,7 @@ export default Signup;
 
 .agreement-checkbox {
   i.v-icon {
-    color: #1D2027;
+    color: #1d2027;
     background-color: #01983a;
     width: 16px;
     height: 16px;
@@ -778,7 +786,7 @@ export default Signup;
   }
 
   i.mdi-checkbox-blank-outline {
-    background-color: #1D2027;
+    background-color: #1d2027;
     box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
     border-radius: 4px;
   }

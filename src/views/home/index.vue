@@ -501,6 +501,28 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "SOFTSWISS";
           break;
+        case "Evoplay":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#FFFFFF";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "Evoplay";
+          break;
+        case "Bgaming":
+          gameFilterIconColor1.value = "#7782AA";
+          gameFilterIconColor2.value = "#7782AA";
+          gameFilterIconColor3.value = "#7782AA";
+          gameFilterIconColor4.value = "#7782AA";
+          gameFilterIconColor5.value = "#FFFFFF";
+          gameFilterIconColor6.value = "#7782AA";
+          gameFilterIconColor7.value = "#7782AA";
+          filterTabText.value = "paging";
+          selectedCategoryName.value = "Bgaming";
+          break;
         case "slot":
           gameFilterIconColor1.value = "#7782AA";
           gameFilterIconColor2.value = "#7782AA";
@@ -631,6 +653,7 @@ const Dashboard = defineComponent({
         add_game: id,
       });
     }
+
     // 取消收藏
     const cancelFavoriteGame = async (id: string | number, page_no: number) => {
       await dispatchFavoriteGame({
@@ -648,6 +671,19 @@ const Dashboard = defineComponent({
         }
       });
     };
+
+    const refreshGameFavoriteList = (id: string | number) => {
+      pagingGames.value.map((item: { name: string; games: any[]; page_no: number; }) => {
+        if (item.name == 'Favorite') {
+          item.games = item.games.filter((gameItem: { id: string | number; }) => gameItem.id != id);
+          if (mobileWidth.value > 600) {
+            item.page_no = Math.ceil(item.games.length / 7);
+          } else {
+            item.page_no = Math.ceil(item.games.length / 6);
+          }
+        }
+      });
+    }
 
     const handleSearchInputFocus = () => {
       searchDialogShow.value = true;
@@ -1051,6 +1087,7 @@ const Dashboard = defineComponent({
       handleBannerCategory,
       gameConfirmDialogShow,
       selectedGameItem,
+      refreshGameFavoriteList,
       // comUserActivityList
     };
   },
@@ -1135,6 +1172,7 @@ export default Dashboard;
         :selectedGameItem="selectedGameItem"
         :is_favorite="is_favorite"
         @closeGameConfirmDialog="gameConfirmDialogShow = false"
+        @refreshGameFavoriteList="refreshGameFavoriteList"
       />
     </v-navigation-drawer>
 
@@ -1166,7 +1204,10 @@ export default Dashboard;
       <component :is="liveWinComponent"></component>
 
       <!-- buttons for filter -->
-      <v-row :class="[mobileVersion == 'sm' ? 'mx-2 mb-0' : 'mx-4 mb-0']" style="margin-top:0px">
+      <v-row
+        :class="[mobileVersion == 'sm' ? 'mx-2 mb-0' : 'mx-4 mb-0']"
+        style="margin-top: 0px"
+      >
         <template v-if="mobileVersion != 'sm'">
           <v-slide-group
             class="mt-2"
@@ -1601,7 +1642,7 @@ export default Dashboard;
                     :src="gameItem.image"
                     lazy-placeholder
                     blur="30"
-                    @click="handleEnterGame(gameItem.id, gameItem.name)"
+                    @click="showGameConfirmationDialog(gameItem)"
                   />
                   <div
                     v-if="selectedCategoryName == 'favorite'"
@@ -1887,7 +1928,7 @@ export default Dashboard;
 
   .v-progressive-image {
     border-radius: 8px 46px;
-    background: #1D2027;
+    background: #1d2027;
     aspect-ratio: 0.74152;
   }
 
@@ -1932,7 +1973,7 @@ export default Dashboard;
 
   .v-navigation-drawer__scrim {
     background: black !important;
-    opacity: 0 !important;
+    opacity: 0.72 !important;
   }
 
   .v-navigation-drawer--top {
@@ -2212,7 +2253,7 @@ export default Dashboard;
     position: relative;
     display: block;
     border-radius: 8px;
-    background: #1D2027;
+    background: #1d2027;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
     cursor: pointer;
     transition: 0.3s;
@@ -2323,8 +2364,8 @@ export default Dashboard;
     background-color: #1d2027;
     border-radius: 8px;
   }
-  .v-field__field{
-    background-color: #1D2027 !important;
+  .v-field__field {
+    background-color: #1d2027 !important;
   }
 }
 

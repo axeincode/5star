@@ -10,6 +10,7 @@ import { type GetUserInfo } from "@/interface/user";
 import { storeToRefs } from 'pinia';
 import { useI18n } from "vue-i18n";
 import Footer from "./Footer.vue";
+import { useRoute } from 'vue-router';
 
 // import Deposit from "@/components/cash/deposit/index.vue";
 // import MDeposit from "@/components/cash/deposit/mobile/index.vue";
@@ -17,13 +18,13 @@ import Footer from "./Footer.vue";
 // import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
 // import MCashHeader from "@/components/cash/header/mobile/index.vue";
 // import CashHeader from "@/components/cash/header/index.vue";
-// import Signup from "@/components/Signup/index.vue";
-// import MSignup from "@/components/Signup/mobile/index.vue";
-// import MNickName from "@/components/Signup/mobile/NickName.vue";
+import Signup from "@/components/Signup/index.vue";
+import MSignup from "@/components/Signup/mobile/index.vue";
+import MNickName from "@/components/Signup/mobile/NickName.vue";
 import Login from "@/components/Login/index.vue";
 import MLogin from "@/components/Login/mobile/index.vue";
-// import Signout from "@/components/Signout/index.vue";
-// import MSignout from "@/components/Signout/mobile/index.vue";
+import Signout from "@/components/Signout/index.vue";
+import MSignout from "@/components/Signout/mobile/index.vue";
 // import MobileDialog from "@/components/Signout/mobile/Header.vue";
 // import RefferalDialog from "@/components/refferal/index.vue";
 // import MRefferalDialog from "@/components/refferal/mobile/index.vue";
@@ -52,13 +53,13 @@ const Withdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/i
 const MWithdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/mobile/index.vue"));
 const MCashHeader = defineAsyncComponent(() => import("@/components/cash/header/mobile/index.vue"));
 const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/index.vue"));
-const Signup = defineAsyncComponent(() => import("@/components/Signup/index.vue"));
-const MSignup = defineAsyncComponent(() => import("@/components/Signup/mobile/index.vue"));
-const MNickName = defineAsyncComponent(() => import("@/components/Signup/mobile/NickName.vue"));
+// const Signup = defineAsyncComponent(() => import("@/components/Signup/index.vue"));
+// const MSignup = defineAsyncComponent(() => import("@/components/Signup/mobile/index.vue"));
+// const MNickName = defineAsyncComponent(() => import("@/components/Signup/mobile/NickName.vue"));
 // const Login = defineAsyncComponent(() => import("@/components/Login/index.vue"));
 // const MLogin = defineAsyncComponent(() => import("@/components/Login/mobile/index.vue"));
-const Signout = defineAsyncComponent(() => import("@/components/Signout/index.vue"));
-const MSignout = defineAsyncComponent(() => import("@/components/Signout/mobile/index.vue"));
+// const Signout = defineAsyncComponent(() => import("@/components/Signout/index.vue"));
+// const MSignout = defineAsyncComponent(() => import("@/components/Signout/mobile/index.vue"));
 const MobileDialog = defineAsyncComponent(() => import("@/components/Signout/mobile/Header.vue"));
 const RefferalDialog = defineAsyncComponent(() => import("@/components/refferal/index.vue"));
 const MRefferalDialog = defineAsyncComponent(() => import("@/components/refferal/mobile/index.vue"));
@@ -93,6 +94,10 @@ const { setNavBarToggle } = appBarStore();
 const { setLevelUpDialogVisible } = vipStore();
 
 type dialogType = "login" | "signup" | "signout";
+
+const route = useRoute();
+
+const referral_code = ref<string> ("");
 
 // mobile or pc screen
 const mobileVersion = computed(() => {
@@ -471,6 +476,7 @@ const handleResize = () => {
 }
 
 onMounted(() => {
+  console.log(route.query.code);
   window.addEventListener("resize", handleResize);
   mainHeight.value = window.innerHeight;
   if (overlayScrimShow.value) {
@@ -573,7 +579,7 @@ onMounted(() => {
       transition="dialog-top-transition"
       class="mobile-dialog-toggle-height"
       v-if="mobileVersion == 'sm'"
-      style="z-index:10000000000000010"
+      style="z-index: 10000000000000010"
     >
       <MobileDialog :mobileDialogCheck="mobileDialogCheck" @switch="switchDialog" />
     </v-dialog>
@@ -588,8 +594,7 @@ onMounted(() => {
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('signup')"
       persistent
-      style="z-index:10000000000000020"
-      
+      style="z-index: 10000000000000020"
     >
       <Signup
         v-if="mobileVersion != 'sm'"
@@ -612,7 +617,7 @@ onMounted(() => {
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('login')"
       persistent
-      style="z-index:10000000000000020"
+      style="z-index: 10000000000000020"
     >
       <Login
         v-if="mobileVersion != 'sm'"
@@ -666,7 +671,7 @@ onMounted(() => {
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="mobileVersion == 'sm' ? false : true"
       @click:outside="false"
-      style="z-index: 2147483646;"
+      style="z-index: 2147483646"
     >
       <RefferalDialog v-if="mobileWidth > 600" />
       <MRefferalDialog v-else />
@@ -679,7 +684,7 @@ onMounted(() => {
       :width="mobileWidth < 600 ? '340' : '471'"
       @click:outside="closeLoginBonusDialog"
       :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
-      style="z-index:10000000000000020"
+      style="z-index: 10000000000000020"
     >
       <LoginBonusDialog
         v-if="mobileWidth > 600"
@@ -751,7 +756,6 @@ onMounted(() => {
   </v-main>
 </template>
 <style lang="scss">
-
 .Vue-Toastification__toast {
   align-items: center !important;
   z-index: 2147483647 !important;
@@ -764,7 +768,6 @@ onMounted(() => {
   background: var(--bg-2, #181522);
   box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
-
 
 .el-backtop {
   width: 44px;
@@ -796,7 +799,7 @@ onMounted(() => {
 }
 
 .main-background {
-  background: #15161C;;
+  background: #15161c;
 }
 
 .main-bg-blur {
@@ -831,8 +834,7 @@ onMounted(() => {
   }
 
   .v-navigation-drawer__scrim {
-    opacity: 0 !important;
-    background: transparent !important;
+    opacity: 0.8 !important;
   }
 }
 
