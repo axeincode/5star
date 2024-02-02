@@ -245,7 +245,7 @@ onMounted(() => {
       </v-list-item>
     </template>
     <v-list density="compact" nav class="mt-1">
-      <!-- <v-card color="#211F31" theme="dark" class="mx-1"> -->
+      <!-- <v-card color="#1D2027" theme="dark" class="mx-1"> -->
       <v-row class="ma-4 align-center p-space-between">
         <div>
           <img src="@/assets/public/svg/icon_public_1001.svg" width="24" />
@@ -334,7 +334,7 @@ onMounted(() => {
             :title="t('navBar.casino')" link value="casino">
           </v-list-item>
         </template>
-        <v-card color="#211F31" theme="dark" class="ma-2">
+        <v-card color="#1D2027" theme="dark" class="ma-2">
           <v-list>
             <v-list-item class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_35.svg"
               :title="t('navBar.casino_sub_menu.recently_played')" value="recently played"></v-list-item>
@@ -346,7 +346,7 @@ onMounted(() => {
                   :append-icon="originalMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
                   :title="t('navBar.casino_sub_menu.game_originals')" value="game originals"></v-list-item>
               </template>
-              <v-list theme="dark" bg-color="#211F31">
+              <v-list theme="dark" bg-color="#1D2027">
                 <v-list-item v-for="(item, i) in gameOriginalItems" :key="i" :value="item.name" class="avatar-img"
                   :prepend-avatar="item.icon" :title="item.name">
                 </v-list-item>
@@ -383,13 +383,13 @@ onMounted(() => {
     <v-list>
       <v-menu location="end" offset="16" v-model:model-value="languageMenu">
         <template v-slot:activator="{ props }">
-          <v-card color="#211F31" theme="dark" class="mx-2 language-item">
+          <v-card color="#1D2027" theme="dark" class="mx-2 language-item">
             <v-list-item v-bind="props" class="casino-sub-img" prepend-avatar="@/assets/public/svg/icon_public_57.svg"
               :title="language" value="english" :append-icon="languageMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'">
             </v-list-item>
           </v-card>
         </template>
-        <v-list theme="dark" bg-color="#211F31" width="220" class="text-center">
+        <v-list theme="dark" bg-color="#1D2027" width="220" class="text-center">
           <v-list-item :title="t('navBar.language.title')" class="avatar-img"></v-list-item>
           <v-divider></v-divider>
           <v-list-item v-for="(item, i) in langItems" :key="i" :value="item" class="avatar-img"
@@ -462,7 +462,7 @@ onMounted(() => {
     height: 48px;
     position: relative;
     display: block;
-    background: #211f31;
+    background: #1D2027;
     border-radius: 24px !important;
     cursor: pointer;
     transition: 0.2s;
@@ -692,7 +692,7 @@ onMounted(() => {
 
 .language-item {
   border-radius: 8px;
-  background: var(--text-box-1211-f-31, #211f31);
+  background: var(--text-box-1211-f-31, #1D2027);
 
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -718,7 +718,7 @@ onMounted(() => {
     height: 44px;
     position: relative;
     display: block;
-    background: #211f31;
+    background: #1D2027;
     border-radius: 22px !important;
     cursor: pointer;
     transition: 0.3s;
@@ -764,7 +764,7 @@ onMounted(() => {
     position: absolute;
     top: 4px;
     left: 4px;
-    background: #353652;
+    background: #23262F;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;

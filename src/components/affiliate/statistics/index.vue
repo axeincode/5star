@@ -170,8 +170,8 @@ onMounted(async () => {
 <style lang="scss">
 .statistics-summary-card {
   margin: 16px 16px 0px 16px;
-  border-radius: 12px;
-  background: #29253c;
+  border-radius: 8px;
+  background: #1D2027;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   overflow-x: auto;
 }
@@ -179,13 +179,13 @@ onMounted(async () => {
   align-items: center;
   height: 48px;
   border-radius: 8px;
-  background: #211f31;
+  background: #1D2027;
 }
 .statistics-user-card {
   align-items: center;
   height: 48px;
   border-radius: 8px;
-  background: #211f31;
+  background: #1D2027;
 }
 .statistics-commission-card {
   align-items: center;
@@ -196,7 +196,7 @@ onMounted(async () => {
 .statistics-summary-tab {
   height: 64px;
   border-radius: 0px 0px 8px 8px;
-  background: #29253c;
+  background: #1D2027;
   align-items: center;
   justify-content: center;
 }
@@ -207,14 +207,14 @@ onMounted(async () => {
 }
 .statistics-receive-card {
   height: 118px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: linear-gradient(180deg, #2e68af 0%, #21a68b 100%);
   align-items: center;
   justify-content: center;
 }
 .statistics-receive-btn {
   border-radius: 16px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
     color: #fff;

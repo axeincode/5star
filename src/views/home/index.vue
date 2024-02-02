@@ -1145,9 +1145,6 @@ export default Dashboard;
         @handleBannerCategory="handleBannerCategory"
       ></component>
 
-      <!-- Live Win Component -->
-      <component :is="liveWinComponent"></component>
-
       <!-- input for search -->
       <v-row class="mt-0 home-search-bar" :class="mobileWidth < 600 ? 'px-1' : 'px-4'">
         <v-text-field
@@ -1165,8 +1162,11 @@ export default Dashboard;
         />
       </v-row>
 
+      <!-- Live Win Component -->
+      <component :is="liveWinComponent"></component>
+
       <!-- buttons for filter -->
-      <v-row :class="[mobileVersion == 'sm' ? 'mx-2 mb-0' : 'mx-4 mb-0']">
+      <v-row :class="[mobileVersion == 'sm' ? 'mx-2 mb-0' : 'mx-4 mb-0']" style="margin-top:0px">
         <template v-if="mobileVersion != 'sm'">
           <v-slide-group
             class="mt-2"
@@ -1887,7 +1887,7 @@ export default Dashboard;
 
   .v-progressive-image {
     border-radius: 8px 46px;
-    background: #211f31;
+    background: #1D2027;
     aspect-ratio: 0.74152;
   }
 
@@ -2109,7 +2109,7 @@ export default Dashboard;
 }
 
 .lobby-btn-color {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-btn__content {
     font-weight: 700 !important;
@@ -2118,7 +2118,7 @@ export default Dashboard;
 }
 
 .popular-btn-color {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-btn__content {
     text-align: center;
@@ -2212,7 +2212,7 @@ export default Dashboard;
     position: relative;
     display: block;
     border-radius: 8px;
-    background: #211f31;
+    background: #1D2027;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
     cursor: pointer;
     transition: 0.3s;
@@ -2322,6 +2322,9 @@ export default Dashboard;
   .form-textfield div.v-field.v-field--appended {
     background-color: #1d2027;
     border-radius: 8px;
+  }
+  .v-field__field{
+    background-color: #1D2027 !important;
   }
 }
 

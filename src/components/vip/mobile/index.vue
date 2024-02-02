@@ -799,7 +799,7 @@ const handleVipSwitchRight = () => {
 }
 
 const arrowSwitchTransform = (el: any) => {
-  el.children[0].children[0].setAttribute('fill', '#1C1929')
+  el.children[0].children[0].setAttribute('fill', '#15161C')
   return el;
 }
 
@@ -1382,7 +1382,7 @@ onMounted(async () => {
               </div>
               <v-card
                 theme="dark"
-                color="#1C1929"
+                color="#15161C"
                 class="mt-4 mx-3"
                 style="border-radius: 8px"
               >
@@ -1415,7 +1415,7 @@ onMounted(async () => {
                     >
                       <v-card
                         theme="dark"
-                        color="#29253C"
+                        color="#1D2027"
                         class="text-center pa-2 relative"
                         height="90"
                         style="border-radius: 4px"
@@ -1442,7 +1442,7 @@ onMounted(async () => {
               </v-card>
               <v-card
                 theme="dark"
-                color="#1C1929"
+                color="#15161C"
                 class="mt-4 mx-3"
                 style="border-radius: 8px"
               >
@@ -1516,7 +1516,7 @@ onMounted(async () => {
                 <v-col cols="12" class="px-1">
                   <v-card
                     theme="dark"
-                    color="#1C1929"
+                    color="#15161C"
                     class="ml-auto d-flex align-center"
                     height="49"
                   >
@@ -1543,7 +1543,7 @@ onMounted(async () => {
                 </v-col>
               </v-row>
               <div
-                color="#1C1929"
+                color="#15161C"
                 class="ma-2 pa-4 m-spin-game-card box"
                 :style="{
                   height: spinCardShow ? spinCardHeight2 + 'px' : spinCardHeight1 + 'px',
@@ -1564,7 +1564,7 @@ onMounted(async () => {
                   >
                     <v-card
                       theme="dark"
-                      color="#29253C"
+                      color="#1D2027"
                       class="py-6"
                       style="border-radius: 6px"
                     >
@@ -1625,7 +1625,7 @@ onMounted(async () => {
                 </p>
               </div>
               <div
-                color="#1C1929"
+                color="#15161C"
                 class="ma-2 pa-4 m-spin-game-card box"
                 :style="{
                   height: missionCardShow
@@ -1643,7 +1643,7 @@ onMounted(async () => {
                   >
                     <v-card
                       theme="dark"
-                      color="#29253C"
+                      color="#1D2027"
                       class="py-6"
                       v-if="item.type == 1"
                       height="220"
@@ -1666,7 +1666,7 @@ onMounted(async () => {
                     </v-card>
                     <v-card
                       theme="dark"
-                      color="#29253C"
+                      color="#1D2027"
                       class="py-6"
                       height="220"
                       style="width: 100%; border-radius: 6px"
@@ -1757,7 +1757,7 @@ onMounted(async () => {
                     </v-card>
                     <v-card
                       theme="dark"
-                      color="#29253C"
+                      color="#1D2027"
                       class="py-6"
                       height="220"
                       style="width: 100%; border-radius: 6px"
@@ -1788,7 +1788,7 @@ onMounted(async () => {
                     </v-card>
                     <v-card
                       theme="dark"
-                      color="#29253C"
+                      color="#1D2027"
                       class="py-6"
                       height="220"
                       style="width: 100%; border-radius: 6px"
@@ -1868,7 +1868,7 @@ onMounted(async () => {
                 </p>
                 <v-card
                   theme="dark"
-                  color="#1C1929"
+                  color="#15161C"
                   class="mt-2"
                   height="140"
                   style="border-radius: 8px"
@@ -1896,7 +1896,7 @@ onMounted(async () => {
                 </p>
                 <v-card
                   theme="dark"
-                  color="#1C1929"
+                  color="#15161C"
                   class="mt-2"
                   height="140"
                   style="border-radius: 8px"
@@ -1919,7 +1919,7 @@ onMounted(async () => {
                 <p class="text-700-12 white ml-2">
                   {{ t("vip.benifit_description_body.text_6") }}
                 </p>
-                <v-card theme="dark" color="#1C1929" class="mt-2">
+                <v-card theme="dark" color="#15161C" class="mt-2">
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
                     <v-col cols="6">
                       <div class="benifit-description-border">
@@ -1961,7 +1961,7 @@ onMounted(async () => {
                 <p class="text-700-12 white ml-2">
                   {{ t("vip.benifit_description_body.text_10") }}
                 </p>
-                <v-card theme="dark" color="#1C1929" class="mt-2">
+                <v-card theme="dark" color="#15161C" class="mt-2">
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
                     <template
                       v-for="(cashItemKey, index) in Object.keys(item?.bet_award_rate)"
@@ -2015,7 +2015,7 @@ onMounted(async () => {
                 <p class="text-700-12 white ml-2">
                   {{ t("vip.benifit_description_body.text_17") }}
                 </p>
-                <v-card theme="dark" color="#1C1929" class="mt-2">
+                <v-card theme="dark" color="#15161C" class="mt-2">
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
                     <v-col cols="7">
                       <div class="benifit-description-border">
@@ -2046,7 +2046,7 @@ onMounted(async () => {
                 <p class="text-700-12 white ml-2">
                   {{ t("vip.benifit_description_body.text_18") }}
                 </p>
-                <v-card theme="dark" color="#1C1929" class="mt-2">
+                <v-card theme="dark" color="#15161C" class="mt-2">
                   <v-row class="mx-2 my-0 pa-0 align-center justify-center">
                     <v-col cols="6" class="py-1">
                       <div class="benifit-description-border">
@@ -2217,7 +2217,7 @@ onMounted(async () => {
 
 .m-vip-container {
   margin: -47px 0px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
@@ -2234,7 +2234,7 @@ onMounted(async () => {
   }
 
   .v-slide-group {
-    background: #1c1929 !important;
+    background: #15161C !important;
   }
 
   .v-slide-group__content {
@@ -2263,7 +2263,7 @@ linear-gradient(0deg, #424173, #424173);
 
 .reward-body {
   border-radius: 8px;
-  background: #29253c;
+  background: #1D2027;
 }
 
 .m-reward-card {
@@ -2285,7 +2285,7 @@ linear-gradient(0deg, #424173, #424173);
 
   .m-cashback-my-card {
     border-radius: 14px;
-    background: #1c1929;
+    background: #15161C;
   }
 
   .v-btn__content {
@@ -2362,7 +2362,7 @@ linear-gradient(0deg, #424173, #424173);
   /* Set the transition properties */
   transition: height 0.3s ease-out;
   border-radius: 8px;
-  background: #1c1929;
+  background: #15161C;
   overflow: hidden;
 }
 
@@ -2438,14 +2438,14 @@ linear-gradient(0deg, #424173, #424173);
 .mission-progress-bg {
   .v-progress-linear {
     border-radius: 8px;
-    background: #1c1929 !important;
+    background: #15161C !important;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
 
   .v-progress-linear__background {
     border-radius: 8px;
-    background: #1c1929 !important;
+    background: #15161C !important;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
@@ -2463,7 +2463,7 @@ linear-gradient(0deg, #424173, #424173);
 
 .m-benifit-description-body {
   border-radius: 8px;
-  background: #29253c;
+  background: #1D2027;
 
   .m-benifit-description-header {
     border-radius: 8px;
@@ -2529,7 +2529,7 @@ linear-gradient(0deg, #424173, #424173);
 
 .m-transaction-tab-btn {
   box-shadow: none !important;
-  border-radius: 12px;
+  border-radius: 8px;
 
   .v-btn__content {
     text-align: center;

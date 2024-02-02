@@ -24,8 +24,8 @@ const statisticsItem = ref<statisticsItem>({
 <template>
   <v-row class="mx-4 my-2 align-center">
     <v-col cols="12" md="7" lg="7" class="mt-3 pa-0">
-      <v-card color="#29253C" class="pa-2 m-statistics-card-1">
-        <v-card color="#1C1929" class="pa-2 m-statistics-card-2">
+      <v-card color="#1D2027" class="pa-2 m-statistics-card-1">
+        <v-card color="#15161C" class="pa-2 m-statistics-card-2">
           <v-row>
             <v-col cols="6" md="3" lg="3" class="m-invite-border text-center py-1 mt-4">
               <div class="text-400-10 gray">
@@ -59,7 +59,7 @@ const statisticsItem = ref<statisticsItem>({
             </v-col>
           </v-row>
         </v-card>
-        <v-card color="#1C1929" class="pa-2 m-statistics-card-2 mt-2">
+        <v-card color="#15161C" class="pa-2 m-statistics-card-2 mt-2">
           <v-row>
             <v-col cols="6" md="3" lg="3" class="m-invite-border text-center py-1 mt-4">
               <div class="text-400-10 gray">
@@ -93,7 +93,7 @@ const statisticsItem = ref<statisticsItem>({
             </v-col>
           </v-row>
         </v-card>
-        <v-card color="#1C1929" class="pa-2 m-statistics-card-2 mt-2">
+        <v-card color="#15161C" class="pa-2 m-statistics-card-2 mt-2">
           <v-row>
             <v-col cols="12" class="m-invite-border text-center py-1 mt-4 mb-2">
               <div class="text-400-10 gray">
@@ -132,7 +132,7 @@ const statisticsItem = ref<statisticsItem>({
                   </template>
                   <v-list
                     theme="dark"
-                    bg-color="#211F31"
+                    bg-color="#1D2027"
                     class="px-2"
                     :width="mobileWidth > 600 ? 471 : mobileWidth - 30"
                     style="margin: 0px 2px 0px -15px"
@@ -160,12 +160,12 @@ const statisticsItem = ref<statisticsItem>({
 
 <style lang="scss">
 .m-statistics-card-1 {
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: none;
 }
 .m-statistics-card-2 {
   border-radius: 8px;
-  background: var(--BG-5-1C1929, #1c1929);
+  background: var(--BG-5-1C1929, #15161C);
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }
 

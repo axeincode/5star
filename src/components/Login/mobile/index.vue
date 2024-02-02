@@ -44,7 +44,6 @@ const Login = defineComponent({
     const { dispatchVipLevels } = vipStore();
     const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
-    const { dispatchBannerList } = bannerStore();
     
     // initiate component state
     const state = reactive({
@@ -164,7 +163,6 @@ const Login = defineComponent({
         await dispatchVipInfo();
         await dispatchVipLevels();
         await dispatchVipLevelAward();
-        await dispatchBannerList();
         // await dispatchSocketConnect();
         setOverlayScrimShow(false);
         setRefferalDialogShow(true);
@@ -471,7 +469,7 @@ export default Login;
             :onfocus="handleEmailFocus"
           />
           <div class="m-forgot-mail-card" :style="{ height: mailCardHeight + 'px' }">
-            <v-list theme="dark" bg-color="#211F31">
+            <v-list theme="dark" bg-color="#1D2027">
               <v-list-item
                 class="text-600-12 white"
                 value="gmail"
@@ -576,7 +574,7 @@ export default Login;
   top: 86px;
   left: 50%;
   transform: translateX(-50%);
-  background: #211f31;
+  background: #1D2027;
   width: calc(100% - 48px);
   border-radius: 16px;
   z-index: 200;
@@ -589,7 +587,7 @@ export default Login;
   top: 55px;
   left: 50%;
   transform: translateX(-50%);
-  background: #211f31;
+  background: #1D2027;
   width: calc(100% - 48px);
   border-radius: 16px;
   z-index: 200;
@@ -674,7 +672,7 @@ export default Login;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #414968;
+  color: #23262F;
   position: relative;
   top: 12px;
   text-align: center;
@@ -699,7 +697,7 @@ export default Login;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #414968;
+  color: #23262F;
   position: relative;
   top: 12px;
   text-align: center;

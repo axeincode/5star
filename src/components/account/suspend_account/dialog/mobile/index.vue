@@ -86,12 +86,12 @@ const submitSuspend = async () => {
         </v-row>
         <v-row class="mx-10 mt-10 text-700-14">
             <div class="m-suspend-confirm-btn">
-                <v-btn class="button-bright text-none" height="28" width="76" @click="submitSuspend" :loading="loading">
+                <v-btn class="button-bright text-none" height="40" width="88" @click="submitSuspend" :loading="loading">
                     {{ t('account.suspend_account.dialog.determine_btn_text') }}
                 </v-btn>
             </div>
             <div class="m-suspend-cancel-btn ml-auto">
-                <v-btn class="button-bright text-none" height="28" width="76" @click="emit('suspendDialogHide')">
+                <v-btn class="button-bright text-none" height="40" width="88" @click="emit('suspendDialogHide')">
                     {{ t('account.suspend_account.dialog.cancel_btn_text') }}
                 </v-btn>
             </div>
@@ -103,7 +103,7 @@ const submitSuspend = async () => {
 <style lang="scss">
 // account dialog container
 .m-suspend-dialog-container {
-    background-color: #29253C;
+    background-color: #1D2027;
     border-radius: 16px !important;
     height: 173px;
 }
@@ -112,7 +112,7 @@ const submitSuspend = async () => {
 
     // button
     button {
-        border-radius: 26px !important;
+        border-radius: 8px !important;
 
         .v-btn__content {
             font-weight: 700;
@@ -125,9 +125,9 @@ const submitSuspend = async () => {
 
     // button
     button {
-        background: #414968 !important;
+        background: #23262F !important;
         box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-        border-radius: 26px;
+        border-radius: 8px;
 
         .v-btn__content {
             font-weight: 700;

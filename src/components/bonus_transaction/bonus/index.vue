@@ -133,7 +133,7 @@ onMounted(async () => {
       </v-list-item>
     </v-col>
     <v-col cols="12" md="8" lg="8">
-      <v-card theme="dark" color="#1C1929" class="bonus-card-body pa-4">
+      <v-card theme="dark" color="#15161C" class="bonus-card-body pa-4">
         <v-expansion-panels>
           <v-expansion-panel
             class="bg-color-211F31 mt-2"
@@ -271,9 +271,9 @@ onMounted(async () => {
 }
 
 .forms-bonus-table-bg {
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -301,7 +301,7 @@ onMounted(async () => {
 }
 
 .v-progress-linear {
-  background: #211f31 !important;
+  background: #1D2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 20px !important;
 }
@@ -319,7 +319,7 @@ onMounted(async () => {
 
 .failure-progress {
   .v-progress-linear__determinate {
-    background: linear-gradient(0deg, #1c1929 0%, #393a71 100%);
+    background: linear-gradient(0deg, #15161C 0%, #393a71 100%);
     border-radius: 20px;
   }
 }

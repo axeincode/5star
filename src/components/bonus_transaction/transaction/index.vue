@@ -182,7 +182,7 @@ onMounted(async () => {
         class="ma-2 text-none transaction-tab-btn"
         :class="selectedTab == item ? 'white' : 'text-gray'"
         rounded
-        :color="selectedTab == item ? '#29253C' : 'transparent'"
+        :color="selectedTab == item ? '#1D2027' : 'transparent'"
         @click="transactionTabToggle(item)"
         :width="mobileWidth < 600 ? 106 : 150"
       >
@@ -267,7 +267,7 @@ onMounted(async () => {
 </template>
 <style lang="scss">
 .slide-tabs {
-  background: #1c1929 !important;
+  background: #15161C !important;
   margin: 8px !important;
   border-radius: 8px !important;
 }

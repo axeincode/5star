@@ -190,7 +190,7 @@ onMounted(async () => {
       </v-list-item>
     </v-col>
     <v-col cols="12" class="pa-1">
-      <v-card theme="dark" color="#1C1929" class="m-bonus-card-body pa-2">
+      <v-card theme="dark" color="#15161C" class="m-bonus-card-body pa-2">
         <div
           v-if="userBonusList.list == null || userBonusList.list.length == 0"
           class="ma-4"
@@ -551,7 +551,7 @@ onMounted(async () => {
   width: 64px;
   height: 24px !important;
   border-radius: 8px;
-  background: var(--Secondary-Button-353652, #353652);
+  background: var(--Secondary-Button-353652, #23262F);
   .v-btn__content {
     color: var(--White-BG, #fff);
     text-align: center;
@@ -605,9 +605,9 @@ onMounted(async () => {
 }
 
 .m-forms-bonus-table-bg {
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -618,7 +618,7 @@ onMounted(async () => {
 
 .bonus-cash-border {
   height: 30px;
-  border-right: 1px solid #211f31;
+  border-right: 1px solid #1D2027;
 }
 
 .m-collapse-body .v-expansion-panel-title {
@@ -646,7 +646,7 @@ onMounted(async () => {
 }
 
 .v-progress-linear {
-  background: #211f31 !important;
+  background: #1D2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
 }
@@ -664,7 +664,7 @@ onMounted(async () => {
 
 .failure-progress {
   .v-progress-linear__determinate {
-    background: linear-gradient(0deg, #1c1929 0%, #393a71 100%);
+    background: linear-gradient(0deg, #15161C 0%, #393a71 100%);
     border-radius: 8px;
   }
 }
@@ -687,8 +687,8 @@ onMounted(async () => {
   padding: 8px 8px 16px !important;
 }
 .m-bonus-deposit-group {
-  border-radius: 12px;
-  background: #211f31;
+  border-radius: 8px;
+  background: #1D2027;
   padding: 4px;
   .v-expansion-panel {
     background-color: #29263c !important;

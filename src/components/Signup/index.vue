@@ -364,7 +364,7 @@ export default Signup;
           />
         </v-row>
         <div class="register-mail-card" :style="{ height: mailCardHeight + 'px' }">
-          <v-list theme="dark" bg-color="#211F31">
+          <v-list theme="dark" bg-color="#1D2027">
             <v-list-item
               class="text-500-16 white"
               value="gmail"
@@ -641,7 +641,7 @@ export default Signup;
   top: 274px;
   left: 50%;
   transform: translateX(-50%);
-  background: #211f31;
+  background: #1D2027;
   width: 375px;
   border-radius: 16px;
   z-index: 200;
@@ -650,7 +650,7 @@ export default Signup;
 }
 
 .signup-btn:disabled {
-  background: #353652;
+  background: #23262F;
   cursor: default;
 }
 
@@ -712,7 +712,7 @@ export default Signup;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
-  color: #414968;
+  color: #23262F;
   position: relative;
   top: 12px;
   text-align: center;
@@ -769,7 +769,7 @@ export default Signup;
 
 .agreement-checkbox {
   i.v-icon {
-    color: #211f31;
+    color: #1D2027;
     background-color: #01983a;
     width: 16px;
     height: 16px;
@@ -778,7 +778,7 @@ export default Signup;
   }
 
   i.mdi-checkbox-blank-outline {
-    background-color: #211f31;
+    background-color: #1D2027;
     box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
     border-radius: 4px;
   }

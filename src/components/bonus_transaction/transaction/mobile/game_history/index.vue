@@ -201,7 +201,7 @@ const handleNext = () => {};
                 style="
                   width: 16px;
                   height: 16px;
-                  background: #414968;
+                  background: #23262F;
                   border-radius: 20px;
                 "
                 v-if="item.amount"
@@ -282,7 +282,7 @@ const handleNext = () => {};
       <v-menu offset="12" class="m-game-menu" v-model:model-value="gameMenuShow">
         <template v-slot:activator="{ props }">
           <v-card
-            color="#1C1929"
+            color="#15161C"
             theme="dark"
             style="height: 32px"
             class="m-bonus-game-card"
@@ -325,19 +325,19 @@ const handleNext = () => {};
 </template>
 <style lang="scss">
 .m-forms-bonus-table-bg1 {
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  // border-radius: 12px !important;
+  // border-radius: 8px !important;
   width: 100% !important;
 }
 
 .m-forms-bonus-table1 {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   .v-table__wrapper {
     border-radius: 0px !important;
   }
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #414968;
+    background: #23262F;
     height: 46px !important;
   }
   .v-table > .v-table__wrapper > table > tbody > tr > td,
@@ -350,7 +350,7 @@ const handleNext = () => {};
   }
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #414968;
+    border-bottom: 1px solid #23262F;
   }
 
   .forms-table-body {
@@ -387,7 +387,7 @@ const handleNext = () => {};
     margin-left: -11px;
     border-width: 7px;
     border-style: solid;
-    border-color: #211f31 transparent transparent transparent;
+    border-color: #1D2027 transparent transparent transparent;
   }
 
   .v-overlay__content {
@@ -398,8 +398,8 @@ const handleNext = () => {};
 .m-bonus-game-card {
   height: 32px;
   flex-shrink: 0;
-  border-radius: 12px;
-  background: var(--bg-51-c-1929, #1c1929);
+  border-radius: 8px;
+  background: var(--bg-51-c-1929, #15161C);
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 
   .v-list-item__append > .v-icon {
@@ -410,12 +410,12 @@ const handleNext = () => {};
 
 .el-popper.is-customized {
   padding: 15px 20px;
-  background: #29253c;
+  background: #1D2027;
   border-radius: 10px;
 }
 
 .el-popper.is-customized .el-popper__arrow::before {
-  background: #29253c;
+  background: #1D2027;
   right: 0;
 }
 
@@ -425,7 +425,7 @@ const handleNext = () => {};
   height: 26px;
   flex-shrink: 0;
   border-radius: 27px;
-  background: var(--bg-51-c-1929, #1c1929);
+  background: var(--bg-51-c-1929, #15161C);
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }
 .v-pagination__list {

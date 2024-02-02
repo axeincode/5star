@@ -114,7 +114,7 @@ onMounted(async () => {
     refferalContainerHeight.value = 594;
   }, 800);
   setTimeout(() => {
-    refferalContainerBackground.value = "#2E274C";
+    refferalContainerBackground.value = "#1D2027";
   }, 400);
   await dispatchUserInvite();
 });
@@ -146,8 +146,8 @@ onMounted(async () => {
           <v-card
             height="292"
             theme="dark"
-            color="#211F31"
-            class="overflow-y-auto"
+            color="#15161C"
+            class="overflow-y-auto description-card"
             style="scroll-padding: 20px"
           >
             <div class="mx-4 mt-4 text-600-14 text-gray">
@@ -224,7 +224,7 @@ onMounted(async () => {
             }}{{ t("refferal.dialog.body.text_3") }}
           </div>
           <div class="text-center mt-6 mx-6">
-            <v-card theme="dark" color="#211F31" height="40">
+            <v-card theme="dark" color="#15161C" height="40">
               <div class="text-400-14 text-gray mt-2">
                 {{ inviteItem.web_invite_url }}
               </div>
@@ -289,7 +289,7 @@ onMounted(async () => {
     margin-left: auto;
     margin-right: auto;
     width: 328px;
-    background: #2e274c;
+    background: #15161C;
     border-radius: 16px;
     height: 333px;
     animation-name: heighting;
@@ -298,6 +298,12 @@ onMounted(async () => {
     animation-timing-function: linear;
     animation-iteration-count: 1;
     overflow: hidden;
+    .v-card{
+      border-radius: 8px;
+      &.description-card{
+        border-radius: 16px;
+      }
+    }
   }
 
   .refferal-dialog-header-animation {

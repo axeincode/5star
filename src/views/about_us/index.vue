@@ -108,7 +108,7 @@ onMounted(() => {
         </v-btn>
         <v-menu offset="20" v-model:model-value="aboutMenuShow" class="m-about-menu-list">
           <template v-slot:activator="{ props }">
-            <v-card color="#1C1929" theme="dark" class="ml-auto mr-2 m-about-menu-card">
+            <v-card color="#15161C" theme="dark" class="ml-auto mr-2 m-about-menu-card">
               <v-list-item
                 v-bind="props"
                 :append-icon="aboutMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
@@ -120,7 +120,7 @@ onMounted(() => {
               </v-list-item>
             </v-card>
           </template>
-          <v-list theme="dark" bg-color="#29253C">
+          <v-list theme="dark" bg-color="#1D2027">
             <v-list-item
               v-for="(item, i) in menuList"
               :key="i"
@@ -150,7 +150,7 @@ onMounted(() => {
 
 <style lang="scss">
 .m-about-container {
-  background: #211f31;
+  background: #1D2027;
   margin: -40px 0px 0px 0px;
   padding-bottom: 20px;
   border-radius: 8px;
@@ -158,14 +158,14 @@ onMounted(() => {
 
 .m-about-main-body {
   margin-top: 8px;
-  border-radius: 12px;
-  background: var(--BG-5-1C1929, #1c1929);
+  border-radius: 8px;
+  background: var(--BG-5-1C1929, #15161C);
 }
 
 .m-about-menu-card {
   width: 200px;
   height: 40px;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-list-item__append > .v-icon {
     font-size: 18px;
@@ -175,7 +175,7 @@ onMounted(() => {
 
 .m-about-menu-item-border {
   margin: 8px;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   border: 1px solid #00b25c !important;
   height: 36px !important;
 }
@@ -186,7 +186,7 @@ onMounted(() => {
   align-self: center;
   top: -25px;
   left: 50%;
-  border: 15px solid #29253c;
+  border: 15px solid #1D2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -195,10 +195,10 @@ onMounted(() => {
 }
 
 .m-about-tab-body {
-  background: #29253c;
+  background: #1D2027;
   height: 48px;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-  border-radius: 12px;
+  border-radius: 8px;
 
   .m-about-back-btn {
     background: transparent !important;

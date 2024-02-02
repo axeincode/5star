@@ -84,7 +84,7 @@ onMounted(() => {});
   .level-up-body {
     height: 260px;
     border-radius: 10px;
-    background: #211f31;
+    background: #1D2027;
 
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -103,7 +103,7 @@ onMounted(() => {});
 
   .show-checkbox {
     i.v-icon {
-      color: #1c1929;
+      color: #15161C;
       background-color: #01983a;
       width: 16px;
       height: 16px;
@@ -112,7 +112,7 @@ onMounted(() => {});
     }
 
     i.mdi-checkbox-blank-outline {
-      background-color: #1c1929;
+      background-color: #15161C;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }

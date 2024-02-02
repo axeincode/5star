@@ -77,8 +77,8 @@ const handleMenu = (index: number) => {
 <style lang="scss">
 // mobile account dialog container
 .m-account-dialog-container {
-    background-color: #211F31;
-    border-radius: 32px !important;
+    background-color: #1D2027;
+    border-radius: 8px !important;
     height: 384px;
 
     .m-account-avatar-position {
@@ -112,7 +112,7 @@ const handleMenu = (index: number) => {
 
 
 .m-account-menu {
-    background-color: #211F31;
+    background-color: #1D2027;
     border-radius: 0px 0px 12px 12px !important;
 
     .v-list {
@@ -123,6 +123,6 @@ const handleMenu = (index: number) => {
 .m-account-divider {
     margin: auto;
     border-width: thin;
-    background: #3E3A57;
+    color: black;
 }
 </style>

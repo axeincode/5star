@@ -671,7 +671,7 @@ onMounted(async () => {
   width: 320px;
   height: 338px;
   border-radius: 14px;
-  background: #211f31;
+  background: #1D2027;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   z-index: 20;
 }
@@ -816,7 +816,7 @@ onMounted(async () => {
 }
 
 .m-left-login-bonus-button {
-  background: #211f31;
+  background: #1D2027;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 

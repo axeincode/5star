@@ -211,7 +211,7 @@ onMounted(() => {
           class="m-account-menu-list"
         >
           <template v-slot:activator="{ props }">
-            <v-card color="#1C1929" theme="dark" class="ml-auto mr-2 m-account-menu-card">
+            <v-card color="#15161C" theme="dark" class="ml-auto mr-2 m-account-menu-card">
               <v-list-item
                 v-bind="props"
                 :append-icon="accountMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
@@ -223,7 +223,7 @@ onMounted(() => {
               </v-list-item>
             </v-card>
           </template>
-          <v-list theme="dark" bg-color="#29253C">
+          <v-list theme="dark" bg-color="#1D2027" style="border-radius:8px">
             <v-list-item
               v-for="(item, i) in menuList"
               :key="i"
@@ -258,14 +258,14 @@ onMounted(() => {
 }
 
 .account-container-2 {
-  // background: #211F31;
+  // background: #1D2027;
   margin: -20px 0px;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .m-account-container {
-  background: #211f31;
+  background: #1D2027;
   margin: -40px 0px;
   padding-bottom: 20px;
   border-radius: 8px;
@@ -274,7 +274,7 @@ onMounted(() => {
 .m-account-menu-card {
   width: 200px;
   height: 40px;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-list-item__append > .v-icon {
     font-size: 18px;
@@ -288,7 +288,7 @@ onMounted(() => {
   align-self: center;
   top: -25px;
   left: 50%;
-  border: 15px solid #29253c;
+  border: 15px solid #1D2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -297,7 +297,7 @@ onMounted(() => {
 }
 
 .account-menu {
-  background-color: #211f31;
+  background-color: #1D2027;
   border-radius: 0px 0px 12px 12px !important;
   height: 600px;
 
@@ -309,14 +309,14 @@ onMounted(() => {
 .account-divider {
   margin: auto;
   border-width: thin;
-  background: #353652;
+  background: #23262F;
 }
 
 .m-account-tab-body {
-  background: #29253c;
+  background: #1D2027;
   height: 48px;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-  border-radius: 12px;
+  border-radius: 8px;
 
   .m-account-back-btn {
     background: transparent !important;

@@ -544,7 +544,7 @@ onMounted(async () => {
         <v-menu offset="10" class="deposit-menu">
           <template v-slot:activator="{ props }">
             <v-card
-              color="#211F31"
+              color="#1D2027"
               theme="dark"
               class="mr-4 mt-1 user-card-height"
               v-if="mobileWidth > 600"
@@ -568,7 +568,7 @@ onMounted(async () => {
                         <img src="@/assets/public/svg/icon_public_50.svg" class="mr-2" />
                       </div>
                     </template>
-                    <v-list theme="dark" bg-color="#211F31" class="px-2" width="427px">
+                    <v-list theme="dark" bg-color="#1D2027" class="px-2" width="427px">
                       <v-list-item
                         class="currency-item pl-6"
                         :value="currencyItem.name"
@@ -695,7 +695,7 @@ onMounted(async () => {
         <v-menu offset="20" class="user-menu" :scrim="true">
           <template v-slot:activator="{ props }">
             <v-card
-              color="#211F31"
+              color="#1D2027"
               theme="dark"
               class="mr-4 mt-1 user-card-height"
               style="min-width: 166px !important"
@@ -732,7 +732,7 @@ onMounted(async () => {
               </div>
             </div>
           </template>
-          <v-list theme="dark" bg-color="#211F31" class="px-2" width="320">
+          <v-list theme="dark" bg-color="#1D2027" class="px-2" width="320">
             <v-list-item class="user-item" value="id">
               <template v-slot:prepend>
                 <img src="@/assets/public/svg/icon_public_58.svg" />
@@ -1051,7 +1051,7 @@ onMounted(async () => {
               <p class="chat-box-text">{{ mailCount }}</p>
             </div>
           </template>
-          <v-list theme="dark" bg-color="#211F31" class="px-2" width="400">
+          <v-list theme="dark" bg-color="#1D2027" class="px-2" width="400">
             <v-list-item
               class="mail-item"
               :value="mailItem.mail_content_1.content"
@@ -1142,7 +1142,7 @@ onMounted(async () => {
     align-self: center;
     top: -25px;
     right: 150px;
-    border: 13px solid #211f31;
+    border: 13px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1158,7 +1158,7 @@ onMounted(async () => {
     align-self: center;
     top: -25px;
     left: 60px;
-    border: 13px solid #211f31;
+    border: 13px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1369,7 +1369,7 @@ onMounted(async () => {
 
 .user-item {
   padding: 4px 8px !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-list-item-title {
     font-weight: 700;
@@ -1391,7 +1391,7 @@ onMounted(async () => {
     align-self: center;
     top: -25px;
     right: 68px;
-    border: 13px solid #211f31;
+    border: 13px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1415,7 +1415,7 @@ onMounted(async () => {
     align-self: center;
     right: 66px;
     top: -18px;
-    border: 9px solid #211f31;
+    border: 9px solid #1D2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1472,9 +1472,9 @@ onMounted(async () => {
 
   .mail-item {
     margin-top: 4px !important;
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
     padding: 4px 8px !important;
-    border-radius: 12px !important;
+    border-radius: 8px !important;
   }
 }
 
@@ -1504,7 +1504,7 @@ onMounted(async () => {
   position: absolute;
   right: 9px;
   top: 23px;
-  background: #211f31;
+  background: #1D2027;
   border-radius: 20px;
   padding: 2px 12px;
   font-weight: 500;
@@ -1525,7 +1525,7 @@ onMounted(async () => {
   position: absolute;
   right: 13px;
   top: 22px;
-  background: #211f31;
+  background: #1D2027;
   border-radius: 20px;
   padding: 2px 21px;
   font-weight: 500;
@@ -1534,8 +1534,8 @@ onMounted(async () => {
 
 .sign-out-btn {
   cursor: pointer;
-  background: #353652;
-  border-radius: 12px;
+  background: #23262F;
+  border-radius: 8px;
   padding: 13px;
   margin: 0px 20px;
 }
@@ -1556,7 +1556,7 @@ onMounted(async () => {
 
 .deposit-progress-bg {
   .v-progress-linear {
-    background: #1c1929 !important;
+    background: #15161C !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 20px !important;
   }

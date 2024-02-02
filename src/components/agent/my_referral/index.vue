@@ -241,7 +241,7 @@ onMounted(async () => {
   width: 300px;
   height: 44px;
   background: $agent_referral_report_card_bg;
-  border-radius: 12px;
+  border-radius: 8px;
   bottom: 16.7%;
   right: 3.1%;
   z-index: -1;

@@ -443,9 +443,9 @@ onMounted(async () => {
 </template>
 <style lang="scss">
 .m-forms-bonus-table-bg {
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -455,13 +455,13 @@ onMounted(async () => {
 
 .m-forms-bonus-table1 {
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #414968;
+    background: #23262F;
     height: 46px !important;
   }
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #414968;
+    border-bottom: 1px solid #23262F;
   }
 
   .forms-table-header {

@@ -382,7 +382,7 @@ onMounted(async () => {
       class="mt-2 mx-2 all-bet-history-height"
     >
       <v-card
-        color="#29253C"
+        color="#1D2027"
         theme="dark"
         height="48"
         class="mx-1 mt-1"

@@ -22,8 +22,8 @@ const submitPromotion = async () => {
       <div class="m-promotion-confirm-btn">
         <v-btn
           class="button-bright text-none"
-          height="28"
-          width="76"
+          height="40"
+          width="88"
           @click="submitPromotion"
           :loading="loading"
         >
@@ -33,8 +33,8 @@ const submitPromotion = async () => {
       <div class="m-promotion-cancel-btn ml-auto">
         <v-btn
           class="button-bright text-none"
-          height="28"
-          width="76"
+          height="40"
+          width="88"
           @click="emit('promotionDialogHide', 'cancel')"
         >
           Cancel
@@ -46,7 +46,7 @@ const submitPromotion = async () => {
 
 <style lang="scss">
 .m-promotion-dialog-container {
-  background-color: #29253c;
+  background-color: #1D2027;
   border-radius: 16px !important;
   height: 173px;
 }
@@ -54,7 +54,7 @@ const submitPromotion = async () => {
 .m-promotion-confirm-btn {
   // button
   button {
-    border-radius: 26px !important;
+    border-radius: 8px !important;
 
     .v-btn__content {
       font-weight: 700;
@@ -66,7 +66,7 @@ const submitPromotion = async () => {
 .m-promotion-cancel-btn {
   // button
   button {
-    background: #414968 !important;
+    background: #23262F !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 

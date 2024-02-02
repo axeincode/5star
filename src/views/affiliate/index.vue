@@ -289,21 +289,21 @@ onMounted(() => {
 
 .affiliate-container {
   margin: -20px 40px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .affiliate-container-1 {
   margin: -20px 40px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .m-affiliate-container {
   margin: -60px 0px 10px 0px;
-  background: #211f31;
+  background: #1D2027;
   padding-bottom: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -316,7 +316,7 @@ onMounted(() => {
     display: flex;
     padding: 0px 60px;
     align-items: center;
-    background: #29253c;
+    background: #1D2027;
     height: 64px;
     margin: 8px 16px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -352,7 +352,7 @@ onMounted(() => {
     height: 48px;
     margin: 0px 16px;
     box-shadow: 0px 3px 4px 1px rgba(var(--v-theme-color_000000), 0.21);
-    border-radius: 12px;
+    border-radius: 8px;
     font-weight: 400;
     font-size: 12px;
     color: #7782aa;
@@ -380,11 +380,11 @@ onMounted(() => {
     display: flex;
     padding: 0px 60px;
     align-items: center;
-    background: #29253c;
+    background: #1D2027;
     height: 48px;
     margin: 0px 16px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-    border-radius: 12px;
+    border-radius: 8px;
     font-weight: 400;
     font-size: 12px;
     color: #7782aa;

@@ -53,7 +53,7 @@ const mobileWidth = computed(() => {
         </div>
       </v-col>
       <v-col cols="12" md="8" lg="8" class="text-center">
-        <v-card theme="dark" color="#1C1929" class="ma-4">
+        <v-card theme="dark" color="#15161C" class="ma-4">
           <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
             <v-col cols="6" lg="3">
               <p class="statistics-profit-cash-text-1">R$ 25.916</p>
@@ -89,7 +89,7 @@ const mobileWidth = computed(() => {
       </v-col>
     </v-row>
   </v-card>
-  <v-tabs v-model="profitTab" bg-color="#211F31" class="mt-12 mx-12">
+  <v-tabs v-model="profitTab" bg-color="#1D2027" class="mt-12 mx-12">
     <v-tab
       value="today"
       :class="[profitTab == 'today' ? 'statistics-tab-active' : 'statistics-tab']"
@@ -145,7 +145,7 @@ const mobileWidth = computed(() => {
             </div>
           </v-col>
           <v-col cols="12" md="8" lg="8" class="text-center">
-            <v-card theme="dark" color="#1C1929" class="ma-4">
+            <v-card theme="dark" color="#15161C" class="ma-4">
               <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
                 <v-col cols="6">
                   <p class="statistics-profit-cash-text-1">R$ 19,34</p>
@@ -221,7 +221,7 @@ const mobileWidth = computed(() => {
             </div>
           </v-col>
           <v-col cols="12" md="8" lg="8" class="text-center">
-            <v-card theme="dark" color="#1C1929" class="ma-4">
+            <v-card theme="dark" color="#15161C" class="ma-4">
               <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
                 <v-col cols="6">
                   <p class="statistics-profit-cash-text-1">R$ 19,34</p>
@@ -297,7 +297,7 @@ const mobileWidth = computed(() => {
             </div>
           </v-col>
           <v-col cols="12" md="8" lg="8" class="text-center">
-            <v-card theme="dark" color="#1C1929" class="ma-4">
+            <v-card theme="dark" color="#15161C" class="ma-4">
               <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
                 <v-col cols="6">
                   <p class="statistics-profit-cash-text-1">R$ 19,34</p>
@@ -385,7 +385,7 @@ const mobileWidth = computed(() => {
 }
 
 .statistics-tab {
-  background: #29253c !important;
+  background: #1D2027 !important;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
   border-radius: 8px 8px 0px 0px !important;
   font-weight: 700;

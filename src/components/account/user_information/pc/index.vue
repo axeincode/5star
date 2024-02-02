@@ -122,7 +122,7 @@ const handleVerifyCode = () => {
         <v-row class="mx-6 mt-8">
             <v-col cols="6">
                 <div>
-                    <v-card color="#1C1929" theme="dark" class="user-info-item">
+                    <v-card color="#15161C" theme="dark" class="user-info-item">
                         <v-list-item>
                             <v-list-item-title class="ml-2">
                                 <div class="text-400-12 text-gray">{{ t('account.item.nick_name_text') }}</div>
@@ -146,7 +146,7 @@ const handleVerifyCode = () => {
                 <div class="mt-6">
                     <v-row>
                         <v-col cols="4" lg="3">
-                            <v-card color="#1C1929" theme="dark">
+                            <v-card color="#15161C" theme="dark">
                                 <v-list-item :value="t('account.item.area_text')" class="text-center">
                                     <v-list-item-title>
                                         <div class="text-400-12 text-gray">
@@ -161,7 +161,7 @@ const handleVerifyCode = () => {
                             </v-card>
                         </v-col>
                         <v-col cols="8" lg="9" class="pl-0">
-                            <v-card color="#1C1929" theme="dark" class="user-info-item">
+                            <v-card color="#15161C" theme="dark" class="user-info-item">
                                 <v-list-item class="user-info-item">
                                     <v-list-item-title class="ml-2">
                                         <div class="text-400-12 text-gray">{{ t('account.item.phone_text') }}</div>
@@ -183,7 +183,7 @@ const handleVerifyCode = () => {
                 </div>
             </v-col>
             <v-col cols="6">
-                <v-card color="#1C1929" theme="dark" class="user-info-item">
+                <v-card color="#15161C" theme="dark" class="user-info-item">
                     <v-list-item>
                         <v-list-item-title class="ml-2">
                             <div class="text-400-12 text-gray">{{ t('account.item.email_text') }}</div>
@@ -205,7 +205,7 @@ const handleVerifyCode = () => {
                 <div class="text-400-12 text-gray text-right mr-2 cursor-pointer mt-1" @click="handleVerifyCode">
                     {{ t('account.verify_code_text') }}
                 </div>
-                <v-card color="#1C1929" theme="dark" class="user-info-item mt-6">
+                <v-card color="#15161C" theme="dark" class="user-info-item mt-6">
                     <v-list-item>
                         <v-list-item-title class="ml-2">
                             <div class="text-400-12 text-gray">{{ t('account.item.current_pwd_text') }}</div>
@@ -245,7 +245,7 @@ const handleVerifyCode = () => {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 10px solid #211F31;
+    border-right: 10px solid #1D2027;
 }
 
 .user-info-item {

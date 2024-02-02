@@ -76,7 +76,7 @@ const openRefferalDialogShow = () => {
 
 <style lang="scss">
 .refferal-app-bar-background {
-  background: linear-gradient(90deg, #6940f8 0%, #3fdaa9 47.8%, #6940f8 100%) !important;
+  background: linear-gradient(90deg, #3F86DA 0%, #33D785 47.8%, #FFEA2F 100%) !important;
 
   .v-toolbar__content {
     height: 48px;
@@ -98,7 +98,7 @@ const openRefferalDialogShow = () => {
   }
 
   .earn-btn-bg {
-    background: #29253c !important;
+    background: #1D2027 !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
 
     .v-btn__content {

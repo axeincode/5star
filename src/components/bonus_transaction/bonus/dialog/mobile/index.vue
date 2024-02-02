@@ -100,7 +100,7 @@ const submitCancel = async () => {
 <style lang="scss">
 // bonus dialog container
 .m-bonus-dialog-container {
-  background-color: #29253c;
+  background-color: #1D2027;
   border-radius: 16px !important;
   height: 173px;
 }
@@ -120,7 +120,7 @@ const submitCancel = async () => {
 .m-bonus-cancel-btn {
   // button
   button {
-    background: #414968 !important;
+    background: #23262F !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 

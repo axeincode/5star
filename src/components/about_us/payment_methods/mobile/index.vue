@@ -28,7 +28,7 @@ const mobileWidth: any = computed(() => {
     <div class="text-700-12 white mt-4">
       {{ t("about.payment_methods.text_5") }}
     </div>
-    <v-row class="mx-0 mt-3 justify-center align-center" style="background: #211f31">
+    <v-row class="mx-0 mt-3 justify-center align-center" style="background: #1D2027">
       <v-col cols="4" class="text-400-8 gray text-center py-1">
         {{ t("about.payment_methods.text_6") }}
       </v-col>
@@ -45,7 +45,7 @@ const mobileWidth: any = computed(() => {
     </v-row>
     <v-row
       class="mx-0 mb-0 justify-center align-center"
-      style="background: #29253c; border-top: 2px solid #1c1929"
+      style="background: #1D2027; border-top: 2px solid #15161C"
     >
       <v-col cols="4" class="text-400-8 gray text-center py-2">
         <img src="@/assets/about_us/images/image_1759.png" width="78" />
@@ -55,8 +55,8 @@ const mobileWidth: any = computed(() => {
         class="text-400-8 gray py-2 d-flex align-center justify-center"
         style="
           height: 160.38px;
-          border-right: 2px solid #1c1929;
-          border-left: 2px solid #1c1929;
+          border-right: 2px solid #15161C;
+          border-left: 2px solid #15161C;
         "
       >
         {{ t("about.payment_methods.text_11") }}
@@ -64,7 +64,7 @@ const mobileWidth: any = computed(() => {
       <v-col
         cols="2"
         class="text-400-8 gray py-2 d-flex align-center justify-center"
-        style="height: 160.38px; border-right: 2px solid #1c1929"
+        style="height: 160.38px; border-right: 2px solid #15161C"
       >
         {{ t("about.payment_methods.text_12") }}
       </v-col>
@@ -78,7 +78,7 @@ const mobileWidth: any = computed(() => {
     <div class="text-700-12 white mt-4">
       {{ t("about.payment_methods.text_15") }}
     </div>
-    <v-row class="mx-0 mt-3 justify-center align-center" style="background: #211f31">
+    <v-row class="mx-0 mt-3 justify-center align-center" style="background: #1D2027">
       <v-col cols="4" class="text-400-8 gray text-center py-1">
         {{ t("about.payment_methods.text_6") }}
       </v-col>
@@ -95,7 +95,7 @@ const mobileWidth: any = computed(() => {
     </v-row>
     <v-row
       class="mx-0 mb-0 justify-center align-center"
-      style="background: #29253c; border-top: 2px solid #1c1929"
+      style="background: #1D2027; border-top: 2px solid #15161C"
     >
       <v-col cols="4" class="text-400-8 gray text-center py-2">
         <img src="@/assets/about_us/images/image_1760.png" width="78" />
@@ -105,8 +105,8 @@ const mobileWidth: any = computed(() => {
         class="text-400-8 gray py-2 d-flex align-center justify-center"
         style="
           height: 160.38px;
-          border-right: 2px solid #1c1929;
-          border-left: 2px solid #1c1929;
+          border-right: 2px solid #15161C;
+          border-left: 2px solid #15161C;
         "
       >
         {{ t("about.payment_methods.text_11") }}
@@ -114,7 +114,7 @@ const mobileWidth: any = computed(() => {
       <v-col
         cols="2"
         class="text-400-8 gray py-2 d-flex align-center justify-center"
-        style="height: 160.38px; border-right: 2px solid #1c1929"
+        style="height: 160.38px; border-right: 2px solid #15161C"
       >
         {{ t("about.payment_methods.text_12") }}
       </v-col>

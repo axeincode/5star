@@ -148,7 +148,7 @@ const handleNext = () => {};
               style="
                 width: 20px;
                 height: 20px;
-                background: #414968;
+                background: #23262F;
                 border-radius: 20px;
                 position: relative;
               "
@@ -195,7 +195,7 @@ const handleNext = () => {};
     <v-col cols="6" md="4" lg="4" class="d-flex" style="margin-left: -10px !important">
       <v-menu offset="12" class="game-menu" v-model="gameMenuShow">
         <template v-slot:activator="{ props }">
-          <v-card color="#1C1929" theme="dark">
+          <v-card color="#15161C" theme="dark">
             <v-list-item
               class="game-item"
               v-bind="props"
@@ -209,7 +209,7 @@ const handleNext = () => {};
             </v-list-item>
           </v-card>
         </template>
-        <v-list theme="dark" bg-color="#211F31">
+        <v-list theme="dark" bg-color="#1D2027">
           <v-list-item
             v-for="(item, i) in gameList"
             :key="i"
@@ -254,19 +254,19 @@ const handleNext = () => {};
 <style lang="scss">
 .forms-bonus-table-bg {
   height: 700px;
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
 .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
 .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-  border-bottom: 1px solid #414968;
+  border-bottom: 1px solid #23262F;
 }
 
 .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-  background: #414968;
+  background: #23262F;
 }
 
 .forms-table-header {
@@ -303,7 +303,7 @@ const handleNext = () => {};
     margin-left: -10px;
     border-width: 10px;
     border-style: solid;
-    border-color: #211f31 transparent transparent transparent;
+    border-color: #1D2027 transparent transparent transparent;
   }
 }
 
@@ -313,18 +313,18 @@ const handleNext = () => {};
   height: 26px;
   flex-shrink: 0;
   border-radius: 27px;
-  background: var(--bg-51-c-1929, #1c1929);
+  background: var(--bg-51-c-1929, #15161C);
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }
 
 .el-popper.is-customized {
   padding: 6px 12px;
-  background: #29253c;
+  background: #1D2027;
   border-radius: 10px;
 }
 
 .el-popper.is-customized .el-popper__arrow::before {
-  background: #29253c;
+  background: #1D2027;
   right: 0;
 }
 </style>

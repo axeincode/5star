@@ -348,7 +348,7 @@ onMounted(async () => {
             {{ t("appBar.id") }}: {{ userInfo.uid }}
           </v-list-item-title>
           <template v-slot:append>
-            <div style="width: 22px; height: 22px; border-radius: 4px; background: #353652" class="relative"
+            <div style="width: 22px; height: 22px; border-radius: 4px; background: #23262F" class="relative"
               @click="handleNotifyShow(userInfo.uid)">
               <img src="@/assets/public/svg/icon_public_71.svg" width="16" style="
                   position: absolute;
@@ -585,7 +585,7 @@ onMounted(async () => {
   width: 157px;
   height: 36px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--secondary-button-353652, #23262F);
 
   /* Button Shadow */
@@ -645,7 +645,7 @@ onMounted(async () => {
 
 .m-user-item {
   padding: 10px 10px !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-list-item-title {
     font-weight: 600;
@@ -658,7 +658,7 @@ onMounted(async () => {
   position: absolute;
   right: 17px;
   top: 16px;
-  background: #211f31;
+  background: #1D2027;
   border-radius: 20px;
   padding: 2px 6px;
   font-weight: 500;
@@ -670,7 +670,7 @@ onMounted(async () => {
   position: absolute;
   right: 13px;
   top: 17px;
-  background: #211f31;
+  background: #1D2027;
   border-radius: 20px;
   padding: 2px 17px;
   font-weight: 500;
@@ -680,7 +680,7 @@ onMounted(async () => {
 
 .deposit-progress-bg {
   .v-progress-linear {
-    background: #1c1929 !important;
+    background: #15161C !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 20px !important;
   }
@@ -697,7 +697,7 @@ onMounted(async () => {
 .m-user-item1 {
   padding-top: 9px !important;
   padding-bottom: 9px !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
 
   .v-list-item-title {
     font-weight: 600;

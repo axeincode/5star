@@ -1589,7 +1589,7 @@ onMounted(() => {
     position: absolute;
     top: 1px;
     left: 1px;
-    background: #353652;
+    background: #1D2027;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;

@@ -514,7 +514,7 @@ export default MSignup;
             :withCautionIcon="true"
           />
           <div class="m-register-mail-card" :style="{ height: mailCardHeight + 'px' }">
-            <v-list theme="dark" bg-color="#211F31">
+            <v-list theme="dark" bg-color="#1D2027">
               <v-list-item
                 class="text-600-12 white"
                 value="gmail"
@@ -892,7 +892,7 @@ export default MSignup;
   top: 43px;
   left: 50%;
   transform: translateX(-50%);
-  background: #211f31;
+  background: #1D2027;
   width: 100%;
   border-radius: 16px;
   z-index: 200;
@@ -1009,7 +1009,7 @@ export default MSignup;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #414968;
+  color: #23262F;
   position: relative;
   top: 12px;
   text-align: center;
@@ -1077,7 +1077,7 @@ export default MSignup;
   }
 
   i.mdi-checkbox-blank-outline {
-    background-color: #211f31;
+    background-color: #1D2027;
     box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
     border-radius: 4px;
   }

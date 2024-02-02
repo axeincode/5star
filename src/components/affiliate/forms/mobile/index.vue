@@ -242,7 +242,7 @@ onMounted(async () => {
   <v-row class="mt-6 mx-4">
     <v-menu offset="10" content-class="m-bonus-menu" v-model="bonusMenuShow">
       <template v-slot:activator="{ props }">
-        <v-card color="#1C1929" theme="dark" class="m-bonus-menu-card">
+        <v-card color="#15161C" theme="dark" class="m-bonus-menu-card">
           <v-list-item
             class="bonus-item"
             v-bind="props"
@@ -253,7 +253,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#1C1929">
+      <v-list theme="dark" bg-color="#15161C">
         <v-list-item
           v-for="(item, i) in inviteHistoryConfig.list"
           :key="i"
@@ -268,7 +268,7 @@ onMounted(async () => {
     </v-menu>
     <v-menu offset="10" content-class="m-bonus-menu" v-model="cashMenuShow">
       <template v-slot:activator="{ props }">
-        <v-card color="#1C1929" theme="dark" class="mr-2 ml-auto m-bonus-menu-card">
+        <v-card color="#15161C" theme="dark" class="mr-2 ml-auto m-bonus-menu-card">
           <v-list-item
             class="bonus-item"
             v-bind="props"
@@ -279,7 +279,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#1C1929">
+      <v-list theme="dark" bg-color="#15161C">
         <v-list-item
           v-for="(item, i) in cashItems"
           :key="i"
@@ -357,7 +357,7 @@ onMounted(async () => {
   align-self: center;
   float: right;
   top: -16px;
-  border: 9px solid #1c1929;
+  border: 9px solid #15161C;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -366,13 +366,13 @@ onMounted(async () => {
 }
 
 .m-bonus-menu-selected-item {
-  border-radius: 12px;
-  background: #29253c;
+  border-radius: 8px;
+  background: #1D2027;
 }
 
 .m-bonus-menu-card {
-  border-radius: 12px;
-  background: var(--bg-51-c-1929, #1c1929);
+  border-radius: 8px;
+  background: var(--bg-51-c-1929, #15161C);
 
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -399,9 +399,9 @@ onMounted(async () => {
 
 .m-forms-bonus-table-bg {
   padding: 8px;
-  background: #1c1929 !important;
+  background: #15161C !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   width: 100% !important;
 }
 
@@ -413,13 +413,13 @@ onMounted(async () => {
 
 .m-forms-bonus-table {
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #414968;
+    background: #23262F;
     height: 36px !important;
   }
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #414968;
+    border-bottom: 1px solid #23262F;
   }
 
   .forms-table-header {
@@ -455,9 +455,9 @@ onMounted(async () => {
   .el-date-editor.el-input__wrapper {
     width: 264px;
     height: 40px !important;
-    background: #1c1929 !important;
+    background: #15161C !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-    border-radius: 12px !important;
+    border-radius: 8px !important;
     justify-content: start;
   }
 

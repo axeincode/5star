@@ -60,25 +60,25 @@ textarea {
 }
 
 .bg-color-1 {
-    background-color: #1C1929;
+    background-color: #15161C;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
+    border-radius: 8px;
     height: 48px;
 }
 
 .m-bg-color-1 {
-    background-color: #1C1929;
+    background-color: #15161C;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
+    border-radius: 8px;
     height: 40px;
 }
 
 .bg-color-211F31 {
-    background-color: #211F31;
+    background-color: #1D2027;
 }
 
 .bg-353652 {
-    background: #353652;
+    background: #23262F;
 }
 
 .active {
@@ -587,11 +587,11 @@ textarea {
 }
 
 .color-414968 {
-    color: #414968
+    color: #23262F
 }
 
 .color-353652 {
-    color: #353652
+    color: #23262F
 }
 
 .cursor-pointer {
@@ -608,7 +608,7 @@ textarea {
 
 // textfield
 .dark-textfield .v-field__field {
-    background-color: #1D2027;
+    background-color: #15161C;
 }
 
 .normal-textfield .v-field__field {
@@ -630,7 +630,7 @@ textarea {
     div.v-field__field {
         padding-left: 8px;
         box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
-        border-radius: 12px;
+        border-radius: 8px;
 
         input {
             color: white;
@@ -642,7 +642,7 @@ textarea {
     }
 
     div.v-field.v-field--appended {
-        background-color: #211F31;
+        background-color: #1D2027;
     }
 
     div.v-field__append-inner {
@@ -653,7 +653,7 @@ textarea {
 // button
 button {
     // box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.11) !important;
-    border-radius: 12px;
+    border-radius: 8px;
 
     .v-btn__content {
         font-family: 'Inter';
@@ -693,11 +693,11 @@ button:active:enabled {
 }
 
 .button:disabled {
-    background: #353652;
+    background: #23262F;
 }
 
 .button-dark {
-    background-color: #353652 !important;
+    background-color: #23262F !important;
     color: white !important;
 }
 
@@ -707,7 +707,7 @@ button:active:enabled {
 }
 
 .button-black {
-    background-color: #1C1929 !important;
+    background-color: #15161C !important;
     color: white !important;
 }
 
@@ -718,15 +718,15 @@ button:active:enabled {
 }
 
 .button-purple {
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px solid #6842EC;
     background: #2F2756;
 }
 
 .button-1C1929 {
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px solid #4E7141;
-    background: #1C1929;
+    background: #15161C;
 
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -747,7 +747,7 @@ button:active:enabled {
 
 // carousel
 .button-carousel {
-    background: #211F31;
+    background: #1D2027;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     width: 32px !important;

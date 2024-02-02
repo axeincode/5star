@@ -314,7 +314,7 @@ onMounted(() => {
     width: 32px;
     height: 32px;
     border-radius: 32px;
-    background: #1c1929;
+    background: #15161C;
   }
 
   .m-nickname-close-button {
@@ -366,8 +366,8 @@ onMounted(() => {
   }
 }
 .m-signup-disabled-btn {
-  border-radius: 12px;
-  background: var(--Secondary-Button, #353652);
+  border-radius: 8px;
+  background: var(--Secondary-Button, #23262F);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
   .v-btn__content {

@@ -334,7 +334,7 @@ onMounted(() => {
         </template>
         <v-list
           theme="dark"
-          bg-color="#29253C"
+          bg-color="#1D2027"
           class="px-2"
           :width="mobileWidth > 600 ? 471 : mobileWidth"
         >
@@ -464,21 +464,21 @@ onMounted(() => {
 <style lang="scss">
 // header container
 .mobile-cash-header {
-  background-color: #211f31;
+  background-color:#1D2027;
 
   .m-header {
     text-align: center;
-    border-radius: 0px 0px 25px 25px;
-    background: #29253c;
+    border-radius: 0px 0px 24px 24px;
+    background: #1D2027;
     /* Button Shadow */
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.5);
     height: 60px;
   }
 
   .m-header-dropped {
     text-align: center;
     border-radius: 0px;
-    background: #29253c;
+    background: #1D2027;
     /* Button Shadow */
     height: 60px;
   }
@@ -486,7 +486,7 @@ onMounted(() => {
   .m-deposit-header-btn {
     width: 70px !important;
     height: 60px !important;
-    background: #29253c !important;
+    background: #1D2027 !important;
     box-shadow: none !important;
     border: none !important;
     border-radius: 25px;
@@ -519,7 +519,7 @@ onMounted(() => {
       height: 40px;
       position: relative;
       display: block;
-      background: #211f31;
+      background: #15161C;
       border-radius: 20px !important;
       cursor: pointer;
       transition: 0.3s;
@@ -538,7 +538,7 @@ onMounted(() => {
       .deposit {
         left: 14px;
         transition: 0.3s;
-        color: black;
+        color: white;
 
         img {
           width: 20px;
@@ -593,7 +593,7 @@ onMounted(() => {
     }
 
     input:checked + label .withdraw {
-      color: black;
+      color: white;
     }
   }
 
@@ -602,7 +602,7 @@ onMounted(() => {
   }
 
   .dark-textfield .v-field__field {
-    background-color: #1c1929 !important;
+    background-color: #15161C !important;
   }
 
   .v-field--variant-solo {
@@ -615,7 +615,7 @@ onMounted(() => {
   width: 28px;
   height: 28px;
   border-radius: 48px;
-  background: #211f31;
+  background: #1D2027;
 }
 
 .m-deposit-header-account-bg-1 {
@@ -627,14 +627,15 @@ onMounted(() => {
   height: 24px;
   flex-shrink: 0;
   border-radius: 38px;
-  background: #29253c;
+  background: #1D2027;
+  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.5);
 }
 
 .m-personal-confirm-btn {
   text-align: center;
   width: 150px;
-  border-radius: 12px;
-  background: #353652;
+  border-radius: 8px;
+  background: #23262F;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -785,6 +786,12 @@ onMounted(() => {
       color: #000000;
     }
   }
+}
+.deposit-header-account-position {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .m-deposit-header-bg-blur {
