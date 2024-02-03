@@ -128,7 +128,7 @@ const goToAboutPage = (index: number) => {
         <div class="d-flex align-center justify-center">
           <img
             src="@/assets/public/image/logo_public_01.png"
-            :width="mobileWidth < 600 ? 152 : undefined"
+            :width="mobileWidth < 600 ? 88 : undefined"
           />
           <!-- <p class="logo-title-1 ml-1">{{t('main.logo_text_1')}}</p>
                     <p class="logo-title-2 ml-1">{{t('main.logo_text_2')}}</p> -->

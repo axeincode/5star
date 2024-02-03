@@ -75,8 +75,8 @@ const submitCancel = async () => {
       <div class="m-bonus-confirm-btn">
         <v-btn
           class="button-bright text-none"
-          height="28"
-          width="76"
+          height="40"
+          width="88"
           @click="submitCancel"
           :loading="loading"
         >
@@ -86,8 +86,8 @@ const submitCancel = async () => {
       <div class="m-bonus-cancel-btn ml-auto">
         <v-btn
           class="button-bright text-none"
-          height="28"
-          width="76"
+          height="40"
+          width="88"
           @click="emit('bonusDialogHide')"
         >
           {{ t("bonus.dialog.cancel_btn_text") }}
@@ -101,18 +101,17 @@ const submitCancel = async () => {
 // bonus dialog container
 .m-bonus-dialog-container {
   background-color: #1D2027;
-  border-radius: 16px !important;
+  border-radius: 8px !important;
   height: 173px;
 }
 
 .m-bonus-confirm-btn {
   // button
   button {
-    border-radius: 26px !important;
+    border-radius: 8px !important;
 
     .v-btn__content {
-      font-weight: 700;
-      font-size: 10px;
+      color: #ffffff;
     }
   }
 }
@@ -125,8 +124,6 @@ const submitCancel = async () => {
     border-radius: 26px;
 
     .v-btn__content {
-      font-weight: 700;
-      font-size: 10px;
       color: #ffffff;
     }
   }

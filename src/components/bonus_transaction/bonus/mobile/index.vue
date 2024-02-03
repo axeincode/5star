@@ -550,8 +550,8 @@ onMounted(async () => {
 .m-bonus-forfeit-btn {
   width: 64px;
   height: 24px !important;
-  border-radius: 8px;
-  background: var(--Secondary-Button-353652, #23262F);
+  border-radius: 4px;
+  background: var(--Secondary-Button-353652, #1D2027);
   .v-btn__content {
     color: var(--White-BG, #fff);
     text-align: center;
@@ -629,12 +629,12 @@ onMounted(async () => {
 
 .real-title-bg {
   border-radius: 8px;
-  background: linear-gradient(90deg, #221f32 0%, #4b32ad 100%) !important;
+  background: linear-gradient(90deg, #1D2027 0%, #009B3A 100%) !important;
 }
 
 .bonus-title-bg {
   border-radius: 8px;
-  background: linear-gradient(90deg, #221f32 0%, #5d8f29 100%) !important;
+  background: linear-gradient(90deg, #23262F 0%, #1F4EA8 100%) !important;
 }
 
 .failure-title-bg {
@@ -691,7 +691,7 @@ onMounted(async () => {
   background: #1D2027;
   padding: 4px;
   .v-expansion-panel {
-    background-color: #29263c !important;
+    background-color: #23262F !important;
   }
 }
 </style>

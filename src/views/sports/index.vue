@@ -97,7 +97,7 @@ onMounted(async () => {
     height: 100vh;
     opacity: 1;
     z-index: 20000000;
-    background: #31275c;
+    background: #15161C;
 
     .loading-body {
         display: flex;

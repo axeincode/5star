@@ -181,7 +181,6 @@ onMounted(async () => {
       <v-btn
         class="ma-2 text-none transaction-tab-btn"
         :class="selectedTab == item ? 'white' : 'text-gray'"
-        rounded
         :color="selectedTab == item ? '#1D2027' : 'transparent'"
         @click="transactionTabToggle(item)"
         :width="mobileWidth < 600 ? 106 : 150"
@@ -278,8 +277,8 @@ onMounted(async () => {
 }
 
 .transaction-tab-btn {
-  box-shadow: none;
-
+  
+  box-shadow: 0px 4px 6px 1p rgba(0, 0, 0, 0.21) !important;
   .v-btn__content {
     font-weight: 700;
     font-size: 16px !important;
@@ -291,7 +290,8 @@ onMounted(async () => {
     border-radius: 0px !important;
   }
   .v-slide-group {
-    margin: 10px 0px !important;
+    margin: 10px 20px !important;
+    border-radius: 8px !important;
   }
 
   .transaction-tab-btn {
@@ -299,13 +299,6 @@ onMounted(async () => {
 
     .v-btn__content {
       font-size: 12px !important;
-    }
-  }
-
-  .slide-tab-btns {
-    .v-btn--elevated:hover,
-    .v-btn--elevated:focus {
-      box-shadow: none !important;
     }
   }
 

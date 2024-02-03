@@ -26,6 +26,7 @@ import img_vipemblem_75_99 from "@/assets/vip/image/img_vipemblem_75-99.png";
 import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png";
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
+import { menuStore } from "@/store/menu";
 
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
@@ -47,6 +48,7 @@ const { setDepositWithdrawToggle } = appBarStore();
 const { setVipNavBarToggle } = vipStore();
 const { setNavBarToggle } = appBarStore();
 const { dispatchVipLevelAward } = vipStore();
+const { setRewardNavShow } = menuStore();
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -184,6 +186,13 @@ const depositDialogShow = () => {
 const withdrawDialogShow = () => {
   setWithdrawDialogToggle(true);
   setCashDialogToggle(true);
+  setUserNavBarToggle(false);
+}
+
+const goReward = () =>{
+  setRewardNavShow(true);
+  setMainBlurEffectShow(drawer.value);
+  setOverlayScrimShow(drawer.value);
   setUserNavBarToggle(false);
 }
 
@@ -523,7 +532,7 @@ onMounted(async () => {
           </template>
           <v-list-item-title class="ml-2">{{ t("appBar.fairness") }}</v-list-item-title>
         </v-list-item>
-        <v-list-item class="m-user-item" value="rewards">
+        <v-list-item class="m-user-item" value="rewards" @click="goReward">
           <template v-slot:prepend>
             <img src="@/assets/public/svg/icon_public_67.svg" width="18" />
           </template>

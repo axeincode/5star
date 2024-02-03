@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
 const { dispatchVipLevelAwardReceive } = vipStore();
-const vipOverlay = ref(false);
+const { dispatchVipLevelAward } = vipStore();
+const route = useRoute();
 const vipCheckboxVal = ref(false);
+const vipOverlay = ref(false);
 
 const vipInfo = computed(() => {
     const { getVipInfo } = storeToRefs(vipStore());
@@ -25,17 +28,20 @@ const vipLevelAward = computed(() => {
 //     }
 // })
 
-watch(vipLevelAward.upgrade_gift, (value: string) => {
-    if (+value > 0) {
+watch(vipLevelAward, (value: any) => {
+    if (+value.upgrade_gift > 0) {
         vipOverlay.value = true;
     } else {
         vipOverlay.value = false;
     }
-})
+}, { deep: true })
 
-onMounted(() => {
-    if (+vipLevelAward.value.upgrade_gift > 0) {
+onMounted(async () => {
+    await dispatchVipLevelAward();
+    if (route.name !=='Sports' && route.name !== 'Game') {
+        if (+vipLevelAward.value.upgrade_gift > 0) {
         vipOverlay.value = true;
+    }
     }
     // if (localStorage.getItem('vipCheckbox') === '1') {
     //     vipOverlay.value = true;
@@ -59,7 +65,7 @@ onMounted(() => {
                 </v-btn>
             </div>
             <div class="vip-overlay-level">
-                <span>Level {{ vipLevelAward.level - vipLevelAward.level_up_num }} - Level {{ vipLevelAward.level }}</span>
+                <span>Level {{ vipLevelAward.level }}</span>
             </div>
             <div class="vip-overlay-tip">
                 <span>Congratulations on leveling up!</span>

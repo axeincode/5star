@@ -284,7 +284,7 @@ const handleNext = () => {};
           <v-card
             color="#15161C"
             theme="dark"
-            style="height: 32px"
+            style="height: 32px; width:125px"
             class="m-bonus-game-card"
           >
             <v-list-item
@@ -299,11 +299,12 @@ const handleNext = () => {};
             </v-list-item>
           </v-card>
         </template>
-        <v-list theme="dark" bg-color="#221F32">
+        <v-list theme="dark" bg-color="#23262F" style="border-radius:8px">
           <v-list-item
             v-for="(item, i) in gameList"
             :key="i"
             :value="item"
+            :class="{ 'm-game-menu-item-border': selectedGame == item }"
             @click="handleDropdown(item)"
           >
             <v-list-item-title class="text-center text-600-12">
@@ -362,15 +363,15 @@ const handleNext = () => {};
   }
 
   .forms-table-border0 {
-    border-right: 1px solid #000000 !important;
+    border-right: 1px solid #7782AA !important;
   }
 
   .forms-table-border1 {
-    border-left: 1px solid #000000 !important;
-    border-right: 1px solid #000000 !important;
+    border-left: 1px solid #7782AA !important;
+    border-right: 1px solid #7782AA !important;
   }
   .forms-table-border2 {
-    border-left: 1px solid #000000 !important;
+    border-left: 1px solid #7782AA !important;
   }
 }
 
@@ -411,7 +412,8 @@ const handleNext = () => {};
 .el-popper.is-customized {
   padding: 15px 20px;
   background: #1D2027;
-  border-radius: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.21);
 }
 
 .el-popper.is-customized .el-popper__arrow::before {
@@ -421,10 +423,10 @@ const handleNext = () => {};
 
 .m-bonus-game-card-list {
   margin-left: 3px;
-  width: 79px;
+  width: 125px;
   height: 26px;
   flex-shrink: 0;
-  border-radius: 27px;
+  border-radius: 8px;
   background: var(--bg-51-c-1929, #15161C);
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
 }
@@ -467,5 +469,12 @@ const handleNext = () => {};
   .v-table__wrapper {
     overflow: hidden !important;
   }
+}
+
+.m-game-menu-item-border{
+  margin: 8px;
+  border-radius: 8px !important;
+  //border: 1px solid #00b25c !important;
+  height: 36px !important;
 }
 </style>

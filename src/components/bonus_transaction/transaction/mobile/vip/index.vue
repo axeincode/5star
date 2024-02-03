@@ -297,7 +297,7 @@ onMounted(async () => {
             </v-list-item>
           </v-card>
         </template>
-        <v-list theme="dark" bg-color="#1D2027" width="167">
+        <v-list theme="dark" bg-color="#1D2027" width="167" style="border-radius: 8px;">
           <v-list-item
             v-for="(item, i) in transactionVipMenuList"
             :key="i"
@@ -352,7 +352,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 27px;
+  border-radius: 8px;
   background: #15161C;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   .v-list-item__content {
@@ -421,21 +421,21 @@ onMounted(async () => {
   }
 
   .forms-table-border0 {
-    border-right: 1px solid #000000 !important;
+    border-right: 1px solid #7782AA !important;
   }
 
   .forms-table-border1 {
-    border-left: 1px solid #000000 !important;
-    border-right: 1px solid #000000 !important;
+    border-left: 1px solid #7782AA !important;
+    border-right: 1px solid #7782AA !important;
   }
 
   .forms-table-border2 {
-    border-left: 1px solid #000000 !important;
+    border-left: 1px solid #7782AA !important;
   }
 
   .forms-table-border-right {
     padding-right: 20px;
-    border-right: 1px solid #000000 !important;
+    border-right: 1px solid #7782AA !important;
   }
 
   .withdraw-refund-btn {

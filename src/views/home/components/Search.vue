@@ -6,7 +6,7 @@
 
 <style lang="scss">
 .home-search-body {
-  background: #31275c;
+  background: #15161C;
   position: absolute;
   top: 0;
   width: 100%;

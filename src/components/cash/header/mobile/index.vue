@@ -287,6 +287,7 @@ onMounted(() => {
   <div
     class="mobile-cash-header"
     :class="depositHeaderBlurEffectShow ? 'm-deposit-header-bg-blur' : ''"
+    
   >
     <div
       class="d-flex align-center relative"
@@ -468,7 +469,7 @@ onMounted(() => {
 
   .m-header {
     text-align: center;
-    border-radius: 0px 0px 24px 24px;
+    border-radius: 0px 0px 8px 8px;
     background: #1D2027;
     /* Button Shadow */
     box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.5);
@@ -674,19 +675,19 @@ onMounted(() => {
 
   .personal-info-key-position {
     position: absolute;
-    top: 60px;
+    top: 70px;
     right: 40px;
   }
 
   .personal-info-key-position-1 {
     position: absolute;
-    top: 119px;
+    top: 132px;
     left: 40%;
   }
 
   .personal-info-key-position-2 {
     position: absolute;
-    top: 119px;
+    top: 132px;
     right: 39px;
   }
 
@@ -783,7 +784,7 @@ onMounted(() => {
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
     .v-btn__content {
-      color: #000000;
+      color: white;
     }
   }
 }

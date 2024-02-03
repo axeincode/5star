@@ -862,7 +862,7 @@ export default MSignup;
 
 .m-signup-continue-btn {
   .v-btn__content {
-    color: var(--text-dark-black, #000);
+    color: var(--text-dark-black, white);
     text-align: center;
     font-family: Inter;
     font-size: 14px;
@@ -970,8 +970,8 @@ export default MSignup;
 
 // wrapper
 .m-signup-body {
-  border-radius: 26px 26px 0px 0px;
-  background: var(--bg-2-e-274-c, #1d2027);
+  border-radius: 8px 8px 0px 0px;
+  background: var(--bg-2-e-274-c, #1D2027);
   position: absolute;
   bottom: 0px;
   width: 100%;

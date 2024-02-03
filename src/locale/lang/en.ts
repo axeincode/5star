@@ -32,7 +32,7 @@ export const lang: langType = {
     formPage: {
       header: {
         titleLine1: " Register at ",
-        titleLine2: " Brazstar.com ",
+        titleLine2: " BLUE.GAME ",
       },
       emailAddress: "Email Address",
       password: "Password",
@@ -1430,7 +1430,7 @@ export const lang: langType = {
       text_1: "Invite your friends",
       text_2: "Invite friends who aren't on Brazstar.com yet. You will receive 20.00 BRL for each friend that signs up and makes a deposit. There's no limit to how many friends you can invite. That means there's also no limit to how much you can earn!",
       term_text: "Terms:",
-      text_3: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      text_3: "Balance is paid out directly in your Cash Balance, which you can play with on Brazstar or withdraw. Your friend must sign up through your personal invitation link. Your friend must have deposited at least 50.00 BRL in order for you to receive the invitation reward. If a friend that you have invited is not from the same country as you, you will receive a default reward of 20 BRL converted to your local currency at the fair exchange rate. You cannot create new Brazstar accounts and sign up through your own link to receive the reward. The Refer A Friend program is made for our players to invite friends to the Brazstar platform. Any other use of this program is strictly prohibited. Brazstar may suspend or terminate the Refer A Friend program or the user's ability to participate in it at any time for any reason. We reserve the right to suspend accounts or remove Cash Balance if we notice any activity that we believe is abusive, fraudulent, or in violation of the Brazstar.com Terms of Service or Refer A Friend Terms. We reserve the right to review and investigate all referral activities and to suspend accounts or modify referrals in our sole discretion as deemed fair and appropriate.",
       back_btn_text: "Back"
     }
   },

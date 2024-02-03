@@ -637,7 +637,7 @@ onMounted(async () => {
   width: 340px;
   height: 428px;
   border-radius: 16px;
-  background: #29263c;
+  background: #1D2027;
   position: relative;
 }
 
@@ -651,7 +651,7 @@ onMounted(async () => {
   position: absolute;
   top: -56px;
   right: 12px;
-  background: #29263c;
+  background: #1D2027;
   z-index: 1000;
 }
 
@@ -671,7 +671,7 @@ onMounted(async () => {
   width: 320px;
   height: 338px;
   border-radius: 14px;
-  background: #1D2027;
+  background: #15161C;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   z-index: 20;
 }
@@ -711,7 +711,7 @@ onMounted(async () => {
   width: 94px;
   height: 90px;
   border-radius: 6px;
-  background: linear-gradient(180deg, #2087e8 0%, #0e4987 100%);
+  background: #1682F1;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -723,7 +723,7 @@ onMounted(async () => {
   width: 94px;
   height: 90px;
   border-radius: 6px;
-  background: linear-gradient(180deg, #2087e8 0%, #0e4987 100%);
+  background:#1682F1;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -735,7 +735,7 @@ onMounted(async () => {
   width: 94px;
   height: 90px;
   border-radius: 6px;
-  background: linear-gradient(180deg, #2087e8 0%, #0e4987 100%);
+  background: #1682F1;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -770,7 +770,7 @@ onMounted(async () => {
   width: 195px;
   height: 90px;
   border-radius: 6px;
-  background: linear-gradient(180deg, #9419f0 0%, #275798 100%);
+  background: #009B3A;
   cursor: pointer;
   overflow: hidden;
 }
@@ -816,9 +816,9 @@ onMounted(async () => {
 }
 
 .m-left-login-bonus-button {
-  background: #1D2027;
+  background: #23262F;
   /* Text Box */
-  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
 
   .v-btn__content {
     font-size: 16px;

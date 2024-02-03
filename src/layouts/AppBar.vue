@@ -534,6 +534,7 @@ onMounted(async () => {
         src="@/assets/public/image/logo_public_03.png"
         @click="goHomePage"
         class="mt-1"
+        width="52"
       />
       <!-- <v-btn height="46" width="100" @click="goHomePage" class="align-center">
         <img src="@/assets/public/image/logo_public_03.png" />

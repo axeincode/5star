@@ -307,21 +307,21 @@ watch(depositHistoryItem, (value) => {
   }
 
   .forms-table-border0 {
-    border-right: 1px solid #000000 !important;
+    border-right: 1px solid #7782AA !important;
   }
 
   .forms-table-border1 {
-    border-left: 1px solid #000000 !important;
-    border-right: 1px solid #000000 !important;
+    border-left: 1px solid #7782AA !important;
+    border-right: 1px solid #7782AA !important;
   }
 
   .forms-table-border2 {
-    border-left: 1px solid #000000 !important;
+    border-left: 1px solid #7782AA !important;
   }
 
   .forms-table-border-right {
     padding-right: 20px;
-    border-right: 1px solid #000000 !important;
+    border-right: 1px solid #7782AA !important;
   }
 }
 

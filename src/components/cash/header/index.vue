@@ -558,7 +558,7 @@ onMounted(() => {
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   .v-btn__content {
-    color: #000000;
+    color: white;
   }
 }
 </style>

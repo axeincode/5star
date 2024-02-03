@@ -254,6 +254,7 @@ onMounted(async () => {
 
   div.v-field__field {
     box-shadow: none !important;
+    background-color: #1D2027;
   }
 
   .v-field__overlay {
@@ -350,8 +351,8 @@ onMounted(async () => {
 }
 
 .more-btn-color {
-  background: #2f2756 !important;
-  color: #6842ec !important;
+  background: transparent !important;
+  color: #009B3A !important;
 
   .v-btn__content {
     font-weight: 700 !important;

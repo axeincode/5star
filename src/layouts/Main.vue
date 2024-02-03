@@ -511,6 +511,7 @@ onMounted(() => {
       :transition="'dialog-top-transition'"
       @click:outside="setCashDialogToggle(false)"
       v-if="mobileVersion == 'sm'"
+      style="z-index:2430"
     >
       <MCashHeader />
     </v-dialog>

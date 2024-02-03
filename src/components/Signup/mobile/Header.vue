@@ -46,7 +46,7 @@ export default SignupHeader;
 
 <template>
   <v-row class="m-signup-header-container" :style="{ bottom: bodyHeight + 'px' }">
-    <v-col cols="10" offset="1" class="pl-10 pt-9">
+    <v-col cols="10" class="pl-10 pt-9">
       <!-- <v-row>
                 <span class="logo-text purple">{{t('main.logo_text_1')}}</span>
                 <span class="logo-text yellow">{{t('main.logo_text_2')}}</span>
@@ -63,7 +63,7 @@ export default SignupHeader;
     <img
       src="@/assets/public/image/logo_public_01.png"
       class="m-logo-image"
-      width="143"
+      width="80"
     />
     <img src="@/assets/login/image/img_su_01.png" class="m-coin-image" />
   </v-row>
@@ -75,9 +75,9 @@ export default SignupHeader;
   z-index: 1;
   width: 100%;
   height: 172px;
-  border-radius: 26px 26px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
   margin: 0px !important;
-  background: linear-gradient(0deg, #0075FF 0%, #7EE09A 100%), #5904d9;
+  background: linear-gradient(0deg, #0B123A 0%, #66FF63 100%), #5904d9;
 
   .v-col {
     z-index: 1;
@@ -133,6 +133,6 @@ export default SignupHeader;
   font-weight: 700;
   font-size: 16px;
   line-height: normal;
-  margin-top: 30px;
+  margin-top: 70px;
 }
 </style>

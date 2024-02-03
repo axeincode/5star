@@ -230,7 +230,7 @@ watch(mailList, (newValue) => {
 
 watch(navToggle, (newValue) => {
   navbarToggle.value = newValue;
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
 }, { deep: true })
 
 watch(bonusToggle, (newValue) => {
@@ -250,12 +250,12 @@ watch(mailMenuShow, async (newValue) => {
     setBonusDashboardDialogVisible(false);
     setRewardNavShow(false);
     setSemiCircleShow(false);
-    menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-    casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-    sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-    mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-    promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-    searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
+    menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+    casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+    sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+    mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+    promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+    searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
     setTimeout(() => {
       setMainBlurEffectShow(newValue);
       setOverlayScrimShow(newValue);
@@ -264,7 +264,7 @@ watch(mailMenuShow, async (newValue) => {
     setMainBlurEffectShow(newValue);
     setOverlayScrimShow(newValue);
     setMobileMenuMailToggle(newValue);
-    mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+    mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
   }
   setMailMenuShow(newValue);
   var scale = 0.94;
@@ -343,13 +343,13 @@ const handleNavbarToggle = () => {
       setMainBlurEffectShow(navbarToggle.value);
     }
   }, 10);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const goHomePage = () => {
@@ -369,13 +369,13 @@ const goHomePage = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const handleCasinoToggle = () => {
@@ -394,13 +394,13 @@ const handleCasinoToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const handlePromoToggle = () => {
@@ -419,13 +419,13 @@ const handlePromoToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const handleRewardToggle = () => {
@@ -447,13 +447,13 @@ const handleRewardToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const handleSearchToggle = () => {
@@ -471,13 +471,13 @@ const handleSearchToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const handleSportsToggle = () => {
@@ -496,13 +496,13 @@ const handleSportsToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
   router.push({ name: "Sports" });
 }
 
@@ -520,13 +520,13 @@ const goToSportPage = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
 const goToSharePage = () => {
@@ -546,13 +546,13 @@ const goToSharePage = () => {
   //   setBonusDashboardDialogVisible(bonusDashboardToggle.value)
   //   setMainBlurEffectShow(bonusDashboardToggle.value);
   // }, 10);
-  menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "#6742ec" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "#6742ec" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "#6742ec" : "#7782AA";
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 
   // sportBtnActive.value = false
   // mailMenuShow.value = false;
@@ -567,10 +567,10 @@ const goToSharePage = () => {
 
   // },10)
 
-  // menuIconColor.value = navbarToggle.value ? "#6742ec" : "#7782AA"
-  // casinoIconColor.value = casinoBtnActive.value ? "#6742ec" : "#7782AA";
-  // sportIconColor.value = sportBtnActive.value ? "#6742ec" : "#7782AA";
-  // mailIconColor.value = mailMenuShow.value ? "#6742ec" : "#7782AA";
+  // menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  // casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  // sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  // mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
 }
 
 const listContainer = ref<any>(null);
@@ -789,7 +789,7 @@ onMounted(() => {
       ></inline-svg>
       <div
         class="pt-1 text-600-12"
-        :style="{ color: navbarToggle ? '#6742ec' : '#7782AA' }"
+        :style="{ color: navbarToggle ? 'white' : '#7782AA' }"
       >
         {{ t("mobile_menu.menu") }}
       </div>
@@ -1194,7 +1194,7 @@ onMounted(() => {
 
   .v-btn--active {
     .v-btn__content {
-      color: #6742ec;
+      color: white;
     }
   }
 

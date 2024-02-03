@@ -228,6 +228,7 @@ onMounted(() => {
               v-for="(item, i) in menuList"
               :key="i"
               :value="item"
+              :class="{'m-account-menu-item-border':selectedMenuItem == item}"
               @click="handleDropdown(item, i)"
             >
               <v-list-item-title class="text-center text-400-12 gray">{{
@@ -328,5 +329,12 @@ onMounted(() => {
       color: #ffffff;
     }
   }
+}
+
+.m-account-menu-item-border{
+  margin: 8px;
+  border-radius: 8px !important;
+  border: 1px solid #00b25c !important;
+  height: 36px !important;
 }
 </style>

@@ -548,7 +548,7 @@ onMounted(async () => {
 .m-home-search-body {
   width: 100%;
   height: 100%;
-  border-radius: 0px 0px 30px 30px;
+  border-radius: 0px 0px 8px 8px;
   background: var(--Text-Box-1-211F31, #1D2027);
   overflow-y: auto;
 

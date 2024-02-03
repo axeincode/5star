@@ -105,7 +105,7 @@ onMounted(() => {
   height: 465px;
 
   .m-signout-animation-container {
-    border-radius: 20px 20px 16px 16px;
+    border-radius: 20px 20px 8px 8px;
     background: #1D2027 !important;
     width: 328px;
     height: 201px;
@@ -119,14 +119,15 @@ onMounted(() => {
     .m-header {
       position: absolute;
       top: 0px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, #7EE09A 0%, #0075FF 100%);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #17C648 0%, #FFC327 0%, #07500E 100%);
       text-align: center;
       height: 201px;
       animation-name: scaling;
       animation-duration: 0.3s;
       animation-timing-function: linear;
       animation-iteration-count: 1;
+      box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.21);
 
       .m-logout-logo {
         margin-top: -21px;
