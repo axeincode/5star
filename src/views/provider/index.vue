@@ -47,7 +47,7 @@ const handleMoreGame = async () => {
   moreLoading.value = true;
   currentPage.value += 1;
   await dispatchGameSearch(
-    "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
+    "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
   );
   providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
   moreLoading.value = false;
@@ -65,7 +65,7 @@ const handleInputChange = async (event: any) => {
   providerGameList.value = [];
   searchLoading.value = true;
   await dispatchGameSearch(
-    "?game_provider_slug=" + slug.value + "&search=" + searchText.value + "&page=" + currentPage.value + "&limit=" + limit.value
+    "?game_categories_slug=" + slug.value + "&search=" + searchText.value + "&page=" + currentPage.value + "&limit=" + limit.value
   );
   providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
   searchLoading.value = false;
@@ -76,14 +76,14 @@ watch(searchText, async (value) => {
   if (value) {
     searchLoading.value = true;
     await dispatchGameSearch(
-      "?game_provider_slug=" + slug.value + "&search=" + value + "&page=" + currentPage.value + "&limit=" + limit.value
+      "?game_categories_slug=" + slug.value + "&search=" + value + "&page=" + currentPage.value + "&limit=" + limit.value
     );
     providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
     searchLoading.value = false;
   } else {
     searchLoading.value = true;
     await dispatchGameSearch(
-      "?game_provider_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
+      "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
     );
     providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
     searchLoading.value = false;
@@ -254,7 +254,7 @@ onMounted(async () => {
 
   div.v-field__field {
     box-shadow: none !important;
-    background-color: #1D2027;
+    background-color: #1d2027;
   }
 
   .v-field__overlay {
@@ -352,7 +352,7 @@ onMounted(async () => {
 
 .more-btn-color {
   background: transparent !important;
-  color: #009B3A !important;
+  color: #009b3a !important;
 
   .v-btn__content {
     font-weight: 700 !important;

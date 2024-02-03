@@ -112,13 +112,13 @@ watch(is_favorite, (value) => {
         <div class="text-700-14 white mt-2">{{ selectedGameItem.name }}</div>
         <div class="text-400-12 gray mt-1">by {{ selectedGameItem.provider }}</div>
       </v-col>
-      <v-col cols="3" class="px-2 mt-2 d-flex">
+      <v-col cols="3" class="px-2 mt-2 d-flex justify-end">
         <inline-svg
           :src="icon_public_36"
           :transform-source="svgIconTransform"
           @click="addFavoriteGame(selectedGameItem.id)"
         ></inline-svg>
-        <inline-svg :src="icon_public_103" style="margin-left: auto"></inline-svg>
+        <!-- <inline-svg :src="icon_public_103" style="margin-left: auto"></inline-svg> -->
       </v-col>
     </v-row>
     <v-row class="mx-8 pb-4 align-center" v-if="selectedGameItem.is_demo">

@@ -30,6 +30,40 @@ import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
 import icon_public_57 from "@/assets/public/svg/icon_public_57.svg";
 import icon_public_95 from "@/assets/public/svg/icon_public_95.svg";
 import icon_public_96 from "@/assets/public/svg/icon_public_96.svg";
+import icon_public_1002 from "@/assets/public/svg/icon_public_1002.svg";
+import icon_public_1003 from "@/assets/public/svg/icon_public_1003.svg";
+import icon_public_153 from "@/assets/public/svg/icon_public_153.svg";
+import icon_public_154 from "@/assets/public/svg/icon_public_154.svg";
+import icon_public_155 from "@/assets/public/svg/icon_public_155.svg";
+import icon_public_104 from "@/assets/public/svg/icon_public_104.svg";
+import icon_public_131 from "@/assets/public/svg/icon_public_131.svg";
+import icon_public_136 from "@/assets/public/svg/icon_public_136.svg";
+import icon_public_137 from "@/assets/public/svg/icon_public_137.svg";
+import icon_public_120 from "@/assets/public/svg/icon_public_120.svg";
+import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
+import icon_public_138 from "@/assets/public/svg/icon_public_138.svg";
+import icon_public_122 from "@/assets/public/svg/icon_public_122.svg";
+import icon_public_110 from "@/assets/public/svg/icon_public_110.svg";
+import icon_public_125 from "@/assets/public/svg/icon_public_125.svg";
+import icon_public_112 from "@/assets/public/svg/icon_public_112.svg";
+import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
+import icon_public_121 from "@/assets/public/svg/icon_public_121.svg";
+import icon_public_132 from "@/assets/public/svg/icon_public_132.svg";
+import icon_public_140 from "@/assets/public/svg/icon_public_140.svg";
+import icon_public_113 from "@/assets/public/svg/icon_public_113.svg";
+import icon_public_141 from "@/assets/public/svg/icon_public_141.svg";
+import icon_public_139 from "@/assets/public/svg/icon_public_139.svg";
+import icon_public_142 from "@/assets/public/svg/icon_public_142.svg";
+import icon_public_109 from "@/assets/public/svg/icon_public_109.svg";
+import icon_public_124 from "@/assets/public/svg/icon_public_124.svg";
+import icon_public_133 from "@/assets/public/svg/icon_public_133.svg";
+import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
+import icon_public_119 from "@/assets/public/svg/icon_public_119.svg";
+import icon_public_111 from "@/assets/public/svg/icon_public_111.svg";
+import icon_public_147 from "@/assets/public/svg/icon_public_147.svg";
+import icon_public_149 from "@/assets/public/svg/icon_public_149.svg";
+import icon_public_143 from "@/assets/public/svg/icon_public_143.svg";
+import icon_public_148 from "@/assets/public/svg/icon_public_148.svg";
 
 const router = useRouter();
 const { setNavBarToggle } = appBarStore();
@@ -48,7 +82,8 @@ const { setAgentNavBarToggle } = agentStore();
 const { setVipNavBarToggle } = vipStore();
 
 const { t } = useI18n();
-const open = ref<Array<string>>(['']);
+const casinoOpen = ref<Array<string>>(['']);
+const sportOpen = ref<Array<string>>(['']);
 const language = ref<string>('English');
 const drawer = ref<boolean>(true);
 const languageMenu = ref<boolean>(false);
@@ -74,6 +109,151 @@ const navItem = ref<string>("");
 const soundCheckBox = ref<boolean>(false);
 const onCheckboxColor = ref<string>("#ffffff");
 const offCheckboxColor = ref<string>("#7782AA");
+const sportMenuIconColor = ref<string>("#7782AA");
+const eSportMenuIconColor = ref<string>("#7782AA");
+const sportMenu = ref<boolean>(false);
+const eSportMenu = ref<boolean>(false);
+
+const sportGames = ref<Array<any>>([
+  {
+    name: t("navBar.sport_sub_menu.text_14"),
+    icon: icon_public_136,
+    query: "%2Famerican-football-16"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_15"),
+    icon: icon_public_137,
+    query: "%2Fbadminton-31"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_16"),
+    icon: icon_public_120,
+    query: "%2Fbaseball-3"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_17"),
+    icon: icon_public_105,
+    query: "%2F%3FliveSport%3Dbasketball-2"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_18"),
+    icon: icon_public_138,
+    query: "%2Fcricket-21"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_19"),
+    icon: icon_public_122,
+    query: "%2Fcycling-17"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_20"),
+    icon: icon_public_110,
+    query: "%2Fdarts-22"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_21"),
+    icon: icon_public_125,
+    query: "%2Fformula-1-40"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_22"),
+    icon: icon_public_112,
+    query: "%2Ffutsal-29"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_23"),
+    icon: icon_public_107,
+    query: "%2Fgolf-9"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_24"),
+    icon: icon_public_121,
+    query: "%2Fhandball-6"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_25"),
+    icon: icon_public_132,
+    query: "%2Fice-hockey-4"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_26"),
+    icon: icon_public_140,
+    query: "%2Febaseball%2Fmlb-20-2128614497890471950"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_27"),
+    icon: icon_public_113,
+    query: "%2Fmma-117"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_28"),
+    icon: icon_public_141,
+    query: "%2Famerican-football%2Fusa%2Fnfl-1666080012467572736"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_29"),
+    icon: icon_public_139,
+    query: "%2Fmotorcycle-racing-190"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_30"),
+    icon: icon_public_142,
+    query: ""
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_31"),
+    icon: icon_public_109,
+    query: "%2Frugby-12"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_32"),
+    icon: icon_public_124,
+    query: "%2Fsnooker-19"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_33"),
+    icon: icon_public_133,
+    query: "%2Ftable-tennis-20"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_34"),
+    icon: icon_public_106,
+    query: "%2F%3FliveSport%3Dtennis-5"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_35"),
+    icon: icon_public_119,
+    query: "%2Fvolleyball-23"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_36"),
+    icon: icon_public_111,
+    query: "%2Fwaterpolo-26"
+  },
+])
+
+const eSportGames = ref<Array<any>>([
+  {
+    name: t("navBar.sport_sub_menu.text_37"),
+    icon: icon_public_147,
+    query: "%2Fcounter-strike-109"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_38"),
+    icon: icon_public_149,
+    query: "%2Fdota-2-111"
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_39"),
+    icon: icon_public_143,
+    query: ""
+  },
+  {
+    name: t("navBar.sport_sub_menu.text_40"),
+    icon: icon_public_148,
+    query: "%2Fleague-of-legends-110"
+  },
+])
 
 // mobile version name
 const { name, width } = useDisplay()
@@ -183,7 +363,7 @@ watch(navBarToggle, (newValue) => {
   }
 })
 
-watch(open, (value) => {
+watch(casinoOpen, (value) => {
   if (value.length == 1) {
     casinoIconColor.value = "#7782AA";
     recentlyIconColor.value = "#7782AA"
@@ -196,6 +376,19 @@ watch(open, (value) => {
     sportIconColor.value = "#7782AA"
     promotionIconColor.value = "#7782AA"
     navItem.value = "";
+    sportOpen.value = [""];
+  }
+})
+
+watch(sportOpen, (value) => {
+  if (value.length == 1) {
+    activeItem.value = "";
+  } else {
+    sportIconColor.value = "#FFFFFF";
+    casinoIconColor.value = "#7782AA"
+    promotionIconColor.value = "#7782AA"
+    navItem.value = "";
+    casinoOpen.value = [""];
   }
 })
 
@@ -445,6 +638,38 @@ const providerIconTransform = (el: any) => {
   return el;
 };
 
+watch(sportMenu, (value) => {
+  sportMenuIconColor.value = value ? "#ffffff" : "#7782AA";
+})
+
+const sportMenuIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", sportMenuIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", sportMenuIconColor.value);
+    }
+  }
+  return el;
+};
+
+watch(eSportMenu, (value) => {
+  eSportMenuIconColor.value = value ? "#ffffff" : "#7782AA";
+})
+
+const eSportMenuIconTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute("fill", eSportMenuIconColor.value);
+    for (let subNode of node.children) {
+      subNode.setAttribute("fill", eSportMenuIconColor.value);
+    }
+  }
+  return el;
+};
+
+const handleSportGame = (sport_game_query: string) => {
+  router.push({ name: "Sports", query: { bt_path: sport_game_query } })
+}
+
 const openLoginBonusDialog = () => {
   setLoginBonusDialogVisible(true);
   setNavBarToggle(false);
@@ -545,7 +770,7 @@ const handleGameFilter = (filterText: string) => {
 }
 
 const handleNavbarItem = (navbarText: string) => {
-  open.value = [''];
+  casinoOpen.value = [''];
   navItem.value = navbarText
   switch (navbarText) {
     case t('navBar.sport'):
@@ -752,7 +977,7 @@ onMounted(() => {
           </p>
         </v-list-item>
       </v-list> -->
-      <v-list v-model:opened="open">
+      <v-list v-model:opened="casinoOpen">
         <v-list-group value="Casino">
           <template v-slot:activator="{ props }">
             <v-list-item
@@ -776,7 +1001,7 @@ onMounted(() => {
               </template>
               <v-list-item-title
                 class="ml-2"
-                :class="open.length == 1 ? 'gray' : 'white'"
+                :class="casinoOpen.length == 1 ? 'gray' : 'white'"
               >
                 {{ t("navBar.casino") }}
               </v-list-item-title>
@@ -971,26 +1196,296 @@ onMounted(() => {
           </v-card>
         </v-list-group>
       </v-list>
-      <v-list>
-        <v-list-item
-          class="m-avatar-img m-user-item1 m-nav-menu"
-          style="margin-bottom: -8px !important; padding-left: 10px"
-          @click="handleNavbarItem(t('navBar.sport'))"
-        >
-          <template v-slot:prepend>
-            <inline-svg
-              :src="icon_public_40"
-              width="16"
-              :transform-source="sportIconTransform"
-            ></inline-svg>
+      <v-list v-model:opened="sportOpen" class="mb-2">
+        <v-list-group value="Sport">
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              class="m-user-item1 m-nav-menu white"
+              v-bind="props"
+              link
+              value="sport"
+              :height="40"
+              style="
+                margin-bottom: -16px !important;
+                margin-top: -8px !important;
+                padding-left: 10px;
+              "
+            >
+              <template v-slot:prepend>
+                <inline-svg
+                  :src="icon_public_40"
+                  width="16"
+                  :transform-source="sportIconTransform"
+                ></inline-svg>
+              </template>
+              <v-list-item-title
+                class="ml-2"
+                :class="sportOpen.length == 1 ? 'gray' : 'white'"
+              >
+                {{ t("navBar.sport") }}
+              </v-list-item-title>
+            </v-list-item>
           </template>
-          <v-list-item-title
-            class="ml-2"
-            :class="navItem == t('navBar.sport') ? 'white' : 'gray'"
-          >
-            {{ t("navBar.sport") }}
-          </v-list-item-title>
-        </v-list-item>
+          <v-card color="#15161C" theme="dark" class="mt-6" style="border-radius: 0px">
+            <v-list>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="my_bet"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_1002" width="16"></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="
+                    activeItem == t('navBar.sport_sub_menu.text_1') ? 'white' : 'gray'
+                  "
+                >
+                  {{ t("navBar.sport_sub_menu.text_1") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu"
+                value="popular"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_95" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-2 white">
+                  {{ t("navBar.sport_sub_menu.text_2") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="
+                  handleSportGame(
+                    '%2Fsoccer%2Fbrazil%2Fbrasileiro-serie-a-1666079971237564416'
+                  )
+                "
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_153" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_3") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleSportGame('%2Fsoccer%2Fspain%2Flaliga-1666080196081618944')"
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_154" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_4") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="
+                  handleSportGame(
+                    '%2Fsoccer%2Fengland%2Fpremier-league-1666080041827700736'
+                  )
+                "
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_155" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_5") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="
+                  handleSportGame(
+                    '%2Fsoccer%2Finternational-clubs%2Fuefa-champions-league-1666080270903808000'
+                  )
+                "
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_6") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="
+                  handleSportGame('%2Fsoccer%2Fitaly%2Fserie-a-1666080211319525376')
+                "
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_7") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="
+                  handleSportGame('%2Fsoccer%2Fgermany%2Fbundesliga-1666080125223047168')
+                "
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_8") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="
+                  handleSportGame('%2Fsoccer%2Ffrance%2Fligue-1-1666080025423777792')
+                "
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_9") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleSportGame('%2Fsoccer-1')"
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_10") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                class="m-casino-sub-img m-nav-sub-menu ml-2"
+                value="sport_1"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleSportGame('%2Ffifa-300')"
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="icon_public_131" width="16"></inline-svg>
+                </template>
+                <v-list-item-title class="ml-1 gray">
+                  {{ t("navBar.sport_sub_menu.text_11") }}
+                </v-list-item-title>
+              </v-list-item>
+              <v-menu
+                location="center"
+                offset="10"
+                content-class="m-original-dropdown"
+                v-model:model-value="sportMenu"
+                transition="slide-x-transition"
+              >
+                <template v-slot:activator="{ props }">
+                  <v-list-item
+                    v-bind="props"
+                    class="m-casino-sub-img m-nav-sub-menu"
+                    :append-icon="sportMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+                    value="sports"
+                    style="margin-bottom: -4px !important; margin-top: -4px !important"
+                  >
+                    <template v-slot:prepend>
+                      <inline-svg
+                        :src="icon_public_40"
+                        width="16"
+                        :transform-source="sportMenuIconTransform"
+                      ></inline-svg>
+                    </template>
+                    <v-list-item-title class="ml-2" :class="sportMenu ? 'white' : 'gray'">
+                      {{ t("navBar.sport_sub_menu.text_12") }}
+                    </v-list-item-title>
+                  </v-list-item>
+                </template>
+                <v-list
+                  theme="dark"
+                  bg-color="#15161C"
+                  width="166"
+                  class="ml-6"
+                  style="border-radius: 8px; height: 400px; overflow-y: auto"
+                >
+                  <v-list-item
+                    v-for="(item, i) in sportGames"
+                    :key="i"
+                    :value="item.name"
+                    class="m-avatar-img m-nav-sub-menu"
+                    :prepend-avatar="item.icon"
+                    :title="item.name"
+                    style="font-size: 11px !important; font-weight: 500 !important"
+                    @click="handleSportGame(item.query)"
+                  >
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <v-menu
+                location="center"
+                offset="10"
+                content-class="m-original-dropdown"
+                v-model:model-value="eSportMenu"
+                transition="slide-x-transition"
+              >
+                <template v-slot:activator="{ props }">
+                  <v-list-item
+                    v-bind="props"
+                    class="m-casino-sub-img m-nav-sub-menu"
+                    :append-icon="eSportMenu ? 'mdi-chevron-left' : 'mdi-chevron-right'"
+                    value="esports"
+                    style="margin-bottom: -4px !important; margin-top: -4px !important"
+                  >
+                    <template v-slot:prepend>
+                      <inline-svg
+                        :src="icon_public_1003"
+                        width="16"
+                        :transform-source="eSportMenuIconTransform"
+                      ></inline-svg>
+                    </template>
+                    <v-list-item-title
+                      class="ml-2"
+                      :class="eSportMenu ? 'white' : 'gray'"
+                    >
+                      {{ t("navBar.sport_sub_menu.text_13") }}
+                    </v-list-item-title>
+                  </v-list-item>
+                </template>
+                <v-list theme="dark" bg-color="#15161C" width="166" class="ml-6">
+                  <v-list-item
+                    v-for="(item, i) in eSportGames"
+                    :key="i"
+                    :value="item.name"
+                    class="m-avatar-img m-nav-sub-menu"
+                    :prepend-avatar="item.icon"
+                    :title="item.name"
+                    style="font-size: 11px !important; font-weight: 500 !important"
+                    @click="handleSportGame(item.query)"
+                  >
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list>
+          </v-card>
+        </v-list-group>
       </v-list>
       <v-divider class="divider"></v-divider>
       <v-list>
@@ -1632,7 +2127,7 @@ onMounted(() => {
   align-self: center;
   top: 50%;
   transform: translateY(-50%);
-  left: -2px;
+  left: 0px;
   border: 13px solid #15161c;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -1729,6 +2224,14 @@ onMounted(() => {
 
   :deep(.v-avatar) {
     margin-right: 6px !important;
+  }
+
+  :deep(.mdi-chevron-right::before) {
+    font-size: 18px;
+  }
+
+  :deep(.mdi-chevron-left::before) {
+    font-size: 18px;
   }
 }
 

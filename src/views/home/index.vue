@@ -812,6 +812,7 @@ const Dashboard = defineComponent({
     const handleBannerCategory = (category: string) => {
       handleGameFilterBtn(category.toUpperCase());
     }
+
     onMounted(async () => {
       loading.value = true;
       window.scrollTo({

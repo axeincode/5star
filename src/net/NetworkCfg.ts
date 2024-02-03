@@ -113,7 +113,7 @@ export namespace NETWORK {
 
   // activity api
   export class ACTIVITY {
-    static USER_ACTIVITY_LIST = '/user/activity/list'
+    static USER_ACTIVITY_LIST = '/activity/list'
   }
 
   export class Reward{
