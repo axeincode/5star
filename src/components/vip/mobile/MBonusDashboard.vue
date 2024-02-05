@@ -421,6 +421,7 @@ onMounted(() => {
 <style lang="scss">
 .m-bonus-nav {
   .v-navigation-drawer__content {
+    height: 100vh;
     overflow-y: hidden !important;
   }
 }

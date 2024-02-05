@@ -511,7 +511,6 @@ onMounted(() => {
       :transition="'dialog-top-transition'"
       @click:outside="setCashDialogToggle(false)"
       v-if="mobileVersion == 'sm'"
-      style="z-index:2430"
     >
       <MCashHeader />
     </v-dialog>
@@ -852,6 +851,11 @@ onMounted(() => {
   // top: 53px!important;
 }
 
+.cash-header-dialog{
+  z-index: 2430 !important;
+  height: 80px;
+  margin: 0px !important;
+}
 // .m-withdraw-dialog{
 //   .v-overlay__content {
 //     transform: none!important;

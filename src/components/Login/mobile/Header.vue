@@ -60,7 +60,7 @@ export default LoginHeader;
     <img src="@/assets/login/image/img_li_04.png" class="m-logo-image5" width="30" />
     <div class="m-logo-image6-area">
       <img src="@/assets/login/image/img_li_05.png" class="m-logo-image6" width="134" />
-      <p class="m-login-logo-text black">
+      <p class="m-login-logo-text r-black">
         <span :class="currentLanguage === 'en' ? 'ml-0' : 'ml-8'">
           {{ t("login.formPage.header.titleLine1") }}
         </span>
@@ -158,5 +158,9 @@ export default LoginHeader;
   font-weight: 700;
   font-size: 13px;
   line-height: 21px;
+}
+
+.r-black{
+  color: black !important;
 }
 </style>

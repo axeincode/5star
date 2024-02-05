@@ -675,19 +675,19 @@ onMounted(() => {
 
   .personal-info-key-position {
     position: absolute;
-    top: 70px;
+    top: 63px;
     right: 40px;
   }
 
   .personal-info-key-position-1 {
     position: absolute;
-    top: 132px;
+    top: 125px;
     left: 40%;
   }
 
   .personal-info-key-position-2 {
     position: absolute;
-    top: 132px;
+    top: 125px;
     right: 39px;
   }
 

@@ -65,7 +65,7 @@ onMounted(async () => {
                 </v-btn>
             </div>
             <div class="vip-overlay-level">
-                <span>Level {{ vipLevelAward.level }}</span>
+                <span>Level {{ vipLevelAward.old_level }} - Level {{ vipLevelAward.level }}</span>
             </div>
             <div class="vip-overlay-tip">
                 <span>Congratulations on leveling up!</span>

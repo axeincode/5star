@@ -1630,44 +1630,60 @@ export const lang: langType = {
     },
     vip_level_info: {
       black_iron: {
-        bonus: '',
-        rebate: '',
-        fee: ''
+        week: '',
+        moon: '',
+        cash: '',
+        mosaic: '',
+        withdraw: ''
       },
       bronze: {
-        bonus: 'Premio en efectivo de bronce de nivel 2 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: ''
+        week: 'Recompensas semanales de rango Bronce',
+        moon: 'Recompensa mensual de rango Bronce',
+        cash: 'Premio en efectivo de bronce para los niveles 1~24',
+        mosaic: 'Reembolso de código (2% ~ 2,4%)',
+        withdraw: ''
       },
       silver: {
-        bonus: 'Premio en efectivo de plata de nivel 25 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: ''
+        week: 'Recompensas semanales de rango Plata',
+        moon: 'Recompensas mensuales del nivel Plata',
+        cash: 'Premio en efectivo de plata para los niveles 25~49',
+        mosaic: 'Reembolso de código (2,6%)',
+        withdraw: ''
       },
       gold: {
-        bonus: 'Premio en efectivo de oro de nivel 50 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: ''
+        week: 'Recompensas semanales de rango Oro',
+        moon: 'Recompensas mensuales de rango oro',
+        cash: 'Premio en efectivo de oro para los niveles 50~75',
+        mosaic: 'Reembolso de código (2,8%)',
+        withdraw: ''
       },
       platinum: {
-        bonus: 'Premio en efectivo Platino de nivel 76 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 5,000'
+        week: 'Recompensas semanales de rango Platino',
+        moon: 'Recompensa mensual de rango Platino',
+        cash: 'Premio en efectivo de platino para los niveles 76~99',
+        mosaic: 'Reembolso de código (3,0%)',
+        withdraw: 'Descuento en la tarifa de retiro (1,5%), límite de retiro sin tarifa de 5000'
       },
       diamonds: {
-        bonus: 'Premio en efectivo de diamantes de nivel 100 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 20,000'
+        week: 'Recompensas semanales de rango Diamante',
+        moon: 'Recompensa mensual del rango Diamante',
+        cash: 'Premio en efectivo de diamantes de nivel 100 ~ 149',
+        mosaic: 'Reembolso de código (3,2% ~ 3,4%)',
+        withdraw: 'Descuento en la tarifa de retiro (1,5%), límite de retiro sin tarifa de 10 000 ~ 25 000'
       },
       yellow_diamond: {
-        bonus: 'Premio en efectivo de diamante amarillo de nivel 150 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 20,000'
+        week: 'Recompensa semanal del rango Diamante Amarillo',
+        moon: 'Recompensa mensual del rango Diamante Amarillo',
+        cash: 'Premio en efectivo Diamante Amarillo Nivel 150~199',
+        mosaic: 'Reembolso de código (3,6% ~ 4,5%)',
+        withdraw: 'Descuento en la tarifa de retiro (1,0%), límite de retiro sin comisiones de 40 000 ~ 60 000'
       },
       blue_diamond: {
-        bonus: 'Premio en efectivo de diamante azul nivel 200 (bonificación u oro real)',
-        rebate: 'Reembolso de código',
-        fee: 'Descuento en tarifas de retiro, límite de retiro sin tarifas de 80,000'
+        week: 'Recompensas semanales del rango Diamante Azul',
+        moon: 'Recompensas mensuales del rango Diamante Azul',
+        cash: 'Premio en efectivo Diamante Azul nivel 200+',
+        mosaic: 'Reembolso de código (5,0%)',
+        withdraw: 'Descuento en la tarifa de retiro (1,0%), límite de retiro sin comisión de 80.000'
       }
     }
   },

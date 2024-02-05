@@ -47,17 +47,17 @@ const bonus_items = ref<Array<any>>([
   {
     image: img_vip_4,
     content: t("reward.text_8"),
-    value: 2,
+    value: 0,
   },
   {
     image: img_public_21,
     content: t("reward.text_10"),
-    value: 2,
+    value: 0,
   },
   {
     image: img_public_22,
     content: t("reward.text_11"),
-    value: 2,
+    value: 0,
   },
   {
     image: img_public_1,
@@ -352,8 +352,9 @@ onMounted(async () => {
 
 <style lang="scss">
 .m-reward-navigation-drawer {
-  height: 100vh !important;
-  bottom: 0px !important;
+  height: 100%!important;
+  width: 100%!important;
+  top: 0px!important;
   z-index: 2147483645 !important;
   background: $agent_card_bg !important;
   .m-reward-menu{

@@ -31,8 +31,10 @@ const vipCardInfo = [
         title: vipLevels.value[1].rank_name,
         vip: '(VIP1-24)',
         info: [
-            t('vip.vip_level_info.bronze.bonus'), 
-            t('vip.vip_level_info.bronze.rebate'),
+            t('vip.vip_level_info.bronze.week'), 
+            t('vip.vip_level_info.bronze.moon'),
+            t('vip.vip_level_info.bronze.cash'),
+            t('vip.vip_level_info.bronze.mosaic'),
         ]
     },
     {
@@ -40,8 +42,10 @@ const vipCardInfo = [
         title: vipLevels.value[25].rank_name,
         vip: '(VIP25-49)',
         info: [
-            t('vip.vip_level_info.silver.bonus'), 
-            t('vip.vip_level_info.silver.rebate'),
+            t('vip.vip_level_info.silver.week'), 
+            t('vip.vip_level_info.silver.moon'),
+            t('vip.vip_level_info.silver.cash'),
+            t('vip.vip_level_info.silver.mosaic'),
         ]
     },
     {
@@ -49,8 +53,10 @@ const vipCardInfo = [
         title: vipLevels.value[50].rank_name,
         vip: '(VIP50-75)',
         info: [
-            t('vip.vip_level_info.gold.bonus'), 
-            t('vip.vip_level_info.gold.rebate'),
+            t('vip.vip_level_info.gold.week'), 
+            t('vip.vip_level_info.gold.moon'),
+            t('vip.vip_level_info.gold.cash'),
+            t('vip.vip_level_info.gold.mosaic'),
         ]
     },
     {
@@ -58,9 +64,11 @@ const vipCardInfo = [
         title: vipLevels.value[76].rank_name,
         vip: '(VIP76-99)',
         info: [
-            t('vip.vip_level_info.platinum.bonus'), 
-            t('vip.vip_level_info.platinum.rebate'),
-            t('vip.vip_level_info.platinum.fee'),
+            t('vip.vip_level_info.platinum.week'), 
+            t('vip.vip_level_info.platinum.moon'),
+            t('vip.vip_level_info.platinum.cash'),
+            t('vip.vip_level_info.platinum.mosaic'),
+            t('vip.vip_level_info.platinum.withdraw'),
         ]
     },
     {
@@ -68,9 +76,11 @@ const vipCardInfo = [
         title: vipLevels.value[100].rank_name,
         vip: '(VIP100-149)',
         info: [
-            t('vip.vip_level_info.diamonds.bonus'), 
-            t('vip.vip_level_info.diamonds.rebate'),
-            t('vip.vip_level_info.diamonds.fee'),
+            t('vip.vip_level_info.diamonds.week'), 
+            t('vip.vip_level_info.diamonds.moon'),
+            t('vip.vip_level_info.diamonds.cash'),
+            t('vip.vip_level_info.diamonds.mosaic'),
+            t('vip.vip_level_info.diamonds.withdraw'),
         ]
     },
     {
@@ -78,9 +88,11 @@ const vipCardInfo = [
         title: vipLevels.value[159].rank_name,
         vip: '(VIP150-199)',
         info: [
-            t('vip.vip_level_info.yellow_diamond.bonus'), 
-            t('vip.vip_level_info.yellow_diamond.rebate'),
-            t('vip.vip_level_info.yellow_diamond.fee'),
+            t('vip.vip_level_info.yellow_diamond.week'), 
+            t('vip.vip_level_info.yellow_diamond.moon'),
+            t('vip.vip_level_info.yellow_diamond.cash'),
+            t('vip.vip_level_info.yellow_diamond.mosaic'),
+            t('vip.vip_level_info.yellow_diamond.withdraw'),
         ]
     },
     {
@@ -88,9 +100,11 @@ const vipCardInfo = [
         title: vipLevels.value[200].rank_name,
         vip: '(VIP200)',
         info: [
-            t('vip.vip_level_info.blue_diamond.bonus'), 
-            t('vip.vip_level_info.blue_diamond.rebate'),
-            t('vip.vip_level_info.blue_diamond.fee'),
+            t('vip.vip_level_info.blue_diamond.week'), 
+            t('vip.vip_level_info.blue_diamond.moon'),
+            t('vip.vip_level_info.blue_diamond.cash'),
+            t('vip.vip_level_info.blue_diamond.mosaic'),
+            t('vip.vip_level_info.blue_diamond.withdraw'),
         ]
     }
 ]

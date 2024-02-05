@@ -557,7 +557,7 @@ onMounted(() => {
 }
 
 ::deep(.v-navigation-drawer__content) {
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden !important;
 

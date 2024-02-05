@@ -1580,44 +1580,60 @@ export const lang: langType = {
     },
     vip_level_info: {
       black_iron: {
-        bonus: '',
-        rebate: '',
-        fee: ''
+        week: '',
+        moon: '',
+        cash: '',
+        mosaic: '',
+        withdraw: ''
       },
       bronze: {
-        bonus: 'Level 2 Bronze Cash Prize (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: ''
+        week: 'Bronze Rank Weekly Rewards',
+        moon: 'Bronze rank monthly reward',
+        cash: 'Bronze cash prize for level 1~24',
+        mosaic: 'Code rebate (2%~2.4%)',
+        withdraw: ''
       },
       silver: {
-        bonus: 'Level 25 Silver Cash Prize (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: ''
+        week: 'Silver Rank Weekly Rewards',
+        moon: 'Silver tier monthly rewards',
+        cash: 'Silver cash prize for level 25~49',
+        mosaic: 'Code rebate (2.6%)',
+        withdraw: ''
       },
       gold: {
-        bonus: 'Level 50 gold cash prize (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: ''
+        week: 'Gold Rank Weekly Rewards',
+        moon: 'Gold rank monthly rewards',
+        cash: 'Gold cash prize for level 50~75',
+        mosaic: 'Code rebate (2.8%)',
+        withdraw: ''
       },
       platinum: {
-        bonus: 'Level 76 Platinum Cash Award (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: 'Discount on withdrawal fees, 5,000 fee-free withdrawal limit'
+        week: 'Platinum Rank Weekly Rewards',
+        moon: 'Platinum Rank Monthly Reward',
+        cash: 'Platinum cash prize for level 76~99',
+        mosaic: 'Code rebate (3.0%)',
+        withdraw: 'Withdrawal fee discount (1.5%), 5,000 fee-free withdrawal limit'
       },
       diamonds: {
-        bonus: 'Level 100 diamond cash prize (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: 'Discount on withdrawal fees, 20,000 fee-free withdrawal limit'
+        week: 'Diamond Rank Weekly Rewards',
+        moon: 'Diamond Rank Monthly Reward',
+        cash: 'Level 100~149 Diamond Cash Prize',
+        mosaic: 'Code rebate (3.2%~3.4%)',
+        withdraw: 'Withdrawal fee discount (1.5%), fee-free withdrawal limit of 10,000~25,000'
       },
       yellow_diamond: {
-        bonus: 'Level 150 yellow diamond cash prize (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: 'Discount on withdrawal fees, 20,000 fee-free withdrawal limit'
+        week: 'Yellow Diamond Rank Weekly Reward',
+        moon: 'Yellow Diamond Rank Monthly Reward',
+        cash: 'Level 150~199 Yellow Diamond Cash Prize',
+        mosaic: 'Code rebate (3.6%~4.5%)',
+        withdraw: 'Withdrawal fee discount (1.0%), fee-free withdrawal limit of 40,000~60,000'
       },
       blue_diamond: {
-        bonus: 'Level 200 blue diamond cash prize (bonus or real gold)',
-        rebate: 'Code rebate',
-        fee: 'Discount on withdrawal fees, 80,000 fee-free withdrawal limit'
+        week: 'Blue Diamond Rank Weekly Rewards',
+        moon: 'Blue Diamond Rank Monthly Rewards',
+        cash: 'Level 200+ Blue Diamond Cash Prize',
+        mosaic: 'Code rebate (5.0%)',
+        withdraw: 'Withdrawal fee discount (1.0%), 80,000 fee-free withdrawal limit'
       }
     }
   },

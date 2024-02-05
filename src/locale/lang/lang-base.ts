@@ -1627,44 +1627,60 @@ export type langType = {
     },
     vip_level_info: {
       black_iron: {
-        bonus: string,
-        rebate: string,
-        fee: string
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       bronze: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       silver: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       gold: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       platinum: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       diamonds: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       yellow_diamond: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       },
       blue_diamond: {
-        bonus: string,
-        rebate: string,
-        fee: string,
+        week: string,
+        moon: string,
+        cash: string,
+        mosaic: string,
+        withdraw: string
       }
     }
   }

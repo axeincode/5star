@@ -316,6 +316,24 @@ const handleNotifyShow = (uid: string) => {
   );
 }
 
+// Recharge progress bar  充值进度条
+const depositRateVal = computed(() => {
+  if ((vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100) >= 100) {
+        return 100;
+    } else {
+        return vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100
+    }
+})
+
+// Betting progress bar  投注进度条
+const betRateVal = computed(() => {
+  if ((vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100) >= 100) {
+        return 100;
+    } else {
+        return vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100
+    }
+})
+
 watch(vipLevels, (value) => {
   value.map(item => {
     if (item.level == vipInfo.value.level) {
@@ -420,11 +438,11 @@ onMounted(async () => {
                 <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
                 <div class="ml-auto text-800-8">
                   <font>R$ {{ vipInfo.deposit_exp }}</font> /
-                  <font color="#F9BC01">R$ {{ selectedVipLevel.deposit_exp }}</font>
+                  <font color="#F9BC01">R$ {{ vipInfo.rank_deposit_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
-                <v-progress-linear v-model="depositRate" height="8" class="deposit-progress">
+                <v-progress-linear v-model="depositRateVal" height="8" class="deposit-progress">
                 </v-progress-linear>
               </div>
             </div>
@@ -433,11 +451,11 @@ onMounted(async () => {
                 <div class="white text-500-8">{{ t("appBar.wager") }}</div>
                 <div class="ml-auto text-800-8">
                   <font>R$ {{ vipInfo.bet_exp }}</font> /
-                  <font color="#623AEC">R$ {{ selectedVipLevel.bet_exp }}</font>
+                  <font color="#623AEC">R$ {{ vipInfo.rank_bet_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
-                <v-progress-linear v-model="depositRate" height="8" class="wager-progress">
+                <v-progress-linear v-model="betRateVal" height="8" class="wager-progress">
                 </v-progress-linear>
               </div>
             </div>
@@ -633,7 +651,7 @@ onMounted(async () => {
 }
 
 .v-navigation-drawer__content {
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden !important;
 
