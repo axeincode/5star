@@ -276,9 +276,9 @@ onMounted(async () => {
   <div class="m-home-search-body">
     <div class="m-search-header">
       <span class="m-search-header-icon" @click="emit('searchCancel')"></span>
-      <span>{{ t('home.search') }}</span>
+      <span>{{ t("home.search") }}</span>
     </div>
-  <!-- <div
+    <!-- <div
     class="m-home-search-body"
     :style="{
       height: searchContainerHeight >= 590 ? '43vh' : searchContainerHeight - 80 + 'px',
@@ -487,7 +487,7 @@ onMounted(async () => {
   align-items: center;
   gap: 10px;
   border-radius: 6px;
-  background: var(--Secondary-Button-353652, #23262F);
+  background: var(--Secondary-Button-353652, #23262f);
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -510,7 +510,7 @@ onMounted(async () => {
   width: 28px;
   height: 28px;
   border-radius: 3px;
-  background: var(--Secondary-Button-353652, #23262F);
+  background: var(--Secondary-Button-353652, #23262f);
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 }
@@ -525,7 +525,7 @@ onMounted(async () => {
   position: relative;
   height: 50px;
   line-height: 50px;
-  background: var(--BG-5-1C1929, #15161C);
+  background: var(--BG-5-1C1929, #15161c);
   color: #fff;
   text-align: center;
   .m-search-header-icon {
@@ -533,7 +533,7 @@ onMounted(async () => {
     height: 20px;
   }
   .m-search-header-icon::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 20px;
     top: 50%;
@@ -549,7 +549,7 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   border-radius: 0px 0px 8px 8px;
-  background: var(--Text-Box-1-211F31, #1D2027);
+  background: var(--Text-Box-1-211F31, #1d2027);
   overflow-y: auto;
 
   .m-home-search-game:active {
@@ -566,7 +566,7 @@ onMounted(async () => {
 
   .form-textfield div.v-field.v-field--appended {
     border-radius: 10px;
-    background: var(--BG-5-1C1929, #15161C);
+    background: var(--BG-5-1C1929, #15161c);
     height: 40px;
 
     /* Text Box */
@@ -575,7 +575,7 @@ onMounted(async () => {
 
   .form-textfield div.v-field__field {
     color: white;
-    background: var(--BG-5-1C1929, #15161C);
+    background: var(--BG-5-1C1929, #15161c);
     padding-left: 0px;
   }
 
@@ -663,7 +663,7 @@ onMounted(async () => {
     width: 24px;
     height: 24px;
     border-radius: 46px;
-    background: #1D2027;
+    background: #1d2027;
     right: 12px;
     top: 20px;
     /* Button Shadow */
@@ -687,7 +687,7 @@ onMounted(async () => {
     width: 24px;
     height: 24px;
     border-radius: 46px;
-    background: #1D2027;
+    background: #1d2027;
     right: 46px;
     top: 20px;
     left: unset;

@@ -40,8 +40,8 @@ const checkIcon = ref<any>(
 
 const notificationText = ref<string>(t("refferal.copy_success_text"));
 
-const copyToClipboard = () => {
-  clipboard.writeText(inviteItem.value.web_invite_url).then(
+const copyToClipboard = (copy_text: string) => {
+  clipboard.writeText(copy_text).then(
     () => {
       console.log("Copied to clipboard!");
       const toast = useToast();
@@ -219,9 +219,13 @@ onMounted(async () => {
           <div class="text-center mt-6 text-700-18 white">
             {{ t("refferal.dialog.body.text_1") }}
           </div>
-          <div class="text-center mt-4 text-500-12 text-gray">
-            {{ t("refferal.dialog.body.text_2") }}{{ inviteItem.invite_code
-            }}{{ t("refferal.dialog.body.text_3") }}
+          <div
+            class="text-center mt-4 text-500-12 text-gray"
+            @click="copyToClipboard(inviteItem.invite_code)"
+          >
+            {{ t("refferal.dialog.body.text_2") }}
+            {{ inviteItem.invite_code }}
+            {{ t("refferal.dialog.body.text_3") }}
           </div>
           <div class="text-center mt-6 mx-6">
             <v-card theme="dark" color="#15161C" height="40">
@@ -235,7 +239,7 @@ onMounted(async () => {
               class="button-bright m-reffer-btn-font text-none"
               width="-webkit-fill-available"
               height="48px"
-              @click="copyToClipboard"
+              @click="copyToClipboard(inviteItem.web_invite_url)"
             >
               {{ t("refferal.dialog.body.copy_btn_text") }}
             </v-btn>
@@ -289,7 +293,7 @@ onMounted(async () => {
     margin-left: auto;
     margin-right: auto;
     width: 328px;
-    background: #15161C;
+    background: #15161c;
     border-radius: 16px;
     height: 333px;
     animation-name: heighting;
@@ -298,9 +302,9 @@ onMounted(async () => {
     animation-timing-function: linear;
     animation-iteration-count: 1;
     overflow: hidden;
-    .v-card{
+    .v-card {
       border-radius: 8px;
-      &.description-card{
+      &.description-card {
         border-radius: 16px;
       }
     }

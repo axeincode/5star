@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted, defineAsyncComponent } from 'vue';
+import { ref, computed, watch, onMounted, defineAsyncComponent, watchEffect } from 'vue';
 import { useDisplay } from 'vuetify';
 import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
@@ -11,6 +11,7 @@ import { storeToRefs } from 'pinia';
 import { useI18n } from "vue-i18n";
 import Footer from "./Footer.vue";
 import { useRoute } from 'vue-router';
+import { mainStore } from "@/store/main";
 
 // import Deposit from "@/components/cash/deposit/index.vue";
 // import MDeposit from "@/components/cash/deposit/mobile/index.vue";
@@ -69,6 +70,8 @@ const RouletteBonusDialog = defineAsyncComponent(() => import("@/components/roul
 const MRouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/mobile/index.vue"));
 const MAccountDialog = defineAsyncComponent(() => import("@/views/account/dialog/index.vue"));
 const VipUpgradeDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_upgrade_dialog/index.vue"));
+const Search = defineAsyncComponent(() => import("@/components/global/search/index.vue"));
+const MSearch = defineAsyncComponent(() => import("@/components/global/search/mobile/index.vue"));
 
 const { t } = useI18n();
 const { name, width } = useDisplay();
@@ -80,7 +83,7 @@ const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
-const {setActiveAccountIndex} = appBarStore();
+const { setActiveAccountIndex } = appBarStore();
 // const { setBonusDashboardDialogVisible } = appBarStore();
 const { setAuthModalType } = authStore();
 const { setNickNameDialogVisible } = authStore();
@@ -92,12 +95,13 @@ const { setUserNavBarToggle } = appBarStore();
 const { setMailMenuShow } = mailStore();
 const { setNavBarToggle } = appBarStore();
 const { setLevelUpDialogVisible } = vipStore();
+const { setSearchDialogShow } = mainStore();
 
 type dialogType = "login" | "signup" | "signout";
 
 const route = useRoute();
 
-const referral_code = ref<string> ("");
+const referral_code = ref<string>("");
 
 // mobile or pc screen
 const mobileVersion = computed(() => {
@@ -126,8 +130,19 @@ const mobileDialogCheck = ref<boolean>(false);
 const accountDialog = ref<boolean>(false);
 const nickNameDialog = ref<boolean>(false);
 const levelUpDialog = ref<boolean>(false);
+const searchDialog = ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
+
+const searchDialogShow = computed(() => {
+  const { getSearchDialogShow } = storeToRefs(mainStore());
+  return getSearchDialogShow.value
+})
+
+watch(searchDialogShow, (value) => {
+  searchDialog.value = value;
+  setMailMenuShow(value);
+})
 
 const authDialogVisible = computed(() => {
   const { getAuthDialogVisible } = storeToRefs(authStore());
@@ -302,7 +317,7 @@ const refferalDialogVisible = computed(() => {
 
 watch(refferalDialogVisible, (newValue) => {
   refferalDialog.value = newValue;
-  if(refferalDialog.value && mobileWidth.value <600) {
+  if (refferalDialog.value && mobileWidth.value < 600) {
     setUserNavBarToggle(false);
     setNavBarToggle(false);
     setMailMenuShow(false);
@@ -412,7 +427,7 @@ const accountDialogVisible = computed(() => {
   return getAccountDialogShow.value;
 })
 const levelUpDialogVisible = computed(() => {
-  const { getLevelUpDialogVisible }= storeToRefs(vipStore());
+  const { getLevelUpDialogVisible } = storeToRefs(vipStore());
   return getLevelUpDialogVisible.value
 })
 
@@ -475,6 +490,10 @@ const handleResize = () => {
   mainHeight.value = window.innerHeight;
 }
 
+watch(route, (to) => {
+  // console.log(to.path);
+}, { flush: 'pre', immediate: true, deep: true })
+
 onMounted(() => {
   console.log(route.query.code);
   window.addEventListener("resize", handleResize);
@@ -500,6 +519,28 @@ onMounted(() => {
       overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'unset',
     }"
   >
+    <!-- game search dialog -->
+
+    <v-navigation-drawer
+      v-model="searchDialogShow"
+      location="top"
+      class="m-search-bar"
+      temporary
+      :touchless="true"
+      :style="{
+        height: '100%',
+        top: '0px',
+        zIndex: 300000,
+        background: 'unset !important',
+      }"
+      v-if="mobileWidth < 600"
+    >
+      <MSearch
+        :searchDialogShow="searchDialogShow"
+        @searchCancel="setSearchDialogShow(false)"
+      />
+    </v-navigation-drawer>
+
     <!---------------------- Deposit Dialog ----------------------------------------------->
 
     <v-dialog
@@ -752,7 +793,7 @@ onMounted(() => {
     <MenuSemiCircle v-if="mobileWidth < 600" />
 
     <!-------------------------------- Footer Tab ----------------------------------------->
-    <Footer />
+    <Footer v-if="route.path != '/promo'" />
   </v-main>
 </template>
 <style lang="scss">
@@ -773,12 +814,14 @@ onMounted(() => {
   width: 44px;
   height: 44px;
 }
+
 .m-back-top {
   width: 44px;
   height: 44px;
   background: #d42763;
   border-radius: 44px;
   filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
+
   .m-back-icon-position {
     width: 28px;
     height: 28px;
@@ -848,14 +891,16 @@ onMounted(() => {
   .v-overlay__content {
     transform: none !important;
   }
+
   // top: 53px!important;
 }
 
-.cash-header-dialog{
+.cash-header-dialog {
   z-index: 2430 !important;
   height: 80px;
   margin: 0px !important;
 }
+
 // .m-withdraw-dialog{
 //   .v-overlay__content {
 //     transform: none!important;

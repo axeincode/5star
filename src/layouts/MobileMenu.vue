@@ -1116,15 +1116,15 @@ onMounted(() => {
   }
 
   .letter:nth-child(1) {
-    transform: rotateZ(313deg) translateY(-26px) rotateZ(-176deg);
+    transform: rotateZ(306deg) translateY(-26px) rotateZ(-182deg);
   }
 
   .letter:nth-child(2) {
-    transform: rotateZ(295deg) translateY(-26px) rotateZ(-173deg);
+    transform: rotateZ(292deg) translateY(-26px) rotateZ(-173deg);
   }
 
   .letter:nth-child(3) {
-    transform: rotateZ(278deg) translateY(-26px) rotateZ(-184deg);
+    transform: rotateZ(278deg) translateY(-27px) rotateZ(-184deg);
   }
 
   .letter:nth-child(4) {
@@ -1378,7 +1378,7 @@ onMounted(() => {
 
   .mail-item {
     margin-top: 4px !important;
-    background-color: #15161C !important;
+    background-color: #15161c !important;
     padding: 14px 20px !important;
     border-radius: 8px !important;
     animation-name: mailScaling;

@@ -30,8 +30,8 @@ import icon_public_47 from "@/assets/public/svg/icon_public_47.svg";
 import icon_public_57 from "@/assets/public/svg/icon_public_57.svg";
 import icon_public_95 from "@/assets/public/svg/icon_public_95.svg";
 import icon_public_96 from "@/assets/public/svg/icon_public_96.svg";
-import icon_public_1002 from "@/assets/public/svg/icon_public_1002.svg";
-import icon_public_1003 from "@/assets/public/svg/icon_public_1003.svg";
+import icon_public_114 from "@/assets/public/svg/icon_public_114.svg";
+import icon_public_115 from "@/assets/public/svg/icon_public_115.svg";
 import icon_public_153 from "@/assets/public/svg/icon_public_153.svg";
 import icon_public_154 from "@/assets/public/svg/icon_public_154.svg";
 import icon_public_155 from "@/assets/public/svg/icon_public_155.svg";
@@ -1234,7 +1234,7 @@ onMounted(() => {
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_1002" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_114" width="16"></inline-svg>
                 </template>
                 <v-list-item-title
                   class="ml-2"
@@ -1446,7 +1446,7 @@ onMounted(() => {
                   >
                     <template v-slot:prepend>
                       <inline-svg
-                        :src="icon_public_1003"
+                        :src="icon_public_115"
                         width="16"
                         :transform-source="eSportMenuIconTransform"
                       ></inline-svg>
@@ -1771,8 +1771,8 @@ onMounted(() => {
 }
 
 ::deep(.v-navigation-drawer__content) {
-  height: 100vh;
-  overflow-y: auto;
+  height: 100vh !important;
+  overflow-y: auto !important;
   overflow-x: hidden !important;
 
   &::-webkit-scrollbar {

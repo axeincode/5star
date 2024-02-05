@@ -15,6 +15,7 @@ import { type PromoListData } from "@/interface/promo";
 const { setDepositWithdrawToggle } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
+const { dispatchUserActivityList } = promoStore();
 
 const { t } = useI18n();
 const route = useRoute();
@@ -42,7 +43,8 @@ const promoList = computed(() => {
   return getUserActivityList.value;
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await dispatchUserActivityList();
   promoList.value.group_data[0].list_data.map(item => {
     if (item.id == Number(route.query.id)) {
       selectedItem.value = item

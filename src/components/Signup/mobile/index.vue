@@ -80,9 +80,9 @@ const MSignup = defineComponent({
       isShowUsernameValidation: false,
       passwordValidationStrList: [
         t("signup.formPage.validation.password.items[0]"),
-        t("signup.formPage.validation.password.items[1]"),
-        t("signup.formPage.validation.password.items[2]"),
-        t("signup.formPage.validation.password.items[3]"),
+        // t("signup.formPage.validation.password.items[1]"),
+        // t("signup.formPage.validation.password.items[2]"),
+        // t("signup.formPage.validation.password.items[3]"),
       ],
       userNameValidationStrList: [
         t("signup.displayNamePage.validation.username.items[0]"),
@@ -158,16 +158,21 @@ const MSignup = defineComponent({
 
     const passwordValidationList = computed((): boolean[] => {
       const password = state.formData.password;
+
       // 8-30 Characters in length
       const condition1 = password.length <= 30 && password.length >= 8;
-      // Contains one upper and one lowercase character
-      const condition2 = /[A-Z]/.test(password) && /[a-z]/.test(password);
-      // Contains a number
-      const condition3 = /\d/.test(password);
-      // Contains Special Code
-      const condition4 = /[~!@#$%&*()_-]/.test(password);
 
-      return [condition1, condition2, condition3, condition4];
+      // Contains one upper and one lowercase character
+      // const condition2 = /[A-Z]/.test(password) && /[a-z]/.test(password);
+
+      // Contains a number
+      // const condition3 = /\d/.test(password);
+
+      // Contains Special Code
+      // const condition4 = /[~!@#$%&*()_-]/.test(password);
+
+      // return [condition1, condition2, condition3, condition4];
+      return [condition1];
     });
 
     const userNameValidationList = computed((): boolean[] => {
@@ -946,7 +951,7 @@ export default MSignup;
 .m-disable-password {
   position: absolute;
   top: 16px;
-  right: 24px;
+  right: 10px;
   cursor: pointer;
 }
 
@@ -971,7 +976,7 @@ export default MSignup;
 // wrapper
 .m-signup-body {
   border-radius: 8px 8px 0px 0px;
-  background: var(--bg-2-e-274-c, #1D2027);
+  background: var(--bg-2-e-274-c, #1d2027);
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -1130,6 +1135,7 @@ export default MSignup;
   .v-field__field {
     input {
       padding-top: 2px !important;
+      padding-right: 30px !important;
     }
     .v-label.v-field-label {
       font-family: "Inter";

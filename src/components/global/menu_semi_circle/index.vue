@@ -13,7 +13,7 @@ import icon_public_100 from "@/assets/public/svg/icon_public_100.svg";
 import icon_public_97 from "@/assets/public/svg/icon_public_97.svg";
 import icon_public_94 from "@/assets/public/svg/icon_public_94.svg";
 import icon_public_55 from "@/assets/public/svg/icon_public_55.svg";
-import { homeStore } from "@/store/home";
+import { mainStore } from "@/store/main";
 
 const casinoIconColor = ref<string>("#7782AA");
 const rewardIconColor = ref<string>("#7782AA");
@@ -39,7 +39,7 @@ const { setMailMenuShow } = mailStore();
 const { setMobileMenuMailToggle } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
-const { setSearchDialogShow } = homeStore();
+const { setSearchDialogShow } = mainStore();
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());

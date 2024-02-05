@@ -160,11 +160,15 @@ onMounted(async () => {
     </v-navigation-drawer>
     <v-main class="m-promo-navigation-body">
       <v-card
-        class="m-promo-navigation-card mx-2 relative"
-        style="margin-top: 96px !important"
         v-for="(item, index) in promoList.group_data[0].list_data"
+        class="m-promo-navigation-card mx-2 relative"
+        :style="{ marginTop: index == 0 ? '96px !important' : '8px !important' }"
       >
-        <img :src="item.image_path" class="m-promo-card-img" />
+        <img
+          :src="item.image_path"
+          class="m-promo-card-img"
+          @click="$router.push({ name: 'Promo_Detail', query: { id: item.id } })"
+        />
         <div class="d-flex mx-2 mt-1 mb-4">
           <div
             class="text-800-12 gray d-flex align-center"
@@ -179,7 +183,8 @@ onMounted(async () => {
             height="32"
             v-if="item.button_path != ''"
           >
-            {{ t("promo.text_7") }}
+            <!-- {{ t("promo.text_7") }} -->
+            <img :src="item.button_path" width="128" height="36" />
           </v-btn>
         </div>
       </v-card>
@@ -276,6 +281,7 @@ onMounted(async () => {
   .m-promo-navigation-body {
     height: 100vh;
     background: $agent_card_bg !important;
+    overflow-y: auto;
 
     .m-promo-navigation-card {
       // height: 160px;
@@ -358,7 +364,7 @@ onMounted(async () => {
       .m-promo-deposit-btn {
         margin-left: auto;
         border-radius: 8px;
-        background: var(--Logo-Color, #f9bc01);
+        background: transparent !important;
         box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
         .v-btn__content {

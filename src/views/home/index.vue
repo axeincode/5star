@@ -34,14 +34,9 @@ import { authStore } from "@/store/auth";
 import type * as Game from "@/interface/game";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
-import Search from "@/views/home/components/Search.vue";
-import MSearch from "@/views/home/components/mobile/Search.vue";
 import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 import { ProgressiveImage } from "vue-progressive-image";
-import { useNamespace } from "element-plus";
-import { duration } from "moment-timezone";
-import { homeStore } from "@/store/home";
-import { toUpper } from "lodash-es";
+import { mainStore } from "@/store/main";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -60,8 +55,6 @@ const Dashboard = defineComponent({
   },
   components: {
     GameProviders,
-    Search,
-    MSearch,
     MGameConfirm,
     ProgressiveImage,
   },
@@ -79,7 +72,7 @@ const Dashboard = defineComponent({
     const { setNavBarToggle } = appBarStore();
     const { setMainBlurEffectShow } = appBarStore();
     const { dispatchSocketConnect } = socketStore();
-    const { setSearchDialogShow } = homeStore();
+    const { setSearchDialogShow } = mainStore();
     const router = useRouter();
     const route = useRoute();
     const instance = getCurrentInstance();
@@ -175,7 +168,6 @@ const Dashboard = defineComponent({
     });
 
     const selectedGameFilterBtn = ref<any>(t("home.button.all_game"));
-    const searchDialogShow = ref<boolean>(false);
     const gameConfirmDialogShow = ref<boolean>(false);
     const filterTabText = ref<string>("lobby");
     const gameGroupBtnList = ref<Array<any>>([]);
@@ -247,19 +239,6 @@ const Dashboard = defineComponent({
       return getFavoriteGameList.value
     })
 
-    const searchDialogToggle = computed(() => {
-      const { getSearchDialogShow } = storeToRefs(homeStore());
-      return getSearchDialogShow.value
-    })
-
-    watch(searchDialogToggle, (value) => {
-      searchDialogShow.value = value;
-    })
-
-    watch(searchDialogShow, (value) => {
-      setSearchDialogShow(value);
-    })
-
     const mobileVersion = computed(() => {
       return name.value;
     });
@@ -311,10 +290,6 @@ const Dashboard = defineComponent({
         state.signupDialog = false;
         state.mobileDialog = false;
       }
-    });
-
-    watch(searchGameDialogShow, (value: any) => {
-      searchDialogShow.value = false;
     });
 
     const gameTransform1 = (el: any) => {
@@ -686,7 +661,7 @@ const Dashboard = defineComponent({
     }
 
     const handleSearchInputFocus = () => {
-      searchDialogShow.value = true;
+      setSearchDialogShow(true);
     };
 
     const showGameConfirmationDialog = (game_item: Game.GameItem) => {
@@ -696,12 +671,8 @@ const Dashboard = defineComponent({
       selectedGameItem.value = game_item;
     }
 
-    watch(searchDialogShow, (value: boolean) => {
-      setMailMenuShow(value);
-    });
-
     watch(gameConfirmDialogShow, (value: boolean) => {
-      setMailMenuShow(value);
+      // setMailMenuShow(value);
     })
 
     watch(gameFilterText, async (value: any) => {
@@ -798,16 +769,6 @@ const Dashboard = defineComponent({
         });
       }
     });
-
-    // 活動測試
-    // const comUserActivityList = () => {
-    //   const { getUserActivityList } = storeToRefs(gameStore());
-    //   console.log('這裏呀', getUserActivityList.value.group_data)
-    //   if (getUserActivityList.value?.group_data) {
-    //     return getUserActivityList.value.group_data
-    //   }
-    //   return []
-    // }
 
     const handleBannerCategory = (category: string) => {
       handleGameFilterBtn(category.toUpperCase());
@@ -1063,7 +1024,6 @@ const Dashboard = defineComponent({
       handleMoreGame,
       handleSearchInputFocus,
       showGameConfirmationDialog,
-      searchDialogShow,
       selectedCategoryName,
       favoriteIconTransform,
       addFavoriteGame,
@@ -1118,32 +1078,6 @@ export default Dashboard;
     "
     v-else
   >
-    <!-- <div style="width: 100%; height: 200px;">
-      <div v-html="comUserActivityList()[0]?.list_data[0]?.content"></div>
-    </div> -->
-
-    <!-- game search -->
-    <v-navigation-drawer
-      v-model="searchDialogShow"
-      location="top"
-      class="m-search-bar"
-      temporary
-      :touchless="true"
-      :style="{
-        // height: 'unset',
-        height: '100%',
-        top: '0px',
-        zIndex: 300000,
-        background: 'unset !important',
-      }"
-      v-if="mobileWidth < 600"
-    >
-      <MSearch
-        :searchDialogShow="searchDialogShow"
-        @searchCancel="searchDialogShow = false"
-      />
-    </v-navigation-drawer>
-
     <!-- game confirmation dialog -->
 
     <v-navigation-drawer
@@ -1177,7 +1111,7 @@ export default Dashboard;
       />
     </v-navigation-drawer>
 
-    <div :class="searchDialogShow || gameConfirmDialogShow ? 'home-bg-blur' : ''">
+    <div :class="gameConfirmDialogShow ? 'home-bg-blur' : ''">
       <!-- 这里是banner -->
       <component
         :is="bannerComponent"
@@ -1805,6 +1739,12 @@ export default Dashboard;
   }
 }
 
+.m-game-confirm-bar {
+  .v-navigation-drawer__content {
+    height: 100%;
+  }
+}
+
 .v-progressive-image-main {
   width: 100%;
   height: 100%;
@@ -2365,6 +2305,7 @@ export default Dashboard;
     background-color: #1d2027;
     border-radius: 8px;
   }
+
   .v-field__field {
     background-color: #1d2027 !important;
   }
