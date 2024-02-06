@@ -110,7 +110,7 @@ const fixPositionShow = computed(() => {
             class="text-400-12"
             style="padding-top: 21px !important; padding-bottom: 21px !important"
           >
-            {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+            {{ moment(Number(item.created_at) * 1000).format("YYYY-MM-DD HH:mm:ss") }}
           </td>
           <td
             class="text-400-12 color-01983A"

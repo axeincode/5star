@@ -347,7 +347,7 @@ const mobileWidth = computed(() => {
 const enterGameItem = computed(() => {
   const { getEnterGameItem } = storeToRefs(gameStore());
   if (getEnterGameItem.value.method == "HTML") {
-    getEnterGameItem.value.weburl = atob(getEnterGameItem.value.weburl);
+    getEnterGameItem.value.weburl = window.atob(getEnterGameItem.value.weburl);
   }
   return getEnterGameItem.value;
 });
@@ -366,6 +366,7 @@ const handleIframeLoad = () => {
 };
 
 const handleMessageFromIframe = (event: any) => {
+  console.log(event);
   if (event.data.url == "bluesite:exit") {
     router.push({ name: "Dashboard" });
   }

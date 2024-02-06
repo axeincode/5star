@@ -81,13 +81,13 @@ const user = ref<GetUserData>({
   currency: "R$",
 });
 
-const selectedVipLevel = ref<VipLevel>({
+const selectedVipLevel = ref<any>({
   level: 0,
   protection_conditions: 0,
   deposit_exp: 0,
   bet_exp: 0,
   free_spins_times: 0,
-  upgrade_award: 0,
+  uprank_award: 0,
   week_award: 0,
   month_award: 0,
   free_withdrawals: 0,
@@ -102,7 +102,38 @@ const selectedVipLevel = ref<VipLevel>({
   bet_rate: 0,
   availabe_daily_bonus_time: "",
   collectable_week_bonus_day: "",
-  collectable_month_bonus_day: ""
+  collectable_month_bonus_day: "",
+  value: {
+    level: 0,
+    rank_id: 0,
+    protection_conditions: 0,
+    deposit_exp: 0,
+    bet_exp: 0,
+    free_spins_times: 0,
+    uprank_award: 0,
+    week_award: 0,
+    withdrawals_amonut: 0,
+    withdrawal_times: 0,
+    month_withdrawals_amount: 0,
+    month_withdrawals_times: 0,
+    month_award: 0,
+    free_withdrawals: 0,
+    free_withdrawals_times: 0,
+    withdrawal_fee: 0,
+    bet_award_rate: undefined,
+    signin_award: [],
+    tasks_max: 0,
+    deposit_rate: 0,
+    bet_rate: 0,
+    availabe_daily_bonus_time: "",
+    collectable_week_bonus_day: "",
+    collectable_month_bonus_day: ""
+  },
+  rank_id: 0,
+  withdrawals_amonut: 0,
+  withdrawal_times: 0,
+  month_withdrawals_amount: 0,
+  month_withdrawals_times: 0
 });
 
 const vipLevelImgs = ref<Array<any>>([
@@ -189,7 +220,7 @@ const withdrawDialogShow = () => {
   setUserNavBarToggle(false);
 }
 
-const goReward = () =>{
+const goReward = () => {
   setRewardNavShow(true);
   setMainBlurEffectShow(drawer.value);
   setOverlayScrimShow(drawer.value);
@@ -318,20 +349,20 @@ const handleNotifyShow = (uid: string) => {
 
 // Recharge progress bar  充值进度条
 const depositRateVal = computed(() => {
-  if ((vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100) >= 100) {
-        return 100;
-    } else {
-        return vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100
-    }
+  if ((vipInfo.value.deposit_exp / vipInfo.value.deposit_exp * 100) >= 100) {
+    return 100;
+  } else {
+    return vipInfo.value.deposit_exp / vipInfo.value.deposit_exp * 100
+  }
 })
 
 // Betting progress bar  投注进度条
 const betRateVal = computed(() => {
-  if ((vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100) >= 100) {
-        return 100;
-    } else {
-        return vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100
-    }
+  if ((vipInfo.value.bet_exp / vipInfo.value.bet_exp * 100) >= 100) {
+    return 100;
+  } else {
+    return vipInfo.value.bet_exp / vipInfo.value.bet_exp * 100
+  }
 })
 
 watch(vipLevels, (value) => {
@@ -360,8 +391,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-navigation-drawer temporary class="user-nav-background pt-14" location="right" width="269"
-    style="padding-bottom: 58px !important" v-model="drawer" :touchless="true" :on-scroll="handleScroll">
+  <v-navigation-drawer
+    temporary
+    class="user-nav-background pt-14"
+    location="right"
+    width="269"
+    style="padding-bottom: 58px !important"
+    v-model="drawer"
+    :touchless="true"
+    :on-scroll="handleScroll"
+  >
     <template v-slot:prepend>
       <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
     </template>
@@ -372,17 +411,24 @@ onMounted(async () => {
             <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
           </template>
           <v-list-item-title class="ml-2 text-600-10">
-            {{ t("appBar.id") }}: {{ userInfo.uid }}
+            {{ t("appBar.id") }}: {{ userInfo.id }}
           </v-list-item-title>
           <template v-slot:append>
-            <div style="width: 22px; height: 22px; border-radius: 4px; background: #23262F" class="relative"
-              @click="handleNotifyShow(userInfo.uid)">
-              <img src="@/assets/public/svg/icon_public_71.svg" width="16" style="
+            <div
+              style="width: 22px; height: 22px; border-radius: 4px; background: #23262f"
+              class="relative"
+              @click="handleNotifyShow(userInfo.uid)"
+            >
+              <img
+                src="@/assets/public/svg/icon_public_71.svg"
+                width="16"
+                style="
                   position: absolute;
                   left: 50%;
                   top: 50%;
                   transform: translate(-50%, -50%);
-                " />
+                "
+              />
             </div>
           </template>
         </v-list-item>
@@ -390,43 +436,98 @@ onMounted(async () => {
           <template v-slot:prepend>
             <div>
               <div style="height: 30px; justify-content: center; display: flex">
-                <img :src="vipLevelImgs[0].image" width="20" height="24" v-if="vipInfo.level == 0" />
-                <img :src="vipLevelImgs[1].image" width="20" height="24"
-                  v-if="vipInfo.level >= 1 && vipInfo.level < 25" />
-                <img :src="vipLevelImgs[2].image" width="20" height="24"
-                  v-if="vipInfo.level >= 25 && vipInfo.level < 50" />
-                <img :src="vipLevelImgs[3].image" width="20" height="24"
-                  v-if="vipInfo.level >= 50 && vipInfo.level < 75" />
-                <img :src="vipLevelImgs[4].image" width="20" height="24"
-                  v-if="vipInfo.level >= 75 && vipInfo.level < 100" />
-                <img :src="vipLevelImgs[5].image" width="20" height="24"
-                  v-if="vipInfo.level >= 100 && vipInfo.level < 149" />
-                <img :src="vipLevelImgs[6].image" width="20" height="24"
-                  v-if="vipInfo.level >= 150 && vipInfo.level < 200" />
-                <img :src="vipLevelImgs[7].image" width="20" height="24" v-if="vipInfo.level >= 200" />
+                <img
+                  :src="vipLevelImgs[0].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level == 0"
+                />
+                <img
+                  :src="vipLevelImgs[1].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 1 && vipInfo.level < 25"
+                />
+                <img
+                  :src="vipLevelImgs[2].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 25 && vipInfo.level < 50"
+                />
+                <img
+                  :src="vipLevelImgs[3].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 50 && vipInfo.level < 75"
+                />
+                <img
+                  :src="vipLevelImgs[4].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 75 && vipInfo.level < 100"
+                />
+                <img
+                  :src="vipLevelImgs[5].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 100 && vipInfo.level < 149"
+                />
+                <img
+                  :src="vipLevelImgs[6].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 150 && vipInfo.level < 200"
+                />
+                <img
+                  :src="vipLevelImgs[7].image"
+                  width="20"
+                  height="24"
+                  v-if="vipInfo.level >= 200"
+                />
               </div>
               <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level == 0">
                 {{ vipLevelImgs[0].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 1 && vipInfo.level < 25">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 1 && vipInfo.level < 25"
+              >
                 {{ vipLevelImgs[1].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 25 && vipInfo.level < 50">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 25 && vipInfo.level < 50"
+              >
                 {{ vipLevelImgs[2].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 50 && vipInfo.level < 75">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 50 && vipInfo.level < 75"
+              >
                 {{ vipLevelImgs[3].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 75 && vipInfo.level < 100">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 75 && vipInfo.level < 100"
+              >
                 {{ vipLevelImgs[4].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 100 && vipInfo.level < 150">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 100 && vipInfo.level < 150"
+              >
                 {{ vipLevelImgs[5].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 150 && vipInfo.level < 200">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 150 && vipInfo.level < 200"
+              >
                 {{ vipLevelImgs[6].content }}
               </div>
-              <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level >= 200">
+              <div
+                class="text-800-10 color-F9BC01 text-center"
+                v-if="vipInfo.level >= 200"
+              >
                 {{ vipLevelImgs[7].content }}
               </div>
               <div class="text-400-8 white text-center">Level {{ vipInfo.level }}</div>
@@ -438,11 +539,15 @@ onMounted(async () => {
                 <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
                 <div class="ml-auto text-800-8">
                   <font>R$ {{ vipInfo.deposit_exp }}</font> /
-                  <font color="#F9BC01">R$ {{ vipInfo.rank_deposit_exp }}</font>
+                  <font color="#F9BC01">R$ {{ vipInfo.deposit_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
-                <v-progress-linear v-model="depositRateVal" height="8" class="deposit-progress">
+                <v-progress-linear
+                  v-model="depositRateVal"
+                  height="8"
+                  class="deposit-progress"
+                >
                 </v-progress-linear>
               </div>
             </div>
@@ -451,7 +556,7 @@ onMounted(async () => {
                 <div class="white text-500-8">{{ t("appBar.wager") }}</div>
                 <div class="ml-auto text-800-8">
                   <font>R$ {{ vipInfo.bet_exp }}</font> /
-                  <font color="#623AEC">R$ {{ vipInfo.rank_bet_exp }}</font>
+                  <font color="#623AEC">R$ {{ vipInfo.bet_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
@@ -513,8 +618,12 @@ onMounted(async () => {
             t("appBar.transactions")
           }}</v-list-item-title>
         </v-list-item>
-        <v-list-item class="m-user-item refer-friend-background" height="36" value="refer_friend"
-          @click="handleRefferalDialogShow">
+        <v-list-item
+          class="m-user-item refer-friend-background"
+          height="36"
+          value="refer_friend"
+          @click="handleRefferalDialogShow"
+        >
           <template v-slot:prepend>
             <img src="@/assets/public/svg/icon_public_64.svg" width="18" />
           </template>
@@ -522,8 +631,12 @@ onMounted(async () => {
             {{ t("appBar.refer_friend") }}
           </v-list-item-title>
           <template v-slot:append>
-            <img src="@/assets/public/image/img_public_09.png" v-ripple.center class="ml-6 m-refer-friend-img-position"
-              width="43" />
+            <img
+              src="@/assets/public/image/img_public_09.png"
+              v-ripple.center
+              class="ml-6 m-refer-friend-img-position"
+              width="43"
+            />
             <p class="m-refer-friend-text-position">{{ t("appBar.earn_money") }}</p>
           </template>
         </v-list-item>
@@ -539,8 +652,12 @@ onMounted(async () => {
           </template>
           <v-list-item-title class="ml-2">{{ t("appBar.app") }}</v-list-item-title>
           <template v-slot:append>
-            <img src="@/assets/public/image/img_public_04.png" v-ripple.center class="ml-6 m-app-img-position"
-              width="73" />
+            <img
+              src="@/assets/public/image/img_public_04.png"
+              v-ripple.center
+              class="ml-6 m-app-img-position"
+              width="73"
+            />
             <p class="m-app-text-position">{{ t("appBar.install") }}</p>
           </template>
         </v-list-item>
@@ -570,20 +687,27 @@ onMounted(async () => {
           </template>
           <v-list-item-title class="ml-2">{{ t("appBar.statistics") }}</v-list-item-title>
         </v-list-item>
-        <div class="d-flex justify-center align-center m-sign-out-btn text-400-12 white" v-ripple.center
-          @click="showSignoutDialog">
+        <div
+          class="d-flex justify-center align-center m-sign-out-btn text-400-12 white"
+          v-ripple.center
+          @click="showSignoutDialog"
+        >
           <img src="@/assets/public/svg/icon_public_70.svg" class="mr-4" width="20" />
           {{ t("appBar.sign_out") }}
         </div>
       </v-list>
     </div>
   </v-navigation-drawer>
-  <Notification :notificationShow="notificationShow" :notificationText="notificationText" :checkIcon="checkIcon" />
+  <Notification
+    :notificationShow="notificationShow"
+    :notificationText="notificationText"
+    :checkIcon="checkIcon"
+  />
 </template>
 
 <style lang="scss">
 .nav-background {
-  background: #1D2027 !important;
+  background: #1d2027 !important;
   color: #7782aa !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -593,7 +717,7 @@ onMounted(async () => {
 }
 
 .user-nav-background {
-  background: #1D2027 !important;
+  background: #1d2027 !important;
   color: #7782aa !important;
   border: 2px !important;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -613,7 +737,7 @@ onMounted(async () => {
   height: 36px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: var(--secondary-button-353652, #23262F);
+  background: var(--secondary-button-353652, #23262f);
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -685,7 +809,7 @@ onMounted(async () => {
   position: absolute;
   right: 17px;
   top: 16px;
-  background: #1D2027;
+  background: #1d2027;
   border-radius: 20px;
   padding: 2px 6px;
   font-weight: 500;
@@ -697,7 +821,7 @@ onMounted(async () => {
   position: absolute;
   right: 13px;
   top: 17px;
-  background: #1D2027;
+  background: #1d2027;
   border-radius: 20px;
   padding: 2px 17px;
   font-weight: 500;
@@ -707,7 +831,7 @@ onMounted(async () => {
 
 .deposit-progress-bg {
   .v-progress-linear {
-    background: #15161C !important;
+    background: #15161c !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 20px !important;
   }

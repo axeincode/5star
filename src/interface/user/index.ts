@@ -4,6 +4,7 @@ export interface GetUserInfo {
     avatar: string
     first_name: string
     last_name: string
+    id: number | string
     id_number: string
     email: string
     email_confirmd: false,

@@ -43,6 +43,7 @@ const modules = [Pagination];
 
 const vipLevels = computed(() => {
   const { getVipLevels } = storeToRefs(vipStore());
+  console.log(getVipLevels.value[1]);
   return getVipLevels.value;
 });
 
@@ -165,7 +166,7 @@ onMounted(async () => {
                 class="m-login-bonus-card-checkout-bg relative"
                 v-if="loginBonusItem.signin_day > 1 && vipSignIn.vip_level == item.level"
               >
-                <p class="text-900-14 gray login-bonus-text-position">
+                <p class="text-900-12 gray m-login-bonus-text-position">
                   {{ t("vip.login_bonus.day_1_text") }}
                 </p>
                 <img
@@ -174,14 +175,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[0].award }}
+                  $ {{ Number(item.signin_award[0]) }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-1 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(1, item.level, item.signin_award[0].award)"
+                @click="handleLoginBonus(1, item.level, item.signin_award[0])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -201,7 +202,7 @@ onMounted(async () => {
                   width="29"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[0].award }}
+                  $ {{ Number(item.signin_award[0]) }}
                 </p>
               </div>
             </v-col>
@@ -219,14 +220,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[1].award }}
+                  $ {{ item.signin_award[1] }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-2 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(2, item.level, item.signin_award[1].award)"
+                @click="handleLoginBonus(2, item.level, item.signin_award[1])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -246,7 +247,7 @@ onMounted(async () => {
                   width="40"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[1].award }}
+                  $ {{ item.signin_award[1] }}
                 </p>
               </div>
             </v-col>
@@ -264,14 +265,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[2].award }}
+                  $ {{ item.signin_award[2] }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-3 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(3, item.level, item.signin_award[2].award)"
+                @click="handleLoginBonus(3, item.level, item.signin_award[2])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -291,7 +292,7 @@ onMounted(async () => {
                   width="50"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[2].award }}
+                  $ {{ item.signin_award[2] }}
                 </p>
               </div>
             </v-col>
@@ -311,14 +312,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray login-bonus-card-money-position">
-                  $ {{ item.signin_award[3].award }}
+                  $ {{ item.signin_award[3] }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(4, item.level, item.signin_award[3].award)"
+                @click="handleLoginBonus(4, item.level, item.signin_award[3])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -338,7 +339,7 @@ onMounted(async () => {
                   width="48"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[3].award }}
+                  $ {{ item.signin_award[3] }}
                 </p>
               </div>
             </v-col>
@@ -356,14 +357,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[4].award }}
+                  $ {{ item.signin_award[4] }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(5, item.level, item.signin_award[4].award)"
+                @click="handleLoginBonus(5, item.level, item.signin_award[4])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -383,7 +384,7 @@ onMounted(async () => {
                   width="45"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[4].award }}
+                  $ {{ item.signin_award[4] }}
                 </p>
               </div>
             </v-col>
@@ -401,14 +402,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[5].award }}
+                  $ {{ item.signin_award[5] }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(6, item.level, item.signin_award[5].award)"
+                @click="handleLoginBonus(6, item.level, item.signin_award[5])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -428,7 +429,7 @@ onMounted(async () => {
                   width="50"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[5].award }}
+                  $ {{ item.signin_award[5] }}
                 </p>
               </div>
             </v-col>
@@ -448,14 +449,14 @@ onMounted(async () => {
                   width="32"
                 />
                 <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[6].award }}
+                  $ {{ item.signin_award[6] }}
                 </p>
               </div>
               <div
                 class="m-login-bonus-card-bg-4 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(7, item.level, item.signin_award[6].award)"
+                @click="handleLoginBonus(7, item.level, item.signin_award[6])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -475,7 +476,7 @@ onMounted(async () => {
                   width="50"
                 />
                 <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[6].award }}
+                  $ {{ item.signin_award[6] }}
                 </p>
               </div>
             </v-col>
@@ -488,7 +489,7 @@ onMounted(async () => {
                   {{ t("vip.login_bonus.day_8_text") }}
                 </p>
                 <p class="text-900-14 gray mt-2 m-login-bonus-card-money-position-1">
-                  $ {{ loginBonusItem.award[7] }}
+                  $ {{ item.signin_award[7] }}
                 </p>
                 <img
                   src="@/assets/public/svg/icon_public_18.svg"
@@ -500,7 +501,7 @@ onMounted(async () => {
                 class="m-login-bonus-card-bg-5 relative"
                 v-ripple.center
                 v-else
-                @click="handleLoginBonus(8, item.level, loginBonusItem.award[7])"
+                @click="handleLoginBonus(8, item.level, item.signin_award[7])"
               >
                 <img
                   src="@/assets/vip/image/img_vip_32.png"
@@ -515,7 +516,7 @@ onMounted(async () => {
                   {{ t("vip.login_bonus.day_8_text") }}
                 </p>
                 <p class="text-900-12 white mt-2 m-login-bonus-card-money-position-1">
-                  $ {{ loginBonusItem.award[7] }}
+                  $ {{ item.signin_award[7] }}
                 </p>
                 <img
                   src="@/assets/vip/image/img_vip_27.png"
@@ -637,7 +638,7 @@ onMounted(async () => {
   width: 340px;
   height: 428px;
   border-radius: 16px;
-  background: #1D2027;
+  background: #1d2027;
   position: relative;
 }
 
@@ -651,7 +652,7 @@ onMounted(async () => {
   position: absolute;
   top: -56px;
   right: 12px;
-  background: #1D2027;
+  background: #1d2027;
   z-index: 1000;
 }
 
@@ -671,7 +672,7 @@ onMounted(async () => {
   width: 320px;
   height: 338px;
   border-radius: 14px;
-  background: #15161C;
+  background: #15161c;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   z-index: 20;
 }
@@ -711,7 +712,7 @@ onMounted(async () => {
   width: 94px;
   height: 90px;
   border-radius: 6px;
-  background: #1682F1;
+  background: #1682f1;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -723,7 +724,7 @@ onMounted(async () => {
   width: 94px;
   height: 90px;
   border-radius: 6px;
-  background:#1682F1;
+  background: #1682f1;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -735,7 +736,7 @@ onMounted(async () => {
   width: 94px;
   height: 90px;
   border-radius: 6px;
-  background: #1682F1;
+  background: #1682f1;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -770,7 +771,7 @@ onMounted(async () => {
   width: 195px;
   height: 90px;
   border-radius: 6px;
-  background: #009B3A;
+  background: #009b3a;
   cursor: pointer;
   overflow: hidden;
 }
@@ -816,7 +817,7 @@ onMounted(async () => {
 }
 
 .m-left-login-bonus-button {
-  background: #23262F;
+  background: #23262f;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12);
 

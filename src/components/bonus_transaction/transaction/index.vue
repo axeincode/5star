@@ -74,17 +74,17 @@ const vipTimesHistory = computed(() => {
 });
 
 const transactionTabs = ref<Array<string>>([
-  t("transaction.tab.game_history"),
+  // t("transaction.tab.game_history"),
   t("transaction.tab.transactions"),
   t("transaction.tab.deposit"),
   t("transaction.tab.withdrawal"),
   t("transaction.tab.vip"),
-  t("transaction.tab.referral"),
+  // t("transaction.tab.referral"),
 ]);
 const pageSize = ref<number>(8);
 const pageNum = ref<number>(1);
 const vipTimesHistoryIndex = ref<number>(1);
-const selectedTab = ref<any>(t("transaction.tab.game_history"));
+const selectedTab = ref<any>(t("transaction.tab.transactions"));
 
 const transactionTab = computed(() => {
   const { getTransactionTab } = storeToRefs(bonusTransactionStore());
@@ -266,7 +266,7 @@ onMounted(async () => {
 </template>
 <style lang="scss">
 .slide-tabs {
-  background: #15161C !important;
+  background: #15161c !important;
   margin: 8px !important;
   border-radius: 8px !important;
 }
@@ -277,7 +277,6 @@ onMounted(async () => {
 }
 
 .transaction-tab-btn {
-  
   box-shadow: 0px 4px 6px 1p rgba(0, 0, 0, 0.21) !important;
   .v-btn__content {
     font-weight: 700;

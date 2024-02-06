@@ -78,6 +78,7 @@ export const authStore = defineStore({
         avatar: new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href,
         first_name: "",
         last_name: "",
+        id: 0,
         id_number: "",
         email: "",
         email_confirmd: false,

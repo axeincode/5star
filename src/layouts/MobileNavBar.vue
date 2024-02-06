@@ -79,6 +79,7 @@ const { setSearchGameDialogShow } = gameStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setGameFilterText } = gameStore();
+const { dispatchGameCategories } = gameStore();
 const { setAgentNavBarToggle } = agentStore();
 const { setVipNavBarToggle } = vipStore();
 
@@ -695,76 +696,77 @@ const openRefferalDialogShow = () => {
 }
 
 const handleGameFilter = (filterText: string) => {
-  let tempFilterText: string = "";
-  switch (filterText) {
-    case t('navBar.casino_sub_menu.recently_played'):
-      setGameFilterText("history");
-      tempFilterText = "history";
-      activeItem.value = t('navBar.casino_sub_menu.recently_played');
-      recentlyIconColor.value = "#FFFFFF"
-      favoriteIconColor.value = "#7782AA"
-      slotIconColor.value = "#7782AA"
-      liveIconColor.value = "#7782AA"
-      hotIconColor.value = "#7782AA"
-      providerIconColor.value = "#7782AA"
-      break;
-    case t('navBar.casino_sub_menu.hot_text'):
-      // setGameFilterText("history");
-      tempFilterText = "history";
-      activeItem.value = t('navBar.casino_sub_menu.hot_text');
-      hotIconColor.value = "#FFFFFF"
-      recentlyIconColor.value = "#7782AA"
-      favoriteIconColor.value = "#7782AA"
-      slotIconColor.value = "#7782AA"
-      providerIconColor.value = "#7782AA"
-      liveIconColor.value = "#7782AA"
-      break;
-    case t('navBar.casino_sub_menu.favorites'):
-      setGameFilterText("favorite");
-      tempFilterText = "favorite";
-      activeItem.value = t('navBar.casino_sub_menu.favorites');
-      favoriteIconColor.value = "#FFFFFF"
-      recentlyIconColor.value = "#7782AA"
-      slotIconColor.value = "#7782AA"
-      liveIconColor.value = "#7782AA"
-      hotIconColor.value = "#7782AA"
-      providerIconColor.value = "#7782AA"
-      break;
-    case t('navBar.casino_sub_menu.slots'):
-      setGameFilterText("slot");
-      tempFilterText = "slot";
-      activeItem.value = t('navBar.casino_sub_menu.slots');
-      recentlyIconColor.value = "#7782AA"
-      favoriteIconColor.value = "#7782AA"
-      slotIconColor.value = "#FFFFFF"
-      liveIconColor.value = "#7782AA"
-      hotIconColor.value = "#7782AA"
-      providerIconColor.value = "#7782AA"
-      break;
-    case t('navBar.casino_sub_menu.live_casino'):
-      setGameFilterText("live");
-      tempFilterText = "live";
-      activeItem.value = t('navBar.casino_sub_menu.live_casino');
-      recentlyIconColor.value = "#7782AA"
-      favoriteIconColor.value = "#7782AA"
-      slotIconColor.value = "#7782AA"
-      liveIconColor.value = "#FFFFFF"
-      hotIconColor.value = "#7782AA"
-      providerIconColor.value = "#7782AA"
-      break;
-    case t('navBar.casino_sub_menu.provider_text'):
-      // setGameFilterText("live");
-      tempFilterText = "live";
-      activeItem.value = t('navBar.casino_sub_menu.provider_text');
-      recentlyIconColor.value = "#7782AA"
-      favoriteIconColor.value = "#7782AA"
-      slotIconColor.value = "#7782AA"
-      liveIconColor.value = "#7782AA"
-      hotIconColor.value = "#7782AA"
-      providerIconColor.value = "#FFFFFF"
-      break;
-  }
-  router.push({ name: "Dashboard", query: { filter: tempFilterText } });
+  // let tempFilterText: string = "";
+  // switch (filterText) {
+  //   case t('navBar.casino_sub_menu.recently_played'):
+  //     setGameFilterText("history");
+  //     tempFilterText = "history";
+  //     activeItem.value = t('navBar.casino_sub_menu.recently_played');
+  //     recentlyIconColor.value = "#FFFFFF"
+  //     favoriteIconColor.value = "#7782AA"
+  //     slotIconColor.value = "#7782AA"
+  //     liveIconColor.value = "#7782AA"
+  //     hotIconColor.value = "#7782AA"
+  //     providerIconColor.value = "#7782AA"
+  //     break;
+  //   case t('navBar.casino_sub_menu.hot_text'):
+  //     // setGameFilterText("history");
+  //     tempFilterText = "history";
+  //     activeItem.value = t('navBar.casino_sub_menu.hot_text');
+  //     hotIconColor.value = "#FFFFFF"
+  //     recentlyIconColor.value = "#7782AA"
+  //     favoriteIconColor.value = "#7782AA"
+  //     slotIconColor.value = "#7782AA"
+  //     providerIconColor.value = "#7782AA"
+  //     liveIconColor.value = "#7782AA"
+  //     break;
+  //   case t('navBar.casino_sub_menu.favorites'):
+  //     setGameFilterText("favorite");
+  //     tempFilterText = "favorite";
+  //     activeItem.value = t('navBar.casino_sub_menu.favorites');
+  //     favoriteIconColor.value = "#FFFFFF"
+  //     recentlyIconColor.value = "#7782AA"
+  //     slotIconColor.value = "#7782AA"
+  //     liveIconColor.value = "#7782AA"
+  //     hotIconColor.value = "#7782AA"
+  //     providerIconColor.value = "#7782AA"
+  //     break;
+  //   case t('navBar.casino_sub_menu.slots'):
+  //     setGameFilterText("slot");
+  //     tempFilterText = "slot";
+  //     activeItem.value = t('navBar.casino_sub_menu.slots');
+  //     recentlyIconColor.value = "#7782AA"
+  //     favoriteIconColor.value = "#7782AA"
+  //     slotIconColor.value = "#FFFFFF"
+  //     liveIconColor.value = "#7782AA"
+  //     hotIconColor.value = "#7782AA"
+  //     providerIconColor.value = "#7782AA"
+  //     break;
+  //   case t('navBar.casino_sub_menu.live_casino'):
+  //     setGameFilterText("live");
+  //     tempFilterText = "live";
+  //     activeItem.value = t('navBar.casino_sub_menu.live_casino');
+  //     recentlyIconColor.value = "#7782AA"
+  //     favoriteIconColor.value = "#7782AA"
+  //     slotIconColor.value = "#7782AA"
+  //     liveIconColor.value = "#FFFFFF"
+  //     hotIconColor.value = "#7782AA"
+  //     providerIconColor.value = "#7782AA"
+  //     break;
+  //   case t('navBar.casino_sub_menu.provider_text'):
+  //     // setGameFilterText("live");
+  //     tempFilterText = "live";
+  //     activeItem.value = t('navBar.casino_sub_menu.provider_text');
+  //     recentlyIconColor.value = "#7782AA"
+  //     favoriteIconColor.value = "#7782AA"
+  //     slotIconColor.value = "#7782AA"
+  //     liveIconColor.value = "#7782AA"
+  //     hotIconColor.value = "#7782AA"
+  //     providerIconColor.value = "#FFFFFF"
+  //     break;
+  // }
+  // router.push({ name: "Dashboard", query: { filter: tempFilterText } });
+  router.push({ name: "Dashboard", query: { filter: filterText } });
   setNavBarToggle(false);
   setMainBlurEffectShow(false);
   setOverlayScrimShow(false);
@@ -842,9 +844,15 @@ const goGameBetBy = () => {
   router.push({ name: "Sports" });
 }
 
-onMounted(() => {
+const gameCategories = computed(() => {
+  const { getGameCategories } = storeToRefs(gameStore());
+  return getGameCategories.value;
+});
+
+onMounted(async () => {
   drawer.value = mobileWidth.value < 1280 ? false : true;
   languageText();
+  await dispatchGameCategories('?type=casino');
 })
 </script>
 
@@ -1011,6 +1019,23 @@ onMounted(() => {
           <v-card color="#15161C" theme="dark" class="mt-6" style="border-radius: 0px">
             <v-list>
               <v-list-item
+                v-for="(item, index) in gameCategories"
+                class="m-casino-sub-img m-nav-sub-menu"
+                :value="item.slug"
+                style="margin-bottom: -4px !important; margin-top: -4px !important"
+                @click="handleGameFilter(item.slug)"
+              >
+                <template v-slot:prepend>
+                  <inline-svg :src="item.image" width="16"></inline-svg>
+                </template>
+                <v-list-item-title
+                  class="ml-2"
+                  :class="activeItem == item.name ? 'white' : 'gray'"
+                >
+                  {{ item.name }}
+                </v-list-item-title>
+              </v-list-item>
+              <!-- <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu"
                 value="favorites"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"
@@ -1192,7 +1217,7 @@ onMounted(() => {
                 >
                   {{ t("navBar.casino_sub_menu.provider_text") }}
                 </v-list-item-title>
-              </v-list-item>
+              </v-list-item> -->
             </v-list>
           </v-card>
         </v-list-group>
@@ -1258,7 +1283,7 @@ onMounted(() => {
                   {{ t("navBar.sport_sub_menu.text_2") }}
                 </v-list-item-title>
               </v-list-item>
-              
+
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu ml-2"
                 value="sport_1"
