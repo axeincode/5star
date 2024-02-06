@@ -13,6 +13,9 @@ import "swiper/css/navigation";
 import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
+import { useRouter } from "vue-router";
+import { promoStore } from "@/store/promo";
+
 const BannerComponent = defineComponent({
   components: {
     Swiper,
@@ -28,6 +31,8 @@ const BannerComponent = defineComponent({
      * Extract width attribute
      */
     const { width } = useDisplay();
+    const router = useRouter();
+    const { dispatchUserActivityList } = promoStore();
     /**
      * 初始化swiper
      * Initialize swiper
@@ -97,11 +102,25 @@ const BannerComponent = defineComponent({
         state.slides.push(new URL(element.image_path, import.meta.url).href);
       });
     })
-    const slideImageClick = (index:number) => {
+    const slideImageClick = async (index:number) => {
       const { getBannerList } = storeToRefs(bannerStore());
       let type : number = getBannerList.value[index].click_feedback;
+      console.log(type);
       if(type == 5){
-        window.location.href = getBannerList.value[index].content;
+        //window.location.href = getBannerList.value[index].content;.
+        const relocation_url = getBannerList.value[index].content;
+        const url_parts = relocation_url.split('?');
+        console.log(url_parts);
+        if(url_parts.length > 1) {
+          if(url_parts[0] == '/promo/detail'){
+            await dispatchUserActivityList();
+            const num = url_parts[1].split('=');
+            router.push({ name: 'Promo_Detail', query: { id: parseInt(num[1]) } })
+          }
+        }
+        else{
+          window.location.href = getBannerList.value[index].content;
+        }
       }
       if(type == 6){
         window.location.href = getBannerList.value[index].content;
@@ -150,7 +169,7 @@ export default BannerComponent;
       :navigation="false"
       :virtual="true"
       class="mx-4"
-      style="border-radius: 8px"
+      style="border-radius: 8px;"
       @swiper="getSwiperRef"
     >
       <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
@@ -178,7 +197,7 @@ export default BannerComponent;
       :centeredSlides="true"
       :loop="true"
       :autoplay="{
-        delay: 2000,
+        delay: 10000,
         disableOnInteraction: false,
       }"
       :pagination="{
@@ -188,7 +207,7 @@ export default BannerComponent;
       :navigation="false"
       :virtual="true"
       class="mx-2"
-      style="border-radius: 8px; height: 195px"
+      style="border-radius: 8px;"
       @swiper="getSwiperRef"
     >
       <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
@@ -206,7 +225,7 @@ export default BannerComponent;
 
 <style lang="scss">
 .home-swiper {
-  // height: 247px;
+  //height: 247px;
 
   .swiper-pagination-bullet-active {
     width: 18px !important;
@@ -262,8 +281,7 @@ export default BannerComponent;
 }
 
 .m-home-swiper {
-  height: 208px;
-
+  height: fit-content !important;
   .swiper-pagination-bullet-active {
     width: 18px !important;
     height: 6px !important;
@@ -282,6 +300,10 @@ export default BannerComponent;
 
   .swiper-pagination {
     bottom: -12px !important;
+  }
+
+  .m-slider-img-width{
+    height: fit-content !important;
   }
 }
 </style>

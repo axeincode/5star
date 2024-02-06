@@ -205,7 +205,7 @@ const refferalDialog = () => {
                         <span>Level {{ vipInfo.level }}</span>
                     </div>
                     <div class="progress-main-card-t-info-content">
-                        Get rewarded every time you fill the progress bar. Leveling upentitles you to bigger and better rewa rds！
+                        {{ t('vip.vip_level_info.progress.text_1') }}
                     </div>
                 </div>
             </div>
@@ -218,7 +218,7 @@ const refferalDialog = () => {
                     </div>
                 </div>
                 <div class="progress-main-card-m-info">
-                    <span>Deposit</span>
+                    <span>{{ t('vip.vip_level_info.progress.text_12') }}</span>
                     <div class="progress-main-card-m-info-rate">
                         <v-progress-linear
                             v-model="depositRate"
@@ -238,7 +238,7 @@ const refferalDialog = () => {
                     </div>
                 </div>
                 <div class="progress-main-card-b-info">
-                    <span>Wager</span>
+                    <span>{{ t('vip.vip_level_info.progress.text_13') }}</span>
                     <div class="progress-main-card-b-info-rate">
                         <v-progress-linear
                             v-model="betRate"
@@ -254,9 +254,9 @@ const refferalDialog = () => {
             <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
             <div class="progress-main-reward-bg">
                 <div class="progress-main-reward-bg-t">
-                    <span>Rewards available</span>
-                    <span v-if="awardValue() > 0" @click="submitVipLevelAward">CLAIM</span>
-                    <span class="available-button" v-else @click="getVipButtonShow(false)">CLAIM</span>
+                    <span>{{ t('vip.vip_level_info.progress.text_2') }}</span>
+                    <span v-if="awardValue() > 0" @click="submitVipLevelAward">{{ t('vip.vip_level_info.progress.text_3') }}</span>
+                    <span class="available-button" v-else @click="getVipButtonShow(false)">{{ t('vip.vip_level_info.progress.text_3') }}</span>
                 </div>
                 <div class="progress-main-reward-bg-b">
                     R$ {{ awardValue() }}
@@ -267,17 +267,17 @@ const refferalDialog = () => {
 
             <div class="progress-main-reward-view">
                 <img src="@/assets/public/svg/icon_public_83.svg" />
-                <span @click="goPath">View Records</span>
+                <span @click="goPath">{{ t('vip.vip_level_info.progress.text_4') }}</span>
             </div>
         </div>
         <div class="progress-main-tip" v-else>
             <div class="progress-main-tip-title">No Claims</div>
             <div class="progress-main-tip-content">
-                You must have made a deposit or referred a friend in the last 30 days to receive the bonus
+                {{ t('vip.vip_level_info.progress.text_5') }}
             </div>
             <div class="progress-main-tip-button">
-                <span @click="refferalDialog">REFER</span>
-                <span @click="depositDialogShow">DEPOSIT</span>
+                <span @click="refferalDialog">{{ t('vip.vip_level_info.progress.text_6') }}</span>
+                <span @click="depositDialogShow">{{ t('vip.vip_level_info.progress.text_7') }}</span>
             </div>
         </div>
         <div class="progress-main-group">
@@ -286,24 +286,24 @@ const refferalDialog = () => {
                     <img :src="telegram_1" />
                 </div>
                 <div class="progress-main-group-t-info">
-                    <span>VIP GROUP</span>
-                    <span>Join our VIP group Get instant access to more events and bonuses</span>
+                    <span>{{ t('vip.vip_level_info.progress.text_8') }}</span>
+                    <span>{{ t('vip.vip_level_info.progress.text_9') }}</span>
                 </div>
             </div>
             <div class="progress-main-group-b">
-                <span @click="goTelegram">Join in now</span>
+                <span @click="goTelegram">{{ t('vip.vip_level_info.progress.text_10') }}</span>
             </div>
         </div>
         <div class="progress-main-faq">
             <div class="progress-main-faq-title">FAQ</div>
             <el-collapse class="progress-main-faq-collapse">
-                <el-collapse-item title='What is an " Evolution Bonus"?' name="1">
-                    <div>What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?</div>
+                <el-collapse-item :title="t('vip.vip_level_info.progress.text_11')" name="1">
+                    <div>{{ t('vip.vip_level_info.progress.text_14') }}</div>
                 </el-collapse-item>
             </el-collapse>
             <el-collapse class="progress-main-faq-collapse">
-                <el-collapse-item title='What is an " Weekly Bounes"?' name="1">
-                    <div>What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?</div>
+                <el-collapse-item :title="t('vip.vip_level_info.progress.text_15')" name="1">
+                    <div>{{ t('vip.vip_level_info.progress.text_16') }}</div>
                 </el-collapse-item>
             </el-collapse>
         </div>

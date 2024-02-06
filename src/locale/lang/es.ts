@@ -1629,6 +1629,41 @@ export const lang: langType = {
         text_9: "",
     },
     vip_level_info: {
+      progress: {
+        text_1: "Obtén recompensas cada vez que llenes la barra de progreso. ¡Subir de nivel te da derecho a recompensas mejores y mayores!",
+        text_2: "Recompensas disponibles",
+        text_3: "AFIRMAR",
+        text_4: "Ver registros",
+        text_5: "Debes haber realizado un depósito o haber recomendado a un amigo en los últimos 30 días para recibir el bono.",
+        text_6: "REFERIRSE",
+        text_7: "DEPÓSITO",
+        text_8: "GRUPO VIP",
+        text_9: "Únase a nuestro grupo VIP Obtenga acceso instantáneo a más eventos y bonificaciones",
+        text_10: "Únete ahora",
+        text_11: '¿Qué es un "Bono de Evolución"?',
+        text_12: "Depósito",
+        text_13: "Apostar",
+        text_14: '¿Qué es un "Bono de Evolución"? ¿Qué es un "Bono de Evolución"? ¿Qué es un "Bono de Evolución"? ¿Qué es un "Bono de Evolución"? ¿Qué es un "Bono de Evolución"?',
+        text_15: '¿Qué es un "Bono Semanal"?',
+        text_16: '¿Qué es un "Bono Semanal"? ¿Qué es un "Bono Semanal"? ¿Qué es un "Bonos Semanales"? ¿Qué es un "Bonos Semanales"? ¿Qué es un "Bonos Semanales"?'
+      },
+      bonus: {
+        text_1: "Devolución de dinero",
+        text_2: "AFIRMAR",
+        text_3: "Día de la membresía",
+        text_4: "Disponible en",
+        text_5: "Regalo Semana VIP",
+        text_6: "Regalo del mes VIP",
+        text_7: "Bonificación de rango VIP",
+      },
+      upgrade: {
+        text_1: "¡Elevar a mismo nivel!",
+        text_2: "Nivel",
+        text_3: "¡Felicitaciones por subir de nivel!",
+        text_4: "¡Felicidades por el premio!",
+        text_5: "MXN",
+        text_6: "Consíguelo ahora mismo"
+      },
       black_iron: {
         week: '',
         moon: '',

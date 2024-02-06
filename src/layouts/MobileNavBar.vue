@@ -32,38 +32,39 @@ import icon_public_95 from "@/assets/public/svg/icon_public_95.svg";
 import icon_public_96 from "@/assets/public/svg/icon_public_96.svg";
 import icon_public_114 from "@/assets/public/svg/icon_public_114.svg";
 import icon_public_115 from "@/assets/public/svg/icon_public_115.svg";
-import icon_public_153 from "@/assets/public/svg/icon_public_153.svg";
-import icon_public_154 from "@/assets/public/svg/icon_public_154.svg";
-import icon_public_155 from "@/assets/public/svg/icon_public_155.svg";
-import icon_public_104 from "@/assets/public/svg/icon_public_104.svg";
+import icon_public_116 from "@/assets/public/svg/icon_public_116.svg";
+import icon_public_117 from "@/assets/public/svg/icon_public_117.svg";
+import icon_public_118 from "@/assets/public/svg/icon_public_118.svg";
+import icon_public_119 from "@/assets/public/svg/icon_public_119.svg";
+import icon_public_120 from "@/assets/public/svg/icon_public_120.svg";
+import icon_public_121 from "@/assets/public/svg/icon_public_121.svg";
+import icon_public_122 from "@/assets/public/svg/icon_public_122.svg";
+import icon_public_123 from "@/assets/public/svg/icon_public_123.svg";
+import icon_public_124 from "@/assets/public/svg/icon_public_124.svg";
+import icon_public_125 from "@/assets/public/svg/icon_public_125.svg";
+import icon_public_126 from "@/assets/public/svg/icon_public_126.svg";
+import icon_public_127 from "@/assets/public/svg/icon_public_127.svg";
+import icon_public_128 from "@/assets/public/svg/icon_public_128.svg";
+import icon_public_129 from "@/assets/public/svg/icon_public_129.svg";
+import icon_public_130 from "@/assets/public/svg/icon_public_130.svg";
 import icon_public_131 from "@/assets/public/svg/icon_public_131.svg";
+import icon_public_132 from "@/assets/public/svg/icon_public_132.svg";
+import icon_public_133 from "@/assets/public/svg/icon_public_133.svg";
+import icon_public_134 from "@/assets/public/svg/icon_public_134.svg";
+import icon_public_135 from "@/assets/public/svg/icon_public_135.svg";
 import icon_public_136 from "@/assets/public/svg/icon_public_136.svg";
 import icon_public_137 from "@/assets/public/svg/icon_public_137.svg";
-import icon_public_120 from "@/assets/public/svg/icon_public_120.svg";
-import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
 import icon_public_138 from "@/assets/public/svg/icon_public_138.svg";
-import icon_public_122 from "@/assets/public/svg/icon_public_122.svg";
-import icon_public_110 from "@/assets/public/svg/icon_public_110.svg";
-import icon_public_125 from "@/assets/public/svg/icon_public_125.svg";
-import icon_public_112 from "@/assets/public/svg/icon_public_112.svg";
-import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
-import icon_public_121 from "@/assets/public/svg/icon_public_121.svg";
-import icon_public_132 from "@/assets/public/svg/icon_public_132.svg";
-import icon_public_140 from "@/assets/public/svg/icon_public_140.svg";
-import icon_public_113 from "@/assets/public/svg/icon_public_113.svg";
-import icon_public_141 from "@/assets/public/svg/icon_public_141.svg";
 import icon_public_139 from "@/assets/public/svg/icon_public_139.svg";
+import icon_public_140 from "@/assets/public/svg/icon_public_140.svg";
+import icon_public_141 from "@/assets/public/svg/icon_public_141.svg";
 import icon_public_142 from "@/assets/public/svg/icon_public_142.svg";
-import icon_public_109 from "@/assets/public/svg/icon_public_109.svg";
-import icon_public_124 from "@/assets/public/svg/icon_public_124.svg";
-import icon_public_133 from "@/assets/public/svg/icon_public_133.svg";
-import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
-import icon_public_119 from "@/assets/public/svg/icon_public_119.svg";
-import icon_public_111 from "@/assets/public/svg/icon_public_111.svg";
-import icon_public_147 from "@/assets/public/svg/icon_public_147.svg";
-import icon_public_149 from "@/assets/public/svg/icon_public_149.svg";
 import icon_public_143 from "@/assets/public/svg/icon_public_143.svg";
-import icon_public_148 from "@/assets/public/svg/icon_public_148.svg";
+
+import icon_public_144 from "@/assets/public/svg/icon_public_144.svg";
+import icon_public_145 from "@/assets/public/svg/icon_public_145.svg";
+import icon_public_146 from "@/assets/public/svg/icon_public_146.svg";
+import icon_public_147 from "@/assets/public/svg/icon_public_147.svg";
 
 const router = useRouter();
 const { setNavBarToggle } = appBarStore();
@@ -117,58 +118,58 @@ const eSportMenu = ref<boolean>(false);
 const sportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_14"),
-    icon: icon_public_136,
-    query: "/american-football-16"
+    icon: icon_public_121,
+    query: "%2Famerican-football-16"
   },
   {
     name: t("navBar.sport_sub_menu.text_15"),
-    icon: icon_public_137,
-    query: "/badminton-31"
+    icon: icon_public_122,
+    query: "%2Fbadminton-31"
   },
   {
     name: t("navBar.sport_sub_menu.text_16"),
-    icon: icon_public_120,
-    query: "/baseball-3"
+    icon: icon_public_123,
+    query: "%2Fbaseball-3"
   },
   {
     name: t("navBar.sport_sub_menu.text_17"),
-    icon: icon_public_105,
-    query: "/?liveSport=basketball-2"
+    icon: icon_public_124,
+    query: "%2F%3FliveSport%3Dbasketball-2"
   },
   {
     name: t("navBar.sport_sub_menu.text_18"),
-    icon: icon_public_138,
-    query: "/cricket-21"
+    icon: icon_public_125,
+    query: "%2Fcricket-21"
   },
   {
     name: t("navBar.sport_sub_menu.text_19"),
-    icon: icon_public_122,
-    query: "/cycling-17"
+    icon: icon_public_126,
+    query: "%2Fcycling-17"
   },
   {
     name: t("navBar.sport_sub_menu.text_20"),
-    icon: icon_public_110,
-    query: "/darts-22"
+    icon: icon_public_127,
+    query: "%2Fdarts-22"
   },
   {
     name: t("navBar.sport_sub_menu.text_21"),
-    icon: icon_public_125,
-    query: "/formula-1-40"
+    icon: icon_public_128,
+    query: "%2Fformula-1-40"
   },
   {
     name: t("navBar.sport_sub_menu.text_22"),
-    icon: icon_public_112,
-    query: "/futsal-29"
+    icon: icon_public_129,
+    query: "%2Ffutsal-29"
   },
   {
     name: t("navBar.sport_sub_menu.text_23"),
-    icon: icon_public_107,
-    query: "/golf-9"
+    icon: icon_public_130,
+    query: "%2Fgolf-9"
   },
   {
     name: t("navBar.sport_sub_menu.text_24"),
-    icon: icon_public_121,
-    query: "/handball-6"
+    icon: icon_public_131,
+    query: "%2Fhandball-6"
   },
   {
     name: t("navBar.sport_sub_menu.text_25"),
@@ -177,81 +178,81 @@ const sportGames = ref<Array<any>>([
   },
   {
     name: t("navBar.sport_sub_menu.text_26"),
-    icon: icon_public_140,
-    query: "/ebaseball/mlb-20-2128614497890471950"
+    icon: icon_public_133,
+    query: "%2Febaseball%2Fmlb-20-2128614497890471950"
   },
   {
     name: t("navBar.sport_sub_menu.text_27"),
-    icon: icon_public_113,
-    query: "/mma-117"
+    icon: icon_public_134,
+    query: "%2Fmma-117"
   },
   {
     name: t("navBar.sport_sub_menu.text_28"),
-    icon: icon_public_141,
-    query: "/american-football/usa/nfl-1666080012467572736"
+    icon: icon_public_135,
+    query: "%2Famerican-football%2Fusa%2Fnfl-1666080012467572736"
   },
   {
     name: t("navBar.sport_sub_menu.text_29"),
-    icon: icon_public_139,
-    query: "motorcycle-racing-190"
+    icon: icon_public_136,
+    query: "%2Fmotorcycle-racing-190"
   },
   {
     name: t("navBar.sport_sub_menu.text_30"),
-    icon: icon_public_142,
+    icon: icon_public_137,
     query: ""
   },
   {
     name: t("navBar.sport_sub_menu.text_31"),
-    icon: icon_public_109,
-    query: "rugby-12"
+    icon: icon_public_138,
+    query: "%2Frugby-12"
   },
   {
     name: t("navBar.sport_sub_menu.text_32"),
-    icon: icon_public_124,
-    query: "snooker-19"
+    icon: icon_public_139,
+    query: "%2Fsnooker-19"
   },
   {
     name: t("navBar.sport_sub_menu.text_33"),
-    icon: icon_public_133,
-    query: "table-tennis-20"
+    icon: icon_public_140,
+    query: "%2Ftable-tennis-20"
   },
   {
     name: t("navBar.sport_sub_menu.text_34"),
-    icon: icon_public_106,
-    query: "/?liveSport=tennis-5"
+    icon: icon_public_141,
+    query: "%2F%3FliveSport%3Dtennis-5"
   },
   {
     name: t("navBar.sport_sub_menu.text_35"),
-    icon: icon_public_119,
-    query: "volleyball-23"
+    icon: icon_public_142,
+    query: "%2Fvolleyball-23"
   },
   {
     name: t("navBar.sport_sub_menu.text_36"),
-    icon: icon_public_111,
-    query: "waterpolo-26"
+    icon: icon_public_143,
+    query: "%2Fwaterpolo-26"
   },
 ])
 
 const eSportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_37"),
-    icon: icon_public_147,
-    query: "counter-strike-109"
+    icon: icon_public_144,
+    query: "%2Fcounter-strike-109"
   },
   {
     name: t("navBar.sport_sub_menu.text_38"),
-    icon: icon_public_149,
-    query: "dota-2-111"
+    icon: icon_public_145,
+    query: "%2Fdota-2-111"
   },
   {
     name: t("navBar.sport_sub_menu.text_39"),
-    icon: icon_public_143,
+    icon: icon_public_146,
     query: ""
   },
   {
     name: t("navBar.sport_sub_menu.text_40"),
-    icon: icon_public_148,
-    query: "league-of-legends-110"
+    icon: icon_public_147,
+    query: "%2Fleague-of-legends-110"
   },
 ])
 
@@ -1257,6 +1258,7 @@ onMounted(() => {
                   {{ t("navBar.sport_sub_menu.text_2") }}
                 </v-list-item-title>
               </v-list-item>
+              
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu ml-2"
                 value="sport_1"
@@ -1266,7 +1268,7 @@ onMounted(() => {
                 "
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_153" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_116" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_3") }}
@@ -1279,7 +1281,7 @@ onMounted(() => {
                 @click="handleSportGame('/soccer/spain/laliga-1666080196081618944')"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_154" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_117" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_4") }}
@@ -1294,12 +1296,13 @@ onMounted(() => {
                 "
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_155" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_118" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_5") }}
                 </v-list-item-title>
               </v-list-item>
+
               <v-list-item
                 class="m-casino-sub-img m-nav-sub-menu ml-2"
                 value="sport_1"
@@ -1311,7 +1314,7 @@ onMounted(() => {
                 "
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_119" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_6") }}
@@ -1324,7 +1327,7 @@ onMounted(() => {
                 @click="handleSportGame('/soccer/italy/serie-a-1666080211319525376')"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_119" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_7") }}
@@ -1337,7 +1340,7 @@ onMounted(() => {
                 @click="handleSportGame('/soccer/germany/bundesliga-1666080125223047168')"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_119" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_8") }}
@@ -1350,7 +1353,7 @@ onMounted(() => {
                 @click="handleSportGame('/soccer/france/ligue-1-1666080025423777792')"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_119" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_9") }}
@@ -1363,7 +1366,7 @@ onMounted(() => {
                 @click="handleSportGame('/soccer-1')"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_104" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_119" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_10") }}
@@ -1376,12 +1379,13 @@ onMounted(() => {
                 @click="handleSportGame('/fifa-300')"
               >
                 <template v-slot:prepend>
-                  <inline-svg :src="icon_public_131" width="16"></inline-svg>
+                  <inline-svg :src="icon_public_120" width="16"></inline-svg>
                 </template>
                 <v-list-item-title class="ml-1 gray">
                   {{ t("navBar.sport_sub_menu.text_11") }}
                 </v-list-item-title>
               </v-list-item>
+
               <v-menu
                 location="center"
                 offset="10"

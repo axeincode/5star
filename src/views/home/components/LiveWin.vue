@@ -213,7 +213,7 @@ onUnmounted(() => {
           @click="goGame(item)"
         >
           <div class="text-center">
-            <img :src="imgWinList[Math.floor(Math.random() * 3)]" class="live-win-img" />
+            <img :src="item.game_icon" class="live-win-img" />
             <div class="live-win-level-text">
               <img :src="vipLevelGroups[item.user_vip_group]" width="12" />
               <p class="text-500-8 white ml-1">{{ item.user_name }}</p>
@@ -289,6 +289,8 @@ onUnmounted(() => {
   }
   .live-win-img {
     width: 95%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
     border-radius: 8px;
   }
   .live-win-level-text {

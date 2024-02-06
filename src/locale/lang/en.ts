@@ -1628,6 +1628,41 @@ export const lang: langType = {
       text_9: "",
     },
     vip_level_info: {
+      progress: {
+        text_1: "Get rewarded every time you fill the progress bar. Leveling upentitles you to bigger and better rewa rds！",
+        text_2: "Rewards available",
+        text_3: "CLAIM",
+        text_4: "View Records",
+        text_5: "You must have made a deposit or referred a friend in the last 30 days to receive the bonus",
+        text_6: "REFER",
+        text_7: "DEPOSIT",
+        text_8: "VIP GROUP",
+        text_9: "Join our VIP group Get instant access to more events and bonuses",
+        text_10: "Join in now",
+        text_11: 'What is an " Evolution Bonus"?',
+        text_12: "Deposit",
+        text_13: "Wager",
+        text_14: 'What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?What is an " Evolution Bonus"?',
+        text_15: 'What is an " Weekly Bounes"?',
+        text_16: 'What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?What is an " Weekly Bounes"?'
+      },
+      bonus: {
+        text_1: "Cashback",
+        text_2: "CLAIM",
+        text_3: "Membership Day",
+        text_4: "AvailabIe at",
+        text_5: "VIP Week Gift",
+        text_6: "VIP Month Gift",
+        text_7: "VIP Rank Bonus",
+      },
+      upgrade: {
+        text_1: "Level Up!",
+        text_2: "Level",
+        text_3: "Congratulations on leveling up!",
+        text_4: "Congrats on the award!",
+        text_5: "MXN",
+        text_6: "Get It Right Now"
+      },
       black_iron: {
         week: '',
         moon: '',

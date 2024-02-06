@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
+
+const { t } = useI18n();
 const { dispatchVipLevelAwardReceive } = vipStore();
 const { dispatchVipLevelAward } = vipStore();
 const route = useRoute();
@@ -59,23 +62,23 @@ onMounted(async () => {
     >
         <div class="vip-overlay">
             <div class="vip-overlay-header">
-                <span>Level Up!</span>
+                <span>{{ t('vip.vip_level_info.upgrade.text_1') }}</span>
                 <v-btn class="vip-overlay-header-close" icon="true" width="20" height="20" @click="vipOverlay = false">
                     <img src="@/assets/public/svg/icon_public_10.svg" width="18" />
                 </v-btn>
             </div>
             <div class="vip-overlay-level">
-                <span>Level {{ vipLevelAward.old_level }} - Level {{ vipLevelAward.level }}</span>
+                <span>{{ t('vip.vip_level_info.upgrade.text_2') }} {{ vipLevelAward.old_level }} - {{ t('vip.vip_level_info.upgrade.text_2') }} {{ vipLevelAward.level }}</span>
             </div>
             <div class="vip-overlay-tip">
-                <span>Congratulations on leveling up!</span>
+                <span>{{ t('vip.vip_level_info.upgrade.text_3') }}</span>
             </div>
             <div class="vip-overlay-content">
                 <div class="vip-overlay-content-image"></div>
-                <div class="vip-overlay-content-title">Congrats on the award!</div>
+                <div class="vip-overlay-content-title">{{ t('vip.vip_level_info.upgrade.text_4') }}</div>
                 <div class="vip-overlay-content-icon">
                     <img src="@/assets/public/svg/icon_public_87.svg" width="20" />
-                    <span>MXN</span>
+                    <span>{{ t('vip.vip_level_info.upgrade.text_5') }}</span>
                 </div>
                 <div class="vip-overlay-content-price">
                     <span>{{ vipLevelAward.upgrade_gift }}</span>
@@ -86,7 +89,7 @@ onMounted(async () => {
                     color="success"
                     @click="dispatchVipLevelAwardReceive({ type: 5 })"
                 >
-                    Get It Right Now
+                {{ t('vip.vip_level_info.upgrade.text_6') }}
                 </v-btn>
             </div>
             <!-- <div class="vip-overlay-checkbox">
