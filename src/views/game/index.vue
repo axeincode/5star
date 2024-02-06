@@ -13,7 +13,7 @@ import "swiper/css/navigation";
 import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -21,6 +21,7 @@ const { setMailMenuShow } = mailStore();
 const { dispatchGameEnter } = gameStore();
 const { setMobileMenuShow } = gameStore();
 const route = useRoute();
+const router = useRouter();
 const mobileHeight = ref<number | undefined>(0);
 
 const luckyJackpotList = ref<Array<any>>([
@@ -335,6 +336,8 @@ const recordList = ref<Array<any>>([
 const recordScrollInterval = ref<any>(null);
 const frameShow = ref<boolean>(false);
 
+const gameFrameRef = ref<any>(null);
+
 const modules = [Pagination, Virtual, Autoplay, Navigation];
 
 const mobileWidth = computed(() => {
@@ -356,6 +359,15 @@ const isNumeric = (value: any) => {
 const handleIframeLoad = () => {
   if (enterGameItem.value.weburl != "") {
     frameShow.value = true;
+  }
+  if (gameFrameRef.value) {
+    window.addEventListener("message", handleMessageFromIframe);
+  }
+};
+
+const handleMessageFromIframe = (event: any) => {
+  if (event.data.url == "bluesite:exit") {
+    router.push({ name: "Dashboard" });
   }
 };
 
@@ -402,7 +414,7 @@ onUnmounted(() => {
       </div>
       <iframe
         v-if="enterGameItem.method == 'HTML'"
-        ref="frame"
+        ref="gameFrameRef"
         :srcdoc="enterGameItem.weburl"
         :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
         class="home-game-frame-area"
@@ -410,7 +422,7 @@ onUnmounted(() => {
       ></iframe>
       <iframe
         v-else
-        ref="frame"
+        ref="gameFrameRef"
         :src="enterGameItem.weburl"
         :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
         class="home-game-frame-area"
@@ -594,7 +606,7 @@ onUnmounted(() => {
     margin: auto;
 
     .home-game-frame-area {
-      background: #15161C;
+      background: #15161c;
       border: none;
       margin-top: 20px;
       width: 100%;
@@ -642,7 +654,7 @@ onUnmounted(() => {
 
   .m-game-frame-body {
     .home-game-frame-area {
-      background: #15161C;
+      background: #15161c;
       position: absolute;
       top: 0px;
       border: none;
@@ -660,7 +672,7 @@ onUnmounted(() => {
       height: 100vh;
       opacity: 1;
       z-index: 20000000;
-      background: #15161C;
+      background: #15161c;
 
       .loading-body {
         display: flex;
