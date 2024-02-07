@@ -71,7 +71,7 @@ const user = ref<GetUserData>({
   name: "Little Planes",
   grade_level: "Bronze",
   grade: "VIP 4",
-  wallet: "R$515.25",
+  wallet: "R$0",
   currency: "R$",
 });
 
@@ -288,7 +288,7 @@ const userNavBarToggle = ref(false);
 const selectedCurrencyItem = ref<GetCurrencyBalanceList>({
   //icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
   currency: "BRL",
-  amount: "515.25",
+  amount: "0",
   availabe_balance: "",
   real: "",
   bonus: "",
@@ -534,7 +534,7 @@ onMounted(async () => {
       @click.stop="setNavBarToggle(true)"
       v-if="!navBarToggle && mobileWidth > 600"
     ></v-app-bar-nav-icon>
-    
+
     <v-toolbar-title v-if="mobileWidth > 800">
       <img
         src="@/assets/public/image/logo_public_01.png"
@@ -545,7 +545,7 @@ onMounted(async () => {
         <img src="@/assets/public/image/logo_public_01.png" />
       </v-btn> -->
     </v-toolbar-title>
-    
+
     <v-toolbar-title v-else>
       <img
         src="@/assets/public/image/logo_public_03.png"
@@ -679,7 +679,10 @@ onMounted(async () => {
                         @click="handleSelectCurrency(currencyItem)"
                       >
                         <template v-slot:prepend>
-                          <img width="20" :src="currencyImages[imageIndex[currencyIndex]].icon"/>
+                          <img
+                            width="20"
+                            :src="currencyImages[imageIndex[currencyIndex]].icon"
+                          />
                         </template>
                         <v-list-item-title class="ml-2 text-700-10">{{
                           currencyItem.currency
@@ -1160,7 +1163,7 @@ onMounted(async () => {
     align-self: center;
     top: -25px;
     right: 150px;
-    border: 13px solid #1D2027;
+    border: 13px solid #1d2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1176,7 +1179,7 @@ onMounted(async () => {
     align-self: center;
     top: -25px;
     left: 60px;
-    border: 13px solid #1D2027;
+    border: 13px solid #1d2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1321,14 +1324,14 @@ onMounted(async () => {
   width: 120px;
   height: 48px !important;
   border-radius: 8px !important;
-  background-color: #009B3A !important;
+  background-color: #009b3a !important;
 }
 
 .app-bar-signup-btn-mobile {
   width: 91px;
   height: 40px !important;
   border-radius: 8px;
-  background: #009B3A;
+  background: #009b3a;
   //border: 1px solid #8664f7;
   //background: linear-gradient(0deg, #5524fd 0%, #6d44f7 100%);
 
@@ -1409,7 +1412,7 @@ onMounted(async () => {
     align-self: center;
     top: -25px;
     right: 68px;
-    border: 13px solid #1D2027;
+    border: 13px solid #1d2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1433,7 +1436,7 @@ onMounted(async () => {
     align-self: center;
     right: 66px;
     top: -18px;
-    border: 9px solid #1D2027;
+    border: 9px solid #1d2027;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1490,7 +1493,7 @@ onMounted(async () => {
 
   .mail-item {
     margin-top: 4px !important;
-    background-color: #15161C !important;
+    background-color: #15161c !important;
     padding: 4px 8px !important;
     border-radius: 8px !important;
   }
@@ -1522,7 +1525,7 @@ onMounted(async () => {
   position: absolute;
   right: 9px;
   top: 23px;
-  background: #1D2027;
+  background: #1d2027;
   border-radius: 20px;
   padding: 2px 12px;
   font-weight: 500;
@@ -1543,7 +1546,7 @@ onMounted(async () => {
   position: absolute;
   right: 13px;
   top: 22px;
-  background: #1D2027;
+  background: #1d2027;
   border-radius: 20px;
   padding: 2px 21px;
   font-weight: 500;
@@ -1552,7 +1555,7 @@ onMounted(async () => {
 
 .sign-out-btn {
   cursor: pointer;
-  background: #23262F;
+  background: #23262f;
   border-radius: 8px;
   padding: 13px;
   margin: 0px 20px;
@@ -1574,7 +1577,7 @@ onMounted(async () => {
 
 .deposit-progress-bg {
   .v-progress-linear {
-    background: #15161C !important;
+    background: #15161c !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
     border-radius: 20px !important;
   }
@@ -1598,7 +1601,7 @@ onMounted(async () => {
   border-radius: 8px;
   //border: 1px solid #8664f7;
   //background: linear-gradient(0deg, #5524fd 0%, #6d44f7 100%);
-  background: #009B3A;
+  background: #009b3a;
 }
 
 .deposit-text-position {

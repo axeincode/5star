@@ -77,7 +77,7 @@ const user = ref<GetUserData>({
   name: "Little Planes",
   grade_level: "Bronze",
   grade: "VIP 4",
-  wallet: 515.25,
+  wallet: 0,
   currency: "R$",
 });
 

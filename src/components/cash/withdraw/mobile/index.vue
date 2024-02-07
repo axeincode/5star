@@ -159,9 +159,9 @@ const paymentList = ref<Array<GetPaymentItem>>([
 
 const withdrawAmount = ref<string>("")
 
-const availableAmount = ref<number>(108.88);
+const availableAmount = ref<number>(0);
 
-const feeRate = ref<number>(2.5);
+const feeRate = ref<number>(0);
 
 const validationText2 = ref<string>("")
 
@@ -292,6 +292,11 @@ const errMessage = computed(() => {
   return getErrMessage.value
 })
 
+const depositConfig = computed(() => {
+  const { getDepositCfg } = storeToRefs(depositStore());
+  return getDepositCfg.value
+})
+
 const handleWithdrawSubmit = async () => {
   if (Number(withdrawAmount.value) == 0 || Number(userBalance.value.availabe_balance) == 0) {
     const toast = useToast();
@@ -310,13 +315,15 @@ const handleWithdrawSubmit = async () => {
     return;
   }
   loading.value = true
-  await dispatchUserWithdrawSubmit({
-    id_number: pixInfo.value.id,
-    first_name: pixInfo.value.first_name,
-    last_name: pixInfo.value.last_name,
-    channels_id: selectedPaymentItem.value.id,
-    amount: Number(withdrawAmount.value)
-  })
+  let formData = {} as any;
+  if (depositConfig.value.deposit_user_switch) {
+    formData.id_number = pixInfo.value.id
+    formData.first_name = pixInfo.value.first_name
+    formData.last_name = pixInfo.value.last_name
+  }
+  formData.channels_id = selectedPaymentItem.value.id;
+  formData.amount = Number(withdrawAmount.value)
+  await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
   if (success.value) {
     const toast = useToast();
@@ -334,6 +341,7 @@ const handleWithdrawSubmit = async () => {
     });
     let mailItem = {
       id: 5,
+      offset: 0,
       icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
       mail_content_1: {
         color: "text-color-gray",
@@ -470,9 +478,9 @@ onMounted(async () => {
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
             </template>
-            <v-list-item-title class="ml-2 text-400-12">{{
-              selectedPaymentItem.name
-            }}</v-list-item-title>
+            <v-list-item-title class="ml-2 text-400-12">
+              {{ selectedPaymentItem.name }}
+            </v-list-item-title>
           </v-list-item>
         </v-card>
       </template>
@@ -491,12 +499,12 @@ onMounted(async () => {
                 @click="handleSelectPayment(paymentItem)"
               >
                 <img :src="paymentItem.icon" width="62" />
-                <v-list-item-title class="text-400-10">{{
-                  paymentItem.name
-                }}</v-list-item-title>
-                <v-list-item-title class="text-400-10">{{
-                  paymentItem.description
-                }}</v-list-item-title>
+                <v-list-item-title class="text-400-10">
+                  {{ paymentItem.name }}
+                </v-list-item-title>
+                <v-list-item-title class="text-400-10">
+                  {{ paymentItem.description }}
+                </v-list-item-title>
               </v-list-item>
             </v-card>
           </v-col>
@@ -538,8 +546,9 @@ onMounted(async () => {
       />
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">
-      {{ t("withdraw_dialog.text_1") }}{{ feeRate * 100
-      }}{{ t("withdraw_dialog.text_1_1") }}
+      {{ t("withdraw_dialog.text_1") }}
+      {{ feeRate * 100 }}
+      {{ t("withdraw_dialog.text_1_1") }}
     </v-row>
     <v-row class="mt-4 mx-6 text-400-10 gray">
       {{ t("withdraw_dialog.text_2") }}
@@ -593,7 +602,7 @@ onMounted(async () => {
     background: transparent;
   }
 
-  background-color: #1D2027;
+  background-color: #1d2027;
   height: 100%;
   overflow-y: auto;
 
@@ -618,7 +627,7 @@ onMounted(async () => {
   }
 
   .deposit-amout-btn-black {
-    background: #009B3A;
+    background: #009b3a;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;
@@ -627,7 +636,7 @@ onMounted(async () => {
   }
 
   .deposit-amout-btn-white {
-    background: #23262F;
+    background: #23262f;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;
@@ -655,7 +664,7 @@ onMounted(async () => {
   }
 
   .dark-textfield .v-field__field {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
   }
 
   .v-field--variant-solo {
@@ -664,7 +673,7 @@ onMounted(async () => {
 
   .amount-checkbox {
     i.v-icon {
-      color: #15161C;
+      color: #15161c;
       background-color: #01983a;
       width: 16px;
       height: 16px;
@@ -673,7 +682,7 @@ onMounted(async () => {
     }
 
     i.mdi-checkbox-blank-outline {
-      background-color: #15161C;
+      background-color: #15161c;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }
@@ -712,7 +721,7 @@ onMounted(async () => {
 
 .m-deposit-btn {
   text-align: center;
-  background: #23262F;
+  background: #23262f;
 
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -729,7 +738,7 @@ onMounted(async () => {
 }
 
 .m-deposit-btn-ready {
-  background: #009B3A;
+  background: #009b3a;
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
