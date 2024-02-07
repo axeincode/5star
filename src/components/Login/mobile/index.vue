@@ -302,7 +302,17 @@ export default Login;
   <div class="m-login-container">
     <!-- <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" /> -->
     <div class="m-login-body px-6">
-      <!-- SIGN UP FORM  -->
+      <div class="my-15 d-flex justify-center align-center">
+        <img src="@/assets/public/image/logo_public_01.png" width="86" />
+        <div class="ml-2">
+          <div class="text-800-16 white">
+            {{ t("signup.formPage.header.titleLine1") }}
+          </div>
+          <div class="text-900-20 white">
+            {{ t("signup.formPage.header.titleLine2") }}
+          </div>
+        </div>
+      </div>
       <v-form
         v-if="currentPage === PAGE_TYPE.LOGIN_FORM"
         ref="form"
@@ -380,7 +390,7 @@ export default Login;
             />
           </div>
         </div>
-        <v-row class="mt-1">
+        <v-row class="mt-2">
           <p
             class="ml-9 login-forget-passwrod-text text-400-12"
             @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD"
@@ -388,7 +398,7 @@ export default Login;
             {{ t("login.formPage.forgetPassword") }}
           </p>
         </v-row>
-        <v-row style="margin-top: 116px">
+        <v-row style="margin-top: 100px">
           <v-btn
             class="ma-3 button-bright m-signin-btn-text"
             width="94%"
@@ -433,21 +443,6 @@ export default Login;
       </v-form>
       <!-- Forgot password -->
       <div v-if="currentPage == PAGE_TYPE.FORGOT_PASSWORD" class="full-width">
-        <v-row class="mt-10 d-flex justify-center">
-          <img src="@/assets/public/image/logo_public_01.png" width="182" />
-          <!-- <span class="logo-text purple text-large">{{ t('logo_text_1') }}</span>
-                    <span class="logo-text yellow text-large">{{ t('main.logo_text_2') }}</span> -->
-        </v-row>
-        <v-row class="mt-1 justify-center">
-          <!-- <p class="label-text-md2 white center full-width pl-12 pr-12">
-                        {{ t('login.forgotPasswordPage.title') }}
-                    </p> -->
-          <p class="m-logo-text2 center white">
-            {{ t("signup.formPage.header.titleLine1") }}
-            <br />
-            {{ t("signup.formPage.header.titleLine2") }}
-          </p>
-        </v-row>
         <v-row class="relative mt-8">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
@@ -495,9 +490,20 @@ export default Login;
             </v-list>
           </div>
         </v-row>
-        <v-row style="margin-top: 200px">
+        <v-row style="margin-top: 100px">
           <v-btn
             class="ma-3 button-bright m-signin-btn-text"
+            width="94%"
+            height="48"
+            autocapitalize="off"
+            @click="handleForgotPassword"
+          >
+            {{ t("login.forgotPasswordPage.submit") }}
+          </v-btn>
+        </v-row>
+        <v-row>
+          <v-btn
+            class="ma-3 m-forgot-back-btn"
             width="94%"
             height="48"
             autocapitalize="off"
@@ -560,6 +566,21 @@ export default Login;
 </template>
 
 <style lang="scss">
+.m-forgot-back-btn {
+  background: #23262f;
+  box-shadow: 0px 4px 6px 1px #0000004d;
+
+  .v-btn__content {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+
 .m-login-mail-card {
   position: absolute;
   top: 86px;
@@ -637,14 +658,15 @@ export default Login;
 
 // wrapper
 .m-login-body {
-  border-radius: 8px 8px 0px 0px;
-  background: var(--bg-2-e-274-c, #1d2027);
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  height: 473px;
-  z-index: 2000;
-  overflow-y: auto;
+  // border-radius: 8px 8px 0px 0px;
+  // background: var(--bg-2-e-274-c, #1d2027);
+  // position: absolute;
+  // bottom: 0px;
+  // width: 100%;
+  // height: 473px;
+  // z-index: 2000;
+  // overflow-y: auto;
+
   .form-textfield div.v-field__field {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }

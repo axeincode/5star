@@ -21,6 +21,7 @@ export const lang: langType = {
     forgotPasswordPage: {
       title: 'Forgot Password ?',
       submit: 'Submit',
+      back_text: 'Back',
       notification: "We've sent you an email with instructions to reset your password",
     },
     submit_result: {

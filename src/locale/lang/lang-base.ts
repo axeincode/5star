@@ -19,6 +19,7 @@ export type langType = {
     forgotPasswordPage: {
       title: string,
       submit: string,
+      back_text: string
       notification: string,
     },
     submit_result: {

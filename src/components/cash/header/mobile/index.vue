@@ -176,10 +176,7 @@ const pixInfoToggle = computed(() => {
 })
 
 watch(pixInfoToggle, (value) => {
-  if (!depositConfig.value.deposit_user_switch) {
-    pixInfoMenuShow.value = false;
-  }
-    pixInfoMenuShow.value = value;
+  pixInfoMenuShow.value = value;
 })
 
 const userInfo = computed((): GetUserInfo => {
@@ -250,9 +247,6 @@ watch(cashToggleSwitch, (newValue) => {
 }, { deep: true });
 
 watch(pixInfoMenuShow, (value) => {
-  if (!depositConfig.value.deposit_user_switch) {
-    pixInfoMenuShow.value = false;
-  }
   if (pixInfoItem.value.id != "" && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
     isPersonalBtnReady.value = true;
     confirmValidation.value = true;

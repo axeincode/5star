@@ -249,7 +249,9 @@ watch(depositConfig, (newValue) => {
     })
   })
   const keyArray = Object.keys(newValue["cfg"]);
+  console.log("11111111111111111", keyArray);
   const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
+  console.log("11111111111111111", filteredObjects);
   currencyList.value = filteredObjects;
   selectedPaymentItem.value = paymentList.value[0];
   newValue["list"].map((item: string) => {
@@ -355,7 +357,7 @@ const errMessage = computed(() => {
 
 const handleDepositSubmit = async () => {
   if (Number(depositAmount.value) == 0) return;
-  if (pixInfo.value.id == '' || pixInfo.value.id == undefined) {
+  if (depositConfig.value.deposit_user_switch) {
     setPixInfoToggle(true);
     return;
   }
