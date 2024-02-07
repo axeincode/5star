@@ -363,10 +363,10 @@ const showUserNavBar = (): void => {
   setNavBarToggle(false)
   setBonusDashboardDialogVisible(false);
   setMainBlurEffectShow(false);
-  setTimeout(() => {
+  // setTimeout(() => {
     setUserNavBarToggle(userNavBarToggle.value);
     setMainBlurEffectShow(userNavBarToggle.value);
-  }, 10)
+  // }, 10)
 }
 
 watch(userBalance, (value) => {

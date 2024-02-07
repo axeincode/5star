@@ -29,9 +29,9 @@ export default createVuetify({
         colors: {
           primary: '#1867C0',
           secondary: '#5CBBF6',
-          color_29253c: "#1D2027",
-          box_shadow: "0px 3px 4px 1px rgba(255, 255, 255, 1)",
-          color_000000: "#000000"
+          // color_29253c: "#1D2027",
+          // box_shadow: "0px 3px 4px 1px rgba(255, 255, 255, 1)",
+          // color_000000: "#000000"
         },
       },
     },

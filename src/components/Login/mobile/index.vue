@@ -507,9 +507,9 @@ export default Login;
             width="94%"
             height="48"
             autocapitalize="off"
-            @click="handleForgotPassword"
+            @click="currentPage = PAGE_TYPE.LOGIN_FORM"
           >
-            {{ t("login.forgotPasswordPage.submit") }}
+            {{ t("login.forgotPasswordPage.back_text") }}
           </v-btn>
         </v-row>
         <v-row class="mt-4">
@@ -633,7 +633,7 @@ export default Login;
 .m-disable-password {
   position: absolute;
   top: 16px;
-  right: 24px;
+  right: 10px;
   cursor: pointer;
 }
 
@@ -778,6 +778,10 @@ export default Login;
   transform-origin: top !important;
 
   .v-field__field {
+    input {
+      padding-right: 30px !important;
+    }
+
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;

@@ -685,7 +685,7 @@ onMounted(() => {
     <v-dialog
       v-model="signoutDialog"
       :width="mobileWidth < 600 ? 328 : 471"
-      :scrim="false"
+      :scrim="true"
       @click:outside="closeDialog('signout')"
     >
       <Signout v-if="mobileVersion != 'sm'" @close="closeDialog('signout')" />
