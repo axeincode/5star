@@ -619,6 +619,7 @@ onMounted(() => {
       :fullscreen="mobileVersion == 'sm'"
       transition="dialog-top-transition"
       class="mobile-dialog-toggle-height"
+      :scrim="false"
       v-if="mobileVersion == 'sm'"
       style="z-index: 10000000000000010"
     >
