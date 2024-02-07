@@ -81,7 +81,8 @@ export namespace NETWORK {
     static VIP_LEVEL_AWARD_HISTORY = '/user/viplevelawardhistory' // Obtain VIP level reward record
     static VIP_TIMES_HISTORY = '/user/viptimeshistory' // Get VIP weekly and monthly reward records
     static VIP_SIGNIN_REWARDS = '/user/vipsignin/award'; // Receive VIP sign-in rewards
-    static VIP_SIGNIN = '/user/vipsignin'; // Get VIP check-in content
+    // static VIP_SIGNIN = '/user/vipsignin'; // Get VIP check-in content
+    static VIP_SIGNIN = '/user/vip/signinaward/list';  // Get VIP check-in content
     static VIP_LEVELUP_LIST = '/user/viplevelup/list'; // Get VIP upgrade reward information
     static VIP_LEVELUP_RECEIVE = '/user/viplevelup/receive'; // Receive VIP upgrade rewards
     static USER_VIP_CYCLEAWARD_LIST = '/user/vip/cycleaward/list';  // Get periodic rewards  获取周期性奖励

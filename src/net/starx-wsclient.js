@@ -222,6 +222,8 @@ import './protocol.js'
   var connectcb = null;
 
   starx.init = function (params) {
+    console.log('参数', socket?.readyState, '====', WebSocket.OPEN)
+    if (socket && socket?.readyState === WebSocket.OPEN) return;
     var host = params.host;
     var port = params.port;
     var path = params.path;
@@ -252,7 +254,7 @@ import './protocol.js'
       };
       handshakeBuffer.sys.rsa = data;
     }
-    handshakeCallback = params.handshakeCallback;
+    handshakeCallback = params.handshakeCallback || heartbeat;
     connect(params, url);
   };
 
@@ -443,7 +445,7 @@ import './protocol.js'
     heartbeatId = setTimeout(function () {
       heartbeatId = null;
       send(obj);
-
+      console.log("send heartbeat");
       nextHeartbeatTimeout = Date.now() + heartbeatTimeout;
       heartbeatTimeoutId = setTimeout(heartbeatTimeoutCb, heartbeatTimeout);
     }, heartbeatInterval);
@@ -489,7 +491,7 @@ import './protocol.js'
   };
 
   var onKick = function (data) {
-    //data = JSON.parse(Protocol.strdecode(data));
+    data = JSON.parse(Protocol.strdecode(data));
     if (connectcb) connectcb('onKick', data);
   };
 
@@ -550,8 +552,8 @@ import './protocol.js'
     if (decodeIO_decoder && decodeIO_decoder.lookup(route)) {
       return decodeIO_decoder.build(route).decode(msg.body);
     } else {
-      //return JSON.parse(Protocol.strdecode(msg.body)); //json方式
-      return msg.body;
+      return JSON.parse(Protocol.strdecode(msg.body)); //json方式
+      // return msg.body;
     }
 
     return msg;

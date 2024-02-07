@@ -4,6 +4,9 @@ import './starx-wsclient.js';
 import Cookies from "js-cookie";
 import CacheKey from "@/constants/cacheKey";
 // import { TimerManager } from "../base/TimerManager";
+import { socketStore } from "@/store/socket";
+import { authStore } from "@/store/auth";
+import router from "@/router";
 
 const NETWORK_CODE:number = 200
 
@@ -44,6 +47,7 @@ export class Network {
         this.evenMgr = EventManager.getInstance();
         // TODO 監聽主動推送的消息事件
         // this.evenMgr.on(MESSAGE.SYSTEM.RESTARTGAME, this.allClearNetwork, this);
+        this.evenMgr.on('onFundMessage', this.onFundMessage, this);
         this.onUnsolicited();
     }
 
@@ -126,11 +130,12 @@ export class Network {
         let cfg: starxMsg = {
             host: "wss://pix.kim",
             port: port,
-            path: "/demo/message/conn",
+            path: "/user/connect/ws",
             connectcb: this.connectConnector.bind(this),
         };
         //属于异常断线重连，清理loading 清理发包记录
         if (!this.wsdisconnect) {
+            console.log('异常断线重连')
             this.sendCount = {};
         }
         this.wsdisconnect = false;
@@ -157,10 +162,15 @@ export class Network {
                 console.warn("重新连接", events);
 
                 // 重新捆绑回调
-                this.connect();
+                // this.connect();
                 break;
             case 'onKick':
                 console.log("ws 断线通知 onKick：", event);
+                if (event.value === 307) {
+                    const { dispatchSignout } = authStore();
+                    dispatchSignout();
+                    router.push({ name: "Dashboard" });
+                }
                 this.kicked(event);
                 break;
         }
@@ -241,6 +251,10 @@ export class Network {
         return msg;
     }
 
+    public onFundMessage(msg: any) {
+        const { setSocketBalance } = socketStore();
+        setSocketBalance(msg.body);
+    }
 
     public allClearNetwork() {
         starx.clearListener();

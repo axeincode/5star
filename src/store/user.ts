@@ -35,6 +35,7 @@ export const userStore = defineStore({
       this.verifyTime = verifyTime;
     },
     setUserBalance(userBalance: User.GetUserBalance) {
+      console.log('金额', userBalance)
       this.userBalance = userBalance;
     },
     // user check
