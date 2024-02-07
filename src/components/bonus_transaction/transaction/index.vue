@@ -124,7 +124,7 @@ watch(selectedTab, async (value) => {
 onMounted(async () => {
   selectedTab.value = route.query.tab
     ? route.query.tab
-    : t("transaction.tab.game_history");
+    : t("transaction.tab.transactions");
   selectedTab.value =
     transactionTab.value == "" ? selectedTab.value : transactionTab.value;
   // await dispatchGameHistory({
@@ -190,13 +190,13 @@ onMounted(async () => {
     </v-slide-group-item>
   </v-slide-group>
   <v-window v-model="selectedTab" :disable-swipe="true" :touch="touchless()">
-    <v-window-item
+    <!-- <v-window-item
       :value="t('transaction.tab.game_history')"
       style="margin-left: 10px; margin-right: 10px"
     >
       <GameHistory v-if="mobileWidth > 600" />
       <MGameHistory v-else />
-    </v-window-item>
+    </v-window-item> -->
     <v-window-item
       :value="t('transaction.tab.transactions')"
       style="margin-left: 10px; margin-right: 10px"
@@ -247,7 +247,7 @@ onMounted(async () => {
         v-else
       />
     </v-window-item>
-    <v-window-item
+    <!-- <v-window-item
       :value="t('transaction.tab.referral')"
       style="margin-left: 10px; margin-right: 10px"
     >
@@ -261,7 +261,7 @@ onMounted(async () => {
         :withdrawHistoryItem="withdrawHistoryItem"
         v-else
       />
-    </v-window-item>
+    </v-window-item> -->
   </v-window>
 </template>
 <style lang="scss">

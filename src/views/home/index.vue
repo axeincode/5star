@@ -1232,6 +1232,7 @@ export default Dashboard;
       <MGameConfirm
         :selectedGameItem="selectedGameItem"
         :is_favorite="is_favorite"
+        :gameConfirmDialogShow="gameConfirmDialogShow"
         @closeGameConfirmDialog="gameConfirmDialogShow = false"
         @refreshGameFavoriteList="refreshGameFavoriteList"
       />
@@ -1959,7 +1960,7 @@ export default Dashboard;
 
 .m-home-favorite-icon {
   position: absolute;
-  top: 13px;
+  top: 7px;
   right: 2px;
   width: 24px;
   height: 24px;

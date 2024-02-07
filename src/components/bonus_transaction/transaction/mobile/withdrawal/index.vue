@@ -176,7 +176,7 @@ const handlePrev = async (page_no: number) => {
 }
 
 const handleCopyID = async (id: number) => {
-  clipboard.writeText(id).then(
+  clipboard.writeText(id.toString()).then(
     () => {
       console.log('Copied to clipboard!');
       const toast = useToast();
@@ -443,7 +443,7 @@ onMounted(async () => {
 </template>
 <style lang="scss">
 .m-forms-bonus-table-bg {
-  background: #15161C !important;
+  background: #15161c !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
   width: 100% !important;
@@ -455,13 +455,22 @@ onMounted(async () => {
 
 .m-forms-bonus-table1 {
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #23262F;
+    background: #23262f;
     height: 46px !important;
+  }
+
+  .v-table > .v-table__wrapper > table > tbody > tr > td,
+  .v-table > .v-table__wrapper > table > tbody > tr > th,
+  .v-table > .v-table__wrapper > table > thead > tr > td,
+  .v-table > .v-table__wrapper > table > thead > tr > th,
+  .v-table > .v-table__wrapper > table > tfoot > tr > td,
+  .v-table > .v-table__wrapper > table > tfoot > tr > th {
+    padding: 0px !important;
   }
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #23262F;
+    border-bottom: 1px solid #23262f;
   }
 
   .forms-table-header {
@@ -477,21 +486,21 @@ onMounted(async () => {
   }
 
   .forms-table-border0 {
-    border-right: 1px solid #7782AA !important;
+    border-right: 1px solid #7782aa !important;
   }
 
   .forms-table-border1 {
-    border-left: 1px solid #7782AA !important;
-    border-right: 1px solid #7782AA !important;
+    border-left: 1px solid #7782aa !important;
+    border-right: 1px solid #7782aa !important;
   }
 
   .forms-table-border2 {
-    border-left: 1px solid #7782AA !important;
+    border-left: 1px solid #7782aa !important;
   }
 
   .forms-table-border-right {
     padding-right: 20px;
-    border-right: 1px solid #7782AA !important;
+    border-right: 1px solid #7782aa !important;
   }
 
   .withdraw-refund-btn {

@@ -16,9 +16,9 @@ const router = useRouter();
 
 const emit = defineEmits<{ (e: "closeGameConfirmDialog"): void, (e: "refreshGameFavoriteList", id: number | string): void }>();
 
-const props = defineProps<{ selectedGameItem: GameItem, is_favorite: boolean }>();
+const props = defineProps<{ selectedGameItem: GameItem, is_favorite: boolean, gameConfirmDialogShow: boolean }>();
 
-const { selectedGameItem, is_favorite } = toRefs(props);
+const { selectedGameItem, is_favorite, gameConfirmDialogShow } = toRefs(props);
 
 const { dispatchFavoriteGame } = gameStore();
 const { setAuthModalType } = authStore();
@@ -93,8 +93,9 @@ const handleEnterGame = async (id: number, name: string, is_demo: string) => {
   }
 };
 
-watch(is_favorite, (value) => {
-  favoriteSvgIconColor.value = value ? "#F9BC01" : "#7782AA";
+watch(gameConfirmDialogShow, (value) => {
+  console.log("favorite:::::::::::::::::", is_favorite.value)
+  favoriteSvgIconColor.value = is_favorite.value ? "#F9BC01" : "#7782AA";
 })
 </script>
 

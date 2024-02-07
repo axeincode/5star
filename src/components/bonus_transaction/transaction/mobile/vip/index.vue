@@ -297,7 +297,7 @@ onMounted(async () => {
             </v-list-item>
           </v-card>
         </template>
-        <v-list theme="dark" bg-color="#1D2027" width="167" style="border-radius: 8px;">
+        <v-list theme="dark" bg-color="#1D2027" width="167" style="border-radius: 8px">
           <v-list-item
             v-for="(item, i) in transactionVipMenuList"
             :key="i"
@@ -341,7 +341,7 @@ onMounted(async () => {
   bottom: -24px;
   left: 50%;
   transform: translateX(-50%);
-  border: 13px solid #1D2027;
+  border: 13px solid #1d2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-bottom-color: transparent;
@@ -353,7 +353,7 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  background: #15161C;
+  background: #15161c;
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   .v-list-item__content {
     height: 24px;
@@ -367,7 +367,7 @@ onMounted(async () => {
   width: 167px;
   height: 32px;
   border-radius: 8px;
-  background: var(--BG-5-1C1929, #15161C) !important;
+  background: var(--BG-5-1C1929, #15161c) !important;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   .v-list-item__content {
@@ -387,7 +387,7 @@ onMounted(async () => {
   }
 }
 .m-forms-bonus-table-bg {
-  background: #15161C !important;
+  background: #15161c !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
   width: 100% !important;
@@ -399,13 +399,22 @@ onMounted(async () => {
 
 .m-forms-bonus-table1 {
   .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-    background: #23262F;
+    background: #23262f;
     height: 46px !important;
+  }
+
+  .v-table > .v-table__wrapper > table > tbody > tr > td,
+  .v-table > .v-table__wrapper > table > tbody > tr > th,
+  .v-table > .v-table__wrapper > table > thead > tr > td,
+  .v-table > .v-table__wrapper > table > thead > tr > th,
+  .v-table > .v-table__wrapper > table > tfoot > tr > td,
+  .v-table > .v-table__wrapper > table > tfoot > tr > th {
+    padding: 0px !important;
   }
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    border-bottom: 1px solid #23262F;
+    border-bottom: 1px solid #23262f;
   }
 
   .forms-table-header {
@@ -421,21 +430,21 @@ onMounted(async () => {
   }
 
   .forms-table-border0 {
-    border-right: 1px solid #7782AA !important;
+    border-right: 1px solid #7782aa !important;
   }
 
   .forms-table-border1 {
-    border-left: 1px solid #7782AA !important;
-    border-right: 1px solid #7782AA !important;
+    border-left: 1px solid #7782aa !important;
+    border-right: 1px solid #7782aa !important;
   }
 
   .forms-table-border2 {
-    border-left: 1px solid #7782AA !important;
+    border-left: 1px solid #7782aa !important;
   }
 
   .forms-table-border-right {
     padding-right: 20px;
-    border-right: 1px solid #7782AA !important;
+    border-right: 1px solid #7782aa !important;
   }
 
   .withdraw-refund-btn {
