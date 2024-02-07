@@ -4,8 +4,8 @@ export const lang: langType = {
   main: {
     signupButton: "Register",
     loginButton: "Login",
-    logo_text_1: "BLUE",
-    logo_text_2: "GAME",
+    logo_text_1: "HOY",
+    logo_text_2: "777",
   },
   login: {
     formPage: {
@@ -32,7 +32,7 @@ export const lang: langType = {
     formPage: {
       header: {
         titleLine1: " Register at ",
-        titleLine2: " BLUE.GAME ",
+        titleLine2: " HOY777 ",
       },
       emailAddress: "Email Address",
       password: "Password",
@@ -210,8 +210,8 @@ export const lang: langType = {
     }
   },
   appBar: {
-    logo_text_1: "BLUE",
-    logo_text_2: "GAME",
+    logo_text_1: "HOY",
+    logo_text_2: "777",
     id: "ID",
     account: "Account",
     deposit: "Deposit",

@@ -21,7 +21,8 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+
 
 const MSignup = defineComponent({
   components: {
@@ -44,6 +45,8 @@ const MSignup = defineComponent({
     const { setNickNameDialogVisible } = authStore();
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
+    const { setAuthDialogVisible } = authStore();
+
     const { width } = useDisplay();
     const route = useRoute();
 
@@ -51,7 +54,7 @@ const MSignup = defineComponent({
     const state = reactive({
       currentPage: 0, // default signup form
       dialog: true,
-      isAgreed: false,
+      isAgreed: true,
       socialIconList: [
         new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
         new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
@@ -68,7 +71,7 @@ const MSignup = defineComponent({
         emailAddress: "",
         password: "",
         promoCode: "",
-        isAgreed: false,
+        isAgreed: true,
         visible: false,
       },
       userName: "",
@@ -454,6 +457,17 @@ const MSignup = defineComponent({
       state.closeBtnShow = false;
     });
 
+    
+    const router = useRouter();
+    const authDialogVisible = computed(() => {
+    const { getAuthDialogVisible } = storeToRefs(authStore());
+      return getAuthDialogVisible.value;
+    });
+    const goPrivatePolicy = async () => {
+      await router.push({ name: "About_US", query: { index: 1 } });
+      setSignUpForm(false);
+      emit("close");
+    }
     return {
       t,
       ...toRefs(state),
@@ -478,6 +492,7 @@ const MSignup = defineComponent({
       handleEmailFocus,
       mergeEmail,
       cancelConfirm,
+      goPrivatePolicy,
     };
   },
 });
@@ -613,7 +628,7 @@ export default MSignup;
           />
           <p class="text-600-12 gray ml-1">
             {{ t("signup.formPage.agree.prefix") }}
-            <span class="white pointer">
+            <span class="white pointer" @click="goPrivatePolicy">
               {{ t("signup.formPage.agree.bold") }}
             </span>
             {{ t("signup.formPage.agree.suffix") }}

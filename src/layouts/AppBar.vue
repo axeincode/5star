@@ -14,7 +14,7 @@ import { mailStore } from "@/store/mail";
 import { storeToRefs } from "pinia";
 import { type GetUserData } from "@/interface/appBar";
 import { type GetMailData } from '@/interface/mail';
-import { type GetCurrencyItem } from '@/interface/deposit';
+import { type GetCurrencyBalanceList } from '@/interface/currency';
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
 import { useDisplay } from 'vuetify'
@@ -28,6 +28,8 @@ import img_vipemblem_75_99 from "@/assets/vip/image/img_vipemblem_75-99.png";
 import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png";
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
+
+import { currencyStore } from "@/store/currency";
 
 const { setAuthModalType } = authStore();
 const { dispatchUserProfile } = authStore();
@@ -45,10 +47,11 @@ const { setTransactionTab } = bonusTransactionStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setMailMenuShow } = mailStore();
-const { dispatchUserBalance } = userStore();
+const { dispatchUserBalance, dispatchSetUserCurrency } = userStore();
 const { dispatchSocketConnect } = socketStore();
 const { setDepositWithdrawToggle } = appBarStore();
 const { setBonusDashboardDialogVisible } = appBarStore();
+const { dispatchCurrencyList } = currencyStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -282,78 +285,68 @@ const withdrawDialogShow = () => {
 
 const userNavBarToggle = ref(false);
 
-const selectedCurrencyItem = ref<GetCurrencyItem>({
-  icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-  name: "BRL",
-  value: 515.25
+const selectedCurrencyItem = ref<GetCurrencyBalanceList>({
+  //icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
+  currency: "BRL",
+  amount: "515.25",
+  availabe_balance: "",
+  real: "",
+  bonus: "",
 })
 
-const currencyList = ref<Array<GetCurrencyItem>>([
+const currencyImages : Array<any> = ([
   {
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
     name: "BRL",
-    value: 515.25
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
     name: "PHP",
-    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
     name: "PEN",
-    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
     name: "MXN",
-    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
     name: "CLP",
-    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
     name: "USD",
-    value: 0
   },
   {
     icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
     name: "COP",
-    value: 0
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_91.svg", import.meta.url).href,
+    name: "EUR",
   },
 ])
+const imageIndex = ref<Array<number>>([]);
+const currencyList = computed(()=>{
+  const { getCurrencyList } = storeToRefs(currencyStore());
+  return getCurrencyList.value
+})
 
-const handleSelectCurrency = (item: GetCurrencyItem) => {
+watch(currencyList, (()=>{
+  imageIndex.value.length = 0;
+  currencyList.value.forEach(currency => {
+    imageIndex.value.push(currencyImages.findIndex(item=>item.name==currency.currency) !=  -1 ? currencyImages.findIndex(item=>item.name==currency.currency) : 0);
+  });
+}))
+
+const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   selectedCurrencyItem.value = item;
-  user.value.currency = item.name
-  const currencyUnit = item.name
-  let locale = 'pt-BR';
-  switch (currencyUnit) {
-    case "BRL":
-      locale = 'pt-BR';
-      break;
-    case "PHP":
-      locale = 'en-PH';
-      break;
-    case "PEN":
-      locale = 'en-PE';
-      break;
-    case "MXN":
-      locale = 'en-MX';
-      break;
-    case "CLP":
-      locale = 'es-CL';
-      break;
-    case "USD":
-      locale = 'en-US';
-    case "COP":
-      locale = 'es-CO';
-      break;
-  }
-  user.value.wallet = formatCurrency(Number(item.value), locale, currencyUnit);
+
+  await dispatchSetUserCurrency(item.currency);
+  await dispatchUserBalance();
+
   setTimeout(() => {
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
@@ -377,15 +370,38 @@ const showUserNavBar = (): void => {
 }
 
 watch(userBalance, (value) => {
-  const locale = 'pt-BR';
-  const currencyUnit = "BRL"
+  let locale = 'pt-BR';
+  const currencyUnit = value.currency
+  switch (currencyUnit) {
+    case "BRL":
+      locale = 'pt-BR';
+      break;
+    case "PHP":
+      locale = 'en-PH';
+      break;
+    case "PEN":
+      locale = 'en-PE';
+      break;
+    case "MXN":
+      locale = 'en-MX';
+      break;
+    case "CLP":
+      locale = 'es-CL';
+      break;
+    case "USD":
+      locale = 'en-US';
+    case "COP":
+      locale = 'es-CO';
+      break;
+  }
   user.value.wallet = formatCurrency(Number(value.amount), locale, currencyUnit);
   user.value.currency = value.currency
-  currencyList.value.map(item => {
+  selectedCurrencyItem.value.currency = value.currency
+  /*currencyList.value.map(item => {
     if (item.name == "BRL") {
       item.value = Number(value.amount)
     }
-  })
+  })*/
 })
 
 watch(socketBalance, (value) => {
@@ -497,6 +513,7 @@ onMounted(async () => {
   if (token.value != undefined) {
     await dispatchUserProfile();
     await dispatchUserBalance();
+    await dispatchCurrencyList();
     // await dispatchSocketConnect();
   }
 });
@@ -572,25 +589,25 @@ onMounted(async () => {
                     <v-list theme="dark" bg-color="#1D2027" class="px-2" width="427px">
                       <v-list-item
                         class="currency-item pl-6"
-                        :value="currencyItem.name"
+                        :value="currencyItem.currency"
                         v-for="(currencyItem, currencyIndex) in currencyList"
                         :key="currencyIndex"
                         :class="
-                          selectedCurrencyItem.name == currencyItem.name
+                          selectedCurrencyItem.currency == currencyItem.currency
                             ? 'currency-selected-item'
                             : ''
                         "
                         @click="handleSelectCurrency(currencyItem)"
                       >
                         <template v-slot:prepend>
-                          <img :src="currencyItem.icon" width="24" />
+                          <img width="24" />
                         </template>
                         <v-list-item-title class="ml-2 text-700-14">{{
-                          currencyItem.name
+                          currencyItem.currency
                         }}</v-list-item-title>
                         <template v-slot:append>
                           <p class="text-700-14 white">
-                            $ {{ currencyItem.value.toFixed(2) }}
+                            $ {{ parseFloat(currencyItem.amount).toFixed(2) }}
                           </p>
                         </template>
                       </v-list-item>
@@ -651,9 +668,9 @@ onMounted(async () => {
                     >
                       <v-list-item
                         class="currency-item pl-6"
-                        :value="currencyItem.name"
+                        :value="currencyItem.currency"
                         :class="
-                          selectedCurrencyItem.name == currencyItem.name
+                          selectedCurrencyItem.currency == currencyItem.currency
                             ? 'currency-selected-item'
                             : ''
                         "
@@ -662,14 +679,14 @@ onMounted(async () => {
                         @click="handleSelectCurrency(currencyItem)"
                       >
                         <template v-slot:prepend>
-                          <img :src="currencyItem.icon" width="20" />
+                          <img width="20" :src="currencyImages[imageIndex[currencyIndex]].icon"/>
                         </template>
                         <v-list-item-title class="ml-2 text-700-10">{{
-                          currencyItem.name
+                          currencyItem.currency
                         }}</v-list-item-title>
                         <template v-slot:append>
                           <p class="text-700-10 white">
-                            $ {{ currencyItem.value.toFixed(2) }}
+                            $ {{ parseFloat(currencyItem.amount).toFixed(2) }}
                           </p>
                         </template>
                       </v-list-item>
@@ -1123,8 +1140,8 @@ onMounted(async () => {
 
 <style lang="scss">
 .currency-selected-item {
-  border: 1px solid #00b25c;
-  border-radius: 14px;
+  border: 1px solid #00b25c !important;
+  border-radius: 14px !important;
 }
 
 .m-currency-menu {

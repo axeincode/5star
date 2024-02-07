@@ -70,6 +70,21 @@ export const userStore = defineStore({
       }
       await network.sendMsg(route, {}, next, 1, 4);
     },
+    // set user currency
+    async dispatchSetUserCurrency(currency:string) {
+      this.setSuccess(false);
+      const route: string = NETWORK.PERSONAL_INFO_PAGE.SET_USER_CURRENCY;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: any) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, {currency_type:currency}, next, 1);
+    },
     // user email verify
     async dispatchUserEmailVerify() {
       this.setSuccess(false);

@@ -340,7 +340,7 @@ onMounted(async () => {
 
 @media (max-width: 600px) {
   .v-progressive-image {
-    border-radius: 8px 32px;
+    border-radius: 8px 8px;
   }
 
   .more-btn-color {

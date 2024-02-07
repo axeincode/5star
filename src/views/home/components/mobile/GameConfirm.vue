@@ -162,7 +162,7 @@ watch(is_favorite, (value) => {
   .m-game-confirm-img {
     object-fit: cover;
     aspect-ratio: 0.74152;
-    border-radius: 8px 32px;
+    border-radius: 8px 8px;
   }
 
   .m-game-confirm-real-more-btn {

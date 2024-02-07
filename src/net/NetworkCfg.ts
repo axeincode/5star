@@ -15,6 +15,8 @@ export namespace NETWORK {
     static USER_AMOUNT = 'user/amount'; // get user amount
     static USER_INFO = '/user/info'; // get user profile
     static USER_BALANCE = '/user/balance'; // get user balance
+    static SET_USER_CURRENCY = '/user/currency'; // set user currency
+    
     static USER_CHANGE = '/user/change'; // update user info
     static USER_EMAIL = '/user/email'; // update email
     static USER_PASSWORD = '/user/password'; // update password
@@ -124,5 +126,9 @@ export namespace NETWORK {
 
   export class Banner{
     static BANNER_LIST = '/banner/list'; // banner list
+  }
+
+  export class Currency{
+    static CURRENCY_LIST = '/user/balance/list'; // currency list
   }
 }

@@ -442,7 +442,7 @@ onMounted(async () => {
 @media (max-width: 600px) {
   .m-home-search-body {
     .v-progressive-image {
-      border-radius: 8px 32px;
+      border-radius: 8px 8px;
       background: #1d2027;
       aspect-ratio: 0.74152;
     }
@@ -729,7 +729,7 @@ onMounted(async () => {
 
   .m-home-search-swiper-img {
     width: 100%;
-    border-radius: 8px 32px;
+    border-radius: 8px 8px;
   }
 }
 </style>
