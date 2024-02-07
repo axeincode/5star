@@ -6,6 +6,7 @@ import { appBarStore } from "@/store/appBar";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
 import { menuStore } from "@/store/menu";
+import { refferalStore } from "@/store/refferal";
 import { type GetMailData } from '@/interface/mail';
 import { useDisplay } from 'vuetify'
 import { storeToRefs } from "pinia";
@@ -35,6 +36,7 @@ const { setMailMenuShow } = mailStore();
 const { setSemiCircleShow } = menuStore();
 const { setRewardNavShow } = menuStore();
 const { setMobileMenuMailToggle } = mailStore();
+const { setRefferalDialogShow } = refferalStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -58,7 +60,6 @@ const mailIconColor = ref<string>('#7782AA');
 const promoIconColor = ref<string>('#7782AA');
 const searchIconColor = ref<string>('#7782AA');
 const rewardIconColor = ref<string>("#7782AA");
-const mailListHeight = ref<number>(0);
 
 const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
 const shareIconIndex = ref<number>(0);
@@ -274,50 +275,7 @@ watch(mailMenuShow, async (newValue) => {
   console.log(mailList.value.length);
   if (newValue) {
     for (let item of mailList.value) {
-      await new Promise<void>((resolve) => {
-        setTimeout(async () => {
-          tempMailList.value.push(item);
-          const vList = document.querySelector('.mobile-mail-menu');
-          if (!vList) {
-            return;
-          }
-          await new Promise<void>((resolve) => {
-            setTimeout(() => {
-              resolve();
-            }, 70)
-          })
-          const vListRect = vList.getBoundingClientRect();
-          const listItems = Array.from(vList.querySelectorAll('.mail-item')) as Array<HTMLElement>;
-          console.log("listItem: ", listItems.length);
-          const rect = listItems[tempMailList.value.length - 1].getBoundingClientRect();
-          console.log(tempMailList.value.length);
-          listItems[tempMailList.value.length - 1].style.zIndex = `${zIndex}`
-          if (rect.top > 0 && rect.bottom >= vListRect.bottom) {
-            listItems[tempMailList.value.length - 1].style.scale = `${scale}`;
-            listItems[tempMailList.value.length - 1].style.transform = `translateY(${translateY}px)`
-            listItems[tempMailList.value.length - 1].style.zIndex = `${zIndex}`
-            listItems[tempMailList.value.length - 1].style.opacity = `${opacity}`
-            listItems[tempMailList.value.length - 1].style.animation = '0.8s ease-in-out 0s 1 normal none running fadeIn'
-            var keyframes = `@keyframes fadeIn {
-                  from {
-                    opacity: 0;
-                    translateY(0px)
-                  }
-                  to {
-                    opacity: 0.8;
-                    translateY(${translateY}px)
-                  }
-              }`;
-            var styleSheet = document.styleSheets[0];
-            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-            scale -= 0.02;
-            translateY = translateY - 70;
-          }
-          zIndex -= 1;
-          console.log("rect, bottom", rect.bottom, vListRect.bottom);
-          resolve();
-        }, 10);
-      });
+      tempMailList.value.push(item);
     }
   } else {
     tempMailList.value = [];
@@ -575,92 +533,6 @@ const goToSharePage = () => {
 
 const listContainer = ref<any>(null);
 
-const handleScroll = (event: any) => {
-  const vList = document.querySelector('.mobile-mail-menu');
-
-  if (!vList) {
-    return;
-  }
-
-  const listItems = Array.from(vList.querySelectorAll('.mail-item')) as Array<HTMLElement>;
-
-  const currentScrollPos = event.target.scrollTop;
-
-  const vListRect = vList.getBoundingClientRect();
-
-  console.log(currentScrollPos - prevScrollPos.value);
-
-  const delta = currentScrollPos - prevScrollPos.value;
-
-  listItems.forEach((listItem: HTMLElement) => {
-    const rect = listItem.getBoundingClientRect();
-
-    // If the current scroll position is greater than the previous one, the scrollbar is going down
-    if (currentScrollPos > prevScrollPos.value) {
-      console.log('Scrollbar is going down');
-      console.log(Number(listItem.style.scale));
-      if (Number(listItem.style.scale) > 0 && Number(listItem.style.scale) < 1) {
-        listItem.style.scale = `${Number(listItem.style.scale) + 0.001}`;
-      } else if (Number(listItem.style.scale) > 0 && Number(listItem.style.scale) < 0.8) {
-        listItem.style.scale = `${Number(listItem.style.scale) + 0.002}`;
-      }
-      // console.log(window.getComputedStyle(listItem).getPropertyValue('transform'));
-      const matrix = new DOMMatrix(window.getComputedStyle(listItem).getPropertyValue('transform'));
-      // console.log(matrix.m42);
-      if (matrix.m42 != 0) {
-        const translateY = matrix.m42 + delta >= 0 ? 0 : matrix.m42 + delta
-        listItem.style.transform = `translateY(${translateY}px)`
-      } else {
-        listItem.style.scale = "1";
-        listItem.style.opacity = "1"
-      }
-      // listItem.style.zIndex = `100`
-      // if (rect.top > 0 && rect.bottom < window.innerHeight - 85 && rect.bottom > window.innerHeight - 115) {
-      //   listItem.classList.remove('scale-mail-item');
-      //   listItem.classList.add('animation-mail-item');
-      // }
-    }
-    // Otherwise, the scrollbar is going up
-    else {
-      // console.log('Scrollbar is going up');
-      // if (rect.bottom > window.innerHeight - 83) {
-      // listItem.classList.add('scale-mail-item');
-      // listItem.classList.remove('animation-mail-item');
-      // }
-      const opacity = 0.8
-      if (rect.top > 0 && rect.bottom >= vListRect.bottom) {
-        const matrix = new DOMMatrix(window.getComputedStyle(listItem).getPropertyValue('transform'));
-        const translateY = matrix.m42 + delta >= 0 ? 0 : matrix.m42 + delta
-        listItem.style.transform = `translateY(${translateY}px)`
-        listItem.style.scale = `${Number(listItem.style.scale) - 0.01}`;
-        listItem.style.opacity = `${opacity}`
-        listItem.style.animation = '0.8s ease-in-out 0s 1 normal none running fadeIn'
-        // var keyframes = `@keyframes fadeIn {
-        //       from {
-        //         opacity: 0;
-        //         translateY(0px)
-        //       }
-        //       to {
-        //         opacity: 0.8;
-        //         translateY(${translateY}px)
-        //       }
-        // }`;
-        // var styleSheet = document.styleSheets[0];
-        // styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-      }
-    }
-  });
-
-  if (event.target.scrollTop + event.target.clientHeight >= event.target.scrollHeight) {
-    console.log('Scrollbar reached the end');
-    listItems[listItems.length - 1].style.transform = `translateY(0px)`
-    listItems[listItems.length - 1].style.scale = "1";
-    listItems[listItems.length - 1].style.opacity = "1"
-  }
-
-  prevScrollPos.value = currentScrollPos;
-}
-
 const menuSvgTransform = (el: any) => {
   for (let node of el.children) {
     node.setAttribute('fill', menuIconColor.value)
@@ -753,22 +625,16 @@ const menuBlurEffectShow = computed(() => {
   return getMenuBlurEffectShow.value
 })
 
-const handleResize = () => {
-  mailListHeight.value = window.innerHeight - 246;
-}
 
 onMounted(() => {
-  calculateBottomDistance();
-  window_height.value = window.innerHeight
-  setInterval(() => {
-    shareIconIndex.value = shareIconIndex.value + 1;
-  }, 5000);
-  mailCount.value = mailList.value.length
-  console.log(tempMailList.value.length);
-  mailListHeight.value = window.innerHeight - 246;
-  window.addEventListener("resize", handleResize);
-  // console.log("1111111111111111", window.innerHeight - container_c.value.getBoundingClientRect().bottom);
 })
+
+const goReferFriend = (index:number) =>{
+  if(index == 1){
+    setOverlayScrimShow(false);
+    setRefferalDialogShow(true);
+  }
+}
 </script>
 
 <template>
@@ -981,26 +847,12 @@ onMounted(() => {
       content-class="mobile-mail-menu"
       :scrim="true"
       v-model:model-value="mailMenuShow"
-      transition="slide-y-transition"
     >
-      <template v-slot:activator="{ props }">
-        <!-- <v-btn class="menu-text-color" v-bind="props">
-          <div class="relative">
-            <inline-svg :src="icon_public_55" width="20" height="20" :transform-source="mailSvgTransform"></inline-svg>
-            <p class="chat-box-text">{{ mailCount }}</p>
-          </div>
-          <div class="text-600-12" :style="{ color: mailIconColor }">
-            {{ t("mobile_menu.mail") }}
-          </div>
-        </v-btn> -->
-      </template>
       <v-list
         theme="dark"
         bg-color="transparent"
         class="px-2 m-mail-list"
-        :height="tempMailList.length > 8 ? mailListHeight + 'px' : ''"
         :width="mobileWidth"
-        @scroll="handleScroll"
         style="box-shadow: none !important"
         :style="{ marginLeft: tempMailList.length > 8 ? '6px' : 'auto' }"
         ref="listContainer"
@@ -1020,6 +872,7 @@ onMounted(() => {
             class="mail-item"
             :value="mailItem.mail_content_1.content"
             height="64"
+            @click="goReferFriend(index)"
           >
             <template v-slot:prepend>
               <img :src="mailItem.icon" width="20" />
@@ -1056,20 +909,6 @@ onMounted(() => {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
-
-@keyframes mailScaling {
-  0% {
-    transform: scale(0.8);
-  }
-
-  80% {
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1);
-  }
 }
 
 @keyframes animationMailScaling {
@@ -1381,10 +1220,6 @@ onMounted(() => {
     background-color: #15161c !important;
     padding: 14px 20px !important;
     border-radius: 8px !important;
-    animation-name: mailScaling;
-    animation-duration: 0.3s;
-    animation-timing-function: linear;
-    animation-iteration-count: 1;
     // transition: transform 0.2s ease-in-out;
   }
 

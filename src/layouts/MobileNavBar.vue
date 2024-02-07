@@ -901,7 +901,7 @@ onMounted(async () => {
       <div class="m-vip-login-bonus mt-6" @click="openLoginBonusDialog">
         <img src="@/assets/public/image/img_public_1.png" class="m-vip-login-bonus-img" />
         <div class="m-vip-login-bonus-text">
-          <p class="text-900-10 white">{{ t("navBar.login_bonus_text") }}</p>
+          <p class="text-700-10 white">{{ t("navBar.login_bonus_text") }}</p>
           <p class="text-400-8 white" style="line-height: 6px">
             {{ t("navBar.unlock_text") }}
           </p>
@@ -911,7 +911,7 @@ onMounted(async () => {
       <div class="m-lucky-wheel mt-4" @click="openRouletteBonusDialog">
         <img src="@/assets/public/image/img_public_2.png" class="m-lucky-wheel-img" />
         <div class="m-vip-login-bonus-text">
-          <p class="text-900-10 white">{{ t("navBar.lucky_wheel_text") }}</p>
+          <p class="text-700-10 white">{{ t("navBar.lucky_wheel_text") }}</p>
           <p class="text-400-8 white" style="line-height: 6px">
             {{ t("navBar.unlock_text") }}
           </p>
@@ -920,7 +920,7 @@ onMounted(async () => {
       <div class="m-refer-earn mt-4" @click="openRefferalDialogShow">
         <img src="@/assets/public/svg/img_public_20.svg" width="184" />
         <img src="@/assets/public/image/img_public_6.png" width="48" class="m-earn-img" />
-        <p class="text-900-12 white m-refer-earn-text">
+        <p class="text-700-12 white m-refer-earn-text">
           {{ t("navBar.refer_earn_text") }}
         </p>
       </div>
