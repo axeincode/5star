@@ -36,7 +36,7 @@ const SignupHeader = defineComponent({
 
     return {
       t,
-      bodyHeight
+      bodyHeight,
     };
   },
 });
@@ -47,10 +47,6 @@ export default SignupHeader;
 <template>
   <v-row class="m-signup-header-container" :style="{ bottom: bodyHeight + 'px' }">
     <v-col cols="10" class="pl-10 pt-9">
-      <!-- <v-row>
-                <span class="logo-text purple">{{t('main.logo_text_1')}}</span>
-                <span class="logo-text yellow">{{t('main.logo_text_2')}}</span>
-            </v-row> -->
       <v-row>
         <p class="m-logo-text2 white">
           {{ t("signup.formPage.header.titleLine1") }}
@@ -59,12 +55,7 @@ export default SignupHeader;
         </p>
       </v-row>
     </v-col>
-    <!-- <img src="@/assets/login/image/bg_su_01.png" class="m-bg-image"> -->
-    <img
-      src="@/assets/public/image/logo_public_01.png"
-      class="m-logo-image"
-      width="80"
-    />
+    <img src="@/assets/public/image/logo_public_01.png" class="m-logo-image" width="80" />
     <img src="@/assets/login/image/img_su_01.png" class="m-coin-image" />
   </v-row>
 </template>
@@ -77,7 +68,7 @@ export default SignupHeader;
   height: 172px;
   border-radius: 8px 8px 0px 0px;
   margin: 0px !important;
-  background: linear-gradient(0deg, #0B123A 0%, #66FF63 100%), #5904d9;
+  background: linear-gradient(0deg, #0b123a 0%, #66ff63 100%), #5904d9;
 
   .v-col {
     z-index: 1;

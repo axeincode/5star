@@ -844,6 +844,8 @@ const goGameBetBy = () => {
   router.push({ name: "Sports" });
 }
 
+const casinoMenuList = ref<Array<any>>([]);
+
 const gameCategories = computed(() => {
   const { getGameCategories } = storeToRefs(gameStore());
   return getGameCategories.value;
@@ -853,6 +855,7 @@ onMounted(async () => {
   drawer.value = mobileWidth.value < 1280 ? false : true;
   languageText();
   await dispatchGameCategories('?type=casino');
+  casinoMenuList.value = gameCategories.value
 })
 </script>
 
@@ -1019,7 +1022,7 @@ onMounted(async () => {
           <v-card color="#15161C" theme="dark" class="mt-6" style="border-radius: 0px">
             <v-list>
               <v-list-item
-                v-for="(item, index) in gameCategories"
+                v-for="(item, index) in casinoMenuList"
                 class="m-casino-sub-img m-nav-sub-menu"
                 :value="item.slug"
                 style="margin-bottom: -4px !important; margin-top: -4px !important"

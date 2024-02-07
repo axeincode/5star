@@ -60,7 +60,7 @@ onUnmounted(() => {
 
 <template>
   <div class="mobile-dialog-container">
-    <div class="mobile-dialog-width">
+    <div class="mobile-dialog-width mb-2">
       <div class="mobile-dialog-toggle" v-if="mobileDialogSwitch">
         <input
           type="checkbox"
@@ -95,20 +95,21 @@ onUnmounted(() => {
 .mobile-dialog-container {
   position: sticky !important;
   top: 0px;
-  height: 48px;
+  height: 56px;
   width: 100%;
+  background: $color_1;
 }
 
 .mobile-dialog-width {
   width: 280px;
-  background: #1D2027;
+  background: #1d2027;
   margin: auto;
-  height: 100%;
+  height: 48px;
   border-radius: 0px 0px 24px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 4px 6px 1px #0000004d;
 }
 
 .mobile-dialog-toggle {
@@ -120,10 +121,11 @@ onUnmounted(() => {
     height: 40px;
     position: relative;
     display: block;
-    background: #15161C;
+    background: #15161c;
     border-radius: 20px !important;
     cursor: pointer;
     transition: 0.1s;
+    box-shadow: 0px 0px 6px 1px #00000059 inset;
 
     div {
       position: absolute;
@@ -167,7 +169,7 @@ onUnmounted(() => {
     position: absolute;
     top: 2px;
     left: 2px;
-    background: #009B3A;
+    background: #009b3a;
     border-radius: 18px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;

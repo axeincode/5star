@@ -360,13 +360,15 @@ const handleDepositSubmit = async () => {
     return;
   }
   loading.value = true
-  await dispatchUserDepositSubmit({
-    id_number: pixInfo.value.id,
-    first_name: pixInfo.value.first_name,
-    last_name: pixInfo.value.last_name,
-    channels_id: selectedPaymentItem.value.id,
-    amount: depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
-  })
+  let formData = {} as any;
+  if (depositConfig.value.deposit_user_switch) {
+    formData.id_number = pixInfo.value.id
+    formData.first_name = pixInfo.value.first_name
+    formData.last_name = pixInfo.value.last_name
+  }
+  formData.channels_id = selectedPaymentItem.value.id;
+  formData.amount = depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
+  await dispatchUserDepositSubmit(formData);
   loading.value = false;
   if (success.value) {
     await dispatchUserProfile();
@@ -822,7 +824,7 @@ onMounted(async () => {
     background: transparent;
   }
 
-  background-color: #1D2027;
+  background-color: #1d2027;
   height: 100%;
 
   .m-deposit-card-height {
@@ -846,11 +848,11 @@ onMounted(async () => {
   }
 
   .m-deposit-amout-btn-black {
-    background: #009B3A;
+    background: #009b3a;
     border-radius: 4px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
     width: 100% !important;
-    color:white !important;
+    color: white !important;
     .v-btn__content {
       font-family: Inter;
       font-size: 12px;
@@ -861,7 +863,7 @@ onMounted(async () => {
   }
 
   .m-deposit-amout-btn-white {
-    background: #23262F;
+    background: #23262f;
     border-radius: 4px;
     color: #ffffff;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
@@ -899,7 +901,7 @@ onMounted(async () => {
 
   .m-deposit-btn {
     text-align: center;
-    background: #23262F;
+    background: #23262f;
 
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -916,7 +918,7 @@ onMounted(async () => {
   }
 
   .m-deposit-btn-ready {
-    background: #009B3A;
+    background: #009b3a;
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
@@ -926,7 +928,7 @@ onMounted(async () => {
   }
 
   .dark-textfield .v-field__field {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
   }
 
   .v-field--variant-solo {
@@ -940,7 +942,7 @@ onMounted(async () => {
 
   .amount-checkbox {
     i.v-icon {
-      color: #15161C;
+      color: #15161c;
       background-color: #01983a;
       width: 16px;
       height: 16px;
@@ -949,7 +951,7 @@ onMounted(async () => {
     }
 
     i.mdi-checkbox-blank-outline {
-      background-color: #15161C;
+      background-color: #15161c;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }

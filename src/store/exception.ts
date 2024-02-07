@@ -30,7 +30,7 @@ export const handleException = (code: number) => {
             errorMsg = 'Registration data exception';
             break;
         case 102003:
-            errorMsg = 'Registration data exception';
+            errorMsg = 'The account you entered has been used by someone else, please input again';
             break;
         case 103001:
             errorMsg = 'Abnormal nickname format (abnormal length or illegal identifier)';

@@ -44,7 +44,7 @@ const Login = defineComponent({
     const { dispatchVipLevels } = vipStore();
     const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
-    
+
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
@@ -300,17 +300,8 @@ export default Login;
 
 <template>
   <div class="m-login-container">
-    <!-- <div class="m-login-container" :style="{ height: containerHeight + 'px' }"> -->
-    <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" />
-    <div
-      class="m-login-body px-6"
-      :style="{
-        height:
-          currentPage == PAGE_TYPE.FORGOT_PASSWORD
-            ? containerHeight + 'px'
-            : bodyHeight + 'px',
-      }"
-    >
+    <!-- <LoginHeader v-if="currentPage === PAGE_TYPE.LOGIN_FORM" /> -->
+    <div class="m-login-body px-6">
       <!-- SIGN UP FORM  -->
       <v-form
         v-if="currentPage === PAGE_TYPE.LOGIN_FORM"
@@ -413,7 +404,7 @@ export default Login;
           <p class="m-divide-text">
             {{ t("signup.formPage.divider") }}
           </p>
-          <v-divider color="white" />
+          <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
         </v-row>
         <v-row class="mt-6">
           <v-col cols="8" offset="2">
@@ -519,7 +510,7 @@ export default Login;
           <p class="m-divide-text">
             {{ t("signup.formPage.divider") }}
           </p>
-          <v-divider color="white" />
+          <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
         </v-row>
         <v-row class="mt-6">
           <v-col cols="8" offset="2">
@@ -574,7 +565,7 @@ export default Login;
   top: 86px;
   left: 50%;
   transform: translateX(-50%);
-  background: #1D2027;
+  background: #1d2027;
   width: calc(100% - 48px);
   border-radius: 16px;
   z-index: 200;
@@ -587,7 +578,7 @@ export default Login;
   top: 55px;
   left: 50%;
   transform: translateX(-50%);
-  background: #1D2027;
+  background: #1d2027;
   width: calc(100% - 48px);
   border-radius: 16px;
   z-index: 200;
@@ -632,11 +623,12 @@ export default Login;
 
 // container
 .m-login-container {
-  height: 613px;
-  border-radius: 26px 26px 0px 0px;
+  height: calc(100vh - 56px);
   position: fixed;
   bottom: 0;
   width: 100%;
+  background: $color_1;
+  overflow-y: auto;
 
   .v-field--variant-solo {
     background: transparent !important;
@@ -646,7 +638,7 @@ export default Login;
 // wrapper
 .m-login-body {
   border-radius: 8px 8px 0px 0px;
-  background: var(--bg-2-e-274-c, #1D2027);
+  background: var(--bg-2-e-274-c, #1d2027);
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -672,12 +664,12 @@ export default Login;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #23262F;
+  color: #414968;
   position: relative;
   top: 12px;
   text-align: center;
   width: 120px;
-  background-color: #1D2027;
+  background-color: #1d2027;
   margin: auto;
   z-index: 1;
 }
@@ -697,7 +689,7 @@ export default Login;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #23262F;
+  color: #23262f;
   position: relative;
   top: 12px;
   text-align: center;
@@ -709,7 +701,7 @@ export default Login;
 
 // social icon list component
 .social-icon-wrapper {
-  background-color: #1D2027 !important;
+  background-color: #1d2027 !important;
 
   .v-sheet {
     border-radius: 50px !important;

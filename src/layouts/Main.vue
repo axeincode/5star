@@ -852,7 +852,7 @@ onMounted(() => {
 }
 
 .mobile-dialog-toggle-height {
-  height: 40px !important;
+  height: 50px !important;
   margin: 0 !important;
   bottom: unset !important;
   top: 0 !important;
