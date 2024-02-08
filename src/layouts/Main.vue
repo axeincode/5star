@@ -659,7 +659,7 @@ onMounted(() => {
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('login')"
       persistent
-      style="z-index: 10000000000000020"
+      style="z-index: 2147483646"
     >
       <Login
         v-if="mobileVersion != 'sm'"
@@ -861,11 +861,8 @@ onMounted(() => {
 
 .mobile-login-dialog-position {
   position: fixed !important;
-  // position: absolute !important;
   margin: 0 !important;
-  height: 0px !important;
-  bottom: 0 !important;
-  top: unset !important;
+  top: 54px !important;
 }
 
 .v-navigation-drawer__scrim {

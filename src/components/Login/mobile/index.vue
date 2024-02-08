@@ -316,13 +316,13 @@ export default Login;
       <v-form
         v-if="currentPage === PAGE_TYPE.LOGIN_FORM"
         ref="form"
-        class="full-width"
+        class="full-width relative"
         @keyup.enter="handleLoginFormSubmit"
       >
-        <v-row class="relative mt-8">
+        <div class="relative mt-8">
           <v-text-field
             :label="t('signup.formPage.emailAddress')"
-            class="form-textfield dark-textfield m-login-email"
+            class="form-textfield dark-textfield m-login-email mx-0"
             variant="solo"
             density="comfortable"
             v-model="formData.emailAddress"
@@ -330,41 +330,41 @@ export default Login;
             @input="handleEmailChange"
             :onfocus="handleEmailFocus"
           />
-        </v-row>
-        <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
-          <v-list theme="dark" bg-color="#15161C">
-            <v-list-item
-              class="text-600-12 white"
-              value="gmail"
-              @click="mergeEmail('@gmail.com')"
-            >
-              {{ emailPartName }}@gmail.com
-            </v-list-item>
-            <v-list-item
-              class="text-600-12 white"
-              value="hotmail"
-              @click="mergeEmail('@hotmail.com')"
-              >{{ emailPartName }}@hotmail.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="yahoo"
-              @click="mergeEmail('@yahoo.com')"
-              >{{ emailPartName }}@yahoo.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="icloud"
-              @click="mergeEmail('@icloud.com')"
-              >{{ emailPartName }}@icloud.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="outlook"
-              @click="mergeEmail('@outlook.com')"
-              >{{ emailPartName }}@outlook.com</v-list-item
-            >
-          </v-list>
+          <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
+            <v-list theme="dark" bg-color="#15161C">
+              <v-list-item
+                class="text-600-12 white"
+                value="gmail"
+                @click="mergeEmail('@gmail.com')"
+              >
+                {{ emailPartName }}@gmail.com
+              </v-list-item>
+              <v-list-item
+                class="text-600-12 white"
+                value="hotmail"
+                @click="mergeEmail('@hotmail.com')"
+                >{{ emailPartName }}@hotmail.com</v-list-item
+              >
+              <v-list-item
+                class="text-600-12 white"
+                value="yahoo"
+                @click="mergeEmail('@yahoo.com')"
+                >{{ emailPartName }}@yahoo.com</v-list-item
+              >
+              <v-list-item
+                class="text-600-12 white"
+                value="icloud"
+                @click="mergeEmail('@icloud.com')"
+                >{{ emailPartName }}@icloud.com</v-list-item
+              >
+              <v-list-item
+                class="text-600-12 white"
+                value="outlook"
+                @click="mergeEmail('@outlook.com')"
+                >{{ emailPartName }}@outlook.com</v-list-item
+              >
+            </v-list>
+          </div>
         </div>
         <div class="mt-6 relative pa-0">
           <v-text-field
@@ -583,11 +583,11 @@ export default Login;
 
 .m-login-mail-card {
   position: absolute;
-  top: 86px;
+  top: 42px;
   left: 50%;
   transform: translateX(-50%);
   background: #1d2027;
-  width: calc(100% - 48px);
+  width: 100%;
   border-radius: 16px;
   z-index: 200;
   overflow: hidden;
@@ -644,9 +644,7 @@ export default Login;
 
 // container
 .m-login-container {
-  height: calc(100vh - 56px);
-  position: fixed;
-  bottom: 0;
+  height: 100vh;
   width: 100%;
   background: $color_1;
   overflow-y: auto;

@@ -236,6 +236,7 @@ const Dashboard = defineComponent({
 
     const favoriteGameList = computed(() => {
       const { getFavoriteGameList } = storeToRefs(gameStore());
+      console.log("11111111111111", getFavoriteGameList.value);
       return getFavoriteGameList.value
     })
 
@@ -664,8 +665,12 @@ const Dashboard = defineComponent({
       setSearchDialogShow(true);
     };
 
-    const showGameConfirmationDialog = (game_item: Game.GameItem) => {
+    const showGameConfirmationDialog = async (game_item: Game.GameItem) => {
+      // await dispatchGameFavoriteList();
+      const game_store = gameStore();
+      console.log("222222222222222", game_store.$state);
       state.is_favorite = favoriteGameList.value.some(item => item == game_item.id);
+      console.log(favoriteGameList.value);
       console.log(state.is_favorite);
       gameConfirmDialogShow.value = true;
       selectedGameItem.value = game_item;
@@ -960,8 +965,6 @@ const Dashboard = defineComponent({
       });
 
       pagingGames.value = gameCategories.value;
-
-      await dispatchGameFavoriteList();
 
       console.log("favoritegameList: ", favoriteGameList.value);
 

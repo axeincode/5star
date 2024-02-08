@@ -3,6 +3,8 @@ import { ref, onMounted } from "vue";
 import router from "@/router";
 import { authStore } from "@/store/auth";
 import { useI18n } from "vue-i18n";
+import { resetAllStores } from "@/store";
+import { gameStore } from "@/store/game";
 const emit = defineEmits<{
   (e: "close"): void;
 }>();
@@ -16,6 +18,10 @@ const signoutContainerOverflow = ref<string>("hidden");
 const signOut = (): void => {
   emit("close");
   dispatchSignout();
+  console.log("signout");
+  resetAllStores();
+  const game_store = gameStore();
+  console.log(game_store.$state);
   router.push({ name: "Dashboard" });
 };
 
@@ -106,7 +112,7 @@ onMounted(() => {
 
   .m-signout-animation-container {
     border-radius: 20px 20px 8px 8px;
-    background: #1D2027 !important;
+    background: #1d2027 !important;
     width: 328px;
     height: 201px;
     animation-name: signoutHeightFrame;
@@ -120,7 +126,7 @@ onMounted(() => {
       position: absolute;
       top: 0px;
       border-radius: 8px;
-      background: linear-gradient(180deg, #17C648 0%, #FFC327 0%, #07500E 100%);
+      background: linear-gradient(180deg, #17c648 0%, #ffc327 0%, #07500e 100%);
       text-align: center;
       height: 201px;
       animation-name: scaling;
