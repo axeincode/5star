@@ -409,6 +409,11 @@ watch(socketBalance, (value) => {
   const currencyUnit = "BRL";
   user.value.wallet = formatCurrency(Number(value.bal), locale, currencyUnit);
   user.value.currency = value.cur
+  currencyList.value.map(item => {
+    if (item.name == "BRL") {
+      item.value = Number(value.bal)
+    }
+  })
 })
 
 watch(userNavToggle, (newValue) => {

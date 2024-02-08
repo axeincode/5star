@@ -146,6 +146,21 @@ export const vipStore = defineStore({
                     this.setErrorMessage(handleException(response.code));
                 }
             }
+            await network.sendMsg(route, {}, next, 1, 4);
+        },
+        async dispatchVipSigninawardReceive() {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_SIGNINAWARD_RECEIVE;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: any) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.dispatchVipSignIn();
+                } else {
+                    this.setErrorMessage(handleException(response.code));
+                }
+            }
             await network.sendMsg(route, {}, next, 1);
         },
         // Receive VIP sign-in rewards
