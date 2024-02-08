@@ -19,11 +19,11 @@ import Withdraw from "@/components/cash/withdraw/index.vue";
 import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
 import MCashHeader from "@/components/cash/header/mobile/index.vue";
 import CashHeader from "@/components/cash/header/index.vue";
-import MobileDialog from "@/components/Signout/mobile/Header.vue";
-import Signup from "@/components/Signup/index.vue";
-import MSignup from "@/components/Signup/mobile/index.vue";
-import Login from "@/components/Login/index.vue";
-import MLogin from "@/components/Login/mobile/index.vue";
+// import MobileDialog from "@/components/Signout/mobile/Header.vue";
+// import Signup from "@/components/Signup/index.vue";
+// import MSignup from "@/components/Signup/mobile/index.vue";
+// import Login from "@/components/Login/index.vue";
+// import MLogin from "@/components/Login/mobile/index.vue";
 import MNickName from "@/components/auth/components/mobile/sign_up/NickName.vue";
 import Signout from "@/components/Signout/index.vue";
 import MSignout from "@/components/Signout/mobile/index.vue";
@@ -564,7 +564,7 @@ onMounted(() => {
       <MCashHeader />
     </v-dialog>
 
-    <!-- <v-dialog
+    <v-dialog
       v-model="withdrawDialog"
       :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
       :width="''"
@@ -596,7 +596,7 @@ onMounted(() => {
         <Deposit v-if="mobileWidth > 600" />
         <MDeposit class="m-deposit-sub-dialog" v-else />
       </template>
-    </v-dialog> -->
+    </v-dialog>
 
     <v-dialog
       v-model="cashDialog"
@@ -621,7 +621,7 @@ onMounted(() => {
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
-    <!-- <v-dialog
+    <v-dialog
       v-model="authDialog"
       :width="mobileVersion == 'sm' ? '' : 471"
       :fullscreen="mobileVersion == 'sm'"
@@ -638,11 +638,11 @@ onMounted(() => {
       <template v-else>
         <MAuth />
       </template>
-    </v-dialog> -->
+    </v-dialog>
 
     <!-------------------------------      SIGNUP     ------------------------------------>
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="mobileDialog"
       :fullscreen="mobileVersion == 'sm'"
       transition="dialog-top-transition"
@@ -672,11 +672,11 @@ onMounted(() => {
         @switch="switchDialog('signup')"
       />
       <MSignup v-else @close="closeDialog('signup')" @switch="switchDialog('signup')" />
-    </v-dialog>
+    </v-dialog> -->
 
     <!-------------------------------      LOGIN     ------------------------------------>
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="loginDialog"
       :width="mobileVersion == 'sm' ? '' : 471"
       :fullscreen="mobileVersion == 'sm'"
@@ -695,7 +695,7 @@ onMounted(() => {
         @switch="switchDialog('login')"
       />
       <MLogin v-else @close="closeDialog('login')" @switch="switchDialog('login')" />
-    </v-dialog>
+    </v-dialog> -->
 
     <!-------------------------------      NICKNAME     ------------------------------------>
 
