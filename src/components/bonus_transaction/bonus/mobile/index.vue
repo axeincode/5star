@@ -18,6 +18,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
+const { dispatchUserBalance } = userStore();
 
 const mobileWidth = computed(() => {
   return width.value
@@ -37,7 +38,8 @@ const userBonusList = computed(() => {
   const { getBonusList } = storeToRefs(bonusStore());
   if (getBonusList.value.list != undefined) {
     getBonusList.value.list.map(item => {
-      item.rate = Math.ceil(item.now / item.max);
+      console.log(item);
+      item.rate = Math.ceil(parseInt(item.now) / parseInt(item.max) * 100);
     })
     const resultTree = groupObjects(getBonusList.value.list);
     getBonusList.value.list = resultTree;
@@ -145,9 +147,10 @@ const confirmDailogShow = (id: number) => {
 };
 onMounted(async () => {
   await dispatchUserBonus();
-  console.log(userBonusList.value);
+  await dispatchUserBalance();
 })
 </script>
+
 <template>
   <v-row class="mt-4 mx-2 text-400-12 text-gray text-center">
     <v-col cols="12" class="pa-0">
@@ -201,6 +204,7 @@ onMounted(async () => {
         <template v-else v-for="(item, index) in userBonusList.list" :key="index">
           <div class="m-bonus-deposit-group mb-1">
             <v-expansion-panels>
+              
               <v-expansion-panel class="bg-color-211F31 m-collapse-body" :ripple="false">
                 <v-expansion-panel-title
                   :class="[
@@ -225,7 +229,7 @@ onMounted(async () => {
                         </div>
                         <div class="mt-2">
                           {{ userBalance.currency?.toLocaleUpperCase() }}
-                          {{ item.deposit }}
+                          {{ item.receive }}
                         </div>
                       </v-col>
                       <v-col
@@ -295,7 +299,7 @@ onMounted(async () => {
                             :class="[
                               item.status == 3
                                 ? 'failure-progress'
-                                : 'completion-progress',
+                                : 'real-completion-progress',
                             ]"
                           >
                             <div
@@ -310,7 +314,6 @@ onMounted(async () => {
                     </v-row>
                   </template>
                 </v-expansion-panel-title>
-
                 <v-expansion-panel-text class="mt-3">
                   <v-table class="m-forms-bonus-table-bg text-400-10 white">
                     <thead>
@@ -345,6 +348,8 @@ onMounted(async () => {
                   </v-row>
                 </v-expansion-panel-text>
               </v-expansion-panel>
+            
+            
               <v-expansion-panel
                 class="bg-color-211F31 m-collapse-body mt-1"
                 :ripple="false"
@@ -381,7 +386,7 @@ onMounted(async () => {
                         </div>
                         <div class="mt-2">
                           {{ userBalance.currency?.toLocaleUpperCase() }}
-                          {{ item.children[0].deposit }}
+                          {{ item.children[0].receive }}
                         </div>
                       </v-col>
                       <v-col
@@ -466,7 +471,7 @@ onMounted(async () => {
                             :class="[
                               item.children[0].status == 3
                                 ? 'failure-progress'
-                                : 'completion-progress',
+                                : 'bonus-completion-progress',
                             ]"
                           >
                             <div
@@ -546,6 +551,7 @@ onMounted(async () => {
     <MBonusDialog :id="selectedId" @bonusDialogHide="bonusDialogHide" />
   </v-dialog>
 </template>
+
 <style lang="scss">
 .m-bonus-forfeit-btn {
   width: 64px;
@@ -655,10 +661,18 @@ onMounted(async () => {
   background: transparent !important;
 }
 
-.completion-progress {
+.real-completion-progress {
   .v-progress-linear__determinate {
-    background: linear-gradient(180deg, #6d44f8 0%, #5726fc 100%) !important;
+    background: #009B3A !important;
     border-radius: 8px !important;
+    border: 2px solid #15161C;
+  }
+}
+.bonus-completion-progress {
+  .v-progress-linear__determinate {
+    background: #235AC5 !important;
+    border-radius: 8px !important;
+    border: 2px solid #15161C;
   }
 }
 

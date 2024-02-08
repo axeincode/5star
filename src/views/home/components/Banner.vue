@@ -15,6 +15,7 @@ import "swiper/css/virtual";
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 import { useRouter } from "vue-router";
 import { promoStore } from "@/store/promo";
+import { STATEMENT_TYPES } from "@babel/types";
 
 const BannerComponent = defineComponent({
   components: {
@@ -45,9 +46,6 @@ const BannerComponent = defineComponent({
        * Initialize the value of banner
        */
       slides: [
-        new URL("@/assets/home/image/img_hp_01.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_02.png", import.meta.url).href,
-        new URL("@/assets/home/image/img_hp_03.png", import.meta.url).href,
       ]
     });
     /**
@@ -133,6 +131,22 @@ const BannerComponent = defineComponent({
       }
 
     }
+    const calcSlide = ()=> {
+      let res = [...state.slides, ...state.slides];
+      //let res = [...state.slides];
+      return res;
+    }
+    const handleSlideChange = (event:any) => {
+      let bullets = document.getElementsByClassName("swiper-pagination-bullet");
+      
+      for (let i = 0; i < bullets.length; i++) {
+        if(i == event.activeIndex % state.slides.length)
+          bullets[event.activeIndex % state.slides.length].classList.add('swiper-pagination-bullet-active');
+        else{
+          bullets[i].classList.remove('swiper-pagination-bullet-active');
+        }
+      }
+    }
     return {
       ...toRefs(state),
       mobileWidth,
@@ -143,6 +157,8 @@ const BannerComponent = defineComponent({
       goToNext,
       slideImageClick,
       refferalAppBarShow,
+      calcSlide,
+      handleSlideChange,
     };
   },
 });
@@ -197,7 +213,7 @@ export default BannerComponent;
       :centeredSlides="true"
       :loop="true"
       :autoplay="{
-        delay: 10000,
+        delay: 2000,
         disableOnInteraction: false,
       }"
       :pagination="{
@@ -209,8 +225,9 @@ export default BannerComponent;
       class="mx-2"
       style="border-radius: 8px;"
       @swiper="getSwiperRef"
+      @slideChange="handleSlideChange"
     >
-      <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
+      <swiper-slide v-for="(slide, index) in calcSlide()" :key="index" :virtualIndex="index" >
         <img
           :src="slide"
           class="m-slider-img-width"
@@ -297,7 +314,9 @@ export default BannerComponent;
     opacity: 1;
     margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 2px) !important;
   }
-
+  .swiper-pagination-bullet:not(:nth-child(-n + 3)){
+    display: none !important;
+  }
   .swiper-pagination {
     bottom: -12px !important;
   }

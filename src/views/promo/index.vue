@@ -104,80 +104,99 @@ const promotionSvgTransform = (el: any) => {
   }
   return el;
 };
+const token = computed(() => {
+  const { getToken } = storeToRefs(authStore());
+  return getToken.value;
+});
 
 const handleContent = (item: PromoListData) => {
-  switch (item.click_feedback) {
-    case 5:
-      switch (item.content) {
-        case "deposit":
-          setDepositWithdrawToggle(true);
-          setMainBlurEffectShow(true);
-          setHeaderBlurEffectShow(true);
-          setMenuBlurEffectShow(true);
-          setDepositDialogToggle(true);
-          setCashDialogToggle(true);
-          setUserNavBarToggle(false);
-          break;
-        case "withdraw":
-          setWithdrawDialogToggle(true);
-          setCashDialogToggle(true);
-          setUserNavBarToggle(false);
-          break;
-        case "vip":
-          setVipNavBarToggle('1');
-          setNavBarToggle(false);
-          setMainBlurEffectShow(false);
-          setOverlayScrimShow(false);
-          break;
-        case "invite":
-          setAgentNavBarToggle(true);
-          setNavBarToggle(false);
-          setMainBlurEffectShow(false);
-          setOverlayScrimShow(false);
-          setTimeout(() => {
-            setMailMenuShow(false);
-            setMailMenuShow(true);
-          }, 200)
-          break;
-        case "reward":
-          setRewardNavShow(true);
-          setMainBlurEffectShow(true);
-          setOverlayScrimShow(true);
-          setUserNavBarToggle(false);
-          break;
-        case "user":
-          setAccountDialogShow(true);
-          setMainBlurEffectShow(true);
-          setHeaderBlurEffectShow(true);
-          setMenuBlurEffectShow(true);
-          setOverlayScrimShow(true);
-          setUserNavBarToggle(false);
-          break;
-        case "invite_popup":
-          setOverlayScrimShow(false);
-          setRefferalDialogShow(true)
-          setNavBarToggle(false);
-          break;
-        case "bet_task":
-          router.push({ name: 'Bonuses And Transactions' });
-          setBonusTabIndex(0);
-          setUserNavBarToggle(false);
-          break;
-        case "faq":
-          // case "/deposit":
-          router.push({name: "About_US", query: {index: 0}})
-          break;
-      }
-      break;
-    case 6:
-      break;
-    case 7:
-      break;
-    case 8:
-      break;
-    case 9:
-      break;
+  if(token.value == undefined){
+    setAuthModalType("login");
+    setOverlayScrimShow(false);
   }
+  else{
+    setDepositWithdrawToggle(true);
+    setMainBlurEffectShow(true);
+    setHeaderBlurEffectShow(true);
+    setMenuBlurEffectShow(true);
+    setDepositDialogToggle(true);
+    setCashDialogToggle(true);
+    setUserNavBarToggle(false);
+  }
+  /*else{
+    switch (item.click_feedback) {
+      case 5:
+        switch (item.content) {
+          case "deposit":
+            setDepositWithdrawToggle(true);
+            setMainBlurEffectShow(true);
+            setHeaderBlurEffectShow(true);
+            setMenuBlurEffectShow(true);
+            setDepositDialogToggle(true);
+            setCashDialogToggle(true);
+            setUserNavBarToggle(false);
+            break;
+          case "withdraw":
+            setWithdrawDialogToggle(true);
+            setCashDialogToggle(true);
+            setUserNavBarToggle(false);
+            break;
+          case "vip":
+            setVipNavBarToggle('1');
+            setNavBarToggle(false);
+            setMainBlurEffectShow(false);
+            setOverlayScrimShow(false);
+            break;
+          case "invite":
+            setAgentNavBarToggle(true);
+            setNavBarToggle(false);
+            setMainBlurEffectShow(false);
+            setOverlayScrimShow(false);
+            setTimeout(() => {
+              setMailMenuShow(false);
+              setMailMenuShow(true);
+            }, 200)
+            break;
+          case "reward":
+            setRewardNavShow(true);
+            setMainBlurEffectShow(true);
+            setOverlayScrimShow(true);
+            setUserNavBarToggle(false);
+            break;
+          case "user":
+            setAccountDialogShow(true);
+            setMainBlurEffectShow(true);
+            setHeaderBlurEffectShow(true);
+            setMenuBlurEffectShow(true);
+            setOverlayScrimShow(true);
+            setUserNavBarToggle(false);
+            break;
+          case "invite_popup":
+            setOverlayScrimShow(false);
+            setRefferalDialogShow(true)
+            setNavBarToggle(false);
+            break;
+          case "bet_task":
+            router.push({ name: 'Bonuses And Transactions' });
+            setBonusTabIndex(0);
+            setUserNavBarToggle(false);
+            break;
+          case "faq":
+            // case "/deposit":
+            router.push({name: "About_US", query: {index: 0}})
+            break;
+        }
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+      case 9:
+        break;
+    }
+  }*/
 }
 
 onMounted(async () => {

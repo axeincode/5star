@@ -11,8 +11,8 @@ export interface GetBonusData {
 export interface BonusItem {
     type: number
     status: number
-    now: number
-    max: number
+    now: string
+    max: string
     ended_at: number
     created_at: number
     deposit: number
