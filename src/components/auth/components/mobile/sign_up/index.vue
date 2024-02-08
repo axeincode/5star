@@ -9,15 +9,12 @@ import {
   watch,
 } from "vue";
 import { useI18n } from "vue-i18n";
-import ValidationBox from "@/components/Signup/ValidationBox.vue";
-import SignupHeader from "@/components/Signup/mobile/Header.vue";
+import ValidationBox from "./ValidationBox.vue";
 import { useDisplay } from "vuetify";
-import Notification from "@/components/global/notification/index.vue";
 import { authStore } from "@/store/auth";
 import { userStore } from "@/store/user";
 import { socketStore } from "@/store/socket";
 import { storeToRefs } from "pinia";
-import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
@@ -26,25 +23,26 @@ import { useRoute, useRouter } from "vue-router";
 const MSignup = defineComponent({
   components: {
     ValidationBox,
-    SignupHeader,
-    Notification,
-    ElNotification,
     SuccessIcon,
     WarningIcon,
   },
-  emits: ["close", "switch"],
+  emits: ["close", "switchAuthDialog"],
+  props: {
+    signUpDialogCheck: {
+      type: Boolean,
+      required: true,
+    },
+  },
   setup(props, { emit }) {
     // translation
     const { t } = useI18n();
     const { name } = useDisplay();
     const { dispatchSignUp } = authStore();
+    const { setAuthDialogVisible } = authStore();
     const { dispatchUserProfile } = authStore();
-    const { setSignUpForm } = authStore();
-    const { setDialogCheckbox } = authStore();
     const { setNickNameDialogVisible } = authStore();
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
-    const { setAuthDialogVisible } = authStore();
 
     const { width } = useDisplay();
     const route = useRoute();
@@ -64,7 +62,6 @@ const MSignup = defineComponent({
         SIGNUP_FORM: 0,
         CONFIRM_CANCEL: 1,
         ALREADY_REGISTERED: 2,
-        DISPLAY_NAME: 3,
       },
       formData: {
         emailAddress: "",
@@ -105,15 +102,19 @@ const MSignup = defineComponent({
       loading: false,
       mailCardHeight: 0,
       emailPartName: "",
-      notificationShow: false,
-      checkIcon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
-      notificationText: t("signup.submit_result.success_text"),
-      closeBtnHeight: 0,
-      closeBtnShow: false,
-      containerHeight: 0,
-      bodyHeight: 0,
-      overflow: false,
     });
+
+    watch(
+      props,
+      (value) => {
+        if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
+          state.currentPage = state.PAGE_TYPE.CONFIRM_CANCEL;
+        } else if (state.currentPage == state.PAGE_TYPE.CONFIRM_CANCEL) {
+          setAuthDialogVisible(false);
+        }
+      },
+      { deep: true }
+    );
 
     const showPassword = () => {
       state.isShowPassword = !state.isShowPassword;
@@ -131,19 +132,6 @@ const MSignup = defineComponent({
     const mobileVersion = computed(() => {
       return name.value;
     });
-
-    const dialogCheckbox = computed(() => {
-      const { getDialogCheckbox } = storeToRefs(authStore());
-      return getDialogCheckbox.value;
-    });
-
-    watch(
-      dialogCheckbox,
-      (newValue) => {
-        state.closeBtnShow = false;
-      },
-      { deep: true }
-    );
 
     // flag when login successed
     const success = computed(() => {
@@ -247,16 +235,12 @@ const MSignup = defineComponent({
       state.currentPage = state.PAGE_TYPE.SIGNUP_FORM;
     };
 
-    const handleClickConfirmButton = (): void => {
-      emit("switch", "login");
+    const goSignInPage = (): void => {
+      emit("switchAuthDialog", "login");
     };
 
     // handle form submit
     const handleSignupFormSubmit = async () => {
-      // setSignUpForm(false);
-      // emit("close");
-      // setNickNameDialogVisible(true);
-
       if (!validateEmail()) {
         state.isShowEmailValidaton = true;
         return;
@@ -300,8 +284,7 @@ const MSignup = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
-        setSignUpForm(false);
-        emit("close");
+        setAuthDialogVisible(false);
         setNickNameDialogVisible(true);
         const toast = useToast();
         toast.success(t("signup.submit_result.success_text"), {
@@ -316,12 +299,6 @@ const MSignup = defineComponent({
           icon: SuccessIcon,
           rtl: false,
         });
-        // state.notificationShow = !state.notificationShow;
-        // state.checkIcon = new URL(
-        //   "@/assets/public/svg/icon_public_18.svg",
-        //   import.meta.url
-        // ).href;
-        // state.notificationText = t("signup.submit_result.success_text");
       } else {
         console.log;
         if (
@@ -344,49 +321,15 @@ const MSignup = defineComponent({
             rtl: false,
           });
         }
-        // state.notificationShow = !state.notificationShow;
-        // state.checkIcon = new URL(
-        //   "@/assets/public/svg/icon_public_17.svg",
-        //   import.meta.url
-        // ).href;
-        // state.notificationText = errMessage.value;
       }
     };
 
-    const handleUsernameSubmit = (): void => {
-      console.log("user name submit!");
-    };
-
-    const dialogVisible = computed(() => {
-      const { getAuthDialogVisible } = storeToRefs(authStore());
-      return getAuthDialogVisible.value;
-    });
-
-    watch(
-      dialogVisible,
-      (newValue) => {
-        if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
-          state.currentPage = state.PAGE_TYPE.CONFIRM_CANCEL;
-        } else {
-          setSignUpForm(false);
-          emit("close");
-        }
-      },
-      { deep: true }
-    );
-
-    const closeDialog = (): void => {
-      if (state.currentPage == state.PAGE_TYPE.SIGNUP_FORM) {
-        state.currentPage = state.PAGE_TYPE.CONFIRM_CANCEL;
-      } else {
-        setSignUpForm(false);
-        emit("close");
-      }
+    const goRegisterPage = (): void => {
+      state.currentPage = state.PAGE_TYPE.SIGNUP_FORM;
     };
 
     const handleEmailChange = () => {
       handleValidateEmail();
-      // console.log("onchange")
       if (state.formData.emailAddress.includes("@")) {
         state.emailPartName = state.formData.emailAddress.split("@")[0];
         state.mailCardHeight = 220;
@@ -399,7 +342,6 @@ const MSignup = defineComponent({
 
     const handleEmailFocus = () => {
       handleValidateEmail();
-      // console.log("onFocus")
       if (state.formData.emailAddress.includes("@")) {
         state.emailPartName = state.formData.emailAddress.split("@")[0];
         state.mailCardHeight = 220;
@@ -414,62 +356,21 @@ const MSignup = defineComponent({
     };
 
     const cancelConfirm = () => {
-      setSignUpForm(false);
-      emit("close");
-    };
-
-    watch(
-      mobileWidth,
-      (newValue) => {
-        state.containerHeight = window.innerHeight - 54;
-        state.bodyHeight = window.innerHeight - 203;
-      },
-      { deep: true }
-    );
-
-    const handleResize = () => {
-      if (window.visualViewport?.height != undefined) {
-        state.containerHeight = window.visualViewport?.height - 54;
-        state.bodyHeight = window.innerHeight - 194;
-        if (window.visualViewport.height < 667) {
-          state.overflow = true;
-        } else {
-          state.overflow = false;
-        }
-      }
+      setAuthDialogVisible(false);
     };
 
     onMounted(() => {
       console.log("promo code::::::::::::::::::::", route.query.code);
       state.formData.promoCode = route.query.code ? route.query.code.toString() : "";
-      if (window.visualViewport?.height != undefined) {
-        state.containerHeight = window.visualViewport?.height - 54;
-        state.bodyHeight = window.innerHeight - 194;
-        if (window.visualViewport.height < 667) {
-          state.overflow = true;
-        }
-      }
-      setSignUpForm(true);
-      window.addEventListener("resize", handleResize);
-      // setTimeout(() => {
-      //   state.closeBtnShow = true;
-      // }, 300);
-    });
-
-    onBeforeUnmount(() => {
-      state.closeBtnShow = false;
     });
 
     const router = useRouter();
-    const authDialogVisible = computed(() => {
-      const { getAuthDialogVisible } = storeToRefs(authStore());
-      return getAuthDialogVisible.value;
-    });
+
     const goPrivatePolicy = async () => {
       await router.push({ name: "About_US", query: { index: 1 } });
-      setSignUpForm(false);
-      emit("close");
+      setAuthDialogVisible(false);
     };
+
     return {
       t,
       ...toRefs(state),
@@ -485,11 +386,10 @@ const MSignup = defineComponent({
       handleOnUserNameInputBlur,
       handleOnEmailInputBlur,
       handleClickContinueButton,
-      handleClickConfirmButton,
+      goSignInPage,
       handleSignupFormSubmit,
-      handleUsernameSubmit,
       showPassword,
-      closeDialog,
+      goRegisterPage,
       handleEmailChange,
       handleEmailFocus,
       mergeEmail,
@@ -503,331 +403,240 @@ export default MSignup;
 </script>
 
 <template>
-  <div class="m-signup-container">
-    <!-- <SignupHeader v-if="currentPage !== PAGE_TYPE.DISPLAY_NAME" /> -->
-    <div class="m-signup-body px-6">
-      <div class="my-15 d-flex justify-center align-center">
-        <img src="@/assets/public/image/logo_public_01.png" width="86" />
-        <div class="ml-2">
-          <div class="text-800-16 white">
-            {{ t("signup.formPage.header.titleLine1") }}
-          </div>
-          <div class="text-900-20 white">
-            {{ t("signup.formPage.header.titleLine2") }}
-          </div>
+  <div class="m-signup-container px-6">
+    <div class="my-15 d-flex justify-center align-center">
+      <img src="@/assets/public/image/logo_public_01.png" width="86" />
+      <div class="ml-2">
+        <div class="text-800-16 white">
+          {{ t("signup.formPage.header.titleLine1") }}
         </div>
-      </div>
-      <v-form
-        v-if="currentPage === PAGE_TYPE.SIGNUP_FORM"
-        ref="form"
-        class="full-width"
-        @keyup.enter="handleSignupFormSubmit"
-      >
-        <div class="relative mt-10 pa-0">
-          <v-text-field
-            :label="t('signup.formPage.emailAddress')"
-            class="form-textfield dark-textfield ma-0 m-text-field m-signup-email"
-            variant="solo"
-            density="comfortable"
-            v-model="formData.emailAddress"
-            :onblur="handleOnEmailInputBlur"
-            @input="handleEmailChange"
-            :onfocus="handleEmailFocus"
-          />
-          <ValidationBox
-            v-if="isShowEmailValidaton"
-            :title="
-              t(
-                `signup.formPage.validation.email.${
-                  formData.emailAddress.length ? 'title2' : 'title'
-                }`
-              )
-            "
-            :withCautionIcon="true"
-          />
-          <div class="m-register-mail-card" :style="{ height: mailCardHeight + 'px' }">
-            <v-list theme="dark" bg-color="#1D2027">
-              <v-list-item
-                class="text-600-12 white"
-                value="gmail"
-                @click="mergeEmail('@gmail.com')"
-              >
-                {{ emailPartName }}@gmail.com
-              </v-list-item>
-              <v-list-item
-                class="text-600-12 white"
-                value="hotmail"
-                @click="mergeEmail('@hotmail.com')"
-                >{{ emailPartName }}@hotmail.com</v-list-item
-              >
-              <v-list-item
-                class="text-600-12 white"
-                value="yahoo"
-                @click="mergeEmail('@yahoo.com')"
-                >{{ emailPartName }}@yahoo.com</v-list-item
-              >
-              <v-list-item
-                class="text-600-12 white"
-                value="icloud"
-                @click="mergeEmail('@icloud.com')"
-                >{{ emailPartName }}@icloud.com</v-list-item
-              >
-              <v-list-item
-                class="text-600-12 white"
-                value="outlook"
-                @click="mergeEmail('@outlook.com')"
-                >{{ emailPartName }}@outlook.com</v-list-item
-              >
-            </v-list>
-          </div>
+        <div class="text-900-20 white">
+          {{ t("signup.formPage.header.titleLine2") }}
         </div>
-        <div class="mt-6 relative pa-0">
-          <v-text-field
-            :label="t('signup.formPage.password')"
-            class="form-textfield dark-textfield ma-0 m-signup-password"
-            variant="solo"
-            density="comfortable"
-            :type="isShowPassword ? 'text' : 'password'"
-            v-model="formData.password"
-            :onfocus="handleOnPasswordInputFocus"
-            :onblur="handleOnPasswordInputBlur"
-          />
-          <img
-            v-if="isShowPassword"
-            src="@/assets/public/svg/icon_public_07.svg"
-            class="m-disable-password"
-            @click="showPassword"
-            width="16"
-          />
-          <img
-            v-else
-            src="@/assets/public/svg/icon_public_06.svg"
-            class="m-disable-password"
-            @click="showPassword"
-            width="16"
-          />
-          <ValidationBox
-            v-if="isShowPasswordValidation"
-            :descriptionList="passwordValidationStrList"
-            :validationList="passwordValidationList"
-          />
-        </div>
-        <v-row class="mt-2">
-          <v-text-field
-            :label="t('signup.formPage.promoCode')"
-            class="form-textfield normal-textfield m-signup-promo"
-            variant="solo"
-            density="comfortable"
-            v-model="formData.promoCode"
-          />
-        </v-row>
-        <div class="mt-2" style="display: flex; align-items: center; height: 46px">
-          <v-checkbox
-            v-model="formData.isAgreed"
-            hide-details
-            icon
-            class="m-agreement-checkbox"
-            style="margin-bottom: 20px"
-          />
-          <p class="text-600-12 gray ml-1">
-            {{ t("signup.formPage.agree.prefix") }}
-            <span class="white pointer" @click="goPrivatePolicy">
-              {{ t("signup.formPage.agree.bold") }}
-            </span>
-            {{ t("signup.formPage.agree.suffix") }}
-          </p>
-        </div>
-        <v-row>
-          <v-btn
-            class="mt-8 mx-3"
-            :class="isFormDataReady ? 'm-signup-btn' : 'm-signup-disabled-btn'"
-            width="94%"
-            height="48px"
-            :loading="loading"
-            :onclick="handleSignupFormSubmit"
-          >
-            {{ t("signup.formPage.button") }}
-          </v-btn>
-        </v-row>
-        <v-row class="mt-6">
-          <p class="m-divide-text">
-            {{ t("signup.formPage.divider") }}
-          </p>
-          <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
-        </v-row>
-        <v-row class="mt-6">
-          <v-col cols="8" offset="2">
-            <div
-              class="d-flex justify-space-around bg-surface-variant social-icon-wrapper"
-            >
-              <v-sheet
-                v-for="(item, index) in socialIconList"
-                :key="index"
-                color="#131828"
-                class="rounded"
-              >
-                <v-btn
-                  color="grey-darken-4"
-                  class="m-social-icon-button"
-                  icon=""
-                  height="36px"
-                  width="36px"
-                >
-                  <img :src="item" width="36" />
-                </v-btn>
-              </v-sheet>
-            </div>
-          </v-col>
-        </v-row>
-      </v-form>
-
-      <!-- Confirm cancel. -->
-      <div v-if="currentPage == PAGE_TYPE.CONFIRM_CANCEL" class="full-width">
-        <v-row style="margin-top: 100px" class="mx-4">
-          <p class="text-700-20 white center full-width">
-            {{ t("signup.confirmCancelPage.title") }}
-          </p>
-        </v-row>
-        <v-row class="mt-7">
-          <p class="text-400-14 slate-gray center full-width">
-            {{ t("signup.confirmCancelPage.description") }}
-          </p>
-        </v-row>
-        <v-row style="margin-top: 100px">
-          <v-btn
-            class="ma-3 button-bright m-signup-continue-btn"
-            width="94%"
-            height="48px"
-            @click="handleClickContinueButton"
-          >
-            {{ t("signup.confirmCancelPage.continue") }}
-          </v-btn>
-        </v-row>
-        <v-row class="mt-4">
-          <v-btn
-            class="ma-3 button-dark m-signup-cancel-btn"
-            width="94%"
-            height="48px"
-            @click="cancelConfirm"
-          >
-            {{ t("signup.confirmCancelPage.cancel") }}
-          </v-btn>
-        </v-row>
-      </div>
-
-      <!-- Already registered notification -->
-      <div v-if="currentPage == PAGE_TYPE.ALREADY_REGISTERED" class="full-width">
-        <v-row>
-          <p class="m-label-text-md slate-gray center full-width px-8">
-            {{ t("signup.alreadyRegisterPage.title") }}
-          </p>
-        </v-row>
-        <v-row style="margin-top: 126px">
-          <v-btn
-            class="ma-3 button-bright m-signup-confirm-btn"
-            width="-webkit-fill-available"
-            height="48px"
-            autocapitalize="off"
-            @click="handleClickConfirmButton"
-          >
-            {{ t("signup.alreadyRegisterPage.confirm") }}
-          </v-btn>
-        </v-row>
-        <v-row class="mt-4">
-          <v-btn
-            class="ma-3 button-dark m-signup-cancel-btn"
-            width="-webkit-fill-available"
-            height="48px"
-            autocapitalize="off"
-            @click="closeDialog"
-          >
-            {{ t("signup.alreadyRegisterPage.cancel") }}
-          </v-btn>
-        </v-row>
-      </div>
-
-      <!-- Enter avatar and display name -->
-      <div v-if="currentPage == PAGE_TYPE.DISPLAY_NAME" class="full-width">
-        <v-row class="carousel-container ml-0">
-          <v-carousel height="400" show-arrows hide-delimiters class="carousel">
-            <template v-slot:prev="{ props }">
-              <v-btn
-                class="button-carousel ma-2"
-                variant="text"
-                icon="mdi-chevron-left"
-                @click="props.onClick"
-              ></v-btn>
-            </template>
-            <template v-slot:next="{ props }">
-              <v-btn
-                class="button-carousel ma-2"
-                variant="text"
-                icon="mdi-chevron-right"
-                @click="props.onClick"
-              ></v-btn>
-            </template>
-            <v-carousel-item v-for="(slide, i) in slides" :key="i">
-              <img :src="slide" width="123" style="margin-top: 20px" />
-            </v-carousel-item>
-          </v-carousel>
-        </v-row>
-        <v-row class="mt-4 mb-2">
-          <p class="text-700-16 white full-width center">
-            {{ t("signup.displayNamePage.title") }}
-          </p>
-        </v-row>
-        <v-row class="mt-4 relative m-display-name-input">
-          <v-text-field
-            :label="t('signup.displayNamePage.username')"
-            class="form-textfield dark-textfield"
-            variant="solo"
-            density="comfortable"
-            v-model="userName"
-            :onfocus="handleOnUserNameInputFocus"
-            :onblur="handleOnUserNameInputBlur"
-          />
-          <ValidationBox
-            v-if="isShowUsernameValidation"
-            :title="t('signup.displayNamePage.validation.username.title')"
-            :descriptionList="userNameValidationStrList"
-            :validationList="userNameValidationList"
-          />
-        </v-row>
-        <v-row>
-          <v-btn
-            class="ma-3 mt-8 mb-8 button-bright m-signup-confirm-btn"
-            width="-webkit-fill-available"
-            height="48px"
-            :disabled="!validateUserName()"
-            @click="$emit('close')"
-          >
-            {{ t("signup.displayNamePage.submit") }}
-          </v-btn>
-        </v-row>
       </div>
     </div>
-    <v-btn
-      :class="
-        currentPage == PAGE_TYPE.DISPLAY_NAME ? 'm-close-button-1' : 'm-close-button'
-      "
-      icon="true"
-      @click="closeDialog"
-      width="30"
-      height="30"
-      style="top: -53px; visibility: hidden"
-      v-if="closeBtnShow"
-    >
-      <img src="@/assets/public/svg/icon_public_10.svg" />
-      <!-- <v-icon :color="currentPage === PAGE_TYPE.DISPLAY_NAME ? '#7782AA' : '#FFFFFF'">
-                mdi-close
-            </v-icon> -->
-    </v-btn>
+    <v-form v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" class="full-width">
+      <div class="relative mt-10 pa-0">
+        <v-text-field
+          :label="t('signup.formPage.emailAddress')"
+          class="form-textfield dark-textfield ma-0 m-text-field m-signup-email"
+          variant="solo"
+          density="comfortable"
+          v-model="formData.emailAddress"
+          :onblur="handleOnEmailInputBlur"
+          @input="handleEmailChange"
+          :onfocus="handleEmailFocus"
+        />
+        <ValidationBox
+          v-if="isShowEmailValidaton"
+          :title="
+            t(
+              `signup.formPage.validation.email.${
+                formData.emailAddress.length ? 'title2' : 'title'
+              }`
+            )
+          "
+          :withCautionIcon="true"
+        />
+        <div class="m-register-mail-card" :style="{ height: mailCardHeight + 'px' }">
+          <v-list theme="dark" bg-color="#1D2027">
+            <v-list-item
+              class="text-600-12 white"
+              value="gmail"
+              @click="mergeEmail('@gmail.com')"
+            >
+              {{ emailPartName }}@gmail.com
+            </v-list-item>
+            <v-list-item
+              class="text-600-12 white"
+              value="hotmail"
+              @click="mergeEmail('@hotmail.com')"
+              >{{ emailPartName }}@hotmail.com</v-list-item
+            >
+            <v-list-item
+              class="text-600-12 white"
+              value="yahoo"
+              @click="mergeEmail('@yahoo.com')"
+              >{{ emailPartName }}@yahoo.com</v-list-item
+            >
+            <v-list-item
+              class="text-600-12 white"
+              value="icloud"
+              @click="mergeEmail('@icloud.com')"
+              >{{ emailPartName }}@icloud.com</v-list-item
+            >
+            <v-list-item
+              class="text-600-12 white"
+              value="outlook"
+              @click="mergeEmail('@outlook.com')"
+              >{{ emailPartName }}@outlook.com</v-list-item
+            >
+          </v-list>
+        </div>
+      </div>
+      <div class="mt-6 relative pa-0">
+        <v-text-field
+          :label="t('signup.formPage.password')"
+          class="form-textfield dark-textfield ma-0 m-signup-password"
+          variant="solo"
+          density="comfortable"
+          :type="isShowPassword ? 'text' : 'password'"
+          v-model="formData.password"
+          :onfocus="handleOnPasswordInputFocus"
+          :onblur="handleOnPasswordInputBlur"
+        />
+        <img
+          v-if="isShowPassword"
+          src="@/assets/public/svg/icon_public_07.svg"
+          class="m-disable-password"
+          @click="showPassword"
+          width="16"
+        />
+        <img
+          v-else
+          src="@/assets/public/svg/icon_public_06.svg"
+          class="m-disable-password"
+          @click="showPassword"
+          width="16"
+        />
+        <ValidationBox
+          v-if="isShowPasswordValidation"
+          :descriptionList="passwordValidationStrList"
+          :validationList="passwordValidationList"
+        />
+      </div>
+      <v-row class="mt-2">
+        <v-text-field
+          :label="t('signup.formPage.promoCode')"
+          class="form-textfield normal-textfield m-signup-promo"
+          variant="solo"
+          density="comfortable"
+          v-model="formData.promoCode"
+        />
+      </v-row>
+      <div class="mt-2" style="display: flex; align-items: center; height: 46px">
+        <v-checkbox
+          v-model="formData.isAgreed"
+          hide-details
+          icon
+          class="m-agreement-checkbox"
+          style="margin-bottom: 20px"
+        />
+        <p class="text-600-12 gray ml-1">
+          {{ t("signup.formPage.agree.prefix") }}
+          <span class="white pointer" @click="goPrivatePolicy">
+            {{ t("signup.formPage.agree.bold") }}
+          </span>
+          {{ t("signup.formPage.agree.suffix") }}
+        </p>
+      </div>
+      <v-row>
+        <v-btn
+          class="mt-8 mx-3"
+          :class="isFormDataReady ? 'm-signup-btn' : 'm-signup-disabled-btn'"
+          width="94%"
+          height="48px"
+          :loading="loading"
+          :onclick="handleSignupFormSubmit"
+        >
+          {{ t("signup.formPage.button") }}
+        </v-btn>
+      </v-row>
+      <v-row class="mt-6">
+        <p class="m-divide-text">
+          {{ t("signup.formPage.divider") }}
+        </p>
+        <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
+      </v-row>
+      <v-row class="mt-6">
+        <v-col cols="8" offset="2">
+          <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
+            <v-sheet
+              v-for="(item, index) in socialIconList"
+              :key="index"
+              color="#131828"
+              class="rounded"
+            >
+              <v-btn
+                color="grey-darken-4"
+                class="m-social-icon-button"
+                icon=""
+                height="36px"
+                width="36px"
+              >
+                <img :src="item" width="36" />
+              </v-btn>
+            </v-sheet>
+          </div>
+        </v-col>
+      </v-row>
+    </v-form>
+
+    <!-- Confirm cancel. -->
+    <div v-if="currentPage == PAGE_TYPE.CONFIRM_CANCEL" class="full-width">
+      <v-row style="margin-top: 100px" class="mx-4">
+        <p class="text-700-20 white center full-width">
+          {{ t("signup.confirmCancelPage.title") }}
+        </p>
+      </v-row>
+      <v-row class="mt-7">
+        <p class="text-400-14 slate-gray center full-width">
+          {{ t("signup.confirmCancelPage.description") }}
+        </p>
+      </v-row>
+      <v-row style="margin-top: 100px">
+        <v-btn
+          class="ma-3 button-bright m-signup-continue-btn"
+          width="94%"
+          height="48px"
+          @click="handleClickContinueButton"
+        >
+          {{ t("signup.confirmCancelPage.continue") }}
+        </v-btn>
+      </v-row>
+      <v-row class="mt-4">
+        <v-btn
+          class="ma-3 button-dark m-signup-cancel-btn"
+          width="94%"
+          height="48px"
+          @click="cancelConfirm"
+        >
+          {{ t("signup.confirmCancelPage.cancel") }}
+        </v-btn>
+      </v-row>
+    </div>
+
+    <!-- Already registered notification -->
+    <div v-if="currentPage == PAGE_TYPE.ALREADY_REGISTERED" class="full-width">
+      <v-row>
+        <p class="m-label-text-md slate-gray center full-width px-8">
+          {{ t("signup.alreadyRegisterPage.title") }}
+        </p>
+      </v-row>
+      <v-row style="margin-top: 126px">
+        <v-btn
+          class="ma-3 button-bright m-signup-confirm-btn"
+          width="-webkit-fill-available"
+          height="48px"
+          autocapitalize="off"
+          @click="goSignInPage"
+        >
+          {{ t("signup.alreadyRegisterPage.confirm") }}
+        </v-btn>
+      </v-row>
+      <v-row class="mt-4">
+        <v-btn
+          class="ma-3 button-dark m-signup-cancel-btn"
+          width="-webkit-fill-available"
+          height="48px"
+          autocapitalize="off"
+          @click="goRegisterPage"
+        >
+          {{ t("signup.alreadyRegisterPage.cancel") }}
+        </v-btn>
+      </v-row>
+    </div>
   </div>
-  <!-- <Notification
-    :notificationShow="notificationShow"
-    :notificationText="notificationText"
-    :checkIcon="checkIcon"
-  /> -->
 </template>
 
 <style lang="scss">
@@ -839,7 +648,7 @@ export default MSignup;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    height: 40px;
+    height: 40px !important;
 
     input {
       padding-top: 6px !important;
@@ -862,12 +671,6 @@ export default MSignup;
       --v-field-label-scale: 0.88em;
       font-size: var(--v-field-label-scale);
       max-width: 100%;
-    }
-  }
-
-  .v-input__control {
-    .mdi:before {
-      // font-size: 23px !important;
     }
   }
 
@@ -936,6 +739,7 @@ export default MSignup;
   background: #009b3a;
   color: white;
   border-radius: 8px !important;
+
   .v-btn__content {
     text-align: center;
     font-family: "Inter";
@@ -975,7 +779,7 @@ export default MSignup;
 
 // mobile dialog contaier
 .m-signup-container {
-  height: 100vh;
+  height: calc(100vh - 50px);
   width: 100%;
   background: $color_1;
   overflow-y: auto;
@@ -983,54 +787,21 @@ export default MSignup;
   .v-field--variant-solo {
     background: transparent !important;
   }
-}
 
-.m-signup-container::-webkit-scrollbar {
-  width: 0px;
-}
-
-// wrapper
-.m-signup-body {
-  // border-radius: 8px 8px 0px 0px;
-  // background: var(--bg-2-e-274-c, #1d2027);
-  // position: absolute;
-  // bottom: 0px;
-  // width: 100%;
-  // height: 464px;
-  // z-index: 99;
-
-  // overflow-y: auto;
   .form-textfield div.v-field__field {
     background: #15161c;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
 }
 
+.m-signup-container::-webkit-scrollbar {
+  width: 0px;
+}
+
 .m-display-name-input {
   .form-textfield div.v-field__field {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
-}
-
-.m-signup-body::-webkit-scrollbar {
-  width: 0px;
-}
-
-// close modal button
-.m-close-button {
-  box-shadow: none !important;
-  background-color: transparent !important;
-  position: absolute !important;
-  top: 9px;
-  right: 12px;
-}
-
-.m-close-button-1 {
-  box-shadow: none !important;
-  background-color: transparent !important;
-  position: absolute !important;
-  top: 160px;
-  right: 12px;
 }
 
 // divider
@@ -1125,6 +896,7 @@ export default MSignup;
     input {
       padding-top: 2px !important;
     }
+
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;
@@ -1153,6 +925,7 @@ export default MSignup;
       padding-top: 2px !important;
       padding-right: 30px !important;
     }
+
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;
@@ -1178,9 +951,11 @@ export default MSignup;
 
   .v-field__field {
     background: #15161c;
+
     input {
       padding-top: 2px !important;
     }
+
     .v-label.v-field-label {
       font-family: "Inter";
       font-size: 12px !important;

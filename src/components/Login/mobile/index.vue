@@ -637,14 +637,8 @@ export default Login;
   cursor: pointer;
 }
 
-// button:active:enabled {
-//     transform: scale(0.95);
-//     filter: brightness(80%);
-// }
-
 // container
 .m-login-container {
-  height: 100vh;
   width: 100%;
   background: $color_1;
   overflow-y: auto;

@@ -13,24 +13,25 @@ import Footer from "./Footer.vue";
 import { useRoute } from 'vue-router';
 import { mainStore } from "@/store/main";
 
-// import Deposit from "@/components/cash/deposit/index.vue";
-// import MDeposit from "@/components/cash/deposit/mobile/index.vue";
-// import Withdraw from "@/components/cash/withdraw/index.vue";
-// import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
-// import MCashHeader from "@/components/cash/header/mobile/index.vue";
-// import CashHeader from "@/components/cash/header/index.vue";
+import Deposit from "@/components/cash/deposit/index.vue";
+import MDeposit from "@/components/cash/deposit/mobile/index.vue";
+import Withdraw from "@/components/cash/withdraw/index.vue";
+import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
+import MCashHeader from "@/components/cash/header/mobile/index.vue";
+import CashHeader from "@/components/cash/header/index.vue";
+import MobileDialog from "@/components/Signout/mobile/Header.vue";
 import Signup from "@/components/Signup/index.vue";
 import MSignup from "@/components/Signup/mobile/index.vue";
-import MNickName from "@/components/Signup/mobile/NickName.vue";
 import Login from "@/components/Login/index.vue";
 import MLogin from "@/components/Login/mobile/index.vue";
+import MNickName from "@/components/auth/components/mobile/sign_up/NickName.vue";
 import Signout from "@/components/Signout/index.vue";
 import MSignout from "@/components/Signout/mobile/index.vue";
-// import MobileDialog from "@/components/Signout/mobile/Header.vue";
-// import RefferalDialog from "@/components/refferal/index.vue";
-// import MRefferalDialog from "@/components/refferal/mobile/index.vue";
+import MAuth from "@/components/auth/mobile/index.vue";
 import LoginBonusDialog from "@/components/login_bonus/index.vue";
 import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
+// import RefferalDialog from "@/components/refferal/index.vue";
+// import MRefferalDialog from "@/components/refferal/mobile/index.vue";
 // import GetBonusDialog from "@/components/get_bonus/index.vue";
 // import MGetBonusDialog from "@/components/get_bonus/mobile/index.vue";
 // import RouletteBonusDialog from "@/components/roulette_bonus/index.vue";
@@ -48,12 +49,12 @@ const MGetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonu
 const MenuSemiCircle = defineAsyncComponent(() => import("@/components/global/menu_semi_circle/index.vue"));
 const LevelUpDialog = defineAsyncComponent(() => import("@/components/level_up/index.vue"));
 const MLevelUpDialog = defineAsyncComponent(() => import("@/components/level_up/mobile/index.vue"));
-const Deposit = defineAsyncComponent(() => import("@/components/cash/deposit/index.vue"));
-const MDeposit = defineAsyncComponent(() => import("@/components/cash/deposit/mobile/index.vue"));
-const Withdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/index.vue"));
-const MWithdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/mobile/index.vue"));
-const MCashHeader = defineAsyncComponent(() => import("@/components/cash/header/mobile/index.vue"));
-const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/index.vue"));
+// const Deposit = defineAsyncComponent(() => import("@/components/cash/deposit/index.vue"));
+// const MDeposit = defineAsyncComponent(() => import("@/components/cash/deposit/mobile/index.vue"));
+// const Withdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/index.vue"));
+// const MWithdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/mobile/index.vue"));
+// const MCashHeader = defineAsyncComponent(() => import("@/components/cash/header/mobile/index.vue"));
+// const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/index.vue"));
 // const Signup = defineAsyncComponent(() => import("@/components/Signup/index.vue"));
 // const MSignup = defineAsyncComponent(() => import("@/components/Signup/mobile/index.vue"));
 // const MNickName = defineAsyncComponent(() => import("@/components/Signup/mobile/NickName.vue"));
@@ -61,7 +62,7 @@ const CashHeader = defineAsyncComponent(() => import("@/components/cash/header/i
 // const MLogin = defineAsyncComponent(() => import("@/components/Login/mobile/index.vue"));
 // const Signout = defineAsyncComponent(() => import("@/components/Signout/index.vue"));
 // const MSignout = defineAsyncComponent(() => import("@/components/Signout/mobile/index.vue"));
-const MobileDialog = defineAsyncComponent(() => import("@/components/Signout/mobile/Header.vue"));
+// const MobileDialog = defineAsyncComponent(() => import("@/components/Signout/mobile/Header.vue"));
 const RefferalDialog = defineAsyncComponent(() => import("@/components/refferal/index.vue"));
 const MRefferalDialog = defineAsyncComponent(() => import("@/components/refferal/mobile/index.vue"));
 // const LoginBonusDialog = defineAsyncComponent(() => import("@/components/login_bonus/index.vue"));
@@ -122,6 +123,7 @@ const signUpForm = computed(() => {
 })
 
 // authentication dialog
+const authDialog = ref<boolean>(false);
 const signupDialog = ref<boolean>(false);
 const signoutDialog = ref<boolean>(false);
 const loginDialog = ref<boolean>(false);
@@ -133,6 +135,8 @@ const levelUpDialog = ref<boolean>(false);
 const searchDialog = ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
+
+const authDialogType = ref<dialogType>("login");
 
 const searchDialogShow = computed(() => {
   const { getSearchDialogShow } = storeToRefs(mainStore());
@@ -148,6 +152,10 @@ const authDialogVisible = computed(() => {
   const { getAuthDialogVisible } = storeToRefs(authStore());
   return getAuthDialogVisible.value;
 });
+
+watch(authDialogVisible, (value) => {
+  authDialog.value = value;
+})
 
 const nickNameDialogVisible = computed(() => {
   const { getNickNameDialogVisible } = storeToRefs(authStore());
@@ -556,7 +564,7 @@ onMounted(() => {
       <MCashHeader />
     </v-dialog>
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="withdrawDialog"
       :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
       :width="''"
@@ -588,7 +596,7 @@ onMounted(() => {
         <Deposit v-if="mobileWidth > 600" />
         <MDeposit class="m-deposit-sub-dialog" v-else />
       </template>
-    </v-dialog>
+    </v-dialog> -->
 
     <v-dialog
       v-model="cashDialog"
@@ -613,7 +621,27 @@ onMounted(() => {
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
+    <!-- <v-dialog
+      v-model="authDialog"
+      :width="mobileVersion == 'sm' ? '' : 471"
+      :fullscreen="mobileVersion == 'sm'"
+      :scrim="true"
+      :transition="
+        mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'scale-transition'
+      "
+      :class="[mobileVersion == 'sm' ? 'mobile-auth-dialog-position' : '']"
+      @click:outside="authDialog = false"
+      persistent
+      style="z-index: 2147483646"
+    >
+      <template v-if="mobileVersion != 'sm'"> </template>
+      <template v-else>
+        <MAuth />
+      </template>
+    </v-dialog> -->
+
     <!-------------------------------      SIGNUP     ------------------------------------>
+
     <v-dialog
       v-model="mobileDialog"
       :fullscreen="mobileVersion == 'sm'"
@@ -621,7 +649,7 @@ onMounted(() => {
       class="mobile-dialog-toggle-height"
       :scrim="false"
       v-if="mobileVersion == 'sm'"
-      style="z-index: 10000000000000010"
+      style="z-index: 2147483647"
     >
       <MobileDialog :mobileDialogCheck="mobileDialogCheck" @switch="switchDialog" />
     </v-dialog>
@@ -636,7 +664,7 @@ onMounted(() => {
       :class="[mobileVersion == 'sm' ? 'mobile-login-dialog-position' : '']"
       @click:outside="closeDialog('signup')"
       persistent
-      style="z-index: 10000000000000020"
+      style="z-index: 2147483646"
     >
       <Signup
         v-if="mobileVersion != 'sm'"
@@ -711,7 +739,7 @@ onMounted(() => {
       v-model="refferalDialog"
       persistent
       :width="mobileWidth < 600 ? '360' : '471'"
-      :scrim="mobileVersion == 'sm' ? false : true"
+      :scrim="true"
       @click:outside="false"
       style="z-index: 2147483646"
     >
@@ -859,10 +887,16 @@ onMounted(() => {
   top: 0 !important;
 }
 
+.mobile-auth-dialog-position {
+  position: fixed !important;
+  margin: 0 !important;
+  top: 0px !important;
+}
+
 .mobile-login-dialog-position {
   position: fixed !important;
   margin: 0 !important;
-  top: 54px !important;
+  top: 50px !important;
 }
 
 .v-navigation-drawer__scrim {

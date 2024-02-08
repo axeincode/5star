@@ -68,6 +68,7 @@ const Dashboard = defineComponent({
     const { dispatchUserGame } = gameStore();
     const { dispatchFavoriteGame } = gameStore();
     const { setOriginalGames } = gameStore();
+    const { setFavoriteGameList } = gameStore();
     const { setMailMenuShow } = mailStore();
     const { setNavBarToggle } = appBarStore();
     const { setMainBlurEffectShow } = appBarStore();
@@ -666,9 +667,8 @@ const Dashboard = defineComponent({
     };
 
     const showGameConfirmationDialog = async (game_item: Game.GameItem) => {
-      // await dispatchGameFavoriteList();
-      const game_store = gameStore();
-      console.log("222222222222222", game_store.$state);
+      setFavoriteGameList([]);
+      await dispatchGameFavoriteList();
       state.is_favorite = favoriteGameList.value.some(item => item == game_item.id);
       console.log(favoriteGameList.value);
       console.log(state.is_favorite);

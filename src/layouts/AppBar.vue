@@ -32,6 +32,7 @@ import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import { currencyStore } from "@/store/currency";
 
 const { setAuthModalType } = authStore();
+const { setAuthDialogVisible } = authStore();
 const { dispatchUserProfile } = authStore();
 const { setRightBarToggle } = appBarStore();
 const { setNavBarToggle } = appBarStore();
@@ -263,6 +264,7 @@ const toggleLanguage = () => {
 
 const openDialog = (type: dialogType) => {
   setAuthModalType(type);
+  setAuthDialogVisible(true);
   setOverlayScrimShow(false);
 };
 
@@ -294,7 +296,7 @@ const selectedCurrencyItem = ref<GetCurrencyBalanceList>({
   bonus: "",
 })
 
-const currencyImages : Array<any> = ([
+const currencyImages: Array<any> = ([
   {
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
     name: "BRL",
@@ -329,15 +331,15 @@ const currencyImages : Array<any> = ([
   },
 ])
 const imageIndex = ref<Array<number>>([]);
-const currencyList = computed(()=>{
+const currencyList = computed(() => {
   const { getCurrencyList } = storeToRefs(currencyStore());
   return getCurrencyList.value
 })
 
-watch(currencyList, (()=>{
+watch(currencyList, (() => {
   imageIndex.value.length = 0;
   currencyList.value.forEach(currency => {
-    imageIndex.value.push(currencyImages.findIndex(item=>item.name==currency.currency) !=  -1 ? currencyImages.findIndex(item=>item.name==currency.currency) : 0);
+    imageIndex.value.push(currencyImages.findIndex(item => item.name == currency.currency) != -1 ? currencyImages.findIndex(item => item.name == currency.currency) : 0);
   });
 }))
 
@@ -364,8 +366,8 @@ const showUserNavBar = (): void => {
   setBonusDashboardDialogVisible(false);
   setMainBlurEffectShow(false);
   // setTimeout(() => {
-    setUserNavBarToggle(userNavBarToggle.value);
-    setMainBlurEffectShow(userNavBarToggle.value);
+  setUserNavBarToggle(userNavBarToggle.value);
+  setMainBlurEffectShow(userNavBarToggle.value);
   // }, 10)
 }
 

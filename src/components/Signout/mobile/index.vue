@@ -18,10 +18,7 @@ const signoutContainerOverflow = ref<string>("hidden");
 const signOut = (): void => {
   emit("close");
   dispatchSignout();
-  console.log("signout");
   resetAllStores();
-  const game_store = gameStore();
-  console.log(game_store.$state);
   router.push({ name: "Dashboard" });
 };
 
