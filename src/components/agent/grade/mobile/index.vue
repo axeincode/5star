@@ -75,7 +75,7 @@ onMounted(async () => {
 <template>
   <div class="pb-4">
     <v-row class="mt-1 justify-center mx-16 mb-0">
-      <div class="text-800-14 white text-center relative">
+      <div class="text-800-14 white text-center">
         {{ t("affiliate.invite.commission_title_text") }}
         <v-menu v-model="commissionMenuShow">
           <template v-slot:activator="{ props }">

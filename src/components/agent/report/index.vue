@@ -210,7 +210,7 @@ onMounted(async () => {
 </script>
 <template>
   <v-row class="mx-2 mt-0">
-    <div class="relative m-agent-report-date-picker" @click="datePickerShow = true">
+    <div class="m-agent-report-date-picker" @click="datePickerShow = true">
       <el-date-picker
         v-model="selectedDate"
         popper-class="m-agent-report-date-picker-background"
@@ -637,7 +637,7 @@ onMounted(async () => {
     flex-shrink: 0;
     align-self: stretch;
     border-radius: 8px;
-    border: 1px solid #009B3A;
+    border: 1px solid #009b3a;
   }
 }
 </style>

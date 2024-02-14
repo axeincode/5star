@@ -55,7 +55,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <v-card class="m-agent-profit-summary-card mx-2">
+  <div class="m-agent-profit-summary-card mx-2">
     <div class="ma-4 text-800-14 white">{{ t("affiliate.statistics.summary_text") }}</div>
     <v-row class="mx-1 my-0 px-6 m-agent-profit-summary-level">
       <v-col cols="3" class="pa-0 text-400-12 gray">
@@ -175,7 +175,7 @@ onMounted(async () => {
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
     </v-row>
-  </v-card>
+  </div>
   <v-row class="mx-6 m-agent-profit-summary-tab my-0">
     <v-col
       cols="4"

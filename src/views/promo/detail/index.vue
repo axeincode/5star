@@ -65,20 +65,10 @@ const token = computed(() => {
 });
 
 const handleContent = (item: PromoListData) => {
-  if(token.value == undefined){
+  if (token.value == undefined) {
     setAuthModalType("login");
     setOverlayScrimShow(false);
-  }
-  else{
-    setDepositWithdrawToggle(true);
-    setMainBlurEffectShow(true);
-    setHeaderBlurEffectShow(true);
-    setMenuBlurEffectShow(true);
-    setDepositDialogToggle(true);
-    setCashDialogToggle(true);
-    setUserNavBarToggle(false);
-  }
-  /*else{
+  } else {
     switch (item.click_feedback) {
       case 5:
         switch (item.content) {
@@ -138,7 +128,7 @@ const handleContent = (item: PromoListData) => {
             break;
           case "faq":
             // case "/deposit":
-            router.push({name: "About_US", query: {index: 0}})
+            router.push({ name: "About_US", query: { index: 0 } })
             break;
         }
         break;
@@ -151,7 +141,7 @@ const handleContent = (item: PromoListData) => {
       case 9:
         break;
     }
-  }*/
+  }
 }
 </script>
 
@@ -167,7 +157,9 @@ const handleContent = (item: PromoListData) => {
     </v-card>
     <v-card class="m-promo-detail-card mt-2 pa-2">
       <img :src="selectedItem.image_path" style="width: 100%" />
-      <!--- <div v-html="selectedItem.text" class="mx-1"></div>--->
+      -
+      <div v-html="selectedItem.text" class="mx-1"></div>
+      -
       <!-- <MDepositBonus v-if="activeIndex == 0" />
       <MWelcomeBonus v-if="activeIndex == 1" />
       <v-btn
@@ -178,18 +170,8 @@ const handleContent = (item: PromoListData) => {
       >
         {{ t("promo.text_32") }}
       </v-btn> -->
-      <div v-if="Number(route.query.id) == 1">
-        <img src="@/assets/public/image/promo/promo_1.png" class="m-promo-temp-img"/>
-      </div>
-      <div v-if="Number(route.query.id) == 2">
-        <img src="@/assets/public/image/promo/promo_2.png" class="m-promo-temp-img"/>
-      </div>
-      <div v-if="Number(route.query.id) == 3">
-        <img src="@/assets/public/image/promo/promo_3_1.png" class="m-promo-temp-img"/>
-        <img src="@/assets/public/image/promo/promo_3_2.png" class="m-promo-temp-img"/>
-        <img src="@/assets/public/image/promo/promo_3_3.png" class="m-promo-temp-img"/>
-      </div>
-      <div class="text-center mt-8">
+
+      <!-- <div class="text-center mt-8">
         <v-btn
           class="button-bright m-reffer-btn-font text-none"
           width="-webkit-fill-available"
@@ -198,16 +180,17 @@ const handleContent = (item: PromoListData) => {
         >
           DEPOSITE NOW
         </v-btn>
-      </div>
+      </div> -->
     </v-card>
   </div>
 </template>
 
 <style lang="scss">
-.m-promo-temp-img{
+.m-promo-temp-img {
   margin-top: 50px !important;
   width: 100% !important;
 }
+
 .m-promo-detail-back-card {
   height: 48px;
   border-radius: 8px !important;

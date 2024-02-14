@@ -1,5 +1,14 @@
 <script lang="ts">
-import { defineComponent, ref, toRefs, reactive, computed, watch, onMounted, defineEmits } from "vue";
+import {
+  defineComponent,
+  ref,
+  toRefs,
+  reactive,
+  computed,
+  watch,
+  onMounted,
+  defineEmits,
+} from "vue";
 import { storeToRefs } from "pinia";
 import { refferalStore } from "@/store/refferal";
 import { useDisplay } from "vuetify";
@@ -26,7 +35,7 @@ const BannerComponent = defineComponent({
     Pagination,
     Navigation,
   },
-  setup(components, {emit}) {
+  setup(components, { emit }) {
     /**
      * 提取width属性
      * Extract width attribute
@@ -45,8 +54,7 @@ const BannerComponent = defineComponent({
        * 初始化banner的值
        * Initialize the value of banner
        */
-      slides: [
-      ]
+      slides: [] as Array<string>,
     });
     /**
      * 获取swiper的属性
@@ -91,62 +99,62 @@ const BannerComponent = defineComponent({
       return getToken.value;
     });
 
-    onMounted(async ()=>{
+    onMounted(async () => {
       await dispatchBannerList();
-      
+
       const { getBannerList } = storeToRefs(bannerStore());
       state.slides.length = 0;
-      getBannerList.value.forEach(element => {
-        state.slides.push(new URL(element.image_path, import.meta.url).href);
+      getBannerList.value.forEach((element) => {
+        state.slides.push(element.image_path);
       });
-    })
-    const slideImageClick = async (index:number) => {
+    });
+    const slideImageClick = async (index: number) => {
       const { getBannerList } = storeToRefs(bannerStore());
-      let type : number = getBannerList.value[index].click_feedback;
+      let type: number = getBannerList.value[index].click_feedback;
       console.log(type);
-      if(type == 5){
+      if (type == 5) {
         //window.location.href = getBannerList.value[index].content;.
         const relocation_url = getBannerList.value[index].content;
-        const url_parts = relocation_url.split('?');
+        const url_parts = relocation_url.split("?");
         console.log(url_parts);
-        if(url_parts.length > 1) {
-          if(url_parts[0] == '/promo/detail'){
+        if (url_parts.length > 1) {
+          if (url_parts[0] == "/promo/detail") {
             await dispatchUserActivityList();
-            const num = url_parts[1].split('=');
-            router.push({ name: 'Promo_Detail', query: { id: parseInt(num[1]) } })
+            const num = url_parts[1].split("=");
+            router.push({ name: "Promo_Detail", query: { id: parseInt(num[1]) } });
           }
-        }
-        else{
+        } else {
           window.location.href = getBannerList.value[index].content;
         }
       }
-      if(type == 6){
+      if (type == 6) {
         window.location.href = getBannerList.value[index].content;
       }
-      if(type == 7){
-        emit('handleBannerCategory', getBannerList.value[index].content);
+      if (type == 7) {
+        emit("handleBannerCategory", getBannerList.value[index].content);
       }
-      if(type == 8){
+      if (type == 8) {
         window.location.href = "game/" + getBannerList.value[index].content;
       }
-
-    }
-    const calcSlide = ()=> {
+    };
+    const calcSlide = () => {
       let res = [...state.slides, ...state.slides];
       //let res = [...state.slides];
       return res;
-    }
-    const handleSlideChange = (event:any) => {
+    };
+    const handleSlideChange = (event: any) => {
       let bullets = document.getElementsByClassName("swiper-pagination-bullet");
-      
+
       for (let i = 0; i < bullets.length; i++) {
-        if(i == event.activeIndex % state.slides.length)
-          bullets[event.activeIndex % state.slides.length].classList.add('swiper-pagination-bullet-active');
-        else{
-          bullets[i].classList.remove('swiper-pagination-bullet-active');
+        if (i == event.activeIndex % state.slides.length)
+          bullets[event.activeIndex % state.slides.length].classList.add(
+            "swiper-pagination-bullet-active"
+          );
+        else {
+          bullets[i].classList.remove("swiper-pagination-bullet-active");
         }
       }
-    }
+    };
     return {
       ...toRefs(state),
       mobileWidth,
@@ -185,14 +193,13 @@ export default BannerComponent;
       :navigation="false"
       :virtual="true"
       class="mx-4"
-      style="border-radius: 8px;"
+      style="border-radius: 8px"
       @swiper="getSwiperRef"
     >
       <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
         <img
           :src="slide"
           class="slider-img-width"
-          
           :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
         />
       </swiper-slide>
@@ -223,11 +230,15 @@ export default BannerComponent;
       :navigation="false"
       :virtual="true"
       class="mx-2"
-      style="border-radius: 8px;"
+      style="border-radius: 8px"
       @swiper="getSwiperRef"
       @slideChange="handleSlideChange"
     >
-      <swiper-slide v-for="(slide, index) in calcSlide()" :key="index" :virtualIndex="index" >
+      <swiper-slide
+        v-for="(slide, index) in calcSlide()"
+        :key="index"
+        :virtualIndex="index"
+      >
         <img
           :src="slide"
           class="m-slider-img-width"
@@ -314,14 +325,14 @@ export default BannerComponent;
     opacity: 1;
     margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 2px) !important;
   }
-  .swiper-pagination-bullet:not(:nth-child(-n + 3)){
+  .swiper-pagination-bullet:not(:nth-child(-n + 3)) {
     display: none !important;
   }
   .swiper-pagination {
     bottom: -12px !important;
   }
 
-  .m-slider-img-width{
+  .m-slider-img-width {
     height: fit-content !important;
   }
 }
