@@ -1910,7 +1910,7 @@ export const lang: langType = {
     text_29: "Standard ",
     text_30: "Bonus Terms",
     text_31: " apply to the Welcome Bonus.",
-    text_32: "Deposit NOW",
+    text_32: "Go to Deposit",
     text_33: "150% Welcome Bonus up to ",
     text_34: "How does the welcome bonus work?",
     text_35: "The welcome bonus consists of a Deposit Bonus up to ",

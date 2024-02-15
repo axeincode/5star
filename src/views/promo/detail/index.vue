@@ -64,11 +64,21 @@ const token = computed(() => {
   return getToken.value;
 });
 
-const handleCancel = (item: PromoListData) => {
-  if (token.value == undefined) {
+const handleContent = (item: PromoListData) => {
+  if(token.value == undefined){
     setAuthModalType("login");
     setOverlayScrimShow(false);
-  } else {
+  }
+  else{
+    setDepositWithdrawToggle(true);
+    setMainBlurEffectShow(true);
+    setHeaderBlurEffectShow(true);
+    setMenuBlurEffectShow(true);
+    setDepositDialogToggle(true);
+    setCashDialogToggle(true);
+    setUserNavBarToggle(false);
+  }
+  /*else{
     switch (item.click_feedback) {
       case 5:
         switch (item.content) {
@@ -128,7 +138,7 @@ const handleCancel = (item: PromoListData) => {
             break;
           case "faq":
             // case "/deposit":
-            router.push({ name: "About_US", query: { index: 0 } })
+            router.push({name: "About_US", query: {index: 0}})
             break;
         }
         break;
@@ -141,7 +151,13 @@ const handleCancel = (item: PromoListData) => {
       case 9:
         break;
     }
-  }
+  }*/
+}
+
+const i18nButtonText = (eng: string) =>{
+  if(eng == "Go to Deposit")
+    return t("promo.text_32");
+  return "";
 }
 </script>
 
@@ -158,9 +174,7 @@ const handleCancel = (item: PromoListData) => {
     <v-card class="m-promo-detail-card mt-2 pa-2">
       <img :src="selectedItem.image_path" style="width: 100%" />
       <div v-html="selectedItem.text" class="mx-1"></div>
-      <!-- <MDepositBonus v-if="activeIndex == 0" />
-      <MWelcomeBonus v-if="activeIndex == 1" />
-      <v-btn
+      <!---<v-btn
         class="text-none m-promo-detail-deposit-btn my-5"
         width="-webkit-fill-available"
         height="48"
@@ -174,9 +188,9 @@ const handleCancel = (item: PromoListData) => {
           class="button-bright m-reffer-btn-font text-none"
           width="-webkit-fill-available"
           height="55px"
-          @click="handleCancel"
+          @click="handleContent"
         >
-          DEPOSITE NOW
+          {{i18nButtonText(selectedItem.button_text)}}
         </v-btn>
       </div>
     </v-card>

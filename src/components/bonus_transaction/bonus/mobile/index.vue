@@ -10,6 +10,7 @@ import { bonusStore } from "@/store/bonus";
 import { appBarStore } from "@/store/appBar";
 import moment from "moment-timezone";
 import MBonusDialog from "@/components/bonus_transaction/bonus/dialog/mobile/index.vue";
+import { group } from 'node:console';
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -100,18 +101,32 @@ const formsList = ref<Array<any>>([
 const dialogVisible = ref<boolean>(false);
 const selectedId = ref<number>(0);
 
-const groupObjects = array => {
-  const grouped = {};
-
+const groupObjects = (array:Array<any>) => {
+  let grouped:Array<any> = [];
+  let new_item:any = -1;
+  let is_new:boolean = true;
   array.forEach(obj => {
-    const parentId = obj.relation_id;
-    if (!grouped[parentId]) {
-      grouped[parentId] = [];
-    }
-    grouped[parentId].push(obj);
+      if(obj.type == 0) {
+        if(!is_new){
+          grouped.push(new_item);
+        }
+        new_item = obj;
+        is_new = false;
+      }
+      else {
+        if(is_new){
+          grouped.push(obj);
+        }
+        else{
+          if(new_item.children == undefined)
+            new_item.children = [];
+          new_item.children.push(obj);
+        }
+      }
   });
-
-  const buildTree = parentId => {
+  if(new_item != -1)
+    grouped.push(new_item);
+  /*const buildTree = parentId => {
     if (!grouped[parentId]) {
       return [];
     }
@@ -123,9 +138,8 @@ const groupObjects = array => {
       }
       return obj;
     });
-  };
-
-  return buildTree(0);
+  };*/
+  return grouped;
 };
 
 const bonusDialogHide = () => {
@@ -203,7 +217,6 @@ onMounted(async () => {
         <template v-else v-for="(item, index) in userBonusList.list" :key="index">
           <div class="m-bonus-deposit-group mb-1">
             <v-expansion-panels>
-              
               <v-expansion-panel class="bg-color-211F31 m-collapse-body" :ripple="false">
                 <v-expansion-panel-title
                   :class="[
@@ -266,7 +279,7 @@ onMounted(async () => {
                       >
                         <div class="text-400-10">No time limit</div>
                       </v-col>
-                      <v-col cols="2" class="text-right">
+                      <v-col cols="2" class="text-right" v-if="item.type == 1">
                         <div class="relative" style="margin-left: auto; width: 25px">
                           <img
                             src="@/assets/bonus/img/img_so_01.png"
@@ -347,7 +360,6 @@ onMounted(async () => {
                   </v-row>
                 </v-expansion-panel-text>
               </v-expansion-panel>
-            
             
               <v-expansion-panel
                 class="bg-color-211F31 m-collapse-body mt-1"

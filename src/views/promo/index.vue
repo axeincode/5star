@@ -206,6 +206,12 @@ onMounted(async () => {
   });
   await dispatchUserActivityList();
 });
+
+const i18nButtonText = (eng: string) =>{
+  if(eng == "Go to Deposit")
+    return t("promo.text_32");
+  return "";
+}
 </script>
 
 <template>
@@ -311,8 +317,7 @@ onMounted(async () => {
             v-if="item.button_path != ''"
             @click="handleContent(item)"
           >
-            <!-- {{ t("promo.text_7") }} -->
-            <img :src="item.button_path" width="128" height="36" />
+            {{i18nButtonText(item.button_text)}}
           </v-btn>
         </div>
       </v-card>
@@ -407,7 +412,7 @@ onMounted(async () => {
   }
 
   .m-promo-navigation-body {
-    height: 100vh;
+    height: calc(100vh - 70px);
     background: $agent_card_bg !important;
     overflow-y: auto;
 
@@ -492,7 +497,7 @@ onMounted(async () => {
       .m-promo-deposit-btn {
         margin-left: auto;
         border-radius: 8px;
-        background: transparent !important;
+        background: #F9BC01 !important;
         box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
         .v-btn__content {

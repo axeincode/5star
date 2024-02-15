@@ -14,6 +14,7 @@ export interface PromoListData {
     content: string
     click_feedback: number
     button_path: string
+    button_text: string
 }
 
 export interface PromoGroupData {
