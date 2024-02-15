@@ -64,7 +64,7 @@ const token = computed(() => {
   return getToken.value;
 });
 
-const handleContent = (item: PromoListData) => {
+const handleCancel = (item: PromoListData) => {
   if (token.value == undefined) {
     setAuthModalType("login");
     setOverlayScrimShow(false);
@@ -168,7 +168,8 @@ const handleContent = (item: PromoListData) => {
       >
         {{ t("promo.text_32") }}
       </v-btn> -->
-      <!-- <div class="text-center mt-8">
+
+      <div class="text-center mt-8" @click="handleCancel">
         <v-btn
           class="button-bright m-reffer-btn-font text-none"
           width="-webkit-fill-available"
@@ -176,7 +177,8 @@ const handleContent = (item: PromoListData) => {
         >
           DEPOSITE NOW
         </v-btn>
-      </div> -->
+      </div>
+      -->
     </v-card>
   </div>
 </template>
