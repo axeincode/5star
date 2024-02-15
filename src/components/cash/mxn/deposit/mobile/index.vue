@@ -7,7 +7,7 @@ import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
 import { type GetPixInfo } from '@/interface/deposit';
 import { type GetUserInfo } from "@/interface/user";
-import ValidationBox from '@/components/cash/deposit/ValidationBox.vue';
+import ValidationBox from '@/components/cash/mxn/deposit/ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
@@ -16,8 +16,8 @@ import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import router from '@/router';
-import MParticipatingDialog from "@/components/cash/deposit/mobile/MParticipatingDialog.vue";
-import MDepositInfoDialog from "@/components/cash/deposit/mobile/MDepositInfoDialog.vue";
+import MParticipatingDialog from "./MParticipatingDialog.vue";
+import MDepositInfoDialog from "./MDepositInfoDialog.vue";
 import store from '@/store';
 import { load } from 'webfontloader';
 import { useToast } from "vue-toastification";
@@ -41,7 +41,7 @@ const { dispatchUserProfile } = authStore();
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-  name: "BRL",
+  name: "MXN",
   value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
@@ -231,7 +231,7 @@ const depositSubmit = computed(() => {
 const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
   return arr.filter((obj: any) => {
     const objValues = obj[key];
-    return valueArr.every((value: any) => objValues.includes(value));
+    return valueArr.some((value: any) => objValues.includes(value));
   });
 };
 
@@ -249,9 +249,7 @@ watch(depositConfig, (newValue) => {
     })
   })
   const keyArray = Object.keys(newValue["cfg"]);
-  console.log("11111111111111111", keyArray);
   const filteredObjects = filterByKeyArray(currencyTemplateList, 'name', keyArray);
-  console.log("11111111111111111", filteredObjects);
   currencyList.value = filteredObjects;
   selectedPaymentItem.value = paymentList.value[0];
   newValue["list"].map((item: string) => {
@@ -616,9 +614,9 @@ onMounted(async () => {
             <template v-slot:prepend>
               <img :src="selectedCurrencyItem.icon" width="20" />
             </template>
-            <v-list-item-title class="ml-2 text-400-12">{{
-              selectedCurrencyItem.name
-            }}</v-list-item-title>
+            <v-list-item-title class="ml-2 text-400-12">
+              {{ selectedCurrencyItem.name }}
+            </v-list-item-title>
           </v-list-item>
         </v-card>
       </template>
@@ -856,6 +854,7 @@ onMounted(async () => {
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
     width: 100% !important;
     color: white !important;
+
     .v-btn__content {
       font-family: Inter;
       font-size: 12px;

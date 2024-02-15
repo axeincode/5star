@@ -13,12 +13,12 @@ import Footer from "./Footer.vue";
 import { useRoute } from 'vue-router';
 import { mainStore } from "@/store/main";
 
-import Deposit from "@/components/cash/deposit/index.vue";
-import MDeposit from "@/components/cash/deposit/mobile/index.vue";
-import Withdraw from "@/components/cash/withdraw/index.vue";
-import MWithdraw from "@/components/cash/withdraw/mobile/index.vue";
-import MCashHeader from "@/components/cash/header/mobile/index.vue";
-import CashHeader from "@/components/cash/header/index.vue";
+import Deposit from "@/components/cash/mxn/deposit/index.vue";
+import MDeposit from "@/components/cash/mxn/deposit/mobile/index.vue";
+import Withdraw from "@/components/cash/mxn/withdraw/index.vue";
+import MWithdraw from "@/components/cash/mxn/withdraw/mobile/index.vue";
+import MCashHeader from "@/components/cash/mxn/header/mobile/index.vue";
+import CashHeader from "@/components/cash/mxn/header/index.vue";
 // import MobileDialog from "@/components/Signout/mobile/Header.vue";
 // import Signup from "@/components/Signup/index.vue";
 // import MSignup from "@/components/Signup/mobile/index.vue";

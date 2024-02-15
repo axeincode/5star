@@ -6,13 +6,13 @@ import { depositStore } from '@/store/deposit';
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
 import { type GetUserInfo } from "@/interface/user";
-import ValidationBox from '@/components/cash/deposit/ValidationBox.vue';
+import ValidationBox from './ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
-import ParticipatingDialog from "@/components/cash/deposit/ParticipatingDialog.vue";
+import ParticipatingDialog from "./ParticipatingDialog.vue";
 
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -487,7 +487,7 @@ const overlayScrimShow = computed(() => {
   .v-field--variant-solo-filled {
     background: transparent;
   }
-  background-color: #1D2027;
+  background-color: #1d2027;
   height: 700px;
   border-radius: 0px 0px 16px 16px;
 
@@ -512,7 +512,7 @@ const overlayScrimShow = computed(() => {
   }
 
   .deposit-amout-btn-black {
-    background: #009B3A;
+    background: #009b3a;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;
@@ -521,7 +521,7 @@ const overlayScrimShow = computed(() => {
   }
 
   .deposit-amout-btn-white {
-    background: #23262F;
+    background: #23262f;
     font-weight: 700;
     font-size: 12px;
     border-radius: 4px;
@@ -549,7 +549,7 @@ const overlayScrimShow = computed(() => {
   }
 
   .dark-textfield .v-field__field {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
   }
 
   .v-field--variant-solo {
@@ -558,7 +558,7 @@ const overlayScrimShow = computed(() => {
 
   .amount-checkbox {
     i.v-icon {
-      color: #15161C;
+      color: #15161c;
       background-color: #01983a;
       width: 16px;
       height: 16px;
@@ -567,7 +567,7 @@ const overlayScrimShow = computed(() => {
     }
 
     i.mdi-checkbox-blank-outline {
-      background-color: #15161C;
+      background-color: #15161c;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }

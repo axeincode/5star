@@ -865,7 +865,7 @@ onMounted(async () => {
     expand-on-hover
     :scrim-opacity="0.6"
     :touchless="true"
-    class="nav-background pb-100"
+    class="nav-background pb-16"
     :width="192"
     v-model="drawer"
   >

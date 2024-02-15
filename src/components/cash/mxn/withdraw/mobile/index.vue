@@ -10,7 +10,7 @@ import { mailStore } from '@/store/mail';
 import { type GetUserInfo } from "@/interface/user";
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
-import ValidationBox from '@/components/cash/withdraw/ValidationBox.vue';
+import ValidationBox from '@/components/cash/mxn/withdraw/ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
