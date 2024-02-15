@@ -38,7 +38,6 @@ const userBonusList = computed(() => {
   const { getBonusList } = storeToRefs(bonusStore());
   if (getBonusList.value.list != undefined) {
     getBonusList.value.list.map(item => {
-      console.log(item);
       item.rate = Math.ceil(parseInt(item.now) / parseInt(item.max) * 100);
     })
     const resultTree = groupObjects(getBonusList.value.list);

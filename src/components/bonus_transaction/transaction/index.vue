@@ -59,9 +59,9 @@ const vipRebateHistory = computed(() => {
 const vipLevelRewardHistory = computed(() => {
   const { getVipLevelRewardHistory } = storeToRefs(vipStore());
   console.log(getVipLevelRewardHistory.value);
-  getVipLevelRewardHistory.value.list.map((item) => {
-    item.type = "Rank Bonus";
-  });
+  // getVipLevelRewardHistory.value.list.map((item) => {
+  //   item.type = "Rank Bonus";
+  // });
   return getVipLevelRewardHistory.value;
 });
 

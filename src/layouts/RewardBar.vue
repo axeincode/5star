@@ -37,6 +37,9 @@ const { setLevelUpDialogVisible, dispatchVipRebateAward, dispatchVipLevelAward }
 const { setAuthModalType } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
+const { dispatchVipBetawardReceive } = vipStore();
+const { dispatchVipCycleawardReceive } = vipStore();
+const { dispatchVipLevelAwardReceive } = vipStore();
 
 const { dispatchRewardList, dispatchReceiveAchievementBonus } = rewardStore();
 
@@ -128,6 +131,27 @@ watch(rewardNavShow, (value) => {
   }
 });
 
+// Monitor periodic reward data  监听周期性奖励数据
+watch(vipCycleawardList, (value: any) => {
+  console.log('监听周期性奖励数据====>', value);
+  if (value) {
+    bonus_items.value[1].value = value.week_gift;
+    bonus_items.value[2].value = value.month_gift;
+  }
+})
+
+// Monitor and code rebates  监听打码返利
+watch(vipBetawardList, (value: any) => {
+  if (value) {
+    bonus_items.value[0].value = value.now_cash_back;
+  }
+  console.log('监听打码返利=====>', value);
+})
+
+// Rewards related to surveillance level  监听等级相关奖励
+watch(vipLevelAward, (value: any) => {
+  console.log('监听等级相关奖励=====>', value);
+})
 const openLoginDialog = () => {
   setAuthModalType("login");
   setOverlayScrimShow(false);
@@ -155,56 +179,27 @@ const handleAhivBonus = async () => {
 }
 
 const handleMyReward = async (index:number) => {
-  if(index == 0) {
-    await dispatchVipLevelAward({
-      type: 3
-    }).then(()=>{
-        alertMessage(t('reward.success_text'), 1);
-      }).catch(()=>{
-        alertMessage(errVIPMessage.value, 0);
-      });
-    await getRewardList();
+  if (index === 0) {
+    dispatchVipLevelAwardReceive({ type: 5 });
   }
-  if(index == 1) {
+  if (index === 1) {
     openRefferalDialog();
   }
-
 }
 
 const handleBonus = async (index:number) => {
-  if(index != 3) {
-    if(index == 0){
-      await dispatchVipRebateAward({}).then(()=>{
-        alertMessage(t('reward.success_text'), 1);
-      }).catch(()=>{
-        alertMessage(errVIPMessage.value, 0);
-      });
-    }
-    if(index == 1){
-      await dispatchVipLevelAward({
-        type: 1
-      }).then(()=>{
-        alertMessage(t('reward.success_text'), 1);
-      }).catch(()=>{
-        alertMessage(errVIPMessage.value, 0);
-      });
-    }
-    if(index == 2){
-      await dispatchVipLevelAward({
-        type: 2
-      }).then(()=>{
-        alertMessage(t('reward.success_text'), 1);
-      }).catch(()=>{
-        alertMessage(errVIPMessage.value, 0);
-      });
-    }
-    await getRewardList();
+  if (index === 0) {
+    dispatchVipBetawardReceive({ type: 7 });
   }
-
-  if(index == 3) {
-    openLoginBonusDialog()
+  if (index === 1) {
+    dispatchVipCycleawardReceive({ type: 3 });
   }
-
+  if (index === 2) {
+    dispatchVipCycleawardReceive({ type: 4 });
+  }
+  if (index === 3) {
+    openLoginBonusDialog();
+  }
 }
 const openLoginBonusDialog = () => {
   setLoginBonusDialogVisible(true);
@@ -219,9 +214,9 @@ const rewardList = computed(() => {
 
 const getRewardList = async() => {
   await dispatchRewardList();
-  bonus_items.value[0].value = rewardList.value.cash_back == undefined ? '0' : rewardList.value.cash_back;
-  bonus_items.value[1].value = rewardList.value.week == undefined ? '0' : rewardList.value.week;
-  bonus_items.value[2].value = rewardList.value.month == undefined ? '0' : rewardList.value.month;
+  // bonus_items.value[0].value = rewardList.value.cash_back == undefined ? '0' : rewardList.value.cash_back;
+  // bonus_items.value[1].value = rewardList.value.week == undefined ? '0' : rewardList.value.week;
+  // bonus_items.value[2].value = rewardList.value.month == undefined ? '0' : rewardList.value.month;
 }
 
 const alertMessage = (message:string, type: number) => {
@@ -353,12 +348,12 @@ onMounted(async () => {
                   {{ item.content }}
                 </p>
                 <p class="text-700-12 white" v-if="index == 0">
-                  {{ rewardList.level_up_num }} <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
+                  {{ vipLevelAward.upgrade_gift }} <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
                 </p>
               </div>
             </v-col>
             <v-col cols="3" class="d-flex align-center py-1">
-              <v-btn :class="rewardList.level_up_num <= 0 && index == 0 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleMyReward(index)" :disabled="rewardList.level_up_num <= 0 && index == 0?true:false">
+              <v-btn :class="vipLevelAward.upgrade_gift <= 0 && index == 0 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleMyReward(index)" :disabled="rewardList.level_up_num <= 0 && index == 0?true:false">
                 {{ t("reward.text_7") }}
               </v-btn>
             </v-col>
