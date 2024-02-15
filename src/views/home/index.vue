@@ -578,6 +578,24 @@ const Dashboard = defineComponent({
       gameFilterBtnFlag.value = false;
     };
 
+    watch(selectedGameFilterBtn, ()=>{
+      const element = document.getElementsByClassName('filter-btn-container'); // Replace 'your-element-id' with the actual ID of your element
+      if(element != undefined){
+        let curPos = element[0].scrollLeft;
+        let index = gameGroupBtnList.value.findIndex(item => item.slug == selectedGameFilterBtn.value);
+        index = index + 1;
+        let left = 0;
+        let right = 116.48;
+        if(index > 0){
+          left = 116.48 + 148 * (index - 1);
+          right = left + 148;
+        }
+        const width = element[0].offsetWidth;
+        if(!(left > curPos && left < curPos + width)){
+          element[0].scrollLeft = 116.48 + (index - 1) * 148;
+        }
+      }
+    })
     const handleMoreGame = async (
       slug: string,
       page_no: number,
@@ -1377,20 +1395,8 @@ export default Dashboard;
           </v-slide-group>
         </template>
         <template v-else>
-          <v-slide-group
-            v-model="selectedGameFilterBtn"
-            class="mt-4 mb-0"
-            :transition="customTransition"
-            :touch="{ velocity: 0.3 }"
-            style="
-              margin-left: 0px !important;
-              margin-right: 0px !important;
-              background: none !important;
-            "
-          >
-            <v-slide-group-item>
-              <!-- width="112" -->
-              <v-btn
+          <div style="overflow:auto; color:white" class="filter-btn-container mt-4 mb-0 d-flex">
+            <v-btn
                 class="mr-3 text-none"
                 height="36"
                 :class="
@@ -1409,9 +1415,8 @@ export default Dashboard;
                 >
                 </inline-svg>
                 {{ t("home.button.all_game") }}
-              </v-btn>
-            </v-slide-group-item>
-            <v-slide-group-item
+            </v-btn>
+            <div
               v-for="(item, index) in gameGroupBtnList"
               :key="index"
               :value="item.slug"
@@ -1477,8 +1482,8 @@ export default Dashboard;
                 ></inline-svg>
                 {{ item.name }}
               </v-btn>
-            </v-slide-group-item>
-          </v-slide-group>
+            </div>
+          </div>
         </template>
       </v-row>
 
@@ -2447,5 +2452,14 @@ export default Dashboard;
 
 .m-game-confirm-bar {
   box-shadow: none !important;
+}
+.filter-btn-container{
+  overscroll-behavior: auto !important;
+  touch-action: manipulation;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.filter-btn-container::-webkit-scrollbar{
+  display: none;
 }
 </style>

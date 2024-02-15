@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
@@ -33,7 +33,7 @@ const vipBetawardList = computed(() => {
         <div class="bonus-main-cashback">
             <div class="bonus-main-cashback-l">
                 <span>{{ t('vip.vip_level_info.bonus.text_1') }}</span>
-                <span>R$ 0</span>
+                <span>R$ {{ vipBetawardList.now_cash_back }}</span>
             </div>
             <div class="bonus-main-cashback-r">
                 <span v-if="+vipBetawardList.now_cash_back > 0" @click="dispatchVipBetawardReceive({ type: 7 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>
@@ -43,7 +43,7 @@ const vipBetawardList = computed(() => {
         <div class="bonus-main-membership">
             <div class="bonus-main-membership-l">
                 <span>{{ t('vip.vip_level_info.bonus.text_3') }}</span>
-                <span>R$ 0</span>
+                <span>R$ {{ vipCycleawardList.membership_day_gift }}</span>
             </div>
             <div class="bonus-main-membership-r">
                 <span v-if="+vipCycleawardList.membership_day_gift > 0" @click="dispatchVipCycleawardReceive({ type: 2 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>

@@ -43,6 +43,24 @@ const { dispatchRewardList, dispatchReceiveAchievementBonus } = rewardStore();
 const rewardNavShow = ref<boolean>(false);
 const claimText = ref<string>("");
 
+// periodic rewards  周期性奖励
+const vipCycleawardList = computed(() => {
+    const { getVipCycleawardList } = storeToRefs(vipStore());
+    return getVipCycleawardList.value;
+})
+
+// Code rebate  打码返利
+const vipBetawardList = computed(() => {
+    const { getVipBetawardList } = storeToRefs(vipStore());
+    return getVipBetawardList.value;
+})
+
+// Level related rewards  等级相关奖励
+const vipLevelAward = computed(() => {
+    const { getVipLevelAward } = storeToRefs(vipStore());
+    return getVipLevelAward.value;
+})
+
 const bonus_items = ref<Array<any>>([
   {
     image: img_vip_4,
@@ -203,6 +221,7 @@ const getRewardList = async() => {
   await dispatchRewardList();
   bonus_items.value[0].value = rewardList.value.cash_back == undefined ? '0' : rewardList.value.cash_back;
   bonus_items.value[1].value = rewardList.value.week == undefined ? '0' : rewardList.value.week;
+  bonus_items.value[2].value = rewardList.value.month == undefined ? '0' : rewardList.value.month;
 }
 
 const alertMessage = (message:string, type: number) => {

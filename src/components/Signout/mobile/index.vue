@@ -20,6 +20,7 @@ const signOut = (): void => {
   dispatchSignout();
   resetAllStores();
   router.push({ name: "Dashboard" });
+  window.location.reload();
 };
 
 onMounted(() => {

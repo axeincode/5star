@@ -89,6 +89,7 @@ const vipLevelText = (value: number) => {
     }
 }
 
+// vip rank picture matching  vip段位图片匹配
 const vipLevelImg = (value: number) => {
     if (value === 0) {
         return img_vipemblem_1;
@@ -96,7 +97,7 @@ const vipLevelImg = (value: number) => {
     if (value > 0 && value < 25) {
         return img_vipemblem_1_24;
     }
-    if (value > 25 && value < 50) {
+    if (value > 24 && value < 50) {
         return img_vipemblem_25_49;
     }
     if (value > 49 && value < 76) {
@@ -119,19 +120,22 @@ const vipLevelImg = (value: number) => {
 // All available reward amounts  所有可领取奖励金额
 const awardValue = () => {
     let val = 0;
-    if (vipCycleawardList.value.membership_day_gift > 0) {
+    if (+vipCycleawardList.value.membership_day_gift > 0) {
         val = val + vipCycleawardList.value.membership_day_gift * 1;
     }
-    if (vipCycleawardList.value.week_gift > 0) {
+    if (+vipCycleawardList.value.week_gift > 0) {
         val = val + vipCycleawardList.value.week_gift * 1;
     }
-    if (vipCycleawardList.value.month_gift > 0) {
+    if (+vipCycleawardList.value.month_gift > 0) {
         val = val + vipCycleawardList.value.month_gift * 1;
     }
-    if (vipLevelAward.value.uprank_gift > 0) {
+    if (+vipLevelAward.value.upgrade_gift > 0) {
+        val = val + vipLevelAward.value.upgrade_gift * 1;
+    }
+    if (+vipLevelAward.value.uprank_gift > 0) {
         val = val + vipLevelAward.value.uprank_gift * 1;
     }
-    if (vipBetawardList.value.now_cash_back > 0) {
+    if (+vipBetawardList.value.now_cash_back > 0) {
         val = val + vipBetawardList.value.now_cash_back * 1;
     }
     return val;
@@ -147,6 +151,9 @@ const submitVipLevelAward = async () => {
     }
     if (+vipCycleawardList.value.month_gift > 0) {
         await dispatchVipCycleawardReceive({ type: 4 });
+    }
+    if (+vipLevelAward.value.upgrade_gift > 0) {
+        await dispatchVipLevelAwardReceive({ type: 5 });
     }
     if (+vipLevelAward.value.uprank_gift > 0) {
         await dispatchVipLevelAwardReceive({ type: 6 });

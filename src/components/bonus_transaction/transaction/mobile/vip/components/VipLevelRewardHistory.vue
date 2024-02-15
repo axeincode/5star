@@ -61,7 +61,7 @@ const fixPositionShow = computed(() => {
         <th class="text-700-12 black text-center">
           <div class="forms-table-border1">
             <div style="width: 90px; margin-left: 20px; margin-right: 20px">
-              {{ t("transaction.vip.text_11") }}
+              {{ currentList[0]?.type === 2 ? t("transaction.vip.text_12") : t("transaction.vip.text_11") }}
             </div>
           </div>
         </th>
@@ -129,7 +129,7 @@ const fixPositionShow = computed(() => {
               min-width: 130px;
             "
           >
-            VIP {{ item.vip_level }}
+            {{ item.type == 2 ? `RANK ${item.vip_level}` : `VIP ${item.vip_level}` }}
           </td>
           <td
             class="text-400-12"

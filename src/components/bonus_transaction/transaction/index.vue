@@ -144,22 +144,22 @@ onMounted(async () => {
     start_time: Math.ceil(moment().valueOf() / 1000),
     lid: 0,
   });
-  await dispatchVipRebateHistory({
-    page_num: pageNum.value,
-    page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
-  });
-  await dispatchVipLevelRewardHistory({
-    page_num: pageNum.value,
-    page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
-  });
-  await dispatchVipTimesHistory({
-    index: vipTimesHistoryIndex.value,
-    page_num: pageNum.value,
-    page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
-  });
+  // await dispatchVipRebateHistory({
+  //   page_num: pageNum.value,
+  //   page_size: pageSize.value,
+  //   start_time: Math.ceil(moment().valueOf() / 1000),
+  // });
+  // await dispatchVipLevelRewardHistory({
+  //   page_num: pageNum.value,
+  //   page_size: pageSize.value,
+  //   start_time: Math.ceil(moment().valueOf() / 1000),
+  // });
+  // await dispatchVipTimesHistory({
+  //   index: vipTimesHistoryIndex.value,
+  //   page_num: pageNum.value,
+  //   page_size: pageSize.value,
+  //   start_time: Math.ceil(moment().valueOf() / 1000),
+  // });
 });
 </script>
 <template>

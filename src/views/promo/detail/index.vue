@@ -157,9 +157,13 @@ const handleContent = (item: PromoListData) => {
     </v-card>
     <v-card class="m-promo-detail-card mt-2 pa-2">
       <img :src="selectedItem.image_path" style="width: 100%" />
+<<<<<<< HEAD
+      <div v-html="selectedItem.text" class="mx-1"></div>
+=======
       -
       <div v-html="selectedItem.text" class="mx-1"></div>
       -
+>>>>>>> b6b089575a9e1c58a5231f55c5b7adb7a3c21e7d
       <!-- <MDepositBonus v-if="activeIndex == 0" />
       <MWelcomeBonus v-if="activeIndex == 1" />
       <v-btn
@@ -171,12 +175,15 @@ const handleContent = (item: PromoListData) => {
         {{ t("promo.text_32") }}
       </v-btn> -->
 
+<<<<<<< HEAD
+      <div class="text-center mt-8" @click="handleCancel">
+=======
       <!-- <div class="text-center mt-8">
+>>>>>>> b6b089575a9e1c58a5231f55c5b7adb7a3c21e7d
         <v-btn
           class="button-bright m-reffer-btn-font text-none"
           width="-webkit-fill-available"
           height="55px"
-          @click="handleContent"
         >
           DEPOSITE NOW
         </v-btn>

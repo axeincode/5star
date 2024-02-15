@@ -18,15 +18,13 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchVipRebateHistory } = vipStore();
 const { dispatchVipTimesHistory } = vipStore();
+const { dispatchVipLevelRewardHistory } = vipStore();
 
 const props = defineProps<{
-  pageSize: number,
-  vipRebateHistory: VipRebateHistoryData,
-  vipLevelRewardHistory: VipLevelRewardHistoryData,
-  vipTimesHistory: VipTimesHistoryData,
+  pageSize: number
 }>();
 
-const { pageSize, vipRebateHistory, vipLevelRewardHistory, vipTimesHistory } = toRefs(props);
+const { pageSize } = toRefs(props);
 
 const paginationLength = ref<number>(0);
 
@@ -52,46 +50,101 @@ const mobileWidth = computed(() => {
   return width.value;
 });
 
+const vipRebateHistory = computed(() => {
+  const { getVipRebateHistory } = storeToRefs(vipStore());
+  return getVipRebateHistory.value;
+});
+
+const vipLevelRewardHistory = computed(() => {
+  const { getVipLevelRewardHistory } = storeToRefs(vipStore());
+  return getVipLevelRewardHistory.value;
+})
+
+const vipTimesHistory = computed(() => {
+  const { getVipTimesHistory } = storeToRefs(vipStore());
+  // getVipTimesHistory.value.list.map((item) => {
+  //   item.type = "Weekly Bonus";
+  // });
+  return getVipTimesHistory.value;
+});
+
 const fixPositionShow = computed(() => {
   const { getFixPositionEnable } = storeToRefs(appBarStore());
   return getFixPositionEnable.value;
 });
 
-const handleNext = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value;
-  endIndex.value = startIndex.value + pageSize.value;
-  currentList.value = vipRebateHistory.value.list.slice(startIndex.value, endIndex.value);
-  if (currentList.value.length == 0) {
+const pageNo = async (page_no: number) => {
+  if (selectedVipMenuItem.value == t('transaction.vip.text_1')) {
     await dispatchVipRebateHistory({
+      page_num: page_no,
       page_size: pageSize.value,
-      page_num: 1,
-      start_time: Number(vipRebateHistory.value.list[vipRebateHistory.value.list.length - 1].created_at),
+      start_time: Math.ceil(moment().valueOf() / 1000),
     });
+    paginationLength.value = vipRebateHistory.value.total;
+  }
+  if (selectedVipMenuItem.value == t('transaction.vip.text_2')) {
+    await dispatchVipLevelRewardHistory({
+      page_num: page_no,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+    paginationLength.value = vipLevelRewardHistory.value.total;
+  }
+  if (selectedVipMenuItem.value == t('transaction.vip.text_3')) {
+    selectedHistoryIndex.value = 1;
+    await dispatchVipTimesHistory({
+      index: 1,
+      page_num: page_no,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+    paginationLength.value = vipTimesHistory.value.total;
+  }
+  if (selectedVipMenuItem.value == t('transaction.vip.text_4')) {
+    selectedHistoryIndex.value = 2;
+    await dispatchVipTimesHistory({
+      index: 2,
+      page_num: page_no,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+    paginationLength.value = vipTimesHistory.value.total;
   }
 }
 
-const handlePrev = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value;
-  endIndex.value = startIndex.value + pageSize.value;
-  currentList.value = vipRebateHistory.value.list.slice(startIndex.value, endIndex.value);
-  if (currentList.value.length == 0) {
-    await dispatchVipRebateHistory({
-      page_size: pageSize.value,
-      page_num: 1,
-      end_time: Number(vipRebateHistory.value.list[0].created_at),
-    });
-  }
+const handleNext = (page_no: number) => {
+  pageNo(page_no);
+}
+
+const handlePrev = (page_no: number) => {
+  pageNo(page_no);
 }
 
 const handleTransactionMenuDropdown = (item: string) => {
   selectedVipMenuItem.value = item;
 }
 
-watch(vipRebateHistory, (value) => {
-  paginationLength.value = vipRebateHistory.value.total
-})
+// watch(vipRebateHistory, (value) => {
+//   paginationLength.value = vipRebateHistory.value.total
+// })
 
 watch(selectedVipMenuItem, async (value) => {
+  if (value == t('transaction.vip.text_1')) {
+    await dispatchVipRebateHistory({
+      page_num: 1,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+    paginationLength.value = vipRebateHistory.value.total;
+  }
+  if (value == t('transaction.vip.text_2')) {
+    await dispatchVipLevelRewardHistory({
+      page_num: 1,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    });
+    paginationLength.value = vipLevelRewardHistory.value.total;
+  }
   if (value == t('transaction.vip.text_4')) {
     selectedHistoryIndex.value = 2;
     await dispatchVipTimesHistory({
@@ -100,8 +153,8 @@ watch(selectedVipMenuItem, async (value) => {
       page_size: pageSize.value,
       start_time: Math.ceil(moment().valueOf() / 1000),
     });
+    paginationLength.value = vipTimesHistory.value.total;
   }
-
   if (value == t('transaction.vip.text_3')) {
     selectedHistoryIndex.value = 1;
     await dispatchVipTimesHistory({
@@ -110,10 +163,16 @@ watch(selectedVipMenuItem, async (value) => {
       page_size: pageSize.value,
       start_time: Math.ceil(moment().valueOf() / 1000),
     });
+    paginationLength.value = vipTimesHistory.value.total;
   }
 })
 
 onMounted(async () => {
+  await dispatchVipRebateHistory({
+    page_num: 1,
+    page_size: pageSize.value,
+    start_time: Math.ceil(moment().valueOf() / 1000),
+  });
   paginationLength.value = vipRebateHistory.value.total
 });
 </script>
@@ -259,15 +318,15 @@ onMounted(async () => {
       </tbody>
     </v-table> -->
     <VipRebateHistory
-      :currentList="vipRebateHistory.list.slice(startIndex, endIndex)"
+      :currentList="vipRebateHistory.list"
       v-if="selectedVipMenuItem == t('transaction.vip.text_1')"
     />
     <VipLevelRewardHistory
-      :currentList="vipLevelRewardHistory.list.slice(startIndex, endIndex)"
+      :currentList="vipLevelRewardHistory.list"
       v-if="selectedVipMenuItem == t('transaction.vip.text_2')"
     />
     <VipTimesHistory
-      :currentList="vipTimesHistory.list.slice(startIndex, endIndex)"
+      :currentList="vipTimesHistory.list"
       :selectedHistoryIndex="selectedHistoryIndex"
       v-if="
         selectedVipMenuItem == t('transaction.vip.text_3') ||

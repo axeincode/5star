@@ -349,19 +349,19 @@ const handleNotifyShow = (id: number | string) => {
 
 // Recharge progress bar  充值进度条
 const depositRateVal = computed(() => {
-  if ((vipInfo.value.deposit_exp / vipInfo.value.deposit_exp * 100) >= 100) {
+  if ((vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100) >= 100) {
     return 100;
   } else {
-    return vipInfo.value.deposit_exp / vipInfo.value.deposit_exp * 100
+    return vipInfo.value.deposit_exp / vipInfo.value.rank_deposit_exp * 100
   }
 })
 
 // Betting progress bar  投注进度条
 const betRateVal = computed(() => {
-  if ((vipInfo.value.bet_exp / vipInfo.value.bet_exp * 100) >= 100) {
+  if ((vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100) >= 100) {
     return 100;
   } else {
-    return vipInfo.value.bet_exp / vipInfo.value.bet_exp * 100
+    return vipInfo.value.bet_exp / vipInfo.value.rank_bet_exp * 100
   }
 })
 
