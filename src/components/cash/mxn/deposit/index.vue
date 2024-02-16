@@ -321,9 +321,9 @@ const overlayScrimShow = computed(() => {
             <template v-slot:prepend>
               <img :src="selectedCurrencyItem.icon" width="26" />
             </template>
-            <v-list-item-title class="ml-2">{{
-              selectedCurrencyItem.name
-            }}</v-list-item-title>
+            <v-list-item-title class="ml-2">
+              {{ selectedCurrencyItem.name }}
+            </v-list-item-title>
           </v-list-item>
         </v-card>
       </template>
@@ -357,16 +357,16 @@ const overlayScrimShow = computed(() => {
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" />
             </template>
-            <v-list-item-title class="ml-2">{{
-              selectedPaymentItem.name
-            }}</v-list-item-title>
+            <v-list-item-title class="ml-2">
+              {{ selectedPaymentItem.name }}
+            </v-list-item-title>
           </v-list-item>
         </v-card>
       </template>
       <v-list theme="dark" bg-color="#181522">
         <v-row class="payment-width-370">
           <v-col
-            cols="6"
+            cols="12"
             v-for="(paymentItem, paymentIndex) in paymentList"
             :key="paymentIndex"
             class="pa-1"

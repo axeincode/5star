@@ -8,18 +8,14 @@ import { type GetPaymentItem } from '@/interface/deposit';
 import { type GetPixInfo } from '@/interface/deposit';
 import { type GetUserInfo } from "@/interface/user";
 import ValidationBox from '@/components/cash/mxn/deposit/ValidationBox.vue';
-import Notification from "@/components/global/notification/index.vue";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
-import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import router from '@/router';
 import MParticipatingDialog from "./MParticipatingDialog.vue";
 import MDepositInfoDialog from "./MDepositInfoDialog.vue";
-import store from '@/store';
-import { load } from 'webfontloader';
 import { useToast } from "vue-toastification";
 
 const { name, width } = useDisplay();
@@ -301,6 +297,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
       max: item.max
     })
   })
+  selectedPaymentItem.value = paymentList.value[0];
 }
 
 const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
@@ -660,33 +657,45 @@ onMounted(async () => {
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
             </template>
-            <v-list-item-title class="ml-2 text-400-12">{{
-              selectedPaymentItem.name
-            }}</v-list-item-title>
+            <v-list-item-title class="ml-2 text-400-12">
+              {{ selectedPaymentItem.name }}
+            </v-list-item-title>
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#15161C">
-        <v-row class="m-payment-width-370 px-1">
+      <v-list theme="dark" bg-color="#15161C" class="mx-1">
+        <v-row class="m-payment-width-370 px-2">
           <v-col
-            cols="6"
+            cols="12"
             v-for="(paymentItem, paymentIndex) in paymentList"
             :key="paymentIndex"
             class="pa-1"
           >
-            <v-card color="#23262F" theme="dark" class="text-center">
+            <v-card
+              color="#23262F"
+              theme="dark"
+              class="text-center"
+              :class="selectedPaymentItem.name == paymentItem.name ? 'border-active' : ''"
+              style="border-radius: 8px; box-shadow: none"
+            >
               <v-list-item
                 class="payment-select-item pa-2"
                 :value="paymentItem.name"
                 @click="handleSelectPayment(paymentItem)"
               >
-                <img :src="paymentItem.icon" width="62" />
-                <v-list-item-title class="text-400-10">{{
-                  paymentItem.name
-                }}</v-list-item-title>
-                <v-list-item-title class="text-400-10">{{
-                  paymentItem.description
-                }}</v-list-item-title>
+                <v-row class="align-center">
+                  <v-col cols="4" class="text-center">
+                    <img :src="paymentItem.icon" width="62" />
+                  </v-col>
+                  <v-col cols="8" class="text-left">
+                    <v-list-item-title class="text-400-12">
+                      {{ paymentItem.name }}
+                    </v-list-item-title>
+                    <v-list-item-title class="text-400-12">
+                      {{ paymentItem.description }}
+                    </v-list-item-title>
+                  </v-col>
+                </v-row>
               </v-list-item>
             </v-card>
           </v-col>
@@ -985,6 +994,10 @@ onMounted(async () => {
 .m-payment-width-370 {
   margin: auto;
   max-height: 290px !important;
+
+  .border-active {
+    border: 2px solid #009b3a;
+  }
 }
 
 @media (max-width: 600px) {

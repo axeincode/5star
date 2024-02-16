@@ -5,6 +5,9 @@ export const handleException = (code: number) => {
         case 0:
             errorMsg = '失败';
             break;
+        case 101004:
+            errorMsg = 'Credentials have expired. Please log in again';
+            break;
         case 100000:
             errorMsg = 'The data passed is abnormal';
             break;

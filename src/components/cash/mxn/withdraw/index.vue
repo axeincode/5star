@@ -240,6 +240,7 @@ const handleWithdrawSubmit = async () => {
   })
   let mailItem = {
     id: 5,
+    offset: 0,
     icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
     mail_content_1: {
       color: "text-color-gray",
@@ -439,6 +440,7 @@ const overlayScrimShow = computed(() => {
   .v-field--variant-solo-filled {
     background: transparent;
   }
+
   background-color: #1d2027;
   height: 700px;
   border-radius: 0px 0px 16px 16px;

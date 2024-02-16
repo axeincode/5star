@@ -240,6 +240,7 @@ const handleWithdrawSubmit = async () => {
   })
   let mailItem = {
     id: 5,
+    offset: 0,
     icon: new URL("@/assets/public/svg/icon_public_16.svg", import.meta.url).href,
     mail_content_1: {
       color: "text-color-gray",
