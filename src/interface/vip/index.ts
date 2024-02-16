@@ -26,6 +26,8 @@ export interface VipInfo {
     level: number
     deposit_exp: number
     bet_exp: number
+    rank_bet_exp: number
+    rank_deposit_exp: number
     free_spin_times: number
     week_gift: number
     month_gift: number
