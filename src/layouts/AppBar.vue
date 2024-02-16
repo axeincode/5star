@@ -239,10 +239,11 @@ watch(mobileWidth, (newValue: number) => {
   }
 })
 
-watch(currencyMenuShow, (value: boolean) => {
+watch(currencyMenuShow, async (value: boolean) => {
   console.log(value);
   if (mobileWidth.value < 600) {
     if (value) {
+      await dispatchCurrencyList();
       setUserNavBarToggle(false);
       setMainBlurEffectShow(false);
       setNavBarToggle(false);
@@ -252,7 +253,6 @@ watch(currencyMenuShow, (value: boolean) => {
         setFixPositionEnable(true);
         setMainBlurEffectShow(true);
       }, 10)
-
     } else {
       setFixPositionEnable(false);
     }
@@ -364,9 +364,6 @@ const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   selectedCurrencyItem.value = item;
 
   await dispatchSetUserCurrency(item.currency);
-  await dispatchUserBalance();
-  await dispatchUserBonus();
-  await dispatchCurrencyList();
 
   setTimeout(() => {
     setOverlayScrimShow(false);
@@ -375,8 +372,10 @@ const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   }, 300)
 }
 
-const handleCurrencyMenuShow = () => {
+const handleCurrencyMenuShow = async () => {
   currencyMenuShow.value = !currencyMenuShow.value;
+  await dispatchUserBalance();
+  await dispatchUserBonus();
 }
 
 const showUserNavBar = async () => {
@@ -457,9 +456,9 @@ watch(socketBalance, (value) => {
       locale = 'es-CO';
       break;
   }
-  user.value.wallet = formatCurrency(Number(value.bal), locale, value.cur);
-  user.value.currency = value.cur
-  console.log(currencyList.value)
+  if (user.value.currency == value.cur) {
+    user.value.wallet = formatCurrency(Number(value.bal), locale, value.cur);
+  }
   currencyList.value.map(item => {
     if (item.currency == value.cur) {
       item.amount = value.bal.toString()
