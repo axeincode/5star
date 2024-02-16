@@ -11,6 +11,8 @@ import { appBarStore } from "@/store/appBar";
 import moment from "moment-timezone";
 import MBonusDialog from "@/components/bonus_transaction/bonus/dialog/mobile/index.vue";
 import { group } from 'node:console';
+import { bannerStore } from '@/store/banner';
+import { currencyStore } from '@/store/currency';
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -20,6 +22,7 @@ const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { dispatchUserBalance } = userStore();
+const { dispatchCurrencyList} = currencyStore();
 
 const mobileWidth = computed(() => {
   return width.value
@@ -158,9 +161,41 @@ const confirmDailogShow = (id: number) => {
   setMenuBlurEffectShow(true);
   setOverlayScrimShow(true);
 };
+
+const formatCurrency = (currency: number, currencyUnit: string) => {
+  let locale = 'pt-BR';
+  switch (currencyUnit) {
+    case "BRL":
+      locale = 'pt-BR';
+      break;
+    case "PHP":
+      locale = 'en-PH';
+      break;
+    case "PEN":
+      locale = 'en-PE';
+      break;
+    case "MXN":
+      locale = 'es-MX';
+      break;
+    case "CLP":
+      locale = 'es-CL';
+      break;
+    case "USD":
+      locale = 'en-US';
+    case "COP":
+      locale = 'es-CO';
+      break;
+  }
+  const fomarttedAmount = currency.toLocaleString(locale, {
+    style: "currency",
+    currency: currencyUnit,
+  })
+  return fomarttedAmount
+}
 onMounted(async () => {
   await dispatchUserBonus();
   await dispatchUserBalance();
+  await dispatchCurrencyList();
 })
 </script>
 
@@ -178,7 +213,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.account_balance") }}</div>
-          <div class="text-600-12 white">R$ {{ userBalance.real }}</div>
+          <div class="text-600-12 white">{{formatCurrency(Number(userBalance.real), userBalance.currency)}}</div>
         </v-list-item-title>
         <!-- <template v-slot:append>
           <div v-ripple.center style="width: 24px; height: 24px">
@@ -192,7 +227,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.bonus_money") }}</div>
-          <div class="text-600-12 white">R$ {{ userBalance.bonus }}</div>
+          <div class="text-600-12 white">{{formatCurrency(Number(userBalance.bonus), userBalance.currency)}}</div>
         </v-list-item-title>
       </v-list-item>
       <v-list-item class="m-bg-color-1 mt-4 mx-6">
@@ -201,7 +236,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-12 white">R$ {{ userBalance.amount }}</div>
+          <div class="text-600-12 white">{{formatCurrency(Number(userBalance.amount), userBalance.currency)}}</div>
         </v-list-item-title>
       </v-list-item>
     </v-col>
@@ -283,15 +318,15 @@ onMounted(async () => {
                         <div class="relative" style="margin-left: auto; width: 25px">
                           <img
                             src="@/assets/bonus/img/img_so_01.png"
-                            v-if="(Number(item.receive) * 100) / Number(item.gain_amount) > 50"
+                            v-if="(Number(item.gain_amount) * 100) / Number(item.deposit) > 50"
                             width="24"
                           />
                           <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
                           <p class="m-bonus-rate">
                             {{
-                              Number(item.gain_amount) == 0
+                              Number(item.deposit) == 0
                                 ? 0
-                                : Number((item.receive * 100) / Number(item.gain_amount))
+                                : Number((item.gain_amount * 100) / Number(item.deposit))
                             }}%
                           </p>
                         </div>
@@ -318,7 +353,7 @@ onMounted(async () => {
                               class="text-400-10"
                               :class="[item.status == 3 ? 'gray' : '']"
                             >
-                              R$ {{ item.now }} / R$ {{ item.max }}
+                              {{formatCurrency(Number(item.now), userBalance.currency)}} / {{formatCurrency(Number(item.max), userBalance.currency)}}
                             </div>
                           </v-progress-linear>
                         </div>
@@ -448,8 +483,8 @@ onMounted(async () => {
                           <img
                             src="@/assets/bonus/img/img_so_01.png"
                             v-if="
-                              (Number(item.children[0].receive) * 100) /
-                                item.children[0].gain_amount >
+                              (Number(item.children[0].gain_amount) * 100) /
+                                item.children[0].deposit >
                               50
                             "
                             width="24"
@@ -457,11 +492,11 @@ onMounted(async () => {
                           <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
                           <p class="m-bonus-rate">
                             {{
-                              item.children[0].gain_amount == 0
+                              Number(item.children[0].deposit) == 0
                                 ? 0
                                 : Number(
-                                    (item.children[0].receive * 100) /
-                                      item.children[0].gain_amount
+                                    (item.children[0].gain_amount * 100) /
+                                    Number(item.children[0].deposit)
                                   )
                             }}%
                           </p>
@@ -489,8 +524,7 @@ onMounted(async () => {
                               class="text-400-10"
                               :class="[item.children[0].status == 3 ? 'gray' : '']"
                             >
-                              R$ {{ item.children[0].now }} / R$
-                              {{ item.children[0].max }}
+                              {{formatCurrency(Number(item.children[0].now), userBalance.currency)}}/ {{formatCurrency(Number(item.children[0].max), userBalance.currency)}}
                             </div>
                           </v-progress-linear>
                         </div>

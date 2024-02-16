@@ -67,7 +67,7 @@ const handleNext = async (page_no: number) => {
     await dispatchTransactionHistory({
       page_size: pageSize.value,
       start_time: transactionHistoryItem.value.record[transactionHistoryItem.value.record.length - 1].created_at,
-      lid: transactionHistoryItem.value.record[transactionHistoryItem.value.record.length - 1].id,
+      lid: transactionHistoryItem.value.record[transactionHistoryItem.value.record.length - 1].id.toString(),
     });
   }
 }
@@ -80,7 +80,7 @@ const handlePrev = async (page_no: number) => {
     await dispatchTransactionHistory({
       page_size: pageSize.value,
       end_time: transactionHistoryItem.value.record[0].created_at,
-      lid: transactionHistoryItem.value.record[0].id,
+      lid: transactionHistoryItem.value.record[0].id.toString(),
     });
   }
 }

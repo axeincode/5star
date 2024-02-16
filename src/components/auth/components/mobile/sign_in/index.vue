@@ -14,6 +14,8 @@ import { useDisplay } from "vuetify";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
+import { bannerStore } from "@/store/banner";
+import { currencyStore } from "@/store/currency";
 
 const Login = defineComponent({
   components: {
@@ -38,7 +40,7 @@ const Login = defineComponent({
     const { dispatchVipLevels } = vipStore();
     const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
-
+    const {dispatchCurrencyList} = currencyStore();
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
@@ -122,6 +124,7 @@ const Login = defineComponent({
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
+        await dispatchCurrencyList();
         // await dispatchUserInvite();
         await dispatchVipInfo();
         await dispatchVipLevels();

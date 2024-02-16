@@ -31,6 +31,7 @@ import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 
 import { currencyStore } from "@/store/currency";
 import { bonusStore } from "@/store/bonus";
+import { bannerStore } from "@/store/banner";
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
@@ -56,6 +57,8 @@ const { setDepositWithdrawToggle } = appBarStore();
 const { setBonusDashboardDialogVisible } = appBarStore();
 const { dispatchCurrencyList } = currencyStore();
 const { dispatchUserBonus } = bonusStore();
+
+const { dispatchBannerList } = bannerStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -363,7 +366,7 @@ const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   await dispatchSetUserCurrency(item.currency);
   await dispatchUserBalance();
   await dispatchUserBonus();
-  console.log("Here");
+  await dispatchCurrencyList();
 
   setTimeout(() => {
     setOverlayScrimShow(false);
@@ -407,7 +410,7 @@ watch(userBalance, (value) => {
       locale = 'en-PE';
       break;
     case "MXN":
-      locale = 'en-MX';
+      locale = 'es-MX';
       break;
     case "CLP":
       locale = 'es-CL';

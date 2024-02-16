@@ -20,6 +20,7 @@ export interface BonusItem {
     receive: number
     wager: number
     rate: number
+    deposit: string
 }
 
 export interface GetBonusList {

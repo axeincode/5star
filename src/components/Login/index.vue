@@ -14,6 +14,8 @@ import { vipStore } from "@/store/vip";
 import { useToast } from "vue-toastification";
 import { useRoute } from "vue-router";
 import { gameStore } from "@/store/game";
+import { bannerStore } from "@/store/banner";
+import { currencyStore } from "@/store/currency";
 
 const Login = defineComponent({
   components: {
@@ -29,6 +31,7 @@ const Login = defineComponent({
     const { setAuthModalType } = authStore();
     const { setToken } = authStore();
     const { dispatchUserBalance } = userStore();
+    const { dispatchCurrencyList } = currencyStore();
     const { dispatchSocketConnect } = socketStore();
     const { dispatchVipInfo } = vipStore();
     const { dispatchVipLevels } = vipStore();
@@ -126,6 +129,7 @@ const Login = defineComponent({
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
+        await dispatchCurrencyList();
         await dispatchVipInfo();
         await dispatchVipLevels();
         // await dispatchSocketConnect();

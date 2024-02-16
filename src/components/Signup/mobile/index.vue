@@ -22,6 +22,8 @@ import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
+import { bannerStore } from "@/store/banner";
+import { currencyStore } from "@/store/currency";
 
 const MSignup = defineComponent({
   components: {
@@ -43,6 +45,7 @@ const MSignup = defineComponent({
     const { setDialogCheckbox } = authStore();
     const { setNickNameDialogVisible } = authStore();
     const { dispatchUserBalance } = userStore();
+    const { dispatchCurrencyList} = currencyStore();
     const { dispatchSocketConnect } = socketStore();
     const { setAuthDialogVisible } = authStore();
 
@@ -299,6 +302,7 @@ const MSignup = defineComponent({
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
+        await dispatchCurrencyList();
         await dispatchSocketConnect();
         setSignUpForm(false);
         emit("close");

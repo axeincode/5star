@@ -19,6 +19,8 @@ import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
+import { bannerStore } from "@/store/banner";
+import { currencyStore } from "@/store/currency";
 
 const MSignup = defineComponent({
   components: {
@@ -43,6 +45,7 @@ const MSignup = defineComponent({
     const { setNickNameDialogVisible } = authStore();
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
+    const { dispatchCurrencyList } = currencyStore();
 
     const { width } = useDisplay();
     const route = useRoute();
@@ -284,6 +287,8 @@ const MSignup = defineComponent({
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
+        await dispatchCurrencyList();
+
         setAuthDialogVisible(false);
         setNickNameDialogVisible(true);
         const toast = useToast();

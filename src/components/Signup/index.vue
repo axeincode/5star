@@ -14,6 +14,8 @@ import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { socketStore } from "@/store/socket";
 import { useToast } from "vue-toastification";
 import { useRoute } from "vue-router";
+import { bannerStore } from "@/store/banner";
+import { currencyStore } from "@/store/currency";
 
 const Signup = defineComponent({
   components: {
@@ -30,6 +32,7 @@ const Signup = defineComponent({
     const { dispatchUserProfile } = authStore();
     const { dispatchUserBalance } = userStore();
     const { dispatchSocketConnect } = socketStore();
+    const { dispatchCurrencyList } = currencyStore();
 
     const route = useRoute();
 
@@ -219,6 +222,7 @@ const Signup = defineComponent({
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
+        await dispatchCurrencyList();
         await dispatchSocketConnect();
         // state.notificationShow = !state.notificationShow;
         // state.checkIcon = new URL(

@@ -34,7 +34,10 @@ const { dispatchUserWithdrawCfg } = withdrawStore();
 const { dispatchUserWithdrawSubmit } = withdrawStore();
 const { setDepositWithdrawToggle } = appBarStore();
 const { dispatchUserBalance } = userStore();
+const { dispatchCurrencyList } = currencyStore();
 import router from '@/router';
+import { bannerStore } from '@/store/banner';
+import { currencyStore } from '@/store/currency';
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
@@ -404,6 +407,7 @@ onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();
   await dispatchUserBalance();
+  await dispatchCurrencyList();
 })
 </script>
 
