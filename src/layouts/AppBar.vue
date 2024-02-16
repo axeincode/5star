@@ -30,6 +30,7 @@ import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png"
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 
 import { currencyStore } from "@/store/currency";
+import { bonusStore } from "@/store/bonus";
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
@@ -53,6 +54,7 @@ const { dispatchSocketConnect } = socketStore();
 const { setDepositWithdrawToggle } = appBarStore();
 const { setBonusDashboardDialogVisible } = appBarStore();
 const { dispatchCurrencyList } = currencyStore();
+const { dispatchUserBonus } = bonusStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
@@ -348,6 +350,8 @@ const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
 
   await dispatchSetUserCurrency(item.currency);
   await dispatchUserBalance();
+  await dispatchUserBonus();
+  console.log("Here");
 
   setTimeout(() => {
     setOverlayScrimShow(false);
