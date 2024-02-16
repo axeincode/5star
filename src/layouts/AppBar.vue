@@ -397,6 +397,7 @@ const showUserNavBar = async () => {
 }
 
 watch(userBalance, (value) => {
+  console.log("userbalance================");
   let locale = 'pt-BR';
   const currencyUnit = value.currency
   switch (currencyUnit) {
@@ -432,14 +433,37 @@ watch(userBalance, (value) => {
 })
 
 watch(socketBalance, (value) => {
-  const locale = 'pt-BR';
-  const currencyUnit = "BRL";
-  user.value.wallet = formatCurrency(Number(value.bal), locale, currencyUnit);
+  console.log("socketBalance================", value);
+  let locale = 'pt-BR';
+  switch (value.cur) {
+    case "BRL":
+      locale = 'pt-BR';
+      break;
+    case "PHP":
+      locale = 'en-PH';
+      break;
+    case "PEN":
+      locale = 'en-PE';
+      break;
+    case "MXN":
+      locale = 'es-MX';
+      break;
+    case "CLP":
+      locale = 'es-CL';
+      break;
+    case "USD":
+      locale = 'en-US';
+    case "COP":
+      locale = 'es-CO';
+      break;
+  }
+  user.value.wallet = formatCurrency(Number(value.bal), locale, value.cur);
   user.value.currency = value.cur
+  console.log(currencyList.value)
   currencyList.value.map(item => {
-    // if (item.name == "BRL") {
-    //   item.value = Number(value.bal)
-    // }
+    if (item.currency == value.cur) {
+      item.amount = value.bal.toString()
+    }
   })
 })
 
@@ -635,9 +659,9 @@ onMounted(async () => {
                         <template v-slot:prepend>
                           <img width="24" />
                         </template>
-                        <v-list-item-title class="ml-2 text-700-14">{{
-                          currencyItem.currency
-                        }}</v-list-item-title>
+                        <v-list-item-title class="ml-2 text-700-14">
+                          {{ currencyItem.currency }}
+                        </v-list-item-title>
                         <template v-slot:append>
                           <p class="text-700-14 white">
                             $ {{ parseFloat(currencyItem.amount).toFixed(2) }}

@@ -35,11 +35,11 @@ export const socketStore = defineStore({
       const route: string = NETWORK.WEB_SOCKET.SOCKET_CONNECT;
       const network: Network = Network.getInstance();
       network.connect();
-      // this.socket = createWebSocket(route);
-      // this.socket.onopen = this.handleOpen;
-      // this.socket.onmessage = this.handleMessage;
-      // this.socket.onerror = this.handleError;
-      // this.socket.onclose = this.handleClose;
+      this.socket = createWebSocket(route);
+      this.socket.onopen = this.handleOpen;
+      this.socket.onmessage = this.handleMessage;
+      this.socket.onerror = this.handleError;
+      this.socket.onclose = this.handleClose;
     },
     handleOpen() {
       console.log('WebSocket connection established');
