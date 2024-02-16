@@ -14,6 +14,7 @@ import { authStore } from "@/store/auth";
 // import MWelcomeBonus from "@/components/promo/welcome_bonus/index.vue";
 
 const { setAuthModalType } = authStore();
+const { setAuthDialogVisible } = authStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
@@ -36,7 +37,8 @@ const selectedItem = ref<PromoListData>({
   countdown: false,
   content: "",
   click_feedback: 0,
-  button_path: ""
+  button_path: "",
+  button_text: ""
 });
 
 const depositDialogShow = () => {
@@ -65,11 +67,12 @@ const token = computed(() => {
 });
 
 const handleContent = (item: PromoListData) => {
-  if(token.value == undefined){
+  if (token.value == undefined) {
     setAuthModalType("login");
+    setAuthDialogVisible(true);
     setOverlayScrimShow(false);
   }
-  else{
+  else {
     setDepositWithdrawToggle(true);
     setMainBlurEffectShow(true);
     setHeaderBlurEffectShow(true);
@@ -154,8 +157,8 @@ const handleContent = (item: PromoListData) => {
   }*/
 }
 
-const i18nButtonText = (eng: string) =>{
-  if(eng == "Go to Deposit")
+const i18nButtonText = (eng: string) => {
+  if (eng == "Go to Deposit")
     return t("promo.text_32");
   return "";
 }
@@ -190,7 +193,7 @@ const i18nButtonText = (eng: string) =>{
           height="55px"
           @click="handleContent"
         >
-          {{i18nButtonText(selectedItem.button_text)}}
+          {{ i18nButtonText(selectedItem.button_text) }}
         </v-btn>
       </div>
     </v-card>

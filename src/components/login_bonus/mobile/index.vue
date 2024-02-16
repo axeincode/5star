@@ -18,6 +18,7 @@ import MConfirm from "@/components/global/confirm/mobile/index.vue";
 const emit = defineEmits<{ (e: "closeLoginBonusDialog"): void }>();
 const { t } = useI18n();
 const { setAuthModalType } = authStore();
+const { setAuthDialogVisible } = authStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setGetBonusDialogVisible } = loginBonusStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
@@ -89,6 +90,7 @@ const getSwiperRef = (swiperInstance: any) => {
 const handleLoginBonus = async (day: number) => {
   if (token.value == undefined) {
     setAuthModalType("login");
+    setAuthDialogVisible(true);
     setOverlayScrimShow(false);
     emit("closeLoginBonusDialog");
     return;
@@ -158,356 +160,356 @@ onMounted(async () => {
           :key="index"
           :virtualIndex="index"
         > -->
-          <div class="mt-2 text-center">
-            <Font class="color-F9BC01 text-900-18">VIP{{ vipSignIn.vip_level }}</Font>
-            <Font class="text-900-18 white">
-              {{ t("vip.login_bonus.title_text") }}
-            </Font>
+      <div class="mt-2 text-center">
+        <Font class="color-F9BC01 text-900-18">VIP{{ vipSignIn.vip_level }}</Font>
+        <Font class="text-900-18 white">
+          {{ t("vip.login_bonus.title_text") }}
+        </Font>
+      </div>
+      <v-row class="mt-2 mx-2">
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 1"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_1_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[0] }}
+            </p>
           </div>
-          <v-row class="mt-2 mx-2">
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 1"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_1_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[0] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-2 relative"
-                :class="vipSignIn.signin_day === 1 ? 'select_bg' : ''"
-                v-ripple.center
-                v-else
-                @click="handleLoginBonus(1)"
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_1_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_21.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="29"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[0] }}
-                </p>
-              </div>
-            </v-col>
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 2"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_2_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[2] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-2 relative"
-                :class="vipSignIn.signin_day === 2 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(2)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_2_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_22.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="40"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[1] }}
-                </p>
-              </div>
-            </v-col>
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 3"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_3_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[2] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-3 relative"
-                :class="vipSignIn.signin_day === 3 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(3)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_3_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_23.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="50"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[2] }}
-                </p>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row class="mt-5 mx-2">
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 4"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_4_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray login-bonus-card-money-position">
-                  $ {{ item.signin_award[3] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-4 relative"
-                :class="vipSignIn.signin_day === 4 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(4)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_4_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_24.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="48"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[3] }}
-                </p>
-              </div>
-            </v-col>
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 5"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_5_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[4] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-4 relative"
-                :class="vipSignIn.signin_day === 5 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(5)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_5_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_25.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="45"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[4] }}
-                </p>
-              </div>
-            </v-col>
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 6"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_6_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[5] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-4 relative"
-                :class="vipSignIn.signin_day === 6 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(6)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_6_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_26.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="50"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[5] }}
-                </p>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row class="mt-5 mx-2 mb-1">
-            <v-col cols="4" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 7"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_7_text") }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-                <p class="text-900-14 gray m-login-bonus-card-money-position">
-                  $ {{ item.signin_award[6] }}
-                </p>
-              </div>
-              <div
-                class="m-login-bonus-card-bg-4 relative"
-                :class="vipSignIn.signin_day === 7 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(7)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position">
-                  {{ t("vip.login_bonus.day_7_text") }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_26.png"
-                  class="m-login-bonus-card-cash-position"
-                  width="50"
-                />
-                <p class="text-900-12 white m-login-bonus-card-money-position">
-                  $ {{ vipSignIn.award[6] }}
-                </p>
-              </div>
-            </v-col>
-            <v-col cols="8" class="pa-0 d-flex justify-center">
-              <div
-                class="m-login-bonus-card-checkout-bg-1 relative"
-                v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 8"
-              >
-                <p class="text-900-14 gray m-login-bonus-text-position-1">
-                  {{ t("vip.login_bonus.day_8_text") }}
-                </p>
-                <p class="text-900-14 gray mt-2 m-login-bonus-card-money-position-1">
-                  $ {{ item.signin_award[7] }}
-                </p>
-                <img
-                  src="@/assets/public/svg/icon_public_18.svg"
-                  class="m-login-bonus-card-cash-position"
-                  width="32"
-                />
-              </div>
-              <div
-                class="m-login-bonus-card-bg-5 relative"
-                :class="vipSignIn.signin_day === 8 ? 'select_bg' : ''"
-                v-ripple.center
-                @click="handleLoginBonus(8)"
-                v-else
-              >
-                <img
-                  src="@/assets/vip/image/img_vip_32.png"
-                  class="m-login-bonus-sunshine-img"
-                  v-if="vipSignIn.is_signin === 1"
-                />
-                <p class="text-900-12 white m-login-bonus-text-position-1">
-                  {{ t("vip.login_bonus.day_8_text") }}
-                </p>
-                <p class="text-900-12 white mt-2 m-login-bonus-card-money-position-1">
-                  $ {{ vipSignIn.award[7] }}
-                </p>
-                <img
-                  src="@/assets/vip/image/img_vip_27.png"
-                  width="113"
-                  height="61"
-                  class="m-login-bonus-card-cash-position-1"
-                />
-              </div>
-            </v-col>
-          </v-row>
-        <!-- </SwiperSlide>
+          <div
+            class="m-login-bonus-card-bg-2 relative"
+            :class="vipSignIn.signin_day === 1 ? 'select_bg' : ''"
+            v-ripple.center
+            v-else
+            @click="handleLoginBonus(1)"
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_1_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_21.png"
+              class="m-login-bonus-card-cash-position"
+              width="29"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[0] }}
+            </p>
+          </div>
+        </v-col>
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 2"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_2_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[2] }}
+            </p>
+          </div>
+          <div
+            class="m-login-bonus-card-bg-2 relative"
+            :class="vipSignIn.signin_day === 2 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(2)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_2_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_22.png"
+              class="m-login-bonus-card-cash-position"
+              width="40"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[1] }}
+            </p>
+          </div>
+        </v-col>
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 3"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_3_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray m-login-bonus-card-money-position">
+              $ {{ item.signin_award[2] }}
+            </p>
+          </div>
+          <div
+            class="m-login-bonus-card-bg-3 relative"
+            :class="vipSignIn.signin_day === 3 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(3)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_3_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_23.png"
+              class="m-login-bonus-card-cash-position"
+              width="50"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[2] }}
+            </p>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row class="mt-5 mx-2">
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 4"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_4_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray login-bonus-card-money-position">
+              $ {{ item.signin_award[3] }}
+            </p>
+          </div>
+          <div
+            class="m-login-bonus-card-bg-4 relative"
+            :class="vipSignIn.signin_day === 4 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(4)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_4_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_24.png"
+              class="m-login-bonus-card-cash-position"
+              width="48"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[3] }}
+            </p>
+          </div>
+        </v-col>
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 5"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_5_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray m-login-bonus-card-money-position">
+              $ {{ item.signin_award[4] }}
+            </p>
+          </div>
+          <div
+            class="m-login-bonus-card-bg-4 relative"
+            :class="vipSignIn.signin_day === 5 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(5)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_5_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_25.png"
+              class="m-login-bonus-card-cash-position"
+              width="45"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[4] }}
+            </p>
+          </div>
+        </v-col>
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 6"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_6_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray m-login-bonus-card-money-position">
+              $ {{ item.signin_award[5] }}
+            </p>
+          </div>
+          <div
+            class="m-login-bonus-card-bg-4 relative"
+            :class="vipSignIn.signin_day === 6 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(6)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_6_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_26.png"
+              class="m-login-bonus-card-cash-position"
+              width="50"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[5] }}
+            </p>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row class="mt-5 mx-2 mb-1">
+        <v-col cols="4" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 7"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_7_text") }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+            <p class="text-900-14 gray m-login-bonus-card-money-position">
+              $ {{ item.signin_award[6] }}
+            </p>
+          </div>
+          <div
+            class="m-login-bonus-card-bg-4 relative"
+            :class="vipSignIn.signin_day === 7 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(7)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position">
+              {{ t("vip.login_bonus.day_7_text") }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_26.png"
+              class="m-login-bonus-card-cash-position"
+              width="50"
+            />
+            <p class="text-900-12 white m-login-bonus-card-money-position">
+              $ {{ vipSignIn.award[6] }}
+            </p>
+          </div>
+        </v-col>
+        <v-col cols="8" class="pa-0 d-flex justify-center">
+          <div
+            class="m-login-bonus-card-checkout-bg-1 relative"
+            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 8"
+          >
+            <p class="text-900-14 gray m-login-bonus-text-position-1">
+              {{ t("vip.login_bonus.day_8_text") }}
+            </p>
+            <p class="text-900-14 gray mt-2 m-login-bonus-card-money-position-1">
+              $ {{ item.signin_award[7] }}
+            </p>
+            <img
+              src="@/assets/public/svg/icon_public_18.svg"
+              class="m-login-bonus-card-cash-position"
+              width="32"
+            />
+          </div>
+          <div
+            class="m-login-bonus-card-bg-5 relative"
+            :class="vipSignIn.signin_day === 8 ? 'select_bg' : ''"
+            v-ripple.center
+            @click="handleLoginBonus(8)"
+            v-else
+          >
+            <img
+              src="@/assets/vip/image/img_vip_32.png"
+              class="m-login-bonus-sunshine-img"
+              v-if="vipSignIn.is_signin === 1"
+            />
+            <p class="text-900-12 white m-login-bonus-text-position-1">
+              {{ t("vip.login_bonus.day_8_text") }}
+            </p>
+            <p class="text-900-12 white mt-2 m-login-bonus-card-money-position-1">
+              $ {{ vipSignIn.award[7] }}
+            </p>
+            <img
+              src="@/assets/vip/image/img_vip_27.png"
+              width="113"
+              height="61"
+              class="m-login-bonus-card-cash-position-1"
+            />
+          </div>
+        </v-col>
+      </v-row>
+      <!-- </SwiperSlide>
       </Swiper> -->
     </div>
     <v-row class="m-login-bonus-footer mx-0 align-center">

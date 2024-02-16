@@ -40,7 +40,6 @@ import { mainStore } from "@/store/main";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
-const { setAuthModalType } = authStore();
 const Dashboard = defineComponent({
   async beforeRouteEnter(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded, next: any) {
     await Promise.all([
@@ -74,6 +73,8 @@ const Dashboard = defineComponent({
     const { setMainBlurEffectShow } = appBarStore();
     const { dispatchSocketConnect } = socketStore();
     const { setSearchDialogShow } = mainStore();
+    const { setAuthModalType } = authStore();
+    const { setAuthDialogVisible } = authStore();
     const router = useRouter();
     const route = useRoute();
     const instance = getCurrentInstance();
@@ -394,6 +395,7 @@ const Dashboard = defineComponent({
         router.push(`/game/${id}/${replaceName}`);
       } else {
         setAuthModalType('login');
+        setAuthDialogVisible(true);
       }
 
     };
@@ -578,20 +580,20 @@ const Dashboard = defineComponent({
       gameFilterBtnFlag.value = false;
     };
 
-    watch(selectedGameFilterBtn, ()=>{
+    watch(selectedGameFilterBtn, () => {
       const element = document.getElementsByClassName('filter-btn-container'); // Replace 'your-element-id' with the actual ID of your element
-      if(element != undefined){
+      if (element != undefined) {
         let curPos = element[0].scrollLeft;
         let index = gameGroupBtnList.value.findIndex(item => item.slug == selectedGameFilterBtn.value);
         index = index + 1;
         let left = 0;
         let right = 116.48;
-        if(index > 0){
+        if (index > 0) {
           left = 116.48 + 148 * (index - 1);
           right = left + 148;
         }
         const width = element[0].offsetWidth;
-        if(!(left > curPos && left < curPos + width)){
+        if (!(left > curPos && left < curPos + width)) {
           element[0].scrollLeft = 116.48 + (index - 1) * 148;
         }
       }
@@ -1395,26 +1397,29 @@ export default Dashboard;
           </v-slide-group>
         </template>
         <template v-else>
-          <div style="overflow:auto; color:white" class="filter-btn-container mt-4 mb-0 d-flex">
+          <div
+            style="overflow: auto; color: white"
+            class="filter-btn-container mt-4 mb-0 d-flex"
+          >
             <v-btn
-                class="mr-3 text-none"
-                height="36"
-                :class="
-                  selectedGameFilterBtn == t('home.button.all_game')
-                    ? 'black button-bright'
-                    : 'text-gray btn-211f31'
-                "
-                @click="handleGameFilterBtn(t('home.button.all_game'))"
+              class="mr-3 text-none"
+              height="36"
+              :class="
+                selectedGameFilterBtn == t('home.button.all_game')
+                  ? 'black button-bright'
+                  : 'text-gray btn-211f31'
+              "
+              @click="handleGameFilterBtn(t('home.button.all_game'))"
+            >
+              <inline-svg
+                :src="icon_public_34"
+                width="18"
+                height="18"
+                style="margin-right: 6px"
+                :transform-source="gameTransform1"
               >
-                <inline-svg
-                  :src="icon_public_34"
-                  width="18"
-                  height="18"
-                  style="margin-right: 6px"
-                  :transform-source="gameTransform1"
-                >
-                </inline-svg>
-                {{ t("home.button.all_game") }}
+              </inline-svg>
+              {{ t("home.button.all_game") }}
             </v-btn>
             <div
               v-for="(item, index) in gameGroupBtnList"
@@ -2453,13 +2458,17 @@ export default Dashboard;
 .m-game-confirm-bar {
   box-shadow: none !important;
 }
-.filter-btn-container{
+
+.filter-btn-container {
   overscroll-behavior: auto !important;
   touch-action: manipulation;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
-.filter-btn-container::-webkit-scrollbar{
+
+.filter-btn-container::-webkit-scrollbar {
   display: none;
 }
 </style>

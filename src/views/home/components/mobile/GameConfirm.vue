@@ -21,6 +21,7 @@ const props = defineProps<{ selectedGameItem: GameItem, is_favorite: boolean, ga
 const { selectedGameItem, is_favorite, gameConfirmDialogShow } = toRefs(props);
 
 const { dispatchFavoriteGame } = gameStore();
+const { setAuthDialogVisible } = authStore();
 const { setAuthModalType } = authStore();
 const { setOverlayScrimShow } = appBarStore();
 const { dispatchGameFavoriteList } = gameStore();
@@ -56,6 +57,7 @@ const svgIconTransform = (el: any) => {
 
 const openDialog = (type: dialogType) => {
   setAuthModalType(type);
+  setAuthDialogVisible(true);
   setOverlayScrimShow(false);
 };
 
@@ -89,7 +91,8 @@ const handleEnterGame = async (id: number, name: string, is_demo: string) => {
     // router.push(`/game/${id}/${replaceName}/${is_demo}`);
     router.push({ name: "Game", params: { id: id, name: replaceName, demo: is_demo } });
   } else {
-    setAuthModalType('login');
+    emit("closeGameConfirmDialog");
+    openDialog('login');
   }
 };
 

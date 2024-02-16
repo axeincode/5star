@@ -14,14 +14,14 @@ import img_public_22 from "@/assets/public/image/img_public_22.png";
 import img_public_23 from "@/assets/public/image/img_public_23.png";
 import img_public_1 from "@/assets/public/image/img_public_1.png";
 import img_public_2 from "@/assets/public/image/img_public_2.png";
-import icon_public_10 from "@/assets/public/svg/icon_public_10.svg"
+import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
 import img_vip_1 from "@/assets/vip/image/img_vip_1.png";
 import img_vip_3 from "@/assets/vip/image/img_vip_3.png";
 import { vipStore } from "@/store/vip";
 import { rewardStore } from "@/store/reward";
 import { refferalStore } from "@/store/refferal";
 import { loginBonusStore } from "@/store/loginBonus";
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 
@@ -32,9 +32,14 @@ const { setRewardNavShow } = menuStore();
 const { setMailMenuShow } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
-const { setLevelUpDialogVisible, dispatchVipRebateAward, dispatchVipLevelAward } = vipStore();
+const {
+  setLevelUpDialogVisible,
+  dispatchVipRebateAward,
+  dispatchVipLevelAward,
+} = vipStore();
 
 const { setAuthModalType } = authStore();
+const { setAuthDialogVisible } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { dispatchVipBetawardReceive } = vipStore();
@@ -48,21 +53,21 @@ const claimText = ref<string>("");
 
 // periodic rewards  周期性奖励
 const vipCycleawardList = computed(() => {
-    const { getVipCycleawardList } = storeToRefs(vipStore());
-    return getVipCycleawardList.value;
-})
+  const { getVipCycleawardList } = storeToRefs(vipStore());
+  return getVipCycleawardList.value;
+});
 
 // Code rebate  打码返利
 const vipBetawardList = computed(() => {
-    const { getVipBetawardList } = storeToRefs(vipStore());
-    return getVipBetawardList.value;
-})
+  const { getVipBetawardList } = storeToRefs(vipStore());
+  return getVipBetawardList.value;
+});
 
 // Level related rewards  等级相关奖励
 const vipLevelAward = computed(() => {
-    const { getVipLevelAward } = storeToRefs(vipStore());
-    return getVipLevelAward.value;
-})
+  const { getVipLevelAward } = storeToRefs(vipStore());
+  return getVipLevelAward.value;
+});
 
 const bonus_items = ref<Array<any>>([
   {
@@ -133,61 +138,63 @@ watch(rewardNavShow, (value) => {
 
 // Monitor periodic reward data  监听周期性奖励数据
 watch(vipCycleawardList, (value: any) => {
-  console.log('监听周期性奖励数据====>', value);
+  console.log("监听周期性奖励数据====>", value);
   if (value) {
     bonus_items.value[1].value = value.week_gift;
     bonus_items.value[2].value = value.month_gift;
   }
-})
+});
 
 // Monitor and code rebates  监听打码返利
 watch(vipBetawardList, (value: any) => {
   if (value) {
     bonus_items.value[0].value = value.now_cash_back;
   }
-  console.log('监听打码返利=====>', value);
-})
+  console.log("监听打码返利=====>", value);
+});
 
 // Rewards related to surveillance level  监听等级相关奖励
 watch(vipLevelAward, (value: any) => {
-  console.log('监听等级相关奖励=====>', value);
-})
+  console.log("监听等级相关奖励=====>", value);
+});
 const openLoginDialog = () => {
   setAuthModalType("login");
+  setAuthDialogVisible(true);
   setOverlayScrimShow(false);
 };
 
 const openRefferalDialog = () => {
   setOverlayScrimShow(false);
-  setRefferalDialogShow(true)
-}
-
+  setRefferalDialogShow(true);
+};
 
 const errVIPMessage = computed((): string => {
-    const { getErrMessage } = storeToRefs(vipStore());
-    return getErrMessage.value
-})
+  const { getErrMessage } = storeToRefs(vipStore());
+  return getErrMessage.value;
+});
 
 const handleAhivBonus = async () => {
-  await dispatchReceiveAchievementBonus().then(()=>{
-    alertMessage(t('reward.success_text'), 1);
-  }).catch(()=>{
-    alertMessage(t('reward.err_text'), 0);
-  });
-  
-  await getRewardList();
-}
+  await dispatchReceiveAchievementBonus()
+    .then(() => {
+      alertMessage(t("reward.success_text"), 1);
+    })
+    .catch(() => {
+      alertMessage(t("reward.err_text"), 0);
+    });
 
-const handleMyReward = async (index:number) => {
+  await getRewardList();
+};
+
+const handleMyReward = async (index: number) => {
   if (index === 0) {
     dispatchVipLevelAwardReceive({ type: 5 });
   }
   if (index === 1) {
     openRefferalDialog();
   }
-}
+};
 
-const handleBonus = async (index:number) => {
+const handleBonus = async (index: number) => {
   if (index === 0) {
     dispatchVipBetawardReceive({ type: 7 });
   }
@@ -200,78 +207,98 @@ const handleBonus = async (index:number) => {
   if (index === 3) {
     openLoginBonusDialog();
   }
-}
+};
 const openLoginBonusDialog = () => {
   setLoginBonusDialogVisible(true);
   setOverlayScrimShow(true);
   setMainBlurEffectShow(true);
-}
+};
 
 const rewardList = computed(() => {
   const { getRewardList } = storeToRefs(rewardStore());
   return getRewardList.value;
 });
 
-const getRewardList = async() => {
+const getRewardList = async () => {
   await dispatchRewardList();
   // bonus_items.value[0].value = rewardList.value.cash_back == undefined ? '0' : rewardList.value.cash_back;
   // bonus_items.value[1].value = rewardList.value.week == undefined ? '0' : rewardList.value.week;
   // bonus_items.value[2].value = rewardList.value.month == undefined ? '0' : rewardList.value.month;
-}
+};
 
-const alertMessage = (message:string, type: number) => {
+const alertMessage = (message: string, type: number) => {
   const toast = useToast();
-  toast.success(message, { 
-      timeout: 3000,
-      closeOnClick: false,
-      pauseOnFocusLoss: false,
-      pauseOnHover: false,
-      draggable: false,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: type == 1 ? SuccessIcon : WarningIcon,
-      rtl: false,
+  toast.success(message, {
+    timeout: 3000,
+    closeOnClick: false,
+    pauseOnFocusLoss: false,
+    pauseOnHover: false,
+    draggable: false,
+    showCloseButtonOnHover: false,
+    hideProgressBar: true,
+    closeButton: "button",
+    icon: type == 1 ? SuccessIcon : WarningIcon,
+    rtl: false,
   });
-}
-const claimClicked = async () =>{
-}
+};
+const claimClicked = async () => {};
 
 const scrollTop = ref<number>(0);
 const handleScroll = (event: any) => {
   scrollTop.value = event.target.scrollTop;
 };
 
-
 onMounted(async () => {
-  if(token.value){
+  if (token.value) {
     await getRewardList();
   }
 });
-
 </script>
 
 <template>
-  <v-navigation-drawer v-model="rewardNavShow" location="bottom" temporary :touchless="true"
-    class="m-reward-navigation-drawer">
-
+  <v-navigation-drawer
+    v-model="rewardNavShow"
+    location="bottom"
+    temporary
+    :touchless="true"
+    class="m-reward-navigation-drawer"
+  >
     <div :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'">
-      <v-btn class="m-reward-drawer-close-button" icon="true" width="20" height="20" @click="setRewardNavShow(false)">
-      <img :src="icon_public_10" width="18" />
-    </v-btn>
+      <v-btn
+        class="m-reward-drawer-close-button"
+        icon="true"
+        width="20"
+        height="20"
+        @click="setRewardNavShow(false)"
+      >
+        <img :src="icon_public_10" width="18" />
+      </v-btn>
     </div>
 
     <div class="m-reward-total-body" @scroll="handleScroll">
       <div class="m-reward-header" v-if="token">
         <p class="text-700-12 white pt-8 mx-4">{{ t("reward.text_3") }}</p>
 
-        <v-row class="mx-4 my-1 align-center ">
+        <v-row class="mx-4 my-1 align-center">
           <v-col cols="9" class="text-400-12 py-1 px-0 d-flex align-center">
-            <v-text-field class="form-textfield dark-textfield mx-0 my-0" variant="solo" hide-details filled clearable
-              :class="mobileWidth < 600 ? 'm-claim-text' : ''" v-model="claimText" :placeholder="t('reward.text_4')" />
+            <v-text-field
+              class="form-textfield dark-textfield mx-0 my-0"
+              variant="solo"
+              hide-details
+              filled
+              clearable
+              :class="mobileWidth < 600 ? 'm-claim-text' : ''"
+              v-model="claimText"
+              :placeholder="t('reward.text_4')"
+            />
           </v-col>
           <v-col cols="3" class="pa-1 text-right">
-            <v-btn class="text-none m-reward-claim-btn" width="72" height="32" @click="claimClicked">
+            <v-btn
+              class="text-none m-reward-claim-btn"
+              width="72"
+              height="32"
+              @click="claimClicked"
+            >
               {{ t("reward.text_5") }}
             </v-btn>
           </v-col>
@@ -279,16 +306,51 @@ onMounted(async () => {
 
         <v-row class="mx-4 my-2 m-reward-achievement-bonus">
           <v-col cols="3" class="d-flex align-center justify-center">
-            <img src="@/assets/affiliate/statistics/img_agent_8.png" width="54" :class="rewardList.achievement_status == 1 ? '' :  'm-reward-achievement-img'" />
+            <img
+              src="@/assets/affiliate/statistics/img_agent_8.png"
+              width="54"
+              :class="
+                rewardList.achievement_status == 1 ? '' : 'm-reward-achievement-img'
+              "
+            />
           </v-col>
           <v-col cols="6">
-            <p :class="rewardList.achievement_status == 1 ? 'text-400-12 white' :'text-400-12 text-gray'">
+            <p
+              :class="
+                rewardList.achievement_status == 1
+                  ? 'text-400-12 white'
+                  : 'text-400-12 text-gray'
+              "
+            >
               {{ t("reward.text_6") }}
             </p>
-            <p :class="rewardList.achievement_status == 1 ? 'text-800-14 active' :'text-800-14 text-gray'">R$ {{ rewardList.achievement == undefined? '0.00' : parseFloat(rewardList.achievement).toFixed(2) }}</p>
+            <p
+              :class="
+                rewardList.achievement_status == 1
+                  ? 'text-800-14 active'
+                  : 'text-800-14 text-gray'
+              "
+            >
+              R$
+              {{
+                rewardList.achievement == undefined
+                  ? "0.00"
+                  : parseFloat(rewardList.achievement).toFixed(2)
+              }}
+            </p>
           </v-col>
           <v-col cols="3" class="d-flex align-center">
-            <v-btn :class="rewardList.achievement_status == 1?'button-yellow m-reward-bonus-active-btn':'m-reward-bonus-btn'" width="72" height="32" :disabled="rewardList.achievement_status == 1?false:true" @click="handleAhivBonus">
+            <v-btn
+              :class="
+                rewardList.achievement_status == 1
+                  ? 'button-yellow m-reward-bonus-active-btn'
+                  : 'm-reward-bonus-btn'
+              "
+              width="72"
+              height="32"
+              :disabled="rewardList.achievement_status == 1 ? false : true"
+              @click="handleAhivBonus"
+            >
               {{ t("reward.text_7") }}
             </v-btn>
           </v-col>
@@ -304,7 +366,12 @@ onMounted(async () => {
           <div>{{ t("reward.text_20") }}</div>
           <div>{{ t("reward.text_21") }}</div>
         </div>
-        <v-btn class="text-none m-reward-join-btn" width="96" height="32" @click="openLoginDialog">
+        <v-btn
+          class="text-none m-reward-join-btn"
+          width="96"
+          height="32"
+          @click="openLoginDialog"
+        >
           {{ t("reward.text_22") }}
         </v-btn>
       </div>
@@ -328,7 +395,17 @@ onMounted(async () => {
               </div>
             </v-col>
             <v-col cols="3" class="d-flex align-center py-1">
-              <v-btn :class="item.value == 0 && index != 3 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleBonus(index)" :disabled="item.value == 0 && index != 3?true:false">
+              <v-btn
+                :class="
+                  item.value == 0 && index != 3
+                    ? 'm-reward-bonus-btn'
+                    : 'button-yellow m-reward-bonus-active-btn'
+                "
+                width="72"
+                height="32"
+                @click="handleBonus(index)"
+                :disabled="item.value == 0 && index != 3 ? true : false"
+              >
                 {{ t("reward.text_7") }}
               </v-btn>
             </v-col>
@@ -348,12 +425,23 @@ onMounted(async () => {
                   {{ item.content }}
                 </p>
                 <p class="text-700-12 white" v-if="index == 0">
-                  {{ vipLevelAward.upgrade_gift }} <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
+                  {{ vipLevelAward.upgrade_gift }}
+                  <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
                 </p>
               </div>
             </v-col>
             <v-col cols="3" class="d-flex align-center py-1">
-              <v-btn :class="vipLevelAward.upgrade_gift <= 0 && index == 0 ? 'm-reward-bonus-btn' : 'button-yellow m-reward-bonus-active-btn'" width="72" height="32" @click="handleMyReward(index)" :disabled="rewardList.level_up_num <= 0 && index == 0?true:false">
+              <v-btn
+                :class="
+                  vipLevelAward.upgrade_gift <= 0 && index == 0
+                    ? 'm-reward-bonus-btn'
+                    : 'button-yellow m-reward-bonus-active-btn'
+                "
+                width="72"
+                height="32"
+                @click="handleMyReward(index)"
+                :disabled="rewardList.level_up_num <= 0 && index == 0 ? true : false"
+              >
                 {{ t("reward.text_7") }}
               </v-btn>
             </v-col>
@@ -366,21 +454,22 @@ onMounted(async () => {
 
 <style lang="scss">
 .m-reward-navigation-drawer {
-  height: 100%!important;
-  width: 100%!important;
-  top: 0px!important;
+  height: 100% !important;
+  width: 100% !important;
+  top: 0px !important;
   z-index: 2147483645 !important;
   background: $agent_card_bg !important;
-  .m-reward-menu{
+
+  .m-reward-menu {
     z-index: 1000;
     position: fixed;
     width: 100% !important;
     top: 0px !important;
     border-style: none !important;
     height: 30px !important;
-
   }
-  .m-reward-menu-active-bg{
+
+  .m-reward-menu-active-bg {
     box-shadow: $agent_card_notmet_box_shadow !important;
     background: $agent_card_notmet_bg !important;
     width: 100% !important;
@@ -388,6 +477,7 @@ onMounted(async () => {
     position: fixed;
     z-index: 100000000 !important;
   }
+
   .m-reward-drawer-close-button {
     box-shadow: none !important;
     background-color: transparent !important;
@@ -396,11 +486,13 @@ onMounted(async () => {
     right: 6px;
     z-index: 100000;
   }
-  .m-reward-total-body{
+
+  .m-reward-total-body {
     margin-top: 5px;
     height: calc(100vh - 5px);
     overflow-y: scroll;
   }
+
   .m-reward-header {
     .m-reward-achievement-bonus {
       border-radius: 8px;
@@ -411,8 +503,8 @@ onMounted(async () => {
   .m-reward-join-card {
     height: 160px;
     border-radius: 8px;
-    border: 1px solid #1D2027;
-    background: conic-gradient(from 47deg at 50.17% 49.69%, #07070A 0deg, #1D2027 360deg);
+    border: 1px solid #1d2027;
+    background: conic-gradient(from 47deg at 50.17% 49.69%, #07070a 0deg, #1d2027 360deg);
 
     .m-reward-pic-img {
       position: absolute;
@@ -435,13 +527,13 @@ onMounted(async () => {
     .m-reward-join-btn {
       border-radius: 8px;
       background: $agent_card_bar_bg;
-      box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30);
+      box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
       position: absolute;
       right: 16px;
       bottom: 30px;
 
       .v-btn__content {
-        color: #FFF;
+        color: #fff;
         font-family: Inter;
         font-size: 12px;
         font-style: normal;
@@ -463,7 +555,7 @@ onMounted(async () => {
   .m-reward-claim-btn {
     border-radius: 8px !important;
     background: $agent_card_title_color;
-    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
     .v-btn__content {
       color: #000;
@@ -480,10 +572,10 @@ onMounted(async () => {
   .m-reward-bonus-btn {
     border-radius: 8px;
     background: $agent_color_3;
-    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
     .v-btn__content {
-      color: var(--light-color, #7782AA);
+      color: var(--light-color, #7782aa);
       text-align: center;
       font-family: Inter;
       font-size: 14px;
@@ -500,7 +592,7 @@ onMounted(async () => {
 
   .m-reward-bonus-active-btn {
     border-radius: 8px;
-    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
     .v-btn__content {
       color: #000;
@@ -534,7 +626,7 @@ onMounted(async () => {
     }
 
     .v-field__input::placeholder {
-      color: #7782AA;
+      color: #7782aa;
       text-align: center;
       font-family: Inter;
       font-size: 10px;

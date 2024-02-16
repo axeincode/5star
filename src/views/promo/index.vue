@@ -18,6 +18,7 @@ import { storeToRefs } from "pinia";
 import { type PromoListData } from "@/interface/promo";
 
 const { setAuthModalType } = authStore();
+const { setAuthDialogVisible } = authStore();
 const { setUserNavBarToggle } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
 const { setWithdrawDialogToggle } = appBarStore();
@@ -110,11 +111,12 @@ const token = computed(() => {
 });
 
 const handleContent = (item: PromoListData) => {
-  if(token.value == undefined){
+  if (token.value == undefined) {
     setAuthModalType("login");
+    setAuthDialogVisible(true);
     setOverlayScrimShow(false);
   }
-  else{
+  else {
     setDepositWithdrawToggle(true);
     setMainBlurEffectShow(true);
     setHeaderBlurEffectShow(true);
@@ -207,8 +209,8 @@ onMounted(async () => {
   await dispatchUserActivityList();
 });
 
-const i18nButtonText = (eng: string) =>{
-  if(eng == "Go to Deposit")
+const i18nButtonText = (eng: string) => {
+  if (eng == "Go to Deposit")
     return t("promo.text_32");
   return "";
 }
@@ -317,7 +319,7 @@ const i18nButtonText = (eng: string) =>{
             v-if="item.button_path != ''"
             @click="handleContent(item)"
           >
-            {{i18nButtonText(item.button_text)}}
+            {{ i18nButtonText(item.button_text) }}
           </v-btn>
         </div>
       </v-card>
@@ -497,7 +499,7 @@ const i18nButtonText = (eng: string) =>{
       .m-promo-deposit-btn {
         margin-left: auto;
         border-radius: 8px;
-        background: #F9BC01 !important;
+        background: #f9bc01 !important;
         box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
 
         .v-btn__content {
