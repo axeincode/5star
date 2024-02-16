@@ -240,7 +240,7 @@ onMounted(async () => {
                           {{ item.type == 0 ? t("bonus.text_3") : t("bonus.text_4") }}
                         </div>
                         <div class="mt-2">
-                          {{ userBalance.currency?.toLocaleUpperCase() }}
+                          {{ item.currency?.toLocaleUpperCase() }}
                           {{ item.receive }}
                         </div>
                       </v-col>
@@ -283,15 +283,15 @@ onMounted(async () => {
                         <div class="relative" style="margin-left: auto; width: 25px">
                           <img
                             src="@/assets/bonus/img/img_so_01.png"
-                            v-if="(Number(item.receive) * 100) / item.deposit > 50"
+                            v-if="(Number(item.receive) * 100) / Number(item.gain_amount) > 50"
                             width="24"
                           />
                           <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
                           <p class="m-bonus-rate">
                             {{
-                              item.deposit == 0
+                              Number(item.gain_amount) == 0
                                 ? 0
-                                : Number((item.receive * 100) / item.deposit)
+                                : Number((item.receive * 100) / Number(item.gain_amount))
                             }}%
                           </p>
                         </div>
@@ -347,7 +347,7 @@ onMounted(async () => {
                     <tbody>
                       <tr>
                         <td>{{ moment(item.created_at * 1000).format("YYYY/MM/DD") }}</td>
-                        <td>{{ item.deposit }}</td>
+                        <td>{{ item.gain_amount }}</td>
                         <td>{{ item.receive }}</td>
                         <td>{{ item.wager }}</td>
                       </tr>
@@ -396,7 +396,7 @@ onMounted(async () => {
                           }}
                         </div>
                         <div class="mt-2">
-                          {{ userBalance.currency?.toLocaleUpperCase() }}
+                          {{ item.currency?.toLocaleUpperCase() }}
                           {{ item.children[0].receive }}
                         </div>
                       </v-col>
@@ -449,7 +449,7 @@ onMounted(async () => {
                             src="@/assets/bonus/img/img_so_01.png"
                             v-if="
                               (Number(item.children[0].receive) * 100) /
-                                item.children[0].deposit >
+                                item.children[0].gain_amount >
                               50
                             "
                             width="24"
@@ -457,11 +457,11 @@ onMounted(async () => {
                           <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
                           <p class="m-bonus-rate">
                             {{
-                              item.children[0].deposit == 0
+                              item.children[0].gain_amount == 0
                                 ? 0
                                 : Number(
                                     (item.children[0].receive * 100) /
-                                      item.children[0].deposit
+                                      item.children[0].gain_amount
                                   )
                             }}%
                           </p>
@@ -526,7 +526,7 @@ onMounted(async () => {
                             )
                           }}
                         </td>
-                        <td>{{ item.children[0].deposit }}</td>
+                        <td>{{ item.children[0].gain_amount }}</td>
                         <td>{{ item.children[0].receive }}</td>
                         <td>{{ item.children[0].wager }}</td>
                       </tr>

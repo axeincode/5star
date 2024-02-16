@@ -90,7 +90,6 @@ const formsList = ref<Array<any>>([
 
 onMounted(async () => {
   await dispatchUserBonus();
-  console.log(userBonusList.value);
 })
 </script>
 <template>
