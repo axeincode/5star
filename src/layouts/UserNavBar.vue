@@ -539,7 +539,7 @@ onMounted(async () => {
                 <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
                 <div class="ml-auto text-800-8">
                   <font>R$ {{ vipInfo.deposit_exp }}</font> /
-                  <font color="#F9BC01">R$ {{ vipInfo.deposit_exp }}</font>
+                  <font color="#F9BC01">R$ {{ vipInfo.rank_deposit_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
@@ -556,7 +556,7 @@ onMounted(async () => {
                 <div class="white text-500-8">{{ t("appBar.wager") }}</div>
                 <div class="ml-auto text-800-8">
                   <font>R$ {{ vipInfo.bet_exp }}</font> /
-                  <font color="#623AEC">R$ {{ vipInfo.bet_exp }}</font>
+                  <font color="#623AEC">R$ {{ vipInfo.rank_bet_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">

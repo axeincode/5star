@@ -1666,6 +1666,10 @@ export const lang: langType = {
         text_5: "MXN",
         text_6: "Consíguelo ahora mismo"
       },
+      uprank: {
+        text_1: "Avance",
+        text_2: "¡Felicitaciones por mejorar su nivel de insignia!",
+      },
       black_iron: {
         week: '',
         moon: '',

@@ -1663,6 +1663,10 @@ export type langType = {
         text_5: string,
         text_6: string,
       },
+      uprank: {
+        text_1: string,
+        text_2: string,
+      },
       black_iron: {
         week: string,
         moon: string,

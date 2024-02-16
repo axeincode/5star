@@ -71,6 +71,7 @@ const RouletteBonusDialog = defineAsyncComponent(() => import("@/components/roul
 const MRouletteBonusDialog = defineAsyncComponent(() => import("@/components/roulette_bonus/mobile/index.vue"));
 const MAccountDialog = defineAsyncComponent(() => import("@/views/account/dialog/index.vue"));
 const VipUpgradeDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_upgrade_dialog/index.vue"));
+const VipUpRankDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_uprank_dialog/index.vue"));
 const Search = defineAsyncComponent(() => import("@/components/global/search/index.vue"));
 const MSearch = defineAsyncComponent(() => import("@/components/global/search/mobile/index.vue"));
 
@@ -804,6 +805,7 @@ onMounted(() => {
     </v-dialog>
 
     <VipUpgradeDialog />
+    <VipUpRankDialog />
 
     <!------------------------------ Main Page ------------------------------------------->
 
