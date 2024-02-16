@@ -815,7 +815,7 @@ onMounted(async () => {
                 <img src="@/assets/public/svg/icon_public_58.svg" />
               </template>
               <v-list-item-title class="ml-2"
-                >{{ t("appBar.id") }}ddd: {{ userInfo.uid }}</v-list-item-title
+                >{{ t("appBar.id") }}: {{ userInfo.uid }}</v-list-item-title
               >
               <template v-slot:append>
                 <img

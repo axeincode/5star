@@ -120,57 +120,57 @@ const sportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_14"),
     icon: icon_public_121,
-    query: "%2Famerican-football-16"
+    query: "/american-football-16"
   },
   {
     name: t("navBar.sport_sub_menu.text_15"),
     icon: icon_public_122,
-    query: "%2Fbadminton-31"
+    query: "/badminton-31"
   },
   {
     name: t("navBar.sport_sub_menu.text_16"),
     icon: icon_public_123,
-    query: "%2Fbaseball-3"
+    query: "/baseball-3"
   },
   {
     name: t("navBar.sport_sub_menu.text_17"),
     icon: icon_public_124,
-    query: "%2F%3FliveSport%3Dbasketball-2"
+    query: "/?liveSport=basketball-2"
   },
   {
     name: t("navBar.sport_sub_menu.text_18"),
     icon: icon_public_125,
-    query: "%2Fcricket-21"
+    query: "/cricket-21"
   },
   {
     name: t("navBar.sport_sub_menu.text_19"),
     icon: icon_public_126,
-    query: "%2Fcycling-17"
+    query: "/cycling-17"
   },
   {
     name: t("navBar.sport_sub_menu.text_20"),
     icon: icon_public_127,
-    query: "%2Fdarts-22"
+    query: "/darts-22"
   },
   {
     name: t("navBar.sport_sub_menu.text_21"),
     icon: icon_public_128,
-    query: "%2Fformula-1-40"
+    query: "/formula-1-40"
   },
   {
     name: t("navBar.sport_sub_menu.text_22"),
     icon: icon_public_129,
-    query: "%2Ffutsal-29"
+    query: "/futsal-29"
   },
   {
     name: t("navBar.sport_sub_menu.text_23"),
     icon: icon_public_130,
-    query: "%2Fgolf-9"
+    query: "/golf-9"
   },
   {
     name: t("navBar.sport_sub_menu.text_24"),
     icon: icon_public_131,
-    query: "%2Fhandball-6"
+    query: "/handball-6"
   },
   {
     name: t("navBar.sport_sub_menu.text_25"),
@@ -180,22 +180,22 @@ const sportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_26"),
     icon: icon_public_133,
-    query: "%2Febaseball%2Fmlb-20-2128614497890471950"
+    query: "/ebaseball/mlb-20-2128614497890471950"
   },
   {
     name: t("navBar.sport_sub_menu.text_27"),
     icon: icon_public_134,
-    query: "%2Fmma-117"
+    query: "/mma-117"
   },
   {
     name: t("navBar.sport_sub_menu.text_28"),
     icon: icon_public_135,
-    query: "%2Famerican-football%2Fusa%2Fnfl-1666080012467572736"
+    query: "/american-football/usa/nfl-1666080012467572736"
   },
   {
     name: t("navBar.sport_sub_menu.text_29"),
     icon: icon_public_136,
-    query: "%2Fmotorcycle-racing-190"
+    query: "/motorcycle-racing-190"
   },
   {
     name: t("navBar.sport_sub_menu.text_30"),
@@ -205,32 +205,32 @@ const sportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_31"),
     icon: icon_public_138,
-    query: "%2Frugby-12"
+    query: "/rugby-12"
   },
   {
     name: t("navBar.sport_sub_menu.text_32"),
     icon: icon_public_139,
-    query: "%2Fsnooker-19"
+    query: "/snooker-19"
   },
   {
     name: t("navBar.sport_sub_menu.text_33"),
     icon: icon_public_140,
-    query: "%2Ftable-tennis-20"
+    query: "/table-tennis-20"
   },
   {
     name: t("navBar.sport_sub_menu.text_34"),
     icon: icon_public_141,
-    query: "%2F%3FliveSport%3Dtennis-5"
+    query: "/?liveSport=tennis-5"
   },
   {
     name: t("navBar.sport_sub_menu.text_35"),
     icon: icon_public_142,
-    query: "%2Fvolleyball-23"
+    query: "/volleyball-23"
   },
   {
     name: t("navBar.sport_sub_menu.text_36"),
     icon: icon_public_143,
-    query: "%2Fwaterpolo-26"
+    query: "/waterpolo-26"
   },
 ])
 
@@ -238,12 +238,12 @@ const eSportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_37"),
     icon: icon_public_144,
-    query: "%2Fcounter-strike-109"
+    query: "/counter-strike-109"
   },
   {
     name: t("navBar.sport_sub_menu.text_38"),
     icon: icon_public_145,
-    query: "%2Fdota-2-111"
+    query: "/dota-2-111"
   },
   {
     name: t("navBar.sport_sub_menu.text_39"),
@@ -253,7 +253,7 @@ const eSportGames = ref<Array<any>>([
   {
     name: t("navBar.sport_sub_menu.text_40"),
     icon: icon_public_147,
-    query: "%2Fleague-of-legends-110"
+    query: "/league-of-legends-110"
   },
 ])
 
