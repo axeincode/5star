@@ -373,14 +373,14 @@ const handleDepositSubmit = async () => {
     formData.last_name = pixInfo.value.last_name
   }
   formData.channels_id = selectedPaymentItem.value.id;
-  formData.amount = depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
+  formData.amount = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
   formData.is_bonus = bonusCheck.value ? false : true;
   await dispatchUserDepositSubmit(formData);
   loading.value = false;
   if (success.value) {
     await dispatchUserProfile();
     if (depositSubmit.value.code_url != "") {
-      depositAmountWithBonus.value = depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
+      depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
       let locale = 'pt-BR';
       switch (selectedCurrencyItem.value.name) {
         case "BRL":
