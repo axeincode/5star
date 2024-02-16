@@ -275,7 +275,9 @@ onMounted(async () => {
 <template>
   <div class="m-home-search-body">
     <div class="m-search-header">
-      <span class="m-search-header-icon" @click="emit('searchCancel')"></span>
+      <v-icon class="m-search-header-icon" @click="emit('searchCancel')">
+        mdi-chevron-left
+      </v-icon>
       <span>{{ t("home.search") }}</span>
     </div>
     <!-- <div
@@ -536,7 +538,7 @@ onMounted(async () => {
 }
 
 .m-search-header {
-  position: relative;
+  // position: relative;
   height: 50px;
   line-height: 50px;
   background: var(--BG-5-1C1929, #15161c);
@@ -546,19 +548,22 @@ onMounted(async () => {
   .m-search-header-icon {
     width: 20px;
     height: 20px;
+    position: absolute;
+    left: 15px;
+    top: 15px;
   }
 
-  .m-search-header-icon::before {
-    content: "";
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translate(0, -50%) rotate(45deg);
-    border-bottom: 2px solid #fff;
-    border-left: 2px solid #fff;
-    width: 10px;
-    height: 10px;
-  }
+  // .m-search-header-icon::before {
+  //   content: "";
+  //   position: absolute;
+  //   left: 20px;
+  //   top: 50%;
+  //   transform: translate(0, -50%) rotate(45deg);
+  //   border-bottom: 2px solid #fff;
+  //   border-left: 2px solid #fff;
+  //   width: 10px;
+  //   height: 10px;
+  // }
 }
 
 .m-home-search-body {
@@ -596,7 +601,7 @@ onMounted(async () => {
   }
 
   .mdi:before {
-    font-size: 16px !important;
+    // font-size: 16px !important;
   }
 
   .v-field__input {

@@ -289,6 +289,7 @@ const depositWithdrawToggle = computed(() => {
 })
 
 watch(depositDialogToggle, (newValue) => {
+  console.log("qqqqqqqqqqqqqqqqq", depositDialogToggle.value);
   depositDialog.value = newValue;
 })
 

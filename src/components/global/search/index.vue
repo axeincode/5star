@@ -528,10 +528,12 @@ onMounted(async () => {
   background: var(--BG-5-1C1929, #15161c);
   color: #fff;
   text-align: center;
+
   .m-search-header-icon {
     width: 20px;
     height: 20px;
   }
+
   .m-search-header-icon::before {
     content: "";
     position: absolute;

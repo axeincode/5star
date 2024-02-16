@@ -35,11 +35,14 @@ const { dispatchUserDepositSubmit } = depositStore();
 const { setPixInfoToggle } = depositStore();
 const { dispatchUserProfile } = authStore();
 
+const selectedCurrencyUnit = ref<string>("R$");
+
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
   name: "MXN",
   value: 5.25
 })
+
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "",
   icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -166,8 +169,6 @@ const depositBlurEffectShow = computed(() => {
 const { setOverlayScrimShow } = appBarStore();
 
 const depositToggleSwitch = ref<boolean>(false);
-
-const depositAmountUnit = ref<string>("R$");
 
 const depositRate = ref<number>(0);
 
@@ -298,6 +299,14 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
     })
   })
   selectedPaymentItem.value = paymentList.value[0];
+  switch (selectedCurrencyItem.value.name) {
+    case "BRL":
+      selectedCurrencyUnit.value = 'R$';
+      break;
+    case "MXN":
+      selectedCurrencyUnit.value = 'MXN';
+      break;
+  }
 }
 
 const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
@@ -554,6 +563,15 @@ onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
 
+  switch (selectedCurrencyItem.value.name) {
+    case "BRL":
+      selectedCurrencyUnit.value = 'R$';
+      break;
+    case "MXN":
+      selectedCurrencyUnit.value = 'MXN';
+      break;
+  }
+
   // setOverlayScrimShow(true);
   // setDepositHeaderBlurEffectShow(true);
   // setDepositBlurEffectShow(true);
@@ -702,7 +720,10 @@ onMounted(async () => {
         </v-row>
       </v-list>
     </v-menu>
-    <v-row class="mt-6 mx-6 text-400-12 gray">
+    <div class="mx-4 mt-2">
+      <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
+    </div>
+    <v-row class="mt-4 mx-6 text-400-12 gray">
       {{ t("deposit_dialog.deposit_amount") }}
     </v-row>
     <v-row class="mt-2 mx-2">
@@ -722,7 +743,7 @@ onMounted(async () => {
           ]"
           @click="handleDepositAmount(depositAmountItem.depositSelect)"
         >
-          {{ depositAmountUnit }} {{ depositAmountItem.depositSelect }}
+          {{ selectedCurrencyUnit }} {{ depositAmountItem.depositSelect }}
           <div
             class="m-deposit-amount-area"
             v-if="!bonusCheck && depositAmountItem.bonus != 0"
@@ -777,8 +798,11 @@ onMounted(async () => {
       <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
     </div>
     <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
-      R${{ depositAmount }} + R${{
-        depositConfig["bonus"][0]["type"] == 0 && depositConfig["bonus"] != undefined
+      {{ selectedCurrencyUnit }}{{ depositAmount }} + {{ selectedCurrencyUnit
+      }}{{
+        depositConfig["bonus"].length > 0 &&
+        depositConfig["bonus"][0]["type"] == 0 &&
+        depositConfig["bonus"] != undefined
           ? depositRate
           : (Number(depositAmount) * depositRate).toFixed(2)
       }}

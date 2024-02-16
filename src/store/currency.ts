@@ -14,7 +14,6 @@ export const currencyStore = defineStore({
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
-
     getCurrencyList: (state) => state.currencyList,
   },
   actions: {

@@ -1176,7 +1176,7 @@ export const lang: langType = {
   withdraw_dialog: {
     withdraw_currency: "Withdrawal Currency",
     withdraw_payment_method: "Withdraw to",
-    withdraw_amount: "Available Balance: R$ ",
+    withdraw_amount: "Available Balance: ",
     amount: "Amount",
     validation: {
       text_1: "Enter the amount you want to withdraw. ",
@@ -1197,7 +1197,7 @@ export const lang: langType = {
     text_2: "Free monthly withdrawal amount: 100",
     text_3: "Withdrawal hours: 11:00 - 19:00.",
     text_4: "Payout time: from 5 minutes to 24 hours.",
-    other_text: "% fee,R$",
+    other_text: "% fee,",
     other_text_1: " into your account",
     withdraw_btn_text: "WITHDRAW",
     withdraw_warning_text: "Excess of withdrawable amount",

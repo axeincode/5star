@@ -180,6 +180,8 @@ const isDepositBtnReady = ref<boolean>(false);
 const currencyMenuShow = ref<boolean>(false);
 const paymentMenuShow = ref<boolean>(false);
 
+const selectedCurrencyUnit = ref<string>("R$")
+
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value;
@@ -248,6 +250,15 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
       max: item.max
     })
   })
+  selectedPaymentItem.value = paymentList.value[0];
+  switch (selectedCurrencyItem.value.name) {
+    case "BRL":
+      selectedCurrencyUnit.value = 'R$';
+      break;
+    case "MXN":
+      selectedCurrencyUnit.value = 'MXN';
+      break;
+  }
 }
 
 const handleSelectPayment = (item: GetPaymentItem) => {
@@ -404,6 +415,15 @@ onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();
   await dispatchUserBalance();
+
+  switch (selectedCurrencyItem.value.name) {
+    case "BRL":
+      selectedCurrencyUnit.value = 'R$';
+      break;
+    case "MXN":
+      selectedCurrencyUnit.value = 'MXN';
+      break;
+  }
 })
 </script>
 
@@ -512,7 +532,8 @@ onMounted(async () => {
       </v-list>
     </v-menu>
     <v-row class="mt-6 mx-6 text-500-10 white">
-      {{ t("withdraw_dialog.withdraw_amount") }}{{ availableAmount }}
+      {{ t("withdraw_dialog.withdraw_amount") }}{{ selectedCurrencyUnit
+      }}{{ availableAmount }}
     </v-row>
     <v-row class="mt-4 mx-2 relative">
       <v-text-field
@@ -562,7 +583,7 @@ onMounted(async () => {
     <v-row
       class="m-deposit-footer-text-position text-600-10 white justify-center mx-2 mt-10"
     >
-      {{ feeRate * 100 }} {{ t("withdraw_dialog.other_text") }}
+      {{ feeRate * 100 }} {{ t("withdraw_dialog.other_text") }}{{ selectedCurrencyUnit }}
       {{ Number(withdrawAmount) * (1 - Number(feeRate)) }}
       {{ t("withdraw_dialog.other_text_1") }}
     </v-row>

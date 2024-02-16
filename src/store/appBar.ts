@@ -59,6 +59,7 @@ export const appBarStore = defineStore({
       this.navBarToggle = navBarToggle;
     },
     setDepositDialogToggle(depositDialogToggle: boolean) {
+      console.log("rrrrrrrrrrrrrrrrrrrrrrrr", depositDialogToggle);
       this.depositDialogToggle = depositDialogToggle;
     },
     setWithdrawDialogToggle(withdrawDialogToggle: boolean) {

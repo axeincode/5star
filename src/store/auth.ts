@@ -167,7 +167,7 @@ export const authStore = defineStore({
           if (response.data.avatar == "") {
             response.data.avatar = new URL("@/assets/public/image/ua_public_10.png", import.meta.url).href
           }
-          console.log("qqqqqqqqqqqqqqqqqqq", response.data.id.toString());
+          this.setErrorMessage("");
           this.setUserInfo(response.data);
           this.setSuccess(true);
         } else {
