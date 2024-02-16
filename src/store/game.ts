@@ -136,6 +136,7 @@ export const gameStore = defineStore({
             this.gameBigWinItem = gameBigWinItem;
         },
         async getGameBetbyInit() {
+            await this.dispatchGameEnter({ id: '9999', demo: false });
             this.betby = new BTRenderer().initialize(
                 {
                     token: this.enterGameItem.reserve || '',
@@ -153,7 +154,7 @@ export const gameStore = defineStore({
                     },
                     onTokenExpired: async () => {
                         this.closeKill();
-                        await this.dispatchGameEnter({ id: '9999' });
+                        await this.dispatchGameEnter({ id: '9999', demo: false });
                         await this.getGameBetbyInit();
                     },
                     onSessionRefresh: async () => {
