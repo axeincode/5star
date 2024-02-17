@@ -24,7 +24,7 @@ watch(getLang, async(oldVal: string, newVal: string) => {
     if (oldVal !== newVal) {
         betbyShow.value = true;
         await closeKill();
-        await dispatchGameEnter({ id: route.params.id, demo: false });
+        // await dispatchGameEnter({ id: route.params.id, demo: false });
         await getGameBetbyInit();
         betbyShow.value = false;
     }

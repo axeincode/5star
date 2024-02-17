@@ -8,6 +8,7 @@ import { appBarStore } from "@/store/appBar";
 import { vipStore } from "@/store/vip";
 import { socketStore } from "@/store/socket";
 import { refferalStore } from '@/store/refferal';
+import { gameStore } from "@/store/game";
 import { loginBonusStore } from "@/store/loginBonus";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { mailStore } from "@/store/mail";
@@ -18,7 +19,7 @@ import { type GetCurrencyBalanceList } from '@/interface/currency';
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
 import { useDisplay } from 'vuetify'
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import img_vipemblem_2 from "@/assets/vip/image/img_vipemblem_2.png";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
@@ -59,9 +60,11 @@ const { dispatchCurrencyList } = currencyStore();
 const { dispatchUserBonus } = bonusStore();
 
 const { dispatchBannerList } = bannerStore();
+const { dispatchGameEnter, getGameBetbyInit, closeKill } = gameStore();
 
 const { name, width } = useDisplay()
 const router = useRouter();
+const route = useRoute();
 
 type dialogType = "login" | "signup";
 const color = ref<string>("#1D2027");
@@ -364,7 +367,10 @@ const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   selectedCurrencyItem.value = item;
 
   await dispatchSetUserCurrency(item.currency);
-
+  if (route.name == 'Sports') {
+    await closeKill();
+    await getGameBetbyInit();
+  }
   setTimeout(() => {
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);

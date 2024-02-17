@@ -126,7 +126,9 @@ export const gameStore = defineStore({
         openDialog(type: dialogType) {
             const { setAuthModalType } = authStore();
             const { setOverlayScrimShow } = appBarStore();
+            const { setAuthDialogVisible } = authStore();
             setAuthModalType(type);
+            setAuthDialogVisible(true);
             setOverlayScrimShow(false);
         },
         closeKill() {
@@ -136,7 +138,9 @@ export const gameStore = defineStore({
             this.gameBigWinItem = gameBigWinItem;
         },
         async getGameBetbyInit() {
-            await this.dispatchGameEnter({ id: '9999', demo: false });
+            if (!this.enterGameItem.reserve) {
+                await this.dispatchGameEnter({ id: '9999', demo: false });
+            }
             this.betby = new BTRenderer().initialize(
                 {
                     token: this.enterGameItem.reserve || '',
