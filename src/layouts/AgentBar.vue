@@ -152,10 +152,13 @@ onMounted(() => {
   }
 
   .m-agent-body {
-    margin-top: 70px;
-    padding-top: 8px;
+    // margin-top: 70px;
+    // padding-top: 8px;
     height: calc(100vh - 70px);
     overflow-y: scroll;
+    position: absolute;
+    top: 70px;
+    width: 100%;
   }
 }
 </style>

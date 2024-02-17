@@ -21,6 +21,8 @@ export interface BonusItem {
     wager: number
     rate: number
     deposit: string
+    id: string | number
+    children: any
 }
 
 export interface GetBonusList {

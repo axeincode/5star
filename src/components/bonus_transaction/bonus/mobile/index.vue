@@ -213,7 +213,9 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.account_balance") }}</div>
-          <div class="text-600-12 white">{{formatCurrency(Number(userBalance.real), userBalance.currency)}}</div>
+          <div class="text-600-12 white">
+            {{ formatCurrency(Number(userBalance.real), userBalance.currency) }}
+          </div>
         </v-list-item-title>
         <!-- <template v-slot:append>
           <div v-ripple.center style="width: 24px; height: 24px">
@@ -227,7 +229,9 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.bonus_money") }}</div>
-          <div class="text-600-12 white">{{formatCurrency(Number(userBalance.bonus), userBalance.currency)}}</div>
+          <div class="text-600-12 white">
+            {{ formatCurrency(Number(userBalance.bonus), userBalance.currency) }}
+          </div>
         </v-list-item-title>
       </v-list-item>
       <v-list-item class="m-bg-color-1 mt-4 mx-6">
@@ -236,7 +240,9 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4" style="line-height: 17px">
           <div class="text-400-10 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-12 white">{{formatCurrency(Number(userBalance.amount), userBalance.currency)}}</div>
+          <div class="text-600-12 white">
+            {{ formatCurrency(Number(userBalance.amount), userBalance.currency) }}
+          </div>
         </v-list-item-title>
       </v-list-item>
     </v-col>
@@ -318,7 +324,9 @@ onMounted(async () => {
                         <div class="relative" style="margin-left: auto; width: 25px">
                           <img
                             src="@/assets/bonus/img/img_so_01.png"
-                            v-if="(Number(item.gain_amount) * 100) / Number(item.deposit) > 50"
+                            v-if="
+                              (Number(item.gain_amount) * 100) / Number(item.deposit) > 50
+                            "
                             width="24"
                           />
                           <img src="@/assets/bonus/img/img_so_06.png" v-else width="24" />
@@ -326,7 +334,10 @@ onMounted(async () => {
                             {{
                               Number(item.deposit) == 0
                                 ? 0
-                                : Number((item.gain_amount * 100) / Number(item.deposit))
+                                : Number(
+                                    (Number(item.gain_amount) * 100) /
+                                      Number(item.deposit)
+                                  )
                             }}%
                           </p>
                         </div>
@@ -353,7 +364,11 @@ onMounted(async () => {
                               class="text-400-10"
                               :class="[item.status == 3 ? 'gray' : '']"
                             >
-                              {{formatCurrency(Number(item.now), userBalance.currency)}} / {{formatCurrency(Number(item.max), userBalance.currency)}}
+                              {{
+                                formatCurrency(Number(item.now), userBalance.currency)
+                              }}
+                              /
+                              {{ formatCurrency(Number(item.max), userBalance.currency) }}
                             </div>
                           </v-progress-linear>
                         </div>
@@ -395,7 +410,7 @@ onMounted(async () => {
                   </v-row>
                 </v-expansion-panel-text>
               </v-expansion-panel>
-            
+
               <v-expansion-panel
                 class="bg-color-211F31 m-collapse-body mt-1"
                 :ripple="false"
@@ -496,7 +511,7 @@ onMounted(async () => {
                                 ? 0
                                 : Number(
                                     (item.children[0].gain_amount * 100) /
-                                    Number(item.children[0].deposit)
+                                      Number(item.children[0].deposit)
                                   )
                             }}%
                           </p>
@@ -524,7 +539,18 @@ onMounted(async () => {
                               class="text-400-10"
                               :class="[item.children[0].status == 3 ? 'gray' : '']"
                             >
-                              {{formatCurrency(Number(item.children[0].now), userBalance.currency)}}/ {{formatCurrency(Number(item.children[0].max), userBalance.currency)}}
+                              {{
+                                formatCurrency(
+                                  Number(item.children[0].now),
+                                  userBalance.currency
+                                )
+                              }}/
+                              {{
+                                formatCurrency(
+                                  Number(item.children[0].max),
+                                  userBalance.currency
+                                )
+                              }}
                             </div>
                           </v-progress-linear>
                         </div>
@@ -602,7 +628,7 @@ onMounted(async () => {
   width: 64px;
   height: 24px !important;
   border-radius: 4px;
-  background: var(--Secondary-Button-353652, #1D2027);
+  background: var(--Secondary-Button-353652, #1d2027);
   .v-btn__content {
     color: var(--White-BG, #fff);
     text-align: center;
@@ -656,7 +682,7 @@ onMounted(async () => {
 }
 
 .m-forms-bonus-table-bg {
-  background: #15161C !important;
+  background: #15161c !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
   width: 100% !important;
@@ -669,7 +695,7 @@ onMounted(async () => {
 
 .bonus-cash-border {
   height: 30px;
-  border-right: 1px solid #1D2027;
+  border-right: 1px solid #1d2027;
 }
 
 .m-collapse-body .v-expansion-panel-title {
@@ -680,12 +706,12 @@ onMounted(async () => {
 
 .real-title-bg {
   border-radius: 8px;
-  background: linear-gradient(90deg, #1D2027 0%, #009B3A 100%) !important;
+  background: linear-gradient(90deg, #1d2027 0%, #009b3a 100%) !important;
 }
 
 .bonus-title-bg {
   border-radius: 8px;
-  background: linear-gradient(90deg, #23262F 0%, #1F4EA8 100%) !important;
+  background: linear-gradient(90deg, #23262f 0%, #1f4ea8 100%) !important;
 }
 
 .failure-title-bg {
@@ -697,7 +723,7 @@ onMounted(async () => {
 }
 
 .v-progress-linear {
-  background: #1D2027 !important;
+  background: #1d2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
 }
@@ -708,22 +734,22 @@ onMounted(async () => {
 
 .real-completion-progress {
   .v-progress-linear__determinate {
-    background: #009B3A !important;
+    background: #009b3a !important;
     border-radius: 8px !important;
-    border: 2px solid #15161C;
+    border: 2px solid #15161c;
   }
 }
 .bonus-completion-progress {
   .v-progress-linear__determinate {
-    background: #235AC5 !important;
+    background: #235ac5 !important;
     border-radius: 8px !important;
-    border: 2px solid #15161C;
+    border: 2px solid #15161c;
   }
 }
 
 .failure-progress {
   .v-progress-linear__determinate {
-    background: linear-gradient(0deg, #15161C 0%, #393a71 100%);
+    background: linear-gradient(0deg, #15161c 0%, #393a71 100%);
     border-radius: 8px;
   }
 }
@@ -747,10 +773,10 @@ onMounted(async () => {
 }
 .m-bonus-deposit-group {
   border-radius: 8px;
-  background: #1D2027;
+  background: #1d2027;
   padding: 4px;
   .v-expansion-panel {
-    background-color: #23262F !important;
+    background-color: #23262f !important;
   }
 }
 </style>

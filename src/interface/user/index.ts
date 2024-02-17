@@ -47,6 +47,8 @@ export interface GetUserBalance {
     amount: number,
     currency: string,
     availabe_balance: number,
+    real: number | string,
+    bonus: number | string
 }
 export interface UpdateSuspendUser {
     time: number

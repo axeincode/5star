@@ -210,7 +210,7 @@ onMounted(async () => {
 </script>
 <template>
   <v-row class="mx-2 mt-0">
-    <div class="m-agent-report-date-picker" @click="datePickerShow = true">
+    <div class="m-agent-report-date-picker relative" @click="datePickerShow = true">
       <el-date-picker
         v-model="selectedDate"
         popper-class="m-agent-report-date-picker-background"

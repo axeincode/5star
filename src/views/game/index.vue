@@ -396,6 +396,21 @@ onMounted(async () => {
     id: route.params.id,
     demo: route.params.demo == "true" ? true : false,
   });
+  if (enterGameItem.value.provider == "SOFTSWISS") {
+    // launch_options
+    let obOptions = JSON.parse(enterGameItem.value.reserve);
+    console.log(obOptions);
+    // run softswiss game
+    const gameLaunchOptions = { target_element: "game_wrapper" } as any;
+    gameLaunchOptions["launch_options"] = {
+      game_launcher_url: obOptions.launch_options.game_launcher_url,
+      game_url: enterGameItem.value.weburl,
+      strategy: enterGameItem.value.parames,
+      lobby_url: "", // Host address where the lobby JavaScript libraries are located.
+      token_id: "", // Unique player authorization token.
+    };
+    (window as any).sg.launch(gameLaunchOptions);
+  }
 });
 
 onUnmounted(() => {
@@ -413,22 +428,24 @@ onUnmounted(() => {
           <div class="dot-0"></div>
         </div>
       </div>
-      <iframe
-        v-if="enterGameItem.method == 'HTML'"
-        ref="gameFrameRef"
-        :srcdoc="enterGameItem.weburl"
-        :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
-        class="home-game-frame-area"
-        @load="handleIframeLoad"
-      ></iframe>
-      <iframe
-        v-else
-        ref="gameFrameRef"
-        :src="enterGameItem.weburl"
-        :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
-        class="home-game-frame-area"
-        @load="handleIframeLoad"
-      ></iframe>
+      <div id="game_wrapper">
+        <iframe
+          v-if="enterGameItem.method == 'HTML'"
+          ref="gameFrameRef"
+          :srcdoc="enterGameItem.weburl"
+          :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
+          class="home-game-frame-area"
+          @load="handleIframeLoad"
+        ></iframe>
+        <iframe
+          v-else
+          ref="gameFrameRef"
+          :src="enterGameItem.weburl"
+          :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
+          class="home-game-frame-area"
+          @load="handleIframeLoad"
+        ></iframe>
+      </div>
     </div>
   </div>
   <div class="game-body" v-else>
@@ -440,20 +457,22 @@ onUnmounted(() => {
           <div class="dot-0"></div>
         </div>
       </div>
-      <iframe
-        v-if="enterGameItem.method == 'HTML'"
-        :srcdoc="enterGameItem.weburl"
-        class="home-game-frame-area"
-        :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
-        @load="handleIframeLoad"
-      ></iframe>
-      <iframe
-        :src="enterGameItem.weburl"
-        class="home-game-frame-area"
-        :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
-        @load="handleIframeLoad"
-        v-else
-      ></iframe>
+      <div id="game_wrapper">
+        <iframe
+          v-if="enterGameItem.method == 'HTML'"
+          :srcdoc="enterGameItem.weburl"
+          class="home-game-frame-area"
+          :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
+          @load="handleIframeLoad"
+        ></iframe>
+        <iframe
+          :src="enterGameItem.weburl"
+          class="home-game-frame-area"
+          :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
+          @load="handleIframeLoad"
+          v-else
+        ></iframe>
+      </div>
     </div>
     <!--------------------- Game History ---------------------->
     <v-row class="mx-6 mt-6">

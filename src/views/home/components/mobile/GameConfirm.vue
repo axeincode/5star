@@ -10,6 +10,9 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import icon_public_36 from "@/assets/public/svg/icon_public_36.svg";
 import icon_public_103 from "@/assets/public/svg/icon_public_103.svg";
+import { useToast } from "vue-toastification";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -21,6 +24,7 @@ const props = defineProps<{ selectedGameItem: GameItem, is_favorite: boolean, ga
 const { selectedGameItem, is_favorite, gameConfirmDialogShow } = toRefs(props);
 
 const { dispatchFavoriteGame } = gameStore();
+const { dispatchGameEnter } = gameStore();
 const { setAuthDialogVisible } = authStore();
 const { setAuthModalType } = authStore();
 const { setOverlayScrimShow } = appBarStore();
@@ -28,6 +32,8 @@ const { dispatchGameFavoriteList } = gameStore();
 const { setMailMenuShow } = mailStore();
 
 const favoriteSvgIconColor = ref<string>("#7782AA")
+
+const loading = ref<boolean>(false);
 
 type dialogType = "login" | "signup";
 
@@ -38,6 +44,10 @@ const success = computed(() => {
   return getSuccess.value
 })
 
+const errMessage = computed(() => {
+  const { getErrMessage } = storeToRefs(gameStore());
+  return getErrMessage.value
+})
 // get Token
 const token = computed(() => {
   const { getToken } = storeToRefs(authStore());
@@ -86,6 +96,28 @@ const addFavoriteGame = async (id: string | number) => {
 
 const handleEnterGame = async (id: number, name: string, is_demo: string) => {
   if (token.value) {
+    loading.value = true
+    await dispatchGameEnter({
+      id: id.toString(),
+      demo: is_demo == "true" ? true : false,
+    });
+    loading.value = false;
+    if (!success.value) {
+      const toast = useToast();
+      toast.success("Game id is wrong!", {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: WarningIcon,
+        rtl: false,
+      });
+      return;
+    }
     let replaceName = name.replace(/ /g, "-");
     setMailMenuShow(true);
     // router.push(`/game/${id}/${replaceName}/${is_demo}`);
@@ -114,7 +146,7 @@ watch(gameConfirmDialogShow, (value) => {
       </v-col>
       <v-col cols="5">
         <div class="text-700-14 white mt-2">{{ selectedGameItem.name }}</div>
-        <div class="text-400-12 gray mt-1">by {{ selectedGameItem.provider }}</div>
+        <div class="text-400-12 gray mt-1">by {{ selectedGameItem.producer }}</div>
       </v-col>
       <v-col cols="3" class="px-2 mt-2 d-flex justify-end">
         <inline-svg
@@ -135,6 +167,7 @@ watch(gameConfirmDialogShow, (value) => {
       </v-col>
       <v-col cols="6">
         <v-btn
+          :loading="loading"
           class="text-none m-game-confirm-real-more-btn"
           width="144"
           height="40"
@@ -146,6 +179,7 @@ watch(gameConfirmDialogShow, (value) => {
     </v-row>
     <div class="text-center" v-else>
       <v-btn
+        :loading="loading"
         class="my-4 text-none m-game-confirm-real-more-btn"
         width="280"
         height="40"

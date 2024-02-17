@@ -245,6 +245,7 @@ export const gameStore = defineStore({
             const next = (response: Game.GetGameEnterResponse) => {
                 if (response.code == 200) {
                     this.setSuccess(true);
+                    this.setErrorMessage("");
                     this.setGameEnterItem(response.data);
                 } else {
                     this.setErrorMessage(handleException(response.code));

@@ -14,6 +14,7 @@ import { useToast } from "vue-toastification";
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchBonusCancel } = bonusStore();
+const { dispatchUserBonus } = bonusStore();
 const emit = defineEmits<{ (e: "bonusDialogHide"): void }>();
 const props = defineProps<{ id: number }>();
 const { id } = toRefs(props);
@@ -40,6 +41,7 @@ const submitCancel = async () => {
   await dispatchBonusCancel({
     id: id.value,
   });
+  await dispatchUserBonus();
   if (success.value) {
     emit("bonusDialogHide");
   } else {
@@ -100,7 +102,7 @@ const submitCancel = async () => {
 <style lang="scss">
 // bonus dialog container
 .m-bonus-dialog-container {
-  background-color: #1D2027;
+  background-color: #1d2027;
   border-radius: 8px !important;
   height: 173px;
 }
@@ -119,7 +121,7 @@ const submitCancel = async () => {
 .m-bonus-cancel-btn {
   // button
   button {
-    background: #23262F !important;
+    background: #23262f !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 

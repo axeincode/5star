@@ -21,6 +21,7 @@ export interface GameItem {
     name: string
     image: string
     provider: string
+    producer: string
     is_demo: boolean
 }
 
