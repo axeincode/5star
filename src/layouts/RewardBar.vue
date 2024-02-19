@@ -263,7 +263,33 @@ onMounted(async () => {
     :touchless="true"
     class="m-reward-navigation-drawer"
   >
-    <div :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'">
+    <div :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'" v-if="token">
+      <p class="text-700-12 white pt-8 mx-4" v-if="token">{{ t("reward.text_3") }}</p>
+
+      <v-row class="mx-4 my-1 align-center" v-if="token">
+        <v-col cols="9" class="text-400-12 py-1 px-0 d-flex align-center">
+          <v-text-field
+            class="form-textfield dark-textfield mx-0 my-0"
+            variant="solo"
+            hide-details
+            filled
+            clearable
+            :class="mobileWidth < 600 ? 'm-claim-text' : ''"
+            v-model="claimText"
+            :placeholder="t('reward.text_4')"
+          />
+        </v-col>
+        <v-col cols="3" class="pa-1 text-right">
+          <v-btn
+            class="text-none m-reward-claim-btn"
+            width="72"
+            height="32"
+            @click="claimClicked"
+          >
+            {{ t("reward.text_5") }}
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-btn
         class="m-reward-drawer-close-button"
         icon="true"
@@ -275,35 +301,20 @@ onMounted(async () => {
       </v-btn>
     </div>
 
-    <div class="m-reward-total-body" @scroll="handleScroll">
+    <div :class="scrollTop == 0 ? 'm-reward-logout-menu' : 'm-reward-menu-log-out-active-bg'" v-else>
+      <v-btn
+        class="m-reward-drawer-close-button"
+        icon="true"
+        width="20"
+        height="20"
+        @click="setRewardNavShow(false)"
+      >
+        <img :src="icon_public_10" width="18" />
+      </v-btn>
+    </div>
+
+    <div :class="token? 'm-reward-total-body' : 'm-reward-logout-total-body'" @scroll="handleScroll">
       <div class="m-reward-header" v-if="token">
-        <p class="text-700-12 white pt-8 mx-4">{{ t("reward.text_3") }}</p>
-
-        <v-row class="mx-4 my-1 align-center">
-          <v-col cols="9" class="text-400-12 py-1 px-0 d-flex align-center">
-            <v-text-field
-              class="form-textfield dark-textfield mx-0 my-0"
-              variant="solo"
-              hide-details
-              filled
-              clearable
-              :class="mobileWidth < 600 ? 'm-claim-text' : ''"
-              v-model="claimText"
-              :placeholder="t('reward.text_4')"
-            />
-          </v-col>
-          <v-col cols="3" class="pa-1 text-right">
-            <v-btn
-              class="text-none m-reward-claim-btn"
-              width="72"
-              height="32"
-              @click="claimClicked"
-            >
-              {{ t("reward.text_5") }}
-            </v-btn>
-          </v-col>
-        </v-row>
-
         <v-row class="mx-4 my-2 m-reward-achievement-bonus">
           <v-col cols="3" class="d-flex align-center justify-center">
             <img
@@ -356,8 +367,7 @@ onMounted(async () => {
           </v-col>
         </v-row>
       </div>
-
-      <div class="m-reward-join-card mx-4 relative mt-8" v-else>
+      <div class="m-reward-join-card mx-4 relative mt-2" v-else>
         <img src="@/assets/public/image/img_public_25.png" height="159" />
         <img src="@/assets/public/image/img_public_24.png" class="m-reward-pic-img" />
         <img src="@/assets/public/image/img_public_5.png" class="m-reward-money-img" />
@@ -466,10 +476,27 @@ onMounted(async () => {
     width: 100% !important;
     top: 0px !important;
     border-style: none !important;
+    height: 110px !important;
+  }
+  .m-reward-logout-menu{
+    z-index: 1000;
+    position: fixed;
+    width: 100% !important;
+    top: 0px !important;
+    border-style: none !important;
     height: 30px !important;
   }
 
   .m-reward-menu-active-bg {
+    box-shadow: $agent_card_notmet_box_shadow !important;
+    background: $agent_card_notmet_bg !important;
+    width: 100% !important;
+    height: 110px !important;
+    position: fixed;
+    z-index: 100000000 !important;
+  }
+
+  .m-reward-menu-log-out-active-bg{
     box-shadow: $agent_card_notmet_box_shadow !important;
     background: $agent_card_notmet_bg !important;
     width: 100% !important;
@@ -488,8 +515,13 @@ onMounted(async () => {
   }
 
   .m-reward-total-body {
-    margin-top: 5px;
-    height: calc(100vh - 5px);
+    margin-top: 110px;
+    height: calc(100vh - 110px);
+    overflow-y: scroll;
+  }
+  .m-reward-logout-total-body{
+    margin-top: 30px;
+    height: calc(100vh - 30px);
     overflow-y: scroll;
   }
 
@@ -622,7 +654,7 @@ onMounted(async () => {
       height: 40px !important;
       min-height: 40px !important;
       background: $agent_card_notmet_bg !important;
-      padding: 0px;
+      padding: 0px !important;
     }
 
     .v-field__input::placeholder {

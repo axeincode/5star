@@ -1795,7 +1795,7 @@ export const lang: langType = {
     text_3: "Claim A Promo Code",
     text_4: "Enter Promo Code You Would Like To Clai",
     text_5: "Claim",
-    text_6: "Achievement Bonus",
+    text_6: "Refferals Bonus",
     text_7: "ADD",
     text_8: "CashBack",
     text_9: "Daily Bonus",

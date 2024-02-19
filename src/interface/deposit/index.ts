@@ -40,6 +40,7 @@ export interface DepositHistoryItem {
     amount: string
     status: number
     note: string
+    currency: string
 }
 
 export interface DepositHistoryResponse {

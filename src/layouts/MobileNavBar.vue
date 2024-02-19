@@ -908,7 +908,7 @@ onMounted(async () => {
         </div>
         <img src="@/assets/public/image/img_ci_7.png" class="m-vip-login-bonus-img-1" />
       </div>
-      <div class="m-lucky-wheel mt-4" @click="openRouletteBonusDialog">
+      <!--<div class="m-lucky-wheel mt-4" @click="openRouletteBonusDialog">
         <img src="@/assets/public/image/img_public_2.png" class="m-lucky-wheel-img" />
         <div class="m-vip-login-bonus-text">
           <p class="text-700-10 white">{{ t("navBar.lucky_wheel_text") }}</p>
@@ -916,7 +916,7 @@ onMounted(async () => {
             {{ t("navBar.unlock_text") }}
           </p>
         </div>
-      </div>
+      </div>-->
       <div class="m-refer-earn mt-4" @click="openRefferalDialogShow">
         <img src="@/assets/public/svg/img_public_20.svg" width="184" />
         <img src="@/assets/public/image/img_public_6.png" width="48" class="m-earn-img" />

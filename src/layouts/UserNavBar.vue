@@ -262,9 +262,14 @@ const goWithdrawPage = () => {
 }
 
 const goGameHistoryPage = () => {
-  router.push({ name: 'Bonuses And Transactions' });
+  /*router.push({ name: 'Bonuses And Transactions' });
   setBonusTabIndex(1);
   setTransactionTab(t('transaction.tab.game_history'));
+  setUserNavBarToggle(false);*/
+  router.push({ name: "Dashboard", query: { filter: 'history' } });
+  setNavBarToggle(false);
+  setMainBlurEffectShow(false);
+  setOverlayScrimShow(false);
   setUserNavBarToggle(false);
 }
 

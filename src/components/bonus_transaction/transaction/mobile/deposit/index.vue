@@ -99,6 +99,38 @@ const handleCopyID = async (id: number) => {
 watch(depositHistoryItem, (value) => {
   paginationLength.value = Math.ceil(value.total_pages / pageSize.value)
 })
+
+const formatCurrency = (currency: number, currencyUnit: string) => {
+  let locale = 'pt-BR';
+  switch (currencyUnit) {
+    case "BRL":
+      locale = 'pt-BR';
+      break;
+    case "PHP":
+      locale = 'en-PH';
+      break;
+    case "PEN":
+      locale = 'en-PE';
+      break;
+    case "MXN":
+      locale = 'es-MX';
+      break;
+    case "CLP":
+      locale = 'es-CL';
+      break;
+    case "USD":
+      locale = 'en-US';
+    case "COP":
+      locale = 'es-CO';
+      break;
+  }
+  const fomarttedAmount = currency.toLocaleString(locale, {
+    style: "currency",
+    currency: currencyUnit,
+  })
+  return fomarttedAmount
+}
+
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
@@ -214,7 +246,7 @@ watch(depositHistoryItem, (value) => {
                 padding-bottom: 21px !important;
               "
             >
-              R$ {{ item.amount }}
+              {{ formatCurrency(Number(item.amount), item.currency) }}
             </td>
             <td
               class="text-400-12 text-center"

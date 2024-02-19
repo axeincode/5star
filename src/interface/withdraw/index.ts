@@ -19,6 +19,7 @@ export interface WithdrawalHistoryItem {
     status: number
     amount: string
     currency_type: string
+    currency: string
 }
 export interface WithdrawalHistoryResponse {
     total_pages: number
