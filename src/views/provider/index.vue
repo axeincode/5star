@@ -283,7 +283,7 @@ onMounted(async () => {
   .v-field__input::placeholder {
     opacity: unset !important;
     color: #7782aa !important;
-    font-family: "Inter";
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 500;

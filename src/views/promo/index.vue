@@ -455,7 +455,7 @@ const i18nButtonText = (eng: string) => {
   }
 
   .m-promo-navigation-body {
-    height: calc(100vh - 70px);
+    height: calc(100dvh - 70px);
     background: $agent_card_bg !important;
     overflow-y: auto;
 
@@ -513,7 +513,7 @@ const i18nButtonText = (eng: string) => {
           text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           -webkit-text-stroke-width: 1px;
           -webkit-text-stroke-color: #fff;
-          font-family: Inter;
+          font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
           font-size: 32px;
           font-style: normal;
           font-weight: 900;
@@ -532,7 +532,7 @@ const i18nButtonText = (eng: string) => {
         box-shadow: none !important;
 
         .m-promo-card-text-2 {
-          font-family: Inter;
+          font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
           font-size: 24px;
           font-style: normal;
           font-weight: 900;
@@ -554,7 +554,7 @@ const i18nButtonText = (eng: string) => {
           color: var(--Logo-Color, #f9bc01);
           -webkit-text-stroke-width: 1;
           -webkit-text-stroke-color: #ffe500;
-          font-family: Inter;
+          font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
           font-size: 28px;
           font-style: normal;
           font-weight: 800;
@@ -583,7 +583,7 @@ const i18nButtonText = (eng: string) => {
 
         .v-btn__content {
           color: #000;
-          font-family: Inter;
+          font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
           font-size: 12px;
           font-style: normal;
           font-weight: 700;

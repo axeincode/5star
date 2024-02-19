@@ -486,7 +486,7 @@ export default Login;
 @media (max-width: 600px) {
   .v-field__field {
     color: var(--sec-text-7782-aa, #7782aa);
-    font-family: "Inter";
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -495,7 +495,7 @@ export default Login;
 
     input {
       padding-top: 6px !important;
-      font-family: "Inter";
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 600;
@@ -503,7 +503,7 @@ export default Login;
     }
 
     .v-label.v-field-label {
-      font-family: "Inter";
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;
@@ -523,7 +523,7 @@ export default Login;
   box-shadow: 0px 4px 6px 1px #0000004d;
 
   .v-btn__content {
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 14px;
     font-weight: 700;
     line-height: 17px;
@@ -566,7 +566,7 @@ export default Login;
 .m-signin-btn-text {
   .v-btn__content {
     text-align: center;
-    font-family: "Inter";
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -611,7 +611,7 @@ export default Login;
 
 // divider
 .m-divide-text {
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -627,7 +627,7 @@ export default Login;
 
 // divider
 .divide-text {
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -658,7 +658,7 @@ export default Login;
 
 .login-forget-passwrod-text {
   cursor: pointer;
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -675,7 +675,7 @@ export default Login;
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: "Inter";
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -703,7 +703,7 @@ export default Login;
     }
 
     .v-label.v-field-label {
-      font-family: "Inter";
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -727,7 +727,7 @@ export default Login;
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: "Inter";
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;

@@ -278,7 +278,7 @@ onMounted(async () => {
     .v-btn__content {
       color: #000;
       text-align: center;
-      font-family: Inter;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;

@@ -2292,7 +2292,7 @@ linear-gradient(0deg, #424173, #424173);
     margin-left: 10px;
     color: #000;
     font-size: 14px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2331,7 +2331,7 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     color: #000;
     font-size: 16px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 800;
     letter-spacing: normal;
   }
@@ -2346,7 +2346,7 @@ linear-gradient(0deg, #424173, #424173);
     color: var(--white-bg, #fff);
     text-align: center;
     font-size: 14px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 600;
     letter-spacing: normal;
   }
@@ -2375,7 +2375,7 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     color: #000;
     font-size: 10px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
   }
 }
@@ -2385,7 +2385,7 @@ linear-gradient(0deg, #424173, #424173);
     color: #6842ec;
     text-align: center;
     font-size: 10px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2396,7 +2396,7 @@ linear-gradient(0deg, #424173, #424173);
     color: #fff;
     text-align: center;
     font-size: 10px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2498,7 +2498,7 @@ linear-gradient(0deg, #424173, #424173);
   color: #fff;
   text-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25);
   font-size: 24px;
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: italic;
   font-weight: 700;
 }
@@ -2506,7 +2506,7 @@ linear-gradient(0deg, #424173, #424173);
 .m-vip-footer-content {
   color: #fff;
   font-size: 16px;
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: italic;
   font-weight: 700;
 }
@@ -2515,7 +2515,7 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     color: #000;
     font-size: 16px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 800;
     letter-spacing: normal;
   }
@@ -2534,7 +2534,7 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     text-align: center;
     font-size: 12px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2544,7 +2544,7 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     text-align: center;
     font-size: 10px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }

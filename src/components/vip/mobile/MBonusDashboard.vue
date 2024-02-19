@@ -500,7 +500,7 @@ onMounted(() => {
       padding: 16px;
 
       .m-deposit-bonus-img-text {
-        font-family: Inter;
+        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
         font-size: 16px;
         font-weight: 800;
         line-height: 19px;
@@ -535,7 +535,7 @@ onMounted(() => {
 .m-bonus-dashboard-title {
   position: relative;
   top: 24px;
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 22px;

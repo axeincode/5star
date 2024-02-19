@@ -153,7 +153,7 @@ export default LoginHeader;
   top: 6px;
   right: 22px;
   z-index: 2;
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 13px;

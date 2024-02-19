@@ -515,14 +515,18 @@ onMounted(async () => {
   }
 
   .m-reward-total-body {
-    margin-top: 110px;
-    height: calc(100vh - 110px);
-    overflow-y: scroll;
+    position: absolute;
+    top: 110px;
+    height: calc(100% - 110px) !important;
+    width: 100% !important;
+    overflow-y: auto !important;
   }
   .m-reward-logout-total-body{
-    margin-top: 30px;
-    height: calc(100vh - 30px);
-    overflow-y: scroll;
+    position: absolute;
+    top: 30px;
+    height: calc(100% - 30px) !important;
+    width: 100% !important;
+    overflow-y: auto !important;
   }
 
   .m-reward-header {
@@ -566,7 +570,7 @@ onMounted(async () => {
 
       .v-btn__content {
         color: #fff;
-        font-family: Inter;
+        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 900;
@@ -592,7 +596,7 @@ onMounted(async () => {
     .v-btn__content {
       color: #000;
       text-align: center;
-      font-family: Inter;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -609,7 +613,7 @@ onMounted(async () => {
     .v-btn__content {
       color: var(--light-color, #7782aa);
       text-align: center;
-      font-family: Inter;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -629,7 +633,7 @@ onMounted(async () => {
     .v-btn__content {
       color: #000;
       text-align: center;
-      font-family: Inter;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -660,7 +664,7 @@ onMounted(async () => {
     .v-field__input::placeholder {
       color: #7782aa;
       text-align: center;
-      font-family: Inter;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;

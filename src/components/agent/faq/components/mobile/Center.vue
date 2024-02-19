@@ -499,7 +499,7 @@ const { t } = useI18n();
 
   .m-agent-ua-user-circle-text {
     color: #ffffff;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 8px;
     font-style: normal;
     font-weight: 900;

@@ -106,7 +106,7 @@ const mobileWidth: any = computed(() => {
     background-color: #15161C !important;
     border-bottom: unset !important;
     color: var(--White-BG, #fff);
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -118,7 +118,7 @@ const mobileWidth: any = computed(() => {
   .el-collapse-item__content {
     padding-bottom: 16px;
     color: var(--Sec-Text-7782AA, #7782aa);
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;

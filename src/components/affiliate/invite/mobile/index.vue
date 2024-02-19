@@ -313,7 +313,7 @@ onMounted(async () => {
 
 .m-invite-partner-text {
   color: var(--logo-f-9-bc-01, #f9bc01);
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 800;
@@ -343,7 +343,7 @@ onMounted(async () => {
 
 .m-invite-url-title {
   color: var(--sec-text-7782-aa, #7782aa);
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -545,7 +545,7 @@ onMounted(async () => {
   margin-top: 60px;
 
   .v-btn__content {
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -617,7 +617,7 @@ onMounted(async () => {
 
 .Vue-Toastification__toast-body {
   color: var(--sec-text, #7782aa);
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;

@@ -362,7 +362,7 @@ onMounted(() => {
 
   .v-btn__content {
     text-align: center;
-    font-family: "Inter";
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -377,7 +377,7 @@ onMounted(() => {
   .v-btn__content {
     color: #ffffff;
     text-align: center;
-    font-family: "Inter";
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -389,7 +389,7 @@ onMounted(() => {
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: "Inter";
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;

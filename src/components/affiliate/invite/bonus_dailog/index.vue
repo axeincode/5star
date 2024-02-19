@@ -192,7 +192,7 @@ const emit = defineEmits<{ (e: 'close'): void }>()
 }
 
 .bonus-dialog-header-title {
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -200,7 +200,7 @@ const emit = defineEmits<{ (e: 'close'): void }>()
 }
 
 .bonus-dialog-text-1 {
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -211,7 +211,7 @@ const emit = defineEmits<{ (e: 'close'): void }>()
 .bonus-dialog-text-2 {
     width: 115px;
     height: 40px;
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;

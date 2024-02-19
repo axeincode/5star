@@ -719,7 +719,7 @@ export default Signup;
 
 // divider
 .divide-text {
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -749,7 +749,7 @@ export default Signup;
 
 // ask signin text
 .signin-text {
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -760,7 +760,7 @@ export default Signup;
 
 .signin-text2 {
   cursor: pointer;
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 800;
   font-size: 16px;
@@ -770,7 +770,7 @@ export default Signup;
 
 // agreement
 .agreement-text {
-  font-family: "Inter";
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;

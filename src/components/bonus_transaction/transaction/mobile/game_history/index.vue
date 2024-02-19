@@ -446,7 +446,7 @@ const handleNext = () => {};
   .m-bonus-transaction-tooltip {
     font-size: 12px;
     font-weight: 400;
-    font-family: "Inter";
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   }
 }
 .m-bonus-transaction-table-btn {

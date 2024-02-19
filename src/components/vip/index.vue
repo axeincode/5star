@@ -1449,7 +1449,7 @@ onMounted(() => {
   .v-btn__content {
     color: #000;
     font-size: 16px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 800;
   }
 }
@@ -1487,7 +1487,7 @@ onMounted(() => {
   .v-btn__content {
     color: #000;
     font-size: 20px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 800;
   }
 }
@@ -1497,7 +1497,7 @@ onMounted(() => {
     color: var(--white-bg, #fff);
     text-align: center;
     font-size: 18px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 600;
   }
 }
@@ -1531,7 +1531,7 @@ onMounted(() => {
   .v-btn__content {
     color: #000;
     font-size: 12px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
   }
 }
@@ -1541,7 +1541,7 @@ onMounted(() => {
     color: #6842ec;
     text-align: center;
     font-size: 12px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
   }
 }
@@ -1551,7 +1551,7 @@ onMounted(() => {
     color: #fff;
     text-align: center;
     font-size: 12px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 700;
   }
 }
@@ -1651,7 +1651,7 @@ onMounted(() => {
   color: #fff;
   text-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25);
   font-size: 40px;
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: italic;
   font-weight: 700;
 }
@@ -1659,7 +1659,7 @@ onMounted(() => {
 .vip-footer-content {
   color: #fff;
   font-size: 24px;
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-style: italic;
   font-weight: 700;
 }
@@ -1668,7 +1668,7 @@ onMounted(() => {
   .v-btn__content {
     color: #000;
     font-size: 20px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 800;
   }
 }

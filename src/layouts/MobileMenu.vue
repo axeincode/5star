@@ -943,7 +943,7 @@ const goReferFriend = (index:number) =>{
     position: absolute;
     transform-origin: center;
     font-size: 7px;
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-weight: 500;
     word-wrap: break-word;
     // transform: rotateY(0deg) rotateZ(0deg);

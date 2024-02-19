@@ -493,7 +493,7 @@ onMounted(async () => {
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   color: var(--Sec-Text-7782AA, #7782aa);
   text-align: center;
-  font-family: Inter;
+  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -591,7 +591,7 @@ onMounted(async () => {
 
   .v-field__input::placeholder {
     color: var(--Sec-Text-7782AA, #7782aa);
-    font-family: Inter;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-size: 10px !important;
     font-style: normal;
     font-weight: 400 !important;

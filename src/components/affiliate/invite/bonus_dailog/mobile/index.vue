@@ -205,7 +205,7 @@ const handleClose = () => {
 }
 
 .m-bonus-dialog-header-title {
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 800;
     font-size: 14px;
@@ -213,7 +213,7 @@ const handleClose = () => {
 }
 
 .m-bonus-dialog-text-1 {
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 10px;
@@ -224,7 +224,7 @@ const handleClose = () => {
 .m-bonus-dialog-text-2 {
     width: 115px;
     height: 40px;
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
@@ -239,7 +239,7 @@ const handleClose = () => {
 }
 
 .m-bonus-dialog-text-3 {
-    font-family: 'Inter';
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
