@@ -136,7 +136,7 @@ const accountDialog = ref<boolean>(false);
 const nickNameDialog = ref<boolean>(false);
 const levelUpDialog = ref<boolean>(false);
 const searchDialog = ref<boolean>(false);
-const depositConfirmDialog = ref<boolean>(true);
+const depositConfirmDialog = ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
