@@ -1924,5 +1924,20 @@ export const lang: langType = {
   game_confirm: {
     text_1: "Fun Mode",
     text_2: "Real Mode"
+  },  
+  deposit_confirm: {
+    text_1: "Order Amount",
+    text_2: "Payment term",
+    text_3: "Provider",
+    text_4: "Account Number/Account",
+    text_5: "For one time use only",
+    text_6: "Name of payee",
+    text_7: "SPEI Recharge Tutorial",
+    text_8: "process",
+    text_9: "Step 1: Copy the CLABE information provided.",
+    text_10: "Step 2: Login to the banking application, paste the CLABE information, then pay with ",
+    text_11: "Step 3: Check if the payment has been received (there may be a delay, if it has not been received, please check back later or contact customer service).",
+    text_12: "Transfer completed",
+    text_13: "safety and security",
   }
 };

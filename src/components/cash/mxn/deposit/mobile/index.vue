@@ -17,6 +17,9 @@ import router from '@/router';
 import MParticipatingDialog from "./MParticipatingDialog.vue";
 import MDepositInfoDialog from "./MDepositInfoDialog.vue";
 import { useToast } from "vue-toastification";
+import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
+import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
+import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -33,6 +36,7 @@ const { setCashDialogToggle } = appBarStore();
 const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
 const { setPixInfoToggle } = depositStore();
+const { setDepositConfirmDialogToggle } = depositStore();
 const { dispatchUserProfile } = authStore();
 
 const selectedCurrencyUnit = ref<string>("R$");
@@ -188,6 +192,12 @@ const promotionDialogVisible = ref<boolean>(false);
 
 const depositInfoDialogVisible = ref<boolean>(false);
 
+const mxnPaymentChannel = ref<any>({
+  spei: icon_public_106,
+  oxxo: icon_public_105,
+  codi: icon_public_107
+})
+
 const notificationShow = ref<boolean>(false);
 const currencyMenuShow = ref<boolean>(false);
 const paymentMenuShow = ref<boolean>(false);
@@ -238,7 +248,7 @@ watch(depositConfig, (newValue) => {
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_name.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       description: item.min + "~" + item.max + " " + item.channel_type,
       min: item.min,
@@ -291,7 +301,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
   depositConfig.value["cfg"][selectedCurrencyItem.value.name]?.map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_name.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       description: item.min + "~" + item.max + " " + item.channel_type,
       min: item.min,
@@ -379,62 +389,63 @@ const handleDepositSubmit = async () => {
   loading.value = false;
   if (success.value) {
     await dispatchUserProfile();
-    if (depositSubmit.value.code_url != "") {
-      depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
-      let locale = 'pt-BR';
-      switch (selectedCurrencyItem.value.name) {
-        case "BRL":
-          locale = 'pt-BR';
-          break;
-        case "PHP":
-          locale = 'en-PH';
-          break;
-        case "PEN":
-          locale = 'en-PE';
-          break;
-        case "MXN":
-          locale = 'en-MX';
-          break;
-        case "CLP":
-          locale = 'es-CL';
-          break;
-        case "USD":
-          locale = 'en-US';
-        case "COP":
-          locale = 'es-CO';
-          break;
-      }
-      depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
-      codeUrl.value = depositSubmit.value.code_url;
-      setMainBlurEffectShow(false);
-      setOverlayScrimShow(false);
-      setDepositHeaderBlurEffectShow(false);
-      setDepositBlurEffectShow(false);
-      setTimeout(() => {
-        depositInfoDialogVisible.value = true;
-      }, 10)
-      return;
-    }
-    window.open(depositSubmit.value.url, '_blank');
-    const toast = useToast();
-    toast.success("Successfully submitted", {
-      timeout: 3000,
-      closeOnClick: false,
-      pauseOnFocusLoss: false,
-      pauseOnHover: false,
-      draggable: false,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: SuccessIcon,
-      rtl: false,
-    });
+    // if (depositSubmit.value.code_url != "") {
+    //   depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
+    //   let locale = 'pt-BR';
+    //   switch (selectedCurrencyItem.value.name) {
+    //     case "BRL":
+    //       locale = 'pt-BR';
+    //       break;
+    //     case "PHP":
+    //       locale = 'en-PH';
+    //       break;
+    //     case "PEN":
+    //       locale = 'en-PE';
+    //       break;
+    //     case "MXN":
+    //       locale = 'en-MX';
+    //       break;
+    //     case "CLP":
+    //       locale = 'es-CL';
+    //       break;
+    //     case "USD":
+    //       locale = 'en-US';
+    //     case "COP":
+    //       locale = 'es-CO';
+    //       break;
+    //   }
+    //   depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
+    //   codeUrl.value = depositSubmit.value.code_url;
+    //   setMainBlurEffectShow(false);
+    //   setOverlayScrimShow(false);
+    //   setDepositHeaderBlurEffectShow(false);
+    //   setDepositBlurEffectShow(false);
+    //   setTimeout(() => {
+    //     depositInfoDialogVisible.value = true;
+    //   }, 10)
+    //   return;
+    // }
+    // window.open(depositSubmit.value.url, '_blank');
+    // const toast = useToast();
+    // toast.success("Successfully submitted", {
+    //   timeout: 3000,
+    //   closeOnClick: false,
+    //   pauseOnFocusLoss: false,
+    //   pauseOnHover: false,
+    //   draggable: false,
+    //   showCloseButtonOnHover: false,
+    //   hideProgressBar: true,
+    //   closeButton: "button",
+    //   icon: SuccessIcon,
+    //   rtl: false,
+    // });
     setDepositDialogToggle(false);
     setCashDialogToggle(false);
     setMainBlurEffectShow(false);
     setHeaderBlurEffectShow(false);
     setMenuBlurEffectShow(false);
-    router.push({ name: "Dashboard" })
+    // router.push({ name: "Dashboard" })
+    setDepositConfirmDialogToggle(true);
   } else {
     const toast = useToast();
     toast.success(errMessage.value, {

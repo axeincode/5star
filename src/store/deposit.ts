@@ -17,7 +17,9 @@ export const depositStore = defineStore({
     depositSubmit: {} as any,
     pixInfo: {} as Deposit.GetPixInfo,
     pixInfoToggle: false as boolean,
-    depositHistoryItem: {} as Deposit.DepositHistoryResponse
+    depositHistoryItem: {} as Deposit.DepositHistoryResponse,
+    depositConfirmDialogToggle: false as boolean,
+    channelName: "spei" as string
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -26,7 +28,9 @@ export const depositStore = defineStore({
     getDepositSubmit: (state) => state.depositSubmit,
     getPixInfo: (state) => state.pixInfo,
     getPixInfoToggle: (state) => state.pixInfoToggle,
-    getDepositHistoryItem: (state) => state.depositHistoryItem
+    getDepositHistoryItem: (state) => state.depositHistoryItem,
+    getDepositConfirmDialogToggle: (state) => state.depositConfirmDialogToggle,
+    getChannelName: (state) => state.channelName
   },
   actions: {
     // set functions
@@ -50,6 +54,12 @@ export const depositStore = defineStore({
     },
     setDepositHistoryItem(depositHistoryItem: Deposit.DepositHistoryResponse) {
       this.depositHistoryItem = depositHistoryItem
+    },
+    setDepositConfirmDialogToggle(depositConfirmDialogToggle: boolean) {
+      this.depositConfirmDialogToggle = depositConfirmDialogToggle
+    },
+    setChannelName(channelName: string) {
+      this.channelName = channelName;
     },
     // user deposit configuration
     async dispatchUserDepositCfg() {

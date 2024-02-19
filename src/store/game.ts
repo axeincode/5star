@@ -132,7 +132,7 @@ export const gameStore = defineStore({
             setOverlayScrimShow(false);
         },
         closeKill() {
-            this.betby?.kill();
+            (this.betby as any)?.kill();
         },
         setGameBigWinItem(gameBigWinItem: Game.GameBigWinData) {
             this.gameBigWinItem = gameBigWinItem;

@@ -13,14 +13,15 @@ declare interface starxMsg {
     reconnect?: boolean;
 }
 
-declare class starx {
-    constructor(parameters) { }
+type pomeloMsg = any;
 
-    declare static init(params: pomeloMsg): viod;
-    declare static clearListener(): viod;
-    declare static disconnect(): viod;
-    declare static request(route: string, msg: any, callback?: Function): viod;
-    declare static notify(route: string, msg: any): viod;
-    declare static getState(): boolean;
-    declare static on(key: string, call: Function);
+declare class starx {
+    constructor(parameters: any)
+    static init(params: pomeloMsg): void;
+    static clearListener(): void;
+    static disconnect(): void;
+    static request(route: string, msg: any, callback?: Function): void;
+    static notify(route: string, msg: any): void;
+    static getState(): boolean;
+    static on(key: string, call: Function): any;
 }

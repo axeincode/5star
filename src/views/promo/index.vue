@@ -47,6 +47,7 @@ const activeIndex = ref<number>(0);
 const allSvgIconColor = ref<string>("#ffffff");
 const vipSvgIconColor = ref<string>("#7782AA");
 const promotionSvgIconColor = ref<string>("#7782AA");
+const promoShow = ref<boolean>(false);
 
 const { dispatchUserActivityList } = promoStore();
 
@@ -206,7 +207,9 @@ onMounted(async () => {
     top: 0,
     behavior: "smooth",
   });
+  promoShow.value = false
   await dispatchUserActivityList();
+  promoShow.value = true
 });
 
 const i18nButtonText = (eng: string) => {
@@ -294,35 +297,46 @@ const i18nButtonText = (eng: string) => {
       </div>
     </v-navigation-drawer>
     <v-main class="m-promo-navigation-body">
-      <v-card
-        v-for="(item, index) in promoList.group_data[0].list_data"
-        class="m-promo-navigation-card mx-2 relative"
-        :style="{ marginTop: index == 0 ? '96px !important' : '8px !important' }"
-      >
-        <img
-          :src="item.image_path"
-          class="m-promo-card-img"
-          @click="$router.push({ name: 'Promo_Detail', query: { id: item.id } })"
-        />
-        <div class="d-flex mx-2 mt-1 mb-4">
-          <div
-            class="text-800-12 gray d-flex align-center"
-            @click="$router.push({ name: 'Promo_Detail', query: { id: item.id } })"
-          >
-            {{ t("promo.text_6") }}
-            <v-icon size="large">mdi-chevron-right</v-icon>
+      <template v-if="!promoShow">
+        <div class="m-loading-container relative">
+          <div class="loading-body">
+            <div class="dot-0"></div>
+            <div class="dot-1"></div>
+            <div class="dot-0"></div>
           </div>
-          <v-btn
-            class="text-none m-promo-deposit-btn"
-            width="122"
-            height="32"
-            v-if="item.button_path != ''"
-            @click="handleContent(item)"
-          >
-            {{ i18nButtonText(item.button_text) }}
-          </v-btn>
         </div>
-      </v-card>
+      </template>
+      <template v-else>
+        <v-card
+          v-for="(item, index) in promoList.group_data[0].list_data"
+          class="m-promo-navigation-card mx-2 relative"
+          :style="{ marginTop: index == 0 ? '96px !important' : '8px !important' }"
+        >
+          <img
+            :src="item.image_path"
+            class="m-promo-card-img"
+            @click="$router.push({ name: 'Promo_Detail', query: { id: item.id } })"
+          />
+          <div class="d-flex mx-2 mt-1 mb-4">
+            <div
+              class="text-800-12 gray d-flex align-center"
+              @click="$router.push({ name: 'Promo_Detail', query: { id: item.id } })"
+            >
+              {{ t("promo.text_6") }}
+              <v-icon size="large">mdi-chevron-right</v-icon>
+            </div>
+            <v-btn
+              class="text-none m-promo-deposit-btn"
+              width="122"
+              height="32"
+              v-if="item.button_path != ''"
+              @click="handleContent(item)"
+            >
+              {{ i18nButtonText(item.button_text) }}
+            </v-btn>
+          </div>
+        </v-card>
+      </template>
       <!-- <v-card
         class="m-promo-navigation-card mx-2 relative"
         style="margin-top: 96px !important"
@@ -376,6 +390,33 @@ const i18nButtonText = (eng: string) => {
 </template>
 
 <style lang="scss">
+@keyframes expandAnimation {
+  0% {
+    scale: 1.3;
+  }
+
+  50% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 1.3;
+  }
+}
+
+@keyframes expandReverseAnimation {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 1.2;
+  }
+
+  100% {
+    scale: 0.8;
+  }
+}
 .m-promo-navigation-layout {
   margin-top: -100px;
   z-index: 13 !important;
@@ -417,6 +458,44 @@ const i18nButtonText = (eng: string) => {
     height: calc(100vh - 70px);
     background: $agent_card_bg !important;
     overflow-y: auto;
+
+    .m-loading-container {
+      position: fixed;
+      top: 0px;
+      border: none;
+      width: 100%;
+      height: 100vh;
+      opacity: 1;
+      z-index: 20000000;
+      background: #15161c;
+
+      .loading-body {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 48%;
+        left: 40%;
+        transform: translateX(-50%);
+
+        .dot-0 {
+          width: 10px;
+          height: 10px;
+          background: #12ff76;
+          border-radius: 10px;
+          margin: 0px 4px;
+          animation: expandAnimation 0.6s 0.1s ease-in infinite;
+        }
+
+        .dot-1 {
+          width: 16px;
+          height: 16px;
+          background: #12ff76;
+          border-radius: 16px;
+          margin: 0px 4px;
+          animation: expandReverseAnimation 0.6s 0.1s ease-in infinite;
+        }
+      }
+    }
 
     .m-promo-navigation-card {
       // height: 160px;

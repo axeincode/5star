@@ -43,6 +43,7 @@ import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
 
 import { mailStore } from "@/store/mail";
 import router from '@/router';
+import { depositStore } from '@/store/deposit';
 
 const GetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/index.vue"));
 const MGetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/mobile/index.vue"));
@@ -74,6 +75,7 @@ const VipUpgradeDialog = defineAsyncComponent(() => import("@/components/vip/com
 const VipUpRankDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_uprank_dialog/index.vue"));
 const Search = defineAsyncComponent(() => import("@/components/global/search/index.vue"));
 const MSearch = defineAsyncComponent(() => import("@/components/global/search/mobile/index.vue"));
+const MDepositConfirm = defineAsyncComponent(() => import("@/components/cash/mxn/deposit/mobile/MDepositConfirm.vue"));
 
 const { t } = useI18n();
 const { name, width } = useDisplay();
@@ -134,6 +136,7 @@ const accountDialog = ref<boolean>(false);
 const nickNameDialog = ref<boolean>(false);
 const levelUpDialog = ref<boolean>(false);
 const searchDialog = ref<boolean>(false);
+const depositConfirmDialog = ref<boolean>(true);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
@@ -289,7 +292,6 @@ const depositWithdrawToggle = computed(() => {
 })
 
 watch(depositDialogToggle, (newValue) => {
-  console.log("qqqqqqqqqqqqqqqqq", depositDialogToggle.value);
   depositDialog.value = newValue;
 })
 
@@ -315,6 +317,16 @@ watch(cashDialogToggle, (newValue) => {
 
 watch(cashDialog, (newValue) => {
   console.log(cashDialog)
+})
+
+// deposit confirm dialog
+const depositConfirmDialogToggle = computed(() => {
+  const { getDepositConfirmDialogToggle } = storeToRefs(depositStore());
+  return getDepositConfirmDialogToggle.value
+})
+
+watch(depositConfirmDialogToggle, (value) => {
+  depositConfirmDialog.value = value
 })
 
 // refferal dialog
@@ -407,6 +419,7 @@ const overlayScrimShow = computed(() => {
   const { getOverlayScrimShow } = storeToRefs(appBarStore());
   return getOverlayScrimShow.value;
 })
+
 watch(overlayScrimShow, (newValue) => {
   if (newValue) {
     overlayScrimBackground.value = "transparent";
@@ -619,6 +632,19 @@ onMounted(() => {
         <Deposit v-if="mobileWidth > 600" />
         <MDeposit v-else />
       </template>
+    </v-dialog>
+
+    <!---------------------------------- Deposit Confirm ----------------------------------------->
+
+    <v-dialog
+      v-model="depositConfirmDialog"
+      :width="''"
+      :fullscreen="true"
+      :scrim="false"
+      persistent
+      v-if="mobileVersion == 'sm'"
+    >
+      <MDepositConfirm />
     </v-dialog>
 
     <!-----------------------Authentication Dialog --------------------------------------->
