@@ -180,6 +180,7 @@ const Dashboard = defineComponent({
       name: "",
       image: "",
       provider: "",
+      producer: "",
       is_demo: false
     })
 
@@ -690,8 +691,6 @@ const Dashboard = defineComponent({
       setFavoriteGameList([]);
       await dispatchGameFavoriteList();
       state.is_favorite = favoriteGameList.value.some(item => item == game_item.id);
-      console.log(favoriteGameList.value);
-      console.log(state.is_favorite);
       gameConfirmDialogShow.value = true;
       selectedGameItem.value = game_item;
     }
@@ -2083,7 +2082,9 @@ export default Dashboard;
 .v-field__input::placeholder {
   opacity: unset !important;
   color: #7782aa !important;
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -2128,7 +2129,9 @@ export default Dashboard;
     .v-field__input::placeholder {
       opacity: unset !important;
       color: #7782aa !important;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 500;
@@ -2145,14 +2148,18 @@ export default Dashboard;
   .lobby-btn-color {
     .v-btn__content {
       font-size: 12px !important;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     }
   }
 
   .popular-btn-color {
     .v-btn__content {
       font-size: 12px !important;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     }
   }
 }
@@ -2244,7 +2251,9 @@ export default Dashboard;
 
   .v-btn__content {
     text-align: center;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;

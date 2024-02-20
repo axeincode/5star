@@ -809,8 +809,8 @@ onMounted(async () => {
       <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
     </div>
     <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
-      {{ selectedCurrencyUnit }}{{ depositAmount }} + {{ selectedCurrencyUnit
-      }}{{
+      {{ selectedCurrencyUnit }}{{ depositAmount }} + {{ selectedCurrencyUnit }}
+      {{
         depositConfig["bonus"].length > 0 &&
         depositConfig["bonus"][0]["type"] == 0 &&
         depositConfig["bonus"] != undefined
@@ -900,7 +900,9 @@ onMounted(async () => {
     color: white !important;
 
     .v-btn__content {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
@@ -916,7 +918,9 @@ onMounted(async () => {
     width: 100% !important;
 
     .v-btn__content {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
@@ -955,7 +959,9 @@ onMounted(async () => {
     .v-btn__content {
       color: #fff;
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -1050,7 +1056,9 @@ onMounted(async () => {
     // background: rgba(119, 130, 170, 1);
     font-weight: 400;
     font-size: 10px !important;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     opacity: 1;
   }
 }
@@ -1073,7 +1081,9 @@ onMounted(async () => {
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;

@@ -13,6 +13,7 @@ export interface Search {
     name: string
     image: string
     provider: string
+    producer: string
     is_demo: boolean
 }
 

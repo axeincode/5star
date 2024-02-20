@@ -1191,7 +1191,6 @@ export type langType = {
       confirm_warning_text: string
     }
     text_1: string
-    text_1_1: string
     text_2: string
     text_3: string
     text_4: string
@@ -1199,6 +1198,17 @@ export type langType = {
     other_text_1: string
     withdraw_btn_text: string
     withdraw_warning_text: string
+    text_5: string
+    text_6: string
+    text_7: string
+    text_8: string
+    text_9: string
+    text_10: string
+    text_11: string
+    text_12: string
+    text_13: string
+    text_14: string
+    text_15: string
   }
   mail_dialog: {
     header_text: string

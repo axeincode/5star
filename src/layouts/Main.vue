@@ -957,7 +957,7 @@ onMounted(() => {
 }
 
 .cash-header-dialog {
-  z-index: 2430 !important;
+  z-index: 2431 !important;
   height: 80px;
   margin: 0px !important;
 }

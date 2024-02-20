@@ -368,7 +368,7 @@ const handleIframeLoad = () => {
 const handleMessageFromIframe = (event: any) => {
   console.log(event);
   if (event.data.url == "bluesite:exit") {
-    router.push({ name: "Dashboard" });
+    router.go(-1);
   }
 };
 

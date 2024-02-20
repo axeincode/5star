@@ -9,12 +9,17 @@ import { type Search } from "@/interface/game";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
 import { storeToRefs } from "pinia";
+import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
+import type * as Game from "@/interface/game";
+import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const { dispatchGameSearch } = gameStore();
+const { setFavoriteGameList } = gameStore();
+const { dispatchGameFavoriteList } = gameStore();
 const { setMailMenuShow } = mailStore();
 
 const currentPage = ref<number>(1);
@@ -24,6 +29,16 @@ const searchLoading = ref<boolean>(false);
 const moreLoading = ref<boolean>(false);
 const slug = ref<any>("");
 const searchText = ref<string>("");
+const gameConfirmDialogShow = ref<boolean>(false);
+const is_favorite = ref<boolean>(false);
+const selectedGameItem = ref<Game.GameItem>({
+  id: 0,
+  name: "",
+  image: "",
+  provider: "",
+  producer: "",
+  is_demo: false
+})
 
 const mobileWidth: any = computed(() => {
   return width.value;
@@ -39,6 +54,11 @@ const providerGames = computed(() => {
   return getGameSearchList.value;
 });
 
+const favoriteGameList = computed(() => {
+  const { getFavoriteGameList } = storeToRefs(gameStore());
+  return getFavoriteGameList.value
+})
+
 const goToBackPage = () => {
   router.go(-1);
 };
@@ -53,13 +73,21 @@ const handleMoreGame = async () => {
   moreLoading.value = false;
 };
 
-const handleEnterGame = async (id: number, name: string) => {
-  let replaceName = name.replace(/ /g, "-");
-  if (mobileWidth.value < 600) {
-    setMailMenuShow(true);
-  }
-  router.push(`/game/${id}/${replaceName}`);
-};
+// const handleEnterGame = async (id: number, name: string) => {
+//   let replaceName = name.replace(/ /g, "-");
+//   if (mobileWidth.value < 600) {
+//     setMailMenuShow(true);
+//   }
+//   router.push(`/game/${id}/${replaceName}`);
+// };
+
+const showGameConfirmationDialog = async (game_item: Game.GameItem) => {
+  setFavoriteGameList([]);
+  await dispatchGameFavoriteList();
+  is_favorite.value = favoriteGameList.value.some(item => item == game_item.id);
+  gameConfirmDialogShow.value = true;
+  selectedGameItem.value = game_item;
+}
 
 const handleInputChange = async (event: any) => {
   providerGameList.value = [];
@@ -69,6 +97,9 @@ const handleInputChange = async (event: any) => {
   );
   providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
   searchLoading.value = false;
+}
+
+const refreshGameFavoriteList = (id: string | number) => {
 }
 
 watch(searchText, async (value) => {
@@ -117,94 +148,132 @@ onMounted(async () => {
       <div class="dot-0"></div>
     </div>
   </div>
-  <div class="mx-3 m-provider-loading-container" v-else>
-    <div class="d-flex align-center">
+  <div v-else>
+    <!-- game confirmation dialog -->
+
+    <v-navigation-drawer
+      v-model="gameConfirmDialogShow"
+      location="bottom"
+      class="m-game-confirm-bar"
+      temporary
+      :touchless="true"
+      :style="{
+        height: 'unset',
+        bottom: '0px',
+        zIndex: 300000,
+        background: 'unset !important',
+      }"
+      v-if="mobileWidth < 600"
+    >
       <v-btn
-        class="text-none m-provider-back-btn"
-        variant="elevated"
-        icon="mdi-chevron-left"
-        width="20"
-        height="20"
-        @click="goToBackPage"
+        class="m-game-confirm-drawer-close-button"
+        icon="true"
+        width="24"
+        height="24"
+        @click="gameConfirmDialogShow = false"
       >
+        <inline-svg :src="icon_public_10" width="20" height="20"></inline-svg>
       </v-btn>
-      <p class="text-800-14 white ml-2">{{ t("provider.text_1") }}</p>
+      <MGameConfirm
+        :selectedGameItem="selectedGameItem"
+        :is_favorite="is_favorite"
+        :gameConfirmDialogShow="gameConfirmDialogShow"
+        @closeGameConfirmDialog="gameConfirmDialogShow = false"
+        @refreshGameFavoriteList="refreshGameFavoriteList"
+      />
+    </v-navigation-drawer>
+    <div
+      class="mx-3 m-provider-loading-container"
+      :class="gameConfirmDialogShow ? 'm-provider-bg-blur' : ''"
+    >
+      <div class="d-flex align-center">
+        <v-btn
+          class="text-none m-provider-back-btn"
+          variant="elevated"
+          icon="mdi-chevron-left"
+          width="20"
+          height="20"
+          @click="goToBackPage"
+        >
+        </v-btn>
+        <p class="text-800-14 white ml-2">{{ t("provider.text_1") }}</p>
+      </div>
+      <v-text-field
+        :placeholder="t('provider.text_2')"
+        class="form-textfield dark-textfield mx-0"
+        variant="solo"
+        hide-details
+        filled
+        clearable
+        density="compact"
+        prepend-inner-icon="mdi-magnify"
+        color="#7782AA"
+        :class="mobileWidth < 600 ? 'm-provider-game-search-text' : ''"
+        v-model="searchText"
+      />
+      <template v-if="searchLoading">
+        <div class="m-provider-loading-container relative" style="padding-top: 400px">
+          <div class="loading-body">
+            <div class="dot-0"></div>
+            <div class="dot-1"></div>
+            <div class="dot-0"></div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div
+          v-if="providerGameList.length == 0"
+          class="text-400-12 gray text-center mt-4"
+          style="width: 202px; margin: auto"
+        >
+          {{ t("provider.text_6") }}
+        </div>
+        <v-row class="ma-0">
+          <template v-for="(game, index) in providerGameList" :key="index">
+            <v-col
+              cols="4"
+              lg="2"
+              md="2"
+              sm="3"
+              class="px-1 relative py-0 m-provider-game-img"
+              v-if="index < 6 * currentPage"
+            >
+              <ProgressiveImage
+                :src="game.image"
+                lazy-placeholder
+                blur="30"
+                @click="showGameConfirmationDialog(game)"
+              />
+            </v-col>
+          </template>
+        </v-row>
+        <div
+          class="mt-4 text-center text-700-14 gray"
+          v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+        >
+          {{ t("provider.text_3") }}
+          <font class="white">&nbsp;{{ 6 * currentPage }}&nbsp;</font>
+          {{ t("provider.text_4") }}
+          <font class="white">&nbsp;{{ providerGames.total }}&nbsp;</font>
+          {{ t("provider.text_5") }}
+        </div>
+        <v-btn
+          class="text-none more-btn-color mt-5 text-center"
+          variant="outlined"
+          :width="mobileWidth < 600 ? '100%' : 164"
+          :height="mobileWidth < 600 ? 41 : 48"
+          v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+          @click="handleMoreGame()"
+        >
+          <div v-if="!moreLoading">{{ t("home.more") }}</div>
+          <div class="m-more-loading-body" v-else>
+            <div class="dot-0"></div>
+            <div class="dot-1"></div>
+            <div class="dot-0"></div>
+          </div>
+        </v-btn>
+      </template>
     </div>
-    <v-text-field
-      :placeholder="t('provider.text_2')"
-      class="form-textfield dark-textfield mx-0"
-      variant="solo"
-      hide-details
-      filled
-      clearable
-      density="compact"
-      prepend-inner-icon="mdi-magnify"
-      color="#7782AA"
-      :class="mobileWidth < 600 ? 'm-provider-game-search-text' : ''"
-      v-model="searchText"
-    />
-    <template v-if="searchLoading">
-      <div class="m-provider-loading-container relative" style="padding-top: 400px">
-        <div class="loading-body">
-          <div class="dot-0"></div>
-          <div class="dot-1"></div>
-          <div class="dot-0"></div>
-        </div>
-      </div>
-    </template>
-    <template v-else>
-      <div
-        v-if="providerGameList.length == 0"
-        class="text-400-12 gray text-center mt-4"
-        style="width: 202px; margin: auto"
-      >
-        {{ t("provider.text_6") }}
-      </div>
-      <v-row class="ma-0">
-        <template v-for="(game, index) in providerGameList" :key="index">
-          <v-col
-            cols="4"
-            lg="2"
-            md="2"
-            sm="3"
-            class="px-1 relative py-0 m-provider-game-img"
-            v-if="index < 6 * currentPage"
-          >
-            <ProgressiveImage
-              :src="game.image"
-              lazy-placeholder
-              blur="30"
-              @click="handleEnterGame(game.id, game.name)"
-            />
-          </v-col>
-        </template>
-      </v-row>
-      <div
-        class="mt-4 text-center text-700-14 gray"
-        v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
-      >
-        {{ t("provider.text_3") }}
-        <font class="white">&nbsp;{{ 6 * currentPage }}&nbsp;</font>
-        {{ t("provider.text_4") }}
-        <font class="white">&nbsp;{{ providerGames.total }}&nbsp;</font>
-        {{ t("provider.text_5") }}
-      </div>
-      <v-btn
-        class="text-none more-btn-color mt-5 text-center"
-        variant="outlined"
-        :width="mobileWidth < 600 ? '100%' : 164"
-        :height="mobileWidth < 600 ? 41 : 48"
-        v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
-        @click="handleMoreGame()"
-      >
-        <div v-if="!moreLoading">{{ t("home.more") }}</div>
-        <div class="m-more-loading-body" v-else>
-          <div class="dot-0"></div>
-          <div class="dot-1"></div>
-          <div class="dot-0"></div>
-        </div>
-      </v-btn>
-    </template>
   </div>
 </template>
 
@@ -236,9 +305,16 @@ onMounted(async () => {
     scale: 0.8;
   }
 }
+
+.m-provider-bg-blur {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
 .m-provider-back-btn {
   background: transparent !important;
   box-shadow: unset !important;
+
   .v-icon {
     font-size: 20px !important;
     color: white;
@@ -283,7 +359,9 @@ onMounted(async () => {
   .v-field__input::placeholder {
     opacity: unset !important;
     color: #7782aa !important;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 500;
@@ -292,6 +370,7 @@ onMounted(async () => {
 
   .v-input__control {
     height: 36px !important;
+
     .mdi:before {
       font-size: 19px !important;
       color: #7782aa !important;
