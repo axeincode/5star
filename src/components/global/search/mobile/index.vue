@@ -238,7 +238,7 @@ watch(
 watch(searchDialogShow, (value) => {
   if (value) {
     if (searchRef.value != undefined) {
-      searchRef.value.focus();
+      //searchRef.value.focus();
     }
   }
   if (!value && searchText.value != "") {
@@ -287,146 +287,149 @@ onMounted(async () => {
       maxHeight: '643px',
     }"
   > -->
-    <div class="pt-3">
-      <v-text-field
-        ref="searchRef"
-        :placeholder="t('home.search')"
-        class="form-textfield dark-textfield"
-        variant="solo"
-        hide-details
-        filled
-        clearable
-        density="compact"
-        prepend-inner-icon="mdi-magnify"
-        color="#7782AA"
-        :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
-        @input="handleSearchInput"
-        v-model="searchText"
-      />
-    </div>
-    <div class="m-search-loading-container relative pt-8" v-if="searchLoading">
-      <div class="loading-body">
-        <div class="dot-0"></div>
-        <div class="dot-1"></div>
-        <div class="dot-0"></div>
-      </div>
-    </div>
-    <div class="m-home-search-result pt-8 text-center" v-else>
-      <div v-if="searchedGameList.length == 0">
-        <img
-          src="@/assets/public/image/img_se_1.png"
-          v-if="searchText.length >= 3 && searchText != ''"
+    <div style="position:absolute; top:50px; width:100dvw">
+      <div class="pt-3">
+        <v-text-field
+          ref="searchRef"
+          :placeholder="t('home.search')"
+          class="form-textfield dark-textfield"
+          variant="solo"
+          hide-details
+          filled
+          clearable
+          density="compact"
+          prepend-inner-icon="mdi-magnify"
+          color="#7782AA"
+          :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
+          @input="handleSearchInput"
+          v-model="searchText"
         />
-        <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">
-          {{ t("home.search_dialog.text_2") }}
-        </p>
-        <p class="text-400-12 gray" v-else>{{ t("home.search_dialog.text_3") }}</p>
-        <div
-          class="mx-3 mt-4"
-          style="display: flex; justify-content: space-between"
-          v-if="searchHistoryKeywords.length > 0"
-        >
-          <p class="text-700-14 white">{{ t("home.search_dialog.search_history") }}</p>
-          <div class="m-home-search-history-remove" @click="removeAllSearchKeyword">
-            <img src="@/assets/public/svg/icon_public_82.svg" style="margin-top: 6px" />
-          </div>
-        </div>
-        <div
-          class="d-flex mx-3 mt-4"
-          style="gap: 6px; flex-wrap: wrap"
-          v-if="searchHistoryKeywords.length > 0"
-        >
-          <div
-            class="m-home-search-history-text"
-            v-for="(keyword, index) in searchHistoryKeywords"
-            :key="index"
-          >
-            <font @click="handleSearchGame(keyword)"> {{ keyword }}</font>
-            <span
-              class="m-home-search-history-word-remove"
-              v-if="index + 1 == searchHistoryKeywords.length"
-              @click="handleRemoveSearchKeyword(index)"
-            >
-              <img
-                src="@/assets/public/svg/icon_public_52.svg"
-                width="9"
-                class="m-home-search-history-word-remove-icon-position"
-              />
-            </span>
-          </div>
+      </div>
+      <div class="m-search-loading-container relative pt-8" v-if="searchLoading">
+        <div class="loading-body">
+          <div class="dot-0"></div>
+          <div class="dot-1"></div>
+          <div class="dot-0"></div>
         </div>
       </div>
-      <div v-else>
-        <div class="d-flex justify-between align-center mx-3">
-          <p class="text-700-14 white">{{ t("home.search_dialog.text_4") }}</p>
-          <p class="text-600-10 gray">
-            {{ t("home.search_dialog.text_5") }}
-            <font class="text-600-10 color-32CFEC">{{ searchedGameCount }}</font>
-            {{ t("home.search_dialog.text_6") }}
-          </p>
-        </div>
-        <v-row class="mx-2 my-4">
-          <template v-for="(item, index) in searchedGameList" :key="index">
-            <v-col cols="4" class="py-0 px-1" v-if="index < 3 * page_no">
-              <ProgressiveImage
-                :src="item.image"
-                lazy-placeholder
-                :placeholder-src="img_public_42"
-                blur="30"
-                @click="handleEnterGame(item.id, item.name)"
-              />
-            </v-col>
-          </template>
-        </v-row>
-        <v-row
-          class="justify-center"
-          :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'"
-        >
-          <v-btn
-            class="text-none more-btn-color"
-            variant="outlined"
-            width="100%"
-            height="41"
-            v-if="searchedGameCount > 3 && searchedGameCount > 3 * page_no"
-            @click="handleMoreGame()"
-          >
-            <div v-if="!moreLoading">{{ t("home.more") }}</div>
-            <div class="loading-body" v-else>
-              <div class="dot-0"></div>
-              <div class="dot-1"></div>
-              <div class="dot-0"></div>
-            </div>
-          </v-btn>
-        </v-row>
-      </div>
-    </div>
-    <div class="m-home-search-swiper-title mt-8">
-      <p class="ml-3 text-700-14 white">{{ t("home.search_dialog.text_1") }}</p>
-      <div class="swiper-button-next" slot="button-next" @click="goToNext"></div>
-      <div class="swiper-button-prev" slot="button-prev" @click="goToPrev"></div>
-    </div>
-    <div class="relative m-home-search-swiper pt-5">
-      <Swiper
-        :modules="modules"
-        :slidesPerView="3"
-        :spaceBetween="8"
-        class="mx-3"
-        style="height: auto"
-        @swiper="getSwiperRef"
-      >
-        <SwiperSlide
-          v-for="(gameItem, index) in recommendedGameList"
-          :key="index"
-          :virtualIndex="index"
-        >
+      <div class="m-home-search-result pt-8 text-center" v-else>
+        <div v-if="searchedGameList.length == 0">
           <img
-            :src="gameItem.image"
-            class="m-home-search-swiper-img"
-            @click="handleEnterGame(gameItem.id, gameItem.name)"
+            src="@/assets/public/image/img_se_1.png"
+            v-if="searchText.length >= 3 && searchText != ''"
           />
-        </SwiperSlide>
-      </Swiper>
+          <p class="text-400-12 gray" v-if="searchText.length >= 3 && searchText != ''">
+            {{ t("home.search_dialog.text_2") }}
+          </p>
+          <p class="text-400-12 gray" v-else>{{ t("home.search_dialog.text_3") }}</p>
+          <div
+            class="mx-3 mt-4"
+            style="display: flex; justify-content: space-between"
+            v-if="searchHistoryKeywords.length > 0"
+          >
+            <p class="text-700-14 white">{{ t("home.search_dialog.search_history") }}</p>
+            <div class="m-home-search-history-remove" @click="removeAllSearchKeyword">
+              <img src="@/assets/public/svg/icon_public_82.svg" style="margin-top: 6px" />
+            </div>
+          </div>
+          <div
+            class="d-flex mx-3 mt-4"
+            style="gap: 6px; flex-wrap: wrap"
+            v-if="searchHistoryKeywords.length > 0"
+          >
+            <div
+              class="m-home-search-history-text"
+              v-for="(keyword, index) in searchHistoryKeywords"
+              :key="index"
+            >
+              <font @click="handleSearchGame(keyword)"> {{ keyword }}</font>
+              <span
+                class="m-home-search-history-word-remove"
+                v-if="index + 1 == searchHistoryKeywords.length"
+                @click="handleRemoveSearchKeyword(index)"
+              >
+                <img
+                  src="@/assets/public/svg/icon_public_52.svg"
+                  width="9"
+                  class="m-home-search-history-word-remove-icon-position"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="d-flex justify-between align-center mx-3">
+            <p class="text-700-14 white">{{ t("home.search_dialog.text_4") }}</p>
+            <p class="text-600-10 gray">
+              {{ t("home.search_dialog.text_5") }}
+              <font class="text-600-10 color-32CFEC">{{ searchedGameCount }}</font>
+              {{ t("home.search_dialog.text_6") }}
+            </p>
+          </div>
+          <v-row class="mx-2 my-4">
+            <template v-for="(item, index) in searchedGameList" :key="index">
+              <v-col cols="4" class="py-0 px-1" v-if="index < 3 * page_no">
+                <ProgressiveImage
+                  :src="item.image"
+                  lazy-placeholder
+                  :placeholder-src="img_public_42"
+                  blur="30"
+                  @click="handleEnterGame(item.id, item.name)"
+                />
+              </v-col>
+            </template>
+          </v-row>
+          <v-row
+            class="justify-center"
+            :class="mobileWidth < 600 ? 'mt-6 mx-3' : 'mt-8 ml-4'"
+          >
+            <v-btn
+              class="text-none more-btn-color"
+              variant="outlined"
+              width="100%"
+              height="41"
+              v-if="searchedGameCount > 3 && searchedGameCount > 3 * page_no"
+              @click="handleMoreGame()"
+            >
+              <div v-if="!moreLoading">{{ t("home.more") }}</div>
+              <div class="loading-body" v-else>
+                <div class="dot-0"></div>
+                <div class="dot-1"></div>
+                <div class="dot-0"></div>
+              </div>
+            </v-btn>
+          </v-row>
+        </div>
+      </div>
+      <div class="m-home-search-swiper-title mt-8">
+        <p class="ml-3 text-700-14 white">{{ t("home.search_dialog.text_1") }}</p>
+        <div class="swiper-button-next" slot="button-next" @click="goToNext"></div>
+        <div class="swiper-button-prev" slot="button-prev" @click="goToPrev"></div>
+      </div>
+      <div class="relative m-home-search-swiper pt-5">
+        <Swiper
+          :modules="modules"
+          :slidesPerView="3"
+          :spaceBetween="8"
+          class="mx-3"
+          style="height: auto"
+          @swiper="getSwiperRef"
+        >
+          <SwiperSlide
+            v-for="(gameItem, index) in recommendedGameList"
+            :key="index"
+            :virtualIndex="index"
+          >
+            <img
+              :src="gameItem.image"
+              class="m-home-search-swiper-img"
+              @click="handleEnterGame(gameItem.id, gameItem.name)"
+            />
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -544,6 +547,10 @@ onMounted(async () => {
   background: var(--BG-5-1C1929, #15161c);
   color: #fff;
   text-align: center;
+  position: absolute;
+  width: 100% !important;
+  top:0px;
+  left:0px;
 
   .m-search-header-icon {
     width: 20px;
@@ -572,6 +579,7 @@ onMounted(async () => {
   border-radius: 0px 0px 8px 8px;
   background: var(--Text-Box-1-211F31, #1d2027);
   overflow-y: auto;
+  position:absolute;
 
   .m-home-search-game:active {
     transform: scale(0.9);

@@ -473,7 +473,8 @@ const selectActiveIndex = (index: number) => {
   setMenuBlurEffectShow(false);
   setOverlayScrimShow(false);
   setAccountDialogShow(false);
-  router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
+  //router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
+  router.push({ name: "Account"});
 }
 
 watch(accountDialogVisible, (value: boolean) => {
@@ -538,8 +539,8 @@ onMounted(() => {
     class="main-background"
     :class="mainBlurEffectShow ? 'main-bg-blur' : ''"
     :style="{
-      height: mobileWidth < 600 && mailMenuShow ? mainHeight + 'px' : 'unset',
-      overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'unset',
+      height: mobileWidth < 600 && mailMenuShow ? mainHeight + 'px' : 'fit-content',
+      overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'hidden',
     }"
   >
     <!-- game search dialog -->
@@ -551,10 +552,11 @@ onMounted(() => {
       temporary
       :touchless="true"
       :style="{
-        height: '100%',
+        height: '100dvh',
         top: '0px',
         zIndex: 300000,
         background: 'unset !important',
+        width: '100dvw'
       }"
       v-if="mobileWidth < 600"
     >
@@ -900,6 +902,7 @@ onMounted(() => {
 }
 
 .main-background {
+  width: 100dvw !important;
   background: #15161c;
 }
 

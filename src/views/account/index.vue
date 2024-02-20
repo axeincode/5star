@@ -60,7 +60,7 @@ const handleDropdown = (item: string, index: number) => {
   setActiveAccountIndex(index)
   selectedMenuItem.value = item;
   activeMenuIndex.value = index;
-  router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
+  //router.push({ name: "Account", params: { index: activeMenuIndex.value }, query: { index: activeMenuIndex.value } });
 }
 
 const activeAccountIndex = computed(() => {
@@ -127,10 +127,10 @@ const mDialogHide = () => {
 
 const goBeforePage = () => {
   router.go(-1);
-  setTimeout(() => {
+  /*setTimeout(() => {
     activeMenuIndex.value = route.query.index ? route.query.index : 0
     setActiveAccountIndex(activeMenuIndex.value)
-  }, 500)
+  }, 500)*/
 }
 
 watch(activeAccountIndex, (value) => {
@@ -151,8 +151,10 @@ onMounted(() => {
   if (mobileWidth.value < 600) {
     mobileDialogVisible.value = true;
   }
-  activeMenuIndex.value = route.query.index ? route.query.index : 0
-  setActiveAccountIndex(activeMenuIndex.value)
+  //activeMenuIndex.value = route.query.index ? route.query.index : 0;
+  activeMenuIndex.value = activeAccountIndex.value;
+  selectedMenuItem.value = menuList.value[activeMenuIndex.value];
+  //setActiveAccountIndex(activeMenuIndex.value)
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
