@@ -20,6 +20,7 @@ import store from '@/store';
 import { useToast } from "vue-toastification";
 import { bannerStore } from '@/store/banner';
 import icon_public_09 from "@/assets/public/svg/icon_public_09.svg";
+import BindingPhone from "./BindingPhone.vue";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -116,6 +117,8 @@ const validationText2 = ref<string>("")
 const notificationShow = ref<boolean>(false);
 
 const loading = ref<boolean>(false);
+
+const phoneBindingDialog = ref<boolean>(false);
 
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
@@ -282,6 +285,10 @@ const handleWithdrawSubmit = async () => {
     });
     return;
   }
+  if (!userInfo.value.phone_confirmd) {
+    phoneBindingDialog.value = true;
+    return;
+  }
   loading.value = true
   let formData = {} as any;
   if (depositConfig.value.deposit_user_switch) {
@@ -352,7 +359,6 @@ const handleWithdrawSubmit = async () => {
   }
 }
 
-
 watch(withdrawAmount, (newValue) => {
   if (validateAmount()) {
     isDepositBtnReady.value = true;
@@ -385,9 +391,20 @@ onMounted(async () => {
 </script>
 
 <template>
+  <v-dialog
+    v-model="phoneBindingDialog"
+    class="m-phone-binding-dialog"
+    :width="''"
+    :fullscreen="true"
+    :scrim="true"
+    :transition="'dialog-top-transition'"
+    @click:outside="phoneBindingDialog = false"
+  >
+    <BindingPhone />
+  </v-dialog>
   <div
     class="mobile-withdraw-container"
-    :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
+    :class="depositBlurEffectShow || phoneBindingDialog ? 'deposit-bg-blur' : ''"
   >
     <v-row class="mt-6 mx-8 text-500-10 white align-center">
       {{ t("withdraw_dialog.withdraw_amount") }}
@@ -567,6 +584,10 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+.m-phone-binding-dialog {
+  z-index: 2433 !important;
+  margin: 0px !important;
+}
 .mobile-withdraw-container::-webkit-scrollbar {
   width: 0px;
 }

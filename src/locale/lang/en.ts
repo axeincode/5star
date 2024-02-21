@@ -1949,5 +1949,15 @@ export const lang: langType = {
     text_11: "Step 3: Check if the payment has been received (there may be a delay, if it has not been received, please check back later or contact customer service).",
     text_12: "Transfer completed",
     text_13: "safety and security",
+  },
+  phone_binding_dialog: {
+    text_1: "Binding cell phone number",
+    text_2: "For the security of your account and subsequent withdrawals,",
+    text_3: "please bind your cell phone number",
+    text_4: "phone number",
+    text_5: "Enter phone number",
+    text_6: "captcha",
+    text_7: "Enter the verification code",
+    text_8: "Submit",
   }
 };

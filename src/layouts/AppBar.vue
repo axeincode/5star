@@ -29,6 +29,7 @@ import img_vipemblem_75_99 from "@/assets/vip/image/img_vipemblem_75-99.png";
 import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png";
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
+import Cookies from "js-cookie"
 
 import { currencyStore } from "@/store/currency";
 import { bonusStore } from "@/store/bonus";
@@ -138,6 +139,8 @@ const token = computed(() => {
   const { getToken } = storeToRefs(authStore());
   return getToken.value;
 });
+
+console.log(Cookies.get("blue-game-token-key"))
 
 const userInfo = computed(() => {
   const { getUserInfo } = storeToRefs(authStore());
