@@ -5,6 +5,8 @@ import type * as Game from "@/interface/game";
 import { handleException } from './exception';
 import { authStore } from "@/store/auth";
 import { appBarStore } from "@/store/appBar";
+import Cookies from "js-cookie";
+import CacheKey from "@/constants/cacheKey";
 
 type dialogType = "login" | "signup";
 
@@ -150,15 +152,19 @@ export const gameStore = defineStore({
                     betSlipOffsetTop: 0,
                     betslipZIndex: 999,
                     themeName: "default",
-                    onLogin: () => {
-                        this.openDialog('login');
+                    onLogin: async () => {
+                        if (Cookies.get(CacheKey.TOKEN) == "") {
+                            this.openDialog('login');
+                        } else {
+                            this.closeKill();
+                            await this.getGameBetbyInit();
+                        }
                     },
                     onRegister: () => {
                         this.openDialog('signup');
                     },
                     onTokenExpired: async () => {
                         this.closeKill();
-                        await this.dispatchGameEnter({ id: '9999', demo: false });
                         await this.getGameBetbyInit();
                     },
                     onSessionRefresh: async () => {

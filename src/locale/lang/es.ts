@@ -1397,6 +1397,7 @@ export const lang: langType = {
         text_10: "Bono",
         text_11: "Nivel VIP",
         text_12: "Rango VIP",
+        text_13: "Bono de inicio de sesión VIP"
     },      
   },
   account: {

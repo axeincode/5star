@@ -77,10 +77,11 @@ watch(
     if (newQuery.index) {
       activeMenuIndex.value = newQuery.index;
       selectedMenuItem.value = menuList.value[activeMenuIndex.value];
-      window.scrollTo({
+      window.scroll({
         top: 0,
         behavior: "smooth",
       });
+      //document.getElementsByClassName("m-about-container")[0].scrollIntoView({behavior:"smooth"});
     }
   }
 );
@@ -91,10 +92,11 @@ onMounted(() => {
     selectedMenuItem.value = menuList.value[activeMenuIndex.value];
   }
   setActiveAboutIndex(activeMenuIndex.value);
-  window.scrollTo({
+  window.scroll({
     top: 0,
     behavior: "smooth",
   });
+  //document.getElementsByClassName("m-about-container")[0].scrollIntoView({behavior:"smooth"});
 });
 </script>
 

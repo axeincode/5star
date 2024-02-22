@@ -35,12 +35,17 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 // Import the English locale (or any other locale you want to customize)
 import 'dayjs/locale/en';
+import Vue3GoogleLogin from 'vue3-google-login';
 
 const app = createApp(App)
 
 registerPlugins(app)
 
 app.use(i18n)
+
+app.use(Vue3GoogleLogin, {
+  clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com',
+})
 
 dayjs.locale('en', {
   name: 'en',

@@ -14,8 +14,10 @@ import { useDisplay } from "vuetify";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
+import { throwStatement } from "@babel/types";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
+import { googleTokenLogin } from 'vue3-google-login';
 
 const Login = defineComponent({
   components: {
@@ -54,9 +56,7 @@ const Login = defineComponent({
       },
       socialIconList: [
         new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_30.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_31.svg", import.meta.url).href,
+        new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href
       ],
       isShowPassword: false,
       notificationShow: false,
@@ -68,8 +68,8 @@ const Login = defineComponent({
       closeBtnHeight: 0,
       containerHeight: 0 as number | undefined,
       bodyHeight: 0,
+      clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com'
     });
-
     const mobileWidth = computed(() => {
       return width.value;
     });
@@ -213,6 +213,65 @@ const Login = defineComponent({
       }, 100);
     };
 
+    // google Login  谷歌登录
+    const onSignInSuccessGoogle = (index: number) => {
+      if (index === 0) {
+        FB.login(function(response){
+          console.log('facebook登录', response);
+        });
+      }
+      if (index === 1) {
+        googleTokenLogin({
+          clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com'
+        }).then((res: any) => {
+          console.log('google登录', res)
+        })
+      }
+    }
+
+    const statusChangeCallback = (response) => {
+      console.log('statusChangeCallback');
+      console.log(response);                   // The current login status of the person.
+      if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+        testAPI();  
+      } else {                                 // Not logged into your webpage or we are unable to tell.
+        console.log('报错了')
+      }
+    }
+
+    const onSignInSuccess = () => {
+      FB.login(function(response){
+          console.log(response);
+      });
+      // FB.init({
+      //   appId: '1782039332218801',
+      //   xfbml: true,
+      //   version: 'v18.0'
+      // });
+      // FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      //   statusChangeCallback(response);       // Returns the login status.
+      // // get your auth token and info
+      // })
+    }
+
+    const testAPI = () => {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', function(response) {
+        console.log('Successful login for: ' + response.name);
+      });
+    }
+
+    const onSignInError = (err: any) => {
+      console.log('失败了吗', err)
+      // logic if auth failed
+    }
+
+    const checkLoginState = () => {               // Called when a person is finished with the Login Button.
+      FB.getLoginStatus(function(response) {   // See the onlogin handler
+        statusChangeCallback(response);
+      });
+    }
+
     watch(
       mobileWidth,
       (newValue) => {
@@ -222,7 +281,9 @@ const Login = defineComponent({
       { deep: true }
     );
 
-    onMounted(() => {});
+    onMounted(() => {
+      // onSignInSuccess()
+    });
 
     return {
       t,
@@ -235,15 +296,21 @@ const Login = defineComponent({
       handleEmailChange,
       handleEmailFocus,
       mergeEmail,
+      onSignInSuccessGoogle,
+      onSignInSuccess,
+      onSignInError,
+      testAPI,
+      statusChangeCallback,
+      checkLoginState
     };
   },
 });
-
 export default Login;
 </script>
 
 <template>
   <div class="m-login-container px-6">
+    <div id="status"></div>
     <div class="my-15 d-flex justify-center align-center">
       <img src="@/assets/public/image/logo_public_01.png" width="86" />
       <div class="ml-2">
@@ -354,8 +421,8 @@ export default Login;
         </p>
         <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
       </v-row>
-      <v-row class="mt-6">
-        <v-col cols="8" offset="2">
+      <v-row class="mt-6 m-justify-content">
+        <v-col cols="4">
           <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
             <v-sheet
               v-for="(item, index) in socialIconList"
@@ -369,10 +436,15 @@ export default Login;
                 icon=""
                 width="36px"
                 height="36px"
+                @click="onSignInSuccessGoogle(index)"
               >
                 <img :src="item" width="36" />
               </v-btn>
             </v-sheet>
+            <!-- <div @click="onSignInSuccessGoogle">谷歌登录</div> -->
+            <!-- <button id="loginBtn" @click="onSignInSuccess" >登录</button>  -->
+            <!-- <div @click="onSignInSuccess">facebook登录</div> -->
+            <!-- <fb:login-button scope="public_profile,email" @click="checkLoginState();"></fb:login-button> -->
           </div>
         </v-col>
       </v-row>
@@ -623,6 +695,10 @@ export default Login;
   background-color: #1d2027;
   margin: auto;
   z-index: 1;
+}
+
+.m-justify-content {
+  justify-content: center;
 }
 
 // divider

@@ -13,12 +13,14 @@ import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import VipRebateHistory from './components/VipRebateHistory.vue';
 import VipLevelRewardHistory from './components/VipLevelRewardHistory.vue';
 import VipTimesHistory from './components/VipTimesHistory.vue';
+import VipSigninHistory from './components/VipSigninHistory.vue';
 
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchVipRebateHistory } = vipStore();
 const { dispatchVipTimesHistory } = vipStore();
 const { dispatchVipLevelRewardHistory } = vipStore();
+const { dispatchVipSigninHistory } = vipStore();
 
 const props = defineProps<{
   pageSize: number
@@ -41,7 +43,8 @@ const transactionVipMenuList = ref<Array<string>>([
   t('transaction.vip.text_1'),
   t('transaction.vip.text_2'),
   t('transaction.vip.text_3'),
-  t('transaction.vip.text_4')
+  t('transaction.vip.text_4'),
+  t('transaction.vip.text_13')
 ]);
 
 const tempHistoryList = [{},{},{},{},{},{}];
@@ -58,6 +61,11 @@ const vipRebateHistory = computed(() => {
 const vipLevelRewardHistory = computed(() => {
   const { getVipLevelRewardHistory } = storeToRefs(vipStore());
   return getVipLevelRewardHistory.value;
+})
+
+const vipSigninHistory = computed(() => {
+  const { getVipSigninHistoryList } = storeToRefs(vipStore());
+  return getVipSigninHistoryList.value;
 })
 
 const vipTimesHistory = computed(() => {
@@ -109,6 +117,14 @@ const pageNo = async (page_no: number) => {
       start_time: Math.ceil(moment().valueOf() / 1000),
     });
     paginationLength.value = vipTimesHistory.value.total;
+  }
+  if (selectedVipMenuItem.value == t('transaction.vip.text_13')) {
+    await dispatchVipSigninHistory({
+      page_num: page_no,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    })
+    paginationLength.value = vipSigninHistory.value.total;
   }
 }
 
@@ -164,6 +180,14 @@ watch(selectedVipMenuItem, async (value) => {
       start_time: Math.ceil(moment().valueOf() / 1000),
     });
     paginationLength.value = vipTimesHistory.value.total;
+  }
+  if (value == t('transaction.vip.text_13')) {
+    await dispatchVipSigninHistory({
+      page_num: 1,
+      page_size: pageSize.value,
+      start_time: Math.ceil(moment().valueOf() / 1000),
+    })
+    paginationLength.value = vipSigninHistory.value.total;
   }
 })
 
@@ -332,6 +356,10 @@ onMounted(async () => {
         selectedVipMenuItem == t('transaction.vip.text_3') ||
         selectedVipMenuItem == t('transaction.vip.text_4')
       "
+    />
+    <VipSigninHistory
+      :currentList="vipSigninHistory.list"
+      v-if="selectedVipMenuItem == t('transaction.vip.text_13')"
     />
   </v-row>
   <v-row class="m-bonus-transaction-table-5">

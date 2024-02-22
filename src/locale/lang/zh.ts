@@ -1395,6 +1395,7 @@ export const lang: langType = {
       text_10: "Bonus",
       text_11: "Vip Level",
       text_12: "Vip Rank",
+      text_13: "VIP Login Bonus"
     }
   },
   account: {

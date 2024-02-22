@@ -43,6 +43,10 @@ export const vipStore = defineStore({
         vipCycleawardList: {} as Vip.VipCycleawardListData,
         vipLevelAward: {} as Vip.VipLevelAwardData,
         vipBetawardList: {} as Vip.vipBetawardListData,
+        vipSigninHistoryList: {
+            total: 0,
+            list: []
+        } as Vip.VipSigninHistoryData
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -60,7 +64,8 @@ export const vipStore = defineStore({
         getVipNavBarToggle: (state) => state.vipNavBarToggle,
         getVipCycleawardList: (state) => state.vipCycleawardList,
         getVipLevelAward: (state) => state.vipLevelAward,
-        getVipBetawardList: (state) => state.vipBetawardList
+        getVipBetawardList: (state) => state.vipBetawardList,
+        getVipSigninHistoryList: (state) => state.vipSigninHistoryList
     },
     actions: {
         // set functions
@@ -115,6 +120,9 @@ export const vipStore = defineStore({
         // Storage coding rebate  存储打码返利
         setVipBetawardList(vipBetawardList: Vip.vipBetawardListData) {
             this.vipBetawardList = vipBetawardList;
+        },
+        setVipSigninHistory(vipSigninHistoryList: Vip.VipSigninHistoryData) {
+            this.vipSigninHistoryList = vipSigninHistoryList;
         },
         // Reward collection prompt information  奖励领取提示信息  
         alertMessage(successMessage: Vip.SuccessMessageParams) {
@@ -452,6 +460,25 @@ export const vipStore = defineStore({
                 } else {
                     this.setErrorMessage(handleException(response.code));
                     this.alertMessage({ message: response.message, type: 0 });
+                }
+            }
+            await network.sendMsg(route, data, next, 1);
+        },
+        /**
+         * Get sign-in reward collection records  获取签到奖励领取记录
+         * @param
+         */
+        async dispatchVipSigninHistory(data: Vip.VipSigninHistoryRequest) {
+            this.setSuccess(false);
+            const route: string = NETWORK.VIP_INFO.VIP_SIGNIN_HISTORY;
+            const network: Network = Network.getInstance();
+            // response call back function
+            const next = (response: Vip.GetVipSigninHistoryRequest) => {
+                if (response.code == 200) {
+                    this.setSuccess(true);
+                    this.setVipSigninHistory(response.data);
+                } else {
+                    this.setErrorMessage(handleException(response.code));
                 }
             }
             await network.sendMsg(route, data, next, 1);

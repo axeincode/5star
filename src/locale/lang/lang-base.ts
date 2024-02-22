@@ -1404,6 +1404,7 @@ export type langType = {
       text_10: string
       text_11: string
       text_12: string
+      text_13: string
     }
   }
   account: {

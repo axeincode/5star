@@ -170,7 +170,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 1"
+            v-if="vipSignIn.signin_day > 0"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_1_text") }}
@@ -186,15 +186,15 @@ onMounted(async () => {
           </div>
           <div
             class="m-login-bonus-card-bg-2 relative"
-            :class="vipSignIn.signin_day === 1 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 0 ? 'select_bg' : ''"
             v-ripple.center
             v-else
-            @click="handleLoginBonus(1)"
+            @click="handleLoginBonus(0)"
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 0"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_1_text") }}
@@ -212,7 +212,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 2"
+            v-if="vipSignIn.signin_day > 1"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_2_text") }}
@@ -223,20 +223,20 @@ onMounted(async () => {
               width="32"
             />
             <p class="text-900-14 gray m-login-bonus-card-money-position">
-              $ {{ vipSignIn.award[2] }}
+              $ {{ vipSignIn.award[1] }}
             </p>
           </div>
           <div
             class="m-login-bonus-card-bg-2 relative"
-            :class="vipSignIn.signin_day === 2 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 1 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(2)"
+            @click="handleLoginBonus(1)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 1"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_2_text") }}
@@ -254,7 +254,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 3"
+            v-if="vipSignIn.signin_day > 2"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_3_text") }}
@@ -265,20 +265,20 @@ onMounted(async () => {
               width="32"
             />
             <p class="text-900-14 gray m-login-bonus-card-money-position">
-              $ {{ item.signin_award[2] }}
+              $ {{ vipSignIn.award[2] }}
             </p>
           </div>
           <div
             class="m-login-bonus-card-bg-3 relative"
-            :class="vipSignIn.signin_day === 3 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 2 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(3)"
+            @click="handleLoginBonus(2)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 2"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_3_text") }}
@@ -298,7 +298,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 4"
+            v-if="vipSignIn.signin_day > 3"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_4_text") }}
@@ -309,20 +309,20 @@ onMounted(async () => {
               width="32"
             />
             <p class="text-900-14 gray login-bonus-card-money-position">
-              $ {{ item.signin_award[3] }}
+              $ {{ vipSignIn.award[3] }}
             </p>
           </div>
           <div
             class="m-login-bonus-card-bg-4 relative"
-            :class="vipSignIn.signin_day === 4 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 3 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(4)"
+            @click="handleLoginBonus(3)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 3"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_4_text") }}
@@ -340,7 +340,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 5"
+            v-if="vipSignIn.signin_day > 4"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_5_text") }}
@@ -351,20 +351,20 @@ onMounted(async () => {
               width="32"
             />
             <p class="text-900-14 gray m-login-bonus-card-money-position">
-              $ {{ item.signin_award[4] }}
+              $ {{ vipSignIn.award[4] }}
             </p>
           </div>
           <div
             class="m-login-bonus-card-bg-4 relative"
-            :class="vipSignIn.signin_day === 5 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 4 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(5)"
+            @click="handleLoginBonus(4)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 4"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_5_text") }}
@@ -382,7 +382,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 6"
+            v-if="vipSignIn.signin_day > 5"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_6_text") }}
@@ -393,20 +393,20 @@ onMounted(async () => {
               width="32"
             />
             <p class="text-900-14 gray m-login-bonus-card-money-position">
-              $ {{ item.signin_award[5] }}
+              $ {{ vipSignIn.award[5] }}
             </p>
           </div>
           <div
             class="m-login-bonus-card-bg-4 relative"
-            :class="vipSignIn.signin_day === 6 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 5 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(6)"
+            @click="handleLoginBonus(5)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 5"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_6_text") }}
@@ -426,7 +426,7 @@ onMounted(async () => {
         <v-col cols="4" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 7"
+            v-if="vipSignIn.signin_day > 6"
           >
             <p class="text-900-14 gray m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_7_text") }}
@@ -437,20 +437,20 @@ onMounted(async () => {
               width="32"
             />
             <p class="text-900-14 gray m-login-bonus-card-money-position">
-              $ {{ item.signin_award[6] }}
+              $ {{ vipSignIn.award[6] }}
             </p>
           </div>
           <div
             class="m-login-bonus-card-bg-4 relative"
-            :class="vipSignIn.signin_day === 7 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day === 6 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(7)"
+            @click="handleLoginBonus(6)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day === 6"
             />
             <p class="text-900-12 white m-login-bonus-text-position">
               {{ t("vip.login_bonus.day_7_text") }}
@@ -468,13 +468,13 @@ onMounted(async () => {
         <v-col cols="8" class="pa-0 d-flex justify-center">
           <div
             class="m-login-bonus-card-checkout-bg-1 relative"
-            v-if="vipSignIn.is_signin === 2 && vipSignIn.signin_day === 8"
+            v-if="vipSignIn.signin_day > 7 && vipSignIn.is_signin === 2"
           >
             <p class="text-900-14 gray m-login-bonus-text-position-1">
               {{ t("vip.login_bonus.day_8_text") }}
             </p>
             <p class="text-900-14 gray mt-2 m-login-bonus-card-money-position-1">
-              $ {{ item.signin_award[7] }}
+              $ {{ vipSignIn.award[7] }}
             </p>
             <img
               src="@/assets/public/svg/icon_public_18.svg"
@@ -484,15 +484,15 @@ onMounted(async () => {
           </div>
           <div
             class="m-login-bonus-card-bg-5 relative"
-            :class="vipSignIn.signin_day === 8 ? 'select_bg' : ''"
+            :class="vipSignIn.signin_day >= 7 ? 'select_bg' : ''"
             v-ripple.center
-            @click="handleLoginBonus(8)"
+            @click="handleLoginBonus(vipSignIn.signin_day > 7 ? vipSignIn.signin_day : 7)"
             v-else
           >
             <img
               src="@/assets/vip/image/img_vip_32.png"
               class="m-login-bonus-sunshine-img"
-              v-if="vipSignIn.is_signin === 1"
+              v-if="vipSignIn.is_signin === 1 && vipSignIn.signin_day >= 7"
             />
             <p class="text-900-12 white m-login-bonus-text-position-1">
               {{ t("vip.login_bonus.day_8_text") }}

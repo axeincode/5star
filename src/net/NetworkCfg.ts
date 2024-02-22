@@ -94,6 +94,7 @@ export namespace NETWORK {
     static USER_VIP_LEVELAWARD_RECEIVE = '/user/vip/levelaward/receive';  // Receive level-related rewards  领取等级相关奖励
     static USER_VIP_BETAWARD_LIST = '/user/vip/betaward/list';  // Get coding rebates  获取打码返利
     static USER_VIP_BETAWARD_RECEIVE = '/user/vip/betaward/receive';  // Get coding rebates  领取打码返利
+    static VIP_SIGNIN_HISTORY = '/user/vipsigninhistory';  //  Get sign-in reward collection records  获取签到奖励领取记录
   }
 
   // websocket api

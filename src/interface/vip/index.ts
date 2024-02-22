@@ -137,6 +137,19 @@ export interface VipTimesHistoryData {
     list: Array<VipTimesHistoryItem>
 }
 
+export interface VipSigninHistoryItem {
+    notes_id: string | number
+    created_at: string | number
+    amount: string | number
+    vip_level: string | number
+    sign_day: number
+}
+
+export interface VipSigninHistoryData {
+    total: number
+    list: Array<VipSigninHistoryItem>
+}
+
 export interface VipTimesHistoryRequest {
     index: number
     page_num: number
@@ -151,6 +164,12 @@ export interface VipSignInData {
     limited_bet: number
     limited_deposit: number
     vip_level: number
+}
+
+export interface VipSigninHistoryRequest {
+    page_num: number
+    page_size: number
+    start_time: number
 }
 
 export interface VipLevelUpListData {
@@ -227,6 +246,12 @@ export type GetVipLevelRewardHistoryResponse = {
 export type GetVipTimesHistoryResponse = {
     code: number
     data: VipTimesHistoryData
+    message: string
+}
+
+export type GetVipSigninHistoryRequest = {
+    code: number
+    data: VipSigninHistoryData
     message: string
 }
 

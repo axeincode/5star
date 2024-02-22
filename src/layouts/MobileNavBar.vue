@@ -770,6 +770,10 @@ const handleGameFilter = (filterText: string) => {
   setNavBarToggle(false);
   setMainBlurEffectShow(false);
   setOverlayScrimShow(false);
+  setTimeout(()=>{window.scrollTo({
+    top: 250,
+    behavior: "smooth",
+  });}, 500);
 }
 
 const handleNavbarItem = (navbarText: string) => {
