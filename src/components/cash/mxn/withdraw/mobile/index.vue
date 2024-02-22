@@ -21,6 +21,7 @@ import { useToast } from "vue-toastification";
 import { bannerStore } from '@/store/banner';
 import icon_public_09 from "@/assets/public/svg/icon_public_09.svg";
 import BindingPhone from "./BindingPhone.vue";
+import WithdrawInfo from "./WithdrawInfo.vue";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -119,6 +120,7 @@ const notificationShow = ref<boolean>(false);
 const loading = ref<boolean>(false);
 
 const phoneBindingDialog = ref<boolean>(false);
+const withdrawInfoDialog = ref<boolean>(false);
 
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
@@ -261,8 +263,6 @@ const depositConfig = computed(() => {
   return getDepositCfg.value
 })
 
-
-
 const svgTransform = (el: any, color: string) => {
   el.children[0].setAttribute("fill", color);
   return el;
@@ -374,6 +374,11 @@ watch(currencyMenuShow, (value) => {
   // }
 })
 
+const submitPhoneBinding = () => {
+  phoneBindingDialog.value = false;
+  withdrawInfoDialog.value = true;
+}
+
 onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();
@@ -400,7 +405,21 @@ onMounted(async () => {
     :transition="'dialog-top-transition'"
     @click:outside="phoneBindingDialog = false"
   >
-    <BindingPhone />
+    <BindingPhone
+      @closePhoneBindingDialog="phoneBindingDialog = false"
+      @submitPhoneBinding="submitPhoneBinding"
+    />
+  </v-dialog>
+  <v-dialog
+    v-model="withdrawInfoDialog"
+    class="m-phone-binding-dialog"
+    :width="''"
+    :fullscreen="true"
+    :scrim="true"
+    :transition="'dialog-top-transition'"
+    @click:outside="withdrawInfoDialog = false"
+  >
+    <WithdrawInfo @closeWithdrawInfoDialog="withdrawInfoDialog = false" />
   </v-dialog>
   <div
     class="mobile-withdraw-container"

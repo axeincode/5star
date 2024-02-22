@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { appBarStore } from '@/store/appBar';
 import { authStore } from "@/store/auth";
+import { userStore } from '@/store/user';
 import { depositStore } from '@/store/deposit';
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
@@ -38,6 +39,7 @@ const { dispatchUserDepositSubmit } = depositStore();
 const { setPixInfoToggle } = depositStore();
 const { setDepositConfirmDialogToggle } = depositStore();
 const { dispatchUserProfile } = authStore();
+const { dispatchUserBalance } = userStore();
 
 const selectedCurrencyUnit = ref<string>("R$");
 
@@ -389,6 +391,7 @@ const handleDepositSubmit = async () => {
   loading.value = false;
   if (success.value) {
     await dispatchUserProfile();
+    await dispatchUserBalance();
     // if (depositSubmit.value.code_url != "") {
     //   depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
     //   let locale = 'pt-BR';

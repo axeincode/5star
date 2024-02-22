@@ -16,7 +16,7 @@ import { useTimer } from "vue-timer-hook";
 const { t } = useI18n();
 const { setDepositConfirmDialogToggle } = depositStore();
 
-const timer_value = ref<number>(3560);
+const timer_value = ref<number>(3600);
 
 const mxnPaymentChannel = ref<any>({
   spei: icon_public_106,
@@ -25,7 +25,7 @@ const mxnPaymentChannel = ref<any>({
 });
 
 const time = new Date();
-time.setSeconds(time.getSeconds() + timer_value.value); // 10 minutes timer
+time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
 
 const timer = useTimer(Number(time));
 timer.start();

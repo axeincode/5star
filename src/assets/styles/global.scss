@@ -9,6 +9,14 @@ textarea {
     /* 适用于WebKit浏览器（如Safari） */
 }
 
+.text-decoration {
+    text-decoration: underline !important;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
 .v-divider {
     opacity: 1;
     border: 1px solid #15161C !important;
@@ -478,7 +486,7 @@ textarea {
 .text-900-28 {
     font-weight: 900;
     font-size: 28px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    // font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     -webkit-text-size-adjust: none;
 }
 

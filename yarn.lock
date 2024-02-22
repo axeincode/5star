@@ -5354,7 +5354,7 @@
     "temp-dir" "^1.0.0"
     "uuid" "^3.0.1"
 
-"terser@^5.0.0", "terser@^5.26.0", "terser@^5.4.0":
+"terser@^5.0.0", "terser@^5.4.0":
   "integrity" "sha512-dytTGoE2oHgbNV9nTzgBEPaqAWvcJNl66VZ0BkJqlvp71IjO8CxdBx/ykCNb47cLnCmCvRZ6ZR0tLkqvZCdVBQ=="
   "resolved" "https://registry.npmjs.org/terser/-/terser-5.26.0.tgz"
   "version" "5.26.0"
@@ -5726,7 +5726,7 @@
     "@volar/vue-typescript" "1.6.5"
     "semver" "^7.3.8"
 
-"vue@^2.0.0 || >=3.0.0", "vue@^2.6.14 || ^3.3.0", "vue@^3", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.25", "vue@3.3.4":
+"vue@^2.0.0 || >=3.0.0", "vue@^2.6.14 || ^3.3.0", "vue@^3", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.2", "vue@^3.0.3", "vue@^3.2.0", "vue@^3.2.25", "vue@3.3.4":
   "integrity" "sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"
   "version" "3.3.4"
@@ -5741,6 +5741,11 @@
   "integrity" "sha512-86vUkNPBzL2PVuR9w6hUsI90ccFjLp+K8cSFpRTISf+SjUQY3fMHc5CFF5MUL62v1xYYm27zEBmQupO9VQx9Kw=="
   "resolved" "https://registry.npmjs.org/vue3-carousel/-/vue3-carousel-0.3.1.tgz"
   "version" "0.3.1"
+
+"vue3-google-login@^2.0.25":
+  "integrity" "sha512-b6EfYFF2KH1qSiiCKI9WmPB79GdXifPB8qOt48RRmo1F5h3UcigrrqzQCosjcRLcTqUpRQcZ9TeKYP4ZVroNHQ=="
+  "resolved" "https://registry.npmjs.org/vue3-google-login/-/vue3-google-login-2.0.25.tgz"
+  "version" "2.0.25"
 
 "vue3-lazyload@^0.3.8":
   "integrity" "sha512-UiJHRT7mzry102WbhtrRgJh+f8Z8u4Z+H1RU4dvPmQeq7wFSDFxZB9iJOWGihH2FscXN/8rMGLDOQJAmjwqpCg=="

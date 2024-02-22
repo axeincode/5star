@@ -14,14 +14,16 @@ export const withdrawStore = defineStore({
     withdrawHistoryItem: {
       total_pages: 0,
       record: []
-    } as Withdraw.WithdrawalHistoryResponse
+    } as Withdraw.WithdrawalHistoryResponse,
+    smsVerificationItem: { remaining_time: 0 } as Withdraw.SmsSendResponseItem
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getWithdrawCfg: (state) => state.withdrawConfig,
     getWithdrawSubmit: (state) => state.withdrawSubmit,
-    getWithdrawHistoryItem: (state) => state.withdrawHistoryItem
+    getWithdrawHistoryItem: (state) => state.withdrawHistoryItem,
+    getSmsVerificationItem: (state) => state.smsVerificationItem,
   },
   actions: {
     // set functions
@@ -43,6 +45,9 @@ export const withdrawStore = defineStore({
       // withdrawHistoryItem.record.map(item => {
       //   this.withdrawHistoryItem.record.push(item);
       // })
+    },
+    setSmsVerificationItem(smsVerificationItem: Withdraw.SmsSendResponseItem) {
+      this.smsVerificationItem = smsVerificationItem
     },
     // user withdraw configuration
     async dispatchUserWithdrawCfg() {
@@ -105,6 +110,37 @@ export const withdrawStore = defineStore({
               item.status = 3;
             }
           })
+          this.setSuccess(true);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
+    // Send SMS verification code
+    async dispatchSmsVerificationCode(data: Withdraw.SmsSendRequestForm) {
+      this.setSuccess(false);
+      const route: string = NETWORK.PHONE_BIDING.SMS_VERIFICATION_CODE;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Withdraw.GetSmsSendResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setSmsVerificationItem(response.data);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
+    // Submit SMS verification code for verification
+    async dispatchSubmitSMS(data: Withdraw.SmsSubmitRequestForm) {
+      this.setSuccess(false);
+      const route: string = NETWORK.PHONE_BIDING.SUBMIT_SMS_CODE;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: Withdraw.GetSmsSubmitResponse) => {
+        if (response.code == 200) {
           this.setSuccess(true);
         } else {
           this.setErrorMessage(handleException(response.code));

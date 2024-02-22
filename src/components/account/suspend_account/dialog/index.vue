@@ -5,8 +5,6 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
-import Notification from "@/components/global/notification/index.vue";
-import { ElNotification } from "element-plus";
 import { useToast } from "vue-toastification";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
@@ -116,7 +114,7 @@ const submitSuspend = async () => {
 <style lang="scss">
 // account dialog container
 .suspend-dialog-container {
-  background-color: #15161C;
+  background-color: #15161c;
   border-radius: 16px !important;
   height: 220px;
 }
@@ -136,7 +134,7 @@ const submitSuspend = async () => {
 .suspend-cancel-btn {
   // button
   button {
-    background: #23262F !important;
+    background: #23262f !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 
@@ -171,7 +169,9 @@ const submitSuspend = async () => {
 
 .Vue-Toastification__toast-body {
   color: var(--sec-text, #7782aa);
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;

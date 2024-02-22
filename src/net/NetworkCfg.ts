@@ -133,4 +133,10 @@ export namespace NETWORK {
   export class Currency{
     static CURRENCY_LIST = '/user/balance/list'; // currency list
   }
+
+  // phone binding api
+  export class PHONE_BIDING {
+    static SMS_VERIFICATION_CODE = '/user/sms/send'; // Send SMS verification code
+    static SUBMIT_SMS_CODE = '/user/sms/submit'; // Submit SMS verification code for verification
+  }
 }

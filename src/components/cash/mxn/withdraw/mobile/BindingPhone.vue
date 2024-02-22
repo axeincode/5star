@@ -1,16 +1,142 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
+import { withdrawStore } from "@/store/withdraw";
+import { userStore } from "@/store/user";
+import { storeToRefs } from "pinia";
+import store from "@/store";
+import { useToast } from "vue-toastification";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useTimer } from "vue-timer-hook";
+import phones from "@/utils/phoneValidation";
+import currencyList from "@/utils/currencyList";
+import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
 
 const { t } = useI18n();
+const { dispatchSmsVerificationCode } = withdrawStore();
+const { dispatchSubmitSMS } = withdrawStore();
 
-const disabled = ref<boolean>(true);
+const emit = defineEmits<{
+  (e: "submitPhoneBinding"): void;
+  (e: "closePhoneBindingDialog"): void;
+}>();
+
+const smsVerificationItem = computed(() => {
+  const { getSmsVerificationItem } = storeToRefs(withdrawStore());
+  return getSmsVerificationItem.value;
+});
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value;
+});
+
+const phone_number = ref<string>("");
+const captchaLoading = ref<boolean>(false);
+const submitLoading = ref<boolean>(false);
+const verification_code = ref<string>("");
+const phone_code = ref<string>("");
+
+const timer_value = ref<number>(0);
+
+const time = new Date();
+time.setSeconds(time.getSeconds() + timer_value.value);
+
+const timer = useTimer(Number(time));
+timer.start();
+
+watch(
+  smsVerificationItem,
+  (value) => {
+    timer_value.value = Number(value.remaining_time);
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timer_value.value);
+    timer.restart(Number(time));
+  },
+  { deep: true }
+);
+
+const capthcaDisabled = computed((): boolean => {
+  if (phone_number.value == "" || timer_value.value != 0) {
+    return true;
+  }
+  let disabled = (phone_code.value + phone_number.value).match(
+    phones[currencyList[userBalance.value.currency]]
+  );
+  return Boolean(disabled);
+});
+
+const submitDisabled = computed(() => {
+  return phone_number.value == "" || verification_code.value == "" ? true : false;
+});
+
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(withdrawStore());
+  return getSuccess.value;
+});
+
+const errMessage = computed(() => {
+  const { getErrMessage } = storeToRefs(withdrawStore());
+  return getErrMessage.value;
+});
+
+const sendSMSVerificationCode = async () => {
+  captchaLoading.value = true;
+  await dispatchSmsVerificationCode({
+    phone: "52" + phone_number.value,
+  });
+  captchaLoading.value = false;
+};
+
+const submitSMS = async () => {
+  submitLoading.value = true;
+  emit("submitPhoneBinding");
+  await dispatchSubmitSMS({
+    phone: phone_number.value,
+    code: verification_code.value,
+  });
+  submitLoading.value = false;
+  if (success.value) {
+    emit("submitPhoneBinding");
+  } else {
+    const toast = useToast();
+    toast.success(errMessage.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
+  }
+};
+
+onMounted(() => {
+  phone_code.value = getPhoneCodeByLocale(currencyList[userBalance.value.currency]);
+  watchEffect(async () => {
+    if (timer.isExpired.value) {
+      console.log("isExpired");
+      timer_value.value = 0;
+    }
+  });
+});
 </script>
 
 <template>
   <div class="m-phone-binding-container">
     <div class="m-phone-binding-dailog-header">
-      <v-btn class="m-close-button" icon="true" width="24" height="24" @click="">
+      <v-btn
+        class="m-close-button"
+        icon="true"
+        width="24"
+        height="24"
+        @click="$.emit('closePhoneBindingDialog')"
+      >
         <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
       </v-btn>
     </div>
@@ -25,15 +151,24 @@ const disabled = ref<boolean>(true);
       <div class="mx-4 mt-4 text-400-12 gray">{{ t("phone_binding_dialog.text_4") }}</div>
       <div class="mt-1 d-flex align-center">
         <div class="m-phone-binding-input mr-2 relative">
-          <div class="m-phone-binding-code text-700-12 white">+52</div>
+          <div class="m-phone-binding-code text-700-12 white">{{ phone_code }}</div>
           <input
             type="number"
+            v-model="phone_number"
             :placeholder="t('phone_binding_dialog.text_5')"
             class="text-700-12 px-2"
           />
         </div>
-        <v-btn class="m-phone-binding-captcha-btn" :disabled="disabled">
-          {{ t("phone_binding_dialog.text_6") }}
+        <v-btn
+          class="m-phone-binding-captcha-btn"
+          :disabled="capthcaDisabled"
+          :loading="captchaLoading"
+          @click="sendSMSVerificationCode"
+        >
+          <template v-if="timer_value == 0">
+            {{ t("phone_binding_dialog.text_6") }}
+          </template>
+          <template v-else>{{ timer.seconds }} s</template>
         </v-btn>
       </div>
       <div class="mx-4 mt-4 text-400-12 gray">{{ t("phone_binding_dialog.text_6") }}</div>
@@ -41,6 +176,7 @@ const disabled = ref<boolean>(true);
         <div class="m-phone-binding-input relative">
           <input
             type="number"
+            v-model="verification_code"
             :placeholder="t('phone_binding_dialog.text_7')"
             class="text-700-12 px-4"
             style="width: 100%"
@@ -48,7 +184,14 @@ const disabled = ref<boolean>(true);
         </div>
       </div>
       <div class="mt-6 text-center">
-        <v-btn width="288" height="48" class="m-phone-binding-submit-btn">
+        <v-btn
+          width="288"
+          height="48"
+          :disabled="submitDisabled"
+          :loading="submitLoading"
+          class="m-phone-binding-submit-btn"
+          @click="submitSMS"
+        >
           {{ t("phone_binding_dialog.text_8") }}
         </v-btn>
       </div>
@@ -108,7 +251,7 @@ const disabled = ref<boolean>(true);
       input::placeholder {
         font-size: 12px;
         font-weight: 400;
-        color: #ffffff;
+        color: #7782aa;
       }
     }
 
