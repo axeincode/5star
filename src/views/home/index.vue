@@ -37,6 +37,7 @@ import { useRouter, useRoute } from "vue-router";
 import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { mainStore } from "@/store/main";
+import MOrder from "@/views/home/components/mobile/Order.vue";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -55,6 +56,7 @@ const Dashboard = defineComponent({
   components: {
     GameProviders,
     MGameConfirm,
+    MOrder,
     ProgressiveImage,
   },
   setup() {
@@ -1226,6 +1228,8 @@ export default Dashboard;
     "
     v-else
   >
+    <!----------------------- Order component --------------------------->
+    <MOrder />
     <!-- game confirmation dialog -->
 
     <v-navigation-drawer

@@ -22,6 +22,10 @@ import { bannerStore } from '@/store/banner';
 import icon_public_09 from "@/assets/public/svg/icon_public_09.svg";
 import BindingPhone from "./BindingPhone.vue";
 import WithdrawInfo from "./WithdrawInfo.vue";
+import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
+import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
+import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
+import { getUnitByCurrency } from '@/utils/currencyUnit';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -40,11 +44,6 @@ const { dispatchCurrencyList } = currencyStore();
 import router from '@/router';
 import { currencyStore } from '@/store/currency';
 
-const selectedCurrencyItem = ref<GetCurrencyItem>({
-  icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-  name: "MXN",
-  value: 5.25
-})
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
   icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -91,6 +90,12 @@ const currencyTemplateList = [
     value: 0
   },
 ]
+
+const mxnPaymentChannel = ref<any>({
+  spei: icon_public_106,
+  oxxo: icon_public_105,
+  codi: icon_public_107
+})
 
 const svgIconColor = ref<string>("#12FF76");
 
@@ -175,10 +180,10 @@ watch(userBalance, (value) => {
 
 watch(withdrawConfig, (newValue) => {
   paymentList.value = [];
-  newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
+  newValue["cfg"][userBalance.value.currency].map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: userBalance.value.currency == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       description: item.min + "~" + item.max + " " + item.channel_type,
       min: item.min,
@@ -191,30 +196,6 @@ watch(withdrawConfig, (newValue) => {
   selectedPaymentItem.value = paymentList.value[0];
   feeRate.value = withdrawConfig.value["fee"]["rate"];
 }, { deep: true });
-
-const handleSelectCurrency = (item: GetCurrencyItem) => {
-  selectedCurrencyItem.value = item;
-  paymentList.value = [];
-  withdrawConfig.value["cfg"][selectedCurrencyItem.value.name]?.map((item: any) => {
-    paymentList.value.push({
-      id: item.channel_id,
-      icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-      name: item.channel_name,
-      description: item.min + "~" + item.max + " " + item.channel_type,
-      min: item.min,
-      max: item.max
-    })
-  })
-  selectedPaymentItem.value = paymentList.value[0];
-  switch (selectedCurrencyItem.value.name) {
-    case "BRL":
-      selectedCurrencyUnit.value = 'R$';
-      break;
-    case "MXN":
-      selectedCurrencyUnit.value = 'MXN';
-      break;
-  }
-}
 
 const handleSelectPayment = (item: GetPaymentItem) => {
   selectedPaymentItem.value = item;
@@ -264,7 +245,8 @@ const depositConfig = computed(() => {
 })
 
 const svgTransform = (el: any, color: string) => {
-  el.children[0].setAttribute("fill", color);
+  let selectedColor = userInfo.value.phone_confirmd ? "#12FF76" : "#F9BC01"
+  el.children[0].setAttribute("fill", selectedColor);
   return el;
 };
 
@@ -384,14 +366,7 @@ onMounted(async () => {
   await dispatchUserWithdrawCfg();
   await dispatchUserBalance();
   await dispatchCurrencyList();
-  switch (selectedCurrencyItem.value.name) {
-    case "BRL":
-      selectedCurrencyUnit.value = 'R$';
-      break;
-    case "MXN":
-      selectedCurrencyUnit.value = 'MXN';
-      break;
-  }
+  selectedCurrencyUnit.value = getUnitByCurrency(userBalance.value.currency);
 })
 </script>
 
@@ -437,7 +412,7 @@ onMounted(async () => {
     </v-row>
     <v-row class="mt-2 mx-2 relative">
       <v-text-field
-        :label="`${t('withdraw_dialog.amount')}(${selectedCurrencyItem.name})`"
+        :label="`${t('withdraw_dialog.amount')}(${selectedCurrencyUnit})`"
         class="form-textfield dark-textfield m-withdraw-amount-text mb-0"
         variant="solo"
         density="comfortable"
@@ -452,19 +427,19 @@ onMounted(async () => {
     <div class="mt-3 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_5") }}
       <span class="text-700-12" style="margin-left: auto">
-        0&nbsp;{{ selectedCurrencyItem.name }}
+        0&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_6") }}
       <span class="text-700-12" style="margin-left: auto">
-        0&nbsp;{{ selectedCurrencyItem.name }}
+        0&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
-        0&nbsp;{{ selectedCurrencyItem.name }}
+        0&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mx-4 mt-2">
@@ -607,6 +582,7 @@ onMounted(async () => {
   z-index: 2433 !important;
   margin: 0px !important;
 }
+
 .mobile-withdraw-container::-webkit-scrollbar {
   width: 0px;
 }

@@ -101,7 +101,7 @@ const submitCancel = async () => {
 <style lang="scss">
 // bonus dialog container
 .bonus-dialog-container {
-  background-color: #15161C;
+  background-color: #15161c;
   border-radius: 16px !important;
   height: 220px;
 }
@@ -121,7 +121,7 @@ const submitCancel = async () => {
 .bonus-cancel-btn {
   // button
   button {
-    background: #23262F !important;
+    background: #23262f !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 
@@ -150,13 +150,15 @@ const submitCancel = async () => {
   height: 60px;
   border: none;
   border-radius: 16px 0px 0px 16px;
-  background: var(--bg-2, #181522);
+  background: var(--bg-2, #15161c);
   box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
 .Vue-Toastification__toast-body {
   color: var(--sec-text, #7782aa);
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;

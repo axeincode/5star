@@ -38,8 +38,12 @@ const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
 const { setPixInfoToggle } = depositStore();
 const { setDepositConfirmDialogToggle } = depositStore();
+const { setDepositAmount } = depositStore();
 const { dispatchUserProfile } = authStore();
 const { dispatchUserBalance } = userStore();
+const { setDepositOrderDialog } = depositStore();
+const { setTimerValue } = depositStore();
+const { setDepositOrderTimeRefresh } = depositStore();
 
 const selectedCurrencyUnit = ref<string>("R$");
 
@@ -107,62 +111,6 @@ const paymentList = ref<Array<GetPaymentItem>>([
     min: 149,
     max: 588.88
   },
-  {
-    id: "2",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_2",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
-  {
-    id: "3",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_3",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
-  {
-    id: "4",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_4",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
-  {
-    id: "5",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_5",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
-  {
-    id: "6",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_6",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
-  {
-    id: "7",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_7",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
-  {
-    id: "8",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-    name: "PIX_8",
-    description: "20~150.000 BRL",
-    min: 149,
-    max: 588.88
-  },
 ])
 
 const depositAmountList = ref<Array<any>>([])
@@ -218,8 +166,9 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
-watch(userInfo, (value) => {
-
+const depositOrderTimeRefresh = computed(() => {
+  const { getDepositOrderTimeRefresh } = storeToRefs(depositStore());
+  return getDepositOrderTimeRefresh.value
 })
 
 const pixInfo = computed(() => {
@@ -250,7 +199,7 @@ watch(depositConfig, (newValue) => {
   newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_name.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       description: item.min + "~" + item.max + " " + item.channel_type,
       min: item.min,
@@ -303,7 +252,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
   depositConfig.value["cfg"][selectedCurrencyItem.value.name]?.map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_name.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       description: item.min + "~" + item.max + " " + item.channel_type,
       min: item.min,
@@ -390,6 +339,23 @@ const handleDepositSubmit = async () => {
   await dispatchUserDepositSubmit(formData);
   loading.value = false;
   if (success.value) {
+    setDepositOrderTimeRefresh(!depositOrderTimeRefresh.value);
+    setTimerValue(0);
+    setDepositOrderDialog(true);
+    setDepositAmount(Number(depositAmount.value));
+    const toast = useToast();
+    toast.success(t("deposit_dialog.text_1"), {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
+    });
     await dispatchUserProfile();
     await dispatchUserBalance();
     // if (depositSubmit.value.code_url != "") {
@@ -442,13 +408,15 @@ const handleDepositSubmit = async () => {
     //   icon: SuccessIcon,
     //   rtl: false,
     // });
-    setDepositDialogToggle(false);
-    setCashDialogToggle(false);
-    setMainBlurEffectShow(false);
-    setHeaderBlurEffectShow(false);
-    setMenuBlurEffectShow(false);
-    // router.push({ name: "Dashboard" })
+
+
+    // setDepositDialogToggle(false);
+    // setCashDialogToggle(false);
+    // setMainBlurEffectShow(false);
+    // setHeaderBlurEffectShow(false);
+    // setMenuBlurEffectShow(false);
     setDepositConfirmDialogToggle(true);
+    depositAmount.value = "";
   } else {
     const toast = useToast();
     toast.success(errMessage.value, {

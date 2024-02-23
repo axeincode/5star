@@ -251,14 +251,14 @@ watch(currencyMenuShow, async (value: boolean) => {
     if (value) {
       await dispatchCurrencyList();
       setUserNavBarToggle(false);
-      setMainBlurEffectShow(false);
+      // setMainBlurEffectShow(false);
       setNavBarToggle(false);
-      setMailMenuShow(false);
+      // setMailMenuShow(false);
       setBonusDashboardDialogVisible(false);
-      setTimeout(() => {
+      // setTimeout(() => {
         setFixPositionEnable(true);
-        setMainBlurEffectShow(true);
-      }, 10)
+      //   setMainBlurEffectShow(true);
+      // }, 10)
     } else {
       setFixPositionEnable(false);
     }
@@ -356,7 +356,8 @@ const currencyImages: Array<any> = ([
 const imageIndex = ref<Array<number>>([]);
 const currencyList = computed(() => {
   const { getCurrencyList } = storeToRefs(currencyStore());
-  return getCurrencyList.value
+  let orderedCurrencyList = getCurrencyList.value.sort((a, b) => a.currency.localeCompare(b.currency));
+  return orderedCurrencyList
 })
 
 watch(currencyList, (() => {
@@ -727,7 +728,7 @@ onMounted(async () => {
                     </template>
                     <v-list
                       theme="dark"
-                      bg-color="#23262F"
+                      bg-color="#1d2027"
                       class="px-2"
                       :width="currencyMenuWidth"
                     >
@@ -1222,7 +1223,7 @@ onMounted(async () => {
     opacity: 0 !important;
   }
 
-  .v-overlay__content::after {
+  .v-overlay__content::before {
     content: "";
     position: absolute;
     align-self: center;

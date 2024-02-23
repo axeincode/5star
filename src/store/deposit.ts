@@ -19,7 +19,11 @@ export const depositStore = defineStore({
     pixInfoToggle: false as boolean,
     depositHistoryItem: {} as Deposit.DepositHistoryResponse,
     depositConfirmDialogToggle: false as boolean,
-    channelName: "spei" as string
+    channelName: "spei" as string,
+    depositAmount: 0 as number,
+    depositOrderDialog: false as boolean,
+    timerValue: 0 as number,
+    depositOrderTimeRefresh: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -30,7 +34,11 @@ export const depositStore = defineStore({
     getPixInfoToggle: (state) => state.pixInfoToggle,
     getDepositHistoryItem: (state) => state.depositHistoryItem,
     getDepositConfirmDialogToggle: (state) => state.depositConfirmDialogToggle,
-    getChannelName: (state) => state.channelName
+    getChannelName: (state) => state.channelName,
+    getDepositAmount: (state) => state.depositAmount,
+    getDepositOrderDialog: (state) => state.depositOrderDialog,
+    getTimerValue: (state) => state.timerValue,
+    getDepositOrderTimeRefresh: (state) => state.depositOrderTimeRefresh,
   },
   actions: {
     // set functions
@@ -60,6 +68,18 @@ export const depositStore = defineStore({
     },
     setChannelName(channelName: string) {
       this.channelName = channelName;
+    },
+    setDepositAmount(depositAmount: number) {
+      this.depositAmount = depositAmount
+    },
+    setDepositOrderDialog(depositOrderDialog: boolean){
+      this.depositOrderDialog = depositOrderDialog
+    },
+    setTimerValue(timerValue: number) {
+      this.timerValue = timerValue
+    },
+    setDepositOrderTimeRefresh(depositOrderTimeRefresh: boolean){
+      this.depositOrderTimeRefresh = depositOrderTimeRefresh
     },
     // user deposit configuration
     async dispatchUserDepositCfg() {

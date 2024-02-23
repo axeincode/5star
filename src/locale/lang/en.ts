@@ -1153,7 +1153,8 @@ export const lang: langType = {
       confirm_text: "Confirm",
       confirm_success_text: "Successfully submitted, need to modify please contact customer service",
       confirm_warning_text: "Please contact customer service to make changes"
-    }
+    },
+    text_1: "Successfully submitted, need to modify please contact customer service"
   },
   transaction_history: {
     type: {
@@ -1987,5 +1988,10 @@ export const lang: langType = {
     text_23: "",
     text_24: "",
     text_25: "",
+  },
+  order_dialog: {
+    text_1: "You have an open order",
+    text_2: "countdown ",
+    text_3: "continue",
   }
 };

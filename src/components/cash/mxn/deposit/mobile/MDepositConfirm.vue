@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { depositStore } from "@/store/deposit";
 import icon_public_104 from "@/assets/public/svg/icon_public_104.svg";
@@ -15,6 +15,7 @@ import { useTimer } from "vue-timer-hook";
 
 const { t } = useI18n();
 const { setDepositConfirmDialogToggle } = depositStore();
+const { setTimerValue } = depositStore();
 
 const timer_value = ref<number>(3600);
 
@@ -28,16 +29,48 @@ const time = new Date();
 time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
 
 const timer = useTimer(Number(time));
-timer.start();
+
+const timerValue = computed(() => {
+  const { getTimerValue } = storeToRefs(depositStore());
+  return getTimerValue.value;
+});
 
 const channnelName = computed(() => {
   const { getChannelName } = storeToRefs(depositStore());
   return getChannelName.value;
 });
 
+const depositAmount = computed(() => {
+  const { getDepositAmount } = storeToRefs(depositStore());
+  return getDepositAmount.value;
+});
+
 const closeDepositConfirmDialog = () => {
   setDepositConfirmDialogToggle(false);
 };
+
+onMounted(() => {
+  if (timerValue.value == 0) {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
+    timer.start();
+  } else {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timerValue.value);
+    timer.restart(Number(time));
+  }
+  watchEffect(async () => {
+    if (timer.isExpired.value) {
+      setTimerValue(0);
+      setDepositConfirmDialogToggle(false);
+    }
+  });
+});
+
+onUnmounted(() => {
+  // setTimerValue(timer.minutes.value * 60 + timer.seconds.value);
+  // console.log(timer.minutes.value, timer.seconds.value);
+});
 </script>
 
 <template>
@@ -57,7 +90,7 @@ const closeDepositConfirmDialog = () => {
       <img :src="mxnPaymentChannel[channnelName]" width="63" />
       <div class="m-order-amount text-center mt-2 pa-2">
         <div class="text-700-14 white">{{ t("deposit_confirm.text_1") }}</div>
-        <div class="text-900-28 yellow">$ 100</div>
+        <div class="text-900-28 yellow">$ {{ depositAmount }}</div>
         <div class="text-700-10 orange">
           {{ t("deposit_confirm.text_2") }}&nbsp;{{ timer.minutes }}:{{ timer.seconds }}
         </div>
@@ -113,10 +146,16 @@ const closeDepositConfirmDialog = () => {
       <div class="text-400-12 gray my-2">{{ t("deposit_confirm.text_8") }}</div>
       <div class="text-400-10 gray">{{ t("deposit_confirm.text_9") }}</div>
       <div class="text-400-10 gray">
-        {{ t("deposit_confirm.text_10") }}<span class="text-700-10 yellow">$100</span>
+        {{ t("deposit_confirm.text_10") }}
+        <span class="text-700-10 yellow">${{ depositAmount }}</span>
       </div>
       <div class="text-400-10 gray">{{ t("deposit_confirm.text_11") }}</div>
-      <v-btn class="m-transfer-complete my-4" width="-webkit-fill-available" height="48">
+      <v-btn
+        class="m-transfer-complete my-4"
+        width="-webkit-fill-available"
+        height="48"
+        @click="closeDepositConfirmDialog"
+      >
         {{ t("deposit_confirm.text_12") }}
       </v-btn>
     </div>

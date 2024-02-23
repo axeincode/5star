@@ -277,7 +277,7 @@ const handleVerifyCode = () => {
 .m-account-speaker-bg {
   width: 44px;
   height: 44px;
-  background: #009B3A;
+  background: #009b3a;
   border-radius: 44px;
   position: absolute;
   right: 20px;
@@ -315,14 +315,14 @@ const handleVerifyCode = () => {
 .m-email-verify-btn-color {
   width: 100%;
   background: transparent;
-  border: 1px solid #009B3A;
+  border: 1px solid #009b3a;
   border-radius: 8px;
 
   .v-btn__content {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #009B3A;
+    color: #009b3a;
   }
 }
 
@@ -335,21 +335,23 @@ const handleVerifyCode = () => {
   //flex-direction: unset!important;
 }
 .Vue-Toastification__toast {
-    align-items: center !important;
-    z-index: 1000000000 !important;
-    top: 70px;
-    right: -20px !important;
-    width: 320px !important;
-    height: 60px;
-    border: none;
-    border-radius: 16px 0px 0px 16px;
-    background: var(--bg-2, #181522);
-    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+  align-items: center !important;
+  z-index: 1000000000 !important;
+  top: 70px;
+  right: -20px !important;
+  width: 320px !important;
+  height: 60px;
+  border: none;
+  border-radius: 16px 0px 0px 16px;
+  background: var(--bg-2, #15161c);
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
 .Vue-Toastification__toast-body {
   color: var(--sec-text, #7782aa);
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;

@@ -121,6 +121,7 @@ const sendEmailAppInvite = () => {
 };
 
 const inviteAward = async () => {
+  if (inviteItem.value.available_bonus == 0) return;
   loading.value = true;
   await dispatchInviteAward({});
   loading.value = false;
@@ -166,7 +167,13 @@ onMounted(async () => {
           <div class="text-400-12 text-white">{{ t("agent.text_7") }}</div>
         </v-col>
         <v-col cols="6" class="text-right">
-          <v-btn width="112" height="32" :loading="loading" @click="inviteAward">
+          <v-btn
+            width="112"
+            height="32"
+            :loading="loading"
+            :disabled="inviteItem.available_bonus == 0"
+            @click="inviteAward"
+          >
             {{ t("agent.text_8") }}
           </v-btn>
         </v-col>
@@ -278,18 +285,25 @@ onMounted(async () => {
     .v-btn__content {
       color: #000;
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     }
   }
+  .v-btn--disabled {
+    .v-btn__content {
+      color: #ffffff !important;
+    }
+  }
 }
 
 .m-referral-reward-card-1 {
   position: absolute;
-  top: 76px;
+  top: 70px;
 }
 
 .m-agent-referral-partner-card {

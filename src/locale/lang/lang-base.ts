@@ -1152,6 +1152,7 @@ export type langType = {
       confirm_success_text: string
       confirm_warning_text: string
     }
+    text_1: string
   }
   transaction_history: {
     type: {
@@ -1985,5 +1986,10 @@ export type langType = {
     text_23: string
     text_24: string
     text_25: string
+  }
+  order_dialog: {
+    text_1: string
+    text_2: string
+    text_3: string
   }
 };

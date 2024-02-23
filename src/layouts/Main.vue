@@ -556,7 +556,7 @@ onMounted(() => {
         top: '0px',
         zIndex: 300000,
         background: 'unset !important',
-        width: '100dvw'
+        width: '100dvw',
       }"
       v-if="mobileWidth < 600"
     >
@@ -639,12 +639,14 @@ onMounted(() => {
     <!---------------------------------- Deposit Confirm ----------------------------------------->
 
     <v-dialog
+      class="m-deposit-cofirm-dialog"
       v-model="depositConfirmDialog"
       :width="''"
       :fullscreen="true"
       :scrim="false"
       persistent
       v-if="mobileVersion == 'sm'"
+      :transition="'dialog-top-transition'"
     >
       <MDepositConfirm />
     </v-dialog>
@@ -866,7 +868,7 @@ onMounted(() => {
   height: 60px;
   border: none;
   border-radius: 16px 0px 0px 16px;
-  background: var(--bg-2, #181522);
+  background: var(--bg-2, #15161c);
   box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
@@ -963,6 +965,10 @@ onMounted(() => {
   z-index: 2431 !important;
   height: 80px;
   margin: 0px !important;
+}
+
+.m-deposit-cofirm-dialog {
+  z-index: 2432 !important;
 }
 
 // .m-withdraw-dialog{

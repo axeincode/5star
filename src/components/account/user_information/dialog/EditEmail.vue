@@ -274,7 +274,7 @@ const handleEmailFocus = () => {
   height: 60px;
   border: none;
   border-radius: 16px 0px 0px 16px;
-  background: var(--bg-2, #181522);
+  background: var(--bg-2, #15161c);
   box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
 }
 
