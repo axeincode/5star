@@ -12,6 +12,10 @@ import icon_public_112 from "@/assets/public/svg/icon_public_112.svg";
 import icon_public_113 from "@/assets/public/svg/icon_public_113.svg";
 import { storeToRefs } from "pinia";
 import { useTimer } from "vue-timer-hook";
+import * as clipboard from "clipboard-polyfill";
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const { setDepositConfirmDialogToggle } = depositStore();
@@ -26,6 +30,8 @@ const mxnPaymentChannel = ref<any>({
 });
 
 const depositConfirmItem = ref<any>({});
+
+const notificationText = ref<string>("");
 
 const time = new Date();
 time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
@@ -54,6 +60,31 @@ const channnelName = computed(() => {
 
 const closeDepositConfirmDialog = () => {
   setDepositConfirmDialogToggle(false);
+};
+
+const depositInfoCopy = (content: string) => {
+  clipboard.writeText(content).then(
+    () => {
+      console.log("Copied to clipboard!");
+      notificationText.value = "Successful replication";
+      const toast = useToast();
+      toast.success(notificationText.value, {
+        timeout: 5000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+    },
+    (error) => {
+      console.error("Could not copy text: ", error);
+    }
+  );
 };
 
 onMounted(() => {
@@ -114,7 +145,7 @@ onUnmounted(() => {
           icon="true"
           width="24"
           height="24"
-          @click="closeDepositConfirmDialog"
+          @click="depositInfoCopy(depositConfirmItem.bank_name)"
         >
           <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
         </v-btn>
@@ -132,7 +163,7 @@ onUnmounted(() => {
           icon="true"
           width="24"
           height="24"
-          @click="closeDepositConfirmDialog"
+          @click="depositInfoCopy(depositConfirmItem.account_number)"
         >
           <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
         </v-btn>
@@ -145,7 +176,7 @@ onUnmounted(() => {
           icon="true"
           width="24"
           height="24"
-          @click="closeDepositConfirmDialog"
+          @click="depositInfoCopy(depositConfirmItem.account_name)"
         >
           <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
         </v-btn>
