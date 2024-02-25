@@ -57,6 +57,7 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   id: "",
   icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
   name: "PIX",
+  channel_type: "",
   description: "20~150.000 BRL",
   min: 149,
   max: 588.88
@@ -107,6 +108,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "1",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_1",
+    channel_type: "",
     description: "20~150.000 BRL",
     min: 149,
     max: 588.88
@@ -201,7 +203,8 @@ watch(depositConfig, (newValue) => {
       id: item.channel_id,
       icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
-      description: item.min + "~" + item.max + " " + item.channel_type,
+      channel_type: item.channel_type,
+      description: item.min + "~" + item.max + " " + item.currecy_type,
       min: item.min,
       max: item.max
     })
@@ -254,7 +257,8 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
       id: item.channel_id,
       icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
-      description: item.min + "~" + item.max + " " + item.channel_type,
+      channel_type: item.channel_type,
+      description: item.min + "~" + item.max + " " + item.currecy_type,
       min: item.min,
       max: item.max
     })
@@ -339,6 +343,31 @@ const handleDepositSubmit = async () => {
   await dispatchUserDepositSubmit(formData);
   loading.value = false;
   if (success.value) {
+    if (depositSubmit.value.url != "") {
+      window.open(depositSubmit.value.url, '_blank');
+      const toast = useToast();
+      toast.success(t("deposit_dialog.text_1"), {
+        timeout: 3000,
+        closeOnClick: false,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: SuccessIcon,
+        rtl: false,
+      });
+      depositAmount.value = "";
+      return;
+    }
+    let depositConfirmItem: any = {
+      deposit_amount: depositAmount.value,
+      bank_name: depositSubmit.value.bank_name,
+      account_number: depositSubmit.value.account_number,
+      account_name: depositSubmit.value.account_name,
+    }
+    localStorage.setItem("spei", JSON.stringify(depositConfirmItem));
     setDepositOrderTimeRefresh(!depositOrderTimeRefresh.value);
     setTimerValue(0);
     setDepositOrderDialog(true);

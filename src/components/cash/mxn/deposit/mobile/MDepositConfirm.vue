@@ -25,6 +25,8 @@ const mxnPaymentChannel = ref<any>({
   codi: icon_public_107,
 });
 
+const depositConfirmItem = ref<any>({});
+
 const time = new Date();
 time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
 
@@ -40,10 +42,15 @@ const channnelName = computed(() => {
   return getChannelName.value;
 });
 
-const depositAmount = computed(() => {
-  const { getDepositAmount } = storeToRefs(depositStore());
-  return getDepositAmount.value;
-});
+// const depositAmount = computed(() => {
+//   const { getDepositAmount } = storeToRefs(depositStore());
+//   return getDepositAmount.value;
+// });
+
+// const depositSubmit = computed(() => {
+//   const { getDepositSubmit } = storeToRefs(depositStore());
+//   return getDepositSubmit.value;
+// });
 
 const closeDepositConfirmDialog = () => {
   setDepositConfirmDialogToggle(false);
@@ -65,6 +72,10 @@ onMounted(() => {
       setDepositConfirmDialogToggle(false);
     }
   });
+  const speiValue = localStorage.getItem("spei");
+  if (speiValue !== null) {
+    depositConfirmItem.value = JSON.parse(speiValue);
+  }
 });
 
 onUnmounted(() => {
@@ -90,14 +101,14 @@ onUnmounted(() => {
       <img :src="mxnPaymentChannel[channnelName]" width="63" />
       <div class="m-order-amount text-center mt-2 pa-2">
         <div class="text-700-14 white">{{ t("deposit_confirm.text_1") }}</div>
-        <div class="text-900-28 yellow">$ {{ depositAmount }}</div>
+        <div class="text-900-28 yellow">$ {{ depositConfirmItem.deposit_amount }}</div>
         <div class="text-700-10 orange">
           {{ t("deposit_confirm.text_2") }}&nbsp;{{ timer.minutes }}:{{ timer.seconds }}
         </div>
       </div>
       <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_3") }}</div>
       <div class="m-provider-body py-2 px-4">
-        <div class="text-700-12 white">STP</div>
+        <div class="text-700-12 white">{{ depositConfirmItem.bank_name }}</div>
         <v-btn
           class="m-copy-button"
           icon="true"
@@ -115,7 +126,7 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="m-provider-body py-2 px-4">
-        <div class="text-700-12 white">6180260987172188</div>
+        <div class="text-700-12 white">{{ depositConfirmItem.account_number }}</div>
         <v-btn
           class="m-copy-button"
           icon="true"
@@ -128,7 +139,7 @@ onUnmounted(() => {
       </div>
       <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_6") }}</div>
       <div class="m-provider-body py-2 px-4">
-        <div class="text-700-12 white">PACSMILE M EXICO SA DE CV</div>
+        <div class="text-700-12 white">{{ depositConfirmItem.account_name }}</div>
         <v-btn
           class="m-copy-button"
           icon="true"
@@ -147,7 +158,7 @@ onUnmounted(() => {
       <div class="text-400-10 gray">{{ t("deposit_confirm.text_9") }}</div>
       <div class="text-400-10 gray">
         {{ t("deposit_confirm.text_10") }}
-        <span class="text-700-10 yellow">${{ depositAmount }}</span>
+        <span class="text-700-10 yellow">${{ depositConfirmItem.deposit_amount }}</span>
       </div>
       <div class="text-400-10 gray">{{ t("deposit_confirm.text_11") }}</div>
       <v-btn

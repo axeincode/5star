@@ -8,6 +8,7 @@ export interface GetPaymentItem {
     id: string
     icon: string
     name: string
+    channel_type: string
     description: string
     min: string | number
     max: string | number
