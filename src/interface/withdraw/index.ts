@@ -10,6 +10,10 @@ export interface WithdrawItem {
     last_name: string
     channels_id: string
     amount: string | number
+    email: string
+    phone: string
+    bank_name: string
+    rfc: string
 }
 
 export interface WithdrawalHistoryItem {

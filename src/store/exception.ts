@@ -84,7 +84,7 @@ export const handleException = (code: number) => {
             errorMsg = '可提金額不符合';
             break;
         case 106202:
-            errorMsg = '存款失敗';
+            errorMsg = '取款失敗';
             break;
         case 107001:
             errorMsg = 'vip数据异常';

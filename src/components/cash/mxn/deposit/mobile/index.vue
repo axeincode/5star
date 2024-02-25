@@ -371,7 +371,7 @@ const handleDepositSubmit = async () => {
     setDepositOrderTimeRefresh(!depositOrderTimeRefresh.value);
     setTimerValue(0);
     setDepositOrderDialog(true);
-    setDepositAmount(Number(depositAmount.value));
+    // setDepositAmount(Number(depositAmount.value));
     const toast = useToast();
     toast.success(t("deposit_dialog.text_1"), {
       timeout: 3000,

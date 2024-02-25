@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, watchEffect } from "vue";
+import { ref, computed, watch, onMounted, watchEffect, onBeforeUnmount } from "vue";
 import { useI18n } from "vue-i18n";
 import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
@@ -19,11 +19,13 @@ time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
 const timer = useTimer(Number(time));
 timer.start();
 
+const depositOrderDialog = ref<boolean>(false);
+
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
   return getRefferalAppBarShow.value;
 });
-const depositOrderDialog = computed(() => {
+const depositOrderDialogToggle = computed(() => {
   const { getDepositOrderDialog } = storeToRefs(depositStore());
   return getDepositOrderDialog.value;
 });
@@ -37,22 +39,55 @@ const openDepositConfirmDialog = () => {
 };
 const closeDepositOrderDialog = () => {
   setTimerValue(0);
+  localStorage.removeItem("spei");
+  localStorage.removeItem("timer");
+  depositOrderDialog.value = false;
   setDepositOrderDialog(false);
 };
 watch(depositOrderTimeRefresh, (value) => {
-  console.log("refresh");
   const time = new Date();
   time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer
   timer.restart(Number(time));
 });
+watch(depositOrderDialogToggle, (value) => {
+  depositOrderDialog.value = value;
+});
+watch(
+  [timer.minutes, timer.seconds],
+  (newMinutes, newSeconds) => {
+    if (timer.minutes.value != 0 && timer.seconds.value != 0) {
+      localStorage.setItem(
+        "timer",
+        (Number(timer.minutes.value) * 60 + Number(timer.seconds.value)).toString()
+      );
+    }
+  },
+  { immediate: true }
+);
 onMounted(() => {
   watchEffect(async () => {
     if (timer.isExpired.value) {
       setTimerValue(0);
+      localStorage.removeItem("spei");
+      localStorage.removeItem("timer");
+      depositOrderDialog.value = false;
       setDepositConfirmDialogToggle(false);
     }
   });
+  const speiValue = localStorage.getItem("spei");
+  if (speiValue !== null) {
+    depositOrderDialog.value = true;
+  }
+  const timerValue = localStorage.getItem("timer");
+  if (timerValue !== null) {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + Number(timerValue));
+    timer.restart(Number(time));
+  }
 });
+// onBeforeUnmount(() => {
+//   localStorage.setItem("timer", timer.minutes.value.toString());
+// });
 </script>
 
 <template>

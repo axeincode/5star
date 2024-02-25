@@ -33,6 +33,7 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
   icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
   name: "PIX",
+  channel_type: "",
   description: "20~150.000 BRL",
   min: 149,
   max: 588.88

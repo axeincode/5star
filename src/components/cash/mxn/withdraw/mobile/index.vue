@@ -25,6 +25,7 @@ import WithdrawInfo from "./WithdrawInfo.vue";
 import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
 import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
+import paypal_icon from "@/assets/public/svg/paypal.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 
 const { name, width } = useDisplay();
@@ -43,6 +44,7 @@ const { dispatchUserBalance } = userStore();
 const { dispatchCurrencyList } = currencyStore();
 import router from '@/router';
 import { currencyStore } from '@/store/currency';
+import { json } from 'stream/consumers';
 
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
@@ -97,7 +99,8 @@ const currencyTemplateList = [
 const mxnPaymentChannel = ref<any>({
   spei: icon_public_106,
   oxxo: icon_public_105,
-  codi: icon_public_107
+  codi: icon_public_107,
+  paypal: paypal_icon,
 })
 
 const svgIconColor = ref<string>("#12FF76");
@@ -291,6 +294,18 @@ const handleWithdrawSubmit = async () => {
   }
   formData.channels_id = selectedPaymentItem.value.id;
   formData.amount = Number(withdrawAmount.value)
+  const withdrawInfo = localStorage.getItem(userInfo.value.id.toString())
+  if (withdrawInfo !== null) {
+    let withdrawInfoItem = JSON.parse(withdrawInfo);
+    formData.id_number = withdrawInfoItem.clabe_number;
+    formData.first_name = withdrawInfoItem.name;
+    formData.last_name = userInfo.value.last_name
+    formData.email = withdrawInfoItem.email;
+    formData.phone = "52" + userInfo.value.phone;
+    formData.bank_name = withdrawInfoItem.bank_code;
+    // formData.bank_name = "STP";
+    formData.rfc = withdrawInfoItem.rfc;
+  }
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
   if (success.value) {

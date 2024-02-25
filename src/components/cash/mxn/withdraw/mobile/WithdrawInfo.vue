@@ -155,6 +155,7 @@ const svgTransform = (el: any, color: string) => {
 };
 
 const addWithdrawInfo = () => {
+  withdrawInfoItem.value.phone = userInfo.value.phone;
   localStorage.setItem(userInfo.value.id.toString(), JSON.stringify(withdrawInfoItem.value))
 }
 
@@ -162,7 +163,7 @@ onMounted(() => {
   selectedWithdrawMethodItem.value = withdraw_type.value.toLocaleLowerCase() == t("withdraw_info_dialog.text_2").toLocaleLowerCase() ? t("withdraw_info_dialog.text_2") : t("withdraw_info_dialog.text_3")
   const withdrawInfo = localStorage.getItem(userInfo.value.id.toString());
   if (withdrawInfo !== null) {
-    withdrawInfoItem.value = withdrawInfo;
+    withdrawInfoItem.value = JSON.parse(withdrawInfo);
   }
 })
 </script>
@@ -197,7 +198,7 @@ onMounted(() => {
               v-bind="props"
               class=""
               value="withdraw method dropdown"
-              :append-icon="withdrawMethodShow ? 'mdi-chevron-down' : 'mdi-chevron-up'"
+              :append-icon="withdrawMethodShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             >
               <v-list-item-title class="ml-2 text-400-12 d-flex align-center">
                 {{ selectedWithdrawMethodItem }}
@@ -243,7 +244,7 @@ onMounted(() => {
       <!------------------- phone number ------------------------>
       <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_8") }}</div>
       <div class="mt-2 m-withdraw-info-input-card px-4 d-flex align-center">
-        <div class="text-600-12 white">+52 123456</div>
+        <div class="text-600-12 white">+52 {{ userInfo.phone }}</div>
         <inline-svg
           :src="icon_public_09"
           width="20"
@@ -268,7 +269,7 @@ onMounted(() => {
               v-bind="props"
               class=""
               value="withdraw method dropdown"
-              :append-icon="bankCodeMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-up'"
+              :append-icon="bankCodeMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             >
               <v-list-item-title
                 class="ml-2 text-400-12 d-flex align-center"
@@ -317,7 +318,7 @@ onMounted(() => {
                 v-bind="props"
                 class=""
                 value="withdraw method dropdown"
-                :append-icon="accountTypeMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-up'"
+                :append-icon="accountTypeMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
               >
                 <v-list-item-title
                   class="ml-2 text-400-12 d-flex align-center"
@@ -376,7 +377,7 @@ onMounted(() => {
                 v-bind="props"
                 class=""
                 value="withdraw method dropdown"
-                :append-icon="typeMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-up'"
+                :append-icon="typeMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
               >
                 <v-list-item-title
                   class="ml-2 text-400-12 d-flex align-center"
