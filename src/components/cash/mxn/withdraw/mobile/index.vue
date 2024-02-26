@@ -621,7 +621,7 @@ onMounted(async () => {
       />
     </div>
     <v-row class="mt-0 mx-14 text-400-10 gray">
-      {{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig["fee"]["rate"]) * 100 }}%
+      {{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig?.fee?.rate) * 100 }}%
     </v-row>
     <!-- <v-row class="mt-4 mx-14 text-400-10 gray">
       {{ t("withdraw_dialog.text_2") }}{{ selectedCurrencyUnit }}0
