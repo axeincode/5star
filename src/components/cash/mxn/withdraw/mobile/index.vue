@@ -10,23 +10,22 @@ import { mailStore } from '@/store/mail';
 import { type GetUserInfo } from "@/interface/user";
 import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
-import ValidationBox from '@/components/cash/mxn/withdraw/ValidationBox.vue';
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
-import store from '@/store';
 import { useToast } from "vue-toastification";
-import { bannerStore } from '@/store/banner';
 import icon_public_09 from "@/assets/public/svg/icon_public_09.svg";
 import BindingPhone from "./BindingPhone.vue";
 import WithdrawInfo from "./WithdrawInfo.vue";
 import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
 import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
-import paypal_icon from "@/assets/public/svg/paypal.svg";
+import icon_public_150 from "@/assets/public/svg/icon_public_150.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
+import currencyListValue from "@/utils/currencyList";
+import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -44,7 +43,6 @@ const { dispatchUserBalance } = userStore();
 const { dispatchCurrencyList } = currencyStore();
 import router from '@/router';
 import { currencyStore } from '@/store/currency';
-import { json } from 'stream/consumers';
 
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
@@ -100,8 +98,10 @@ const mxnPaymentChannel = ref<any>({
   spei: icon_public_106,
   oxxo: icon_public_105,
   codi: icon_public_107,
-  paypal: paypal_icon,
+  paypal: icon_public_150,
 })
+
+const residualAmount = ref<number>(0);
 
 const svgIconColor = ref<string>("#12FF76");
 
@@ -122,6 +122,8 @@ const paymentList = ref<Array<GetPaymentItem>>([
 const withdrawAmount = ref<string>("")
 
 const availableAmount = ref<number>(0);
+const feeAmount = ref<number>(0);
+const cashableAmount = ref<number>(0);
 
 const feeRate = ref<number>(0);
 
@@ -181,6 +183,10 @@ const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
   });
 };
 
+const refreshWithdrawalConfig = async () => {
+  await dispatchUserWithdrawCfg();
+}
+
 watch(userBalance, (value) => {
   availableAmount.value = value["availabe_balance"];
 })
@@ -204,6 +210,31 @@ watch(withdrawConfig, (newValue) => {
   selectedPaymentItem.value = paymentList.value[0];
   feeRate.value = withdrawConfig.value["fee"]["rate"];
 }, { deep: true });
+
+watch(withdrawAmount, (newValue) => {
+  if (Number(availableAmount.value) - Number(newValue) < 0) {
+    feeAmount.value = 0;
+    cashableAmount.value = 0;
+    residualAmount.value = 0;
+    const toast = useToast();
+    toast.success(t("withdraw_dialog.text_10"), {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
+  } else {
+    residualAmount.value = Number(availableAmount.value) - Number(newValue)
+    feeAmount.value = Number(newValue) * Number(withdrawConfig.value.fee.rate);
+    cashableAmount.value = Number(newValue) - Number(feeAmount.value);
+  }
+})
 
 const handleSelectPayment = (item: GetPaymentItem) => {
   selectedPaymentItem.value = item;
@@ -295,13 +326,14 @@ const handleWithdrawSubmit = async () => {
   formData.channels_id = selectedPaymentItem.value.id;
   formData.amount = Number(withdrawAmount.value)
   const withdrawInfo = localStorage.getItem(userInfo.value.id.toString())
+  const phoneCode = getPhoneCodeByLocale(currencyListValue[userBalance.value.currency]);
   if (withdrawInfo !== null) {
     let withdrawInfoItem = JSON.parse(withdrawInfo);
     formData.id_number = withdrawInfoItem.clabe_number;
     formData.first_name = withdrawInfoItem.name;
     formData.last_name = userInfo.value.last_name
     formData.email = withdrawInfoItem.email;
-    formData.phone = "52" + userInfo.value.phone;
+    formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
     formData.bank_name = withdrawInfoItem.bank_code;
     // formData.bank_name = "STP";
     formData.rfc = withdrawInfoItem.rfc;
@@ -310,7 +342,7 @@ const handleWithdrawSubmit = async () => {
   loading.value = false;
   if (success.value) {
     const toast = useToast();
-    toast.success("Successful withdrawal of funds", {
+    toast.success(t("withdraw_dialog.text_11"), {
       timeout: 3000,
       closeOnClick: false,
       pauseOnFocusLoss: false,
@@ -349,6 +381,7 @@ const handleWithdrawSubmit = async () => {
     setMainBlurEffectShow(false);
     setHeaderBlurEffectShow(false);
     setMenuBlurEffectShow(false);
+    await dispatchUserBalance();
     router.push({ name: "Dashboard" })
   } else {
     const toast = useToast();
@@ -450,6 +483,7 @@ onMounted(async () => {
       {{ selectedCurrencyUnit }}
       {{ availableAmount }}
       <img
+        @click="refreshWithdrawalConfig"
         src="@/assets/public/svg/icon_public_16.svg"
         style="margin-left: auto"
         width="16"
@@ -472,19 +506,19 @@ onMounted(async () => {
     <div class="mt-3 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_5") }}
       <span class="text-700-12" style="margin-left: auto">
-        0&nbsp;{{ selectedCurrencyUnit }}
+        {{ feeAmount }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_6") }}
       <span class="text-700-12" style="margin-left: auto">
-        0&nbsp;{{ selectedCurrencyUnit }}
+        {{ cashableAmount }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
-        0&nbsp;{{ selectedCurrencyUnit }}
+        {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mx-4 mt-2">
@@ -587,11 +621,11 @@ onMounted(async () => {
       />
     </div>
     <v-row class="mt-0 mx-14 text-400-10 gray">
-      {{ t("withdraw_dialog.text_1") }}
+      {{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig["fee"]["rate"]) * 100 }}%
     </v-row>
-    <v-row class="mt-4 mx-14 text-400-10 gray">
-      {{ t("withdraw_dialog.text_2") }}
-    </v-row>
+    <!-- <v-row class="mt-4 mx-14 text-400-10 gray">
+      {{ t("withdraw_dialog.text_2") }}{{ selectedCurrencyUnit }}0
+    </v-row> -->
     <v-row class="mt-4 mx-14 text-400-10 gray">
       {{ t("withdraw_dialog.text_3") }}
     </v-row>

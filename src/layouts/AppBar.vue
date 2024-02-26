@@ -30,10 +30,11 @@ import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png"
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import Cookies from "js-cookie"
-
+import currencyListValue from "@/utils/currencyList";
 import { currencyStore } from "@/store/currency";
 import { bonusStore } from "@/store/bonus";
 import { bannerStore } from "@/store/banner";
+import { depositStore } from "@/store/deposit";
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
@@ -59,6 +60,8 @@ const { setDepositWithdrawToggle } = appBarStore();
 const { setBonusDashboardDialogVisible } = appBarStore();
 const { dispatchCurrencyList } = currencyStore();
 const { dispatchUserBonus } = bonusStore();
+const { setDepositOrderDialog } = depositStore();
+const { setTimerValue } = depositStore();
 
 const { dispatchBannerList } = bannerStore();
 const { dispatchGameEnter, getGameBetbyInit, closeKill } = gameStore();
@@ -256,7 +259,7 @@ watch(currencyMenuShow, async (value: boolean) => {
       // setMailMenuShow(false);
       setBonusDashboardDialogVisible(false);
       // setTimeout(() => {
-        setFixPositionEnable(true);
+      setFixPositionEnable(true);
       //   setMainBlurEffectShow(true);
       // }, 10)
     } else {
@@ -406,7 +409,7 @@ const showUserNavBar = async () => {
 }
 
 watch(userBalance, (value) => {
-  console.log("userbalance================");
+  console.log("userbalance================", value);
   let locale = 'pt-BR';
   const currencyUnit = value.currency
   switch (currencyUnit) {
@@ -443,29 +446,13 @@ watch(userBalance, (value) => {
 
 watch(socketBalance, (value) => {
   console.log("socketBalance================", value);
-  let locale = 'pt-BR';
-  switch (value.cur) {
-    case "BRL":
-      locale = 'pt-BR';
-      break;
-    case "PHP":
-      locale = 'en-PH';
-      break;
-    case "PEN":
-      locale = 'en-PE';
-      break;
-    case "MXN":
-      locale = 'es-MX';
-      break;
-    case "CLP":
-      locale = 'es-CL';
-      break;
-    case "USD":
-      locale = 'en-US';
-    case "COP":
-      locale = 'es-CO';
-      break;
+  if (value.op_type == 201) {
+    setTimerValue(0);
+    localStorage.removeItem("spei");
+    localStorage.removeItem("timer");
+    setDepositOrderDialog(false);
   }
+  let locale = currencyListValue[value.cur];
   if (user.value.currency == value.cur) {
     user.value.wallet = formatCurrency(Number(value.bal), locale, value.cur);
   }

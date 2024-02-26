@@ -5,6 +5,10 @@ import icon_public_09 from "@/assets/public/svg/icon_public_09.svg";
 import { type GetUserInfo } from "@/interface/user";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from 'pinia';
+import mxBankList from "@/utils/mx_bank";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { useToast } from "vue-toastification";
 
 const { t } = useI18n();
 const props = defineProps<{ withdraw_type: string }>();
@@ -15,94 +19,6 @@ const withdrawMethodList = ref<Array<string>>([
   t("withdraw_info_dialog.text_2"),
   t("withdraw_info_dialog.text_3"),
 ]);
-const bankCodeList = ref<any>({
-  ABC_CAPITAL: "ABC CAPITAL",
-  ACCENDO_BANCO: "ACCENDO BANCO",
-  ACTINVER: "ACTINVER",
-  AFIRME: "AFIRME",
-  AKALA: "AKALA",
-  AMERICAN_EXPRES: "AMERICAN EXPRES",
-  ASP_INTEGRA_OPC: "ASP INTEGRA OPC",
-  AUTOFIN: "AUTOFIN",
-  AZTECA: "AZTECA",
-  BAJIO: "BAJIO",
-  BANAMEX: "BANAMEX",
-  BANCO_FINTERRA: "BANCO FINTERRA",
-  BANCO_S3: "BANCO S3",
-  BANCOMEXT: "BANCOMEXT",
-  BANCOPPEL: "BANCOPPEL",
-  BANCREA: "BANCREA",
-  BANJERCITO: "BANJERCITO",
-  BANK_OF_AMERICA: "BANK OF AMERICA",
-  BANKAOOL: "BANKAOOL",
-  BANOBRAS: "BANOBRAS",
-  BANORTE: "BANORTE",
-  BANREGIO: "BANREGIO",
-  BANSEFI: "BANSEFI",
-  BANSI: "BANSI",
-  BANXICO: "BANXICO",
-  BARCLAYS: "BARCLAYS",
-  BBASE: "BBASE",
-  BBVA_BANCOMER: "BBVA BANCOMER",
-  BMONEX: "BMONEX",
-  CAJA_POP_MEXICA: "CAJA POP MEXICA",
-  CAJA_TELEFONIST: "CAJA TELEFONIST",
-  CB_INTERCAM: "CB INTERCAM",
-  CI_BOLSA: "CI BOLSA",
-  CIBANCO: "CIBANCO",
-  CoDi_Valida: "CoDi Valida",
-  COMPARTAMOS: "COMPARTAMOS",
-  CONSUBANCO: "CONSUBANCO",
-  CREDICAPITAL: "CREDICAPITAL",
-  CREDIT_SUISSE: "CREDIT SUISSE",
-  CRISTOBAL_COLON: "CRISTOBAL COLON",
-  DEUTSCHE: "DEUTSCHE",
-  DONDE: "DONDE",
-  ESTRUCTURADORES: "ESTRUCTURADORES",
-  EVERCORE: "EVERCORE",
-  FINAMEX: "FINAMEX",
-  FINCOMUN: "FINCOMUN",
-  FOMPED: "FOMPED",
-  FONDO_FIRA: "FONDO (FIRA)",
-  GBM: "GBM",
-  HDI_SEGUROS: "HDI SEGUROS",
-  HIPOTECARIA_FED: "HIPOTECARIA FED",
-  HSBC: "HSBC",
-  ICBC: "ICBC",
-  INBURSA: "INBURSA",
-  INDEVAL: "INDEVAL",
-  INMOBILIARIO: "INMOBILIARIO",
-  INTERCAM_BANCO: "INTERCAM BANCO",
-  INVERCAP: "INVERCAP",
-  INVEX: "INVEX",
-  JP_MORGAN: "JP MORGAN",
-  KUSPIT: "KUSPIT",
-  LIBERTAD: "LIBERTAD",
-  MASARI: "MASARI",
-  MIFEL: "MIFEL",
-  MIZUHO_BANK: "MIZUHO BANK",
-  MONEXCB: "MONEXCB",
-  MUFG: "MUFG",
-  MULTIVA_BANCO: "MULTIVA BANCO",
-  MULTIVA_CBOLSA: "MULTIVA CBOLSA",
-  NAFIN: "NAFIN",
-  PAGATODO: "PAGATODO",
-  PROFUTURO: "PROFUTURO",
-  REFORMA: "REFORMA",
-  SABADELL: "SABADELL",
-  SANTANDER: "SANTANDER",
-  SANTANDER2: "SANTANDER2",
-  SCOTIABANK: "SCOTIABANK",
-  SHINHAN: "SHINHAN",
-  TP: "STP",
-  TRANSFER: "TRANSFER",
-  UNAGRA: "UNAGRA",
-  VALMEX: "VALMEX",
-  VALUE: "VALUE",
-  VE_POR_MAS: "VE POR MAS",
-  VECTOR: "VECTOR",
-  VOLKSWAGEN: "VOLKSWAGEN"
-})
 const accountTypeList = ref<Array<string>>([
   "Clabe"
 ])
@@ -157,7 +73,28 @@ const svgTransform = (el: any, color: string) => {
 const addWithdrawInfo = () => {
   withdrawInfoItem.value.phone = userInfo.value.phone;
   localStorage.setItem(userInfo.value.id.toString(), JSON.stringify(withdrawInfoItem.value))
+  const toast = useToast();
+  toast.success('Successfully added !', {
+    timeout: 3000,
+    closeOnClick: false,
+    pauseOnFocusLoss: false,
+    pauseOnHover: false,
+    draggable: false,
+    showCloseButtonOnHover: false,
+    hideProgressBar: true,
+    closeButton: "button",
+    icon: SuccessIcon,
+    rtl: false,
+  });
 }
+
+watch(withdrawInfoItem, (newValue) => {
+  if (withdrawInfoItem.value.clabe_number.length > 2) {
+    withdrawInfoItem.value.bank_code = Object.keys(mxBankList).filter(item => item.slice(-3) === withdrawInfoItem.value.clabe_number.substring(0, 3));
+  } else {
+    withdrawInfoItem.value.bank_code = "";
+  }
+}, { immediate: true, deep: true });
 
 onMounted(() => {
   selectedWithdrawMethodItem.value = withdraw_type.value.toLocaleLowerCase() == t("withdraw_info_dialog.text_2").toLocaleLowerCase() ? t("withdraw_info_dialog.text_2") : t("withdraw_info_dialog.text_3")
@@ -258,7 +195,21 @@ onMounted(() => {
 
       <!------------------- bank code ------------------------>
       <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_9") }}</div>
-      <v-menu
+      <v-card color="#15161C" theme="dark" class="mt-2 m-withdraw-info-input-card">
+        <v-list-item>
+          <v-list-item-title
+            class="ml-2 text-400-12 d-flex align-center"
+            :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
+          >
+            {{
+              withdrawInfoItem.bank_code == ""
+                ? t("withdraw_info_dialog.text_10")
+                : mxBankList[withdrawInfoItem.bank_code]
+            }}
+          </v-list-item-title>
+        </v-list-item>
+      </v-card>
+      <!-- <v-menu
         offset="4"
         v-model:model-value="bankCodeMenuShow"
         content-class="m-withdraw-method-menu"
@@ -278,7 +229,7 @@ onMounted(() => {
                 {{
                   withdrawInfoItem.bank_code == ""
                     ? t("withdraw_info_dialog.text_10")
-                    : bankCodeList[withdrawInfoItem.bank_code]
+                    : mxBankList[withdrawInfoItem.bank_code]
                 }}
               </v-list-item-title>
             </v-list-item>
@@ -290,17 +241,17 @@ onMounted(() => {
           class="m-withdraw-method-list px-2"
           style="height: 160px !important; overflow-y: auto"
         >
-          <template v-for="(key, index) in Object.keys(bankCodeList)" :key="index">
+          <template v-for="(key, index) in Object.keys(mxBankList)" :key="index">
             <div
               class="m-withdraw-info-menu-list text-700-12 white d-flex align-center px-4"
               :class="withdrawInfoItem.bank_code == key ? 'active' : ''"
               @click="handleSelectBankCode(key)"
             >
-              {{ bankCodeList[key] }}
+              {{ mxBankList[key] }}
             </div>
           </template>
         </v-list>
-      </v-menu>
+      </v-menu> -->
 
       <template v-if="selectedWithdrawMethodItem == t('withdraw_info_dialog.text_2')">
         <!------------------- account type ------------------------>

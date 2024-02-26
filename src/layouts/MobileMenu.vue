@@ -629,8 +629,8 @@ const menuBlurEffectShow = computed(() => {
 onMounted(() => {
 })
 
-const goReferFriend = (index:number) =>{
-  if(index == 1){
+const goReferFriend = (index: number) => {
+  if (index == 1) {
     setOverlayScrimShow(false);
     setRefferalDialogShow(true);
   }
@@ -712,35 +712,50 @@ const goReferFriend = (index:number) =>{
           <div
             class="letter white"
             ref="casino_1"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.promo'),
+              'text-700-8': selectedItem == t('mobile_menu.promo'),
+            }"
           >
             P
           </div>
           <div
             class="letter white"
             ref="casino_2"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.promo'),
+              'text-700-8': selectedItem == t('mobile_menu.promo'),
+            }"
           >
             R
           </div>
           <div
             class="letter white"
             ref="casino_3"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.promo'),
+              'text-700-8': selectedItem == t('mobile_menu.promo'),
+            }"
           >
             O
           </div>
           <div
             class="letter white"
             ref="casino_4"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.promo'),
+              'text-700-8': selectedItem == t('mobile_menu.promo'),
+            }"
           >
             M
           </div>
           <div
             class="letter white"
             ref="casino_5"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.promo') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.promo'),
+              'text-700-8': selectedItem == t('mobile_menu.promo'),
+            }"
           >
             O
           </div>
@@ -748,42 +763,60 @@ const goReferFriend = (index:number) =>{
           <div
             class="letter white"
             ref="reward_1"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.search'),
+              'text-700-8': selectedItem == t('mobile_menu.search'),
+            }"
           >
             S
           </div>
           <div
             class="letter white"
             ref="reward_2"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.search'),
+              'text-700-8': selectedItem == t('mobile_menu.search'),
+            }"
           >
             E
           </div>
           <div
             class="letter white"
             ref="reward_3"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.search'),
+              'text-700-8': selectedItem == t('mobile_menu.search'),
+            }"
           >
             A
           </div>
           <div
             class="letter white"
             ref="reward_4"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.search'),
+              'text-700-8': selectedItem == t('mobile_menu.search'),
+            }"
           >
             R
           </div>
           <div
             class="letter white"
             ref="reward_5"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.search'),
+              'text-700-8': selectedItem == t('mobile_menu.search'),
+            }"
           >
             C
           </div>
           <div
             class="letter white"
             ref="reward_6"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.search') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.search'),
+              'text-700-8': selectedItem == t('mobile_menu.search'),
+            }"
           >
             H
           </div>
@@ -791,28 +824,40 @@ const goReferFriend = (index:number) =>{
           <div
             class="letter white"
             ref="mail_2"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.mail'),
+              'text-700-8': selectedItem == t('mobile_menu.mail'),
+            }"
           >
             M
           </div>
           <div
             class="letter white"
             ref="mail_3"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.mail'),
+              'text-700-8': selectedItem == t('mobile_menu.mail'),
+            }"
           >
             A
           </div>
           <div
             class="letter white"
             ref="mail_4"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.mail'),
+              'text-700-8': selectedItem == t('mobile_menu.mail'),
+            }"
           >
             I
           </div>
           <div
             class="letter white"
             ref="mail_5"
-            :class="{ 'opacity-1': selectedItem != t('mobile_menu.mail') }"
+            :class="{
+              'opacity-1': selectedItem != t('mobile_menu.mail'),
+              'text-700-8': selectedItem == t('mobile_menu.mail'),
+            }"
           >
             L
           </div>
@@ -942,9 +987,11 @@ const goReferFriend = (index:number) =>{
   .letter {
     position: absolute;
     transform-origin: center;
-    font-size: 7px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-    font-weight: 500;
+    font-size: 8px;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
+    font-weight: 400;
     word-wrap: break-word;
     // transform: rotateY(0deg) rotateZ(0deg);
     text-align: center;
@@ -963,7 +1010,7 @@ const goReferFriend = (index:number) =>{
   }
 
   .letter:nth-child(3) {
-    transform: rotateZ(278deg) translateY(-27px) rotateZ(-184deg);
+    transform: rotateZ(278deg) translateY(-26px) rotateZ(-184deg);
   }
 
   .letter:nth-child(4) {
