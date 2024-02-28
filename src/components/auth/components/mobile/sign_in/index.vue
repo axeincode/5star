@@ -312,7 +312,7 @@ export default Login;
   <div class="m-login-container px-6">
     <div id="status"></div>
     <div class="my-15 d-flex justify-center align-center">
-      <img src="@/assets/public/image/logo_public_01.png" width="86" />
+      <img src="@/assets/public/image/logo_public_04.png" width="86" />
       <div class="ml-2">
         <div class="text-800-16 white">
           {{ t("signup.formPage.header.titleLine1") }}

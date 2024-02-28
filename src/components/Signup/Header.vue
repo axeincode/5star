@@ -32,7 +32,7 @@ export default SignupHeader
             </v-row>
         </v-col>
         <img src="@/assets/login/image/bg_su_01.png" class="bg-image">
-        <img src="@/assets/public/image/logo_public_01.png" class="logo-image">
+        <img src="@/assets/public/image/logo_public_04.png" class="logo-image">
         <img src="@/assets/login/image/img_su_01.png" class="coin-image">
     </v-row>
 </template>

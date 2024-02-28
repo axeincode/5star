@@ -127,7 +127,7 @@ const goToAboutPage = (index: number) => {
       <v-col cols="12" sm="12" md="5" lg="5" class="text-center px-0">
         <div class="d-flex align-center justify-center">
           <img
-            src="@/assets/public/image/logo_public_01.png"
+            src="@/assets/public/image/logo_public_04.png"
             :width="mobileWidth < 600 ? 88 : undefined"
           />
           <!-- <p class="logo-title-1 ml-1">{{t('main.logo_text_1')}}</p>
@@ -216,7 +216,7 @@ const goToAboutPage = (index: number) => {
   width: 100%;
   position: relative;
   left: -8px;
-  background: #15161C;
+  background: #15161c;
 }
 .footer-title {
   font-weight: 700;

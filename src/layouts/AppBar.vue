@@ -590,24 +590,24 @@ onMounted(async () => {
 
     <v-toolbar-title v-if="mobileWidth > 800">
       <img
-        src="@/assets/public/image/logo_public_01.png"
+        src="@/assets/public/image/logo_public_04.png"
         @click="goHomePage"
         style="margin-top: 12px"
       />
       <!-- <v-btn height="60" @click="goHomePage" class="align-center mt-1">
-        <img src="@/assets/public/image/logo_public_01.png" />
+        <img src="@/assets/public/image/logo_public_04.png" />
       </v-btn> -->
     </v-toolbar-title>
 
     <v-toolbar-title v-else>
       <img
-        src="@/assets/public/image/logo_public_03.png"
+        src="@/assets/public/image/logo_public_04.png"
         @click="goHomePage"
         class="mt-1"
         width="52"
       />
       <!-- <v-btn height="46" width="100" @click="goHomePage" class="align-center">
-        <img src="@/assets/public/image/logo_public_03.png" />
+        <img src="@/assets/public/image/logo_public_04.png" />
       </v-btn> -->
     </v-toolbar-title>
     <div v-if="token != undefined">

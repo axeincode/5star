@@ -168,6 +168,11 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
+const userFundsIdentity = computed(() => {
+  const { getUserFundsIdentity } = storeToRefs(userStore());
+  return getUserFundsIdentity.value
+})
+
 const depositOrderTimeRefresh = computed(() => {
   const { getDepositOrderTimeRefresh } = storeToRefs(depositStore());
   return getDepositOrderTimeRefresh.value

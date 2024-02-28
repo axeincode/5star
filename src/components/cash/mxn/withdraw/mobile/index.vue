@@ -156,6 +156,11 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
+const userFundsIdentity = computed(() => {
+  const { getUserFundsIdentity } = storeToRefs(userStore());
+  return getUserFundsIdentity.value
+})
+
 const userBalance = computed(() => {
   const { getUserBalance } = storeToRefs(userStore());
   return getUserBalance.value
@@ -318,25 +323,29 @@ const handleWithdrawSubmit = async () => {
   }
   loading.value = true
   let formData = {} as any;
-  if (depositConfig.value.deposit_user_switch) {
-    formData.id_number = pixInfo.value.id
-    formData.first_name = pixInfo.value.first_name
-    formData.last_name = pixInfo.value.last_name
-  }
+  // if (depositConfig.value.deposit_user_switch) {
+  //   formData.id_number = pixInfo.value.id
+  //   formData.first_name = pixInfo.value.first_name
+  //   formData.last_name = pixInfo.value.last_name
+  // }
   formData.channels_id = selectedPaymentItem.value.id;
   formData.amount = Number(withdrawAmount.value)
   const withdrawInfo = localStorage.getItem(userInfo.value.id.toString())
   const phoneCode = getPhoneCodeByLocale(currencyListValue[userBalance.value.currency]);
   if (withdrawInfo !== null) {
     let withdrawInfoItem = JSON.parse(withdrawInfo);
-    formData.id_number = withdrawInfoItem.clabe_number;
+    formData.bank_number = withdrawInfoItem.clabe_number;
+    formData.id_number = withdrawInfoItem.rfc;
     formData.first_name = withdrawInfoItem.name;
     formData.last_name = userInfo.value.last_name
     formData.email = withdrawInfoItem.email;
     formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
-    formData.bank_name = withdrawInfoItem.bank_code;
-    // formData.bank_name = "STP";
-    formData.rfc = withdrawInfoItem.rfc;
+    // formData.bank_name = withdrawInfoItem.bank_code;
+    // formData.rfc = withdrawInfoItem.rfc;
+  } else {
+    withdraw_type.value = selectedPaymentItem.value.channel_type;
+    withdrawInfoDialog.value = true;
+    return;
   }
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;

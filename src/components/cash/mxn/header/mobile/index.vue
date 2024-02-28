@@ -4,6 +4,7 @@ import { appBarStore } from "@/store/appBar";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
+import { userStore } from "@/store/user";
 import icon_public_60 from "@/assets/public/svg/icon_public_60.svg";
 import icon_public_65 from "@/assets/public/svg/icon_public_65.svg";
 
@@ -16,6 +17,8 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setDepositBlurEffectShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
+
+const { dispatchUserFundsIdentity } = userStore();
 
 const cashToggleSwitch = ref<boolean>(false);
 
@@ -92,7 +95,8 @@ const withdrawTransform = (el: any) => {
   return el;
 };
 
-onMounted(() => {
+onMounted(async () => {
+  await dispatchUserFundsIdentity();
   setMainBlurEffectShow(false);
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);

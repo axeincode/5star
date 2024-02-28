@@ -55,7 +55,7 @@ export default SignupHeader;
         </p>
       </v-row>
     </v-col>
-    <img src="@/assets/public/image/logo_public_01.png" class="m-logo-image" width="80" />
+    <img src="@/assets/public/image/logo_public_04.png" class="m-logo-image" width="80" />
     <img src="@/assets/login/image/img_su_01.png" class="m-coin-image" />
   </v-row>
 </template>
