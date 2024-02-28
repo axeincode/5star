@@ -100,7 +100,6 @@ onMounted(() => {
   selectedWithdrawMethodItem.value = withdraw_type.value.toLocaleLowerCase() == t("withdraw_info_dialog.text_2").toLocaleLowerCase() ? t("withdraw_info_dialog.text_2") : t("withdraw_info_dialog.text_3")
   const withdrawInfo = localStorage.getItem(userInfo.value.id.toString());
   if (withdrawInfo !== null) {
-    console.log(withdrawInfo);
     withdrawInfoItem.value = JSON.parse(withdrawInfo);
   }
 })

@@ -9,6 +9,7 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@adjustcom/adjust-web-sdk": "^5.6.0",
     "@mdi/font": "7.0.96",
     "@types/nprogress": "^0.2.3",
     "animejs": "^3.2.1",

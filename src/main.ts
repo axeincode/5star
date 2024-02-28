@@ -35,7 +35,16 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 // Import the English locale (or any other locale you want to customize)
 import 'dayjs/locale/en';
+
+// vue3 google login
 import Vue3GoogleLogin from 'vue3-google-login';
+
+import Adjust from '@adjustcom/adjust-web-sdk';
+
+Adjust.initSdk({
+  appToken: 'YOUR_APP_TOKEN',
+  environment: 'sandbox', // or 'production'
+});
 
 const app = createApp(App)
 
@@ -87,7 +96,7 @@ app.use(ElementPlus);
 
 const options: PluginOptions = {
   position: POSITION.TOP_RIGHT,
-  timeout: 2000,
+  timeout: 3000,
   closeOnClick: false,
   pauseOnFocusLoss: false,
   pauseOnHover: false,
