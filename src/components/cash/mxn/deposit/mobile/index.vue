@@ -337,11 +337,16 @@ const handleDepositSubmit = async () => {
   }
   loading.value = true
   let formData = {} as any;
-  if (depositConfig.value.deposit_user_switch) {
-    formData.id_number = pixInfo.value.id
-    formData.first_name = pixInfo.value.first_name
-    formData.last_name = pixInfo.value.last_name
-  }
+  // if (depositConfig.value.deposit_user_switch) {
+  //   formData.id_number = pixInfo.value.id
+  //   formData.bank_number = pixInfo.value.id
+  //   formData.first_name = pixInfo.value.first_name
+  //   formData.last_name = pixInfo.value.last_name
+  // }
+  formData.id_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.id_number : userInfo.value.id_number
+  formData.bank_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.bank_number : userInfo.value.id_number
+  formData.first_name = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.user_name : userInfo.value.first_name
+  formData.last_name = userInfo.value.last_name
   formData.channels_id = selectedPaymentItem.value.id;
   formData.amount = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
   formData.is_bonus = bonusCheck.value ? false : true;
