@@ -1114,6 +1114,7 @@ export const lang: langType = {
     }
   },
   mobile_menu: {
+    home: "Home",
     menu: "Menu",
     casino: "Casino",
     share: "Bonus",

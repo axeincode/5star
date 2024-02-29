@@ -35,6 +35,7 @@ import { currencyStore } from "@/store/currency";
 import { bonusStore } from "@/store/bonus";
 import { bannerStore } from "@/store/banner";
 import { depositStore } from "@/store/deposit";
+import icon_public_81 from "@/assets/public/svg/icon_public_81.svg";
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
@@ -77,6 +78,9 @@ const { t } = useI18n();
 const currentLanguage = ref<string>("en");
 const appBarWidth = ref<string>("app-bar-pc");
 const notificationText = ref<string>("");
+
+const menuIconColor = ref<string>("#7782AA");
+const navbarToggle = ref<boolean>(false);
 
 // logged in user info
 const user = ref<GetUserData>({
@@ -144,6 +148,11 @@ const token = computed(() => {
 });
 
 console.log(Cookies.get("blue-game-token-key"))
+
+const navToggle = computed(() => {
+  const { getNavBarToggle } = storeToRefs(appBarStore());
+  return getNavBarToggle.value
+})
 
 const userInfo = computed(() => {
   const { getUserInfo } = storeToRefs(authStore());
@@ -547,6 +556,35 @@ const headerBlurEffectShow = computed(() => {
   return getHeaderBlurEffectShow.value
 })
 
+const menuSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', menuIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', menuIconColor.value)
+    }
+  }
+  return el
+}
+
+const handleNavbarToggle = () => {
+  navbarToggle.value = !navbarToggle.value
+  setUserNavBarToggle(false);
+  setBonusDashboardDialogVisible(false);
+  setMainBlurEffectShow(false);
+  setTimeout(() => {
+    setNavBarToggle(navbarToggle.value);
+    if (mobileWidth.value < 600) {
+      setMainBlurEffectShow(navbarToggle.value);
+    }
+  }, 10);
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+}
+
+watch(navToggle, (newValue) => {
+  navbarToggle.value = newValue;
+  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+}, { deep: true })
+
 onMounted(async () => {
   if (mobileWidth.value < 600) {
     currencyMenuWidth.value = (window.innerWidth - 20) + "px";
@@ -600,11 +638,19 @@ onMounted(async () => {
     </v-toolbar-title>
 
     <v-toolbar-title v-else>
+      <inline-svg
+        :src="icon_public_81"
+        width="20"
+        height="20"
+        class="mb-3 mr-4"
+        :transform-source="menuSvgTransform"
+        @click="handleNavbarToggle"
+      ></inline-svg>
       <img
         src="@/assets/public/image/logo_public_04.png"
         @click="goHomePage"
         class="mt-1"
-        width="52"
+        width="44"
       />
       <!-- <v-btn height="46" width="100" @click="goHomePage" class="align-center">
         <img src="@/assets/public/image/logo_public_04.png" />

@@ -6,6 +6,7 @@ import { appBarStore } from "@/store/appBar";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
 import { menuStore } from "@/store/menu";
+import { mainStore } from "@/store/main";
 import { refferalStore } from "@/store/refferal";
 import { type GetMailData } from '@/interface/mail';
 import { useDisplay } from 'vuetify'
@@ -21,6 +22,7 @@ import icon_public_100 from "@/assets/public/svg/icon_public_100.svg";
 import img_public_17 from "@/assets/public/image/temp/img_public_17.png";
 import img_public_18 from "@/assets/public/image/temp/img_public_18.png";
 import img_public_19 from "@/assets/public/image/temp/img_public_19.png";
+import icon_public_151 from "@/assets/public/svg/icon_public_151.svg";
 
 const { t } = useI18n();
 const { name, width } = useDisplay()
@@ -37,6 +39,7 @@ const { setSemiCircleShow } = menuStore();
 const { setRewardNavShow } = menuStore();
 const { setMobileMenuMailToggle } = mailStore();
 const { setRefferalDialogShow } = refferalStore();
+const { setSearchDialogShow } = mainStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -50,6 +53,7 @@ const searchBtnActive = ref<boolean>(false);
 const mailBtnActive = ref<boolean>(false);
 const mailNavigation = ref<boolean>(false);
 const rewardBtnActive = ref<boolean>(false);
+const homeBtnActive = ref<boolean>(false);
 const mailMenuShow = ref<boolean>(false);
 const tempMailList = ref<Array<GetMailData>>([]);
 
@@ -60,6 +64,7 @@ const mailIconColor = ref<string>('#7782AA');
 const promoIconColor = ref<string>('#7782AA');
 const searchIconColor = ref<string>('#7782AA');
 const rewardIconColor = ref<string>("#7782AA");
+const homeIconColor = ref<string>("#7782AA");
 
 const shareIcon = ref<any>(new URL("@/assets/public/image/img_public_19.png", import.meta.url).href)
 const shareIconIndex = ref<number>(0);
@@ -230,8 +235,8 @@ watch(mailList, (newValue) => {
 }, { deep: true })
 
 watch(navToggle, (newValue) => {
-  navbarToggle.value = newValue;
-  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  // navbarToggle.value = newValue;
+  // menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
 }, { deep: true })
 
 watch(bonusToggle, (newValue) => {
@@ -311,7 +316,8 @@ const handleNavbarToggle = () => {
 }
 
 const goHomePage = () => {
-  casinoBtnActive.value = !casinoBtnActive.value
+  homeBtnActive.value = !homeBtnActive.value;
+  casinoBtnActive.value = false;
   mailMenuShow.value = false;
   sportBtnActive.value = false
   promoBtnActive.value = false;
@@ -327,6 +333,7 @@ const goHomePage = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA";
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -416,6 +423,7 @@ const handleRewardToggle = () => {
 
 const handleSearchToggle = () => {
   searchBtnActive.value = !searchBtnActive.value
+  homeBtnActive.value = false;
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
   navbarToggle.value = false;
@@ -425,10 +433,12 @@ const handleSearchToggle = () => {
   setMainBlurEffectShow(false);
   setRewardNavShow(false);
   setSemiCircleShow(false);
+    setSearchDialogShow(true);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA";
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -543,6 +553,16 @@ const menuSvgTransform = (el: any) => {
   return el
 }
 
+const homeSvgTransform = (el: any) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', homeIconColor.value)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', homeIconColor.value)
+    }
+  }
+  return el
+}
+
 const casinoSvgTransform = (el: any) => {
   for (let node of el.children) {
     node.setAttribute("fill", casinoIconColor.value);
@@ -646,29 +666,26 @@ const goReferFriend = (index: number) => {
     :class="menuBlurEffectShow ? 'menu-bg-blur' : ''"
     style="height: 60px"
   >
-    <v-btn class="menu-text-color" @click="handleNavbarToggle" :ripple="false">
+    <v-btn class="menu-text-color" @click="goHomePage" :ripple="false">
       <inline-svg
-        :src="icon_public_81"
-        width="20"
-        height="20"
-        :transform-source="menuSvgTransform"
-      ></inline-svg>
-      <div
-        class="pt-1 text-600-12"
-        :style="{ color: navbarToggle ? 'white' : '#7782AA' }"
-      >
-        {{ t("mobile_menu.menu") }}
-      </div>
-    </v-btn>
-    <v-btn class="menu-text-color" @click="goHomePage">
-      <inline-svg
-        :src="icon_public_34"
-        width="20"
-        height="20"
-        :transform-source="casinoSvgTransform"
+        :src="icon_public_151"
+        width="22"
+        height="22"
+        :transform-source="homeSvgTransform"
       ></inline-svg>
       <div class="pt-1 text-600-12">
-        {{ t("mobile_menu.casino") }}
+        {{ t("mobile_menu.home") }}
+      </div>
+    </v-btn>
+    <v-btn class="menu-text-color" @click="handleSearchToggle">
+      <inline-svg
+        :src="icon_public_94"
+        width="20"
+        height="20"
+        :transform-source="searchSvgTransform"
+      ></inline-svg>
+      <div class="pt-1 text-600-12">
+        {{ t("mobile_menu.search") }}
       </div>
     </v-btn>
     <!-- <v-btn class="menu-text-color" @click="goToSharePage">

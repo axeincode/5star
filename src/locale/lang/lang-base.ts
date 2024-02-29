@@ -1112,6 +1112,7 @@ export type langType = {
     }
   }
   mobile_menu: {
+    home: string
     menu: string
     casino: string
     share: string

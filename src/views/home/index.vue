@@ -407,7 +407,7 @@ const Dashboard = defineComponent({
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
       window.scrollTo({
-        top: 250,
+        top: 450,
         behavior: "smooth",
       });
       console.log(gamFilterBtn, t("home.button.all_game"));
@@ -595,7 +595,8 @@ const Dashboard = defineComponent({
           left = 116.48 + 148 * (index - 1);
           right = left + 148;
         }
-        const width = element[0].offsetWidth;
+        console.log((element[0] as any).offsetWidth);
+        const width = (element[0] as any).offsetWidth;
         if (!(left > curPos && left < curPos + width)) {
           element[0].scrollLeft = 116.48 + (index - 1) * 148;
         }
