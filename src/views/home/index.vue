@@ -245,6 +245,11 @@ const Dashboard = defineComponent({
       return getFavoriteGameList.value
     })
 
+    const casinoGameShow = computed(() => {
+      const { getCasinoGameShow } = storeToRefs(mainStore());
+      return getCasinoGameShow.value
+    })
+
     const mobileVersion = computed(() => {
       return name.value;
     });
@@ -288,6 +293,13 @@ const Dashboard = defineComponent({
 
     const cdnUrl = computed(() => {
       return instance?.appContext.config.globalProperties.$cdn('vue');
+    })
+
+    watch(casinoGameShow, (newValue) => {
+      window.scrollTo({
+        top: 450,
+        behavior: "smooth",
+      });
     })
 
     watch(mobileVersion, (newValue: string) => {
@@ -1140,6 +1152,12 @@ const Dashboard = defineComponent({
           filterTabText.value = "paging";
           selectedCategoryName.value = "live";
           break;
+      }
+      if (route.query.game == "casino") {
+        window.scrollTo({
+          top: 450,
+          behavior: "smooth",
+        });
       }
     });
 
@@ -2028,7 +2046,7 @@ export default Dashboard;
     transform: translate(-50%, -50%);
     width: 48px;
     height: 46px;
-    background-image: url("@/assets/public/image/img_public_42.png");
+    background-image: url("@/assets/public/image/logo_public_06.png");
     background-repeat: no-repeat;
     background-size: contain;
     animation: opacityAnimation 0.6s ease-in infinite;

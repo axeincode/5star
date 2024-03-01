@@ -134,7 +134,7 @@ watch(selectedItem, (new_value, old_value) => {
         case t("mobile_menu.mail"):
           rotation.value = rotation.value + 240;
           break;
-        case t("mobile_menu.search"):
+        case t("mobile_menu.casino"):
           rotation.value = rotation.value + 120;
           break;
       }
@@ -144,12 +144,12 @@ watch(selectedItem, (new_value, old_value) => {
         case t("mobile_menu.promo"):
           rotation.value = rotation.value + 120;
           break;
-        case t("mobile_menu.search"):
+        case t("mobile_menu.casino"):
           rotation.value = rotation.value + 240;
           break;
       }
       break;
-    case t("mobile_menu.search"):
+    case t("mobile_menu.casino"):
       switch (new_value) {
         case t("mobile_menu.promo"):
           rotation.value = rotation.value + 240;
@@ -165,9 +165,9 @@ watch(selectedItem, (new_value, old_value) => {
       selectedImg.value = img_public_17;
       selectedIcon.value = icon_public_97;
       break;
-    case t("mobile_menu.search"):
+    case t("mobile_menu.casino"):
       selectedImg.value = img_public_18;
-      selectedIcon.value = icon_public_94;
+      selectedIcon.value = icon_public_34;
       break;
     case t("mobile_menu.mail"):
       selectedImg.value = img_public_19;
@@ -781,8 +781,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_1"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.search'),
-              'text-700-8': selectedItem == t('mobile_menu.search'),
+              'opacity-1': selectedItem != t('mobile_menu.casino'),
+              'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
             S
@@ -791,8 +791,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_2"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.search'),
-              'text-700-8': selectedItem == t('mobile_menu.search'),
+              'opacity-1': selectedItem != t('mobile_menu.casino'),
+              'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
             E
@@ -801,8 +801,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_3"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.search'),
-              'text-700-8': selectedItem == t('mobile_menu.search'),
+              'opacity-1': selectedItem != t('mobile_menu.casino'),
+              'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
             A
@@ -811,8 +811,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_4"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.search'),
-              'text-700-8': selectedItem == t('mobile_menu.search'),
+              'opacity-1': selectedItem != t('mobile_menu.casino'),
+              'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
             R
@@ -821,8 +821,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_5"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.search'),
-              'text-700-8': selectedItem == t('mobile_menu.search'),
+              'opacity-1': selectedItem != t('mobile_menu.casino'),
+              'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
             C
@@ -831,8 +831,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_6"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.search'),
-              'text-700-8': selectedItem == t('mobile_menu.search'),
+              'opacity-1': selectedItem != t('mobile_menu.casino'),
+              'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
             H

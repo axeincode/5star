@@ -567,15 +567,18 @@ onMounted(async () => {
   background: #211f32;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+
   .button-transparent {
     background: transparent !important;
     box-shadow: none !important;
+
     .v-btn__content {
       font-size: 14px;
       color: #7782aa;
       font-weight: 700;
     }
   }
+
   .button-bright {
     .v-btn__content {
       font-size: 14px;
@@ -584,28 +587,33 @@ onMounted(async () => {
       font-weight: 700;
     }
   }
+
   .btn-width {
     min-width: 128px;
   }
 }
+
 .m-bet-history-tabs {
   display: flex;
   align-items: center;
   margin: 0px 10px;
   height: 32px;
   border-radius: 8px;
-  background: #23262F;
+  background: #23262f;
   /* Text Box */
   box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+
   .button-transparent {
     background: transparent !important;
     box-shadow: none !important;
+
     .v-btn__content {
       font-size: 12px;
       color: #7782aa;
       font-weight: 700;
     }
   }
+
   .button-bright {
     .v-btn__content {
       font-size: 12px;
@@ -635,6 +643,7 @@ onMounted(async () => {
 
 .m-all-bet-history-height {
   border-radius: 8px;
+
   .swiper-wrapper {
     height: 406px;
 
@@ -643,23 +652,28 @@ onMounted(async () => {
         flex-basis: 0;
         flex-grow: 1;
       }
+
       .v-col-3 {
         flex-basis: 0;
         flex-grow: 1;
       }
+
       .v-col-5 {
         flex-basis: 0;
         flex-grow: 1;
       }
     }
   }
+
   .swiper-vertical {
     touch-action: auto;
   }
 }
+
 .all-bet-history-height {
   height: 640px;
   border-radius: 16px;
+
   .swiper-wrapper {
     height: 568px;
 

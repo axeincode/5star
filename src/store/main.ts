@@ -6,16 +6,21 @@ export const mainStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    searchDialogShow: false as boolean
+    searchDialogShow: false as boolean,
+    casinoGameShow: false as boolean
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getSearchDialogShow: (state) => state.searchDialogShow,
+    getCasinoGameShow: (state) => state.casinoGameShow,
   },
   actions: {
     setSearchDialogShow(searchDialogShow: boolean) {
       this.searchDialogShow = searchDialogShow;
+    },
+    setCasinoGameShow(casinoGameShow: boolean) {
+      this.casinoGameShow = casinoGameShow;
     }
   }
 })

@@ -27,6 +27,8 @@ const bottom = ref<number>(-48);
 // mail count
 const mailCount = ref<number>(10);
 
+const casinoGameShow = ref<boolean>(false);
+
 const { t } = useI18n();
 const { name, width } = useDisplay();
 const router = useRouter();
@@ -40,6 +42,7 @@ const { setMobileMenuMailToggle } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setSearchDialogShow } = mainStore();
+const { setCasinoGameShow } = mainStore();
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
@@ -57,16 +60,25 @@ watch(selectedItem, (newValue) => {
       promoIconColor.value = "#ffffff";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#7782AA";
+      casinoIconColor.value = "#7782AA";
       break;
     case t("mobile_menu.search"):
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#ffffff";
       mailIconColor.value = "#7782AA";
+      casinoIconColor.value = "#7782AA";
       break;
     case t("mobile_menu.mail"):
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#ffffff";
+      casinoIconColor.value = "#7782AA";
+      break;
+    case t("mobile_menu.casino"):
+      casinoIconColor.value = "#ffffff";
+      promoIconColor.value = "#7782AA";
+      searchIconColor.value = "#7782AA";
+      mailIconColor.value = "#7782AA";
       break;
   }
 });
@@ -143,6 +155,7 @@ const mailSvgTransform = (el: any) => {
 };
 
 const handleSelectItem = (item: string) => {
+  casinoGameShow.value = !casinoGameShow.value;
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
@@ -156,6 +169,9 @@ const handleSelectItem = (item: string) => {
     setSearchDialogShow(true);
   } else if (item == t("mobile_menu.mail")) {
     setMobileMenuMailToggle(true);
+  } else if (item == t("mobile_menu.casino")) {
+    setCasinoGameShow(casinoGameShow.value);
+    router.push({ name: "Dashboard", query: { game: "casino" } });
   }
 };
 
@@ -222,19 +238,19 @@ onMounted(() => {
     </div>
     <div
       class="m-semicircle-item m-semicircle-search"
-      @click="handleSelectItem(t('mobile_menu.search'))"
+      @click="handleSelectItem(t('mobile_menu.casino'))"
     >
       <inline-svg
-        :src="icon_public_94"
+        :src="icon_public_34"
         width="22"
         height="22"
-        :transform-source="searchSvgTransform"
+        :transform-source="casinoSvgTransform"
       ></inline-svg>
       <div
         class="text-600-12"
-        :class="selectedItem == t('mobile_menu.search') ? 'white' : 'gray'"
+        :class="selectedItem == t('mobile_menu.casino') ? 'white' : 'gray'"
       >
-        {{ t("mobile_menu.search") }}
+        {{ t("mobile_menu.casino") }}
       </div>
     </div>
   </div>
