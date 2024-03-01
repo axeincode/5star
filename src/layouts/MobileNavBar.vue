@@ -385,6 +385,11 @@ watch(casinoOpen, (value) => {
 watch(sportOpen, (value) => {
   if (value.length == 1) {
     activeItem.value = "";
+    casinoIconColor.value = "#7782AA";
+    recentlyIconColor.value = "#7782AA"
+    favoriteIconColor.value = "#7782AA"
+    slotIconColor.value = "#7782AA"
+    liveIconColor.value = "#7782AA"
   } else {
     sportIconColor.value = "#FFFFFF";
     casinoIconColor.value = "#7782AA"
@@ -1688,7 +1693,7 @@ onMounted(async () => {
       <v-list-item class="m-theme-toggle">
         <input type="checkbox" id="m-theme-toggle" v-model="soundCheckBox" />
         <label for="m-theme-toggle">
-          <div class="dark" :class="[!soundCheckBox ? 'active' : '' ]">
+          <div class="dark" :class="[!soundCheckBox ? 'active' : '']">
             <inline-svg
               :src="icon_public_46"
               width="16"
@@ -1696,7 +1701,7 @@ onMounted(async () => {
             ></inline-svg>
             <p class="text-700-10 ml-1">{{ t("navBar.sound_mode.on") }}</p>
           </div>
-          <div class="light" :class="[soundCheckBox ? 'active' : '' ]">
+          <div class="light" :class="[soundCheckBox ? 'active' : '']">
             <inline-svg
               :src="icon_public_47"
               width="16"

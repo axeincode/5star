@@ -7,31 +7,33 @@ const LiveChatWidgetVisible = ref<boolean>(true);
 
 console.log(license, "license111");
 
-const handleNewEvent = function() {}
-const handleonReady = function() {}
-const visibilityChanged = function() {}
+const handleNewEvent = function () {};
+const handleonReady = function () {};
+const visibilityChanged = function () {};
 </script>
 
 <template>
   <!-- <div> -->
-    <div class="white">    <LiveChatWidget
+  <div class="white">
+    <LiveChatWidget
       :license="'16597974'"
       :visibility="'minimized'"
       v-on:new-event="handleNewEvent"
       v-on:ready="handleonReady"
       v-on:visibility-changed="visibilityChanged"
       ref="liveChatWidget"
-    /></div>
+    />
+  </div>
 
   <!-- </div> -->
 </template>
 
 <style lang="scss" scoped>
 .white {
-    // color: white;
-    // background: red;
-    // position: fixed;
-    // width: 100%;
-    // height: 100px;
+  // color: white;
+  // background: red;
+  // position: fixed;
+  // width: 100%;
+  // height: 100px;
 }
 </style>

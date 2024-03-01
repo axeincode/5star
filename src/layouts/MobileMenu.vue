@@ -425,6 +425,10 @@ const handleRewardToggle = () => {
   promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
   rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
+  setTimeout(() => {
+    rewardBtnActive.value = false
+    rewardIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  }, 1000)
 }
 
 const handleSearchToggle = () => {
@@ -452,6 +456,10 @@ const handleSearchToggle = () => {
   promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
   searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
   rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
+  setTimeout(() => {
+    searchBtnActive.value = false
+    searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  }, 1000)
 }
 
 const handleSportsToggle = () => {
@@ -480,6 +488,10 @@ const handleSportsToggle = () => {
   searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
   rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
   router.push({ name: "Sports" });
+  setTimeout(() => {
+    sportBtnActive.value = false
+    sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  }, 1000)
 }
 
 const goToSportPage = () => {
@@ -696,7 +708,10 @@ const goReferFriend = (index: number) => {
         height="20"
         :transform-source="searchSvgTransform"
       ></inline-svg>
-      <div class="pt-1 text-600-12">
+      <div
+        class="pt-1 text-600-12"
+        :class="searchIconColor == 'white' ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.search") }}
       </div>
     </v-btn>
@@ -894,25 +909,36 @@ const goReferFriend = (index: number) => {
         </div>
       </div>
     </v-btn>
-    <v-btn class="menu-text-color" @click="handleSportsToggle" v-warp-label="{nodeName: 'menu-btn'}">
+    <v-btn
+      class="menu-text-color"
+      @click="handleSportsToggle"
+      v-warp-label="{ nodeName: 'menu-btn' }"
+    >
       <inline-svg
         :src="icon_public_40"
         width="20"
         height="20"
         :transform-source="sportSvgTransform"
       ></inline-svg>
-      <div class="pt-1 text-600-12">
+      <div class="pt-1 text-600-12" :class="sportIconColor == 'white' ? 'white' : 'gray'">
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>
-    <v-btn class="menu-text-color" @click="handleRewardToggle"  v-warp-label="{nodeName: 'menu-btn'}">
+    <v-btn
+      class="menu-text-color"
+      @click="handleRewardToggle"
+      v-warp-label="{ nodeName: 'menu-btn' }"
+    >
       <inline-svg
         :src="icon_public_100"
         width="20"
         height="20"
         :transform-source="rewardSvgTransform"
       ></inline-svg>
-      <div class="pt-1 text-600-12">
+      <div
+        class="pt-1 text-600-12"
+        :class="rewardIconColor == 'white' ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.reward") }}
       </div>
     </v-btn>
@@ -1121,6 +1147,7 @@ const goReferFriend = (index: number) => {
     transform: none !important;
   }
 }
+
 // ::v-deep .v-bottom-navigation  {
 //   .v-bottom-navigation__content > .v-btn {
 //   }
