@@ -1688,7 +1688,7 @@ onMounted(async () => {
       <v-list-item class="m-theme-toggle">
         <input type="checkbox" id="m-theme-toggle" v-model="soundCheckBox" />
         <label for="m-theme-toggle">
-          <div class="dark">
+          <div class="dark" :class="[!soundCheckBox ? 'active' : '' ]">
             <inline-svg
               :src="icon_public_46"
               width="16"
@@ -1696,7 +1696,7 @@ onMounted(async () => {
             ></inline-svg>
             <p class="text-700-10 ml-1">{{ t("navBar.sound_mode.on") }}</p>
           </div>
-          <div class="light">
+          <div class="light" :class="[soundCheckBox ? 'active' : '' ]">
             <inline-svg
               :src="icon_public_47"
               width="16"
@@ -2055,35 +2055,39 @@ onMounted(async () => {
 
 // dark and light toggle switch
 .m-theme-toggle {
-  height: 30px;
+  // height: 30px;
 
   label {
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    // top: 10px;
+    // left: 50%;
+    // transform: translateX(-50%);
     width: 164px;
-    height: 30px;
-    position: absolute;
-    display: block;
+    // height: 30px;
+    // position: absolute;
+    display: flex;
     background: #15161c;
     border-radius: 20px !important;
     cursor: pointer;
     transition: 0.3s;
 
     div {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 100;
+      // position: absolute;
+      // top: 50%;
+      // transform: translateY(-50%);
+      // z-index: 100;
+      flex: 1;
+      padding: 0 5px;
+      margin-right: 5px;
       display: flex;
       align-items: center;
       font-weight: 700;
       font-size: 14px;
+      border-radius: 18px;
     }
 
     .dark {
-      left: 16px;
-      transition: 0.3s;
+      // left: 16px;
+      // transition: 0.3s;
       color: white;
 
       img {
@@ -2094,7 +2098,7 @@ onMounted(async () => {
     }
 
     .light {
-      left: 108px;
+      // left: 108px;
       transition: 0.3s;
       color: #7782aa;
 
@@ -2103,34 +2107,40 @@ onMounted(async () => {
         margin-right: 4px;
       }
     }
+
+    .active {
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      background: #1d2027;
+    }
   }
 
-  label:after {
-    content: "";
-    width: 74px;
-    height: 28px;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    background: #1d2027;
-    border-radius: 18px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-  }
+  // label:after {
+  //   content: "";
+  //   width: 74px;
+  //   height: 28px;
+  //   position: absolute;
+  //   top: 1px;
+  //   left: 1px;
+  //   background: #1d2027;
+  //   border-radius: 18px;
+  //   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  //   transition: 0.3s;
+  // }
 
   input {
     width: 0;
     height: 0;
     visibility: hidden;
+    position: absolute;
   }
 
   input:checked + label:after {
-    left: 88px;
+    // left: 88px;
     // transform: translateX(-100%);
   }
 
   label:active:after {
-    width: 74px;
+    // width: 74px;
   }
 
   input:checked + label .dark {

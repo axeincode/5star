@@ -41,7 +41,7 @@ const openRefferalDialogShow = () => {
     :elevate-on-scroll="elevateOnScroll"
   >
     <v-toolbar-title class="d-flex align-center justify-center">
-      <p class="white" :class="mobileWidth < 600 ? 'text-500-10' : 'text-700-16'">
+      <p class="white" :class="mobileWidth < 600 ? 'text-500-10 wrap' : 'text-700-16'">
         {{ t("refferal.app_bar_title") }}
       </p>
       <img
@@ -74,6 +74,17 @@ const openRefferalDialogShow = () => {
   </v-app-bar>
 </template>
 
+<!-- <style lang="scss" scoped>
+@media screen and (max-width: 600px) {
+  .refferal-app-bar-background {
+    .v-toolbar__content {
+      height: 32px !important;
+    }
+
+  }
+}
+</style> -->
+
 <style lang="scss">
 .refferal-app-bar-background {
   background: linear-gradient(90deg, #3F86DA 0%, #33D785 47.8%, #FFEA2F 100%) !important;
@@ -85,6 +96,15 @@ const openRefferalDialogShow = () => {
   @media (max-width: 600px) {
     .v-toolbar__content {
       height: 32px !important;
+    }
+    .wrap {
+      min-width: 180px;
+      max-width: 220px;
+      white-space: pre-wrap;
+      word-break: keep-all;
+      // word-warp: break-word;
+      text-align: center;
+      line-height: 14px;
     }
   }
 

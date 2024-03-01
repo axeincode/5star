@@ -16,7 +16,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
   const { VITE_PUBLIC_PATH } = viteEnv
   return {
     /** Modify according to the actual situation when packaging base */
-    base: VITE_PUBLIC_PATH,
+    base: './',
     plugins: [
       vue({
         template: { transformAssetUrls }

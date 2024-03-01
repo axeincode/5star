@@ -32,6 +32,7 @@ import "vue-toastification/dist/index.css";
 
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { setupGlobDirectives } from '@/directives';
 
 // Import the English locale (or any other locale you want to customize)
 import 'dayjs/locale/en';
@@ -93,6 +94,9 @@ app.use(Vue3Lazyload, {
 app.component('inline-svg', InlineSvg);
 
 app.use(ElementPlus);
+
+// 注册全局指令
+setupGlobDirectives(app);
 
 const options: PluginOptions = {
   position: POSITION.TOP_RIGHT,
