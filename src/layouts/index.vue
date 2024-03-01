@@ -6,6 +6,8 @@ import { useRoute } from "vue-router";
 import AppBarLayout from "./AppBar.vue";
 import MainLayout from "./Main.vue";
 import MobileMenuLayout from "./MobileMenu.vue";
+import { LiveChatWidget, EventHandlerPayload } from "@livechat/widget-vue";
+
 // import NavBarLayout from "./NavBar.vue";
 // import MNavBarLayout from "./MobileNavBar.vue";
 // import UserNavBarLayout from "./UserNavBar.vue";
@@ -33,6 +35,9 @@ const RefferalLayout = defineAsyncComponent(() => import("./RefferalBar.vue"));
 const VipBar = defineAsyncComponent(() => import("./VipBar.vue"));
 const MBonusDashboardDialog = defineAsyncComponent(
   () => import("@/components/vip/mobile/MBonusDashboard.vue")
+);
+const LiveChat = defineAsyncComponent(
+  () => import("./live_chat/index.vue")
 );
 
 const route = useRoute();
@@ -82,6 +87,7 @@ const handleScroll = () => {
     <MBonusDashboardDialog />
     <MainLayout />
     <MobileMenuLayout v-if="mobileWidth < 1024" />
+    <LiveChat />
   </v-app>
 </template>
 

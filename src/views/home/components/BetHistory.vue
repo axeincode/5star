@@ -481,6 +481,7 @@ onMounted(async () => {
     >
       <template v-for="(item, index) in betHistoryTabList">
         <v-btn
+          v-warp-label="{nodeName: '.v-btn__content', height: 28, maxWidth: 84}"
           class="text-none"
           :class="[item == selectedBtnText ? 'button-bright' : 'button-transparent']"
           height="28px"

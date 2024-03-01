@@ -49,10 +49,10 @@ onMounted(() => {
       <div class="m-auth-dialog-toggle">
         <input type="checkbox" id="mobile-dialog-toggle" v-model="dialogCheckBox" />
         <label for="mobile-dialog-toggle">
-          <div class="login">
+          <div class="login" :class="[dialogCheckBox ? 'active' : '']">
             <p>{{ t("main.loginButton") }}</p>
           </div>
-          <div class="register">
+          <div class="register" :class="[!dialogCheckBox ? 'active' : '']">
             <p>{{ t("main.signupButton") }}</p>
           </div>
         </label>
@@ -96,28 +96,37 @@ onMounted(() => {
         width: 200px;
         height: 40px;
         position: relative;
-        display: block;
+        // display: block;
         background: #15161c;
         border-radius: 20px !important;
         cursor: pointer;
         transition: 0.1s;
         box-shadow: 0px 0px 6px 1px #00000059 inset;
+        display: flex;
 
         div {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 100;
+          // position: absolute;
+          // top: 50%;
+          // transform: translateY(-50%);
+          // z-index: 100;
           display: flex;
           align-items: center;
           font-weight: 700;
           font-size: 12px;
+          border-radius: 18px;
+          padding: 2px;
+          height: 36px;
+          flex: 1;
+          box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+          transition: 0.3s;
+          justify-content: center;
+          color: #7782aa;
         }
 
         .login {
           left: 36px;
           transition: 0.3s;
-          color: white;
+          // color: white;
 
           img {
             width: 20px;
@@ -129,27 +138,32 @@ onMounted(() => {
         .register {
           left: 125px;
           transition: 0.3s;
-          color: white;
+          // color: white;
 
           img {
             width: 20px;
             margin-right: 4px;
           }
         }
+
+        .active {
+          background: #009b3a;
+          color: white;
+        }
       }
 
-      label:after {
-        content: "";
-        width: 98px;
-        height: 36px;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        background: #009b3a;
-        border-radius: 18px;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-      }
+      // label:after {
+      //   content: "";
+      //   width: 98px;
+      //   height: 36px;
+      //   position: absolute;
+      //   top: 2px;
+      //   left: 2px;
+      //   background: #009b3a;
+      //   border-radius: 18px;
+      //   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      //   transition: 0.3s;
+      // }
 
       input {
         width: 0;
@@ -158,20 +172,20 @@ onMounted(() => {
         position: absolute;
       }
 
-      input:checked + label:after {
-        left: 100px;
-      }
+      // input:checked + label:after {
+      //   left: 100px;
+      // }
 
-      label:active:after {
-        width: 74px;
-      }
+      // label:active:after {
+      //   width: 74px;
+      // }
 
       input:checked + label .login {
-        color: #7782aa;
+        // color: #7782aa;
       }
 
       input:checked + label .register {
-        color: white;
+        // color: white;
       }
     }
   }
