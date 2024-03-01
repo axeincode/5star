@@ -785,7 +785,7 @@ const goReferFriend = (index: number) => {
               'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
-            S
+            C
           </div>
           <div
             class="letter white"
@@ -795,7 +795,7 @@ const goReferFriend = (index: number) => {
               'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
-            E
+            A
           </div>
           <div
             class="letter white"
@@ -805,7 +805,7 @@ const goReferFriend = (index: number) => {
               'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
-            A
+            S
           </div>
           <div
             class="letter white"
@@ -815,7 +815,7 @@ const goReferFriend = (index: number) => {
               'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
-            R
+            I
           </div>
           <div
             class="letter white"
@@ -825,7 +825,7 @@ const goReferFriend = (index: number) => {
               'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
-            C
+            N
           </div>
           <div
             class="letter white"
@@ -835,7 +835,7 @@ const goReferFriend = (index: number) => {
               'text-700-8': selectedItem == t('mobile_menu.casino'),
             }"
           >
-            H
+            O
           </div>
           <div class="letter white" ref="mail_1"></div>
           <div
