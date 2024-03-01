@@ -245,6 +245,7 @@ watch(bonusToggle, (newValue) => {
 
 watch(mailMenuShow, async (newValue) => {
   if (newValue) {
+    homeBtnActive.value = false;
     sportBtnActive.value = false
     casinoBtnActive.value = false;
     navbarToggle.value = false;
@@ -256,6 +257,7 @@ watch(mailMenuShow, async (newValue) => {
     setBonusDashboardDialogVisible(false);
     setRewardNavShow(false);
     setSemiCircleShow(false);
+    homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
     menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
     casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
     sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -289,6 +291,7 @@ watch(mailMenuShow, async (newValue) => {
 
 const handleNavbarToggle = () => {
   navbarToggle.value = !navbarToggle.value
+  homeBtnActive.value = false;
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
   sportBtnActive.value = false;
@@ -306,6 +309,7 @@ const handleNavbarToggle = () => {
       setMainBlurEffectShow(navbarToggle.value);
     }
   }, 10);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -395,6 +399,7 @@ const handlePromoToggle = () => {
 
 const handleRewardToggle = () => {
   rewardBtnActive.value = !rewardBtnActive.value
+  homeBtnActive.value = false;
   promoBtnActive.value = false
   mailMenuShow.value = false;
   sportBtnActive.value = false
@@ -412,6 +417,7 @@ const handleRewardToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -433,7 +439,7 @@ const handleSearchToggle = () => {
   setMainBlurEffectShow(false);
   setRewardNavShow(false);
   setSemiCircleShow(false);
-    setSearchDialogShow(true);
+  setSearchDialogShow(true);
   setTimeout(() => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
@@ -450,6 +456,7 @@ const handleSearchToggle = () => {
 
 const handleSportsToggle = () => {
   sportBtnActive.value = !sportBtnActive.value
+  homeBtnActive.value = false;
   searchBtnActive.value = false;
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
@@ -464,6 +471,7 @@ const handleSportsToggle = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -476,6 +484,7 @@ const handleSportsToggle = () => {
 
 const goToSportPage = () => {
   sportBtnActive.value = !sportBtnActive.value
+  homeBtnActive.value = false;
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
   navbarToggle.value = false;
@@ -488,6 +497,7 @@ const goToSportPage = () => {
     setNavBarToggle(navbarToggle.value)
     setMainBlurEffectShow(navbarToggle.value);
   }, 200);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
@@ -499,6 +509,7 @@ const goToSportPage = () => {
 
 const goToSharePage = () => {
   // bonusDashboardToggle.value = !bonusDashboardToggle.value;
+  homeBtnActive.value = false;
   navbarToggle.value = false;
   mailMenuShow.value = false;
   casinoBtnActive.value = false;
@@ -514,6 +525,7 @@ const goToSharePage = () => {
   //   setBonusDashboardDialogVisible(bonusDashboardToggle.value)
   //   setMainBlurEffectShow(bonusDashboardToggle.value);
   // }, 10);
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
   menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
   casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
   sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";

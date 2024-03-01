@@ -1155,7 +1155,8 @@ export const lang: langType = {
       confirm_success_text: "Successfully submitted, need to modify please contact customer service",
       confirm_warning_text: "Please contact customer service to make changes"
     },
-    text_1: "Successfully submitted, need to modify please contact customer service"
+    text_1: "Successfully submitted, need to modify please contact customer service",
+    text_2: "Once your deposit is made, it will activate the selected bonus. If you have already made a deposit Please do not change the selected bonus until the deposit is credited to the game balance."
   },
   transaction_history: {
     type: {
