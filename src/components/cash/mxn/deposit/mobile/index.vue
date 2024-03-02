@@ -839,11 +839,11 @@ onMounted(async () => {
       :class="bonusCheck ? '' : 'm-deposit-bonus-card-border'"
     >
       <div class="d-flex align-center">
-        <img src="@/assets/vip/image/img_vip_10.png" width="30" />
+        <img src="@/assets/vip/image/img_vip_10.png" width="21" />
         <div class="text-700-12 white">{{ depositConfig.name }}</div>
       </div>
       <div class="d-flex align-start ml-6">
-        <img src="@/assets/public/svg/icon_public_03.svg" />
+        <img src="@/assets/public/svg/icon_public_03.svg" width="10" />
         <div class="text-400-8 gray">{{ t("deposit_dialog.text_2") }}</div>
       </div>
     </div>

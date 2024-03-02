@@ -517,7 +517,7 @@ onMounted(async () => {
     <v-row class="mt-6 mx-8 text-500-10 white align-center">
       {{ t("withdraw_dialog.withdraw_amount") }}
       {{ selectedCurrencyUnit }}
-      {{ availableAmount }}
+      {{ availableAmount.toFixed(2) }}
       <img
         @click="refreshWithdrawalConfig"
         src="@/assets/public/svg/icon_public_16.svg"
@@ -554,7 +554,7 @@ onMounted(async () => {
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
-        {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ residualAmount.toFixed(2) }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mx-4 mt-2">
