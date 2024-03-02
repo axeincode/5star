@@ -100,7 +100,9 @@ onMounted(() => {
       <v-col cols="7" class="pa-0">
         <div class="text-700-14 white">{{ t("order_dialog.text_1") }}</div>
         <div class="text-700-10 color-15161C">
-          {{ t("order_dialog.text_2") }}{{ timer.minutes }}:{{ timer.seconds }}
+          {{ t("order_dialog.text_2") }}
+          {{ timer.minutes.value.toString().padStart(2, "0") }}:
+          {{ timer.seconds.value.toString().padStart(2, "0") }}
         </div>
       </v-col>
       <v-col cols="4" class="pa-0 text-center">

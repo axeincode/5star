@@ -134,7 +134,9 @@ onUnmounted(() => {
         <div class="text-700-14 white">{{ t("deposit_confirm.text_1") }}</div>
         <div class="text-900-28 yellow">$ {{ depositConfirmItem.deposit_amount }}</div>
         <div class="text-700-10 orange">
-          {{ t("deposit_confirm.text_2") }}&nbsp;{{ timer.minutes }}:{{ timer.seconds }}
+          {{ t("deposit_confirm.text_2") }}&nbsp;
+          {{ timer.minutes.value.toString().padStart(2, "0") }}:
+          {{ timer.seconds.value.toString().padStart(2, "0") }}
         </div>
       </div>
       <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_3") }}</div>

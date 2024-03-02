@@ -300,6 +300,9 @@ const handleAmountInputFocus = (): void => {
     isShowAmountValidation.value = false;
   } else {
     isShowAmountValidation.value = true;
+    setTimeout(() => {
+      isShowAmountValidation.value = false;
+    }, 5000)
   }
 }
 
@@ -308,15 +311,14 @@ const handleAmountInputChange = (): void => {
     isShowAmountValidation.value = false;
   } else {
     isShowAmountValidation.value = true;
+    setTimeout(() => {
+      isShowAmountValidation.value = false;
+    }, 5000)
   }
 }
 
 const handleAmountInputBlur = (): void => {
-  // if (validateAmount()) {
   isShowAmountValidation.value = false;
-  // } else {
-  //     isShowAmountValidation.value = true;
-  // }
 }
 
 const success = computed(() => {
@@ -537,6 +539,9 @@ watch(depositAmount, (newValue) => {
     isDepositBtnReady.value = false;
   }
   isShowAmountValidation.value = !validateAmount();
+    setTimeout(() => {
+      isShowAmountValidation.value = false;
+    }, 5000)
   if (!bonusCheck.value) {
     depositConfig.value["bonus"].map((bonusItem: any) => {
       if (bonusItem["type"] == 0) {
@@ -816,7 +821,7 @@ onMounted(async () => {
         />
       </div>
 
-      <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
+      <!-- <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" /> -->
     </div>
     <!-- <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
       {{ selectedCurrencyUnit }}{{ depositAmount }} + {{ selectedCurrencyUnit }}
@@ -835,7 +840,7 @@ onMounted(async () => {
     >
       <div class="d-flex align-center">
         <img src="@/assets/vip/image/img_vip_10.png" width="30" />
-        <div class="text-700-12 white">10% Deposit Bonus Everyday up to R$1800</div>
+        <div class="text-700-12 white">{{ depositConfig.name }}</div>
       </div>
       <div class="d-flex align-start ml-6">
         <img src="@/assets/public/svg/icon_public_03.svg" />
@@ -884,6 +889,7 @@ onMounted(async () => {
 // container
 .mobile-deposit-container {
   overflow-y: auto;
+
   .m-deposit-bonus-card {
     // height: 83px;
     border-radius: 8px;

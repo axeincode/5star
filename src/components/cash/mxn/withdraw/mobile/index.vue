@@ -6,6 +6,7 @@ import { authStore } from "@/store/auth";
 import { userStore } from "@/store/user";
 import { withdrawStore } from '@/store/withdraw';
 import { depositStore } from '@/store/deposit';
+import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { mailStore } from '@/store/mail';
 import { type GetUserInfo } from "@/interface/user";
 import { type GetCurrencyItem } from '@/interface/deposit';
@@ -43,6 +44,9 @@ const { dispatchUserBalance } = userStore();
 const { dispatchCurrencyList } = currencyStore();
 import router from '@/router';
 import { currencyStore } from '@/store/currency';
+
+const { setBonusTabIndex } = bonusTransactionStore();
+const { setTransactionTab } = bonusTransactionStore();
 
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
@@ -217,7 +221,46 @@ watch(withdrawConfig, (newValue) => {
 }, { deep: true });
 
 watch(withdrawAmount, (newValue) => {
-  if (Number(availableAmount.value) - Number(newValue) < 0) {
+  // if (Number(availableAmount.value) - Number(newValue) < 0) {
+  //   feeAmount.value = 0;
+  //   cashableAmount.value = 0;
+  //   residualAmount.value = 0;
+  //   const toast = useToast();
+  //   toast.success(t("withdraw_dialog.text_10"), {
+  //     timeout: 3000,
+  //     closeOnClick: false,
+  //     pauseOnFocusLoss: false,
+  //     pauseOnHover: false,
+  //     draggable: false,
+  //     showCloseButtonOnHover: false,
+  //     hideProgressBar: true,
+  //     closeButton: "button",
+  //     icon: WarningIcon,
+  //     rtl: false,
+  //   });
+  // } else {
+  //   residualAmount.value = Number(availableAmount.value) - Number(newValue)
+  //   feeAmount.value = Number(newValue) * Number(withdrawConfig.value.fee.rate);
+  //   cashableAmount.value = Number(newValue) - Number(feeAmount.value);
+  // }
+})
+
+const handleSelectPayment = (item: GetPaymentItem) => {
+  selectedPaymentItem.value = item;
+}
+
+const validateAmount = (): boolean => {
+  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
+}
+
+const handleAmountInputFocus = (): void => {
+}
+
+const handleAmountInputChange = (): void => {
+}
+
+const handleAmountInputBlur = (): void => {
+  if (Number(availableAmount.value) - Number(withdrawAmount.value) < 0) {
     feeAmount.value = 0;
     cashableAmount.value = 0;
     residualAmount.value = 0;
@@ -235,42 +278,10 @@ watch(withdrawAmount, (newValue) => {
       rtl: false,
     });
   } else {
-    residualAmount.value = Number(availableAmount.value) - Number(newValue)
-    feeAmount.value = Number(newValue) * Number(withdrawConfig.value.fee.rate);
-    cashableAmount.value = Number(newValue) - Number(feeAmount.value);
+    residualAmount.value = Number(availableAmount.value) - Number(withdrawAmount.value)
+    feeAmount.value = Number(withdrawAmount.value) * Number(withdrawConfig.value.fee.rate);
+    cashableAmount.value = Number(withdrawAmount.value) - Number(feeAmount.value);
   }
-})
-
-const handleSelectPayment = (item: GetPaymentItem) => {
-  selectedPaymentItem.value = item;
-}
-
-const validateAmount = (): boolean => {
-  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
-}
-
-const handleAmountInputFocus = (): void => {
-  if (validateAmount()) {
-    isShowAmountValidation.value = false;
-  } else {
-    isShowAmountValidation.value = true;
-  }
-}
-
-const handleAmountInputChange = (): void => {
-  if (validateAmount()) {
-    isShowAmountValidation.value = false;
-  } else {
-    isShowAmountValidation.value = true;
-  }
-}
-
-const handleAmountInputBlur = (): void => {
-  // if (validateAmount()) {
-  isShowAmountValidation.value = false;
-  // } else {
-  //     isShowAmountValidation.value = true;
-  // }
 }
 
 const success = computed(() => {
@@ -427,6 +438,22 @@ watch(currencyMenuShow, (value) => {
 const submitPhoneBinding = () => {
   phoneBindingDialog.value = false;
   withdrawInfoDialog.value = true;
+}
+
+const cashDialogShow = () => {
+  setCashDialogToggle(false);
+  setDepositDialogToggle(false);
+  setWithdrawDialogToggle(false);
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
+};
+
+const goWithdrawPage = () => {
+  cashDialogShow();
+  router.push({ name: 'Bonuses And Transactions' });
+  setBonusTabIndex(1);
+  setTransactionTab(t('transaction.tab.withdrawal'));
 }
 
 onMounted(async () => {
@@ -659,7 +686,7 @@ onMounted(async () => {
       >
         {{ t("withdraw_dialog.withdraw_btn_text") }}
       </v-btn>
-      <div class="d-flex align-center justify-center mt-2">
+      <div class="d-flex align-center justify-center mt-2" @click="goWithdrawPage">
         <img src="@/assets/public/svg/icon_public_108.svg" />
         <span class="text-400-12 blue ml-1" style="text-decoration: underline">
           {{ t("withdraw_dialog.text_9") }}
