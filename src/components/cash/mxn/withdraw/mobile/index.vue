@@ -576,7 +576,7 @@ onMounted(async () => {
             v-bind="props"
             class="payment-item m-deposit-card-height m-withdraw-currency-item"
             value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />

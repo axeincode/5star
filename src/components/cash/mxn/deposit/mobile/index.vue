@@ -650,7 +650,7 @@ onMounted(async () => {
             v-bind="props"
             class="currency-item m-deposit-card-height"
             value="currency dropdown"
-            :append-icon="currencyMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="currencyMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedCurrencyItem.icon" width="20" />
@@ -696,7 +696,7 @@ onMounted(async () => {
             v-bind="props"
             class="payment-item m-deposit-card-height"
             value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
