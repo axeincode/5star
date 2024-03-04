@@ -5,6 +5,7 @@ import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { depositStore } from "@/store/deposit";
 import { useTimer } from "vue-timer-hook";
+import { authStore } from "@/store/auth";
 
 const { t } = useI18n();
 const { setDepositConfirmDialogToggle } = depositStore();
@@ -32,6 +33,10 @@ const depositOrderDialogToggle = computed(() => {
 const depositOrderTimeRefresh = computed(() => {
   const { getDepositOrderTimeRefresh } = storeToRefs(depositStore());
   return getDepositOrderTimeRefresh.value;
+});
+const token = computed(() => {
+  const { getToken } = storeToRefs(authStore());
+  return getToken.value;
 });
 const openDepositConfirmDialog = () => {
   setDepositConfirmDialogToggle(true);
@@ -74,6 +79,14 @@ onMounted(() => {
       setDepositConfirmDialogToggle(false);
     }
   });
+  if (token.value == undefined) {
+    setTimerValue(0);
+    localStorage.removeItem("spei");
+    localStorage.removeItem("timer");
+    depositOrderDialog.value = false;
+    setDepositOrderDialog(false);
+    return;
+  }
   const speiValue = localStorage.getItem("spei");
   if (speiValue !== null) {
     depositOrderDialog.value = true;
