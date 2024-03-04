@@ -298,15 +298,18 @@ const originalGames = computed(() => {
 const langItems = ref<Array<any>>([
   {
     id: 'en',
-    value: t('navBar.language.english'),
+    // value: t('navBar.language.english'),
+    value: 'english',
   },
   {
     id: 'pt',
-    value: t('navBar.language.portuguese'),
+    // value: t('navBar.language.portuguese'),
+    value: 'portuguese',
   },
   {
     id: 'es',
-    value: t('navBar.language.espanola')
+    // value: t('navBar.language.espanola'),
+    value: 'espanola'
   }
 ])
 
@@ -445,7 +448,9 @@ const offIconTransform = (el: any) => {
 }
 
 const handleLanguageDropdown = (item: any) => {
-  language.value = item.value;
+  const firstLetter = item.value.charAt(0).toUpperCase()
+  language.value = firstLetter + item.value.slice(1);
+
   switch (item.id) {
     case 'en':
       setLang("en");
@@ -1685,7 +1690,7 @@ onMounted(async () => {
               @click="handleLanguageDropdown(item)"
               :class="language == item.value ? 'nav-lang-selected-item' : ''"
             >
-              <v-list-item-title>{{ item.value }}</v-list-item-title>
+              <v-list-item-title>{{ t(`navBar.language.${item.value}`) }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -2061,12 +2066,16 @@ onMounted(async () => {
 // dark and light toggle switch
 .m-theme-toggle {
   // height: 30px;
+  :deep(.v-list-item__content) {
+    overflow: visible;
+  }
 
   label {
     // top: 10px;
     // left: 50%;
     // transform: translateX(-50%);
-    width: 164px;
+    // width: 164px;
+    width: 100%;
     // height: 30px;
     // position: absolute;
     display: flex;
@@ -2074,6 +2083,7 @@ onMounted(async () => {
     border-radius: 20px !important;
     cursor: pointer;
     transition: 0.3s;
+    padding: 3px 4px;
 
     div {
       // position: absolute;
@@ -2081,19 +2091,20 @@ onMounted(async () => {
       // transform: translateY(-50%);
       // z-index: 100;
       flex: 1;
-      padding: 0 5px;
-      margin-right: 5px;
+      padding: 0 4px;
       display: flex;
       align-items: center;
       font-weight: 700;
       font-size: 14px;
       border-radius: 18px;
+      justify-content: center;
     }
 
     .dark {
       // left: 16px;
       // transition: 0.3s;
       color: white;
+      margin-right: 5px;
 
       img {
         width: 20px;

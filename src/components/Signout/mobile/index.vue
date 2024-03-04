@@ -46,11 +46,11 @@ onMounted(() => {
     >
       <div class="m-header">
         <img src="@/assets/public/image/img_public_03.png" class="m-logout-logo" />
-        <p class="text-700-16 white mt-3 mx-10">{{ t("signout.text_1") }}</p>
+        <p class="text-700-16 white mt-3 m-header-10">{{ t("signout.text_1") }}</p>
       </div>
       <p class="m-signout-text">{{ t("signout.text_2") }}</p>
       <p class="m-signout-notice">{{ t("signout.text_3") }}</p>
-      <div class="mt-8 text-center">
+      <div class="mt-8 text-center m-signout-box">
         <v-btn
           class="m-signout-btn button-bright"
           width="-webkit-fill-available"
@@ -145,10 +145,15 @@ onMounted(() => {
         padding: 12px 80px 28px 80px;
         margin: 0;
       }
+      
+      .m-header-10 {
+        margin-right: 10px;
+        margin-left: 10px;
+      }
     }
 
     .m-signout-text {
-      padding: 225px 65px 0 65px;
+      padding: 225px 35px 0 35px;
       color: white;
       font-size: 24px;
       font-weight: 700;
@@ -156,7 +161,7 @@ onMounted(() => {
     }
 
     .m-signout-notice {
-      margin: 30px 28px 0 28px;
+      margin: 24px 28px 0 28px;
       color: white;
       font-size: 12px;
       font-weight: 400;
@@ -175,6 +180,12 @@ onMounted(() => {
         line-height: normal;
         letter-spacing: normal;
       }
+    }
+    .m-signout-box {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     // close modal button

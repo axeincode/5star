@@ -2,7 +2,7 @@ import type { Directive, App } from "vue";
 
 function labelWarp(element: any, binding: any) {
   // console.group("labelWarp1");
-  const { nodeName, height, maxWidth } = binding.value;
+  const { nodeName, height, maxWidth, lineHeightOffset } = binding.value;
   let currentNode = element;
 
   switch(nodeName) {
@@ -36,15 +36,16 @@ function labelWarp(element: any, binding: any) {
       currentNode = element.querySelector(nodeName);
       const eleHeight = currentNode.offsetHeight;
       const orginOffsetWidth = currentNode.offsetWidth;
-    
+      const offsetValue = lineHeightOffset || 0
+
       let lineHeightCssText = "";
     
       if (orginOffsetWidth < maxWidth) return;
     
       if(eleHeight <= height) {
-        lineHeightCssText = height / 2 + 'px';
+        lineHeightCssText = ( height / 2 - offsetValue ) + 'px';
       } else {
-        lineHeightCssText = eleHeight / 2 + 'px';
+        lineHeightCssText = ( eleHeight / 2 - offsetValue ) + 'px';
       }
       currentNode.style.cssText += `width: ${maxWidth - 4}px;word-break: break-all;word-warp: break-word; white-space: pre-line; line-height:${lineHeightCssText}!important`;
       break;

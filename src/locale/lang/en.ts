@@ -1807,7 +1807,7 @@ export const lang: langType = {
     text_1: "Reward Bonuses",
     text_2: "View all bonuses",
     text_3: "Claim A Promo Code",
-    text_4: "Enter Promo Code You Would Like To Clai",
+    text_4: "Enter Promo Code You Would Like To Claim",
     text_5: "Claim",
     text_6: "Refferals Bonus",
     text_7: "ADD",

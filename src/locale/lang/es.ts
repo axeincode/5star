@@ -1795,7 +1795,7 @@ export const lang: langType = {
     text_1: "Bonos de Recompensa",
     text_2: "Ver todos los bonos",
     text_3: "Solicitar un Código de Promoción",
-    text_4: "Introduce el Código de Promoción que deseas reclamar",
+    text_4: "Introduce el Código de Promoción",
     text_5: "Reclamar",
     text_6: "Bono por Logro",
     text_7: "AÑADIR",

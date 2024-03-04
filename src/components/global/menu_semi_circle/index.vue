@@ -258,8 +258,8 @@ onMounted(() => {
 
 <style lang="scss">
 .m-menu-semicircle-toggle {
-  width: 175px;
-  height: 87.5px;
+  width: 180px;
+  height: 90px;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   position: fixed;
@@ -277,8 +277,9 @@ onMounted(() => {
   }
 
   .m-semicircle-promo {
-    left: 17px;
+    left: 23%;
     top: 32px;
+    transform: translateX(-50%);
 
     .chat-box-text {
       top: -1px;
@@ -300,8 +301,10 @@ onMounted(() => {
   }
 
   .m-semicircle-mail {
-    right: 23px;
+    // right: 23px;
     top: 32px;
+    right: 23%;
+    transform: translateX(50%);
 
     .chat-box-text {
       top: -1px;

@@ -49,10 +49,10 @@ onMounted(() => {
       <div class="m-auth-dialog-toggle">
         <input type="checkbox" id="mobile-dialog-toggle" v-model="dialogCheckBox" />
         <label for="mobile-dialog-toggle">
-          <div class="login" :class="[dialogCheckBox ? 'active' : '']">
+          <div class="login" :class="[!dialogCheckBox ? 'active' : '']">
             <p>{{ t("main.loginButton") }}</p>
           </div>
-          <div class="register" :class="[!dialogCheckBox ? 'active' : '']">
+          <div class="register" :class="[dialogCheckBox ? 'active' : '']">
             <p>{{ t("main.signupButton") }}</p>
           </div>
         </label>
