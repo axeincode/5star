@@ -5,8 +5,15 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
 import { userStore } from "@/store/user";
+import { depositStore } from '@/store/deposit';
+import { authStore } from "@/store/auth";
 import icon_public_60 from "@/assets/public/svg/icon_public_60.svg";
 import icon_public_65 from "@/assets/public/svg/icon_public_65.svg";
+import { type GetPixInfo } from '@/interface/deposit';
+import { type GetUserInfo } from "@/interface/user";
+import { useToast } from "vue-toastification";
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
+import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -19,11 +26,48 @@ const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 
 const { dispatchUserFundsIdentity } = userStore();
+const { setPixInfo } = depositStore();
+const { setPixInfoToggle } = depositStore();
 
 const cashToggleSwitch = ref<boolean>(false);
 
+const personalInfoToggle = ref<boolean>(false);
+
+const confirmValidation = ref<boolean>(false);
+
+const pixInfoMenuShow = ref<boolean>(false);
+
 const depositCheckboxColor = ref<string>("#ffffff");
 const withdrawCheckboxColor = ref<string>("#7782AA");
+
+const isPersonalBtnReady = ref<boolean>(false);
+
+const pixInfoItem = ref<GetPixInfo>({
+  id: "",
+  first_name: "",
+  last_name: "",
+});
+
+const userInfo = computed((): GetUserInfo => {
+  const { getUserInfo } = storeToRefs(authStore());
+  pixInfoItem.value.id = getUserInfo.value.id_number;
+  pixInfoItem.value.first_name = getUserInfo.value.first_name;
+  pixInfoItem.value.last_name = getUserInfo.value.last_name;
+  setPixInfo(pixInfoItem.value);
+  return getUserInfo.value;
+})
+
+watch(userInfo, (value) => {
+  pixInfoItem.value.id = value.id_number;
+  pixInfoItem.value.first_name = value.first_name;
+  pixInfoItem.value.last_name = value.last_name;
+  setPixInfo(pixInfoItem.value);
+})
+
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value;
+});
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -37,6 +81,26 @@ const cashDialogShow = () => {
   setHeaderBlurEffectShow(false);
   setMenuBlurEffectShow(false);
 };
+
+const validateCPF = (cpf: string) => {
+  cpf = cpf.replace(/[^\d]+/g, '');
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+    return false;
+  }
+  var sum = 0;
+  for (var i = 0; i < 9; i++) {
+    sum += parseInt(cpf.charAt(i)) * (10 - i);
+  }
+  var rest = sum % 11;
+  var digit1 = (rest < 2) ? 0 : (11 - rest);
+  sum = 0;
+  for (var i = 0; i < 10; i++) {
+    sum += parseInt(cpf.charAt(i)) * (11 - i);
+  }
+  rest = sum % 11;
+  var digit2 = (rest < 2) ? 0 : (11 - rest);
+  return (digit1 === parseInt(cpf.charAt(9)) && digit2 === parseInt(cpf.charAt(10)));
+}
 
 const depositDialogToggle = computed(() => {
   const { getDepositDialogToggle } = storeToRefs(appBarStore());
@@ -53,10 +117,93 @@ const withdrawDialogToggle = computed(() => {
   return getWithdrawDialogToggle.value;
 });
 
+const pixInfoToggle = computed(() => {
+  const { getPixInfoToggle } = storeToRefs(depositStore());
+  return getPixInfoToggle.value
+})
+
+watch(pixInfoToggle, (value) => {
+  pixInfoMenuShow.value = value;
+})
+
+const handlePixInfoID = (): void => {
+  console.log(validateCPF(pixInfoItem.value.id));
+  if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+  }
+}
+
+const handlePixInfoFirstName = (): void => {
+  if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+  }
+}
+
+const handlePixInfoLastName = (): void => {
+  if (pixInfoItem.value.id != "" && validateCPF(pixInfoItem.value.id) && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+  }
+}
+
+const handlePersonalInfoToggle = (): void => {
+  personalInfoToggle.value = !personalInfoToggle.value;
+}
+
+
+const handlePixInfoSubmit = (): void => {
+  if (isPersonalBtnReady.value) {
+    setPixInfo(pixInfoItem.value);
+    confirmValidation.value = true;
+    const toast = useToast();
+    toast.success(t('deposit_dialog.personal_information.confirm_success_text'), {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
+    });
+    setTimeout(() => {
+      pixInfoMenuShow.value = false;
+    }, 2000)
+  }
+}
+
+const handleConfirmValidation = (): void => {
+  if (confirmValidation.value) {
+    const toast = useToast();
+    toast.success(t('deposit_dialog.personal_information.confirm_warning_text'), {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
+  }
+}
+
 watch(
   cashToggleSwitch,
   (newValue) => {
     if (newValue) {
+      isPersonalBtnReady.value = false;
+      confirmValidation.value = false;
+
       setWithdrawDialogToggle(true);
       setDepositDialogToggle(false);
       setMainBlurEffectShow(true);
@@ -67,6 +214,9 @@ watch(
       depositCheckboxColor.value = "#7782AA";
       withdrawCheckboxColor.value = "#ffffff";
     } else {
+      isPersonalBtnReady.value = false;
+      confirmValidation.value = false;
+
       setWithdrawDialogToggle(false);
       setDepositDialogToggle(true);
       setMainBlurEffectShow(true);
@@ -80,6 +230,20 @@ watch(
   },
   { deep: true }
 );
+
+watch(pixInfoMenuShow, (value) => {
+  if (pixInfoItem.value.id != "" && pixInfoItem.value.first_name != "" && pixInfoItem.value.last_name != "") {
+    isPersonalBtnReady.value = true;
+    confirmValidation.value = true;
+  } else {
+    isPersonalBtnReady.value = false;
+    confirmValidation.value = false;
+  }
+  setDepositBlurEffectShow(pixInfoMenuShow.value == true ? true : false)
+  if (!value) {
+    setPixInfoToggle(false);
+  }
+})
 
 const depositTransform = (el: any) => {
   for (let node of el.children) {
@@ -115,6 +279,131 @@ onMounted(async () => {
     :class="depositHeaderBlurEffectShow ? 'm-deposit-header-bg-blur' : ''"
   >
     <div class="d-flex align-center relative m-header">
+      <v-menu
+        offset="-5"
+        :close-on-content-click="false"
+        content-class="m-personal-info-menu"
+        v-model:model-value="pixInfoMenuShow"
+        :transition="{
+          enterActiveClass: 'my-enter-active-class',
+          leaveActiveClass: 'my-leave-active-class',
+        }"
+        v-if="userBalance.currency == 'BRL'"
+      >
+        <template v-slot:activator="{ props }">
+          <v-btn
+            class="m-deposit-header-btn"
+            v-bind="props"
+            @click="handlePersonalInfoToggle"
+          >
+            <div class="m-deposit-header-account-bg relative">
+              <div class="m-deposit-header-account-bg-1">
+                <img
+                  src="@/assets/public/svg/icon_public_59.svg"
+                  width="16"
+                  class="deposit-header-account-position"
+                />
+              </div>
+            </div>
+            <!-- <v-icon class="header-mdi-icon">mdi-chevron-right</v-icon> -->
+            <img
+              src="@/assets/public/svg/icon_public_11.svg"
+              width="16"
+              class="ml-1"
+              v-if="!pixInfoMenuShow"
+            />
+            <img
+              src="@/assets/public/svg/icon_public_50.svg"
+              width="16"
+              class="ml-1"
+              v-else
+            />
+          </v-btn>
+        </template>
+        <v-list
+          theme="dark"
+          bg-color="#1D2027"
+          class="px-2"
+          :width="mobileWidth > 600 ? 471 : mobileWidth"
+        >
+          <v-list-item class="pt-4">
+            <div class="text-center text-400-12 gray">
+              {{ t("deposit_dialog.personal_information.header_text") }}
+            </div>
+          </v-list-item>
+          <div
+            @click="handleConfirmValidation"
+            class="m-personal-information-id-text mx-4"
+          >
+            <v-text-field
+              :label="t('deposit_dialog.personal_information.id_text')"
+              style="margin: 0px"
+              class="form-textfield dark-textfield"
+              variant="solo"
+              density="comfortable"
+              :disabled="userInfo.id_number != ''"
+              append-icon="mdi"
+              color="#7782AA"
+              v-model="pixInfoItem.id"
+              @input="handlePixInfoID"
+            />
+            <img
+              src="@/assets/public/svg/icon_public_19.svg"
+              class="personal-info-key-position"
+              v-if="confirmValidation"
+            />
+          </div>
+          <div
+            class="mx-4 d-flex m-personal-information-id-text"
+            @click="handleConfirmValidation"
+          >
+            <v-text-field
+              :label="t('deposit_dialog.personal_information.first_name')"
+              class="form-textfield dark-textfield mx-1"
+              variant="solo"
+              density="comfortable"
+              append-icon="mdi"
+              color="#7782AA"
+              v-model="pixInfoItem.first_name"
+              :disabled="userInfo.first_name != ''"
+              @input="handlePixInfoFirstName"
+              @mousedown="handleConfirmValidation"
+            />
+            <img
+              src="@/assets/public/svg/icon_public_19.svg"
+              class="personal-info-key-position-1"
+              v-if="confirmValidation"
+            />
+            <v-text-field
+              :label="t('deposit_dialog.personal_information.last_name')"
+              class="form-textfield dark-textfield mx-1"
+              variant="solo"
+              density="comfortable"
+              append-icon="mdi"
+              color="#7782AA"
+              v-model="pixInfoItem.last_name"
+              :disabled="userInfo.last_name != ''"
+              @input="handlePixInfoLastName"
+            >
+            </v-text-field>
+            <img
+              src="@/assets/public/svg/icon_public_19.svg"
+              class="personal-info-key-position-2"
+              v-if="confirmValidation"
+            />
+          </div>
+          <v-list-item class="text-center">
+            <v-btn
+              class="mx-16 mt-2 mb-6 m-personal-confirm-btn"
+              :class="isPersonalBtnReady ? 'personal-btn-ready' : ''"
+              height="48px"
+              :onclick="handlePixInfoSubmit"
+            >
+              {{ t("deposit_dialog.personal_information.confirm_text") }}
+            </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <div class="m-deposit-toggle">
         <input type="checkbox" id="m-deposit-toggle" v-model="cashToggleSwitch" />
         <label for="m-deposit-toggle">

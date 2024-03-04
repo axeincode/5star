@@ -21,6 +21,8 @@ import { useToast } from "vue-toastification";
 import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
 import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
+import { getUnitByCurrency } from '@/utils/currencyUnit';
+import currencyListValue from '@/utils/currencyList';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -168,6 +170,11 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
+const userBalance = computed(() => {
+  const { getUserBalance } = storeToRefs(userStore());
+  return getUserBalance.value
+})
+
 const userFundsIdentity = computed(() => {
   const { getUserFundsIdentity } = storeToRefs(userStore());
   return getUserFundsIdentity.value
@@ -269,14 +276,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
     })
   })
   selectedPaymentItem.value = paymentList.value[0];
-  switch (selectedCurrencyItem.value.name) {
-    case "BRL":
-      selectedCurrencyUnit.value = 'R$';
-      break;
-    case "MXN":
-      selectedCurrencyUnit.value = 'MXN';
-      break;
-  }
+  selectedCurrencyUnit.value = getUnitByCurrency(selectedCurrencyItem.value.name);
 }
 
 const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
@@ -339,16 +339,24 @@ const handleDepositSubmit = async () => {
   }
   loading.value = true
   let formData = {} as any;
-  // if (depositConfig.value.deposit_user_switch) {
-  //   formData.id_number = pixInfo.value.id
-  //   formData.bank_number = pixInfo.value.id
-  //   formData.first_name = pixInfo.value.first_name
-  //   formData.last_name = pixInfo.value.last_name
-  // }
-  formData.id_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.id_number : userInfo.value.id_number
-  formData.bank_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.bank_number : userInfo.value.id_number
-  formData.first_name = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.user_name : userInfo.value.first_name
-  formData.last_name = userInfo.value.last_name
+  formData.id_number = "";
+  formData.bank_number = "";
+  formData.first_name = "";
+  formData.last_name = "";
+  if (userBalance.value.currency.toLocaleUpperCase() == "BRL") {
+    if (depositConfig.value.deposit_user_switch) {
+      formData.id_number = pixInfo.value.id
+      formData.bank_number = pixInfo.value.id
+      formData.first_name = pixInfo.value.first_name
+      formData.last_name = pixInfo.value.last_name
+    }
+    if (userFundsIdentity.value.identity.pix !== undefined) {
+      formData.id_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.id_number : userInfo.value.id_number
+      formData.bank_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.bank_number : userInfo.value.id_number
+      formData.first_name = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.user_name : userInfo.value.first_name
+      formData.last_name = userInfo.value.last_name
+    }
+  }
   formData.channels_id = selectedPaymentItem.value.id;
   formData.amount = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
   formData.is_bonus = bonusCheck.value ? false : true;
@@ -371,6 +379,20 @@ const handleDepositSubmit = async () => {
         rtl: false,
       });
       depositAmount.value = "";
+      return;
+    }
+    if (depositSubmit.value.code_url != "") {
+      depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
+      let locale = currencyListValue[selectedCurrencyItem.value.name];
+      depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
+      codeUrl.value = depositSubmit.value.code_url;
+      setMainBlurEffectShow(false);
+      setOverlayScrimShow(false);
+      setDepositHeaderBlurEffectShow(false);
+      setDepositBlurEffectShow(false);
+      setTimeout(() => {
+        depositInfoDialogVisible.value = true;
+      }, 10)
       return;
     }
     let depositConfirmItem: any = {
@@ -539,9 +561,9 @@ watch(depositAmount, (newValue) => {
     isDepositBtnReady.value = false;
   }
   isShowAmountValidation.value = !validateAmount();
-    setTimeout(() => {
-      isShowAmountValidation.value = false;
-    }, 5000)
+  setTimeout(() => {
+    isShowAmountValidation.value = false;
+  }, 5000)
   if (!bonusCheck.value) {
     depositConfig.value["bonus"].map((bonusItem: any) => {
       if (bonusItem["type"] == 0) {
