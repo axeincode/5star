@@ -42,6 +42,7 @@ const { dispatchUserWithdrawSubmit } = withdrawStore();
 const { setDepositWithdrawToggle } = appBarStore();
 const { dispatchUserBalance } = userStore();
 const { dispatchCurrencyList } = currencyStore();
+const { setPixInfoToggle } = depositStore();
 import router from '@/router';
 import { currencyStore } from '@/store/currency';
 
@@ -328,7 +329,11 @@ const handleWithdrawSubmit = async () => {
     });
     return;
   }
-  if (!userInfo.value.phone_confirmd) {
+  if (userFundsIdentity.value.identity.pix == undefined && userBalance.value.currency.toLocaleUpperCase() == "BRL") {
+    setPixInfoToggle(true);
+    return;
+  }
+  if (!userInfo.value.phone_confirmd && userBalance.value.currency.toLocaleUpperCase() != "BRL") {
     phoneBindingDialog.value = true;
     return;
   }
@@ -348,9 +353,9 @@ const handleWithdrawSubmit = async () => {
       formData.bank_number = userFundsIdentity.value.identity.pix.bank_number
       formData.first_name = userFundsIdentity.value.identity.pix.user_name
     } else {
-      formData.id_number = userInfo.value.id_number
-      formData.bank_number = userInfo.value.id_number
-      formData.first_name = userInfo.value.first_name
+      // formData.id_number = userInfo.value.id_number
+      // formData.bank_number = userInfo.value.id_number
+      // formData.first_name = userInfo.value.first_name
     }
     formData.email = "";
     formData.phone = "";
