@@ -250,7 +250,7 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
-  return withdrawAmount.value != "" && Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
+  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
 }
 
 const handleAmountInputFocus = (): void => {
@@ -334,42 +334,29 @@ const handleWithdrawSubmit = async () => {
   }
   loading.value = true
   let formData = {} as any;
+  // if (depositConfig.value.deposit_user_switch) {
+  //   formData.id_number = pixInfo.value.id
+  //   formData.first_name = pixInfo.value.first_name
+  //   formData.last_name = pixInfo.value.last_name
+  // }
   formData.channels_id = selectedPaymentItem.value.id;
   formData.amount = Number(withdrawAmount.value)
   const withdrawInfo = localStorage.getItem(userInfo.value.id.toString())
   const phoneCode = getPhoneCodeByLocale(currencyListValue[userBalance.value.currency]);
-  if (userBalance.value.currency.toLocaleUpperCase() == "BRL") {
-    formData.id_number = pixInfo.value.id
-    formData.bank_number = pixInfo.value.id;
-    formData.first_name = pixInfo.value.first_name
-    formData.last_name = pixInfo.value.last_name
-    if (userFundsIdentity.value.identity.pix !== undefined) {
-      formData.id_number = userFundsIdentity.value.identity.pix.id_number
-      formData.bank_number = userFundsIdentity.value.identity.pix.bank_number
-      formData.first_name = userFundsIdentity.value.identity.pix.user_name
-    } else {
-      formData.id_number = userInfo.value.id_number
-      formData.bank_number = userInfo.value.id_number
-      formData.first_name = userInfo.value.first_name
-    }
-    formData.email = "";
-    formData.phone = "";
+  if (withdrawInfo !== null) {
+    let withdrawInfoItem = JSON.parse(withdrawInfo);
+    formData.bank_number = withdrawInfoItem.clabe_number;
+    formData.id_number = withdrawInfoItem.rfc;
+    formData.first_name = withdrawInfoItem.name;
+    formData.last_name = userInfo.value.last_name
+    formData.email = withdrawInfoItem.email;
+    formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
+    // formData.bank_name = withdrawInfoItem.bank_code;
+    // formData.rfc = withdrawInfoItem.rfc;
   } else {
-    if (withdrawInfo !== null) {
-      let withdrawInfoItem = JSON.parse(withdrawInfo);
-      formData.bank_number = withdrawInfoItem.clabe_number;
-      formData.id_number = withdrawInfoItem.rfc;
-      formData.first_name = withdrawInfoItem.name;
-      formData.last_name = userInfo.value.last_name
-      formData.email = withdrawInfoItem.email;
-      formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
-      // formData.bank_name = withdrawInfoItem.bank_code;
-      // formData.rfc = withdrawInfoItem.rfc;
-    } else {
-      withdraw_type.value = selectedPaymentItem.value.channel_type;
-      withdrawInfoDialog.value = true;
-      return;
-    }
+    withdraw_type.value = selectedPaymentItem.value.channel_type;
+    withdrawInfoDialog.value = true;
+    return;
   }
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
@@ -567,7 +554,7 @@ onMounted(async () => {
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
-        {{ residualAmount.toFixed(2) }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mx-4 mt-2">
@@ -601,7 +588,6 @@ onMounted(async () => {
                 height="20"
                 :transform-source="(el: any) => svgTransform(el, '#12FF76')"
                 style="margin-left: auto"
-                v-if="userBalance.currency.toLocaleUpperCase() == 'MXN'"
               >
               </inline-svg>
             </v-list-item-title>
@@ -640,10 +626,7 @@ onMounted(async () => {
                       {{ paymentItem.description }}
                     </v-list-item-title>
                   </v-col>
-                  <v-col
-                    cols="3"
-                    v-if="userBalance.currency.toLocaleUpperCase() == 'MXN'"
-                  >
+                  <v-col cols="3">
                     <inline-svg
                       :src="icon_public_09"
                       width="20"
@@ -732,10 +715,11 @@ onMounted(async () => {
   }
 
   .m-withdraw-btn-position {
-    position: absolute;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
+    // position: absolute;
+    // bottom: 70px;
+    // left: 50%;
+    // transform: translateX(-50%);
+    margin: 40px auto 50px;
     width: 98%;
   }
 

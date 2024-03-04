@@ -24,7 +24,6 @@ export const depositStore = defineStore({
     depositOrderDialog: false as boolean,
     timerValue: 0 as number,
     depositOrderTimeRefresh: false as boolean,
-    depositCurrency: "MXN" as string,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -40,7 +39,6 @@ export const depositStore = defineStore({
     getDepositOrderDialog: (state) => state.depositOrderDialog,
     getTimerValue: (state) => state.timerValue,
     getDepositOrderTimeRefresh: (state) => state.depositOrderTimeRefresh,
-    getDepositCurrency: (state) => state.depositCurrency,
   },
   actions: {
     // set functions
@@ -82,9 +80,6 @@ export const depositStore = defineStore({
     },
     setDepositOrderTimeRefresh(depositOrderTimeRefresh: boolean){
       this.depositOrderTimeRefresh = depositOrderTimeRefresh
-    },
-    setDepositCurrency(depositCurrency: string) {
-      this.depositCurrency = depositCurrency;
     },
     // user deposit configuration
     async dispatchUserDepositCfg() {

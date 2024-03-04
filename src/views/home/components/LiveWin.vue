@@ -5,6 +5,7 @@ import { useDisplay } from "vuetify";
 import { useRouter } from "vue-router";
 import { gameStore } from "@/store/game";
 import icon_public_91 from "@/assets/public/svg/icon_public_91.svg";
+import icon_public_91_1 from "@/assets/public/svg/icon_public_91_1.svg";
 import img_vipemblem_1_24 from "@/assets/vip/image/img_vipemblem_1-24.png";
 import img_vipemblem_25_49 from "@/assets/vip/image/img_vipemblem_25-49.png";
 import img_vipemblem_50_74 from "@/assets/vip/image/img_vipemblem_50-74.png";
@@ -111,17 +112,28 @@ const liveWinList = ()=>{
 
 <template>
   <div class="m-home-live-win" v-if="mobileWidth < 600">
-    <img src="@/assets/home/svg/live_win_1.svg" class="m-live-win-img-width" />
-    <div class="live-win-header">
+    <!-- <img src="@/assets/home/svg/live_win_1.svg" class="m-live-win-img-width" /> -->
+    <div class="live-win-header-new">
+      <div class="live-win-header-new-title">
+        <inline-svg
+          :src="icon_public_91_1"
+          width="16"
+          height="16"
+          style="margin-top: 2px"
+        ></inline-svg>
+        <p class="text-900-10 ml-1">{{ t("home.live_win.text_1") }}</p>
+      </div>
+    </div>
+    <!-- <div class="live-win-header">
       <inline-svg
-        :src="icon_public_91"
+        :src="icon_public_91_1"
         width="16"
         height="16"
         :transform-source="svgIconTransform"
         style="margin-top: 2px"
       ></inline-svg>
       <p class="text-900-10 gray ml-1">{{ t("home.live_win.text_1") }}</p>
-    </div>
+    </div> -->
     <div class="live-win-body">
       <Swiper
       :modules="modules"
@@ -212,9 +224,13 @@ const liveWinList = ()=>{
     align-items: center;
   }
   .live-win-body {
-    position: absolute;
-    top: 30px;
+    // position: absolute;
+    // top: 30px;
     width: 100%;
+    min-height: 100px;
+    background: #1D2027;
+    border-radius: 0 8px 8px 8px;
+    padding: 8px 0px;
   }
   .live-win-img {
     width: 95%;
@@ -227,6 +243,35 @@ const liveWinList = ()=>{
     align-items: center;
     margin: 0px 6px;
     justify-content: center;
+  }
+  .live-win-header-new {
+    width: 100%;
+    // display: flex;
+    .live-win-header-new-title {
+      display: flex;
+      width: fit-content;
+      background: #1D2027;
+      border-radius: 8px 8px 0 0;
+      padding: 2px 20px 0px 10PX;
+      line-height: 16px;
+      color: #fff !important;
+      margin-right: 8px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        right: -8px;
+        top: 6px;
+        width: 0px;
+        height: 0px;
+        border: 9px solid #1D2027;
+        border-left: 4px solid #1D2027;
+        border-right: 4px solid #1D2027;
+        border-top-color: transparent;
+        border-right-color: transparent;
+      }
+    }
   }
 }
 .home-live-win {

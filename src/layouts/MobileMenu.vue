@@ -40,7 +40,6 @@ const { setRewardNavShow } = menuStore();
 const { setMobileMenuMailToggle } = mailStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setSearchDialogShow } = mainStore();
-const { setHomeMenuBtnClicked } = menuStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -103,6 +102,7 @@ const window_height = ref<number>(0);
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
+  
   return getSelectedItem.value
 })
 
@@ -120,7 +120,6 @@ const calculateBottomDistance = () => {
     const containerRect = casino_1.value.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     casino_1_bottom.value = windowHeight - containerRect.bottom;
-    console.log(casino_1_bottom.value);
   }
 };
 
@@ -130,47 +129,51 @@ watchEffect(() => {
 
 watch(selectedItem, (new_value, old_value) => {
   switch (old_value) {
-    case t("mobile_menu.promo"):
+    case t("Promo"):
       switch (new_value) {
-        case t("mobile_menu.mail"):
+        case t("Mail"):
           rotation.value = rotation.value + 240;
           break;
-        case t("mobile_menu.casino"):
+        case t("Casino"):
           rotation.value = rotation.value + 120;
           break;
       }
+      // rotation.value = 270
       break;
-    case t("mobile_menu.mail"):
+    case t("Mail"):
       switch (new_value) {
-        case t("mobile_menu.promo"):
+        case t("Promo"):
           rotation.value = rotation.value + 120;
           break;
-        case t("mobile_menu.casino"):
+        case t("Casino"):
           rotation.value = rotation.value + 240;
           break;
       }
+      // rotation.value = 270 + 90
       break;
-    case t("mobile_menu.casino"):
+    case t("Casino"):
       switch (new_value) {
-        case t("mobile_menu.promo"):
+        case t("Promo"):
           rotation.value = rotation.value + 240;
           break;
-        case t("mobile_menu.mail"):
+        case t("Mail"):
           rotation.value = rotation.value + 120;
           break;
       }
+      // rotation.value = 180
       break;
   }
+  
   switch (new_value) {
-    case t("mobile_menu.promo"):
+    case t("Promo"):
       selectedImg.value = img_public_17;
       selectedIcon.value = icon_public_97;
       break;
-    case t("mobile_menu.casino"):
+    case t("Casino"):
       selectedImg.value = img_public_18;
       selectedIcon.value = icon_public_34;
       break;
-    case t("mobile_menu.mail"):
+    case t("Mail"):
       selectedImg.value = img_public_19;
       selectedIcon.value = icon_public_55;
       break;
@@ -280,7 +283,6 @@ watch(mailMenuShow, async (newValue) => {
   var translateY = -56;
   var opacity = 0.8;
   var zIndex = 100
-  console.log(mailList.value.length);
   if (newValue) {
     for (let item of mailList.value) {
       tempMailList.value.push(item);
@@ -320,13 +322,7 @@ const handleNavbarToggle = () => {
   rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
-const homeMenuBtnClicked = computed(() => {
-  const { getHomeMenuBtnClicked } = storeToRefs(menuStore());
-  return getHomeMenuBtnClicked.value
-})
-
 const goHomePage = () => {
-  console.log(homeBtnActive.value);
   homeBtnActive.value = !homeBtnActive.value;
   casinoBtnActive.value = false;
   mailMenuShow.value = false;
@@ -334,8 +330,6 @@ const goHomePage = () => {
   promoBtnActive.value = false;
   searchBtnActive.value = false;
   rewardBtnActive.value = false;
-  console.log(homeBtnActive.value);
-  setHomeMenuBtnClicked(homeMenuBtnClicked.value ? false : true);
   router.push({ name: "Dashboard" });
   navbarToggle.value = false;
   setUserNavBarToggle(false);
@@ -680,7 +674,6 @@ const menuBlurEffectShow = computed(() => {
 
 
 onMounted(() => {
-  console.log("onMOunted");
 })
 
 const goReferFriend = (index: number) => {
@@ -707,7 +700,7 @@ const goReferFriend = (index: number) => {
         height="22"
         :transform-source="homeSvgTransform"
       ></inline-svg>
-      <div class="pt-1 text-600-12">
+      <div class="text-600-10 menu-text">
         {{ t("mobile_menu.home") }}
       </div>
     </v-btn>
@@ -767,8 +760,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_1"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.promo'),
-              'text-700-8': selectedItem == t('mobile_menu.promo'),
+              'opacity-1': selectedItem != 'Promo',
+              'text-700-8': selectedItem == 'Promo',
             }"
           >
             P
@@ -777,8 +770,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_2"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.promo'),
-              'text-700-8': selectedItem == t('mobile_menu.promo'),
+              'opacity-1': selectedItem != 'Promo',
+              'text-700-8': selectedItem == 'Promo',
             }"
           >
             R
@@ -787,8 +780,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_3"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.promo'),
-              'text-700-8': selectedItem == t('mobile_menu.promo'),
+              'opacity-1': selectedItem != 'Promo',
+              'text-700-8': selectedItem == 'Promo',
             }"
           >
             O
@@ -797,8 +790,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_4"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.promo'),
-              'text-700-8': selectedItem == t('mobile_menu.promo'),
+              'opacity-1': selectedItem != 'Promo',
+              'text-700-8': selectedItem == 'Promo',
             }"
           >
             M
@@ -807,8 +800,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_5"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.promo'),
-              'text-700-8': selectedItem == t('mobile_menu.promo'),
+              'opacity-1': selectedItem != 'Promo',
+              'text-700-8': selectedItem == 'Promo',
             }"
           >
             O
@@ -818,8 +811,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_1"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.casino'),
-              'text-700-8': selectedItem == t('mobile_menu.casino'),
+              'opacity-1': selectedItem != 'Casino',
+              'text-700-8': selectedItem == 'Casino',
             }"
           >
             C
@@ -828,8 +821,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_2"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.casino'),
-              'text-700-8': selectedItem == t('mobile_menu.casino'),
+              'opacity-1': selectedItem != 'Casino',
+              'text-700-8': selectedItem == 'Casino',
             }"
           >
             A
@@ -838,8 +831,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_3"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.casino'),
-              'text-700-8': selectedItem == t('mobile_menu.casino'),
+              'opacity-1': selectedItem != 'Casino',
+              'text-700-8': selectedItem == 'Casino',
             }"
           >
             S
@@ -848,8 +841,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_4"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.casino'),
-              'text-700-8': selectedItem == t('mobile_menu.casino'),
+              'opacity-1': selectedItem != 'Casino',
+              'text-700-8': selectedItem == 'Casino',
             }"
           >
             I
@@ -858,8 +851,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_5"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.casino'),
-              'text-700-8': selectedItem == t('mobile_menu.casino'),
+              'opacity-1': selectedItem != 'Casino',
+              'text-700-8': selectedItem == 'Casino',
             }"
           >
             N
@@ -868,8 +861,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_6"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.casino'),
-              'text-700-8': selectedItem == t('mobile_menu.casino'),
+              'opacity-1': selectedItem != 'Casino',
+              'text-700-8': selectedItem == 'Casino',
             }"
           >
             O
@@ -879,8 +872,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_2"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.mail'),
-              'text-700-8': selectedItem == t('mobile_menu.mail'),
+              'opacity-1': selectedItem != 'Mail',
+              'text-700-8': selectedItem == 'Mail',
             }"
           >
             M
@@ -889,8 +882,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_3"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.mail'),
-              'text-700-8': selectedItem == t('mobile_menu.mail'),
+              'opacity-1': selectedItem != 'Mail',
+              'text-700-8': selectedItem == 'Mail',
             }"
           >
             A
@@ -899,8 +892,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_4"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.mail'),
-              'text-700-8': selectedItem == t('mobile_menu.mail'),
+              'opacity-1': selectedItem != 'Mail',
+              'text-700-8': selectedItem == 'Mail',
             }"
           >
             I
@@ -909,8 +902,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_5"
             :class="{
-              'opacity-1': selectedItem != t('mobile_menu.mail'),
-              'text-700-8': selectedItem == t('mobile_menu.mail'),
+              'opacity-1': selectedItem != 'Mail',
+              'text-700-8': selectedItem == 'Mail',
             }"
           >
             L
@@ -1258,11 +1251,19 @@ const goReferFriend = (index: number) => {
 
 .menu-text-color {
   color: #7782aa;
+  padding: 0px !important;
+  min-width: unset !important;
 
   .v-btn__content {
     font-weight: 700 !important;
     font-size: 12px !important;
     line-height: 20px;
+
+    .menu-text {
+      padding-top: 6px;
+      height: 20px;
+      line-height: 10px;
+    }
   }
 
   .chat-box-text {

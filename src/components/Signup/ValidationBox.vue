@@ -42,6 +42,7 @@ export default ValidationBox;
   <div
     class="pa-2 animate glow delay-1 fade-in"
     :class="mobileWidth > 600 ? 'validation-box-container' : 'm-validation-box-container'"
+    style="z-index: 10000;"
   >
     <v-row
       v-if="title.length"

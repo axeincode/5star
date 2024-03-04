@@ -427,7 +427,8 @@ onMounted(() => {
     top: 36px;
     width: 100%;
     height: calc(100vh - 36px);
-    overflow-y: scroll;
+    overflow-y: auto;
+    padding-bottom: 50px !important;
 
     .m-withdraw-info-input-card {
       box-shadow: 0px 0px 6px 1px #00000059 inset;
