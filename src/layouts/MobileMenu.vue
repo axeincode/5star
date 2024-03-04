@@ -40,6 +40,7 @@ const { setRewardNavShow } = menuStore();
 const { setMobileMenuMailToggle } = mailStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setSearchDialogShow } = mainStore();
+const { setHomeMenuBtnClicked } = menuStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -102,7 +103,7 @@ const window_height = ref<number>(0);
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
-  
+
   return getSelectedItem.value
 })
 
@@ -163,7 +164,7 @@ watch(selectedItem, (new_value, old_value) => {
       // rotation.value = 180
       break;
   }
-  
+
   switch (new_value) {
     case t("Promo"):
       selectedImg.value = img_public_17;
@@ -322,6 +323,11 @@ const handleNavbarToggle = () => {
   rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
+const homeMenuBtnClicked = computed(() => {
+  const { getHomeMenuBtnClicked } = storeToRefs(menuStore());
+  return getHomeMenuBtnClicked.value
+})
+
 const goHomePage = () => {
   homeBtnActive.value = !homeBtnActive.value;
   casinoBtnActive.value = false;
@@ -330,6 +336,7 @@ const goHomePage = () => {
   promoBtnActive.value = false;
   searchBtnActive.value = false;
   rewardBtnActive.value = false;
+  setHomeMenuBtnClicked(homeMenuBtnClicked.value ? false : true);
   router.push({ name: "Dashboard" });
   navbarToggle.value = false;
   setUserNavBarToggle(false);

@@ -31,6 +31,7 @@ import { appBarStore } from "@/store/appBar";
 import { gameStore } from "@/store/game";
 import { socketStore } from "@/store/socket";
 import { authStore } from "@/store/auth";
+import { menuStore } from "@/store/menu";
 import type * as Game from "@/interface/game";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
@@ -293,6 +294,19 @@ const Dashboard = defineComponent({
 
     const cdnUrl = computed(() => {
       return instance?.appContext.config.globalProperties.$cdn('vue');
+    })
+
+    const homeMenuBtnClicked = computed(() => {
+      const { getHomeMenuBtnClicked } = storeToRefs(menuStore());
+      return getHomeMenuBtnClicked.value
+    })
+
+    watch(homeMenuBtnClicked, (newValue) => {
+      console.log("sdfsdfsdfsdfsdfsdf");
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     })
 
     watch(casinoGameShow, (newValue) => {
