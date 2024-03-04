@@ -650,7 +650,7 @@ onMounted(async () => {
             v-bind="props"
             class="currency-item m-deposit-card-height"
             value="currency dropdown"
-            :append-icon="currencyMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="currencyMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedCurrencyItem.icon" width="20" />
@@ -696,7 +696,7 @@ onMounted(async () => {
             v-bind="props"
             class="payment-item m-deposit-card-height"
             value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
@@ -839,11 +839,11 @@ onMounted(async () => {
       :class="bonusCheck ? '' : 'm-deposit-bonus-card-border'"
     >
       <div class="d-flex align-center">
-        <img src="@/assets/vip/image/img_vip_10.png" width="30" />
+        <img src="@/assets/vip/image/img_vip_10.png" width="21" />
         <div class="text-700-12 white">{{ depositConfig.name }}</div>
       </div>
       <div class="d-flex align-start ml-6">
-        <img src="@/assets/public/svg/icon_public_03.svg" />
+        <img src="@/assets/public/svg/icon_public_03.svg" width="10" />
         <div class="text-400-8 gray">{{ t("deposit_dialog.text_2") }}</div>
       </div>
     </div>

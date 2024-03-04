@@ -554,7 +554,8 @@ onMounted(async () => {
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
-        {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ residualAmount == 0 ? residualAmount : residualAmount.toFixed(2) }}&nbsp;
+        {{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mx-4 mt-2">
@@ -575,7 +576,7 @@ onMounted(async () => {
             v-bind="props"
             class="payment-item m-deposit-card-height m-withdraw-currency-item"
             value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
