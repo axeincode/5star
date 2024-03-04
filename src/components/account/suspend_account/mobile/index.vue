@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
 import MSuspendDialog from "@/components/account/suspend_account/dialog/mobile/index.vue";
+import { liveChatStore } from "@/store/liveChat";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -11,6 +12,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
+const { setLiveChatMaximize } = liveChatStore();
 
 const mobileWidth: any = computed(() => {
   return width.value;
@@ -37,6 +39,11 @@ const confirmDailogShow = () => {
   setMenuBlurEffectShow(true);
   setOverlayScrimShow(true);
 };
+
+// 打开客服
+const contactService = () => {
+  setLiveChatMaximize()
+}
 </script>
 
 <template>
@@ -72,7 +79,7 @@ const confirmDailogShow = () => {
         </v-btn>
       </v-col>
     </v-row>
-    <v-btn class="m-account-speaker-bg" icon>
+    <v-btn class="m-account-speaker-bg" icon @click="contactService">
       <img
         src="@/assets/public/svg/icon_public_75.svg"
         class="m-account-speaker-img-position"
