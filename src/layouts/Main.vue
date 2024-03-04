@@ -772,7 +772,7 @@ onMounted(() => {
       persistent
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="true"
-      @click:outside="false"
+      @click:outside="closeReferDialog"
       style="z-index: 2147483646"
     >
       <RefferalDialog v-if="mobileWidth > 600" />

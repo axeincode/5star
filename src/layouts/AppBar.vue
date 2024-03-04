@@ -1406,12 +1406,13 @@ onMounted(async () => {
 
 // login btn mobile version
 .app-bar-login-btn-mobile {
-  width: 80px;
+  // width: 80px;
   height: 40px !important;
   background-color: transparent;
   margin-right: 6px;
   font-size: 6px !important;
   font-weight: 400;
+  padding: 0 8px;
 
   .v-btn__content {
     font-weight: 700;

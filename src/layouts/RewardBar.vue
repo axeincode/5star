@@ -282,9 +282,10 @@ onMounted(async () => {
         <v-col cols="3" class="pa-1 text-right">
           <v-btn
             class="text-none m-reward-claim-btn"
-            width="72"
+            width="100%"
             height="32"
             @click="claimClicked"
+            v-reset-font-size="{textNode: 'v-btn__content'}"
           >
             {{ t("reward.text_5") }}
           </v-btn>
@@ -415,6 +416,7 @@ onMounted(async () => {
                 height="32"
                 @click="handleBonus(index)"
                 :disabled="item.value == 0 && index != 3 ? true : false"
+                v-reset-font-size="{textNode: 'v-btn__content'}"
               >
                 {{ t("reward.text_7") }}
               </v-btn>
@@ -592,6 +594,7 @@ onMounted(async () => {
     border-radius: 8px !important;
     background: $agent_card_title_color;
     box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
+    margin-left: 6px;
 
     .v-btn__content {
       color: #000;
@@ -683,6 +686,24 @@ onMounted(async () => {
         font-size: 19px !important;
         color: #7782aa !important;
       }
+    }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.m-claim-text {
+  ::v-deep(.v-field__input) {
+
+    &::placeholder {
+      color: #7782aa !important;
+      text-align: center;
+      font-family: Inter;
+      font-size: 10px !important;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      padding: 0px;
     }
   }
 }

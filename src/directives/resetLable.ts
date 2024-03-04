@@ -5,37 +5,36 @@ const labelResetDirective: Directive = {
   mounted(el, binding, vnode) {
     // console.group("reFontSize");
 
-    const maxWidth = binding.value[0];
-    const labelContent = binding.value[1];
+    const {maxWidth, textNode, padding} = binding.value;
     let labelEl = el;
-    if (labelContent) {
-      labelEl = el.querySelector(`.${labelContent}`);
+    let textEL = el
+    if (textNode) {
+      textEL = el.querySelector(`.${textNode}`);
     }
-
-    // console.log("labelEl - binding", labelEl, binding);
-    // console.log("offsetWidth", labelEl.offsetWidth);
-
+    // 左右padding
+    let paddingValue = padding ? padding : 2;
     const orginOffsetWidth = labelEl.offsetWidth;
+    const textOffsetWidth = textEL.offsetWidth;
+    // 最终用于计算盒子是否超过的最大width
+    const fianlWidth = maxWidth ? maxWidth - paddingValue : orginOffsetWidth - paddingValue;
     // 获取计算样式
-    const computedStyle: any = window.getComputedStyle(labelEl);
+    const computedStyle: any = window.getComputedStyle(textEL);
     // 获取字体大小属性
-    const orginFontSize = parseInt(computedStyle.getPropertyValue("font-size"));
+    const textFontSize = parseInt(computedStyle.getPropertyValue("font-size"));
 
-    console.log("orginFontSize", orginFontSize);
+    // console.log(fianlWidth, textOffsetWidth, 'textOffsetWidth');
 
-    if (orginOffsetWidth < maxWidth) return;
+    let scaleFontSize:Number = textFontSize;
+    if(textOffsetWidth < fianlWidth) return;
 
-    const scaleFontSize = Math.floor(
-      (orginFontSize * maxWidth) / orginOffsetWidth
-    );
+    scaleFontSize = Math.floor(
+        (textFontSize * fianlWidth) / textOffsetWidth
+      );
 
-    // console.log("scaleFontSize", scaleFontSize);
-    labelEl.style.cssText += `font-size: ${scaleFontSize}px !important`;
-    // if(labelContent) {
-    //   labelEl.style.cssText += `font-size: ${scaleFontSize}px !important`;
-    // } else {
 
-    // }
+    // console.log(scaleFontSize, 'scaleFontSize');
+    
+    textEL.style.cssText += `font-size: ${scaleFontSize}px !important`;
     // console.groupEnd();
 
     // Do something when the directive is mounted to element
@@ -47,7 +46,7 @@ const labelResetDirective: Directive = {
 };
 
 export function setupLabelResetDirective(app: App) {
-  app.directive("reset-font", labelResetDirective);
+  app.directive("reset-font-size", labelResetDirective);
 }
 
 export default labelResetDirective;

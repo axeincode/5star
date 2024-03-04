@@ -44,7 +44,7 @@ const confirmDailogShow = () => {
     <v-row class="mx-4 mt-4 text-700-12 text-white">
       {{ t("account.menu.suspend_account_text") }}
     </v-row>
-    <v-row class="mx-4 mt-6 text-400-12 text-gray">
+    <v-row class="mx-4 mt-6 text-400-12 text-gray text-justify" style="letter-spacing: -1px;">
       {{ t("account.suspend_account.help_text") }}
     </v-row>
     <v-row class="mx-4 mt-10">
