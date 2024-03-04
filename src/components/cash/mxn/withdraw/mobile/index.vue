@@ -250,7 +250,7 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
-  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
+  return withdrawAmount.value != "" && Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
 }
 
 const handleAmountInputFocus = (): void => {
@@ -343,6 +343,15 @@ const handleWithdrawSubmit = async () => {
     formData.bank_number = pixInfo.value.id;
     formData.first_name = pixInfo.value.first_name
     formData.last_name = pixInfo.value.last_name
+    if (userFundsIdentity.value.identity.pix !== undefined) {
+      formData.id_number = userFundsIdentity.value.identity.pix.id_number
+      formData.bank_number = userFundsIdentity.value.identity.pix.bank_number
+      formData.first_name = userFundsIdentity.value.identity.pix.user_name
+    } else {
+      formData.id_number = userInfo.value.id_number
+      formData.bank_number = userInfo.value.id_number
+      formData.first_name = userInfo.value.first_name
+    }
     formData.email = "";
     formData.phone = "";
   } else {
@@ -558,7 +567,7 @@ onMounted(async () => {
     <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
-        {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ residualAmount.toFixed(2) }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mx-4 mt-2">

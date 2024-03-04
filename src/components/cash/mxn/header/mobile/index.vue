@@ -57,6 +57,11 @@ const userInfo = computed((): GetUserInfo => {
   return getUserInfo.value;
 })
 
+const depositCurrency = computed(() => {
+  const { getDepositCurrency } = storeToRefs(depositStore());
+  return getDepositCurrency.value
+})
+
 watch(userInfo, (value) => {
   pixInfoItem.value.id = value.id_number;
   pixInfoItem.value.first_name = value.first_name;
@@ -288,7 +293,10 @@ onMounted(async () => {
           enterActiveClass: 'my-enter-active-class',
           leaveActiveClass: 'my-leave-active-class',
         }"
-        v-if="userBalance.currency == 'BRL'"
+        v-if="
+          userBalance.currency.toLocaleUpperCase() == 'BRL' ||
+          depositCurrency.toLocaleUpperCase() == 'BRL'
+        "
       >
         <template v-slot:activator="{ props }">
           <v-btn

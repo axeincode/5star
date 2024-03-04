@@ -46,6 +46,7 @@ const { dispatchUserBalance } = userStore();
 const { setDepositOrderDialog } = depositStore();
 const { setTimerValue } = depositStore();
 const { setDepositOrderTimeRefresh } = depositStore();
+const { setDepositCurrency } = depositStore();
 
 const selectedCurrencyUnit = ref<string>("R$");
 
@@ -277,6 +278,7 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
   })
   selectedPaymentItem.value = paymentList.value[0];
   selectedCurrencyUnit.value = getUnitByCurrency(selectedCurrencyItem.value.name);
+  setDepositCurrency(selectedCurrencyItem.value.name);
 }
 
 const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
@@ -351,10 +353,13 @@ const handleDepositSubmit = async () => {
       formData.last_name = pixInfo.value.last_name
     }
     if (userFundsIdentity.value.identity.pix !== undefined) {
-      formData.id_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.id_number : userInfo.value.id_number
-      formData.bank_number = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.bank_number : userInfo.value.id_number
-      formData.first_name = userFundsIdentity.value.identity.pix !== undefined ? userFundsIdentity.value.identity.pix.user_name : userInfo.value.first_name
-      formData.last_name = userInfo.value.last_name
+      formData.id_number = userFundsIdentity.value.identity.pix.id_number
+      formData.bank_number = userFundsIdentity.value.identity.pix.bank_number
+      formData.first_name = userFundsIdentity.value.identity.pix.user_name
+    } else {
+      formData.id_number = userInfo.value.id_number
+      formData.bank_number = userInfo.value.id_number
+      formData.first_name = userInfo.value.first_name
     }
   }
   formData.channels_id = selectedPaymentItem.value.id;

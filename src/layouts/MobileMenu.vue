@@ -40,6 +40,7 @@ const { setRewardNavShow } = menuStore();
 const { setMobileMenuMailToggle } = mailStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setSearchDialogShow } = mainStore();
+const { setHomeMenuBtnClicked } = menuStore();
 
 // mail count
 const mailCount = ref<number>(10);
@@ -319,7 +320,13 @@ const handleNavbarToggle = () => {
   rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 }
 
+const homeMenuBtnClicked = computed(() => {
+  const { getHomeMenuBtnClicked } = storeToRefs(menuStore());
+  return getHomeMenuBtnClicked.value
+})
+
 const goHomePage = () => {
+  console.log(homeBtnActive.value);
   homeBtnActive.value = !homeBtnActive.value;
   casinoBtnActive.value = false;
   mailMenuShow.value = false;
@@ -327,6 +334,8 @@ const goHomePage = () => {
   promoBtnActive.value = false;
   searchBtnActive.value = false;
   rewardBtnActive.value = false;
+  console.log(homeBtnActive.value);
+  setHomeMenuBtnClicked(homeMenuBtnClicked.value ? false : true);
   router.push({ name: "Dashboard" });
   navbarToggle.value = false;
   setUserNavBarToggle(false);
@@ -671,6 +680,7 @@ const menuBlurEffectShow = computed(() => {
 
 
 onMounted(() => {
+  console.log("onMOunted");
 })
 
 const goReferFriend = (index: number) => {
