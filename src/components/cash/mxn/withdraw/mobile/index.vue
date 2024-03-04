@@ -365,9 +365,21 @@ const handleWithdrawSubmit = async () => {
     formData.email = "";
     formData.phone = "";
   } else {
-    withdraw_type.value = selectedPaymentItem.value.channel_type;
-    withdrawInfoDialog.value = true;
-    return;
+    if (withdrawInfo !== null) {
+      let withdrawInfoItem = JSON.parse(withdrawInfo);
+      formData.bank_number = withdrawInfoItem.clabe_number;
+      formData.id_number = withdrawInfoItem.rfc;
+      formData.first_name = withdrawInfoItem.name;
+      formData.last_name = userInfo.value.last_name
+      formData.email = withdrawInfoItem.email;
+      formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
+      // formData.bank_name = withdrawInfoItem.bank_code;
+      // formData.rfc = withdrawInfoItem.rfc;
+    } else {
+      withdraw_type.value = selectedPaymentItem.value.channel_type;
+      withdrawInfoDialog.value = true;
+      return;
+    }
   }
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
@@ -599,6 +611,7 @@ onMounted(async () => {
                 height="20"
                 :transform-source="(el: any) => svgTransform(el, '#12FF76')"
                 style="margin-left: auto"
+                v-if="userBalance.currency.toLocaleUpperCase() != 'BRL'"
               >
               </inline-svg>
             </v-list-item-title>
@@ -637,7 +650,10 @@ onMounted(async () => {
                       {{ paymentItem.description }}
                     </v-list-item-title>
                   </v-col>
-                  <v-col cols="3">
+                  <v-col
+                    cols="3"
+                    v-if="userBalance.currency.toLocaleUpperCase() != 'BRL'"
+                  >
                     <inline-svg
                       :src="icon_public_09"
                       width="20"
