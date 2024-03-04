@@ -781,7 +781,7 @@ onMounted(async () => {
 }
 
 .v-navigation-drawer__content {
-  height: 100vh;
+  // height: 100vh;
   overflow-y: auto;
   overflow-x: hidden !important;
 
@@ -844,6 +844,7 @@ onMounted(async () => {
 }
 
 .mobile-nav {
+  padding-bottom: 100px !important;
   overflow-y: auto !important;
 
   .v-list-item__overlay {

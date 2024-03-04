@@ -56,25 +56,25 @@ const semiCircleShow = computed(() => {
 
 watch(selectedItem, (newValue) => {
   switch (newValue) {
-    case t("mobile_menu.promo"):
+    case 'Promo':
       promoIconColor.value = "#ffffff";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("mobile_menu.search"):
+    case 'Search':
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#ffffff";
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("mobile_menu.mail"):
+    case 'Mail':
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#ffffff";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("mobile_menu.casino"):
+    case 'Casino':
       casinoIconColor.value = "#ffffff";
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
@@ -159,17 +159,17 @@ const handleSelectItem = (item: string) => {
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
-  if (item == t("mobile_menu.promo")) {
+  if (item == 'Promo') {
     router.push({ name: "Promo" });
     setRewardNavShow(false);
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
     setMailMenuShow(false);
-  } else if (item == t("mobile_menu.search")) {
+  } else if (item == 'Search') {
     setSearchDialogShow(true);
-  } else if (item == t("mobile_menu.mail")) {
+  } else if (item == 'Mail') {
     setMobileMenuMailToggle(true);
-  } else if (item == t("mobile_menu.casino")) {
+  } else if (item == 'Casino') {
     setCasinoGameShow(casinoGameShow.value);
     router.push({ name: "Dashboard", query: { game: "casino" } });
   }
@@ -198,7 +198,7 @@ onMounted(() => {
   >
     <div
       class="m-semicircle-item m-semicircle-promo"
-      @click="handleSelectItem(t('mobile_menu.promo'))"
+      @click="handleSelectItem('Promo')"
     >
       <div class="relative" style="height: 22px">
         <inline-svg
@@ -211,14 +211,14 @@ onMounted(() => {
       </div>
       <div
         class="text-600-12"
-        :class="selectedItem == t('mobile_menu.promo') ? 'white' : 'gray'"
+        :class="selectedItem == 'Promo' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.promo") }}
       </div>
     </div>
     <div
       class="m-semicircle-item m-semicircle-mail"
-      @click="handleSelectItem(t('mobile_menu.mail'))"
+      @click="handleSelectItem('Mail')"
     >
       <div class="relative" style="height: 22px">
         <inline-svg
@@ -231,14 +231,14 @@ onMounted(() => {
       </div>
       <div
         class="text-600-12"
-        :class="selectedItem == t('mobile_menu.mail') ? 'white' : 'gray'"
+        :class="selectedItem == 'Mail' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.mail") }}
       </div>
     </div>
     <div
       class="m-semicircle-item m-semicircle-search"
-      @click="handleSelectItem(t('mobile_menu.casino'))"
+      @click="handleSelectItem('Casino')"
     >
       <inline-svg
         :src="icon_public_34"
@@ -248,7 +248,7 @@ onMounted(() => {
       ></inline-svg>
       <div
         class="text-600-12"
-        :class="selectedItem == t('mobile_menu.casino') ? 'white' : 'gray'"
+        :class="selectedItem == 'Casino' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.casino") }}
       </div>

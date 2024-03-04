@@ -9,15 +9,13 @@ export const menuStore = defineStore({
     selectedItem: 'Promo' as string,
     semiCircleShow: false as boolean,
     rewardNavShow: false as boolean,
-    homeMenuBtnClicked: false as boolean,
   }),
   getters: {
     getSuccess: (state) => state.success,
     getErrMessage: (state) => state.errMessage,
     getSelectedItem: (state) => state.selectedItem,
     getSemiCircleShow: (state) => state.semiCircleShow,
-    getRewardNavShow: (state) => state.rewardNavShow,
-    getHomeMenuBtnClicked: (state) => state.homeMenuBtnClicked,
+    getRewardNavShow: (state) => state.rewardNavShow
   },
   actions: {
     setSelectedItem(selectedItem: string) {
@@ -28,9 +26,6 @@ export const menuStore = defineStore({
     },
     setRewardNavShow(rewardNavShow: boolean) {
       this.rewardNavShow = rewardNavShow;
-    },
-    setHomeMenuBtnClicked(homeMenuBtnClicked: boolean) {
-      this.homeMenuBtnClicked = homeMenuBtnClicked
     }
   }
 })

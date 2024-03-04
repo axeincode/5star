@@ -363,7 +363,7 @@ onMounted(async () => {
     />
   </v-row>
   <v-row class="m-bonus-transaction-table-5">
-    <v-col cols="6" class="d-flex" style="margin-left: -12px; margin-top: 4px">
+    <v-col class="d-flex" style="margin-left: -12px; margin-top: 4px">
       <v-menu
         offset="20"
         class="m-transaction-vip-menu"
@@ -409,7 +409,7 @@ onMounted(async () => {
         </v-list>
       </v-menu>
     </v-col>
-    <v-col cols="6" class="d-flex" style="padding-right: 6px">
+    <v-col class="d-flex" style="padding-right: 6px">
       <div style="width: 100%">
         <Pagination
           :length="paginationLength"

@@ -139,7 +139,7 @@ onMounted(async () => {
         <div class="mt-4 mx-6 white text-400-14">
           {{ t("refferal.description.text_1") }}
         </div>
-        <div class="mt-3 mx-6 text-gray text-500-10 text-justify" style="letter-spacing: -1px">
+        <div class="mt-3 mx-6 text-gray text-500-10 text-justify" style="font-stretch: normal;">
           {{ t("refferal.description.text_2") }}
         </div>
         <div class="mt-4 mx-6">
@@ -153,7 +153,7 @@ onMounted(async () => {
             <div class="mx-4 mt-4 text-600-14 text-gray">
               {{ t("refferal.description.term_text") }}
             </div>
-            <p class="ml-4 mr-2 mt-3 text-400-10 text-gray text-justify" style="letter-spacing: -1px">
+            <p class="ml-4 mr-2 mt-3 text-400-10 text-gray text-justify" style="font-stretch: normal;">
               {{ t("refferal.description.text_3") }}
             </p>
           </v-card>
@@ -190,7 +190,7 @@ onMounted(async () => {
           </div>
           <div
             class="mx-7 mt-2 text-center text-400-12 white text-justify"
-            style="letter-spacing: -1px"
+            style="font-stretch: normal;"
           >
             <Font color="#F9BC01">{{ invitedUser.toLocaleString() }}</Font>
             {{ t("refferal.dialog.header.body_text_1") }}

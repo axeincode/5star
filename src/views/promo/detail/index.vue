@@ -171,7 +171,7 @@ const i18nButtonText = (eng: string) => {
 <template>
   <div class="mx-4">
     <v-card class="m-promo-detail-back-card">
-      <div class="d-flex align-center" style="height: 48px">
+      <div class="d-flex align-center" style="height: 48px;padding-left: 6px;">
         <v-icon size="large" color="#ffffff" @click="$router.push({ name: 'Promo' })">
           mdi-chevron-left
         </v-icon>

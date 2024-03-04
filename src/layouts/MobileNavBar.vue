@@ -11,6 +11,7 @@ import { mailStore } from "@/store/mail";
 import { gameStore } from "@/store/game";
 import { agentStore } from "@/store/agent";
 import { vipStore } from "@/store/vip";
+import { liveChatStore } from "@/store/liveChat";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
@@ -82,6 +83,7 @@ const { setGameFilterText } = gameStore();
 const { dispatchGameCategories } = gameStore();
 const { setAgentNavBarToggle } = agentStore();
 const { setVipNavBarToggle } = vipStore();
+const { setLiveChatMaximize } = liveChatStore();
 
 const { t } = useI18n();
 const casinoOpen = ref<Array<string>>(['']);
@@ -850,6 +852,9 @@ const handleNavbarItem = (navbarText: string) => {
       affiliateIconColor.value = "#7782AA"
       blogIconColor.value = "#7782AA"
       supportIconColor.value = "#FFFFFF"
+
+      // 最大化
+      setLiveChatMaximize()
       break;
   }
 }
