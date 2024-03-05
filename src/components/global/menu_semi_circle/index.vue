@@ -45,6 +45,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setSearchDialogShow } = mainStore();
 const { setCasinoGameShow } = mainStore();
 const { setCircleMenuBtnClicked } = menuStore();
+const { setSelectedCircleItem } = menuStore();
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
@@ -169,6 +170,7 @@ const mailSvgTransform = (el: any) => {
 };
 
 const handleSelectItem = (item: string) => {
+  setSelectedCircleItem(item);
   setCircleMenuBtnClicked(circleMenuBtnClicked ? true : false);
   selectedText.value = item;
   casinoGameShow.value = !casinoGameShow.value;
