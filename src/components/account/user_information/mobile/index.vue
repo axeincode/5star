@@ -17,6 +17,7 @@ import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
+import { liveChatStore } from "@/store/liveChat";
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -24,6 +25,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
+const { setLiveChatMaximize } = liveChatStore();
 
 const userInfo = computed((): GetUserInfo => {
     const { getUserInfo } = storeToRefs(authStore());
@@ -113,6 +115,11 @@ const submitNickName = (name: string) => {
 }
 
 const handleVerifyCode = () => {
+}
+
+// 打开客服
+const contactService = () => {
+  setLiveChatMaximize()
 }
 </script>
 
@@ -237,7 +244,7 @@ const handleVerifyCode = () => {
         </div>
       </v-col>
     </v-row>
-    <v-btn class="m-account-speaker-bg" icon>
+    <v-btn class="m-account-speaker-bg" icon @click="contactService">
       <img
         src="@/assets/public/svg/icon_public_75.svg"
         class="m-account-speaker-img-position"

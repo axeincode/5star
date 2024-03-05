@@ -702,8 +702,8 @@ const goReferFriend = (index: number) => {
     <v-btn class="menu-text-color" @click="goHomePage" :ripple="false">
       <inline-svg
         :src="icon_public_151"
-        width="22"
-        height="22"
+        width="20"
+        height="20"
         :transform-source="homeSvgTransform"
       ></inline-svg>
       <div class="text-600-10 menu-text">
@@ -718,7 +718,7 @@ const goReferFriend = (index: number) => {
         :transform-source="searchSvgTransform"
       ></inline-svg>
       <div
-        class="pt-1 text-600-12"
+        class="text-600-10 menu-text"
         :class="searchIconColor == 'white' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.search") }}
@@ -751,8 +751,8 @@ const goReferFriend = (index: number) => {
         <transition name="fade">
           <inline-svg
             :src="selectedIcon"
-            width="22"
-            height="22"
+            width="20"
+            height="20"
             :transform-source="iconSvgTransform"
             class="m-menu-casino-body-icon"
             :key="selectedIcon"
@@ -929,7 +929,7 @@ const goReferFriend = (index: number) => {
         height="20"
         :transform-source="sportSvgTransform"
       ></inline-svg>
-      <div class="pt-1 text-600-12" :class="sportIconColor == 'white' ? 'white' : 'gray'">
+      <div class="text-600-10 menu-text" :class="sportIconColor == 'white' ? 'white' : 'gray'">
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>
@@ -945,7 +945,7 @@ const goReferFriend = (index: number) => {
         :transform-source="rewardSvgTransform"
       ></inline-svg>
       <div
-        class="pt-1 text-600-12"
+        class="text-600-10 menu-text"
         :class="rewardIconColor == 'white' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.reward") }}

@@ -44,7 +44,7 @@ const visibilityChanged = function () {};
 </script>
 
 <template>
-  <div class="live-chat-container">
+  <!-- <div class="live-chat-container">
     <inline-svg
       :src="icon_public_45"
       width="44"
@@ -52,7 +52,7 @@ const visibilityChanged = function () {};
       :transform-source="supportIconTransform"
       @click="openLiveChat"
     ></inline-svg>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>
