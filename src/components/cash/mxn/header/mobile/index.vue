@@ -293,10 +293,7 @@ onMounted(async () => {
           enterActiveClass: 'my-enter-active-class',
           leaveActiveClass: 'my-leave-active-class',
         }"
-        v-if="
-          userBalance.currency.toLocaleUpperCase() == 'BRL' ||
-          depositCurrency.toLocaleUpperCase() == 'BRL'
-        "
+        v-if="userBalance.currency.toLocaleUpperCase() == 'BRL'"
       >
         <template v-slot:activator="{ props }">
           <v-btn

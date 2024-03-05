@@ -302,7 +302,6 @@ const Dashboard = defineComponent({
     })
 
     watch(homeMenuBtnClicked, (newValue) => {
-      console.log("sdfsdfsdfsdfsdfsdf");
       window.scrollTo({
         top: 0,
         behavior: "smooth",

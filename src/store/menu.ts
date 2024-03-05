@@ -10,6 +10,7 @@ export const menuStore = defineStore({
     semiCircleShow: false as boolean,
     rewardNavShow: false as boolean,
     homeMenuBtnClicked: false as boolean,
+    
   }),
   getters: {
     getSuccess: (state) => state.success,

@@ -51,8 +51,8 @@ const { setTransactionTab } = bonusTransactionStore();
 
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
-  icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-  name: "PIX",
+  icon: "",
+  name: "",
   channel_type: "",
   description: "20~150.000 BRL",
   min: 149,
@@ -156,6 +156,8 @@ const withdrawCheck = ref<boolean>(false);
 
 const selectedCurrencyUnit = ref<string>("R$")
 
+const refreshLoading = ref<boolean>(false);
+
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value;
@@ -194,12 +196,15 @@ const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
 };
 
 const refreshWithdrawalConfig = async () => {
+  refreshLoading.value = true;
   await dispatchUserWithdrawCfg();
+  await dispatchUserBalance();
+  refreshLoading.value = false;
 }
 
 watch(userBalance, (value) => {
   availableAmount.value = value["availabe_balance"];
-})
+}, {deep: true});
 
 watch(withdrawConfig, (newValue) => {
   paymentList.value = [];
@@ -541,12 +546,15 @@ onMounted(async () => {
       {{ t("withdraw_dialog.withdraw_amount") }}
       {{ selectedCurrencyUnit }}
       {{ availableAmount }}
-      <img
-        @click="refreshWithdrawalConfig"
-        src="@/assets/public/svg/icon_public_16.svg"
-        style="margin-left: auto"
-        width="16"
-      />
+      <div style="margin-left: auto" class="relative">
+        <img
+          @click="refreshWithdrawalConfig"
+          src="@/assets/public/svg/icon_public_16.svg"
+          width="16"
+          class="m-withdraw-balance-refresh-img"
+          :class="refreshLoading ? 'm-img-loading' : ''"
+        />
+      </div>
     </v-row>
     <v-row class="mt-2 mx-2 relative">
       <v-text-field
@@ -598,7 +606,7 @@ onMounted(async () => {
             v-bind="props"
             class="payment-item m-deposit-card-height m-withdraw-currency-item"
             value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
@@ -674,14 +682,15 @@ onMounted(async () => {
         </v-row>
       </v-list>
     </v-menu>
-    <div class="mx-4">
-      <v-checkbox
+    <div class="mx-14 my-4">
+      <!-- <v-checkbox
         hide-details
         icon
         class="deposit-checkbox"
         v-model="withdrawCheck"
         :label="t('withdraw_dialog.text_8')"
-      />
+      /> -->
+      <div class="text-400-12 gray">{{ t("withdraw_dialog.text_8") }}</div>
     </div>
     <v-row class="mt-0 mx-14 text-400-10 gray">
       {{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig?.fee?.rate) * 100 }}%
@@ -724,6 +733,16 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .m-phone-binding-dialog {
   z-index: 2433 !important;
   margin: 0px !important;
@@ -739,6 +758,18 @@ onMounted(async () => {
     .v-list-item__append > .v-icon {
       margin-inline-start: 10px;
     }
+  }
+
+  .m-withdraw-balance-refresh-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .m-img-loading {
+    animation: rotate 1s linear infinite;
   }
 
   .m-withdraw-btn-position {

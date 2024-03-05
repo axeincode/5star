@@ -58,8 +58,8 @@ const selectedCurrencyItem = ref<GetCurrencyItem>({
 
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "",
-  icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-  name: "PIX",
+  icon: "",
+  name: "",
   channel_type: "",
   description: "20~150.000 BRL",
   min: 149,
@@ -211,10 +211,10 @@ const filterByKeyArray = (arr: any, key: any, valueArr: any) => {
 watch(depositConfig, (newValue) => {
   depositAmountList.value = [];
   paymentList.value = [];
-  newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
+  newValue["cfg"][userBalance.value.currency].map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: userBalance.value.currency == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       channel_type: item.channel_type,
       description: item.min + "~" + item.max + " " + item.currecy_type,
@@ -265,10 +265,10 @@ const handleDepositAmount = (amount: string) => {
 const handleSelectCurrency = (item: GetCurrencyItem) => {
   selectedCurrencyItem.value = item;
   paymentList.value = [];
-  depositConfig.value["cfg"][selectedCurrencyItem.value.name]?.map((item: any) => {
+  depositConfig.value["cfg"][userBalance.value.currency]?.map((item: any) => {
     paymentList.value.push({
       id: item.channel_id,
-      icon: selectedCurrencyItem.value.name == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+      icon: userBalance.value.currency == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       channel_type: item.channel_type,
       description: item.min + "~" + item.max + " " + item.currecy_type,
@@ -277,8 +277,8 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
     })
   })
   selectedPaymentItem.value = paymentList.value[0];
-  selectedCurrencyUnit.value = getUnitByCurrency(selectedCurrencyItem.value.name);
-  setDepositCurrency(selectedCurrencyItem.value.name);
+  selectedCurrencyUnit.value = getUnitByCurrency(userBalance.value.currency);
+  setDepositCurrency(userBalance.value.currency);
 }
 
 const formatCurrency = (currency: number, locale: string, currencyUnit: string) => {
@@ -388,8 +388,8 @@ const handleDepositSubmit = async () => {
     }
     if (depositSubmit.value.code_url != "") {
       depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
-      let locale = currencyListValue[selectedCurrencyItem.value.name];
-      depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
+      let locale = currencyListValue[userBalance.value.currency];
+      depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, userBalance.value.currency);
       codeUrl.value = depositSubmit.value.code_url;
       setMainBlurEffectShow(false);
       setOverlayScrimShow(false);
@@ -615,45 +615,12 @@ watch(currencyMenuShow, (value) => {
 onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
-
-  switch (selectedCurrencyItem.value.name) {
-    case "BRL":
-      selectedCurrencyUnit.value = 'R$';
-      break;
-    case "MXN":
-      selectedCurrencyUnit.value = 'MXN';
-      break;
-  }
-
-  // setOverlayScrimShow(true);
-  // setDepositHeaderBlurEffectShow(true);
-  // setDepositBlurEffectShow(true);
-  // setTimeout(() => {let locale = 'pt-BR';
-  //     switch (selectedCurrencyItem.value.name) {
-  //       case "BRL":
-  //         locale = 'pt-BR';
-  //         break;
-  //       case "PHP":
-  //         locale = 'en-PH';
-  //         break;
-  //       case "PEN":
-  //         locale = 'en-PE';
-  //         break;
-  //       case "MXN":
-  //         locale = 'en-MX';
-  //         break;
-  //       case "CLP":
-  //         locale = 'es-CL';
-  //         break;
-  //       case "USD":
-  //         locale = 'en-US';
-  //       case "COP":
-  //         locale = 'es-CO';
-  //         break;
-  //     }
-  //     depositAmountWithCurrency.value = formatCurrency(Number(depositAmount.value), locale, selectedCurrencyItem.value.name);
-  //   depositInfoDialogVisible.value = true;
-  // }, 10)
+  selectedCurrencyUnit.value = currencyListValue[userBalance.value.currency];
+  currencyList.value.map(item => {
+    if (item.name == userBalance.value.currency) {
+      selectedCurrencyItem.value = item;
+    }
+  })
 })
 </script>
 
@@ -677,7 +644,6 @@ onMounted(async () => {
             v-bind="props"
             class="currency-item m-deposit-card-height"
             value="currency dropdown"
-            :append-icon="currencyMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
           >
             <template v-slot:prepend>
               <img :src="selectedCurrencyItem.icon" width="20" />
@@ -688,7 +654,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#15161C" class="px-2">
+      <!-- <v-list theme="dark" bg-color="#15161C" class="px-2">
         <v-list-item
           class="currency-item pl-6"
           :value="currencyItem.name"
@@ -706,7 +672,7 @@ onMounted(async () => {
             {{ currencyItem.name }}
           </v-list-item-title>
         </v-list-item>
-      </v-list>
+      </v-list> -->
     </v-menu>
     <v-row class="mt-6 mx-6 text-400-12 gray">
       {{ t("deposit_dialog.choose_payment_method") }}
@@ -723,7 +689,7 @@ onMounted(async () => {
             v-bind="props"
             class="payment-item m-deposit-card-height"
             value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
           >
             <template v-slot:prepend>
               <img :src="selectedPaymentItem.icon" width="52" />
