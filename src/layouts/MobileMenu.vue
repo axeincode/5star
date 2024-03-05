@@ -103,7 +103,6 @@ const window_height = ref<number>(0);
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
-
   return getSelectedItem.value
 })
 

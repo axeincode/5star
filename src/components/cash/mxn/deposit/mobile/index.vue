@@ -400,17 +400,19 @@ const handleDepositSubmit = async () => {
       }, 10)
       return;
     }
-    let depositConfirmItem: any = {
-      deposit_amount: depositAmount.value,
-      bank_name: depositSubmit.value.bank_name,
-      account_number: depositSubmit.value.account_number,
-      account_name: depositSubmit.value.account_name,
+    if (userBalance.value.currency.toLocaleUpperCase() == "MXN") {
+      let depositConfirmItem: any = {
+        deposit_amount: depositAmount.value,
+        bank_name: depositSubmit.value.bank_name,
+        account_number: depositSubmit.value.account_number,
+        account_name: depositSubmit.value.account_name,
+      }
+      localStorage.setItem("spei", JSON.stringify(depositConfirmItem));
+      setDepositOrderTimeRefresh(!depositOrderTimeRefresh.value);
+      setTimerValue(0);
+      setDepositOrderDialog(true);
+      // setDepositAmount(Number(depositAmount.value));
     }
-    localStorage.setItem("spei", JSON.stringify(depositConfirmItem));
-    setDepositOrderTimeRefresh(!depositOrderTimeRefresh.value);
-    setTimerValue(0);
-    setDepositOrderDialog(true);
-    // setDepositAmount(Number(depositAmount.value));
     const toast = useToast();
     toast.success(t("deposit_dialog.text_1"), {
       timeout: 3000,

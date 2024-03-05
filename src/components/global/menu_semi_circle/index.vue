@@ -18,7 +18,7 @@ import { mainStore } from "@/store/main";
 const casinoIconColor = ref<string>("#7782AA");
 const rewardIconColor = ref<string>("#7782AA");
 const sportIconColor = ref<string>("#7782AA");
-const promoIconColor = ref<string>("#ffffff");
+const promoIconColor = ref<string>("#7782AA");
 const searchIconColor = ref<string>("#7782AA");
 const mailIconColor = ref<string>("#7782AA");
 const scale = ref<number>(1);
@@ -56,25 +56,25 @@ const semiCircleShow = computed(() => {
 
 watch(selectedItem, (newValue) => {
   switch (newValue) {
-    case 'Promo':
+    case "Promo":
       promoIconColor.value = "#ffffff";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case 'Search':
+    case "Search":
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#ffffff";
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case 'Mail':
+    case "Mail":
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#ffffff";
       casinoIconColor.value = "#7782AA";
       break;
-    case 'Casino':
+    case "Casino":
       casinoIconColor.value = "#ffffff";
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
@@ -159,17 +159,17 @@ const handleSelectItem = (item: string) => {
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
-  if (item == 'Promo') {
+  if (item == "Promo") {
     router.push({ name: "Promo" });
     setRewardNavShow(false);
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
     setMailMenuShow(false);
-  } else if (item == 'Search') {
+  } else if (item == "Search") {
     setSearchDialogShow(true);
-  } else if (item == 'Mail') {
+  } else if (item == "Mail") {
     setMobileMenuMailToggle(true);
-  } else if (item == 'Casino') {
+  } else if (item == "Casino") {
     setCasinoGameShow(casinoGameShow.value);
     router.push({ name: "Dashboard", query: { game: "casino" } });
   }
@@ -196,10 +196,7 @@ onMounted(() => {
     :style="{ transform: `translateX(-50%)`, bottom: `${bottom}px` }"
     v-if="route.name !== 'Sports'"
   >
-    <div
-      class="m-semicircle-item m-semicircle-promo"
-      @click="handleSelectItem('Promo')"
-    >
+    <div class="m-semicircle-item m-semicircle-promo" @click="handleSelectItem('Promo')">
       <div class="relative" style="height: 22px">
         <inline-svg
           :src="icon_public_97"
@@ -209,17 +206,11 @@ onMounted(() => {
         ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div
-        class="text-600-12"
-        :class="selectedItem == 'Promo' ? 'white' : 'gray'"
-      >
+      <div class="text-600-12" :class="selectedItem == 'Promo' ? 'white' : 'gray'">
         {{ t("mobile_menu.promo") }}
       </div>
     </div>
-    <div
-      class="m-semicircle-item m-semicircle-mail"
-      @click="handleSelectItem('Mail')"
-    >
+    <div class="m-semicircle-item m-semicircle-mail" @click="handleSelectItem('Mail')">
       <div class="relative" style="height: 22px">
         <inline-svg
           :src="icon_public_55"
@@ -229,10 +220,7 @@ onMounted(() => {
         ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div
-        class="text-600-12"
-        :class="selectedItem == 'Mail' ? 'white' : 'gray'"
-      >
+      <div class="text-600-12" :class="selectedItem == 'Mail' ? 'white' : 'gray'">
         {{ t("mobile_menu.mail") }}
       </div>
     </div>
@@ -246,10 +234,7 @@ onMounted(() => {
         height="22"
         :transform-source="casinoSvgTransform"
       ></inline-svg>
-      <div
-        class="text-600-12"
-        :class="selectedItem == 'Casino' ? 'white' : 'gray'"
-      >
+      <div class="text-600-12" :class="selectedItem == 'Casino' ? 'white' : 'gray'">
         {{ t("mobile_menu.casino") }}
       </div>
     </div>
