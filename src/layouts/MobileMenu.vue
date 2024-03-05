@@ -111,6 +111,16 @@ const mobileMenuMailToggle = computed(() => {
   return getMobileMenuMailToggle.value
 })
 
+const circleMenuBtnClicked = computed(() => {
+  const { getCircleMenuBtnClicked } = storeToRefs(menuStore());
+  return getCircleMenuBtnClicked.value;
+});
+
+watch(circleMenuBtnClicked, (value) => {
+  homeBtnActive.value = false;
+  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
+})
+
 watch(mobileMenuMailToggle, (value) => {
   mailMenuShow.value = value;
 })
@@ -542,18 +552,20 @@ const goToSharePage = () => {
   setUserNavBarToggle(false);
   setMainBlurEffectShow(false);
   setNavBarToggle(false);
+
   // setTimeout(() => {
   //   setBonusDashboardDialogVisible(bonusDashboardToggle.value)
   //   setMainBlurEffectShow(bonusDashboardToggle.value);
   // }, 10);
-  homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
-  menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
-  casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
-  sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
-  mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
-  promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
-  searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
-  rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
+
+  // homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
+  // menuIconColor.value = navbarToggle.value ? "white" : "#7782AA"
+  // casinoIconColor.value = casinoBtnActive.value ? "white" : "#7782AA";
+  // sportIconColor.value = sportBtnActive.value ? "white" : "#7782AA";
+  // mailIconColor.value = mailMenuShow.value ? "white" : "#7782AA";
+  // promoIconColor.value = promoBtnActive.value ? "white" : "#7782AA";
+  // searchIconColor.value = searchBtnActive.value ? "white" : "#7782AA";
+  // rewardIconColor.value = rewardBtnActive.value ? "white" : "#7782AA";
 
   // sportBtnActive.value = false
   // mailMenuShow.value = false;
@@ -706,7 +718,10 @@ const goReferFriend = (index: number) => {
         height="20"
         :transform-source="homeSvgTransform"
       ></inline-svg>
-      <div class="text-600-10 menu-text">
+      <div
+        class="text-600-10 menu-text"
+        :class="homeIconColor == 'white' ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.home") }}
       </div>
     </v-btn>
@@ -929,7 +944,10 @@ const goReferFriend = (index: number) => {
         height="20"
         :transform-source="sportSvgTransform"
       ></inline-svg>
-      <div class="text-600-10 menu-text" :class="sportIconColor == 'white' ? 'white' : 'gray'">
+      <div
+        class="text-600-10 menu-text"
+        :class="sportIconColor == 'white' ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.sport") }}
       </div>
     </v-btn>

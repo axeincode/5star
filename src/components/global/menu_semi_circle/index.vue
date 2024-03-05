@@ -23,6 +23,7 @@ const searchIconColor = ref<string>("#7782AA");
 const mailIconColor = ref<string>("#7782AA");
 const scale = ref<number>(1);
 const bottom = ref<number>(-48);
+const selectedText = ref<string>("");
 
 // mail count
 const mailCount = ref<number>(10);
@@ -43,6 +44,7 @@ const { setOverlayScrimShow } = appBarStore();
 const { setMainBlurEffectShow } = appBarStore();
 const { setSearchDialogShow } = mainStore();
 const { setCasinoGameShow } = mainStore();
+const { setCircleMenuBtnClicked } = menuStore();
 
 const selectedItem = computed(() => {
   const { getSelectedItem } = storeToRefs(menuStore());
@@ -54,27 +56,39 @@ const semiCircleShow = computed(() => {
   return getSemiCircleShow.value;
 });
 
+const homeMenuBtnClicked = computed(() => {
+  const { getHomeMenuBtnClicked } = storeToRefs(menuStore());
+  return getHomeMenuBtnClicked.value;
+});
+
+const circleMenuBtnClicked = computed(() => {
+  const { getCircleMenuBtnClicked } = storeToRefs(menuStore());
+  return getCircleMenuBtnClicked.value;
+});
+
+watch(homeMenuBtnClicked, (value) => {
+  selectedText.value = "";
+  promoIconColor.value = "#7782AA";
+  searchIconColor.value = "#7782AA";
+  mailIconColor.value = "#7782AA";
+  casinoIconColor.value = "#7782AA";
+});
+
 watch(selectedItem, (newValue) => {
   switch (newValue) {
-    case "Promo":
+    case t("Promo"):
       promoIconColor.value = "#ffffff";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case "Search":
-      promoIconColor.value = "#7782AA";
-      searchIconColor.value = "#ffffff";
-      mailIconColor.value = "#7782AA";
-      casinoIconColor.value = "#7782AA";
-      break;
-    case "Mail":
+    case t("Mail"):
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#ffffff";
       casinoIconColor.value = "#7782AA";
       break;
-    case "Casino":
+    case t("Casino"):
       casinoIconColor.value = "#ffffff";
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
@@ -155,23 +169,43 @@ const mailSvgTransform = (el: any) => {
 };
 
 const handleSelectItem = (item: string) => {
+  setCircleMenuBtnClicked(circleMenuBtnClicked ? true : false);
+  selectedText.value = item;
   casinoGameShow.value = !casinoGameShow.value;
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
-  if (item == "Promo") {
+  if (item == t("Promo")) {
     router.push({ name: "Promo" });
     setRewardNavShow(false);
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
     setMailMenuShow(false);
-  } else if (item == "Search") {
-    setSearchDialogShow(true);
-  } else if (item == "Mail") {
+  } else if (item == t("Mail")) {
     setMobileMenuMailToggle(true);
-  } else if (item == "Casino") {
+  } else if (item == t("Casino")) {
     setCasinoGameShow(casinoGameShow.value);
     router.push({ name: "Dashboard", query: { game: "casino" } });
+  }
+  switch (item) {
+    case t("Promo"):
+      promoIconColor.value = "#ffffff";
+      searchIconColor.value = "#7782AA";
+      mailIconColor.value = "#7782AA";
+      casinoIconColor.value = "#7782AA";
+      break;
+    case t("Mail"):
+      promoIconColor.value = "#7782AA";
+      searchIconColor.value = "#7782AA";
+      mailIconColor.value = "#ffffff";
+      casinoIconColor.value = "#7782AA";
+      break;
+    case t("Casino"):
+      casinoIconColor.value = "#ffffff";
+      promoIconColor.value = "#7782AA";
+      searchIconColor.value = "#7782AA";
+      mailIconColor.value = "#7782AA";
+      break;
   }
 };
 
@@ -206,7 +240,7 @@ onMounted(() => {
         ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div class="text-600-12" :class="selectedItem == 'Promo' ? 'white' : 'gray'">
+      <div class="text-600-12" :class="selectedText == 'Promo' ? 'white' : 'gray'">
         {{ t("mobile_menu.promo") }}
       </div>
     </div>
@@ -220,7 +254,7 @@ onMounted(() => {
         ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div class="text-600-12" :class="selectedItem == 'Mail' ? 'white' : 'gray'">
+      <div class="text-600-12" :class="selectedText == 'Mail' ? 'white' : 'gray'">
         {{ t("mobile_menu.mail") }}
       </div>
     </div>
@@ -234,7 +268,7 @@ onMounted(() => {
         height="22"
         :transform-source="casinoSvgTransform"
       ></inline-svg>
-      <div class="text-600-12" :class="selectedItem == 'Casino' ? 'white' : 'gray'">
+      <div class="text-600-12" :class="selectedText == 'Casino' ? 'white' : 'gray'">
         {{ t("mobile_menu.casino") }}
       </div>
     </div>

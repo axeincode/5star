@@ -10,6 +10,8 @@ export const menuStore = defineStore({
     semiCircleShow: false as boolean,
     rewardNavShow: false as boolean,
     homeMenuBtnClicked: false as boolean,
+    circleMenuBtnClicked: false as boolean,
+    selectedCircleItem: '' as string,
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -18,6 +20,8 @@ export const menuStore = defineStore({
     getSemiCircleShow: (state) => state.semiCircleShow,
     getRewardNavShow: (state) => state.rewardNavShow,
     getHomeMenuBtnClicked: (state) => state.homeMenuBtnClicked,
+    getCircleMenuBtnClicked: (state) => state.circleMenuBtnClicked,
+    getSelectedCircleItem: (state) => state.selectedCircleItem
   },
   actions: {
     setSelectedItem(selectedItem: string) {
@@ -31,6 +35,12 @@ export const menuStore = defineStore({
     },
     setHomeMenuBtnClicked(homeMenuBtnClicked: boolean) {
       this.homeMenuBtnClicked = homeMenuBtnClicked
+    },
+    setCircleMenuBtnClicked(circleMenuBtnClicked: boolean) {
+      this.circleMenuBtnClicked = circleMenuBtnClicked;
+    },
+    setSelectedCircleItem(selectedCircleItem: string) {
+      this.selectedCircleItem = selectedCircleItem
     }
   }
 })
