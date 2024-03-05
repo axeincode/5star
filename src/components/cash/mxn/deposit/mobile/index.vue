@@ -617,7 +617,7 @@ watch(currencyMenuShow, (value) => {
 onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
-  selectedCurrencyUnit.value = currencyListValue[userBalance.value.currency];
+  selectedCurrencyUnit.value = userBalance.value.currency;
   currencyList.value.map(item => {
     if (item.name == userBalance.value.currency) {
       selectedCurrencyItem.value = item;
