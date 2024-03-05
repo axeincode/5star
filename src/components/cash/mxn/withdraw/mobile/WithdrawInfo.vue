@@ -379,7 +379,7 @@ onMounted(() => {
       </template>
 
       <!------------------- add ------------------------>
-      <v-row class="ma-0 pa-0 mt-4 align-center">
+      <v-row class="ma-0 pa-0 mt-4 align-center mb-16">
         <v-col
           cols="6"
           class="text-700-12 gray text-center"
