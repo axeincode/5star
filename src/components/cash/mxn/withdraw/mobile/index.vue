@@ -378,7 +378,8 @@ const handleWithdrawSubmit = async () => {
       formData.first_name = withdrawInfoItem.name;
       formData.last_name = userInfo.value.last_name
       formData.email = withdrawInfoItem.email;
-      formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
+      // formData.phone = phoneCode.split("+")[1] + userInfo.value.phone;
+      formData.phone = userInfo.value.phone;
       // formData.bank_name = withdrawInfoItem.bank_code;
       // formData.rfc = withdrawInfoItem.rfc;
     } else {

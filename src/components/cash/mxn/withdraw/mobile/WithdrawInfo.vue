@@ -181,7 +181,7 @@ onMounted(() => {
       <!------------------- phone number ------------------------>
       <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_8") }}</div>
       <div class="mt-2 m-withdraw-info-input-card px-4 d-flex align-center">
-        <div class="text-600-12 white">+52 {{ userInfo.phone }}</div>
+        <div class="text-600-12 white">+52 {{ userInfo.phone.substring(2) }}</div>
         <inline-svg
           :src="icon_public_09"
           width="20"
