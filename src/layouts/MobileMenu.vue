@@ -997,6 +997,7 @@ const goReferFriend = (index: number) => {
         <v-list-item
           height="36"
           :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''"
+          style="background: transparent;"
         >
           <v-list-item-title class="ml-2">
             <div class="mail-header-text text-700-14">
@@ -1318,6 +1319,7 @@ const goReferFriend = (index: number) => {
   left: unset !important;
   bottom: 0px !important;
   top: unset !important;
+  background: #23262F;
 
   // background: transparent !important;
   // box-shadow: none !important;
@@ -1328,6 +1330,9 @@ const goReferFriend = (index: number) => {
     position: fixed;
     top: -36px;
     z-index: 100000;
+  }
+  .v-list-item {
+    background: #15161C;
   }
 
   .v-list-item-title {

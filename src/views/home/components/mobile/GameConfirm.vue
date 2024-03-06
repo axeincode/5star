@@ -137,7 +137,7 @@ watch(gameConfirmDialogShow, (value) => {
 <template>
   <div class="m-game-confirm-body">
     <v-row class="mx-2 my-0">
-      <v-col cols="4" class="px-1">
+      <v-col style="flex: 0 0 27.333333% !important;" cols="4" class="px-1">
         <img
           :src="selectedGameItem.image"
           style="width: 100%"
@@ -196,6 +196,8 @@ watch(gameConfirmDialogShow, (value) => {
   // height: 244px;
   width: 100%;
   background: $color_1;
+  padding-left: 4px;
+  padding-top: 6px;
 
   .m-game-confirm-img {
     object-fit: cover;

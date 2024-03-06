@@ -461,14 +461,14 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
         </v-icon>
       </v-btn>
     </v-col>
-    <v-col cols="8" class="d-flex" style="padding-right: 6px">
-      <div style="width: 100%">
+    <v-col cols="8" class="d-flex justify-end" style="padding-right: 10px">
+      <!-- <div style="width: 100%"> -->
         <Pagination
           :length="paginationLength"
           @handlePrev="handlePrev"
           @handleNext="handleNext"
         />
-      </div>
+      <!-- </div> -->
     </v-col>
   </v-row>
 </template>

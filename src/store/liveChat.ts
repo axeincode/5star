@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { authStore } from "@/store/auth";
+// import { authStore } from "@/store/auth";
 
 interface currentState {
   visibility: string;
@@ -10,6 +10,7 @@ interface LiveChatWidgetRef {
   init?: Function;
   on?: Function;
   call?: Function;
+  get?: Function;
 }
 
 // 声明 window 上的 LiveChatWidget 属性
@@ -19,11 +20,11 @@ declare global {
   }
 }
 
-const { getUserInfo } = authStore()
+// const { getUserInfo } = authStore()
 const LiveChatWidgetRef: LiveChatWidgetRef = window.LiveChatWidget;
 
-LiveChatWidgetRef?.call?.("set_customer_name", getUserInfo.id);
-LiveChatWidgetRef?.call?.("set_customer_email", getUserInfo.email);
+// LiveChatWidgetRef?.call?.("set_customer_name", getUserInfo.id);
+// LiveChatWidgetRef?.call?.("set_customer_email", getUserInfo.email);
 
 export const liveChatStore = defineStore({
   id: "liveChat",

@@ -246,7 +246,7 @@ onMounted(async () => {
         </v-list-item-title>
       </v-list-item>
     </v-col>
-    <v-col cols="12" class="pa-1">
+    <v-col cols="12" class="pa-1" style="padding: 4px 28px !important;">
       <v-card theme="dark" color="#15161C" class="m-bonus-card-body pa-2">
         <div
           v-if="userBonusList.list == null || userBonusList.list.length == 0"

@@ -489,6 +489,7 @@ const mobileWidth: any = computed(() => {
   }
   .el-collapse-item__wrap {
     background-color: #15161C !important;
+    border-bottom: 1px solid #1D2027 !important;
   }
   .el-collapse-item__content {
     padding-bottom: 16px;

@@ -99,6 +99,10 @@ onMounted(async () => {
         right: 16px;
         z-index: 99;
     }
+
+    .vip-main-content {
+        padding-bottom: 32px;
+    }
 }
 </style>
 
