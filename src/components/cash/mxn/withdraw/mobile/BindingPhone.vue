@@ -63,13 +63,10 @@ const capthcaDisabled = computed((): boolean => {
   if (phone_number.value == "" || timer_value.value != 0) {
     return true;
   }
-  console.log(phone_code.value + phone_number.value);
-  let disabled = (phone_code.value + phone_number.value).match(
-    phones[currencyList[userBalance.value.currency]]
+  let disabled = phones[currencyList[userBalance.value.currency]].test(
+    phone_code.value + phone_number.value
   );
-  console.log(phones[currencyList[userBalance.value.currency]]);
-  console.log(disabled);
-  return Boolean(disabled);
+  return !disabled;
 });
 
 const submitDisabled = computed(() => {
