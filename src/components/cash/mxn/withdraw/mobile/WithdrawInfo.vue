@@ -193,67 +193,70 @@ onMounted(() => {
         </inline-svg>
       </div>
 
-      <!------------------- bank code ------------------------>
-      <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_9") }}</div>
-      <v-card color="#15161C" theme="dark" class="mt-2 m-withdraw-info-input-card">
-        <v-list-item>
-          <v-list-item-title
-            class="ml-2 text-400-12 d-flex align-center"
-            :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
-          >
-            {{
-              withdrawInfoItem.bank_code == ""
-                ? t("withdraw_info_dialog.text_10")
-                : mxBankList[withdrawInfoItem.bank_code]
-            }}
-          </v-list-item-title>
-        </v-list-item>
-      </v-card>
-      <!-- <v-menu
-        offset="4"
-        v-model:model-value="bankCodeMenuShow"
-        content-class="m-withdraw-method-menu"
-      >
-        <template v-slot:activator="{ props }">
-          <v-card color="#15161C" theme="dark" class="mt-2 m-withdraw-info-input-card">
-            <v-list-item
-              v-bind="props"
-              class=""
-              value="withdraw method dropdown"
-              :append-icon="bankCodeMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-            >
-              <v-list-item-title
-                class="ml-2 text-400-12 d-flex align-center"
-                :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
-              >
-                {{
-                  withdrawInfoItem.bank_code == ""
-                    ? t("withdraw_info_dialog.text_10")
-                    : mxBankList[withdrawInfoItem.bank_code]
-                }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-card>
-        </template>
-        <v-list
-          theme="dark"
-          bg-color="#23262F"
-          class="m-withdraw-method-list px-2"
-          style="height: 160px !important; overflow-y: auto"
-        >
-          <template v-for="(key, index) in Object.keys(mxBankList)" :key="index">
-            <div
-              class="m-withdraw-info-menu-list text-700-12 white d-flex align-center px-4"
-              :class="withdrawInfoItem.bank_code == key ? 'active' : ''"
-              @click="handleSelectBankCode(key)"
-            >
-              {{ mxBankList[key] }}
-            </div>
-          </template>
-        </v-list>
-      </v-menu> -->
-
       <template v-if="selectedWithdrawMethodItem == t('withdraw_info_dialog.text_2')">
+        <!------------------- bank code ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_9") }}
+        </div>
+        <v-card color="#15161C" theme="dark" class="mt-2 m-withdraw-info-input-card">
+          <v-list-item>
+            <v-list-item-title
+              class="ml-2 text-400-12 d-flex align-center"
+              :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
+            >
+              {{
+                withdrawInfoItem.bank_code == ""
+                  ? t("withdraw_info_dialog.text_10")
+                  : mxBankList[withdrawInfoItem.bank_code]
+              }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-card>
+
+        <!-- <v-menu
+          offset="4"
+          v-model:model-value="bankCodeMenuShow"
+          content-class="m-withdraw-method-menu"
+        >
+          <template v-slot:activator="{ props }">
+            <v-card color="#15161C" theme="dark" class="mt-2 m-withdraw-info-input-card">
+              <v-list-item
+                v-bind="props"
+                class=""
+                value="withdraw method dropdown"
+                :append-icon="bankCodeMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+              >
+                <v-list-item-title
+                  class="ml-2 text-400-12 d-flex align-center"
+                  :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
+                >
+                  {{
+                    withdrawInfoItem.bank_code == ""
+                      ? t("withdraw_info_dialog.text_10")
+                      : mxBankList[withdrawInfoItem.bank_code]
+                  }}
+                </v-list-item-title>
+              </v-list-item>
+            </v-card>
+          </template>
+          <v-list
+            theme="dark"
+            bg-color="#23262F"
+            class="m-withdraw-method-list px-2"
+            style="height: 160px !important; overflow-y: auto"
+          >
+            <template v-for="(key, index) in Object.keys(mxBankList)" :key="index">
+              <div
+                class="m-withdraw-info-menu-list text-700-12 white d-flex align-center px-4"
+                :class="withdrawInfoItem.bank_code == key ? 'active' : ''"
+                @click="handleSelectBankCode(key)"
+              >
+                {{ mxBankList[key] }}
+              </div>
+            </template>
+          </v-list>
+        </v-menu> -->
+
         <!------------------- account type ------------------------>
         <div class="text-400-12 gray px-4 mt-4">
           {{ t("withdraw_info_dialog.text_11") }}
