@@ -125,7 +125,7 @@ const Login = defineComponent({
 
       if (success.value) {
         Adjust.trackEvent({
-          eventToken: "gmx6cdn8x3pc",
+          eventToken: "yzv017",
         });
         await dispatchUserProfile();
         await dispatchUserBalance();

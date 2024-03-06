@@ -27,6 +27,7 @@ import icon_public_150 from "@/assets/public/svg/icon_public_150.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from "@/utils/currencyList";
 import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
+import Adjust from "@adjustcom/adjust-web-sdk";
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -389,6 +390,9 @@ const handleWithdrawSubmit = async () => {
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
   if (success.value) {
+        Adjust.trackEvent({
+          eventToken: "idmvzd",
+        });
     const toast = useToast();
     toast.success(t("withdraw_dialog.text_11"), {
       timeout: 3000,
