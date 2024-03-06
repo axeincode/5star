@@ -43,7 +43,7 @@ import Vue3GoogleLogin from 'vue3-google-login';
 import Adjust from '@adjustcom/adjust-web-sdk';
 
 Adjust.initSdk({
-  appToken: 'YOUR_APP_TOKEN',
+  appToken: 'epa7i506785c',
   environment: 'sandbox', // or 'production'
 });
 

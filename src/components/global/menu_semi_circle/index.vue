@@ -171,7 +171,7 @@ const mailSvgTransform = (el: any) => {
 
 const handleSelectItem = (item: string) => {
   setSelectedCircleItem(item);
-  setCircleMenuBtnClicked(circleMenuBtnClicked ? true : false);
+  setCircleMenuBtnClicked(circleMenuBtnClicked.value ? false : true);
   selectedText.value = item;
   casinoGameShow.value = !casinoGameShow.value;
   setSelectedItem(item);
@@ -242,7 +242,10 @@ onMounted(() => {
         ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div class="text-600-12" :class="selectedText == 'Promo' ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedText == t('mobile_menu.promo') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.promo") }}
       </div>
     </div>
@@ -256,7 +259,10 @@ onMounted(() => {
         ></inline-svg>
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
-      <div class="text-600-12" :class="selectedText == 'Mail' ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedText == t('mobile_menu.mail') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.mail") }}
       </div>
     </div>
@@ -270,7 +276,10 @@ onMounted(() => {
         height="22"
         :transform-source="casinoSvgTransform"
       ></inline-svg>
-      <div class="text-600-12" :class="selectedText == 'Casino' ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedText == t('mobile_menu.casino') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.casino") }}
       </div>
     </div>

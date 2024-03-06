@@ -17,7 +17,8 @@ import { useToast } from "vue-toastification";
 import { throwStatement } from "@babel/types";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
-import { googleTokenLogin } from 'vue3-google-login';
+import { googleTokenLogin } from "vue3-google-login";
+import Adjust from "@adjustcom/adjust-web-sdk";
 
 const Login = defineComponent({
   components: {
@@ -42,7 +43,7 @@ const Login = defineComponent({
     const { dispatchVipLevels } = vipStore();
     const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
-    const {dispatchCurrencyList} = currencyStore();
+    const { dispatchCurrencyList } = currencyStore();
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
@@ -56,7 +57,7 @@ const Login = defineComponent({
       },
       socialIconList: [
         new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href
+        new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
       ],
       isShowPassword: false,
       notificationShow: false,
@@ -68,7 +69,8 @@ const Login = defineComponent({
       closeBtnHeight: 0,
       containerHeight: 0 as number | undefined,
       bodyHeight: 0,
-      clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com'
+      clientId:
+        "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
     });
     const mobileWidth = computed(() => {
       return width.value;
@@ -122,6 +124,9 @@ const Login = defineComponent({
       });
 
       if (success.value) {
+        Adjust.trackEvent({
+          eventToken: "gmx6cdn8x3pc",
+        });
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchCurrencyList();
@@ -216,32 +221,35 @@ const Login = defineComponent({
     // google Login  谷歌登录
     const onSignInSuccessGoogle = (index: number) => {
       if (index === 0) {
-        FB.login(function(response){
-          console.log('facebook登录', response);
+        FB.login(function (response) {
+          console.log("facebook登录", response);
         });
       }
       if (index === 1) {
         googleTokenLogin({
-          clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com'
+          clientId:
+            "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
         }).then((res: any) => {
-          console.log('google登录', res)
-        })
+          console.log("google登录", res);
+        });
       }
-    }
+    };
 
     const statusChangeCallback = (response) => {
-      console.log('statusChangeCallback');
-      console.log(response);                   // The current login status of the person.
-      if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-        testAPI();  
-      } else {                                 // Not logged into your webpage or we are unable to tell.
-        console.log('报错了')
+      console.log("statusChangeCallback");
+      console.log(response); // The current login status of the person.
+      if (response.status === "connected") {
+        // Logged into your webpage and Facebook.
+        testAPI();
+      } else {
+        // Not logged into your webpage or we are unable to tell.
+        console.log("报错了");
       }
-    }
+    };
 
     const onSignInSuccess = () => {
-      FB.login(function(response){
-          console.log(response);
+      FB.login(function (response) {
+        console.log(response);
       });
       // FB.init({
       //   appId: '1782039332218801',
@@ -252,25 +260,28 @@ const Login = defineComponent({
       //   statusChangeCallback(response);       // Returns the login status.
       // // get your auth token and info
       // })
-    }
+    };
 
-    const testAPI = () => {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-      console.log('Welcome!  Fetching your information.... ');
-      FB.api('/me', function(response) {
-        console.log('Successful login for: ' + response.name);
+    const testAPI = () => {
+      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+      console.log("Welcome!  Fetching your information.... ");
+      FB.api("/me", function (response) {
+        console.log("Successful login for: " + response.name);
       });
-    }
+    };
 
     const onSignInError = (err: any) => {
-      console.log('失败了吗', err)
+      console.log("失败了吗", err);
       // logic if auth failed
-    }
+    };
 
-    const checkLoginState = () => {               // Called when a person is finished with the Login Button.
-      FB.getLoginStatus(function(response) {   // See the onlogin handler
+    const checkLoginState = () => {
+      // Called when a person is finished with the Login Button.
+      FB.getLoginStatus(function (response) {
+        // See the onlogin handler
         statusChangeCallback(response);
       });
-    }
+    };
 
     watch(
       mobileWidth,
@@ -301,7 +312,7 @@ const Login = defineComponent({
       onSignInError,
       testAPI,
       statusChangeCallback,
-      checkLoginState
+      checkLoginState,
     };
   },
 });
@@ -558,7 +569,9 @@ export default Login;
 @media (max-width: 600px) {
   .v-field__field {
     color: var(--sec-text-7782-aa, #7782aa);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -567,7 +580,9 @@ export default Login;
 
     input {
       padding-top: 6px !important;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 600;
@@ -575,7 +590,9 @@ export default Login;
     }
 
     .v-label.v-field-label {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;
@@ -595,7 +612,9 @@ export default Login;
   box-shadow: 0px 4px 6px 1px #0000004d;
 
   .v-btn__content {
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 14px;
     font-weight: 700;
     line-height: 17px;
@@ -638,7 +657,9 @@ export default Login;
 .m-signin-btn-text {
   .v-btn__content {
     text-align: center;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -683,7 +704,9 @@ export default Login;
 
 // divider
 .m-divide-text {
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -703,7 +726,9 @@ export default Login;
 
 // divider
 .divide-text {
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -734,7 +759,9 @@ export default Login;
 
 .login-forget-passwrod-text {
   cursor: pointer;
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -751,7 +778,9 @@ export default Login;
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -779,7 +808,9 @@ export default Login;
     }
 
     .v-label.v-field-label {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -803,7 +834,9 @@ export default Login;
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;

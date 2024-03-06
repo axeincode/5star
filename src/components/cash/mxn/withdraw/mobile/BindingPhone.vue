@@ -86,6 +86,9 @@ const sendSMSVerificationCode = async () => {
   await dispatchSmsVerificationCode({
     phone: "52" + phone_number.value,
   });
+  // const time = new Date();
+  // time.setSeconds(time.getSeconds() + timer_value.value);
+  // timer.restart(Number(time));
   captchaLoading.value = false;
 };
 
@@ -93,7 +96,7 @@ const submitSMS = async () => {
   submitLoading.value = true;
   emit("submitPhoneBinding");
   await dispatchSubmitSMS({
-    phone: phone_number.value,
+    phone: "52" + phone_number.value,
     code: verification_code.value,
   });
   submitLoading.value = false;

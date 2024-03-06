@@ -204,7 +204,7 @@ const refreshWithdrawalConfig = async () => {
 
 watch(userBalance, (value) => {
   availableAmount.value = value["availabe_balance"];
-}, {deep: true});
+}, { deep: true });
 
 watch(withdrawConfig, (newValue) => {
   paymentList.value = [];
@@ -542,21 +542,21 @@ onMounted(async () => {
     class="mobile-withdraw-container"
     :class="depositBlurEffectShow || phoneBindingDialog ? 'deposit-bg-blur' : ''"
   >
-    <v-row class="mt-6 mx-8 text-500-10 white align-center">
+    <v-row class="mt-6 mx-10 text-500-10 white align-center">
       {{ t("withdraw_dialog.withdraw_amount") }}
       {{ selectedCurrencyUnit }}
       {{ availableAmount }}
-      <div style="margin-left: auto" class="relative">
+      <div style="margin-left: auto" class="relative pr-4">
         <img
           @click="refreshWithdrawalConfig"
           src="@/assets/public/svg/icon_public_16.svg"
-          width="16"
+          width="12"
           class="m-withdraw-balance-refresh-img"
           :class="refreshLoading ? 'm-img-loading' : ''"
         />
       </div>
     </v-row>
-    <v-row class="mt-2 mx-2 relative">
+    <v-row class="mt-2 mx-3 relative">
       <v-text-field
         :label="`${t('withdraw_dialog.amount')}(${selectedCurrencyUnit})`"
         class="form-textfield dark-textfield m-withdraw-amount-text mb-0"
@@ -570,19 +570,19 @@ onMounted(async () => {
         @input="handleAmountInputChange"
       />
     </v-row>
-    <div class="mt-3 mx-8 text-400-12 gray d-flex align-center">
+    <div class="mt-3 mx-10 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_5") }}
       <span class="text-700-12" style="margin-left: auto">
         {{ feeAmount }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
-    <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
+    <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_6") }}
       <span class="text-700-12" style="margin-left: auto">
         {{ cashableAmount }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
-    <div class="mt-2 mx-8 text-400-12 gray d-flex align-center">
+    <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
       <span class="text-700-12" style="margin-left: auto">
         {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
@@ -591,15 +591,20 @@ onMounted(async () => {
     <div class="mx-4 mt-2">
       <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
     </div>
-    <v-row class="mt-2 mx-8 text-400-12 gray">
+    <v-row class="mt-2 mx-10 text-400-12 gray">
       {{ t("withdraw_dialog.withdraw_payment_method") }}
     </v-row>
-    <v-menu offset="4" class="mt-1" v-model:model-value="paymentMenuShow">
+    <v-menu
+      offset="4"
+      class="mt-1"
+      v-model:model-value="paymentMenuShow"
+      content-class="m-withdraw-payment-menu"
+    >
       <template v-slot:activator="{ props }">
         <v-card
           color="#15161C"
           theme="dark"
-          class="mx-4 mt-4 m-deposit-card-height"
+          class="mx-6 mt-4 m-deposit-card-height"
           style="border-radius: 8px"
         >
           <v-list-item
@@ -626,7 +631,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#15161C">
+      <v-list theme="dark" bg-color="#15161C" class="mr-6">
         <v-row class="m-payment-width-370 px-2">
           <v-col
             cols="12"
@@ -682,7 +687,7 @@ onMounted(async () => {
         </v-row>
       </v-list>
     </v-menu>
-    <div class="mx-14 my-4">
+    <div class="mx-10 my-4">
       <!-- <v-checkbox
         hide-details
         icon
@@ -692,16 +697,16 @@ onMounted(async () => {
       /> -->
       <div class="text-400-12 gray">{{ t("withdraw_dialog.text_8") }}</div>
     </div>
-    <v-row class="mt-0 mx-14 text-400-10 gray">
+    <v-row class="mt-0 mx-10 text-400-10 gray">
       {{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig?.fee?.rate) * 100 }}%
     </v-row>
     <!-- <v-row class="mt-4 mx-14 text-400-10 gray">
       {{ t("withdraw_dialog.text_2") }}{{ selectedCurrencyUnit }}0
     </v-row> -->
-    <v-row class="mt-4 mx-14 text-400-10 gray">
+    <v-row class="mt-4 mx-10 text-400-10 gray">
       {{ t("withdraw_dialog.text_3") }}
     </v-row>
-    <v-row class="mt-4 mx-14 text-400-10 gray">
+    <v-row class="mt-4 mx-10 text-400-10 gray">
       {{ t("withdraw_dialog.text_4") }}
     </v-row>
     <!-- <v-row
@@ -713,7 +718,7 @@ onMounted(async () => {
     </v-row> -->
     <div class="m-withdraw-btn-position">
       <v-btn
-        class="ma-3 m-deposit-btn"
+        class="my-3 mx-6 m-deposit-btn"
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
@@ -741,6 +746,10 @@ onMounted(async () => {
   to {
     transform: rotate(360deg);
   }
+}
+
+.m-withdraw-payment-menu {
+  left: 24px !important;
 }
 
 .m-phone-binding-dialog {

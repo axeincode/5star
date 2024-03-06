@@ -23,6 +23,7 @@ import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from '@/utils/currencyList';
+import Adjust from '@adjustcom/adjust-web-sdk';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -431,6 +432,9 @@ const handleDepositSubmit = async () => {
       icon: SuccessIcon,
       rtl: false,
     });
+    Adjust.trackEvent({
+      eventToken: 'gmx6cdn8x3pc'
+    })
     await dispatchUserProfile();
     await dispatchUserBalance();
     // if (depositSubmit.value.code_url != "") {
@@ -636,7 +640,7 @@ onMounted(async () => {
     class="mobile-deposit-container"
     :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
   >
-    <v-row class="mt-6 mx-6 text-400-12 gray">
+    <v-row class="mt-6 mx-10 text-400-12 gray">
       {{ t("deposit_dialog.deposit_currency") }}
     </v-row>
     <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
@@ -644,7 +648,7 @@ onMounted(async () => {
         <v-card
           color="#15161C"
           theme="dark"
-          class="mx-4 mt-4 m-deposit-card-height"
+          class="mx-6 mt-4 m-deposit-card-height"
           style="border-radius: 8px"
         >
           <v-list-item
@@ -681,15 +685,20 @@ onMounted(async () => {
         </v-list-item>
       </v-list> -->
     </v-menu>
-    <v-row class="mt-6 mx-6 text-400-12 gray">
+    <v-row class="mt-6 mx-10 text-400-12 gray">
       {{ t("deposit_dialog.choose_payment_method") }}
     </v-row>
-    <v-menu offset="4" class="mt-1" v-model:model-value="paymentMenuShow">
+    <v-menu
+      offset="4"
+      class="mt-1"
+      v-model:model-value="paymentMenuShow"
+      content-class="m-deposit-payment-menu"
+    >
       <template v-slot:activator="{ props }">
         <v-card
           color="#15161C"
           theme="dark"
-          class="mx-4 mt-4 m-deposit-card-height"
+          class="mx-6 mt-4 m-deposit-card-height"
           style="border-radius: 8px"
         >
           <v-list-item
@@ -707,7 +716,7 @@ onMounted(async () => {
           </v-list-item>
         </v-card>
       </template>
-      <v-list theme="dark" bg-color="#15161C" class="mx-1">
+      <v-list theme="dark" bg-color="#15161C" class="mr-6">
         <v-row class="m-payment-width-370 px-2">
           <v-col
             cols="12"
@@ -749,10 +758,10 @@ onMounted(async () => {
     <div class="mx-4 mt-2">
       <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
     </div>
-    <v-row class="mt-4 mx-6 text-400-12 gray">
+    <v-row class="mt-4 mx-10 text-400-12 gray">
       {{ t("deposit_dialog.deposit_amount") }}
     </v-row>
-    <v-row class="mt-2 mx-2">
+    <v-row class="mt-2 mx-4">
       <v-col
         cols="4"
         class="py-1 px-2"
@@ -785,7 +794,7 @@ onMounted(async () => {
         </v-btn>
       </v-col>
     </v-row>
-    <v-row class="mt-4 mx-1 relative">
+    <v-row class="mt-4 mx-3 relative">
       <v-text-field
         :label="`${t('deposit_dialog.amount')}(${selectedCurrencyItem.name})`"
         class="form-textfield dark-textfield m-deposit-amount-text"
@@ -835,11 +844,11 @@ onMounted(async () => {
       {{ t("deposit_dialog.other_text_1") }}
     </v-row> -->
     <div
-      class="m-deposit-bonus-card mx-4 px-2 py-4"
+      class="m-deposit-bonus-card mx-6 px-2 py-2"
       :class="bonusCheck ? '' : 'm-deposit-bonus-card-border'"
     >
       <div class="d-flex align-center">
-        <img src="@/assets/vip/image/img_vip_10.png" width="30" />
+        <img src="@/assets/vip/image/img_vip_10.png" width="21" />
         <div class="text-700-12 white">{{ depositConfig.name }}</div>
       </div>
       <div class="d-flex align-start ml-6">
@@ -849,7 +858,7 @@ onMounted(async () => {
     </div>
     <div class="m-deposit-btn-position">
       <v-btn
-        class="ma-4 m-deposit-btn"
+        class="my-4 mx-6 m-deposit-btn"
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
@@ -886,6 +895,10 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+.m-deposit-payment-menu {
+  left: 24px !important;
+}
+
 // container
 .mobile-deposit-container {
   overflow-y: auto;
