@@ -842,3 +842,30 @@ button:active:enabled {
 .pb-100 {
     padding-bottom: 100px !important;
 }
+
+.Vue-Toastification__toast.m-custom-toast-class {
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 40px;
+    min-height: 40px;
+    padding: 0 20px;
+    border-radius: 8px 0 0 8px;
+
+    .Vue-Toastification__icon {
+        width: 24px;
+        height: 24px;
+    }
+    .Vue-Toastification__toast-body {
+        height: 24px;
+        line-height: 24px;
+        font-size: 10px;
+        color: #fff;
+    }
+    .Vue-Toastification__close-button {
+        background-image: url("@/assets/public/svg/icon_public_10.svg");
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        background-position: center center;
+        color: transparent;
+        opacity: 1;
+    }
+}

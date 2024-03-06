@@ -243,8 +243,8 @@ onMounted(() => {
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
       <div
-        class="text-600-12"
-        :class="selectedText == t('mobile_menu.promo') ? 'white' : 'gray'"
+        class="text-600-10"
+        :class="selectedItem == 'Promo' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.promo") }}
       </div>
@@ -260,8 +260,8 @@ onMounted(() => {
         <p class="chat-box-text">{{ mailCount }}</p>
       </div>
       <div
-        class="text-600-12"
-        :class="selectedText == t('mobile_menu.mail') ? 'white' : 'gray'"
+        class="text-600-10"
+        :class="selectedItem == 'Mail' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.mail") }}
       </div>
@@ -277,8 +277,8 @@ onMounted(() => {
         :transform-source="casinoSvgTransform"
       ></inline-svg>
       <div
-        class="text-600-12"
-        :class="selectedText == t('mobile_menu.casino') ? 'white' : 'gray'"
+        class="text-600-10"
+        :class="selectedItem == 'Casino' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.casino") }}
       </div>

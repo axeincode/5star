@@ -370,12 +370,26 @@ const handleDepositSubmit = async () => {
   loading.value = false;
   if (success.value) {
     if (depositSubmit.value.url != "") {
-      let newWindow = window.open(depositSubmit.value.url, '_blank');
-      if (newWindow) {
-        newWindow.focus(); // If the new window is successfully opened, switch the focus to the new window
-      } else {
-        alert('Please allow pop-ups in your browser to view the content.'); // If unable to open a new window, show an alert message
+      // let newWindow = window.open(depositSubmit.value.url, '_blank');
+
+      // if (newWindow) {
+      //   newWindow.focus(); // If the new window is successfully opened, switch the focus to the new window
+      // } else {
+      //   alert('Please allow pop-ups in your browser to view the content.'); // If unable to open a new window, show an alert message
+      // }
+
+      // 处理跳转新窗口浏览器拦截
+      const elementA = document.createElement('a');
+      const elementAid = 'newpage'
+      elementA.setAttribute('href', depositSubmit.value.url);
+      elementA.setAttribute('target', '_blank');
+      elementA.setAttribute('id', elementAid);
+      // 防止反复添加
+      if(!document.getElementById(elementAid)) {
+        document.body.appendChild(elementA);
       }
+      elementA.click();
+
       const toast = useToast();
       toast.success(t("deposit_dialog.text_1"), {
         timeout: 3000,

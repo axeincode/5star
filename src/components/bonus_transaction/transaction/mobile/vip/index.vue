@@ -409,14 +409,14 @@ onMounted(async () => {
         </v-list>
       </v-menu>
     </v-col>
-    <v-col class="d-flex" style="padding-right: 6px">
-      <div style="width: 100%">
+    <v-col class="d-flex justify-end" style="padding-right: 10px;">
+      <!-- <div style="width: 100%"> -->
         <Pagination
           :length="paginationLength"
           @handlePrev="handlePrev"
           @handleNext="handleNext"
         />
-      </div>
+      <!-- </div> -->
     </v-col>
   </v-row>
 </template>

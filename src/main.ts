@@ -108,6 +108,7 @@ const options: PluginOptions = {
   showCloseButtonOnHover: false,
   hideProgressBar: true,
   closeButton: "button",
+  toastClassName: "m-custom-toast-class",
   rtl: false,
 };
 

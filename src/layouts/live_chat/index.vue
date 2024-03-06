@@ -3,8 +3,11 @@
 import { ref, onMounted } from "vue";
 import icon_public_45 from "@/assets/public/svg/icon_public_45.svg";
 import { liveChatStore } from "@/store/liveChat";
+import { authStore } from "@/store/auth";
 
 const { setLiveChatMaximize, LiveChatWidget, setInitialData, getVisibility, setLiveChatVisibility } = liveChatStore()
+const { getUserInfo } = authStore()
+
 const license = ref<string>("16597974");
 
 const supportIconColor = ref<string>("#7782AA");
@@ -28,8 +31,9 @@ const openLiveChat = () => {
   setLiveChatMaximize()
 }
 const onReadyHandler = (initialData:any):void => {
-  console.log(initialData);
   
+  LiveChatWidget?.call?.("set_customer_name", getUserInfo.id);
+
   // 初始化数据
   setInitialData(initialData)
 }
@@ -38,9 +42,6 @@ const onVisibilityChanged = (data:any):void => {
   setLiveChatVisibility(data.visibility)
   console.log(getVisibility, 'getVisibility');
 }
-const handleNewEvent = function () {};
-const handleonReady = function () {};
-const visibilityChanged = function () {};
 </script>
 
 <template>
