@@ -27,15 +27,21 @@ const accountTypeMenuShow = ref<boolean>(false);
 const typeMenuShow = ref<boolean>(false);
 
 const withdrawInfoItem = ref<any>({
-  name: "",
-  email: "",
-  phone: "",
-  bank_code: "",
-  account_type: "",
-  clabe_number: "",
-  type: "RFC",
-  rfc: "",
-  paypal_account: "",
+  paypal: {
+    name: "",
+    email: "",
+    paypal_account: "",
+  },
+  spei: {
+    name: "",
+    email: "",
+    phone: "",
+    bank_code: "",
+    account_type: "",
+    clabe_number: "",
+    type: "RFC",
+    rfc: "",
+  }
 })
 
 const typeList = ref<Array<string>>([
@@ -71,7 +77,6 @@ const svgTransform = (el: any, color: string) => {
 };
 
 const addWithdrawInfo = () => {
-  withdrawInfoItem.value.phone = userInfo.value.phone;
   localStorage.setItem(userInfo.value.id.toString(), JSON.stringify(withdrawInfoItem.value))
   const toast = useToast();
   toast.success('Successfully added !', {
@@ -89,10 +94,10 @@ const addWithdrawInfo = () => {
 }
 
 watch(withdrawInfoItem, (newValue) => {
-  if (newValue.clabe_number.length > 2) {
-    withdrawInfoItem.value.bank_code = Object.keys(mxBankList).filter(item => item.slice(-3) === newValue.clabe_number.substring(0, 3))[0];
+  if (newValue.spei.clabe_number.length > 2) {
+    withdrawInfoItem.value.spei.bank_code = Object.keys(mxBankList).filter(item => item.slice(-3) === newValue.spei.clabe_number.substring(0, 3))[0];
   } else {
-    withdrawInfoItem.value.bank_code = "";
+    withdrawInfoItem.value.spei.bank_code = "";
   }
 }, { immediate: true, deep: true });
 
@@ -156,44 +161,49 @@ onMounted(() => {
         </v-list>
       </v-menu>
 
-      <!------------------- name ------------------------>
-      <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_4") }}</div>
-      <div class="mt-2 m-withdraw-info-input-card px-4">
-        <input
-          type="text"
-          v-model="withdrawInfoItem.name"
-          :placeholder="t('withdraw_info_dialog.text_5')"
-          class="text-700-12"
-        />
-      </div>
-
-      <!------------------- e-mail ------------------------>
-      <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_6") }}</div>
-      <div class="mt-2 m-withdraw-info-input-card px-4">
-        <input
-          type="text"
-          v-model="withdrawInfoItem.email"
-          :placeholder="t('withdraw_info_dialog.text_7')"
-          class="text-700-12"
-        />
-      </div>
-
-      <!------------------- phone number ------------------------>
-      <div class="text-400-12 gray px-4 mt-4">{{ t("withdraw_info_dialog.text_8") }}</div>
-      <div class="mt-2 m-withdraw-info-input-card px-4 d-flex align-center">
-        <div class="text-600-12 white">+52 {{ userInfo.phone.substring(2) }}</div>
-        <inline-svg
-          :src="icon_public_09"
-          width="20"
-          height="20"
-          :transform-source="(el: any) => svgTransform(el, '#12FF76')"
-          style="margin-left: auto"
-          v-if="userInfo.phone_confirmd"
-        >
-        </inline-svg>
-      </div>
-
       <template v-if="selectedWithdrawMethodItem == t('withdraw_info_dialog.text_2')">
+        <!------------------- name ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_4") }}
+        </div>
+        <div class="mt-2 m-withdraw-info-input-card px-4">
+          <input
+            type="text"
+            v-model="withdrawInfoItem.spei.name"
+            :placeholder="t('withdraw_info_dialog.text_5')"
+            class="text-700-12"
+          />
+        </div>
+
+        <!------------------- e-mail ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_6") }}
+        </div>
+        <div class="mt-2 m-withdraw-info-input-card px-4">
+          <input
+            type="text"
+            v-model="withdrawInfoItem.spei.email"
+            :placeholder="t('withdraw_info_dialog.text_7')"
+            class="text-700-12"
+          />
+        </div>
+
+        <!------------------- phone number ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_8") }}
+        </div>
+        <div class="mt-2 m-withdraw-info-input-card px-4 d-flex align-center">
+          <div class="text-600-12 white">+52 {{ userInfo.phone.substring(2) }}</div>
+          <inline-svg
+            :src="icon_public_09"
+            width="20"
+            height="20"
+            :transform-source="(el: any) => svgTransform(el, '#12FF76')"
+            style="margin-left: auto"
+            v-if="userInfo.phone_confirmd"
+          >
+          </inline-svg>
+        </div>
         <!------------------- bank code ------------------------>
         <div class="text-400-12 gray px-4 mt-4">
           {{ t("withdraw_info_dialog.text_9") }}
@@ -202,60 +212,16 @@ onMounted(() => {
           <v-list-item>
             <v-list-item-title
               class="ml-2 text-400-12 d-flex align-center"
-              :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
+              :class="withdrawInfoItem.spei.bank_code == '' ? 'gray' : 'white'"
             >
               {{
-                withdrawInfoItem.bank_code == ""
+                withdrawInfoItem.spei.bank_code == ""
                   ? t("withdraw_info_dialog.text_10")
-                  : mxBankList[withdrawInfoItem.bank_code]
+                  : mxBankList[withdrawInfoItem.spei.bank_code]
               }}
             </v-list-item-title>
           </v-list-item>
         </v-card>
-
-        <!-- <v-menu
-          offset="4"
-          v-model:model-value="bankCodeMenuShow"
-          content-class="m-withdraw-method-menu"
-        >
-          <template v-slot:activator="{ props }">
-            <v-card color="#15161C" theme="dark" class="mt-2 m-withdraw-info-input-card">
-              <v-list-item
-                v-bind="props"
-                class=""
-                value="withdraw method dropdown"
-                :append-icon="bankCodeMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-              >
-                <v-list-item-title
-                  class="ml-2 text-400-12 d-flex align-center"
-                  :class="withdrawInfoItem.bank_code == '' ? 'gray' : 'white'"
-                >
-                  {{
-                    withdrawInfoItem.bank_code == ""
-                      ? t("withdraw_info_dialog.text_10")
-                      : mxBankList[withdrawInfoItem.bank_code]
-                  }}
-                </v-list-item-title>
-              </v-list-item>
-            </v-card>
-          </template>
-          <v-list
-            theme="dark"
-            bg-color="#23262F"
-            class="m-withdraw-method-list px-2"
-            style="height: 160px !important; overflow-y: auto"
-          >
-            <template v-for="(key, index) in Object.keys(mxBankList)" :key="index">
-              <div
-                class="m-withdraw-info-menu-list text-700-12 white d-flex align-center px-4"
-                :class="withdrawInfoItem.bank_code == key ? 'active' : ''"
-                @click="handleSelectBankCode(key)"
-              >
-                {{ mxBankList[key] }}
-              </div>
-            </template>
-          </v-list>
-        </v-menu> -->
 
         <!------------------- account type ------------------------>
         <div class="text-400-12 gray px-4 mt-4">
@@ -276,12 +242,12 @@ onMounted(() => {
               >
                 <v-list-item-title
                   class="ml-2 text-400-12 d-flex align-center"
-                  :class="withdrawInfoItem.account_type == '' ? 'gray' : 'white'"
+                  :class="withdrawInfoItem.spei.account_type == '' ? 'gray' : 'white'"
                 >
                   {{
-                    withdrawInfoItem.account_type == ""
+                    withdrawInfoItem.spei.account_type == ""
                       ? t("withdraw_info_dialog.text_12")
-                      : withdrawInfoItem.account_type
+                      : withdrawInfoItem.spei.account_type
                   }}
                 </v-list-item-title>
               </v-list-item>
@@ -291,7 +257,7 @@ onMounted(() => {
             <template v-for="(item, index) in accountTypeList" :key="index">
               <div
                 class="m-withdraw-info-menu-list text-700-12 white d-flex align-center px-4"
-                :class="withdrawInfoItem.account_type == item ? 'active' : ''"
+                :class="withdrawInfoItem.spei.account_type == item ? 'active' : ''"
                 @click="handleSelectAccountType(item)"
               >
                 {{ item }}
@@ -310,7 +276,7 @@ onMounted(() => {
         <div class="mt-2 m-withdraw-info-input-card px-4">
           <input
             type="text"
-            v-model="withdrawInfoItem.clabe_number"
+            v-model="withdrawInfoItem.spei.clabe_number"
             :placeholder="t('withdraw_info_dialog.text_14')"
             class="text-700-12"
           />
@@ -335,9 +301,9 @@ onMounted(() => {
               >
                 <v-list-item-title
                   class="ml-2 text-400-12 d-flex align-center"
-                  :class="withdrawInfoItem.type == '' ? 'gray' : 'white'"
+                  :class="withdrawInfoItem.spei.type == '' ? 'gray' : 'white'"
                 >
-                  {{ withdrawInfoItem.type }}
+                  {{ withdrawInfoItem.spei.type }}
                 </v-list-item-title>
               </v-list-item>
             </v-card>
@@ -346,7 +312,7 @@ onMounted(() => {
             <template v-for="(item, index) in typeList" :key="index">
               <div
                 class="m-withdraw-info-menu-list text-700-12 white d-flex align-center px-4"
-                :class="withdrawInfoItem.type == item ? 'active' : ''"
+                :class="withdrawInfoItem.spei.type == item ? 'active' : ''"
                 @click="handleSelectType(item)"
               >
                 {{ item }}
@@ -360,13 +326,56 @@ onMounted(() => {
         <div class="mt-2 m-withdraw-info-input-card px-4">
           <input
             type="text"
-            v-model="withdrawInfoItem.rfc"
+            v-model="withdrawInfoItem.spei.rfc"
             :placeholder="t('withdraw_info_dialog.text_17')"
             class="text-700-12"
           />
         </div>
       </template>
+
       <template v-else>
+        <!------------------- name ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_4") }}
+        </div>
+        <div class="mt-2 m-withdraw-info-input-card px-4">
+          <input
+            type="text"
+            v-model="withdrawInfoItem.paypal.name"
+            :placeholder="t('withdraw_info_dialog.text_5')"
+            class="text-700-12"
+          />
+        </div>
+
+        <!------------------- e-mail ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_6") }}
+        </div>
+        <div class="mt-2 m-withdraw-info-input-card px-4">
+          <input
+            type="text"
+            v-model="withdrawInfoItem.paypal.email"
+            :placeholder="t('withdraw_info_dialog.text_7')"
+            class="text-700-12"
+          />
+        </div>
+
+        <!------------------- phone number ------------------------>
+        <div class="text-400-12 gray px-4 mt-4">
+          {{ t("withdraw_info_dialog.text_8") }}
+        </div>
+        <div class="mt-2 m-withdraw-info-input-card px-4 d-flex align-center">
+          <div class="text-600-12 white">+52 {{ userInfo.phone.substring(2) }}</div>
+          <inline-svg
+            :src="icon_public_09"
+            width="20"
+            height="20"
+            :transform-source="(el: any) => svgTransform(el, '#12FF76')"
+            style="margin-left: auto"
+            v-if="userInfo.phone_confirmd"
+          >
+          </inline-svg>
+        </div>
         <!------------------- paypal account ------------------------>
         <div class="text-400-12 gray px-4 mt-4">
           {{ t("withdraw_info_dialog.text_20") }}
@@ -374,7 +383,7 @@ onMounted(() => {
         <div class="mt-2 m-withdraw-info-input-card px-4">
           <input
             type="text"
-            v-model="withdrawInfoItem.paypal_account"
+            v-model="withdrawInfoItem.paypal.paypal_account"
             :placeholder="t('withdraw_info_dialog.text_7')"
             class="text-700-12"
           />
