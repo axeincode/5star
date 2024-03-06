@@ -145,34 +145,34 @@ watchEffect(() => {
 
 watch(selectedItem, (new_value, old_value) => {
   switch (old_value) {
-    case t("Promo"):
+    case t("mobile_menu.promo"):
       switch (new_value) {
-        case t("Mail"):
+        case t("mobile_menu.mail"):
           rotation.value = rotation.value + 240;
           break;
-        case t("Casino"):
+        case t("mobile_menu.casino"):
           rotation.value = rotation.value + 120;
           break;
       }
       // rotation.value = 270
       break;
-    case t("Mail"):
+    case t("mobile_menu.mail"):
       switch (new_value) {
-        case t("Promo"):
+        case t("mobile_menu.promo"):
           rotation.value = rotation.value + 120;
           break;
-        case t("Casino"):
+        case t("mobile_menu.casino"):
           rotation.value = rotation.value + 240;
           break;
       }
       // rotation.value = 270 + 90
       break;
-    case t("Casino"):
+    case t("mobile_menu.casino"):
       switch (new_value) {
-        case t("Promo"):
+        case t("mobile_menu.promo"):
           rotation.value = rotation.value + 240;
           break;
-        case t("Mail"):
+        case t("mobile_menu.mail"):
           rotation.value = rotation.value + 120;
           break;
       }
@@ -181,15 +181,15 @@ watch(selectedItem, (new_value, old_value) => {
   }
 
   switch (new_value) {
-    case t("Promo"):
+    case t("mobile_menu.promo"):
       selectedImg.value = img_public_17;
       selectedIcon.value = icon_public_97;
       break;
-    case t("Casino"):
+    case t("mobile_menu.casino"):
       selectedImg.value = img_public_18;
       selectedIcon.value = icon_public_34;
       break;
-    case t("Mail"):
+    case t("mobile_menu.mail"):
       selectedImg.value = img_public_19;
       selectedIcon.value = icon_public_55;
       break;
@@ -788,8 +788,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_1"
             :class="{
-              'opacity-1': selectedCircleItem != t('Promo'),
-              'text-700-8': selectedCircleItem == t('Promo'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.promo'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.promo'),
             }"
           >
             P
@@ -798,8 +798,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_2"
             :class="{
-              'opacity-1': selectedCircleItem != t('Promo'),
-              'text-700-8': selectedCircleItem == t('Promo'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.promo'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.promo'),
             }"
           >
             R
@@ -808,8 +808,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_3"
             :class="{
-              'opacity-1': selectedCircleItem != t('Promo'),
-              'text-700-8': selectedCircleItem == t('Promo'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.promo'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.promo'),
             }"
           >
             O
@@ -818,8 +818,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_4"
             :class="{
-              'opacity-1': selectedCircleItem != t('Promo'),
-              'text-700-8': selectedCircleItem == t('Promo'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.promo'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.promo'),
             }"
           >
             M
@@ -828,8 +828,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="casino_5"
             :class="{
-              'opacity-1': selectedCircleItem != t('Promo'),
-              'text-700-8': selectedCircleItem == t('Promo'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.promo'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.promo'),
             }"
           >
             O
@@ -839,8 +839,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_1"
             :class="{
-              'opacity-1': selectedCircleItem != t('Casino'),
-              'text-700-8': selectedCircleItem == t('Casino'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.casino'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.casino'),
             }"
           >
             C
@@ -849,8 +849,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_2"
             :class="{
-              'opacity-1': selectedCircleItem != t('Casino'),
-              'text-700-8': selectedCircleItem == t('Casino'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.casino'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.casino'),
             }"
           >
             A
@@ -859,8 +859,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_3"
             :class="{
-              'opacity-1': selectedCircleItem != t('Casino'),
-              'text-700-8': selectedCircleItem == t('Casino'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.casino'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.casino'),
             }"
           >
             S
@@ -869,8 +869,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_4"
             :class="{
-              'opacity-1': selectedCircleItem != t('Casino'),
-              'text-700-8': selectedCircleItem == t('Casino'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.casino'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.casino'),
             }"
           >
             I
@@ -879,8 +879,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_5"
             :class="{
-              'opacity-1': selectedCircleItem != t('Casino'),
-              'text-700-8': selectedCircleItem == t('Casino'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.casino'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.casino'),
             }"
           >
             N
@@ -889,8 +889,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="reward_6"
             :class="{
-              'opacity-1': selectedCircleItem != t('Casino'),
-              'text-700-8': selectedCircleItem == t('Casino'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.casino'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.casino'),
             }"
           >
             O
@@ -900,8 +900,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_2"
             :class="{
-              'opacity-1': selectedCircleItem != t('Mail'),
-              'text-700-8': selectedCircleItem == t('Mail'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.mail'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.mail'),
             }"
           >
             M
@@ -910,8 +910,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_3"
             :class="{
-              'opacity-1': selectedCircleItem != t('Mail'),
-              'text-700-8': selectedCircleItem == t('Mail'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.mail'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.mail'),
             }"
           >
             A
@@ -920,8 +920,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_4"
             :class="{
-              'opacity-1': selectedCircleItem != t('Mail'),
-              'text-700-8': selectedCircleItem == t('Mail'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.mail'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.mail'),
             }"
           >
             I
@@ -930,8 +930,8 @@ const goReferFriend = (index: number) => {
             class="letter white"
             ref="mail_5"
             :class="{
-              'opacity-1': selectedCircleItem != t('Mail'),
-              'text-700-8': selectedCircleItem == t('Mail'),
+              'opacity-1': selectedCircleItem != t('mobile_menu.mail'),
+              'text-700-8': selectedCircleItem == t('mobile_menu.mail'),
             }"
           >
             L

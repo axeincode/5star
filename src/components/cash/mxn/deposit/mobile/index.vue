@@ -369,7 +369,12 @@ const handleDepositSubmit = async () => {
   loading.value = false;
   if (success.value) {
     if (depositSubmit.value.url != "") {
-      window.open(depositSubmit.value.url, '_blank');
+      let newWindow = window.open(depositSubmit.value.url, '_blank');
+      if (newWindow) {
+        newWindow.focus(); // If the new window is successfully opened, switch the focus to the new window
+      } else {
+        alert('Please allow pop-ups in your browser to view the content.'); // If unable to open a new window, show an alert message
+      }
       const toast = useToast();
       toast.success(t("deposit_dialog.text_1"), {
         timeout: 3000,
@@ -773,7 +778,7 @@ onMounted(async () => {
               {{
                 depositAmountItem.type == 0
                   ? depositAmountItem.bonus
-                  : depositAmountItem.bonus + "%"
+                  : Number(depositAmountItem.bonus) * 100 + "%"
               }}
             </div>
           </div>

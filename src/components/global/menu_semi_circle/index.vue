@@ -77,19 +77,19 @@ watch(homeMenuBtnClicked, (value) => {
 
 watch(selectedItem, (newValue) => {
   switch (newValue) {
-    case t("Promo"):
+    case t("mobile_menu.promo"):
       promoIconColor.value = "#ffffff";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("Mail"):
+    case t("mobile_menu.mail"):
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#ffffff";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("Casino"):
+    case t("mobile_menu.casino"):
       casinoIconColor.value = "#ffffff";
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
@@ -177,7 +177,7 @@ const handleSelectItem = (item: string) => {
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
-  if (item == t("Promo")) {
+  if (item == t("mobile_menu.promo")) {
     router.push({ name: "Promo" });
     setRewardNavShow(false);
     setOverlayScrimShow(false);
@@ -190,7 +190,7 @@ const handleSelectItem = (item: string) => {
     router.push({ name: "Dashboard", query: { game: "casino" } });
   }
   switch (item) {
-    case t("Promo"):
+    case t("mobile_menu.promo"):
       promoIconColor.value = "#ffffff";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#7782AA";
