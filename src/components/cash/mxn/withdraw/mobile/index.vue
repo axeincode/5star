@@ -343,7 +343,6 @@ const handleWithdrawSubmit = async () => {
     phoneBindingDialog.value = true;
     return;
   }
-  loading.value = true
   let formData = {} as any;
   // if (depositConfig.value.deposit_user_switch) {
   //   formData.id_number = pixInfo.value.id
@@ -388,6 +387,7 @@ const handleWithdrawSubmit = async () => {
       return;
     }
   }
+  loading.value = true
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
   if (success.value) {
