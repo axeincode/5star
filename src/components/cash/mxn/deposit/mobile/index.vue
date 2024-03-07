@@ -380,6 +380,7 @@ const handleDepositSubmit = async () => {
 
       // 处理跳转新窗口浏览器拦截
       const elementA = document.createElement('a');
+<<<<<<< HEAD
       const elementAid = 'newpage'
       elementA.setAttribute('href', depositSubmit.value.url);
       elementA.setAttribute('target', '_blank');
@@ -388,7 +389,15 @@ const handleDepositSubmit = async () => {
       if (!document.getElementById(elementAid)) {
         document.body.appendChild(elementA);
       }
+=======
+      elementA.href = depositSubmit.value.url;
+      document.body.appendChild(elementA);
+>>>>>>> 1a20bea5d18dbc448b709e44d591806d9257bc3a
       elementA.click();
+      elementA.addEventListener('click', function(event) {
+        event.preventDefault(); // 阻止默认行为
+        window.location.href = this.href; // 手动跳转
+      });
 
       const toast = useToast();
       toast.success(t("deposit_dialog.text_1"), {
