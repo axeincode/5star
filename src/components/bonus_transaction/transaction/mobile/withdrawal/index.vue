@@ -366,34 +366,6 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
               {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
             </td>
             <td
-              class="text-400-12"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 60px;
-              "
-            >
-              <div class="d-flex justify-center">
-                {{
-                  item.id.toString().length > 11
-                    ? item.id.toString().slice(0, 11) + "..."
-                    : item.id
-                }}
-                <img
-                  src="@/assets/public/svg/icon_public_71.svg"
-                  width="16"
-                  class="ml-1"
-                  @click="handleCopyID(item.id)"
-                />
-              </div>
-            </td>
-            <td
-              class="text-400-12"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            >
-              {{ item.type }}
-            </td>
-            <td
               class="text-400-12 color-D42763"
               style="
                 padding-top: 21px !important;
@@ -414,6 +386,34 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
             >
               <div>
                 {{ withdrawalStatus[Number(item.status)].value }}
+              </div>
+            </td>
+            <td
+              class="text-400-12"
+              style="padding-top: 21px !important; padding-bottom: 21px !important"
+            >
+              {{ item.type }}
+            </td>
+            <td
+              class="text-400-12"
+              style="
+                padding-top: 21px !important;
+                padding-bottom: 21px !important;
+                min-width: 60px;
+              "
+            >
+              <div class="d-flex justify-center">
+                {{
+                  item.id.toString().length > 11
+                    ? item.id.toString().slice(0, 11) + "..."
+                    : item.id
+                }}
+                <img
+                  src="@/assets/public/svg/icon_public_71.svg"
+                  width="16"
+                  class="ml-1"
+                  @click="handleCopyID(item.id)"
+                />
               </div>
             </td>
             <td

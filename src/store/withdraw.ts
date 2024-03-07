@@ -40,7 +40,7 @@ export const withdrawStore = defineStore({
       this.withdrawSubmit = withdrawSubmit;
     },
     setWithdrawHistoryItem(withdrawHistoryItem: Withdraw.WithdrawalHistoryResponse) {
-      this.withdrawHistoryItem.record = [...this.withdrawHistoryItem.record, ...withdrawHistoryItem.record]
+      this.withdrawHistoryItem.record = [...withdrawHistoryItem.record]
       this.withdrawHistoryItem.total_pages = withdrawHistoryItem.total_pages;
       // withdrawHistoryItem.record.map(item => {
       //   this.withdrawHistoryItem.record.push(item);
