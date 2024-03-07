@@ -21,7 +21,7 @@ import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
-import Adjust from "@adjustcom/adjust-web-sdk";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const MSignup = defineComponent({
   components: {
@@ -285,7 +285,7 @@ const MSignup = defineComponent({
       });
       state.loading = false;
       if (success.value) {
-        Adjust.trackEvent({
+        adjustTrackEvent({
           eventToken: "okjslo",
         });
         await dispatchUserProfile();

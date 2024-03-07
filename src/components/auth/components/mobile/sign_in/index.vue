@@ -18,7 +18,7 @@ import { throwStatement } from "@babel/types";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
 import { googleTokenLogin } from "vue3-google-login";
-import Adjust from "@adjustcom/adjust-web-sdk";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const Login = defineComponent({
   components: {
@@ -124,7 +124,7 @@ const Login = defineComponent({
       });
 
       if (success.value) {
-        Adjust.trackEvent({
+        adjustTrackEvent({
           eventToken: "yzv017",
         });
         await dispatchUserProfile();

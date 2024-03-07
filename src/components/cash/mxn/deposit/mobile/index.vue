@@ -23,7 +23,7 @@ import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from '@/utils/currencyList';
-import Adjust from '@adjustcom/adjust-web-sdk';
+import { adjustTrackEvent } from '@/utils/adjust';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -385,7 +385,7 @@ const handleDepositSubmit = async () => {
       elementA.setAttribute('target', '_blank');
       elementA.setAttribute('id', elementAid);
       // 防止反复添加
-      if(!document.getElementById(elementAid)) {
+      if (!document.getElementById(elementAid)) {
         document.body.appendChild(elementA);
       }
       elementA.click();
@@ -446,9 +446,9 @@ const handleDepositSubmit = async () => {
       icon: SuccessIcon,
       rtl: false,
     });
-    Adjust.trackEvent({
-      eventToken: 'gmx6cdn8x3pc'
-    })
+    adjustTrackEvent({
+      eventToken: "gmx6cdn8x3pc",
+    });
     await dispatchUserProfile();
     await dispatchUserBalance();
     // if (depositSubmit.value.code_url != "") {

@@ -23,7 +23,7 @@ const mobileWidth: any = computed(() => {
     <div class="text-500-10 white mt-4" style="line-height: 3">
       {{ t("about.responsible_gambling.text_3") }}
     </div>
-    <div class="text-500-10 white" style="line-height: 3">
+    <div class="text-500-10 white" style="line-height: 2">
       {{ t("about.responsible_gambling.text_4") }}
     </div>
     <div class="m-about-collapse mt-2">
@@ -66,15 +66,11 @@ const mobileWidth: any = computed(() => {
           </li>
         </el-collapse-item>
         <el-collapse-item :title="t('about.responsible_gambling.text_20')" name="3">
-          <div>{{ t("about.responsible_gambling.text_20") }}</div>
           <div>{{ t("about.responsible_gambling.text_21") }}</div>
-          <div>{{ t("about.responsible_gambling.text_22") }}</div>
-          <div>{{ t("about.responsible_gambling.text_23") }}</div>
         </el-collapse-item>
         <el-collapse-item :title="t('about.responsible_gambling.text_24')" name="4">
           <div>{{ t("about.responsible_gambling.text_25") }}</div>
-          <li>{{ t("about.responsible_gambling.text_26") }}</li>
-          <div>{{ t("about.responsible_gambling.text_27") }}</div>
+          <div class="my-2">{{ t("about.responsible_gambling.text_26") }}</div>
           <div>
             {{ t("about.responsible_gambling.text_28") }}
             <span>
@@ -94,28 +90,40 @@ const mobileWidth: any = computed(() => {
         </el-collapse-item>
         <el-collapse-item :title="t('about.responsible_gambling.text_32')" name="5">
           <div>{{ t("about.responsible_gambling.text_33") }}</div>
-          <li>{{ t("about.responsible_gambling.text_34") }}</li>
+          <div class="my-1 text-700-12 white">
+            {{ t("about.responsible_gambling.text_34") }}
+          </div>
           <div>{{ t("about.responsible_gambling.text_35") }}</div>
-          <li>{{ t("about.responsible_gambling.text_36") }}</li>
+          <div class="my-1 text-700-12 white">
+            {{ t("about.responsible_gambling.text_36") }}
+          </div>
           <div>{{ t("about.responsible_gambling.text_37") }}</div>
-          <li>{{ t("about.responsible_gambling.text_38") }}</li>
+          <div class="my-1 text-700-12 white">
+            {{ t("about.responsible_gambling.text_38") }}
+          </div>
           <div>{{ t("about.responsible_gambling.text_39") }}</div>
-          <li>{{ t("about.responsible_gambling.text_40") }}</li>
+          <div class="my-1 text-700-12 white">
+            {{ t("about.responsible_gambling.text_40") }}
+          </div>
           <div>{{ t("about.responsible_gambling.text_41") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.responsible_gambling.text_42')" name="6">
+          <div class="my-1 text-700-12 white">
+            {{ t("about.responsible_gambling.text_42") }}
+          </div>
           <div>{{ t("about.responsible_gambling.text_43") }}</div>
-          <div>{{ t("about.responsible_gambling.text_44") }}</div>
+          <div class="my-1 text-700-12 white">
+            {{ t("about.responsible_gambling.text_44") }}
+          </div>
           <div>{{ t("about.responsible_gambling.text_45") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.responsible_gambling.text_46')" name="6">
+          <div>{{ t("about.responsible_gambling.text_47") }}</div>
           <a class="m-about-responsible-link">
-            {{ t("about.responsible_gambling.text_46") }}
+            {{ t("about.responsible_gambling.text_48") }}
           </a>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.responsible_gambling.text_47')" name="7">
-          <div>{{ t("about.responsible_gambling.text_48") }}</div>
-          <div>{{ t("about.responsible_gambling.text_49") }}</div>
-          <li class="my-2">{{ t("about.responsible_gambling.text_50") }}</li>
-          <div>{{ t("about.responsible_gambling.text_51") }}</div>
+        <el-collapse-item :title="t('about.responsible_gambling.text_49')" name="7">
+          <div>{{ t("about.responsible_gambling.text_50") }}</div>
+          <div class="my-2 white">{{ t("about.responsible_gambling.text_51") }}</div>
           <div>{{ t("about.responsible_gambling.text_52") }}</div>
         </el-collapse-item>
       </el-collapse>
@@ -130,25 +138,29 @@ const mobileWidth: any = computed(() => {
     border-bottom: unset !important;
   }
   .el-collapse-item {
-    border-bottom: 2px solid #1D2027;
+    border-bottom: 2px solid #1d2027;
   }
   .el-collapse-item__header {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
     border-bottom: unset !important;
     color: var(--White-BG, #fff);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
   }
   .el-collapse-item__wrap {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
   }
   .el-collapse-item__content {
     padding-bottom: 16px;
     color: var(--Sec-Text-7782AA, #7782aa);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -159,7 +171,7 @@ const mobileWidth: any = computed(() => {
     font-size: 14px;
   }
   .m-about-responsible-link {
-    color: #009B3A;
+    color: #009b3a;
     text-decoration-line: underline;
   }
 }

@@ -23,7 +23,7 @@ const mobileWidth: any = computed(() => {
     <div class="m-about-collapse mt-2">
       <el-collapse v-model="activeNames">
         <el-collapse-item :title="t('about.aml_policy.text_3')" name="1">
-          <div>{{ t("about.aml_policy.text_4") }}</div>
+          <div class="my-1">{{ t("about.aml_policy.text_4") }}</div>
           <div>{{ t("about.aml_policy.text_5") }}</div>
           <div>{{ t("about.aml_policy.text_6") }}</div>
           <div>{{ t("about.aml_policy.text_7") }}</div>
@@ -31,133 +31,115 @@ const mobileWidth: any = computed(() => {
           <div>{{ t("about.aml_policy.text_9") }}</div>
           <div>{{ t("about.aml_policy.text_10") }}</div>
           <div>{{ t("about.aml_policy.text_11") }}</div>
-          <div>{{ t("about.aml_policy.text_12") }}</div>
-          <div>{{ t("about.aml_policy.text_13") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_14')" name="2">
+        <el-collapse-item :title="t('about.aml_policy.text_12')" name="2">
+          <div class="mb-1">{{ t("about.aml_policy.text_13") }}</div>
+          <div>{{ t("about.aml_policy.text_14") }}</div>
           <div>{{ t("about.aml_policy.text_15") }}</div>
-          <li>{{ t("about.aml_policy.text_16") }}</li>
-          <li>{{ t("about.aml_policy.text_17") }}</li>
-          <li>{{ t("about.aml_policy.text_18") }}</li>
-          <li>{{ t("about.aml_policy.text_19") }}</li>
+          <div>{{ t("about.aml_policy.text_16") }}</div>
+          <div>{{ t("about.aml_policy.text_17") }}</div>
+          <div class="mt-1">{{ t("about.aml_policy.text_18") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_19')" name="3">
           <div>{{ t("about.aml_policy.text_20") }}</div>
+          <div class="mt-1">{{ t("about.aml_policy.text_21") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_21')" name="3">
-          <div>{{ t("about.aml_policy.text_22") }}</div>
+        <el-collapse-item :title="t('about.aml_policy.text_22')" name="4">
           <div>{{ t("about.aml_policy.text_23") }}</div>
-          <div>{{ t("about.aml_policy.text_24") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_25')" name="4">
-          <div>{{ t("about.aml_policy.text_26") }}</div>
+        <el-collapse-item :title="t('about.aml_policy.text_24')" name="5">
+          <div class="text-700-12 white">{{ t("about.aml_policy.text_25") }}</div>
+          <div class="text-700-12 white">{{ t("about.aml_policy.text_26") }}</div>
+          <div>{{ t("about.aml_policy.text_27") }}</div>
+          <div>{{ t("about.aml_policy.text_28") }}</div>
+          <div class="text-700-12 white my-1">{{ t("about.aml_policy.text_29") }}</div>
+          <div>{{ t("about.aml_policy.text_30") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_27')" name="5">
-          <div class="text-700-12 white">{{ t("about.aml_policy.text_28") }}</div>
-          <div>{{ t("about.aml_policy.text_29") }}</div>
-          <div class="text-700-12 white">{{ t("about.aml_policy.text_30") }}</div>
-          <div>{{ t("about.aml_policy.text_31") }}</div>
-          <div class="text-700-12 white">{{ t("about.aml_policy.text_32") }}</div>
+        <el-collapse-item :title="t('about.aml_policy.text_31')" name="6">
+          <div>{{ t("about.aml_policy.text_32") }}</div>
           <div>{{ t("about.aml_policy.text_33") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_34')" name="6">
+          <div>{{ t("about.aml_policy.text_34") }}</div>
           <div>{{ t("about.aml_policy.text_35") }}</div>
           <div>{{ t("about.aml_policy.text_36") }}</div>
-          <div>{{ t("about.aml_policy.text_37") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_37')" name="7">
           <div>{{ t("about.aml_policy.text_38") }}</div>
           <div>{{ t("about.aml_policy.text_39") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_40')" name="7">
+          <div>{{ t("about.aml_policy.text_40") }}</div>
           <div>{{ t("about.aml_policy.text_41") }}</div>
-          <div>{{ t("about.aml_policy.text_42") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_42')" name="8">
           <div>{{ t("about.aml_policy.text_43") }}</div>
-          <div>{{ t("about.aml_policy.text_44") }}</div>
-          <div>{{ t("about.aml_policy.text_45") }}</div>
+          <div class="mt-1">{{ t("about.aml_policy.text_44") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_45") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_46") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_47") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_48") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_49") }}</div>
+          <div>{{ t("about.aml_policy.text_50") }}</div>
+          <div>{{ t("about.aml_policy.text_51") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_46')" name="8">
-          <div>{{ t("about.aml_policy.text_47") }}</div>
-          <div>{{ t("about.aml_policy.text_48") }}</div>
-          <li class="my-2">{{ t("about.aml_policy.text_49") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_50") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_51") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_52") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_53") }}</li>
-          <div>{{ t("about.aml_policy.text_54") }}</div>
-          <div>{{ t("about.aml_policy.text_55") }}</div>
-          <div>{{ t("about.aml_policy.text_56") }}</div>
+        <el-collapse-item :title="t('about.aml_policy.text_52')" name="9">
+          <div>{{ t("about.aml_policy.text_53") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_54") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_55") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_56") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_57") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_58") }}</div>
+          <div>{{ t("about.aml_policy.text_59") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_57')" name="9">
-          <div>{{ t("about.aml_policy.text_58") }}</div>
-          <li class="my-2">{{ t("about.aml_policy.text_59") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_60") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_61") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_62") }}</li>
-          <li class="my-2">{{ t("about.aml_policy.text_63") }}</li>
-          <div>{{ t("about.aml_policy.text_64") }}</div>
+        <el-collapse-item :title="t('about.aml_policy.text_60')" name="10">
+          <div>{{ t("about.aml_policy.text_61") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_62") }}</div>
+          <div>{{ t("about.aml_policy.text_63") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_64") }}</div>
+          <div>{{ t("about.aml_policy.text_65") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_66") }}</div>
+          <div>{{ t("about.aml_policy.text_67") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_65')" name="10">
-          <div>{{ t("about.aml_policy.text_66") }}</div>
-          <div class="text-700-12 white">{{ t("about.aml_policy.text_67") }}</div>
-          <div>{{ t("about.aml_policy.text_68") }}</div>
-          <div class="text-700-12 white">{{ t("about.aml_policy.text_69") }}</div>
+        <el-collapse-item :title="t('about.aml_policy.text_68')" name="11">
+          <div>{{ t("about.aml_policy.text_69") }}</div>
           <div>{{ t("about.aml_policy.text_70") }}</div>
-          <div class="text-700-12 white">{{ t("about.aml_policy.text_71") }}</div>
-          <div>{{ t("about.aml_policy.text_72") }}</div>
+          <div>{{ t("about.aml_policy.text_71") }}</div>
         </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_73')" name="11">
+        <el-collapse-item :title="t('about.aml_policy.text_72')" name="12">
+          <div>{{ t("about.aml_policy.text_73") }}</div>
           <div>{{ t("about.aml_policy.text_74") }}</div>
           <div>{{ t("about.aml_policy.text_75") }}</div>
-          <div>{{ t("about.aml_policy.text_76") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_76')" name="13">
           <div>{{ t("about.aml_policy.text_77") }}</div>
           <div>{{ t("about.aml_policy.text_78") }}</div>
-          <div class="text-700-12 white mt-2">{{ t("about.aml_policy.text_79") }}</div>
+          <div class="my-2 text-700-12 white">{{ t("about.aml_policy.text_79") }}</div>
           <div>{{ t("about.aml_policy.text_80") }}</div>
-          <div>{{ t("about.aml_policy.text_81") }}</div>
+          <div class="my-2 text-700-12 white">{{ t("about.aml_policy.text_81") }}</div>
           <div>{{ t("about.aml_policy.text_82") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_83')" name="12">
-          <div>{{ t("about.aml_policy.text_84") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_83") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_84") }}</div>
           <div>{{ t("about.aml_policy.text_85") }}</div>
-          <div>{{ t("about.aml_policy.text_86") }}</div>
+          <div class="my-2 text-700-12 white">{{ t("about.aml_policy.text_86") }}</div>
           <div>{{ t("about.aml_policy.text_87") }}</div>
-          <div>{{ t("about.aml_policy.text_88") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_88')" name="14">
           <div>{{ t("about.aml_policy.text_89") }}</div>
-          <li class="my-1">{{ t("about.aml_policy.text_90") }}</li>
-          <li class="my-1">{{ t("about.aml_policy.text_91") }}</li>
-          <div>{{ t("about.aml_policy.text_92") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_90") }}</div>
+          <div class="my-2">{{ t("about.aml_policy.text_91") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_92')" name="15">
           <div>{{ t("about.aml_policy.text_93") }}</div>
-          <div>{{ t("about.aml_policy.text_94") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_94')" name="16">
           <div>{{ t("about.aml_policy.text_95") }}</div>
-          <div>{{ t("about.aml_policy.text_96") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_96')" name="17">
           <div>{{ t("about.aml_policy.text_97") }}</div>
-          <div>{{ t("about.aml_policy.text_98") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_98')" name="18">
           <div>{{ t("about.aml_policy.text_99") }}</div>
-          <div>{{ t("about.aml_policy.text_100") }}</div>
+        </el-collapse-item>
+        <el-collapse-item :title="t('about.aml_policy.text_100')" name="19">
           <div>{{ t("about.aml_policy.text_101") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_102')" name="13">
-          <div>{{ t("about.aml_policy.text_103") }}</div>
-          <div>{{ t("about.aml_policy.text_104") }}</div>
-          <div>{{ t("about.aml_policy.text_105") }}</div>
-          <li class="my-1">{{ t("about.aml_policy.text_106") }}</li>
-          <li class="mt-1">{{ t("about.aml_policy.text_107") }}</li>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_108')" name="14">
-          <div>{{ t("about.aml_policy.text_109") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_110')" name="15">
-          <div>{{ t("about.aml_policy.text_111") }}</div>
-          <div>{{ t("about.aml_policy.text_112") }}</div>
-          <div>{{ t("about.aml_policy.text_113") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_114')" name="16">
-          <div>{{ t("about.aml_policy.text_115") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_116')" name="17">
-          <div>{{ t("about.aml_policy.text_117") }}</div>
-          <div>{{ t("about.aml_policy.text_118") }}</div>
-        </el-collapse-item>
-        <el-collapse-item :title="t('about.aml_policy.text_119')" name="18">
-          <div>{{ t("about.aml_policy.text_120") }}</div>
-          <li class="mt-1">{{ t("about.aml_policy.text_121") }}</li>
+          <div class="mt-1">{{ t("about.aml_policy.text_102") }}</div>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -171,25 +153,29 @@ const mobileWidth: any = computed(() => {
     border-bottom: unset !important;
   }
   .el-collapse-item {
-    border-bottom: 2px solid #1D2027;
+    border-bottom: 2px solid #1d2027;
   }
   .el-collapse-item__header {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
     border-bottom: unset !important;
     color: var(--White-BG, #fff);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
   }
   .el-collapse-item__wrap {
-    background-color: #15161C !important;
+    background-color: #15161c !important;
   }
   .el-collapse-item__content {
     padding-bottom: 16px;
     color: var(--Sec-Text-7782AA, #7782aa);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;

@@ -24,10 +24,11 @@ import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
 import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
 import icon_public_150 from "@/assets/public/svg/icon_public_150.svg";
+import icon_public_22 from "@/assets/public/svg/icon_public_22.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from "@/utils/currencyList";
 import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
-import Adjust from "@adjustcom/adjust-web-sdk";
+import { adjustTrackEvent } from '@/utils/adjust';
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -59,6 +60,8 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   min: 149,
   max: 588.88
 })
+
+const helpMenuShow = ref<boolean>(false);
 
 const withdraw_type = ref<string>("");
 
@@ -142,12 +145,6 @@ const loading = ref<boolean>(false);
 const phoneBindingDialog = ref<boolean>(false);
 const withdrawInfoDialog = ref<boolean>(false);
 
-const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
-
-const notificationText = ref<string>("");
-
-const isShowAmountValidation = ref<boolean>(false);
-
 const isDepositBtnReady = ref<boolean>(false);
 
 const currencyMenuShow = ref<boolean>(false);
@@ -227,37 +224,12 @@ watch(withdrawConfig, (newValue) => {
   feeRate.value = withdrawConfig.value["fee"]["rate"];
 }, { deep: true });
 
-watch(withdrawAmount, (newValue) => {
-  // if (Number(availableAmount.value) - Number(newValue) < 0) {
-  //   feeAmount.value = 0;
-  //   cashableAmount.value = 0;
-  //   residualAmount.value = 0;
-  //   const toast = useToast();
-  //   toast.success(t("withdraw_dialog.text_10"), {
-  //     timeout: 3000,
-  //     closeOnClick: false,
-  //     pauseOnFocusLoss: false,
-  //     pauseOnHover: false,
-  //     draggable: false,
-  //     showCloseButtonOnHover: false,
-  //     hideProgressBar: true,
-  //     closeButton: "button",
-  //     icon: WarningIcon,
-  //     rtl: false,
-  //   });
-  // } else {
-  //   residualAmount.value = Number(availableAmount.value) - Number(newValue)
-  //   feeAmount.value = Number(newValue) * Number(withdrawConfig.value.fee.rate);
-  //   cashableAmount.value = Number(newValue) - Number(feeAmount.value);
-  // }
-})
-
 const handleSelectPayment = (item: GetPaymentItem) => {
   selectedPaymentItem.value = item;
 }
 
 const validateAmount = (): boolean => {
-  return Number(withdrawAmount.value) >= 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
+  return Number(withdrawAmount.value) > 0 && Number(withdrawAmount.value) <= Number(userBalance.value.availabe_balance);
 }
 
 const handleAmountInputFocus = (): void => {
@@ -267,6 +239,12 @@ const handleAmountInputChange = (): void => {
 }
 
 const handleAmountInputBlur = (): void => {
+  if (withdrawAmount.value == "") {
+    feeAmount.value = 0;
+    cashableAmount.value = 0;
+    residualAmount.value = 0;
+    return;
+  }
   if (Number(availableAmount.value) - Number(withdrawAmount.value) < 0) {
     feeAmount.value = 0;
     cashableAmount.value = 0;
@@ -391,7 +369,7 @@ const handleWithdrawSubmit = async () => {
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
   if (success.value) {
-    Adjust.trackEvent({
+    adjustTrackEvent({
       eventToken: "idmvzd",
     });
     const toast = useToast();
@@ -459,7 +437,21 @@ watch(withdrawAmount, (newValue) => {
   } else {
     isDepositBtnReady.value = false;
   }
-  isShowAmountValidation.value = !validateAmount();
+  if (newValue == "") {
+    feeAmount.value = 0;
+    cashableAmount.value = 0;
+    residualAmount.value = 0;
+    return;
+  }
+  if (Number(availableAmount.value) - Number(newValue) < 0) {
+    feeAmount.value = 0;
+    cashableAmount.value = 0;
+    residualAmount.value = 0;
+  } else {
+    residualAmount.value = Number(availableAmount.value) - Number(newValue)
+    feeAmount.value = Number(newValue) * Number(withdrawConfig.value.fee.rate);
+    cashableAmount.value = Number(newValue) - Number(feeAmount.value);
+  }
 })
 
 watch(currencyMenuShow, (value) => {
@@ -467,6 +459,19 @@ watch(currencyMenuShow, (value) => {
   //   currencyMenuShow.value = false
   // }
 })
+
+const iconSvgTransform = (el: any, color: string) => {
+  for (let node of el.children) {
+    node.setAttribute('fill', color)
+    for (let subNode of node.children) {
+      subNode.setAttribute('fill', color)
+      for (let moreSubNode of subNode.children) {
+        moreSubNode.setAttribute('fill', color)
+      }
+    }
+  }
+  return el
+}
 
 const submitPhoneBinding = () => {
   phoneBindingDialog.value = false;
@@ -589,8 +594,46 @@ onMounted(async () => {
     </div>
     <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_7") }}
-      <span class="text-700-12" style="margin-left: auto">
+      <span
+        class="text-700-12"
+        style="margin-left: auto"
+        :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'green' : ''"
+      >
         {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
+      </span>
+    </div>
+    <div
+      class="mt-2 mx-10 text-400-12 gray d-flex align-center"
+      v-if="withdrawAmount != '' && Number(withdrawAmount) != 0"
+    >
+      {{ t("withdraw_dialog.text_12") }}
+      <span
+        class="text-700-12 d-flex align-center"
+        style="margin-left: auto"
+        :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'orange' : ''"
+      >
+        {{ (userBalance.amount - userBalance.availabe_balance).toFixed(2) }}
+        &nbsp;{{ selectedCurrencyUnit }}
+        <v-menu
+          offset="10"
+          v-model="helpMenuShow"
+          content-class="m-withdraw-non-balance-menu"
+        >
+          <template v-slot:activator="{ props }">
+            <inline-svg
+              :src="icon_public_22"
+              width="14"
+              height="14"
+              class="ml-2"
+              :transform-source="(el: any) => iconSvgTransform(el, '#7782AA')"
+              v-bind="props"
+            >
+            </inline-svg>
+          </template>
+          <div class="m-withdraw-non-balance-menu-card pa-4 text-400-10 gray">
+            {{ t("withdraw_dialog.text_13") }}
+          </div>
+        </v-menu>
       </span>
     </div>
     <div class="mx-4 mt-2">
@@ -751,6 +794,31 @@ onMounted(async () => {
   to {
     transform: rotate(360deg);
   }
+}
+
+.m-withdraw-non-balance-menu {
+  left: unset !important;
+  right: 20px !important;
+}
+
+.m-withdraw-non-balance-menu::before {
+  content: "";
+  position: absolute;
+  align-self: center;
+  top: -20px;
+  right: 22px;
+  border: 12px solid #000000;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-right-width: 6px;
+  border-left-width: 6px;
+}
+
+.m-withdraw-non-balance-menu-card {
+  width: 212px;
+  border-radius: 8px;
+  background: #000000;
 }
 
 .m-withdraw-payment-menu {
