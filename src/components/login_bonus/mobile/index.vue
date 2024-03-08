@@ -14,6 +14,7 @@ import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
 import MConfirm from "@/components/global/confirm/mobile/index.vue";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const emit = defineEmits<{ (e: "closeLoginBonusDialog"): void }>();
 const { t } = useI18n();
@@ -128,6 +129,9 @@ const submitConfirm = async () => {
 };
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   if (localStorage.getItem("signin_day") == undefined) {
     localStorage.setItem("signin_day", "0");
   } else {

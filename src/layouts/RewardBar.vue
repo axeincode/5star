@@ -24,6 +24,7 @@ import { loginBonusStore } from "@/store/loginBonus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -249,6 +250,9 @@ const handleScroll = (event: any) => {
 };
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   if (token.value) {
     await getRewardList();
   }
@@ -263,7 +267,10 @@ onMounted(async () => {
     :touchless="true"
     class="m-reward-navigation-drawer"
   >
-    <div :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'" v-if="token">
+    <div
+      :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'"
+      v-if="token"
+    >
       <p class="text-700-12 white pt-8 mx-4" v-if="token">{{ t("reward.text_3") }}</p>
 
       <v-row class="mx-4 my-1 align-center" v-if="token">
@@ -285,7 +292,7 @@ onMounted(async () => {
             width="100%"
             height="32"
             @click="claimClicked"
-            v-reset-font-size="{textNode: 'v-btn__content'}"
+            v-reset-font-size="{ textNode: 'v-btn__content' }"
           >
             {{ t("reward.text_5") }}
           </v-btn>
@@ -302,7 +309,10 @@ onMounted(async () => {
       </v-btn>
     </div>
 
-    <div :class="scrollTop == 0 ? 'm-reward-logout-menu' : 'm-reward-menu-log-out-active-bg'" v-else>
+    <div
+      :class="scrollTop == 0 ? 'm-reward-logout-menu' : 'm-reward-menu-log-out-active-bg'"
+      v-else
+    >
       <v-btn
         class="m-reward-drawer-close-button"
         icon="true"
@@ -314,7 +324,10 @@ onMounted(async () => {
       </v-btn>
     </div>
 
-    <div :class="token? 'm-reward-total-body' : 'm-reward-logout-total-body'" @scroll="handleScroll">
+    <div
+      :class="token ? 'm-reward-total-body' : 'm-reward-logout-total-body'"
+      @scroll="handleScroll"
+    >
       <div class="m-reward-header" v-if="token">
         <v-row class="mx-4 my-2 m-reward-achievement-bonus">
           <v-col cols="3" class="d-flex align-center justify-center">
@@ -416,7 +429,7 @@ onMounted(async () => {
                 height="32"
                 @click="handleBonus(index)"
                 :disabled="item.value == 0 && index != 3 ? true : false"
-                v-reset-font-size="{textNode: 'v-btn__content'}"
+                v-reset-font-size="{ textNode: 'v-btn__content' }"
               >
                 {{ t("reward.text_7") }}
               </v-btn>
@@ -480,7 +493,7 @@ onMounted(async () => {
     border-style: none !important;
     height: 110px !important;
   }
-  .m-reward-logout-menu{
+  .m-reward-logout-menu {
     z-index: 1000;
     position: fixed;
     width: 100% !important;
@@ -498,7 +511,7 @@ onMounted(async () => {
     z-index: 100000000 !important;
   }
 
-  .m-reward-menu-log-out-active-bg{
+  .m-reward-menu-log-out-active-bg {
     box-shadow: $agent_card_notmet_box_shadow !important;
     background: $agent_card_notmet_bg !important;
     width: 100% !important;
@@ -523,7 +536,7 @@ onMounted(async () => {
     width: 100% !important;
     overflow-y: auto !important;
   }
-  .m-reward-logout-total-body{
+  .m-reward-logout-total-body {
     position: absolute;
     top: 30px;
     height: calc(100% - 30px) !important;
@@ -572,7 +585,9 @@ onMounted(async () => {
 
       .v-btn__content {
         color: #fff;
-        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+        font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+          DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+          WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 900;
@@ -599,7 +614,9 @@ onMounted(async () => {
     .v-btn__content {
       color: #000;
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
@@ -616,7 +633,9 @@ onMounted(async () => {
     .v-btn__content {
       color: var(--light-color, #7782aa);
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
@@ -636,7 +655,9 @@ onMounted(async () => {
     .v-btn__content {
       color: #000;
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
@@ -667,7 +688,9 @@ onMounted(async () => {
     .v-field__input::placeholder {
       color: #7782aa;
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;
@@ -694,7 +717,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .m-claim-text {
   ::v-deep(.v-field__input) {
-
     &::placeholder {
       color: #7782aa !important;
       text-align: center;

@@ -3,6 +3,7 @@ import { ref, computed, onMounted, watch, watchEffect } from "vue";
 import { gameStore } from "@/store/game";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const route = useRoute();
 const { dispatchGameEnter, getGameBetbyInit, closeKill } = gameStore();
@@ -35,6 +36,9 @@ watch(
 );
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   window.addEventListener("resize", handleResize);
   betbyHeight.value = window.innerHeight;
   betbyShow.value = true;

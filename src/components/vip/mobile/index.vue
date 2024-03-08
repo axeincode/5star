@@ -804,9 +804,7 @@ const arrowSwitchTransform = (el: any) => {
 }
 
 const submitVipLevelAward = async (awardType: number) => {
-  await dispatchVipLevelAward({
-    type: awardType
-  })
+  await dispatchVipLevelAward()
 }
 
 const getRewardSwiperRef = (swiperInstance: any) => {
@@ -2217,7 +2215,7 @@ onMounted(async () => {
 
 .m-vip-container {
   margin: -47px 0px;
-  background: #1D2027;
+  background: #1d2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
@@ -2234,7 +2232,7 @@ onMounted(async () => {
   }
 
   .v-slide-group {
-    background: #15161C !important;
+    background: #15161c !important;
   }
 
   .v-slide-group__content {
@@ -2257,13 +2255,18 @@ onMounted(async () => {
   height: 163px;
   border-radius: 8px;
   // background: linear-gradient(179deg, #4a32aa 0%, #29263f 100%);
-  background: conic-gradient(from 45.24deg at 50.17% 49.69%, #212442 0deg, #212442 178.12deg, #2D2C59 360deg),
-linear-gradient(0deg, #424173, #424173);
+  background: conic-gradient(
+      from 45.24deg at 50.17% 49.69%,
+      #212442 0deg,
+      #212442 178.12deg,
+      #2d2c59 360deg
+    ),
+    linear-gradient(0deg, #424173, #424173);
 }
 
 .reward-body {
   border-radius: 8px;
-  background: #1D2027;
+  background: #1d2027;
 }
 
 .m-reward-card {
@@ -2274,7 +2277,7 @@ linear-gradient(0deg, #424173, #424173);
   flex-shrink: 0;
   border-radius: 18px;
   // background: linear-gradient(0deg, #275798 0%, #9419f0 100%);
-  background: linear-gradient(0deg, #212442 0%, #2D2C59 100%);
+  background: linear-gradient(0deg, #212442 0%, #2d2c59 100%);
   /* Button Shadow */
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 }
@@ -2285,14 +2288,16 @@ linear-gradient(0deg, #424173, #424173);
 
   .m-cashback-my-card {
     border-radius: 14px;
-    background: #15161C;
+    background: #15161c;
   }
 
   .v-btn__content {
     margin-left: 10px;
     color: #000;
     font-size: 14px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2331,7 +2336,9 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     color: #000;
     font-size: 16px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 800;
     letter-spacing: normal;
   }
@@ -2346,7 +2353,9 @@ linear-gradient(0deg, #424173, #424173);
     color: var(--white-bg, #fff);
     text-align: center;
     font-size: 14px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 600;
     letter-spacing: normal;
   }
@@ -2362,7 +2371,7 @@ linear-gradient(0deg, #424173, #424173);
   /* Set the transition properties */
   transition: height 0.3s ease-out;
   border-radius: 8px;
-  background: #15161C;
+  background: #15161c;
   overflow: hidden;
 }
 
@@ -2375,7 +2384,9 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     color: #000;
     font-size: 10px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 700;
   }
 }
@@ -2385,7 +2396,9 @@ linear-gradient(0deg, #424173, #424173);
     color: #6842ec;
     text-align: center;
     font-size: 10px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2396,7 +2409,9 @@ linear-gradient(0deg, #424173, #424173);
     color: #fff;
     text-align: center;
     font-size: 10px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2438,14 +2453,14 @@ linear-gradient(0deg, #424173, #424173);
 .mission-progress-bg {
   .v-progress-linear {
     border-radius: 8px;
-    background: #15161C !important;
+    background: #15161c !important;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
 
   .v-progress-linear__background {
     border-radius: 8px;
-    background: #15161C !important;
+    background: #15161c !important;
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
@@ -2463,7 +2478,7 @@ linear-gradient(0deg, #424173, #424173);
 
 .m-benifit-description-body {
   border-radius: 8px;
-  background: #1D2027;
+  background: #1d2027;
 
   .m-benifit-description-header {
     border-radius: 8px;
@@ -2498,7 +2513,9 @@ linear-gradient(0deg, #424173, #424173);
   color: #fff;
   text-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25);
   font-size: 24px;
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-style: italic;
   font-weight: 700;
 }
@@ -2506,7 +2523,9 @@ linear-gradient(0deg, #424173, #424173);
 .m-vip-footer-content {
   color: #fff;
   font-size: 16px;
-  font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+    sans-serif;
   font-style: italic;
   font-weight: 700;
 }
@@ -2515,7 +2534,9 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     color: #000;
     font-size: 16px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 800;
     letter-spacing: normal;
   }
@@ -2534,7 +2555,9 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     text-align: center;
     font-size: 12px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }
@@ -2544,7 +2567,9 @@ linear-gradient(0deg, #424173, #424173);
   .v-btn__content {
     text-align: center;
     font-size: 10px;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-weight: 700;
     letter-spacing: normal;
   }

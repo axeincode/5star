@@ -14,6 +14,7 @@ import "swiper/css/virtual";
 // import Swiper core and required modules
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 import { useRoute, useRouter } from "vue-router";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -377,6 +378,9 @@ const handleResize = () => {
 };
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   window.addEventListener("resize", handleResize);
   mobileHeight.value = window.innerHeight;
   setMobileMenuShow(false);

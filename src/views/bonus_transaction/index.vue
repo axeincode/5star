@@ -7,6 +7,7 @@ import { refferalStore } from "@/store/refferal";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { adjustTrackEvent } from "@/utils/adjust";
 // import Bonus from "@/components/bonus_transaction/bonus/index.vue";
 // import MBonus from "@/components/bonus_transaction/bonus/mobile/index.vue";
 // import Transaction from "@/components/bonus_transaction/transaction/index.vue";
@@ -89,6 +90,9 @@ const tabSelect = (index: number) => {
 };
 
 onMounted(() => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
       affiliateWidth.value = "bonus-transaction-container";
@@ -246,21 +250,21 @@ onMounted(() => {
 }
 .bonus-transaction-container {
   margin: -20px 40px;
-  background: #1D2027;
+  background: #1d2027;
   padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .bonus-transaction-container-1 {
   margin: -20px 40px;
-  background: #1D2027;
+  background: #1d2027;
   // padding-bottom: 20px;
   border-radius: 8px;
 }
 
 .m-bonus-transaction-container {
   margin: -60px 0px;
-  background: #1D2027;
+  background: #1d2027;
   // padding-bottom: 20px;
   border-radius: 8px;
 }
@@ -272,7 +276,7 @@ onMounted(() => {
     display: flex;
     padding: 0px 60px;
     align-items: center;
-    background: #1D2027;
+    background: #1d2027;
     height: 48px;
     margin: 0px 16px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -304,7 +308,7 @@ onMounted(() => {
     display: flex;
     padding: 0px 60px;
     align-items: center;
-    background: #1D2027;
+    background: #1d2027;
     height: 48px;
     margin: 0px 16px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
@@ -336,7 +340,7 @@ onMounted(() => {
     display: flex;
     padding: 0px 60px;
     align-items: center;
-    background: #1D2027;
+    background: #1d2027;
     height: 64px;
     margin: 16px 16px 10px 16px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);

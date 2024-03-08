@@ -498,6 +498,9 @@ const goWithdrawPage = () => {
 }
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();
   await dispatchUserBalance();

@@ -7,6 +7,7 @@ import { promoStore } from "@/store/promo";
 import { storeToRefs } from "pinia";
 import { type PromoListData } from "@/interface/promo";
 import { authStore } from "@/store/auth";
+import { adjustTrackEvent } from "@/utils/adjust";
 // import img_hp_4 from "@/assets/promo/image/img_hp_4.png";
 // import img_hp_5 from "@/assets/promo/image/img_hp_5.png";
 // import img_hp_6 from "@/assets/promo/image/img_hp_6.png";
@@ -55,6 +56,9 @@ const promoList = computed(() => {
 });
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   detailShow.value = false
   await dispatchUserActivityList();
   promoList.value.group_data[0].list_data.map(item => {
@@ -171,7 +175,7 @@ const i18nButtonText = (eng: string) => {
 <template>
   <div class="mx-4">
     <v-card class="m-promo-detail-back-card">
-      <div class="d-flex align-center" style="height: 48px;padding-left: 6px;">
+      <div class="d-flex align-center" style="height: 48px; padding-left: 6px">
         <v-icon size="large" color="#ffffff" @click="$router.push({ name: 'Promo' })">
           mdi-chevron-left
         </v-icon>

@@ -7,6 +7,7 @@ import { achievementStore } from "@/store/achievement";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import MAgentRealization from "./components/AgentRealization.vue";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -64,6 +65,9 @@ const achievementItem = computed(() => {
 });
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   if (token.value) {
     await dispatchAchievementList();
   } else {

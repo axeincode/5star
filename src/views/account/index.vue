@@ -15,7 +15,7 @@ import GameProviders from "@/components/global/game_provider/index.vue";
 import SuspendAccount from "@/components/account/suspend_account/index.vue";
 import MSuspendAccount from "@/components/account/suspend_account/mobile/index.vue";
 import MDialog from "./dialog/index.vue";
-
+import { adjustTrackEvent } from "@/utils/adjust";
 
 // const UserInformation = defineAsyncComponent(() => import("@/components/account/user_information/pc/index.vue"));
 // const MUserInformation = defineAsyncComponent(() => import("@/components/account/user_information/mobile/index.vue"));
@@ -139,6 +139,9 @@ watch(activeAccountIndex, (value) => {
 })
 
 onMounted(() => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
       accountWidth.value = "account-container";
@@ -225,12 +228,12 @@ onMounted(() => {
               </v-list-item>
             </v-card>
           </template>
-          <v-list theme="dark" bg-color="#1D2027" style="border-radius:8px">
+          <v-list theme="dark" bg-color="#1D2027" style="border-radius: 8px">
             <v-list-item
               v-for="(item, i) in menuList"
               :key="i"
               :value="item"
-              :class="{'m-account-menu-item-border':selectedMenuItem == item}"
+              :class="{ 'm-account-menu-item-border': selectedMenuItem == item }"
               @click="handleDropdown(item, i)"
             >
               <v-list-item-title class="text-center text-400-12 gray">{{
@@ -268,7 +271,7 @@ onMounted(() => {
 }
 
 .m-account-container {
-  background: #1D2027;
+  background: #1d2027;
   margin: -40px 0px;
   padding-bottom: 20px;
   border-radius: 8px;
@@ -291,7 +294,7 @@ onMounted(() => {
   align-self: center;
   top: -25px;
   left: 50%;
-  border: 15px solid #1D2027;
+  border: 15px solid #1d2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -300,7 +303,7 @@ onMounted(() => {
 }
 
 .account-menu {
-  background-color: #1D2027;
+  background-color: #1d2027;
   border-radius: 0px 0px 12px 12px !important;
   height: 600px;
 
@@ -312,11 +315,11 @@ onMounted(() => {
 .account-divider {
   margin: auto;
   border-width: thin;
-  background: #23262F;
+  background: #23262f;
 }
 
 .m-account-tab-body {
-  background: #1D2027;
+  background: #1d2027;
   height: 48px;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   border-radius: 8px;
@@ -333,7 +336,7 @@ onMounted(() => {
   }
 }
 
-.m-account-menu-item-border{
+.m-account-menu-item-border {
   margin: 8px;
   border-radius: 8px !important;
   border: 1px solid #00b25c !important;

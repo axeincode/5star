@@ -15,6 +15,7 @@ import MPaymentMethods from "@/components/about_us/payment_methods/mobile/index.
 import MReferralSystem from "@/components/about_us/referral_system/mobile/index.vue";
 import MAMLPolicy from "@/components/about_us/aml_policy/mobile/index.vue";
 import MKYCPolicy from "@/components/about_us/kyc_policy/mobile/index.vue";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -87,6 +88,9 @@ watch(
 );
 
 onMounted(() => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   if (route.query.index) {
     activeMenuIndex.value = route.query.index;
     selectedMenuItem.value = menuList.value[activeMenuIndex.value];
@@ -152,7 +156,7 @@ onMounted(() => {
 
 <style lang="scss">
 .m-about-container {
-  background: #1D2027;
+  background: #1d2027;
   margin: -40px 0px 0px 0px;
   padding-bottom: 20px;
   border-radius: 8px;
@@ -161,7 +165,7 @@ onMounted(() => {
 .m-about-main-body {
   margin-top: 8px;
   border-radius: 8px;
-  background: var(--BG-5-1C1929, #15161C);
+  background: var(--BG-5-1C1929, #15161c);
 }
 
 .m-about-menu-card {
@@ -188,7 +192,7 @@ onMounted(() => {
   align-self: center;
   top: -25px;
   left: 50%;
-  border: 15px solid #1D2027;
+  border: 15px solid #1d2027;
   border-right-color: transparent;
   border-left-color: transparent;
   border-top-color: transparent;
@@ -197,7 +201,7 @@ onMounted(() => {
 }
 
 .m-about-tab-body {
-  background: #1D2027;
+  background: #1d2027;
   height: 48px;
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   border-radius: 8px;

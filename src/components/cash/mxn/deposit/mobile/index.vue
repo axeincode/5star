@@ -656,6 +656,9 @@ watch(currencyMenuShow, (value) => {
 })
 
 onMounted(async () => {
+  adjustTrackEvent({
+    eventToken: "s2jbxh", // PAGE_VIEW
+  });
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
   selectedCurrencyUnit.value = userBalance.value.currency;
