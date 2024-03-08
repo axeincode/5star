@@ -291,11 +291,11 @@ const svgTransform = (el: any, color: string) => {
 };
 
 const showWithdrawInfoDialog = (type: string) => {
-  withdraw_type.value = type
   if (!userInfo.value.phone_confirmd) {
     phoneBindingDialog.value = true;
     return;
   }
+  withdraw_type.value = type
   withdrawInfoDialog.value = true
 }
 
