@@ -390,7 +390,8 @@ export class Network {
       const configDefault = {
         headers: {
           "Authorization": 'Bearer ' + token,
-          "X-Language": "en",
+          // "X-Language": "en",
+          "X-Language": localStorage.getItem('lang') || 'en',
         },
         timeout: timeout,
         baseURL: import.meta.env.VITE_BASE_API,

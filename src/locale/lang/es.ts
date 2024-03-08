@@ -1350,6 +1350,7 @@ export const lang: langType = {
     dialog: {
         title_text: "Brazstar.com Muestra",
         content_text_1: "¿Estás seguro de que quieres eliminar la tarea?",
+        content_text_2: "¡¡ la cancelación deducirá el Premio {value} e irrevocable!",
         determine_btn_text: "Determinar",
         cancel_btn_text: "Cancelar",
     },

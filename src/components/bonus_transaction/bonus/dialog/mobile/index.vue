@@ -66,11 +66,14 @@ const submitCancel = async () => {
 <template>
   <div class="m-bonus-dialog-container">
     <v-row class="mx-4 mt-6 text-700-12 text-gray justify-center">
-      {{ t("bonus.dialog.title_text") }}
-    </v-row>
-    <v-row class="mx-4 mt-6 text-700-12 text-gray">
+      <!-- {{ t("bonus.dialog.title_text") }} -->
       <p class="text-center">
         {{ t("bonus.dialog.content_text_1") }}
+      </p>
+    </v-row>
+    <v-row class="mx-4 mt-6 text-700-12 text-gray justify-center">
+      <p class="text-center">
+        {{ t("bonus.dialog.content_text_2", {value: 'xxx'}) }}
       </p>
     </v-row>
     <v-row class="mx-10 mt-10 text-700-14">
@@ -114,6 +117,7 @@ const submitCancel = async () => {
 
     .v-btn__content {
       color: #ffffff;
+      font-size: 12px;
     }
   }
 }
@@ -123,10 +127,11 @@ const submitCancel = async () => {
   button {
     background: #23262f !important;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-    border-radius: 26px;
+    border-radius: 8px !important;
 
     .v-btn__content {
       color: #ffffff;
+      font-size: 12px;
     }
   }
 }
