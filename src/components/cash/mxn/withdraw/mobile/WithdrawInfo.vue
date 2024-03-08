@@ -66,10 +66,10 @@ const handleSelectBankCode = (key: string) => {
   withdrawInfoItem.value.bank_code = key;
 }
 const handleSelectAccountType = (item: string) => {
-  withdrawInfoItem.value.account_type = item;
+  withdrawInfoItem.value.spei.account_type = item;
 }
 const handleSelectType = (item: string) => {
-  withdrawInfoItem.value.type = item;
+  withdrawInfoItem.value.spei.type = item;
 }
 const svgTransform = (el: any, color: string) => {
   el.children[0].setAttribute("fill", color);

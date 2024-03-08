@@ -599,7 +599,7 @@ onMounted(async () => {
         style="margin-left: auto"
         :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'green' : ''"
       >
-        {{ residualAmount }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ residualAmount.toFixed(2) }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div

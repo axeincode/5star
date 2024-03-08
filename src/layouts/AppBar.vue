@@ -381,7 +381,6 @@ watch(currencyList, (() => {
 
 const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   selectedCurrencyItem.value = item;
-
   await dispatchSetUserCurrency(item.currency);
   if (route.name == 'Sports') {
     await closeKill();
