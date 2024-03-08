@@ -294,6 +294,10 @@ const showWithdrawInfoDialog = (type: string) => {
   console.log(type);
   withdraw_type.value = type
   withdrawInfoDialog.value = true
+  if (!userInfo.value.phone_confirmd) {
+    phoneBindingDialog.value = true;
+    return;
+  }
 }
 
 const handleWithdrawSubmit = async () => {

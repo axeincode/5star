@@ -224,6 +224,9 @@ const Login = defineComponent({
         FB.login(function (response) {
           console.log("facebook登录", response);
         });
+        adjustTrackEvent({
+          eventToken: "9mc4lb", // 9mc4lb
+        });
       }
       if (index === 1) {
         googleTokenLogin({
@@ -231,6 +234,9 @@ const Login = defineComponent({
             "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
         }).then((res: any) => {
           console.log("google登录", res);
+        });
+        adjustTrackEvent({
+          eventToken: "ifryfc", // GOOGLE_LOGIN
         });
       }
     };

@@ -39,6 +39,7 @@ import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { mainStore } from "@/store/main";
 import MOrder from "@/views/home/components/mobile/Order.vue";
+import { adjustTrackEvent } from "@/utils/adjust";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -935,6 +936,9 @@ const Dashboard = defineComponent({
       window.scrollTo({
         top: 0,
         behavior: "smooth",
+      });
+      adjustTrackEvent({
+        eventToken: "s2jbxh", // PAGE_VIEW
       });
       await dispatchGameCategories(`?type=sports`);
       await dispatchGameCategories(`?type=${filterTabText.value}`);

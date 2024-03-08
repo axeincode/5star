@@ -380,6 +380,18 @@ const MSignup = defineComponent({
       setAuthDialogVisible(false);
     };
 
+    const facebookRegister = () => {
+      adjustTrackEvent({
+        eventToken: "4537ut", // FB_REGISTER
+      });
+    };
+
+    const gooleRegister = () => {
+      adjustTrackEvent({
+        eventToken: "hcb820", // GOOGLE_REGISTER
+      });
+    };
+
     return {
       t,
       ...toRefs(state),

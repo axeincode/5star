@@ -389,7 +389,7 @@ const handleDepositSubmit = async () => {
         document.body.appendChild(elementA);
       }
       elementA.click();
-      elementA.addEventListener('click', function(event) {
+      elementA.addEventListener('click', function (event) {
         event.preventDefault(); // 阻止默认行为
         window.location.href = this.href; // 手动跳转
       });
@@ -450,9 +450,23 @@ const handleDepositSubmit = async () => {
       icon: SuccessIcon,
       rtl: false,
     });
-    adjustTrackEvent({
-      eventToken: "gmx6cdn8x3pc",
-    });
+    if (localStorage.getItem("recharge_number") == null) {
+      localStorage.setItem("recharge_number", "1");
+      adjustTrackEvent({
+        eventToken: "r15rr9", // FIRST_RECHARGE
+      });
+    } else {
+      localStorage.setItem("recharge_number", (Number(localStorage.getItem("recharge_number")) + 1).toString());
+      if (Number(localStorage.getItem("recharge_number")) == 2) {
+        adjustTrackEvent({
+          eventToken: "ld7asn", // SECOND_RECHARGE
+        });
+      } else {
+        adjustTrackEvent({
+          eventToken: "gdlh3x", // PAY_RECHARGE
+        });
+      }
+    }
     await dispatchUserProfile();
     await dispatchUserBalance();
     // if (depositSubmit.value.code_url != "") {
