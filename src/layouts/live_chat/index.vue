@@ -31,11 +31,11 @@ const openLiveChat = () => {
   setLiveChatMaximize()
 }
 const onReadyHandler = (initialData:any):void => {
-  
-  LiveChatWidget?.call?.("set_customer_name", getUserInfo.id);
-
-  // 初始化数据
-  setInitialData(initialData)
+  if(getUserInfo.id) {
+    LiveChatWidget?.call?.("set_customer_name", getUserInfo.id);
+    // 初始化数据
+    setInitialData(initialData)
+  }
 }
 const onVisibilityChanged = (data:any):void => {
   console.log(data);
@@ -54,6 +54,7 @@ const onVisibilityChanged = (data:any):void => {
       @click="openLiveChat"
     ></inline-svg>
   </div> -->
+  <div></div>
 </template>
 
 <style lang="scss" scoped>
