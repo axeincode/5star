@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import icon_public_09 from "@/assets/public/svg/icon_public_09.svg";
 import { type GetUserInfo } from "@/interface/user";
 import { authStore } from "@/store/auth";
+import { userStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 import mxBankList from "@/utils/mx_bank";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
@@ -48,6 +49,11 @@ const typeList = ref<Array<string>>([
   "RFC",
   "CURP"
 ]);
+
+const userFundsIdentity = computed(() => {
+  const { getUserFundsIdentity } = storeToRefs(userStore());
+  return getUserFundsIdentity.value
+})
 
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
@@ -107,6 +113,13 @@ onMounted(() => {
   if (withdrawInfo !== null) {
     withdrawInfoItem.value = JSON.parse(withdrawInfo);
   }
+  withdrawInfoItem.value.spei.clabe_number = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.bank_number : "";
+  withdrawInfoItem.value.spei.rfc = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.id_number : "";
+  withdrawInfoItem.value.spei.name = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.user_name : "";
+  withdrawInfoItem.value.paypal.clabe_number = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.bank_number : "";
+  withdrawInfoItem.value.spei.rfc = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.id_number : "";
+  withdrawInfoItem.value.paypal.paypal_account = userFundsIdentity.value.identity.Paypal != undefined ? userFundsIdentity.value.identity.Paypal.bank_number : "";
+  withdrawInfoItem.value.paypal.name = userFundsIdentity.value.identity.Paypal != undefined ? userFundsIdentity.value.identity.Paypal.user_name : "";
 })
 </script>
 
@@ -171,6 +184,7 @@ onMounted(() => {
             type="text"
             v-model="withdrawInfoItem.spei.name"
             :placeholder="t('withdraw_info_dialog.text_5')"
+            :disabled="userFundsIdentity.identity.SPEI != undefined"
             class="text-700-12"
           />
         </div>
@@ -279,6 +293,7 @@ onMounted(() => {
             v-model="withdrawInfoItem.spei.clabe_number"
             :placeholder="t('withdraw_info_dialog.text_14')"
             class="text-700-12"
+            :disabled="userFundsIdentity.identity.SPEI != undefined"
           />
         </div>
 
@@ -328,6 +343,7 @@ onMounted(() => {
             type="text"
             v-model="withdrawInfoItem.spei.rfc"
             :placeholder="t('withdraw_info_dialog.text_17')"
+            :disabled="userFundsIdentity.identity.SPEI != undefined"
             class="text-700-12"
           />
         </div>
@@ -343,6 +359,7 @@ onMounted(() => {
             type="text"
             v-model="withdrawInfoItem.paypal.name"
             :placeholder="t('withdraw_info_dialog.text_5')"
+            :disabled="userFundsIdentity.identity.Paypal != undefined"
             class="text-700-12"
           />
         </div>
@@ -385,6 +402,7 @@ onMounted(() => {
             type="text"
             v-model="withdrawInfoItem.paypal.paypal_account"
             :placeholder="t('withdraw_info_dialog.text_7')"
+            :disabled="userFundsIdentity.identity.Paypal != undefined"
             class="text-700-12"
           />
         </div>
