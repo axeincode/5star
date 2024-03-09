@@ -12,6 +12,7 @@ import { gameStore } from "@/store/game";
 import { agentStore } from "@/store/agent";
 import { vipStore } from "@/store/vip";
 import { liveChatStore } from "@/store/liveChat";
+import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import icon_public_34 from "@/assets/public/svg/icon_public_34.svg";
@@ -83,7 +84,8 @@ const { setGameFilterText } = gameStore();
 const { dispatchGameCategories } = gameStore();
 const { setAgentNavBarToggle } = agentStore();
 const { setVipNavBarToggle } = vipStore();
-const { setLiveChatMaximize } = liveChatStore();
+const { setLiveChatMaximize, LiveChatWidget } = liveChatStore();
+const authStoreData = authStore()
 
 const { t } = useI18n();
 const casinoOpen = ref<Array<string>>(['']);
@@ -295,6 +297,8 @@ const originalGames = computed(() => {
   const { getOriginalGames } = storeToRefs(gameStore());
   return getOriginalGames.value
 })
+
+const userInfo = computed(() => authStoreData.getUserInfo)
 
 // language array
 const langItems = ref<Array<any>>([
@@ -853,8 +857,12 @@ const handleNavbarItem = (navbarText: string) => {
       blogIconColor.value = "#7782AA"
       supportIconColor.value = "#FFFFFF"
 
-      // 最大化
-      setLiveChatMaximize()
+      if(userInfo.value?.id) {
+        LiveChatWidget?.call?.("set_customer_name", userInfo.value?.id || '');
+        // 最大化
+        setLiveChatMaximize()
+      }
+
       break;
   }
 }
