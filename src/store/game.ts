@@ -188,7 +188,8 @@ export const gameStore = defineStore({
                         this.setGameCategories(response.data);
                     }
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -205,7 +206,8 @@ export const gameStore = defineStore({
                     this.setGameSearchList(response.data);
                 } else {
                     this.setGameSearchList({ list: [], total: 0 });
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -222,7 +224,8 @@ export const gameStore = defineStore({
                     this.setGameSearchList(response.data);
                 } else {
                     this.setGameSearchList({ list: [], total: 0 });
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1, 4);
@@ -237,7 +240,8 @@ export const gameStore = defineStore({
                 if (response.code == 200) {
                     this.setSuccess(true);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -254,7 +258,8 @@ export const gameStore = defineStore({
                     this.setErrorMessage("");
                     this.setGameEnterItem(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -270,7 +275,8 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setGameHistoryItem(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -286,7 +292,8 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setUserSpinPage(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -302,7 +309,8 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setUserSpin(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1);
@@ -318,7 +326,8 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setGameBigWinItem(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -334,7 +343,8 @@ export const gameStore = defineStore({
                     this.setSuccess(true);
                     this.setFavoriteGameList(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);

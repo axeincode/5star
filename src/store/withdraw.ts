@@ -60,7 +60,8 @@ export const withdrawStore = defineStore({
           this.setSuccess(true);
           this.setWithdrawCfg(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
@@ -76,7 +77,8 @@ export const withdrawStore = defineStore({
           this.setSuccess(true);
           this.setWithdrawSubmit(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -92,7 +94,8 @@ export const withdrawStore = defineStore({
           this.setSuccess(true);
           this.setWithdrawHistoryItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -112,7 +115,8 @@ export const withdrawStore = defineStore({
           })
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -128,7 +132,8 @@ export const withdrawStore = defineStore({
           this.setSuccess(true);
           this.setSmsVerificationItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -143,7 +148,8 @@ export const withdrawStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);

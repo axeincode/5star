@@ -39,7 +39,8 @@ export const bannerStore = defineStore({
                 this.setSuccess(true);
                 this.setBannerList(response.data);
             } else {
-                this.setErrorMessage(handleException(response.code));
+                // this.setErrorMessage(handleException(response.code));
+                this.setErrorMessage(response.message);
             }
         }
         await network.sendMsg(route, {}, next, 1, 4);

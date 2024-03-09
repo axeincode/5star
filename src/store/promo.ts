@@ -46,7 +46,8 @@ export const promoStore = defineStore({
           this.setSuccess(true);
           this.setUserActivityList(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);

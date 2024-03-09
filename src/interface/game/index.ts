@@ -98,7 +98,7 @@ export type GetGameBigWinResponse = {
 export type GetGameCategoriesResponse = {
     code: number
     data: Array<Category>
-    messsage: string
+    message: string
 }
 
 export type GetGameSearchResponse = {

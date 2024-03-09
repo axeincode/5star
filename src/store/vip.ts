@@ -124,10 +124,10 @@ export const vipStore = defineStore({
         setVipSigninHistory(vipSigninHistoryList: Vip.VipSigninHistoryData) {
             this.vipSigninHistoryList = vipSigninHistoryList;
         },
-        // Reward collection prompt information  奖励领取提示信息  
+        // Reward collection prompt information  奖励领取提示信息
         alertMessage(successMessage: Vip.SuccessMessageParams) {
             const toast = useToast();
-            toast.success(successMessage.message, { 
+            toast.success(successMessage.message, {
                 timeout: 3000,
                 closeOnClick: false,
                 pauseOnFocusLoss: false,
@@ -151,7 +151,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipSignIn(response.data)
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -166,7 +167,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.dispatchVipSignIn();
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1);
@@ -181,7 +183,8 @@ export const vipStore = defineStore({
                 if (response.code == 200) {
                     this.setSuccess(true);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1);
@@ -197,7 +200,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipInfo(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -213,7 +217,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipLevels(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -229,7 +234,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipTasks(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -259,7 +265,8 @@ export const vipStore = defineStore({
                 if (response.code == 200) {
                     this.setSuccess(true);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -275,7 +282,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipRebateHistory(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -291,7 +299,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipLevelRewardHistory(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -307,7 +316,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipTimesHistory(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);
@@ -323,7 +333,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipLevelUpList(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -339,7 +350,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipLevelUpReceive(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1);
@@ -357,7 +369,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipCycleawardList(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -378,7 +391,8 @@ export const vipStore = defineStore({
                     this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
                     this.dispatchVipCycleawardList();
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                     this.alertMessage({ message: response.message, type: 0 });
                 }
             }
@@ -397,7 +411,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipLevelAward(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -418,7 +433,8 @@ export const vipStore = defineStore({
                     this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
                     this.dispatchVipLevelAward();
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                     this.alertMessage({ message: response.message, type: 0 });
                 }
             }
@@ -437,7 +453,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipBetawardList(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);
@@ -458,7 +475,8 @@ export const vipStore = defineStore({
                     this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
                     this.dispatchVipBetawardList();
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                     this.alertMessage({ message: response.message, type: 0 });
                 }
             }
@@ -478,7 +496,8 @@ export const vipStore = defineStore({
                     this.setSuccess(true);
                     this.setVipSigninHistory(response.data);
                 } else {
-                    this.setErrorMessage(handleException(response.code));
+                    // this.setErrorMessage(handleException(response.code));
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, data, next, 1);

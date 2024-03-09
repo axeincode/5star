@@ -60,7 +60,8 @@ export const bonusTransactionStore = defineStore({
           this.setSuccess(true);
           this.setTransactionHistoryItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);

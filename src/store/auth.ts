@@ -150,7 +150,8 @@ export const authStore = defineStore({
           this.setToken(response.token);
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, msg, next, 1);
@@ -174,7 +175,8 @@ export const authStore = defineStore({
           if(response.code == 101004) {
             this.dispatchSignout();
           }
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
@@ -190,7 +192,8 @@ export const authStore = defineStore({
           this.setUserAmount(response.data);
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
@@ -205,7 +208,8 @@ export const authStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -220,7 +224,8 @@ export const authStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -235,7 +240,8 @@ export const authStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -250,7 +256,8 @@ export const authStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);

@@ -124,7 +124,8 @@ export const inviteStore = defineStore({
           this.setSuccess(true);
           this.setInviteItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -140,7 +141,8 @@ export const inviteStore = defineStore({
           this.setSuccess(true);
           this.setInviteHistoryItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, formData, next, 1);
@@ -156,7 +158,8 @@ export const inviteStore = defineStore({
           this.setSuccess(true);
           this.setStatisticsItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -171,7 +174,8 @@ export const inviteStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -187,7 +191,8 @@ export const inviteStore = defineStore({
           this.setSuccess(true);
           this.setPersonalInvitationInfo(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -203,7 +208,8 @@ export const inviteStore = defineStore({
           this.setSuccess(true);
           this.setInviteHistoryConfig(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);

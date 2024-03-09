@@ -40,7 +40,8 @@ export const bonusStore = defineStore({
           this.setSuccess(true);
           this.setBonusList(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -55,7 +56,8 @@ export const bonusStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);

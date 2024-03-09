@@ -9,7 +9,7 @@ export const rewardStore = defineStore({
   state: () => ({
     success: false as boolean,
     errMessage: '' as string,
-    
+
     rewardList: {} as Reward.GetRewardCenterList,
   }),
   getters: {
@@ -39,7 +39,8 @@ export const rewardStore = defineStore({
                 this.setSuccess(true);
                 this.setRewardList(response.data);
             } else {
-                this.setErrorMessage(handleException(response.code));
+                // this.setErrorMessage(handleException(response.code));
+                this.setErrorMessage(response.message);
             }
         }
         await network.sendMsg(route, {}, next, 1, 4);
@@ -54,7 +55,8 @@ export const rewardStore = defineStore({
           if (response.code == 200) {
               this.setSuccess(true);
           } else {
-              this.setErrorMessage(handleException(response.code));
+              // this.setErrorMessage(handleException(response.code));
+              this.setErrorMessage(response.message);
           }
       }
       await network.sendMsg(route, {}, next, 1);

@@ -44,7 +44,8 @@ export const achievementStore = defineStore({
           this.setSuccess(true);
           this.setAchievementItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -60,7 +61,8 @@ export const achievementStore = defineStore({
           this.setSuccess(true);
           this.setAchievementItem(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
@@ -75,7 +77,8 @@ export const achievementStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);
@@ -90,7 +93,8 @@ export const achievementStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, data, next, 1);

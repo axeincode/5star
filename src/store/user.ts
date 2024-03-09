@@ -56,7 +56,8 @@ export const userStore = defineStore({
           this.setSuccess(true);
           this.setUserCheck(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -72,7 +73,8 @@ export const userStore = defineStore({
           this.setSuccess(true);
           this.setUserBalance(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
@@ -87,7 +89,8 @@ export const userStore = defineStore({
         if (response.code == 200) {
           this.setSuccess(true);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, { currency_type: currency }, next, 1);
@@ -103,7 +106,8 @@ export const userStore = defineStore({
           this.setSuccess(true);
           this.setVerifyTime(response.time);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1);
@@ -119,7 +123,8 @@ export const userStore = defineStore({
           this.setSuccess(true);
           this.setUserFundsIdentity(response.data);
         } else {
-          this.setErrorMessage(handleException(response.code));
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
