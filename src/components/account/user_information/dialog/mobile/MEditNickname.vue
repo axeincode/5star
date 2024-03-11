@@ -79,7 +79,7 @@ const handleNickNameInputFocus = (): void => {
 };
 
 const handleNickNameInputBlur = (): void => {
-  isShowNicknameValidation.value = false;
+  // isShowNicknameValidation.value = false;
   isExistValidation.value = false;
 };
 
@@ -167,6 +167,7 @@ const submitNickName = async () => {
         :onblur="handleNickNameInputBlur"
       />
       <ValidationBox
+        style="bottom: 70px !important"
         v-if="isShowNicknameValidation"
         :title="t('signup.displayNamePage.validation.username.title')"
         :descriptionList="nickNameValidationStrList"
@@ -208,6 +209,7 @@ const submitNickName = async () => {
   .form-textfield div.v-field__field {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
+
   border-radius: 8px;
   background: #1d2027;
   height: 422px;
@@ -253,6 +255,7 @@ const submitNickName = async () => {
   transform: translateX(-50%);
   z-index: 100;
 }
+
 @media (max-width: 600px) {
   .Vue-Toastification__container {
     right: 0 !important;
@@ -262,6 +265,7 @@ const submitNickName = async () => {
     height: 60px !important;
     //flex-direction: unset!important;
   }
+
   .Vue-Toastification__toast {
     align-items: center !important;
     z-index: 1000000000 !important;
@@ -305,6 +309,7 @@ const submitNickName = async () => {
   height: 60px !important;
   //flex-direction: unset!important;
 }
+
 .Vue-Toastification__toast {
   align-items: center !important;
   z-index: 1000000000 !important;

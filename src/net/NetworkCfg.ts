@@ -16,9 +16,11 @@ export namespace NETWORK {
     static USER_INFO = '/user/info'; // get user profile
     static USER_BALANCE = '/user/balance'; // get user balance
     static SET_USER_CURRENCY = '/user/currency'; // set user currency
-    
+
     static USER_CHANGE = '/user/change'; // update user info
     static USER_EMAIL = '/user/email'; // update email
+    static USER_EMAIL_SEND = '/user/email/send'; // Send email verification code
+    static USER_EMAIL_SUBMIT = '/user/email/submit'; // Submit email verification code for verification
     static USER_PASSWORD = '/user/password'; // update password
     static USER_SUSPEND = '/user/suspend'; // suspend user
     static USER_CHECK = '/user/check'; // user check

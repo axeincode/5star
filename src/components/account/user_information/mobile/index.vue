@@ -3,6 +3,7 @@ import { ref, watch, computed, onMounted } from "vue"
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { authStore } from "@/store/auth";
+import { userStore } from "@/store/user";
 import { storeToRefs } from "pinia";
 import { type GetUserInfo } from "@/interface/user";
 import EditNickname from "@/components/account/user_information/dialog/EditNickname.vue";
@@ -18,6 +19,7 @@ import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
 import { liveChatStore } from "@/store/liveChat";
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -26,14 +28,23 @@ const { setOverlayScrimShow } = appBarStore();
 const { setHeaderBlurEffectShow } = appBarStore();
 const { setMenuBlurEffectShow } = appBarStore();
 const { setLiveChatMaximize } = liveChatStore();
+const { dispatchUserEmailSend } = userStore();
+const { dispatchUserEmailSubmit } = userStore();
+
+const route = useRoute();
 
 const userInfo = computed((): GetUserInfo => {
-    const { getUserInfo } = storeToRefs(authStore());
-    return getUserInfo.value;
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value;
 })
 
+const token = computed(() => {
+  const { getToken } = storeToRefs(authStore());
+  return getToken.value;
+});
+
 const mobileWidth: any = computed(() => {
-    return width.value;
+  return width.value;
 })
 
 const dialogVisible = ref<boolean>(false);
@@ -48,79 +59,109 @@ const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_17.svg", imp
 const notificationText = ref<string>(t('account.phone_warning_text'));
 
 const handlePhonNumber = () => {
-    notificationShow.value = !notificationShow.value;
-    if (notificationShow.value) {
-        const toast = useToast();
-        toast.success(notificationText.value, {
-            timeout: 3000,
-            closeOnClick: false,
-            pauseOnFocusLoss: false,
-            pauseOnHover: false,
-            draggable: false,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: WarningIcon,
-            rtl: false,
-        });
-    }
+  notificationShow.value = !notificationShow.value;
+  if (notificationShow.value) {
+    const toast = useToast();
+    toast.success(notificationText.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
+  }
 }
 
 const editNicknameDialogShow = () => {
-    dialogVisible.value = true;
-    editNicknameDialog.value = true;
-    editPasswordDialog.value = false;
-    editEmailDialog.value = false;
-    setMainBlurEffectShow(true);
-    setHeaderBlurEffectShow(true);
-    setMenuBlurEffectShow(true);
-    setOverlayScrimShow(true);
+  dialogVisible.value = true;
+  editNicknameDialog.value = true;
+  editPasswordDialog.value = false;
+  editEmailDialog.value = false;
+  setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
+  setOverlayScrimShow(true);
 }
 
 const editPasswordDialogShow = () => {
-    dialogVisible.value = true;
-    editPasswordDialog.value = true;
-    editNicknameDialog.value = false;
-    editEmailDialog.value = false;
-    setMainBlurEffectShow(true);
-    setHeaderBlurEffectShow(true);
-    setMenuBlurEffectShow(true);
-    setOverlayScrimShow(true);
+  dialogVisible.value = true;
+  editPasswordDialog.value = true;
+  editNicknameDialog.value = false;
+  editEmailDialog.value = false;
+  setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
+  setOverlayScrimShow(true);
 }
 
 const editEmailDialogShow = () => {
-    dialogVisible.value = true;
-    editEmailDialog.value = true;
-    editPasswordDialog.value = false;
-    editNicknameDialog.value = false;
-    setMainBlurEffectShow(true);
-    setHeaderBlurEffectShow(true);
-    setMenuBlurEffectShow(true);
-    setOverlayScrimShow(true);
+  if (!userInfo.value.email_confirmd) {
+    const toast = useToast();
+    toast.success("Please complete the current email verification first.", {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
+    return;
+  }
+  dialogVisible.value = true;
+  editEmailDialog.value = true;
+  editPasswordDialog.value = false;
+  editNicknameDialog.value = false;
+  setMainBlurEffectShow(true);
+  setHeaderBlurEffectShow(true);
+  setMenuBlurEffectShow(true);
+  setOverlayScrimShow(true);
 }
 
 const userDialogHide = () => {
-    dialogVisible.value = false;
-    editPasswordDialog.value = false;
-    editNicknameDialog.value = false;
-    editEmailDialog.value = false;
-    setMainBlurEffectShow(false);
-    setHeaderBlurEffectShow(false);
-    setMenuBlurEffectShow(false);
-    setOverlayScrimShow(false);
+  dialogVisible.value = false;
+  editPasswordDialog.value = false;
+  editNicknameDialog.value = false;
+  editEmailDialog.value = false;
+  setMainBlurEffectShow(false);
+  setHeaderBlurEffectShow(false);
+  setMenuBlurEffectShow(false);
+  setOverlayScrimShow(false);
 }
 
 const submitNickName = (name: string) => {
-    userInfo.value.name = name
+  userInfo.value.name = name
 }
 
-const handleVerifyCode = () => {
+const handleVerifyCode = async () => {
+  await dispatchUserEmailSend({
+    email: userInfo.value.email
+  })
 }
 
 // 打开客服
 const contactService = () => {
   setLiveChatMaximize()
 }
+
+onMounted(async () => {
+  if (route.query.email_code) {
+    setTimeout(async () => {
+      await dispatchUserEmailSubmit({
+        email: userInfo.value.email,
+        encode: route.query.email_code
+      })
+    }, 2000)
+  }
+})
 </script>
 
 <template>
@@ -174,6 +215,7 @@ const contactService = () => {
           class="text-none m-email-verify-btn-color"
           @click="handleVerifyCode"
           height="40px"
+          v-if="!userInfo.email_confirmd"
         >
           {{ t("account.verify_code_text") }}
         </v-btn>
@@ -341,6 +383,7 @@ const contactService = () => {
   height: 60px !important;
   //flex-direction: unset!important;
 }
+
 .Vue-Toastification__toast {
   align-items: center !important;
   z-index: 1000000000 !important;

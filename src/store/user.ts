@@ -14,7 +14,8 @@ export const userStore = defineStore({
     userBalance: {} as User.GetUserBalance,
     userFundsIdentity: {
       identity: {}
-    } as User.UserFundsIdentityResponse
+    } as User.UserFundsIdentityResponse,
+    userEmailSendItem: {} as User.UserEmailSendItem
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -22,7 +23,8 @@ export const userStore = defineStore({
     getUserCheck: (state) => state.userCheck,
     getVerifyTime: (state) => state.verifyTime,
     getUserBalance: (state) => state.userBalance,
-    getUserFundsIdentity: (state) => state.userFundsIdentity
+    getUserFundsIdentity: (state) => state.userFundsIdentity,
+    getUserEmailSendItem: (state) => state.userEmailSendItem,
   },
   actions: {
     // set functions
@@ -44,6 +46,9 @@ export const userStore = defineStore({
     },
     setUserFundsIdentity(userFundsIdentity: User.UserFundsIdentityResponse) {
       this.userFundsIdentity = userFundsIdentity;
+    },
+    setUserEmailSendItem(userEmailSendItem: User.UserEmailSendItem) {
+      this.userEmailSendItem = userEmailSendItem
     },
     // user check
     async dispatchUserCheck() {
@@ -128,6 +133,39 @@ export const userStore = defineStore({
         }
       }
       await network.sendMsg(route, {}, next, 1, 4);
+    },
+    // Send email verification code
+    async dispatchUserEmailSend(data: any) {
+      this.setSuccess(false);
+      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_EMAIL_SEND;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: User.GetUserEmailSendResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+          this.setUserEmailSendItem(response.data);
+        } else {
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
+    // Send email verification code
+    async dispatchUserEmailSubmit(data: any) {
+      this.setSuccess(false);
+      const route: string = NETWORK.PERSONAL_INFO_PAGE.USER_EMAIL_SUBMIT;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: User.GetUserEmailSubmitResponse) => {
+        if (response.code == 200) {
+          this.setSuccess(true);
+        } else {
+          // this.setErrorMessage(handleException(response.code));
+          this.setErrorMessage(response.message);
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
     },
   }
 })

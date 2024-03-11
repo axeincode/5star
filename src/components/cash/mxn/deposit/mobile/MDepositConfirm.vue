@@ -128,7 +128,7 @@ onUnmounted(() => {
         <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
       </v-btn>
     </div>
-    <div class="m-deposit-confirm-dailog-body px-8 pt-2">
+    <div class="m-deposit-confirm-dailog-body px-8 py-2">
       <img :src="mxnPaymentChannel[channnelName]" width="63" />
       <div class="m-order-amount text-center mt-2 pa-2">
         <div class="text-700-14 white">{{ t("deposit_confirm.text_1") }}</div>
@@ -195,7 +195,7 @@ onUnmounted(() => {
       </div>
       <div class="text-400-10 gray">{{ t("deposit_confirm.text_11") }}</div>
       <v-btn
-        class="m-transfer-complete my-4"
+        class="m-transfer-complete mt-4 mb-16"
         width="-webkit-fill-available"
         height="48"
         @click="closeDepositConfirmDialog"
@@ -239,7 +239,7 @@ onUnmounted(() => {
     position: absolute;
     height: calc(100vh - 36px);
     top: 36px;
-    overflow-y: auto;
+    overflow-y: scroll;
     width: 100%;
 
     .m-order-amount {
