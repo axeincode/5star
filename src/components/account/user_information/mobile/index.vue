@@ -31,6 +31,8 @@ const { setLiveChatMaximize } = liveChatStore();
 const { dispatchUserEmailSend } = userStore();
 const { dispatchUserEmailSubmit } = userStore();
 
+const { dispatchUserProfile } = authStore();
+
 const route = useRoute();
 
 const userInfo = computed((): GetUserInfo => {
@@ -159,6 +161,7 @@ onMounted(async () => {
         email: userInfo.value.email,
         encode: route.query.email_code
       })
+      await dispatchUserProfile();
     }, 2000)
   }
 })
