@@ -19,7 +19,7 @@ import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
 import { liveChatStore } from "@/store/liveChat";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -34,6 +34,7 @@ const { dispatchUserEmailSubmit } = userStore();
 const { dispatchUserProfile } = authStore();
 
 const route = useRoute();
+const router = useRouter();
 
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
