@@ -16,8 +16,8 @@ const { width } = useDisplay();
 const { dispatchBonusCancel } = bonusStore();
 const { dispatchUserBonus } = bonusStore();
 const emit = defineEmits<{ (e: "bonusDialogHide"): void }>();
-const props = defineProps<{ id: number }>();
-const { id } = toRefs(props);
+const props = defineProps<{ id: number, receive: any  }>();
+const { id, receive } = toRefs(props);
 
 const loading = ref<boolean>(false);
 const notificationShow = ref<boolean>(false);
@@ -73,7 +73,9 @@ const submitCancel = async () => {
     </v-row>
     <v-row class="mx-4 mt-6 text-700-12 text-gray justify-center">
       <p class="text-center">
-        {{ t("bonus.dialog.content_text_2", {value: 'xxx'}) }}
+        <span>{{ t("bonus.dialog.content_text_2") }}</span>
+        <span style="color: #f9bc01;">{{ ` ${receive} ` }}</span>
+        <span>{{ t("bonus.dialog.content_text_3") }}</span>
       </p>
     </v-row>
     <v-row class="mx-10 mt-10 text-700-14">

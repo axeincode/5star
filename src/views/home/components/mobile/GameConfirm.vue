@@ -78,6 +78,10 @@ const addFavoriteGame = async (id: string | number) => {
     openDialog("login");
     return;
   }
+
+  // 改变处理图标颜色
+  favoriteSvgIconColor.value = favoriteSvgIconColor.value == "#7782AA" ? "#F9BC01" : "#7782AA";
+  
   if (is_favorite.value) {
     await dispatchFavoriteGame({
       del_game: id,
@@ -88,9 +92,6 @@ const addFavoriteGame = async (id: string | number) => {
       add_game: id,
     });
   }
-
-  // 改变处理图标颜色
-  favoriteSvgIconColor.value = favoriteSvgIconColor.value == "#7782AA" ? "#F9BC01" : "#7782AA";
 
   try {
     await dispatchGameFavoriteList()
@@ -185,7 +186,7 @@ watch(gameConfirmDialogShow, (value) => {
     <div class="text-center" v-else>
       <v-btn
         :loading="loading"
-        class="my-4 text-none m-game-confirm-real-more-btn"
+        class="my-4 mb-11 text-none m-game-confirm-real-more-btn"
         width="280"
         height="40"
         @click="handleEnterGame(selectedGameItem.id, selectedGameItem.name, 'false')"

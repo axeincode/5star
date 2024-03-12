@@ -104,6 +104,8 @@ const refreshGameFavoriteList = (id: string | number) => {
 }
 
 watch(searchText, async (value) => {
+  console.log(slug.value, 'slug.value');
+  
   providerGameList.value = [];
   if (value) {
     searchLoading.value = true;
@@ -247,12 +249,14 @@ onMounted(async () => {
                 lazy-placeholder
                 blur="30"
                 @click="showGameConfirmationDialog(game)"
-              />
+              >
+                <div class="text-overlay">
+                  <h2>{{ game.name }}</h2>
+                  <p>{{ game.provider }}</p>
+                </div>
+              </ProgressiveImage>
 
-              <div class="text-overlay">
-                <h2>{{ game.name }}</h2>
-                <p>{{ game.provider }}</p>
-              </div>
+              
 
             </v-col>
           </template>
@@ -511,7 +515,7 @@ onMounted(async () => {
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0 4px 7px 4px;
+  margin: 0;
   padding: 10px 12px 3px;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);

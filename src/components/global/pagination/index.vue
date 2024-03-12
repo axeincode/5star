@@ -102,6 +102,16 @@ onMounted(() => {
       .v-btn__content {
         font-weight: bold !important;
         font-size: 14px !important;
+        color: #fff !important;
+      }
+    }
+
+    .v-btn--disabled {
+      opacity: 1;
+
+      .v-btn__content {
+        font-weight: bold !important;
+        font-size: 14px !important;
         color: #15161c !important;
       }
     }

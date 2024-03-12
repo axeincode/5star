@@ -56,6 +56,8 @@ const formsList = ref<Array<any>>([
     note: "",
   },
   {},
+  {},
+  {},
   {}
 ]);
 

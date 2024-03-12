@@ -1710,7 +1710,7 @@ onMounted(async () => {
           </v-list>
         </v-menu>
       </v-list>
-      <v-list-item class="m-theme-toggle">
+      <v-list-item class="m-theme-toggle" v-if="false">
         <input type="checkbox" id="m-theme-toggle" v-model="soundCheckBox" />
         <label for="m-theme-toggle">
           <div class="dark" :class="[!soundCheckBox ? 'active' : '']">

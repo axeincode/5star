@@ -113,6 +113,8 @@ const tempHistoryList = [
     amount: "",
     currency_type: "",
   },
+  {},
+  {}
 ]
 
 const success = computed(() => {
@@ -455,11 +457,11 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
   </v-row>
   <v-row class="m-bonus-transaction-table3">
     <v-col cols="4" class="d-flex" style="margin-left: -12px; margin-top: 4px">
-      <v-btn icon width="24" height="24" class="m-withdraw-info-icon">
+      <!-- <v-btn icon width="24" height="24" class="m-withdraw-info-icon">
         <v-icon>
           <img src="@/assets/public/svg/icon_public_53.svg" />
         </v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-col>
     <v-col cols="8" class="d-flex justify-end" style="padding-right: 10px">
       <!-- <div style="width: 100%"> -->

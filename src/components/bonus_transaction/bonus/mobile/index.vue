@@ -45,6 +45,8 @@ const userBonusList = computed(() => {
       item.rate = Math.ceil(parseInt(item.now) / parseInt(item.max) * 100);
     })
     const resultTree = groupObjects(getBonusList.value.list);
+    console.log(resultTree, 'resultTree');
+    
     getBonusList.value.list = resultTree;
   }
   return getBonusList.value
@@ -103,6 +105,7 @@ const formsList = ref<Array<any>>([
 
 const dialogVisible = ref<boolean>(false);
 const selectedId = ref<number>(0);
+const receiveValue = ref<any>();
 
 const groupObjects = (array:Array<any>) => {
   let grouped:Array<any> = [];
@@ -153,8 +156,9 @@ const bonusDialogHide = () => {
   setOverlayScrimShow(false);
 };
 
-const confirmDailogShow = (id: number) => {
+const confirmDailogShow = (id: number, receive: any) => {
   selectedId.value = id;
+  receiveValue.value = receive;
   dialogVisible.value = true;
   setMainBlurEffectShow(true);
   setHeaderBlurEffectShow(true);
@@ -599,7 +603,7 @@ onMounted(async () => {
                     <v-col cols="6" class="text-right">
                       <v-btn
                         class="m-bonus-forfeit-btn text-none"
-                        @click="confirmDailogShow(item.children[0].id)"
+                        @click="confirmDailogShow(item.children[0].id, item.children[0].receive)"
                       >
                         {{ t("bonus.text_5") }}
                       </v-btn>
@@ -619,7 +623,7 @@ onMounted(async () => {
     content-class="m-suspend-dialog-position"
     @click:outside="bonusDialogHide"
   >
-    <MBonusDialog :id="selectedId" @bonusDialogHide="bonusDialogHide" />
+    <MBonusDialog :id="selectedId" :receive="receiveValue" @bonusDialogHide="bonusDialogHide" />
   </v-dialog>
 </template>
 

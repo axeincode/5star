@@ -1361,6 +1361,7 @@ export type langType = {
       title_text: string
       content_text_1: string
       content_text_2: string
+      content_text_3: string
       determine_btn_text: string
       cancel_btn_text: string
     }

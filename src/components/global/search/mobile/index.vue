@@ -30,7 +30,7 @@ const searchLoading = ref<boolean>(false);
 const page_no = ref<number>(1);
 const currentPage = ref<number>(1);
 const moreCurrentPage = ref<number>(1);
-const limit = ref<number>(4);
+const limit = ref<number>(7);
 const moreLoading = ref<boolean>(false);
 const swiper = ref<any>(null);
 
@@ -368,14 +368,21 @@ onMounted(async () => {
           </div>
           <v-row class="mx-2 my-4">
             <template v-for="(item, index) in searchedGameList" :key="index">
-              <v-col cols="4" class="py-0 px-1" v-if="index < 3 * page_no">
+              <v-col cols="4" class="py-0 px-1" v-if="index < 6 * page_no" style="position: relative;">
                 <ProgressiveImage
                   :src="item.image"
                   lazy-placeholder
                   :placeholder-src="img_public_42"
                   blur="30"
                   @click="handleEnterGame(item.id, item.name)"
-                />
+                >
+                  <div class="text-overlay">
+                    <h2>{{ item.name }}</h2>
+                    <p>{{ item.provider }}</p>
+                  </div>
+                </ProgressiveImage>
+
+                
               </v-col>
             </template>
           </v-row>
@@ -425,6 +432,10 @@ onMounted(async () => {
               class="m-home-search-swiper-img"
               @click="handleEnterGame(gameItem.id, gameItem.name)"
             />
+            <div class="text-overlay--search">
+              <h2>{{ gameItem.name }}</h2>
+              <p>{{ gameItem.provider }}</p>
+            </div>
           </SwiperSlide>
         </Swiper>
       </div>
@@ -743,6 +754,74 @@ onMounted(async () => {
   .m-home-search-swiper-img {
     width: 100%;
     border-radius: 8px 8px;
+  }
+}
+
+/* 文字叠加在图片上 */
+.text-overlay--search {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  margin-bottom: 7px;
+  padding: 10px 12px 3px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+
+  h2 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+  }
+}
+
+/* 文字叠加在图片上 */
+.text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 10px 12px 3px;
+  color: white;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+
+  h2 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
   }
 }
 </style>

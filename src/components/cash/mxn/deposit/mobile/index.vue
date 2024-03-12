@@ -676,7 +676,7 @@ onMounted(async () => {
     :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
   >
     <v-row class="mt-6 mx-10 text-400-12 gray">
-      {{ t("deposit_dialog.deposit_currency") }}22
+      {{ t("deposit_dialog.deposit_currency") }}
     </v-row>
     <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
       <template v-slot:activator="{ props }">
@@ -937,6 +937,7 @@ onMounted(async () => {
 // container
 .mobile-deposit-container {
   overflow-y: auto;
+  padding-bottom: 10px;
 
   .m-deposit-bonus-card {
     // height: 83px;

@@ -1362,7 +1362,8 @@ export const lang: langType = {
     dialog: {
       title_text: "HOY777.com Show",
       content_text_1: "Are you sure you want to delete the task?",
-      content_text_2: "Cancellations have {value} bonuses deducted and are irrevocable!",
+      content_text_2: "Cancellations have ",
+      content_text_3: " bonuses deducted and are irrevocable!",
       determine_btn_text: "Determine",
       cancel_btn_text: "Cancel",
     }

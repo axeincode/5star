@@ -6,7 +6,7 @@ import { watch } from "vue";
 import { ref } from "vue";
 import { computed } from "vue";
 import { onMounted } from "vue";
-import { onUnmounted } from "vue";
+import { onActivated } from "vue";
 import { getCurrentInstance } from "vue";
 import { defineAsyncComponent } from "vue";
 import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router'
@@ -40,6 +40,7 @@ import { ProgressiveImage } from "vue-progressive-image";
 import { mainStore } from "@/store/main";
 import MOrder from "@/views/home/components/mobile/Order.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+import { log } from "console";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -728,6 +729,10 @@ const Dashboard = defineComponent({
       // setMailMenuShow(value);
     })
 
+    watch(mailMenuShow, (value) => {
+      handleGameFilterBtn(t('home.button.all_game'))
+    })
+
     watch(gameFilterText, async (value: any) => {
       selectedGameFilterBtn.value = value;
       switch (selectedGameFilterBtn.value) {
@@ -933,6 +938,8 @@ const Dashboard = defineComponent({
 
     onMounted(async () => {
       loading.value = true;
+      console.log(213123123123);
+      
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -1595,12 +1602,13 @@ export default Dashboard;
                     lazy-placeholder
                     blur="30"
                     @click="showGameConfirmationDialog(gameItem)"
-                  />
-
-                  <div class="text-overlay">
-                    <h2>{{ gameItem.name }}</h2>
-                    <p>{{ gameItem.provider }}</p>
-                  </div>
+                  >
+                    <div class="text-overlay">
+                      <h2>{{ gameItem.name }}</h2>
+                      <p>{{ gameItem.provider }}</p>
+                    </div>
+                  </ProgressiveImage>
+                  
                   <!-- <img
                     v-lazy="gameItem.image"
                     :data-src="gameItem.image"
@@ -1761,11 +1769,12 @@ export default Dashboard;
                     lazy-placeholder
                     blur="30"
                     @click="showGameConfirmationDialog(gameItem)"
-                  />
-                  <div class="text-overlay">
-                    <h2>{{ gameItem.name }}</h2>
-                    <p>{{ gameItem.provider }}</p>
-                  </div>
+                  >
+                    <div class="text-overlay">
+                      <h2>{{ gameItem.name }}</h2>
+                      <p>{{ gameItem.provider }}</p>
+                    </div>
+                  </ProgressiveImage>
                   <div
                     v-if="selectedCategoryName == 'favorite'"
                     class="m-home-favorite-icon"
@@ -2535,7 +2544,7 @@ export default Dashboard;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0 4px 7px 4px;
+  margin: 0;
   padding: 10px 12px 3px;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);

@@ -837,9 +837,13 @@ onMounted(async () => {
 
 .deposit-progress-bg {
   .v-progress-linear {
+    height: 8px;
+    border-radius: 20px !important;
+  }
+  .v-progress-linear__background {
     background: #15161c !important;
     box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
-    border-radius: 20px !important;
+    opacity: 1;
   }
 }
 

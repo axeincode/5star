@@ -392,6 +392,7 @@ const refferalDialog = () => {
                             border-radius: 20px;
                             background: #15161C;
                             box-shadow: 0px 0px 6px 1px #00000059 inset;
+                            opacity: 1;
                         }
                     }
                 }
@@ -437,6 +438,7 @@ const refferalDialog = () => {
                             border-radius: 20px;
                             background: #15161C;
                             box-shadow: 0px 0px 6px 1px #00000059 inset;
+                            opacity: 1;
                         }
                     }
                 }
