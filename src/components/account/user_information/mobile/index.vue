@@ -36,6 +36,8 @@ const { dispatchUserProfile } = authStore();
 const route = useRoute();
 const router = useRouter();
 
+const loading = ref<boolean>(false);
+
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value;
@@ -155,9 +157,11 @@ const submitNickName = (name: string) => {
 }
 
 const handleVerifyCode = async () => {
+  loading.value = true;
   await dispatchUserEmailSend({
     email: userInfo.value.email
   })
+  loading.value = false;
   if (success.value) {
     const toast = useToast();
     toast.success(t("account.text_2"), {
@@ -287,6 +291,7 @@ onMounted(async () => {
           class="text-none m-email-verify-btn-color"
           @click="handleVerifyCode"
           height="40px"
+          :loading="loading"
           v-if="!userInfo.email_confirmd"
         >
           {{ t("account.verify_code_text") }}

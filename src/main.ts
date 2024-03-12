@@ -34,7 +34,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { setupGlobDirectives } from '@/directives';
 
-// import "@/permission";
+import "@/permission";
 
 // Import the English locale (or any other locale you want to customize)
 import 'dayjs/locale/en';
