@@ -159,7 +159,6 @@ onMounted(() => {
         <div class="m-phone-binding-input mr-2 relative">
           <div class="m-phone-binding-code text-700-12 white">{{ phone_code }}</div>
           <input
-            type="number"
             v-model="phone_number"
             :placeholder="t('phone_binding_dialog.text_5')"
             class="text-700-12 px-2"
@@ -181,7 +180,6 @@ onMounted(() => {
       <div class="mt-1 d-flex align-center">
         <div class="m-phone-binding-input relative">
           <input
-            type="number"
             v-model="verification_code"
             :placeholder="t('phone_binding_dialog.text_7')"
             class="text-700-12 px-4"

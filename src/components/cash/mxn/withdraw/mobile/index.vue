@@ -579,7 +579,6 @@ onMounted(async () => {
         variant="solo"
         density="comfortable"
         color="#7782AA"
-        type="number"
         v-model="withdrawAmount"
         :onfocus="handleAmountInputFocus"
         :onblur="handleAmountInputBlur"
@@ -774,9 +773,8 @@ onMounted(async () => {
       <v-btn
         class="my-3 mx-6 m-deposit-btn"
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
-        width="-webkit-fill-available"
         height="48px"
-        style="width: -moz-available"
+        style="width: -moz-available !important; width: -webkit-fill-available"
         :loading="loading"
         :onclick="handleWithdrawSubmit"
       >

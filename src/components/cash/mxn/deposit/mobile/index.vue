@@ -895,11 +895,10 @@ onMounted(async () => {
       <v-btn
         class="my-4 mx-6 m-deposit-btn"
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
-        width="-webkit-fill-available"
         height="48px"
         :loading="loading"
         :onclick="handleDepositSubmit"
-        style="width: -moz-available"
+        style="width: -moz-available; width: -webkit-fill-available"
       >
         {{ t("deposit_dialog.deposit_btn_text") }}
       </v-btn>
