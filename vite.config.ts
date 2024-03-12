@@ -113,7 +113,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/assets/styles/global.scss"; @import "@/assets/styles/variables.scss";`
+          additionalData: `@import "@/assets/styles/variables.scss"; @import "@/assets/styles/global.scss";`
         }
       }
     },
