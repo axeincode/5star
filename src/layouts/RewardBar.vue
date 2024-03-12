@@ -406,11 +406,11 @@ onMounted(async () => {
         <template v-for="(item, index) in bonus_items" :key="index">
           <v-row class="ma-0 m-reward-bonus-card" :class="index != 0 ? 'mt-2' : ''">
             <v-col cols="3" class="d-flex align-center justify-center py-1">
-              <img :src="item.image" :width="index == 0 ? 34 : 38" />
+              <img :src="item.image" :class="!token && index != 3 ? 'm-reward-achievement-img' : '' " :width="index == 0 ? 34 : 38" />
             </v-col>
             <v-col cols="6" class="py-1 d-flex align-center">
               <div>
-                <p class="text-400-12 white">
+                <p class="text-400-12 white" :class="!token && index != 3 ? 'text-gray' : '' ">
                   {{ item.content }}
                 </p>
                 <p class="text-800-14 active" v-if="item.value != ''">

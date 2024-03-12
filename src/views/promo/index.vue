@@ -227,11 +227,11 @@ const i18nButtonText = (eng: string) => {
   <v-layout class="m-promo-navigation-layout">
     <v-navigation-drawer class="m-promo-navigation-drawer" :width="76">
       <div
-        class="text-center relative ml-2"
+        class="text-center relative ml-2 m-promo-navigation-event-card"
         :class="
           activeIndex == 0
             ? 'm-promo-navigation-event-card-active'
-            : 'm-promo-navigation-event-card'
+            : ''
         "
         style="margin-top: 96px !important"
         @click="handleBtnTab(0)"
@@ -246,17 +246,16 @@ const i18nButtonText = (eng: string) => {
         <div
           class="text-600-8"
           :class="activeIndex == 0 ? 'white' : 'gray'"
-          style="line-height: 0px"
         >
           {{ t("promo.text_1") }}
         </div>
       </div>
       <div
-        class="mt-8 text-center relative ml-2"
+        class="mt-8 text-center relative ml-2 m-promo-navigation-event-card"
         :class="
           activeIndex == 1
             ? 'm-promo-navigation-event-card-active'
-            : 'm-promo-navigation-event-card'
+            : ''
         "
         @click="handleBtnTab(1)"
       >
@@ -270,17 +269,16 @@ const i18nButtonText = (eng: string) => {
         <div
           class="text-600-8"
           :class="activeIndex == 1 ? 'white' : 'gray'"
-          style="line-height: 0px"
         >
           {{ t("promo.text_2") }}
         </div>
       </div>
       <div
-        class="mt-8 text-center relative ml-2"
+        class="mt-8 text-center relative ml-2 m-promo-navigation-event-card"
         :class="
           activeIndex == 2
             ? 'm-promo-navigation-event-card-active'
-            : 'm-promo-navigation-event-card'
+            : ''
         "
         @click="handleBtnTab(2)"
       >
@@ -294,7 +292,6 @@ const i18nButtonText = (eng: string) => {
         <div
           class="text-600-8"
           :class="activeIndex == 2 ? 'white' : 'gray'"
-          style="line-height: 0px"
         >
           {{ t("promo.text_3") }}
         </div>
@@ -430,8 +427,8 @@ const i18nButtonText = (eng: string) => {
     box-shadow: 3px 0px 4px 1px rgba(0, 0, 0, 0.21) !important;
 
     .m-promo-navigation-event-card-active {
-      width: 56px;
-      height: 48px;
+      // width: 56px;
+      // height: 48px;
       border-radius: 8px;
       background: var(--predominant, #009b3a);
       box-shadow: 0px -4px 0px 0px #0e5e50 inset;
@@ -454,7 +451,8 @@ const i18nButtonText = (eng: string) => {
 
     .m-promo-navigation-event-card {
       width: 56px;
-      height: 48px;
+      min-height: 48px;
+      padding-bottom: 5px;
     }
   }
 

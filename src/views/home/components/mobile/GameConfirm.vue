@@ -88,8 +88,13 @@ const addFavoriteGame = async (id: string | number) => {
       add_game: id,
     });
   }
-  await dispatchGameFavoriteList()
-  if (success.value) {
+
+  // 改变处理图标颜色
+  favoriteSvgIconColor.value = favoriteSvgIconColor.value == "#7782AA" ? "#F9BC01" : "#7782AA";
+
+  try {
+    await dispatchGameFavoriteList()
+  } catch (error) {
     favoriteSvgIconColor.value = favoriteSvgIconColor.value == "#7782AA" ? "#F9BC01" : "#7782AA";
   }
 }
@@ -146,7 +151,7 @@ watch(gameConfirmDialogShow, (value) => {
       </v-col>
       <v-col cols="5">
         <div class="text-700-14 white mt-2">{{ selectedGameItem.name }}</div>
-        <div class="text-400-12 gray mt-1">by {{ selectedGameItem.producer }}</div>
+        <div class="text-400-12 gray mt-1">by {{ selectedGameItem.provider }}</div>
       </v-col>
       <v-col cols="3" class="px-2 mt-2 d-flex justify-end">
         <inline-svg

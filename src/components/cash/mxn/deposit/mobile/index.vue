@@ -676,7 +676,7 @@ onMounted(async () => {
     :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
   >
     <v-row class="mt-6 mx-10 text-400-12 gray">
-      {{ t("deposit_dialog.deposit_currency") }}
+      {{ t("deposit_dialog.deposit_currency") }}22
     </v-row>
     <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
       <template v-slot:activator="{ props }">
@@ -793,7 +793,7 @@ onMounted(async () => {
     <div class="mx-4 mt-2">
       <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
     </div>
-    <v-row class="mt-4 mx-10 text-400-12 gray">
+    <v-row class="mt-2 mx-10 text-400-12 gray">
       {{ t("deposit_dialog.deposit_amount") }}
     </v-row>
     <v-row class="mt-2 mx-4">
@@ -829,7 +829,7 @@ onMounted(async () => {
         </v-btn>
       </v-col>
     </v-row>
-    <v-row class="mt-4 mx-3 relative">
+    <v-row class="mt-3 mx-3 relative">
       <v-text-field
         :label="`${t('deposit_dialog.amount')}(${selectedCurrencyItem.name})`"
         class="form-textfield dark-textfield m-deposit-amount-text"
@@ -1081,6 +1081,8 @@ onMounted(async () => {
   }
 
   .amount-checkbox {
+    margin: 5px 0px 15px;
+
     i.v-icon {
       color: #15161c;
       background-color: #01983a;
@@ -1094,6 +1096,18 @@ onMounted(async () => {
       background-color: #15161c;
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
+    }
+
+    .v-selection-control {
+      min-height: 20px !important;
+    }
+    .v-selection-control__wrapper, 
+    .v-selection-control__input {
+      width: 20px;
+      height: 20px;
+    }
+    .v-selection-control__wrapper {
+      margin: 0 10px;
     }
   }
 

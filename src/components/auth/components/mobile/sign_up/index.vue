@@ -822,6 +822,7 @@ export default MSignup;
   width: 100%;
   background: $color_1;
   overflow-y: auto;
+  padding-bottom: 80px;
 
   .v-field--variant-solo {
     background: transparent !important;

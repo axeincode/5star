@@ -91,13 +91,18 @@ onMounted(() => {
 
   .v-pagination__prev,
   .v-pagination__next {
+    box-shadow: 0px 4px 6px 1px #0000004D;
+    background: #23262F;
+    border-radius: 4px;
+
     .v-btn {
       width: 28px !important;
       height: 28px !important;
 
       .v-btn__content {
-        font-weight: 800 !important;
-        font-size: 12px !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+        color: #15161c !important;
       }
     }
   }

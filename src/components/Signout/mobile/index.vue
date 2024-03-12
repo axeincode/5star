@@ -19,8 +19,10 @@ const signOut = (): void => {
   emit("close");
   dispatchSignout();
   resetAllStores();
-  router.push({ name: "Dashboard" });
-  window.location.reload();
+  router.push({ path: '/' })
+  setTimeout(() => {
+    window.location.reload();
+  }, 300);
 };
 
 onMounted(() => {

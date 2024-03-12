@@ -86,7 +86,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 4px 6px 1px #0000004d;
+    // box-shadow: 0px 4px 6px 1px #0000004d;
 
     .m-auth-dialog-toggle {
       margin-top: 4px;

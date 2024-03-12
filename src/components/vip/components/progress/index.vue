@@ -390,6 +390,8 @@ const refferalDialog = () => {
                         }
                         ::v-deep(.v-progress-linear__background) {
                             border-radius: 20px;
+                            background: #15161C;
+                            box-shadow: 0px 0px 6px 1px #00000059 inset;
                         }
                     }
                 }
@@ -433,6 +435,8 @@ const refferalDialog = () => {
                         }
                         ::v-deep(.v-progress-linear__background) {
                             border-radius: 20px;
+                            background: #15161C;
+                            box-shadow: 0px 0px 6px 1px #00000059 inset;
                         }
                     }
                 }
