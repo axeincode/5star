@@ -14,6 +14,8 @@ const { dispatchInviteAward } = inviteStore();
 
 const summaryTabText = ref<string>("today");
 
+const profitSummaryCard = ref<HTMLElement | undefined>(undefined);
+
 const selectedItem = ref<StatisticsItem>({
     register_user: [],
     deposit_user: [],
@@ -33,12 +35,21 @@ const handleSummaryTab = (tabText: string) => {
     switch (tabText) {
         case "today":
             selectedItem.value = statisticsItem.value.today_profit
+            if (profitSummaryCard.value != undefined) {
+              profitSummaryCard.value.scrollLeft = 0;
+            }
             break;
         case "week":
             selectedItem.value = statisticsItem.value.week_profit
+            if (profitSummaryCard.value != undefined) {
+              profitSummaryCard.value.scrollLeft = 0;
+            }
             break;
         case "month":
             selectedItem.value = statisticsItem.value.month_profit
+            if (profitSummaryCard.value != undefined) {
+              profitSummaryCard.value.scrollLeft = 0;
+            }
             break;
     }
 };
@@ -55,7 +66,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="m-agent-profit-summary-card mx-2">
+  <div class="m-agent-profit-summary-card mx-2" ref="profitSummaryCard">
     <div class="ma-4 text-800-14 white">{{ t("affiliate.statistics.summary_text") }}</div>
     <v-row class="mx-1 my-0 px-6 m-agent-profit-summary-level">
       <v-col cols="3" class="pa-0 text-400-12 gray">

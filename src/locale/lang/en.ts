@@ -1463,7 +1463,10 @@ export const lang: langType = {
         determine_btn_text: "Determine",
         cancel_btn_text: "Cancel",
       }
-    }
+    },
+    text_1: "Email verification successful.",
+    text_2: "Verification code has been sent.",
+    text_3: "Email updated successfully!",
   },
   refferal: {
     app_bar_title: "Earn up to $20 per guest deposit user.",
@@ -1939,7 +1942,7 @@ export const lang: langType = {
   game_confirm: {
     text_1: "Fun Mode",
     text_2: "Real Mode"
-  },  
+  },
   deposit_confirm: {
     text_1: "Order Amount",
     text_2: "Payment term",

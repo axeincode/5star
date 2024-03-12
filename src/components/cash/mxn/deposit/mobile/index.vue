@@ -899,6 +899,7 @@ onMounted(async () => {
         height="48px"
         :loading="loading"
         :onclick="handleDepositSubmit"
+        style="width: -moz-available"
       >
         {{ t("deposit_dialog.deposit_btn_text") }}
       </v-btn>
@@ -1101,7 +1102,7 @@ onMounted(async () => {
     .v-selection-control {
       min-height: 20px !important;
     }
-    .v-selection-control__wrapper, 
+    .v-selection-control__wrapper,
     .v-selection-control__input {
       width: 20px;
       height: 20px;

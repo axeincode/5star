@@ -232,7 +232,7 @@ export type langType = {
       bronze: string,
     }
   }
-  about: {    
+  about: {
     page: {
       text_1: string
       text_2: string
@@ -1026,7 +1026,7 @@ export type langType = {
     live_win: {
       text_1: string
     }
-    button: {      
+    button: {
       all_game: string
       favorite: string
       recently_played: string
@@ -1462,6 +1462,9 @@ export type langType = {
         cancel_btn_text: string
       }
     }
+    text_1: string
+    text_2: string
+    text_3: string
   }
   refferal: {
     app_bar_title: string

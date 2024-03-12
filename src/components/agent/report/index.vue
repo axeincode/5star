@@ -393,7 +393,9 @@ onMounted(async () => {
   .v-list-item-title {
     color: #fff;
     text-align: center;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -472,8 +474,9 @@ onMounted(async () => {
 
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
   .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-    // border-bottom: 1px solid $agent_card_bg;
-    border-bottom: none !important;
+    border-bottom: 1px solid $agent_card_bg;
+    // border-bottom: 1px solid #23262f;
+    // border-bottom: none !important;
   }
 
   .forms-table-header {
@@ -550,7 +553,9 @@ onMounted(async () => {
 
   .el-picker-panel {
     background-color: $agent_card_notmet_bg;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;

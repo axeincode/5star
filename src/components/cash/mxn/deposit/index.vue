@@ -26,9 +26,9 @@ import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 const promotionDialogVisible = ref<boolean>(false);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
-    icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL",
-    value: 5.25
+  icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
+  name: "BRL",
+  value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "",
@@ -36,45 +36,46 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   name: "PIX",
   description: "20~150.000 BRL",
   min: 149,
-  max: 588.88
+  max: 588.88,
+  channel_type: ''
 })
 
 const currencyList = ref<Array<GetCurrencyItem>>([
-    {
-        icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-        name: "BRL",
-        value: 5.25
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
-        name: "PHP",
-        value: 0
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
-        name: "PEN",
-        value: 0
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
-        name: "MXN",
-        value: 0
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
-        name: "CLP",
-        value: 0
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
-        name: "USD",
-        value: 0
-    },
-    {
-        icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
-        name: "COP",
-        value: 0
-    },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
+    name: "BRL",
+    value: 5.25
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
+    name: "PHP",
+    value: 0
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
+    name: "PEN",
+    value: 0
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
+    name: "MXN",
+    value: 0
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
+    name: "CLP",
+    value: 0
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
+    name: "USD",
+    value: 0
+  },
+  {
+    icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
+    name: "COP",
+    value: 0
+  },
 ])
 
 const paymentList = ref<Array<GetPaymentItem>>([
@@ -145,12 +146,12 @@ const paymentList = ref<Array<GetPaymentItem>>([
 ])
 
 const depositAmountList = ref<Array<string>>([
-    '20',
-    '200',
-    '500',
-    '2000',
-    '5000',
-    '19999',
+  '20',
+  '200',
+  '500',
+  '2000',
+  '5000',
+  '19999',
 ])
 
 const depositToggleSwitch = ref<boolean>(false);
@@ -218,35 +219,35 @@ const handleSelectCurrency = (item: GetCurrencyItem) => {
 }
 
 const handleSelectPayment = (item: GetPaymentItem) => {
-    selectedPaymentItem.value = item;
+  selectedPaymentItem.value = item;
 }
 
 const validateAmount = (): boolean => {
-    return Number(depositAmount.value) >= 20 && Number(depositAmount.value) <= 100000;
+  return Number(depositAmount.value) >= 20 && Number(depositAmount.value) <= 100000;
 }
 
 const handleAmountInputFocus = (): void => {
-    if (validateAmount()) {
-        isShowAmountValidaton.value = false;
-    } else {
-        isShowAmountValidaton.value = true;
-    }
+  if (validateAmount()) {
+    isShowAmountValidaton.value = false;
+  } else {
+    isShowAmountValidaton.value = true;
+  }
 }
 
 const handleAmountInputChange = (): void => {
-    if (validateAmount()) {
-        isShowAmountValidaton.value = false;
-    } else {
-        isShowAmountValidaton.value = true;
-    }
+  if (validateAmount()) {
+    isShowAmountValidaton.value = false;
+  } else {
+    isShowAmountValidaton.value = true;
+  }
 }
 
 const handleAmountInputBlur = (): void => {
-    // if (validateAmount()) {
-    isShowAmountValidaton.value = false;
-    // } else {
-    //     isShowAmountValidaton.value = true;
-    // }
+  // if (validateAmount()) {
+  isShowAmountValidaton.value = false;
+  // } else {
+  //     isShowAmountValidaton.value = true;
+  // }
 }
 
 const handleDepositSubmit = async () => {
@@ -272,22 +273,22 @@ watch(bonusCheck, (newValue) => {
 })
 
 watch(depositAmount, (newValue) => {
-    if (validateAmount()) {
-        isDepositBtnReady.value = true;
-    } else {
-        isDepositBtnReady.value = false;
-    }
-    isShowAmountValidaton.value = !validateAmount();
+  if (validateAmount()) {
+    isDepositBtnReady.value = true;
+  } else {
+    isDepositBtnReady.value = false;
+  }
+  isShowAmountValidaton.value = !validateAmount();
 })
 
 watch(depositToggleSwitch, (newValue) => {
-    if (newValue) {
-        setWithdrawDialogToggle(true);
-        setDepositDialogToggle(false);
-    } else {
-        setWithdrawDialogToggle(false);
-        setDepositDialogToggle(true);
-    }
+  if (newValue) {
+    setWithdrawDialogToggle(true);
+    setDepositDialogToggle(false);
+  } else {
+    setWithdrawDialogToggle(false);
+    setDepositDialogToggle(true);
+  }
 })
 
 onMounted(async () => {
@@ -487,6 +488,7 @@ const overlayScrimShow = computed(() => {
   .v-field--variant-solo-filled {
     background: transparent;
   }
+
   background-color: #1d2027;
   height: 700px;
   border-radius: 0px 0px 16px 16px;
@@ -597,6 +599,7 @@ const overlayScrimShow = computed(() => {
   margin: auto;
   height: 440px !important;
 }
+
 .deposit-overlay {
   width: 100%;
   height: 700px;
@@ -607,9 +610,11 @@ const overlayScrimShow = computed(() => {
   border-radius: 16px;
   margin-top: 80px;
 }
+
 .deposit-overlay-show {
   display: block;
 }
+
 .deposit-overlay-hide {
   display: none;
 }

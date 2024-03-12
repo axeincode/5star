@@ -776,6 +776,7 @@ onMounted(async () => {
         :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
         width="-webkit-fill-available"
         height="48px"
+        style="width: -moz-available"
         :loading="loading"
         :onclick="handleWithdrawSubmit"
       >

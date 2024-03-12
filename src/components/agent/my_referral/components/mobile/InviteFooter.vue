@@ -12,7 +12,7 @@ const mobileWidth = computed(() => {
 });
 </script>
 <template>
-  <v-card class="m-agent-referral-footer-card-bg ma-2 pa-3 py-5 mb-4">
+  <v-card class="m-agent-referral-footer-card-bg ma-2 pa-3 py-5 mb-16">
     <v-row class="mx-1 align-center">
       <v-col cols="12" md="6" lg="6">
         <div class="mt-4 text-800-12 white">

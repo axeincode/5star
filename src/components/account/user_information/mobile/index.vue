@@ -45,6 +45,16 @@ const token = computed(() => {
   return getToken.value;
 });
 
+const success = computed(() => {
+  const { getSuccess } = storeToRefs(userStore());
+  return getSuccess.value
+})
+
+const errMessage = computed(() => {
+  const { getErrMessage } = storeToRefs(userStore());
+  return getErrMessage.value
+})
+
 const mobileWidth: any = computed(() => {
   return width.value;
 })
@@ -147,6 +157,35 @@ const handleVerifyCode = async () => {
   await dispatchUserEmailSend({
     email: userInfo.value.email
   })
+  if (success.value) {
+    const toast = useToast();
+    toast.success(t("account.text_2"), {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
+    });
+  } else {
+    const toast = useToast();
+    toast.success(errMessage.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: SuccessIcon,
+      rtl: false,
+    });
+  }
 }
 
 // 打开客服
@@ -161,6 +200,35 @@ onMounted(async () => {
         email: userInfo.value.email,
         encode: route.query.email_code
       })
+      if (success.value) {
+        const toast = useToast();
+        toast.success(t("account.text_1"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
+        });
+      } else {
+        const toast = useToast();
+        toast.success(errMessage.value, {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: SuccessIcon,
+          rtl: false,
+        });
+      }
       await dispatchUserProfile();
     }, 2000)
   }
@@ -243,7 +311,7 @@ onMounted(async () => {
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="mx-3 my-4">
+    <v-row class="mx-3 my-4" v-if="userInfo.phone_confirmd">
       <v-col cols="12" class="pa-0">
         <div class="mt-4">
           <v-row>

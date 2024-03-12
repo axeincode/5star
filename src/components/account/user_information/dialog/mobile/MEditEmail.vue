@@ -73,9 +73,8 @@ const updateEmail = async () => {
     password: password.value,
   });
   if (success.value) {
-    notificationText.value = "Email updated successfully!";
     const toast = useToast();
-    toast.success(notificationText.value, {
+    toast.success(t("account.text_3"), {
       timeout: 3000,
       closeOnClick: false,
       pauseOnFocusLoss: false,
@@ -94,27 +93,19 @@ const updateEmail = async () => {
       emit("userDialogHide");
     }, 2000);
   } else {
-    notificationShow.value = !notificationShow.value;
-    checkIcon.value = new URL(
-      "@/assets/public/svg/icon_public_17.svg",
-      import.meta.url
-    ).href;
-    notificationText.value = errMessage.value;
-    if (notificationShow.value) {
-      const toast = useToast();
-      toast.success(notificationText.value, {
-        timeout: 3000,
-        closeOnClick: false,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-        draggable: false,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: WarningIcon,
-        rtl: false,
-      });
-    }
+    const toast = useToast();
+    toast.success(errMessage.value, {
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: WarningIcon,
+      rtl: false,
+    });
     loading.value = false;
   }
 };
