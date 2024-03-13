@@ -185,6 +185,7 @@ const Dashboard = defineComponent({
       name: "",
       image: "",
       provider: "",
+      provider_name: '',
       producer: "",
       is_demo: false
     })
@@ -1605,7 +1606,7 @@ export default Dashboard;
                   >
                     <div class="text-overlay">
                       <h2>{{ gameItem.name }}</h2>
-                      <p>{{ gameItem.provider }}</p>
+                      <p>{{ gameItem.provider_name }}</p>
                     </div>
                   </ProgressiveImage>
 
@@ -1772,7 +1773,7 @@ export default Dashboard;
                   >
                     <div class="text-overlay">
                       <h2>{{ gameItem.name }}</h2>
-                      <p>{{ gameItem.provider }}</p>
+                      <p>{{ gameItem.provider_name }}</p>
                     </div>
                   </ProgressiveImage>
                   <div

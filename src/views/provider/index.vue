@@ -37,6 +37,7 @@ const selectedGameItem = ref<Game.GameItem>({
   name: "",
   image: "",
   provider: "",
+  provider_name: "",
   producer: "",
   is_demo: false
 })
@@ -105,7 +106,7 @@ const refreshGameFavoriteList = (id: string | number) => {
 
 watch(searchText, async (value) => {
   console.log(slug.value, 'slug.value');
-  
+
   providerGameList.value = [];
   if (value) {
     searchLoading.value = true;
@@ -252,12 +253,9 @@ onMounted(async () => {
               >
                 <div class="text-overlay">
                   <h2>{{ game.name }}</h2>
-                  <p>{{ game.provider }}</p>
+                  <p>{{ game.provider_name }}</p>
                 </div>
               </ProgressiveImage>
-
-              
-
             </v-col>
           </template>
         </v-row>
@@ -425,7 +423,7 @@ onMounted(async () => {
   transform: translate(-50%, -50%);
   width: 48px;
   height: 46px;
-  background-image: url("@/assets/public/image/img_public_42.png");
+  background-image: url("@/assets/public/image/logo_public_06.png");
   background-repeat: no-repeat;
   background-size: contain;
   animation: opacityAnimation 0.6s ease-in infinite;
@@ -526,7 +524,7 @@ onMounted(async () => {
     margin: 0;
     font-size: 12px;
     font-weight: 700;
-    color: #FFFFFF;
+    color: #ffffff;
     line-height: 1;
   }
 

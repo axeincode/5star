@@ -33,7 +33,7 @@ export interface SmsSendRequestForm {
 
 export interface SmsSubmitRequestForm {
     phone: string
-    code: string
+    code: string | number
 }
 
 export interface SmsSendResponseItem {

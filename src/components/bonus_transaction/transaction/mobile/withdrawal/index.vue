@@ -39,6 +39,10 @@ const withdrawalStatus = [
     value: "Waiting for manual processing.",
     color: "white",
   },
+  {
+    value: "Waiting for manual processing.",
+    color: "white",
+  },
 ]
 
 const props = defineProps<{
@@ -48,7 +52,7 @@ const props = defineProps<{
 
 const { pageSize, withdrawHistoryItem } = toRefs(props);
 
-const paginationLength = ref<number>(0);
+const paginationLength = ref<number>(1);
 
 const notificationText = ref<string>('Successful replication');
 
@@ -121,10 +125,6 @@ const success = computed(() => {
   const { getSuccess } = storeToRefs(withdrawStore());
   return getSuccess.value
 })
-
-const mobileWidth = computed(() => {
-  return width.value;
-});
 
 const fixPositionShow = computed(() => {
   const { getFixPositionEnable } = storeToRefs(appBarStore());
@@ -202,12 +202,8 @@ const handleCopyID = async (id: number) => {
 }
 
 watch(withdrawHistoryItem, (value) => {
-  paginationLength.value = withdrawHistoryItem.value.total_pages
+  paginationLength.value = Math.ceil(value.total_pages / pageSize.value)
 })
-
-onMounted(async () => {
-  paginationLength.value = withdrawHistoryItem.value.total_pages
-});
 
 const formatCurrency = (currency: number, currencyUnit: string) => {
   let locale = 'pt-BR';
@@ -456,21 +452,13 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
     </v-table>
   </v-row>
   <v-row class="m-bonus-transaction-table3">
-    <v-col cols="4" class="d-flex" style="margin-left: -12px; margin-top: 4px">
-      <!-- <v-btn icon width="24" height="24" class="m-withdraw-info-icon">
-        <v-icon>
-          <img src="@/assets/public/svg/icon_public_53.svg" />
-        </v-icon>
-      </v-btn> -->
-    </v-col>
+    <v-col cols="4" class="d-flex" style="margin-left: -12px; margin-top: 4px"> </v-col>
     <v-col cols="8" class="d-flex justify-end" style="padding-right: 10px">
-      <!-- <div style="width: 100%"> -->
-        <Pagination
-          :length="paginationLength"
-          @handlePrev="handlePrev"
-          @handleNext="handleNext"
-        />
-      <!-- </div> -->
+      <Pagination
+        :length="paginationLength"
+        @handlePrev="handlePrev"
+        @handleNext="handleNext"
+      />
     </v-col>
   </v-row>
 </template>
