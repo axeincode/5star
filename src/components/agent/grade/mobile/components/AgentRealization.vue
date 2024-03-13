@@ -23,6 +23,7 @@ import { achievementStore } from "@/store/achievement";
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchAchievementAward } = achievementStore();
+const { dispatchAchievementList } = achievementStore();
 
 const props = defineProps<{ achievementItem: GetAchievementItem }>();
 
@@ -86,6 +87,7 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
   console.log(achievement_item);
   if (achievement_item.num <= achievement_progress && achievement_item.state == 1) {
     await dispatchAchievementAward({ index: achievement_item.index });
+    await dispatchAchievementList();
   }
 }
 </script>
