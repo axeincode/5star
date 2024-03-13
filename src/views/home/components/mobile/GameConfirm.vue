@@ -144,11 +144,17 @@ watch(gameConfirmDialogShow, (value) => {
   <div class="m-game-confirm-body">
     <v-row class="mx-2 my-0">
       <v-col style="flex: 0 0 27.333333% !important" cols="4" class="px-1">
-        <img
-          :src="selectedGameItem.image"
-          style="width: 100%"
-          class="m-game-confirm-img"
-        />
+        <div style="position: relative">
+          <img
+            :src="selectedGameItem.image"
+            style="width: 100%"
+            class="m-game-confirm-img"
+          />
+          <div class="text-overlay" style="margin-bottom: 7px">
+            <h2>{{ selectedGameItem.name }}</h2>
+            <p>{{ selectedGameItem.provider }}</p>
+          </div>
+        </div>
       </v-col>
       <v-col cols="5">
         <div class="text-700-14 white mt-2">{{ selectedGameItem.name }}</div>
