@@ -400,7 +400,7 @@ onMounted(async () => {
     id: route.params.id,
     demo: route.params.demo == "true" ? true : false,
   });
-  if (enterGameItem.value.provider == "SOFTSWISS") {
+  if (enterGameItem.value.provider.toLocaleUpperCase() == "SOFTSWISS") {
     // launch_options
     let obOptions = JSON.parse(enterGameItem.value.reserve);
     console.log(obOptions);

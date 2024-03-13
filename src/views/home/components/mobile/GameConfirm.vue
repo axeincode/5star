@@ -152,7 +152,7 @@ watch(gameConfirmDialogShow, (value) => {
           />
           <div class="text-overlay" style="margin-bottom: 7px">
             <h2>{{ selectedGameItem.name }}</h2>
-            <p>{{ selectedGameItem.provider }}</p>
+            <p>{{ selectedGameItem.provider_name }}</p>
           </div>
         </div>
       </v-col>
