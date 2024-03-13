@@ -239,4 +239,37 @@ watch(gameConfirmDialogShow, (value) => {
   right: 6px;
   z-index: 100000;
 }
+
+/* 文字叠加在图片上 */
+.text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 10px 12px 3px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+
+  h2 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+  }
+}
 </style>

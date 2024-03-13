@@ -154,7 +154,12 @@ const liveWinList = ()=>{
           @click="goGame(item)"
         >
           <div class="text-center">
-            <img :src="item.game_icon" class="live-win-img" />
+            <div style="position: relative;">
+              <img :src="item.game_icon" class="live-win-img" />
+              <div class="text-overlay--swiper" style="margin-bottom: 7px;">
+                <h2>{{ item.game_name }}</h2>
+              </div>
+            </div>
             <div class="live-win-level-text">
               <img :src="vipLevelGroups[item.user_vip_group]" width="12" />
               <p class="text-500-8 white ml-1">{{ item.user_name }}</p>
@@ -314,6 +319,28 @@ const liveWinList = ()=>{
   }
   .text-center {
     cursor: pointer;
+  }
+}
+
+/* 文字叠加在图片上 */
+.text-overlay--swiper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 1.8px;
+  padding: 8px 7px 4px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+
+  h2 {
+    margin: 0;
+    font-size: 8px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.2;
   }
 }
 </style>
