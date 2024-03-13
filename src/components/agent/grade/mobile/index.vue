@@ -86,7 +86,7 @@ onMounted(async () => {
             <img
               src="@/assets/public/svg/icon_public_22.svg"
               v-bind="props"
-              style="cursor: pointer; position: absolute; top: 2px; right: -21px"
+              style="cursor: pointer; position: absolute; top: 7px; right: 10px"
               width="16"
             />
           </template>

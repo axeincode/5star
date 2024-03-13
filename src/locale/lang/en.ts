@@ -1968,6 +1968,7 @@ export const lang: langType = {
     text_6: "captcha",
     text_7: "Enter the verification code",
     text_8: "Submit",
+    text_9: "Verification code sent successfully"
   },
   withdraw_info_dialog: {
     text_1: "WITHDRAW",

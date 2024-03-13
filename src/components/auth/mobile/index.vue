@@ -144,8 +144,6 @@ onMounted(() => {
             margin-right: 4px;
           }
         }
-
-
       }
       &.bgActive {
         color: #fff;
@@ -156,10 +154,9 @@ onMounted(() => {
             }
           }
           .register {
-              color: #7782aa !important;
+            color: #7782aa !important;
           }
         }
-
       }
       label:after {
         content: "";
@@ -187,7 +184,7 @@ onMounted(() => {
       }
 
       label:active:after {
-        width: 74px;
+        width: 100px;
       }
 
       input:checked + label .login {

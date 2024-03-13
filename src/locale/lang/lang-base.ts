@@ -1966,6 +1966,7 @@ export type langType = {
     text_6: string
     text_7: string
     text_8: string
+    text_9: string
   }
   withdraw_info_dialog: {
     text_1: string

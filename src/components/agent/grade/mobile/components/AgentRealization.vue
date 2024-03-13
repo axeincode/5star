@@ -33,75 +33,48 @@ const rate = ref(97.8); // 100 is 97.8
 const realizationItem = ref<Array<any>>([
   {
     img: img_agentemblem_1,
-    grade: 10,
-    realization_grade: 5,
-    rate: 97.8,
-  },
-  {
-    img: img_agentemblem_1,
-    grade: 40,
-    realization_grade: 20,
-    rate: 97.8,
-  },
-  {
-    img: img_agentemblem_1,
-    grade: 100,
-    realization_grade: 50,
-    rate: 97.8,
-  },
-  {
-    img: img_agentemblem_1,
-    grade: 200,
-    realization_grade: 100,
-    rate: 97.8,
+    min: 0,
+    max: 200,
   },
   {
     img: img_agentemblem_5,
-    grade: 1000,
-    realization_grade: 500,
-    rate: 97.8,
+    min: 200,
+    max: 500,
   },
   {
     img: img_agentemblem_6,
-    grade: 2000,
-    realization_grade: 1000,
-    rate: 21.5,
+    min: 500,
+    max: 1000,
   },
   {
     img: img_agentemblem_7,
-    grade: 6000,
-    realization_grade: 3000,
-    rate: 0,
+    min: 1000,
+    max: 3000,
   },
   {
     img: img_agentemblem_8,
-    grade: 12000,
-    realization_grade: 5000,
-    rate: 0,
+    min: 3000,
+    max: 5000,
   },
   {
     img: img_agentemblem_9,
-    grade: 25000,
-    realization_grade: 10000,
-    rate: 0,
+    min: 5000,
+    max: 10000,
   },
   {
     img: img_agentemblem_10,
-    grade: 2000000,
-    realization_grade: 50000,
-    rate: 0,
+    min: 10000,
+    max: 50000,
   },
   {
     img: img_agentemblem_11,
-    grade: 4000000,
-    realization_grade: 100000,
-    rate: 0,
+    min: 50000,
+    max: 100000,
   },
   {
     img: img_agentemblem_11,
-    grade: 8000000,
-    realization_grade: 200000,
-    rate: 0,
+    min: 100000,
+    max: 200000,
   },
 ]);
 
@@ -125,15 +98,18 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
   >
     <v-row class="mx-0">
       <v-col cols="5" class="text-center">
-        <img
-          :src="realizationItem[index].img"
-          width="50"
-          :class="
-            item.num <= achievementItem.achievement_progress && item.state == 1
-              ? ''
-              : 'img-gray opacity-3'
-          "
-        />
+        <template v-for="(imageItem, imageIndex) in realizationItem" :key="imageIndex">
+          <img
+            :src="imageItem.img"
+            width="50"
+            :class="
+              item.num <= achievementItem.achievement_progress && item.state == 1
+                ? ''
+                : 'img-gray opacity-3'
+            "
+            v-if="imageItem.min < item.num && imageItem.max >= item.num"
+          />
+        </template>
         <p
           class="text-900-18"
           :class="
@@ -257,7 +233,9 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
 
   .v-btn__content {
     color: #fff;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 700;
@@ -272,8 +250,10 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
   box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3) !important;
 
   .v-btn__content {
-    color: #23262F;
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    color: #23262f;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 700;

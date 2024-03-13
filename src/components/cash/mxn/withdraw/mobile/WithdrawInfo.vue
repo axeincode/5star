@@ -113,11 +113,11 @@ onMounted(() => {
   if (withdrawInfo !== null) {
     withdrawInfoItem.value = JSON.parse(withdrawInfo);
   }
-  withdrawInfoItem.value.spei.clabe_number = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.bank_number : "";
-  withdrawInfoItem.value.spei.rfc = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.id_number : "";
-  withdrawInfoItem.value.spei.name = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.user_name : "";
-  withdrawInfoItem.value.paypal.paypal_account = userFundsIdentity.value.identity.Paypal != undefined ? userFundsIdentity.value.identity.Paypal.bank_number : "";
-  withdrawInfoItem.value.paypal.name = userFundsIdentity.value.identity.Paypal != undefined ? userFundsIdentity.value.identity.Paypal.user_name : "";
+  withdrawInfoItem.value.spei.clabe_number = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.bank_number : withdrawInfoItem.value.spei.clabe_number;
+  withdrawInfoItem.value.spei.rfc = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.id_number : withdrawInfoItem.value.spei.rfc;
+  withdrawInfoItem.value.spei.name = userFundsIdentity.value.identity.SPEI != undefined ? userFundsIdentity.value.identity.SPEI.user_name : withdrawInfoItem.value.spei.name;
+  withdrawInfoItem.value.paypal.paypal_account = userFundsIdentity.value.identity.Paypal != undefined ? userFundsIdentity.value.identity.Paypal.bank_number : withdrawInfoItem.value.paypal.paypal_account;
+  withdrawInfoItem.value.paypal.name = userFundsIdentity.value.identity.Paypal != undefined ? userFundsIdentity.value.identity.Paypal.user_name : withdrawInfoItem.value.paypal.name;
 })
 </script>
 

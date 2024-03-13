@@ -91,6 +91,19 @@ const sendSMSVerificationCode = async () => {
   // const time = new Date();
   // time.setSeconds(time.getSeconds() + timer_value.value);
   // timer.restart(Number(time));
+  const toast = useToast();
+  toast.success(t("phone_binding_dialog.text_9"), {
+    timeout: 3000,
+    closeOnClick: false,
+    pauseOnFocusLoss: false,
+    pauseOnHover: false,
+    draggable: false,
+    showCloseButtonOnHover: false,
+    hideProgressBar: true,
+    closeButton: "button",
+    icon: WarningIcon,
+    rtl: false,
+  });
   captchaLoading.value = false;
 };
 
