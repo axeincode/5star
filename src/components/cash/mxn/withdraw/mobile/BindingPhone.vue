@@ -101,7 +101,7 @@ const sendSMSVerificationCode = async () => {
     showCloseButtonOnHover: false,
     hideProgressBar: true,
     closeButton: "button",
-    icon: WarningIcon,
+    icon: SuccessIcon,
     rtl: false,
   });
   captchaLoading.value = false;
