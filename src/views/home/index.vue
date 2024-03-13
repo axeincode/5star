@@ -612,21 +612,36 @@ const Dashboard = defineComponent({
 
     watch(selectedGameFilterBtn, () => {
       const element = document.getElementsByClassName('filter-btn-container'); // Replace 'your-element-id' with the actual ID of your element
+      const childNodeList = element[0].childNodes; // 获取所有子元素
+      const childNodes = [] // 获取过滤之后的所有子元素
+      for (let i = 0; i < childNodeList.length; i++) {
+        const child = childNodeList[i];
+        if (child.nodeType === 1) { // 过滤掉非元素节点
+          childNodes.push(child)
+        }
+      }
+
       if (element != undefined) {
         let curPos = element[0].scrollLeft;
         let index = gameGroupBtnList.value.findIndex(item => item.slug == selectedGameFilterBtn.value);
-        index = index + 1;
-        let left = 0;
-        let right = 116.48;
-        if (index > 0) {
-          left = 116.48 + 148 * (index - 1);
-          right = left + 148;
-        }
-        console.log((element[0] as any).offsetWidth);
-        const width = (element[0] as any).offsetWidth;
-        if (!(left > curPos && left < curPos + width)) {
-          element[0].scrollLeft = 116.48 + (index - 1) * 148;
-        }
+        
+        element[0].scrollTo({
+          left: childNodes[index + 1].offsetLeft - element[0].offsetLeft - (element[0].offsetWidth - childNodes[index + 1].offsetWidth) / 2,
+          behavior: 'smooth'
+        });
+
+        // index = index + 1;
+        // let left = 0;
+        // let right = 116.48;
+        // if (index > 0) {
+        //   left = 116.48 + 148 * (index - 1);
+        //   right = left + 148;
+        // }
+        // console.log((element[0] as any).offsetWidth);
+        // const width = (element[0] as any).offsetWidth;
+        // if (!(left > curPos && left < curPos + width)) {
+        //   element[0].scrollLeft = 116.48 + (index - 1) * 148;
+        // }
       }
     })
     const handleMoreGame = async (
@@ -2036,6 +2051,7 @@ export default Dashboard;
   background: #29263c;
   border-radius: 24px;
   filter: drop-shadow(0px 2.25px 3px rgba(0, 0, 0, 0.21));
+  z-index: 1000;
 
   svg {
     position: absolute;

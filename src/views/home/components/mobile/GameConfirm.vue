@@ -144,11 +144,19 @@ watch(gameConfirmDialogShow, (value) => {
   <div class="m-game-confirm-body">
     <v-row class="mx-2 my-0">
       <v-col style="flex: 0 0 27.333333% !important;" cols="4" class="px-1">
-        <img
-          :src="selectedGameItem.image"
-          style="width: 100%"
-          class="m-game-confirm-img"
-        />
+        <div style="position: relative;">
+          <img
+            :src="selectedGameItem.image"
+            style="width: 100%"
+            class="m-game-confirm-img"
+          />
+          <div class="text-overlay" style="margin-bottom: 7px;">
+            <h2>{{ selectedGameItem.name }}</h2>
+            <p>{{ selectedGameItem.provider }}</p>
+          </div>
+        </div>
+        
+
       </v-col>
       <v-col cols="5">
         <div class="text-700-14 white mt-2">{{ selectedGameItem.name }}</div>
@@ -236,5 +244,38 @@ watch(gameConfirmDialogShow, (value) => {
   top: -26px;
   right: 6px;
   z-index: 100000;
+}
+
+/* 文字叠加在图片上 */
+.text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 10px 12px 3px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+
+  h2 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+  }
 }
 </style>
