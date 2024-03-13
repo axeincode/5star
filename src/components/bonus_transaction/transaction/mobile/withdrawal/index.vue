@@ -40,8 +40,8 @@ const withdrawalStatus = [
     color: "white",
   },
   {
-    value: "Waiting for manual processing.",
-    color: "white",
+    value: "Refunded",
+    color: "gray",
   },
 ]
 
