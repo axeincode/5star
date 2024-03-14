@@ -134,6 +134,8 @@ const depositRate = ref<number>(0);
 
 const depositAmount = ref<string | number>(0)
 
+const stopCheckDepositAmount = ref<boolean>(false)
+
 const depositAmountWithCurrency = ref<string>("");
 
 const depositAmountWithBonus = ref<string | number>(0);
@@ -295,6 +297,10 @@ const handleSelectPayment = (item: GetPaymentItem) => {
 }
 
 const validateAmount = (): boolean => {
+  // if submit end, don't check
+  if (stopCheckDepositAmount.value) {
+    return true;
+  }
   return Number(depositAmount.value) >= Number(selectedPaymentItem.value.min) && Number(depositAmount.value) <= Number(selectedPaymentItem.value.max);
 }
 
@@ -408,6 +414,7 @@ const handleDepositSubmit = async () => {
         icon: SuccessIcon,
         rtl: false,
       });
+      stopCheckDepositAmount.value = true;
       depositAmount.value = "";
       return;
     }
