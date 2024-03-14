@@ -482,7 +482,7 @@ onMounted(async () => {
   transform: translate(-50%, -50%);
   width: 48px;
   height: 46px;
-  background-image: url("@/assets/public/image/img_public_42.png");
+  background-image: url("@/assets/public/image/logo_public_06.png");
   background-repeat: no-repeat;
   background-size: contain;
   animation: opacityAnimation 0.6s ease-in infinite;
