@@ -44,6 +44,12 @@ const userBonusList = computed(() => {
     getBonusList.value.list.map(item => {
       item.rate = Math.ceil(parseInt(item.now) / parseInt(item.max) * 100);
     })
+    getBonusList.value.list.map(item => {
+      let relationList = getBonusList.value.list.filter(filterItem => filterItem.id == item.relation_id)
+      if (relationList.length  == 0) {
+        item.relation_id = 0;
+      }
+    })
     const resultTree = groupObjects(getBonusList.value.list);
     console.log(resultTree, 'resultTree');
     getBonusList.value.list = resultTree;

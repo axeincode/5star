@@ -22,6 +22,7 @@ export interface BonusItem {
     rate: number
     deposit: string
     id: string | number
+    relation_id: string | number
     children: any
 }
 

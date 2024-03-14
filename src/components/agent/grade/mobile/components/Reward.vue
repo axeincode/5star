@@ -63,9 +63,9 @@ const achievementAward = async (award_item: ExplainItem, award_progress: number)
           <img
             :src="rewardGrades[index].img"
             :class="
-              item.num <= achievementItem.award_progress && item.status == 2
-                ? 'img-gray'
-                : ''
+              item.num <= achievementItem.award_progress && item.status == 1
+                ? ''
+                : 'img-gray'
             "
             width="64"
             @click="achievementAward(item, achievementItem.award_progress)"
@@ -73,9 +73,9 @@ const achievementAward = async (award_item: ExplainItem, award_progress: number)
           <p
             class="text-900-11"
             :class="
-              item.num <= achievementItem.award_progress && item.status == 2
-                ? 'gray'
-                : 'color-F9BC01'
+              item.num <= achievementItem.award_progress && item.status == 1
+                ? 'color-F9BC01'
+                : 'gray'
             "
           >
             R$ {{ item.award }}

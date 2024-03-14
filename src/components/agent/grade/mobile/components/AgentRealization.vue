@@ -115,68 +115,67 @@ const hideReceivedAchievementList = () => {
       mdi-chevron-down
     </v-icon>
   </div>
-  <template v-if="receivedAchievementListShow">
-    <v-card
-      class="m-achievement-realization-card mx-4 mt-2"
-      v-for="(item, index) in achievementItem.achievement_explain.filter(
-      (item: any) => item.state == 2
-    )"
-      :key="index"
-    >
-      <v-row class="mx-0">
-        <v-col cols="5" class="text-center">
-          <template v-for="(imageItem, imageIndex) in realizationItem" :key="imageIndex">
-            <img
-              :src="imageItem.img"
-              width="50"
-              class="img-gray opacity-1"
-              v-if="imageItem.min < item.num && imageItem.max >= item.num"
-            />
-          </template>
-          <p class="text-900-18 gray opacity-45">R$ {{ item.award }}</p>
-        </v-col>
-        <v-col cols="7" class="text-center">
-          <p class="text-700-12 mt-4 gray opacity-45">
-            {{ t("affiliate.achievement.text_2") }} {{ item.num }}
-          </p>
-          <div class="mt-2 m-achievement-realization-progress-bg">
-            <v-progress-linear
-              v-model="item.rate"
-              height="24"
-              class="m-achievement-realization-progress"
-            >
-              <div class="text-800-10 gray opacity-45">
-                {{
-                  Number(achievementItem.achievement_progress) > Number(item.num)
-                    ? item.num
-                    : achievementItem.achievement_progress
-                }}
-                /
-                {{ item.num }}
-              </div>
-            </v-progress-linear>
-          </div>
-          <v-btn
-            class="mt-3 m-achievement-realization-btn"
-            width="132"
-            height="32"
-            :disabled="true"
+  <v-card
+    v-if="receivedAchievementListShow"
+    class="m-achievement-realization-card mx-4 mt-2"
+    v-for="(item, index) in achievementItem.achievement_explain.filter(
+    (item: any) => item.state == 2
+  )"
+    :key="index"
+  >
+    <v-row class="mx-0">
+      <v-col cols="5" class="text-center">
+        <template v-for="(imageItem, imageIndex) in realizationItem" :key="imageIndex">
+          <img
+            :src="imageItem.img"
+            width="50"
+            class="img-gray opacity-1"
+            v-if="imageItem.min < item.num && imageItem.max >= item.num"
+          />
+        </template>
+        <p class="text-900-18 gray opacity-45">R$ {{ item.award }}</p>
+      </v-col>
+      <v-col cols="7" class="text-center">
+        <p class="text-700-12 mt-4 gray opacity-45">
+          {{ t("affiliate.achievement.text_2") }} {{ item.num }}
+        </p>
+        <div class="mt-2 m-achievement-realization-progress-bg">
+          <v-progress-linear
+            v-model="item.rate"
+            height="24"
+            class="m-achievement-realization-progress"
           >
-            {{ t("affiliate.achievement.text_3") }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-card>
-    <div class="text-center">
-      <v-icon
-        class="m-achievement-realization-arrow"
-        color="white"
-        @click="hideReceivedAchievementList"
-      >
-        mdi-chevron-up
-      </v-icon>
-    </div>
-  </template>
+            <div class="text-800-10 gray opacity-45">
+              {{
+                Number(achievementItem.achievement_progress) > Number(item.num)
+                  ? item.num
+                  : achievementItem.achievement_progress
+              }}
+              /
+              {{ item.num }}
+            </div>
+          </v-progress-linear>
+        </div>
+        <v-btn
+          class="mt-3 m-achievement-realization-btn"
+          width="132"
+          height="32"
+          :disabled="true"
+        >
+          {{ t("affiliate.achievement.text_3") }}
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-card>
+  <div class="text-center" v-if="receivedAchievementListShow">
+    <v-icon
+      class="m-achievement-realization-arrow"
+      color="white"
+      @click="hideReceivedAchievementList"
+    >
+      mdi-chevron-up
+    </v-icon>
+  </div>
   <v-card
     class="m-achievement-realization-card mx-4 mt-2"
     v-for="(item, index) in achievementItem.achievement_explain.filter(
