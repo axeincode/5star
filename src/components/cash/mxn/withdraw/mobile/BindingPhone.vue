@@ -111,7 +111,7 @@ const submitSMS = async () => {
   submitLoading.value = true;
   await dispatchSubmitSMS({
     phone: "52" + phone_number.value,
-    code: Number(verification_code.value),
+    code: verification_code.value.toString(),
   });
   submitLoading.value = false;
   if (success.value) {

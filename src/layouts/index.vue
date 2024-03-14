@@ -35,9 +35,7 @@ const VipBar = defineAsyncComponent(() => import("./VipBar.vue"));
 const MBonusDashboardDialog = defineAsyncComponent(
   () => import("@/components/vip/mobile/MBonusDashboard.vue")
 );
-const LiveChat = defineAsyncComponent(
-  () => import("./live_chat/index.vue")
-);
+const LiveChat = defineAsyncComponent(() => import("./live_chat/index.vue"));
 
 const route = useRoute();
 const { width } = useDisplay();

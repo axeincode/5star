@@ -31,6 +31,8 @@ const { achievementItem } = toRefs(props);
 
 const rate = ref(97.8); // 100 is 97.8
 
+const receivedAchievementListShow = ref<boolean>(false);
+
 const realizationItem = ref<Array<any>>([
   {
     img: img_agentemblem_1,
@@ -90,12 +92,96 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
     await dispatchAchievementList();
   }
 }
+
+const showReceivedAchievementList = () => {
+  receivedAchievementListShow.value = true;
+}
+
+const hideReceivedAchievementList = () => {
+  receivedAchievementListShow.value = false;
+}
 </script>
 
 <template>
+  <div
+    class="text-center"
+    v-if="achievementItem.achievement_explain.filter((item: any) => item.state == 2).length > 0 && !receivedAchievementListShow"
+  >
+    <v-icon
+      class="m-achievement-realization-arrow"
+      color="white"
+      @click="showReceivedAchievementList"
+    >
+      mdi-chevron-down
+    </v-icon>
+  </div>
+  <template v-if="receivedAchievementListShow">
+    <v-card
+      class="m-achievement-realization-card mx-4 mt-2"
+      v-for="(item, index) in achievementItem.achievement_explain.filter(
+      (item: any) => item.state == 2
+    )"
+      :key="index"
+    >
+      <v-row class="mx-0">
+        <v-col cols="5" class="text-center">
+          <template v-for="(imageItem, imageIndex) in realizationItem" :key="imageIndex">
+            <img
+              :src="imageItem.img"
+              width="50"
+              class="img-gray opacity-1"
+              v-if="imageItem.min < item.num && imageItem.max >= item.num"
+            />
+          </template>
+          <p class="text-900-18 gray opacity-45">R$ {{ item.award }}</p>
+        </v-col>
+        <v-col cols="7" class="text-center">
+          <p class="text-700-12 mt-4 gray opacity-45">
+            {{ t("affiliate.achievement.text_2") }} {{ item.num }}
+          </p>
+          <div class="mt-2 m-achievement-realization-progress-bg">
+            <v-progress-linear
+              v-model="item.rate"
+              height="24"
+              class="m-achievement-realization-progress"
+            >
+              <div class="text-800-10 gray opacity-45">
+                {{
+                  Number(achievementItem.achievement_progress) > Number(item.num)
+                    ? item.num
+                    : achievementItem.achievement_progress
+                }}
+                /
+                {{ item.num }}
+              </div>
+            </v-progress-linear>
+          </div>
+          <v-btn
+            class="mt-3 m-achievement-realization-btn"
+            width="132"
+            height="32"
+            :disabled="true"
+          >
+            {{ t("affiliate.achievement.text_3") }}
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+    <div class="text-center">
+      <v-icon
+        class="m-achievement-realization-arrow"
+        color="white"
+        @click="hideReceivedAchievementList"
+      >
+        mdi-chevron-up
+      </v-icon>
+    </div>
+  </template>
   <v-card
     class="m-achievement-realization-card mx-4 mt-2"
-    v-for="(item, index) in achievementItem.achievement_explain"
+    v-for="(item, index) in achievementItem.achievement_explain.filter(
+      (item) => item.state != 2
+    )"
     :key="index"
   >
     <v-row class="mx-0">
@@ -104,34 +190,13 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
           <img
             :src="imageItem.img"
             width="50"
-            :class="
-              item.num <= achievementItem.achievement_progress && item.state == 1
-                ? ''
-                : 'img-gray opacity-3'
-            "
             v-if="imageItem.min < item.num && imageItem.max >= item.num"
           />
         </template>
-        <p
-          class="text-900-18"
-          :class="
-            item.num <= achievementItem.achievement_progress && item.state == 1
-              ? 'color-F9BC01'
-              : 'color-414968'
-          "
-        >
-          R$ {{ item.award }}
-        </p>
+        <p class="text-900-18 color-F9BC01">R$ {{ item.award }}</p>
       </v-col>
       <v-col cols="7" class="text-center">
-        <p
-          class="text-700-12 mt-4"
-          :class="
-            item.num <= achievementItem.achievement_progress && item.state == 1
-              ? 'white'
-              : 'color-414968'
-          "
-        >
+        <p class="text-700-12 mt-4 white">
           {{ t("affiliate.achievement.text_2") }} {{ item.num }}
         </p>
         <div
@@ -147,26 +212,23 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
             height="24"
             class="m-achievement-realization-progress"
           >
-            <div
-              class="text-800-10"
-              :class="
-                item.num <= achievementItem.achievement_progress && item.state == 1
-                  ? 'white'
-                  : 'color-414968'
-              "
-            >
-              {{
-                Number(achievementItem.achievement_progress) > Number(item.num)
-                  ? item.num
-                  : achievementItem.achievement_progress
-              }}
-              /
-              {{ item.num }}
+            <div class="text-800-10">
+              <span class="color-F9BC01">
+                {{
+                  Number(achievementItem.achievement_progress) > Number(item.num)
+                    ? item.num
+                    : achievementItem.achievement_progress
+                }}
+                /
+              </span>
+              <span class="white">
+                {{ item.num }}
+              </span>
             </div>
           </v-progress-linear>
         </div>
         <v-btn
-          class="text-none mt-3"
+          class="mt-3"
           width="132"
           height="32"
           :class="
@@ -185,6 +247,10 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
 </template>
 
 <style lang="scss">
+.m-achievement-realization-arrow {
+  font-size: 27px;
+}
+
 .m-achievement-realization-card {
   border-radius: 8px;
   background: $agent_card_notmet_bg;
@@ -231,7 +297,7 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
 .m-achievement-realization-active-btn {
   border-radius: 8px;
   background: $agent_card_bonuses_text_color;
-  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 6px 1px #0000004d;
 
   .v-btn__content {
     color: #fff;
@@ -252,7 +318,7 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
   box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.3) !important;
 
   .v-btn__content {
-    color: #23262f;
+    color: #7782aa;
     font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
       Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
       Microsoft Yahei, sans-serif;
@@ -260,6 +326,7 @@ const achievementAward = async (achievement_item: AchievementItem, achievement_p
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    opacity: 0.45;
   }
 }
 </style>
