@@ -58,6 +58,10 @@ const warpLableDirective: Directive = {
   mounted(el, binding, vnode) {
     labelWarp(el, binding);
   },
+  // 更新后调用
+  updated(el, binding, vnode) {
+    labelWarp(el, binding);
+  },
   // 指令与元素解绑时调用
   unmounted(el, binding, vnode) {
     // Do something when the directive is unmounted from element

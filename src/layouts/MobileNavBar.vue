@@ -929,8 +929,8 @@ onMounted(async () => {
       <div class="m-vip-login-bonus mt-6" @click="openLoginBonusDialog">
         <img src="@/assets/public/image/img_public_1.png" class="m-vip-login-bonus-img" />
         <div class="m-vip-login-bonus-text">
-          <p class="text-700-10 white">{{ t("navBar.login_bonus_text") }}</p>
-          <p class="text-400-8 white" style="line-height: 6px">
+          <p class="text-700-10 white mb-1 lh-12">{{ t("navBar.login_bonus_text") }}</p>
+          <p class="text-400-10 white" style="line-height: 6px">
             {{ t("navBar.unlock_text") }}
           </p>
         </div>
@@ -948,9 +948,12 @@ onMounted(async () => {
       <div class="m-refer-earn mt-4" @click="openRefferalDialogShow">
         <img src="@/assets/public/svg/img_public_20.svg" width="184" />
         <img src="@/assets/public/image/img_public_6.png" width="48" class="m-earn-img" />
-        <p class="text-700-12 white m-refer-earn-text">
-          {{ t("navBar.refer_earn_text") }}
-        </p>
+        <div class="m-refer-earn-text">
+          <p class="text-700-12 white">
+            {{ t("navBar.refer_earn_text") }}
+          </p>
+        </div>
+
       </div>
       <!-- <v-list density="compact" nav class="mt-1 px-0">
         <v-card color="#15161C" theme="dark" style="border-radius: 0px">
@@ -1763,16 +1766,22 @@ onMounted(async () => {
   position: relative;
   margin: 0px 14px;
   width: 164px;
-  height: 32px;
+  min-height: 32px;
   background: #009b3a;
   box-shadow: 0px 4px 0px 0px #0e5e50;
   border-radius: 4px;
 }
 
 .m-vip-login-bonus-text {
-  position: absolute;
-  left: 60px;
-  top: 2px;
+  // position: absolute;
+  // left: 60px;
+  // top: 2px;
+  height: 100%;
+  line-height: 12px;
+  padding: 5px 20px 8px 65px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .m-refer-earn {
@@ -1781,8 +1790,14 @@ onMounted(async () => {
 
 .m-refer-earn-text {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 72px;
+  height: 34px;
+  width: 100px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .m-earn-img {
@@ -1796,7 +1811,9 @@ onMounted(async () => {
   height: 38px;
   position: absolute;
   left: 17px;
-  bottom: 2px;
+  // bottom: 2px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .m-lucky-wheel-img {

@@ -116,6 +116,9 @@ onMounted(() => {
       }
     }
   }
+  .v-pagination__prev {
+    margin-right: 10px !important;
+  }
 
   .v-pagination__item {
     .v-btn {

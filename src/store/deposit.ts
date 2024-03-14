@@ -17,7 +17,10 @@ export const depositStore = defineStore({
     depositSubmit: {} as any,
     pixInfo: {} as Deposit.GetPixInfo,
     pixInfoToggle: false as boolean,
-    depositHistoryItem: {} as Deposit.DepositHistoryResponse,
+    depositHistoryItem: {
+      total_pages: 0,
+      record: []
+    } as Deposit.DepositHistoryResponse,
     depositConfirmDialogToggle: false as boolean,
     channelName: "spei" as string,
     depositAmount: 0 as number,
@@ -25,6 +28,7 @@ export const depositStore = defineStore({
     timerValue: 0 as number,
     depositOrderTimeRefresh: false as boolean,
     depositCurrency: "MXN" as string,
+    moreDepositHistoryFlag: true as boolean
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -41,6 +45,7 @@ export const depositStore = defineStore({
     getTimerValue: (state) => state.timerValue,
     getDepositOrderTimeRefresh: (state) => state.depositOrderTimeRefresh,
     getDepositCurrency: (state) => state.depositCurrency,
+    getMoreDepositHistoryFlag: (state) => state.moreDepositHistoryFlag,
   },
   actions: {
     // set functions
@@ -63,7 +68,33 @@ export const depositStore = defineStore({
       this.pixInfoToggle = pixInfoToggle
     },
     setDepositHistoryItem(depositHistoryItem: Deposit.DepositHistoryResponse) {
-      this.depositHistoryItem = depositHistoryItem
+      if (depositHistoryItem.record.length < 9) {
+        this.moreDepositHistoryFlag = false;
+      } else {
+        this.moreDepositHistoryFlag = true;
+      }
+
+      const baseArr = [0,1,2,3,4,5,6,7]
+      let record = depositHistoryItem.record.slice(0, 8)
+      baseArr.map((item) => {
+        if(record[item]) {
+          this.depositHistoryItem.record.push(record[item])
+        } else {
+          this.depositHistoryItem.record.push({
+            amount: '',
+            created_at: 0,
+            id: '' as unknown as number,
+            note: "",
+            type: '',
+            status: NaN,
+            currency: ''
+          })
+          return {}
+        }
+      })
+      
+      // this.depositHistoryItem.record = [...this.depositHistoryItem.record, ...recordList]
+      this.depositHistoryItem.total_pages = depositHistoryItem.total_pages;
     },
     setDepositConfirmDialogToggle(depositConfirmDialogToggle: boolean) {
       this.depositConfirmDialogToggle = depositConfirmDialogToggle

@@ -127,6 +127,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/third-parth-vendor',
+    component: () => import('@/layouts/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Third_Parth_Vendor',
+        component: () => import('@/views/third_parth_vendor/index.vue'),
+      },
+    ],
+  }
 ]
 
 const router = createRouter({

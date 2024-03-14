@@ -241,7 +241,7 @@ onUnmounted(() => {
     top: 36px;
     overflow-y: scroll;
     width: 100%;
-    padding-bottom: 32px;
+    padding-bottom: 52px !important;
 
     .m-order-amount {
       background: #15161c;

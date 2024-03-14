@@ -15,7 +15,8 @@ export const withdrawStore = defineStore({
       total_pages: 0,
       record: []
     } as Withdraw.WithdrawalHistoryResponse,
-    smsVerificationItem: { remaining_time: 0 } as Withdraw.SmsSendResponseItem
+    smsVerificationItem: { remaining_time: 0 } as Withdraw.SmsSendResponseItem,
+    moreWithdrawHistoryFlag: true as boolean
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -24,6 +25,7 @@ export const withdrawStore = defineStore({
     getWithdrawSubmit: (state) => state.withdrawSubmit,
     getWithdrawHistoryItem: (state) => state.withdrawHistoryItem,
     getSmsVerificationItem: (state) => state.smsVerificationItem,
+    getMoreTransactionHistoryFlag: (state) => state.moreWithdrawHistoryFlag,
   },
   actions: {
     // set functions
@@ -40,11 +42,39 @@ export const withdrawStore = defineStore({
       this.withdrawSubmit = withdrawSubmit;
     },
     setWithdrawHistoryItem(withdrawHistoryItem: Withdraw.WithdrawalHistoryResponse) {
-      this.withdrawHistoryItem.record = [...withdrawHistoryItem.record]
-      this.withdrawHistoryItem.total_pages = withdrawHistoryItem.total_pages;
       // withdrawHistoryItem.record.map(item => {
       //   this.withdrawHistoryItem.record.push(item);
       // })
+      console.log(withdrawHistoryItem, 'withdrawHistoryItem');
+      
+      if (withdrawHistoryItem.record.length < 9) {
+        this.moreWithdrawHistoryFlag = false;
+      } else {
+        this.moreWithdrawHistoryFlag = true;
+      }
+
+      const baseArr = [0,1,2,3,4,5,6,7]
+      let record = withdrawHistoryItem.record.slice(0, 8)
+      baseArr.map((item) => {
+        if(record[item]) {
+          this.withdrawHistoryItem.record.push(record[item])
+        } else {
+          this.withdrawHistoryItem.record.push({
+            amount: '',
+            created_at: 0,
+            id: '' as unknown as number,
+            note: "",
+            type: '',
+            status: NaN,
+            currency_type: '',
+            currency: ''
+          })
+          return {}
+        }
+      })
+      
+      // this.withdrawHistoryItem.record = [...this.withdrawHistoryItem.record, ...recordList]
+      this.withdrawHistoryItem.total_pages = withdrawHistoryItem.total_pages;
     },
     setSmsVerificationItem(smsVerificationItem: Withdraw.SmsSendResponseItem) {
       this.smsVerificationItem = smsVerificationItem

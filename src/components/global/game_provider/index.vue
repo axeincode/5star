@@ -35,9 +35,13 @@ const gameProviders = computed(() => {
   return getGameProviders.value;
 });
 
-const handleGameProviderPage = (slug: string) => {
-  router.push({ name: "Provider", query: { slug: slug } });
-};
+// const handleGameProviderPage = (slug: string) => {
+//   router.push({ name: "Provider", query: { slug: slug } });
+// };
+
+const handleThirdParthVendor = () => {
+  router.push({ name: "Third_Parth_Vendor" });
+}
 
 watch(route, async (to, from) => {
   await dispatchGameCategories("?type=providers");
@@ -53,6 +57,7 @@ onMounted(async () => {
   <v-row
     class="mb-4 white"
     :class="[mobileWidth < 600 ? 'mx-2 mt-8 text-800-16' : 'mx-4 mt-6 text-700-22']"
+    @click="handleThirdParthVendor"
   >
     {{ t("home.game_providers") }}
   </v-row>
@@ -77,7 +82,7 @@ onMounted(async () => {
           width="126"
           height="49"
           class="mr-5"
-          @click="handleGameProviderPage(gameProviderItem.slug)"
+          @click="handleThirdParthVendor"
         />
       </v-slide-group-item>
     </v-slide-group>

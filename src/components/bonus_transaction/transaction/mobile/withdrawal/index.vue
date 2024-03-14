@@ -131,6 +131,11 @@ const fixPositionShow = computed(() => {
   return getFixPositionEnable.value;
 });
 
+const moreWithdrawHistoryFlag = computed(() => {
+  const { moreWithdrawHistoryFlag } = storeToRefs(withdrawStore());
+  return moreWithdrawHistoryFlag.value
+})
+
 const refundWithdrawalSubmit = async (id: number, index: number) => {
   loadingIndex.value = index;
   loading.value = true;
@@ -154,7 +159,7 @@ const refundWithdrawalSubmit = async (id: number, index: number) => {
 }
 
 const handleNext = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value;
+  startIndex.value = (page_no - 1) * pageSize.value - 1;
   endIndex.value = startIndex.value + pageSize.value;
   currentList.value = withdrawHistoryItem.value.record.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
@@ -202,10 +207,18 @@ const handleCopyID = async (id: number) => {
 }
 
 watch(withdrawHistoryItem, (value) => {
-  paginationLength.value = Math.ceil(value.total_pages / pageSize.value)
-})
+  // paginationLength.value = withdrawHistoryItem.value.total_pages
+    paginationLength.value = moreWithdrawHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
+}, { deep: true, immediate: true })
+
+onMounted(async () => {
+  // paginationLength.value = withdrawHistoryItem.value.total_pages
+});
 
 const formatCurrency = (currency: number, currencyUnit: string) => {
+  if(!currency && !currencyUnit) {
+    return ''
+  }
   let locale = 'pt-BR';
   switch (currencyUnit) {
     case "BRL":
@@ -361,7 +374,7 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
               class="text-400-12"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
-              {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+              {{ item.created_at ? moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") : '' }}
             </td>
             <td
               class="text-400-12 color-D42763"
@@ -375,7 +388,7 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
             </td>
             <td
               class="text-400-12"
-              :class="withdrawalStatus[Number(item.status)].color"
+              :class="item.status ? withdrawalStatus[Number(item.status)].color : ''"
               style="
                 padding-top: 21px !important;
                 padding-bottom: 21px !important;
@@ -383,7 +396,7 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
               "
             >
               <div>
-                {{ withdrawalStatus[Number(item.status)].value }}
+                {{ item.status ? withdrawalStatus[Number(item.status)].value : '' }}
               </div>
             </td>
             <td
@@ -407,6 +420,7 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
                     : item.id
                 }}
                 <img
+                  v-show="item.id"
                   src="@/assets/public/svg/icon_public_71.svg"
                   width="16"
                   class="ml-1"

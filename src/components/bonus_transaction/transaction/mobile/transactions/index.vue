@@ -60,7 +60,7 @@ const moreTransactionHistoryFlag = computed(() => {
 })
 
 const handleNext = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value;
+  startIndex.value = (page_no - 1) * pageSize.value - 1;
   endIndex.value = startIndex.value + pageSize.value;
   currentList.value = transactionHistoryItem.value.record.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
@@ -109,12 +109,11 @@ const handleCopyID = async (id: string) => {
   );
 }
 watch(transactionHistoryItem, (value) => {
-  console.log(value);
-  paginationLength.value = moreTransactionHistoryFlag.value && transactionHistoryItem.value.record.length % 8 == 0 ? paginationLength.value + 1 : paginationLength.value
+  paginationLength.value = moreTransactionHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
 }, { deep: true });
 
 onMounted(async () => {
-  paginationLength.value = moreTransactionHistoryFlag.value && transactionHistoryItem.value.record.length % 8 == 0 ? paginationLength.value + 1 : paginationLength.value
+  // paginationLength.value = moreTransactionHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
 });
 </script>
 <template>
@@ -231,7 +230,7 @@ onMounted(async () => {
               class="text-400-12"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
-              {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+              {{ item.created_at ? moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") : '' }}
             </td>
             <td
               class="text-400-12"
@@ -310,6 +309,7 @@ onMounted(async () => {
                     : item.id
                 }}
                 <img
+                  v-show="item.id"
                   src="@/assets/public/svg/icon_public_71.svg"
                   width="16"
                   class="ml-1"
@@ -331,7 +331,7 @@ onMounted(async () => {
                 padding-bottom: 21px !important;
               "
             >
-              R$ {{ item.balance }}
+              {{ item.balance ? `R$ ${item.balance}` : '' }}
             </td>
           </tr>
         </template>
