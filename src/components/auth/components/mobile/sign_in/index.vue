@@ -412,7 +412,7 @@ export default Login;
           />
         </div>
       </div>
-      <v-row class="mt-2 white">
+      <v-row class="mt-2" style="background: white">
         <p
           class="ml-9 login-forget-passwrod-text text-400-12"
           @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD"
