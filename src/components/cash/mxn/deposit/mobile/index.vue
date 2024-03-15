@@ -55,7 +55,7 @@ const { setTimerValue } = depositStore();
 const { setDepositOrderTimeRefresh } = depositStore();
 const { setDepositCurrency } = depositStore();
 
-const selectedCurrencyUnit = ref<string>(platformCurrency);
+const selectedCurrencyUnit = ref<string>(platformCurrency.value);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,

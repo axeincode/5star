@@ -158,7 +158,7 @@ const paymentMenuShow = ref<boolean>(false);
 
 const withdrawCheck = ref<boolean>(false);
 
-const selectedCurrencyUnit = ref<string>(platformCurrency)
+const selectedCurrencyUnit = ref<string>(platformCurrency.value)
 
 const refreshLoading = ref<boolean>(false);
 

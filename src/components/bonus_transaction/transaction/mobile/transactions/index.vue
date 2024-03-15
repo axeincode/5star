@@ -29,11 +29,11 @@ const { pageSize, transactionHistoryItem } = toRefs(props);
 const formsList = ref<Array<any>>([
   {
     date: "2023/1/29 17:50:36",
-    amount: platformCurrency + "3000000000.00",
+    amount: platformCurrency.value + "3000000000.00",
     type: "Game Win",
     id: "re54er35sgf",
     note: "",
-    balance: platformCurrency + " 300000000.00",
+    balance: platformCurrency.value + " 300000000.00",
   },
 ]);
 

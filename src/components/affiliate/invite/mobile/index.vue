@@ -51,12 +51,12 @@ const commissionMenuShow = ref<boolean>(false);
 const morePeople = ref<number>(1025);
 
 const invitationBonusItem = ref({
-    cash: platformCurrency + " 40.496.845",
+    cash: platformCurrency.value + " 40.496.845",
     content: "8099369 people received"
 })
 
 const bettingCommissionItem = ref({
-    cash: platformCurrency + " 38.776.550",
+    cash: platformCurrency.value + " 38.776.550",
     content: "7755310 people received",
 })
 const bonusDialog = ref<boolean>(false);
@@ -73,27 +73,27 @@ const invitationBonusList = ref<GetInvitaionBonusData[]>([
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: platformCurrency + " 12"
+        cash: platformCurrency.value + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: platformCurrency + " 12"
+        cash: platformCurrency.value + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: platformCurrency + " 12"
+        cash: platformCurrency.value + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: platformCurrency + " 12"
+        cash: platformCurrency.value + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: platformCurrency + " 12"
+        cash: platformCurrency.value + " 12"
     }
 ])
 

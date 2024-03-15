@@ -44,44 +44,44 @@ const userBonusList = computed(() => {
   return getBonusList.value
 })
 
-const totalAmount = ref<string>(platformCurrency + " 1500.56");
-const withdrawAmount = ref<string>(platformCurrency + " 855.79");
+const totalAmount = ref<string>(platformCurrency.value + " 1500.56");
+const withdrawAmount = ref<string>(platformCurrency.value + " 855.79");
 
 const bonusList = ref<Array<GetBonusData>>([
   {
     type: "Completion",
     rate: 100,
-    currentCash: platformCurrency + " 90000.00",
-    totalCash: platformCurrency + " 90000.00",
+    currentCash: platformCurrency.value + " 90000.00",
+    totalCash: platformCurrency.value + " 90000.00",
     restCash: "RRL 3000",
-    bonusCash: platformCurrency + " 6000",
+    bonusCash: platformCurrency.value + " 6000",
     expireDate: "2023/2/20"
   },
   {
     type: "Underway",
     rate: 50,
-    currentCash: platformCurrency + " 90000.00",
-    totalCash: platformCurrency + " 90000.00",
+    currentCash: platformCurrency.value + " 90000.00",
+    totalCash: platformCurrency.value + " 90000.00",
     restCash: "RRL 3000",
-    bonusCash: platformCurrency + " 6000",
+    bonusCash: platformCurrency.value + " 6000",
     expireDate: "2023/2/20"
   },
   {
     type: "Failure",
     rate: 0,
-    currentCash: platformCurrency + " 0.00",
-    totalCash: platformCurrency + " 67500.00",
+    currentCash: platformCurrency.value + " 0.00",
+    totalCash: platformCurrency.value + " 67500.00",
     restCash: "RRL 3000",
-    bonusCash: platformCurrency + " 0",
+    bonusCash: platformCurrency.value + " 0",
     expireDate: "2023/2/20"
   },
   {
     type: "Failure",
     rate: 50,
-    currentCash: platformCurrency + " 36000.00",
-    totalCash: platformCurrency + " 67500.00",
+    currentCash: platformCurrency.value + " 36000.00",
+    totalCash: platformCurrency.value + " 67500.00",
     restCash: "RRL 3000",
-    bonusCash: platformCurrency + " 0",
+    bonusCash: platformCurrency.value + " 0",
     expireDate: "2023/2/20"
   },
 ]);

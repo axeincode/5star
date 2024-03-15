@@ -16,7 +16,7 @@ const emit = defineEmits<{ (e: 'closeRouletteBonusDialog'): void }>()
 const { t } = useI18n();
 const { width } = useDisplay()
 
-const roulettePaidBonus = ref<string>(platformCurrency + " 1.400.000");
+const roulettePaidBonus = ref<string>(platformCurrency.value + " 1.400.000");
 const spinNumber = ref<number>(10);
 const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
@@ -32,13 +32,13 @@ const rouletteHistory = ref<Array<GetRouletteHistory>>([
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 1",
+        rouletteResult: platformCurrency.value + " 1",
     },
     {
         id: 2,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 3,
@@ -50,7 +50,7 @@ const rouletteHistory = ref<Array<GetRouletteHistory>>([
         id: 4,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 5000",
+        rouletteResult: platformCurrency.value + " 5000",
     },
 ])
 
@@ -59,61 +59,61 @@ const rouletteWinnerHistory = ref<Array<GetRouletteHistory>>([
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 2,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 1",
+        rouletteResult: platformCurrency.value + " 1",
     },
     {
         id: 3,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 4,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 5,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 6,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 7,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 8,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 9,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 0.5",
+        rouletteResult: platformCurrency.value + " 0.5",
     },
     {
         id: 10,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 5000",
+        rouletteResult: platformCurrency.value + " 5000",
     },
 ])
 
@@ -122,43 +122,43 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 500",
+        rouletteResult: platformCurrency.value + " 500",
     },
     {
         id: 2,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 500",
+        rouletteResult: platformCurrency.value + " 500",
     },
     {
         id: 3,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 500",
+        rouletteResult: platformCurrency.value + " 500",
     },
     {
         id: 4,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 500",
+        rouletteResult: platformCurrency.value + " 500",
     },
     {
         id: 5,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 500",
+        rouletteResult: platformCurrency.value + " 500",
     },
     {
         id: 6,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 500",
+        rouletteResult: platformCurrency.value + " 500",
     },
     {
         id: 7,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 50",
+        rouletteResult: platformCurrency.value + " 50",
     },
     {
         id: 8,
@@ -170,13 +170,13 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
         id: 9,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 50",
+        rouletteResult: platformCurrency.value + " 50",
     },
     {
         id: 10,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: platformCurrency + " 50",
+        rouletteResult: platformCurrency.value + " 50",
     },
 ])
 
@@ -184,11 +184,11 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
 
 const wheelMap = ref<Array<rouletteItem>>([
     {
-        value: platformCurrency + " 5000",
+        value: platformCurrency.value + " 5000",
         color: "D07000",
     },
     {
-        value: platformCurrency + " 5",
+        value: platformCurrency.value + " 5",
         color: "FFBD00",
     },
     {
@@ -196,15 +196,15 @@ const wheelMap = ref<Array<rouletteItem>>([
         color: "FF5600",
     },
     {
-        value: platformCurrency + " 0.5",
+        value: platformCurrency.value + " 0.5",
         color: "FFBD00",
     },
     {
-        value: platformCurrency + " 500",
+        value: platformCurrency.value + " 500",
         color: "D07000",
     },
     {
-        value: platformCurrency + " 50",
+        value: platformCurrency.value + " 50",
         color: "FFBD00",
     },
     {
@@ -212,7 +212,7 @@ const wheelMap = ref<Array<rouletteItem>>([
         color: "31C2F0",
     },
     {
-        value: platformCurrency + " 10",
+        value: platformCurrency.value + " 10",
         color: "FFBD00",
     },
 ])

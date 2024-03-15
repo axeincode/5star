@@ -161,7 +161,7 @@ const depositAmountList = ref<Array<string>>([
 
 const depositToggleSwitch = ref<boolean>(false);
 
-const depositAmountUnit = ref<string>(platformCurrency);
+const depositAmountUnit = ref<string>(platformCurrency.value);
 
 const depositRate = ref<string>("+100%");
 
