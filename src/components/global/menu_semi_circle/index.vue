@@ -28,8 +28,6 @@ const selectedText = ref<string>("");
 // mail count
 const mailCount = ref<number>(10);
 
-const casinoGameShow = ref<boolean>(false);
-
 const { t } = useI18n();
 const { name, width } = useDisplay();
 const router = useRouter();
@@ -55,6 +53,11 @@ const selectedItem = computed(() => {
 const semiCircleShow = computed(() => {
   const { getSemiCircleShow } = storeToRefs(menuStore());
   return getSemiCircleShow.value;
+});
+
+const casinoGameShow = computed(() => {
+  const { getCasinoGameShow } = storeToRefs(mainStore());
+  return getCasinoGameShow.value;
 });
 
 const homeMenuBtnClicked = computed(() => {
@@ -173,7 +176,6 @@ const handleSelectItem = (item: string) => {
   setSelectedCircleItem(item);
   setCircleMenuBtnClicked(circleMenuBtnClicked.value ? false : true);
   selectedText.value = item;
-  casinoGameShow.value = !casinoGameShow.value;
   setSelectedItem(item);
   setSemiCircleShow(false);
   bottom.value = -48;
@@ -186,7 +188,7 @@ const handleSelectItem = (item: string) => {
   } else if (item == t("mobile_menu.mail")) {
     setMobileMenuMailToggle(true);
   } else if (item == t("mobile_menu.casino")) {
-    setCasinoGameShow(casinoGameShow.value);
+    setCasinoGameShow(casinoGameShow.value ? false : true);
     router.push({ name: "Dashboard", query: { game: "casino" } });
   }
   switch (item) {

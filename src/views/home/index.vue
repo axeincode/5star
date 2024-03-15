@@ -306,7 +306,6 @@ const Dashboard = defineComponent({
     })
 
     watch(homeMenuBtnClicked, (newValue) => {
-      console.log("dsfsdfsdfsdf");
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -314,7 +313,6 @@ const Dashboard = defineComponent({
     })
 
     watch(casinoGameShow, (newValue) => {
-      console.log("casinoGameShow");
       window.scrollTo({
         top: 450,
         behavior: "smooth",
