@@ -22,6 +22,11 @@ timer.start();
 
 const depositOrderDialog = ref<boolean>(false);
 
+const socketDepositConfirmDialog = computed(() => {
+  const { getSocketDepositConfirmDialog } = storeToRefs(depositStore());
+  return getSocketDepositConfirmDialog.value;
+});
+
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
   return getRefferalAppBarShow.value;
@@ -49,6 +54,13 @@ const closeDepositOrderDialog = () => {
   depositOrderDialog.value = false;
   setDepositOrderDialog(false);
 };
+watch(socketDepositConfirmDialog, (value) => {
+  setTimerValue(0);
+  localStorage.removeItem("spei");
+  localStorage.removeItem("timer");
+  depositOrderDialog.value = false;
+  setDepositOrderDialog(false);
+});
 watch(depositOrderTimeRefresh, (value) => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + timer_value.value); // 1hour timer

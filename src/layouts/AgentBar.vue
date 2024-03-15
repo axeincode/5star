@@ -28,7 +28,7 @@ const activeIndex = ref<number>(0);
 
 const scrollTop = ref<number>(0);
 
-const currentLang = ref<string | null>(localStorage.getItem('lang'))
+const currentLang = ref<string | null>(localStorage.getItem("lang"));
 
 const agentNavBarToggle = computed(() => {
   const { getAgentNavBarToggle } = storeToRefs(agentStore());
@@ -79,7 +79,10 @@ onMounted(() => {
       <img :src="icon_public_10" width="18" />
     </v-btn>
     <div class="m-agent-header" :class="scrollTop == 0 ? '' : 'm-agent-header-active-bg'">
-      <div class="d-flex mx-5 justify-between pt-8" :class="[currentLang === 'es' ? 'tab-box' : '']">
+      <div
+        class="d-flex mx-5 justify-between pt-8"
+        :class="[currentLang === 'es' ? 'tab-box' : '']"
+      >
         <div class="tab-box-item">
           <span
             @click="handleTab(0)"
@@ -112,14 +115,14 @@ onMounted(() => {
             {{ t("agent.text_4") }}
           </span>
         </div>
-         <div class="tab-box-item">
+        <!-- <div class="tab-box-item">
           <span
             @click="handleTab(4)"
             :class="activeIndex == 4 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
           >
             {{ t("agent.text_5") }}
           </span>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="m-agent-body" @scroll="handleScroll">
@@ -150,8 +153,9 @@ onMounted(() => {
 
     .tab-box {
       display: grid !important;
-      grid-template-columns: repeat(5,1fr) !important;
-      grid-gap: 10px !important; 
+      grid-template-columns: repeat(5, 1fr) !important;
+      grid-gap: 10px !important;
+
       .tab-box-item {
         display: flex;
         align-items: center;

@@ -25,7 +25,6 @@ import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 import { adjustTrackEvent } from "@/utils/adjust";
-import { load } from "webfontloader";
 
 const { t } = useI18n();
 const { width } = useDisplay();

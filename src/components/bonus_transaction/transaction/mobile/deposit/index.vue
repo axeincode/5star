@@ -108,7 +108,7 @@ const handleCopyID = async (id: number) => {
 }
 
 const handleNext = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value - 1;
+  startIndex.value = (page_no - 1) * pageSize.value;
   endIndex.value = startIndex.value + pageSize.value;
   currentList.value = depositHistoryItem.value.record.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
@@ -171,7 +171,6 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
   })
   return fomarttedAmount
 }
-
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
@@ -272,18 +271,19 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
           </tr>
         </template>
         <template v-else>
-          <tr 
-            v-for="(item, index) in depositHistoryItem.record.slice(
-              startIndex,
-              endIndex
-            )" 
+          <tr
+            v-for="(item, index) in depositHistoryItem.record.slice(startIndex, endIndex)"
             :key="index"
           >
             <td
               class="text-400-12 text-center"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
-              {{ item.created_at ? moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") : '' }}
+              {{
+                item.created_at
+                  ? moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
+                  : ""
+              }}
             </td>
             <td
               class="text-400-12 text-center color-01983A"
@@ -352,7 +352,12 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
     </v-table>
   </v-row>
   <v-row class="m-bonus-transaction-table2">
-    <Pagination style="margin-top: 4px" :length="paginationLength" @handlePrev="handlePrev" @handleNext="handleNext" />
+    <Pagination
+      style="margin-top: 4px"
+      :length="paginationLength"
+      @handlePrev="handlePrev"
+      @handleNext="handleNext"
+    />
   </v-row>
 </template>
 <style lang="scss">

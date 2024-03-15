@@ -25,6 +25,7 @@ export const depositStore = defineStore({
     channelName: "spei" as string,
     depositAmount: 0 as number,
     depositOrderDialog: false as boolean,
+    socketDepositConfirmDialog: false as boolean,
     timerValue: 0 as number,
     depositOrderTimeRefresh: false as boolean,
     depositCurrency: "MXN" as string,
@@ -46,6 +47,7 @@ export const depositStore = defineStore({
     getDepositOrderTimeRefresh: (state) => state.depositOrderTimeRefresh,
     getDepositCurrency: (state) => state.depositCurrency,
     getMoreDepositHistoryFlag: (state) => state.moreDepositHistoryFlag,
+    getSocketDepositConfirmDialog: (state) => state.socketDepositConfirmDialog
   },
   actions: {
     // set functions
@@ -67,6 +69,9 @@ export const depositStore = defineStore({
     setPixInfoToggle(pixInfoToggle: boolean) {
       this.pixInfoToggle = pixInfoToggle
     },
+    setSocketDepositConfirmDialog(socketDepositConfirmDialog: boolean) {
+      this.socketDepositConfirmDialog = socketDepositConfirmDialog
+    },
     setDepositHistoryItem(depositHistoryItem: Deposit.DepositHistoryResponse) {
       if (depositHistoryItem.record.length < 9) {
         this.moreDepositHistoryFlag = false;
@@ -74,8 +79,8 @@ export const depositStore = defineStore({
         this.moreDepositHistoryFlag = true;
       }
 
-      const baseArr = [0,1,2,3,4,5,6,7]
-      let record = depositHistoryItem.record.slice(0, 8)
+      const baseArr = [0,1,2,3,4,5,6,7,8]
+      let record = depositHistoryItem.record.slice(0, 9)
       baseArr.map((item) => {
         if(record[item]) {
           this.depositHistoryItem.record.push(record[item])
@@ -92,7 +97,7 @@ export const depositStore = defineStore({
           return {}
         }
       })
-      
+
       // this.depositHistoryItem.record = [...this.depositHistoryItem.record, ...recordList]
       this.depositHistoryItem.total_pages = depositHistoryItem.total_pages;
     },

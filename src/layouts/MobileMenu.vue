@@ -783,7 +783,7 @@ const goReferFriend = (index: number) => {
             :key="selectedIcon"
           ></inline-svg>
         </transition>
-        <div
+        <!-- <div
           class="m-menu-circle"
           :style="{ transform: `rotate(${rotation}deg) translate(-50%, -50%)` }"
         >
@@ -940,7 +940,7 @@ const goReferFriend = (index: number) => {
             L
           </div>
           <div class="letter white" ref="mail_6"></div>
-        </div>
+        </div> -->
       </div>
     </v-btn>
     <v-btn
@@ -997,7 +997,7 @@ const goReferFriend = (index: number) => {
         <v-list-item
           height="36"
           :class="tempMailList.length > 8 ? 'm-mail-menu-title' : ''"
-          style="background: transparent;"
+          style="background: transparent"
         >
           <v-list-item-title class="ml-2">
             <div class="mail-header-text text-700-14">
@@ -1319,7 +1319,7 @@ const goReferFriend = (index: number) => {
   left: unset !important;
   bottom: 0px !important;
   top: unset !important;
-  background: #23262F;
+  background: #23262f;
 
   // background: transparent !important;
   // box-shadow: none !important;
@@ -1332,7 +1332,7 @@ const goReferFriend = (index: number) => {
     z-index: 100000;
   }
   .v-list-item {
-    background: #15161C;
+    background: #15161c;
   }
 
   .v-list-item-title {
