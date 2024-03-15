@@ -2,8 +2,8 @@ import type { langType } from "./lang-base";
 
 export const lang: langType = {
     "main": {
-      "signupButton": "Regístrese en",
-      "loginButton": "Inicio de sesión",
+      "signupButton": "Regístrese",
+      "loginButton": "Inicio sesión",
       "logo_text_1": "HOY",
       "logo_text_2": "777"
     },
@@ -1760,7 +1760,7 @@ export const lang: langType = {
     },
     "agent": {
       "text_1": "Mis referencias",
-      "text_2": "PREGUNTAS FRECUENTES",
+      "text_2": "Preguntas frecuentes",
       "text_3": "Beneficios",
       "text_4": "Informe",
       "text_5": "Grado",

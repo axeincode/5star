@@ -30,7 +30,7 @@ const searchLoading = ref<boolean>(false);
 const page_no = ref<number>(1);
 const currentPage = ref<number>(1);
 const moreCurrentPage = ref<number>(1);
-const limit = ref<number>(7);
+const limit = ref<number>(6);
 const moreLoading = ref<boolean>(false);
 const swiper = ref<any>(null);
 
@@ -305,7 +305,7 @@ onMounted(async () => {
           v-model="searchText"
         />
       </div>
-      <div class="m-search-loading-container relative pt-8" v-if="searchLoading">
+      <div class="m-search-loading-container relative pt-8" v-if="searchLoading && searchedGameList.length == 0">
         <div class="loading-body">
           <div class="dot-0"></div>
           <div class="dot-1"></div>

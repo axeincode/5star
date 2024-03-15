@@ -28,6 +28,8 @@ const activeIndex = ref<number>(0);
 
 const scrollTop = ref<number>(0);
 
+const currentLang = ref<string | null>(localStorage.getItem('lang'))
+
 const agentNavBarToggle = computed(() => {
   const { getAgentNavBarToggle } = storeToRefs(agentStore());
   return getAgentNavBarToggle.value;
@@ -77,37 +79,47 @@ onMounted(() => {
       <img :src="icon_public_10" width="18" />
     </v-btn>
     <div class="m-agent-header" :class="scrollTop == 0 ? '' : 'm-agent-header-active-bg'">
-      <div class="d-flex mx-5 justify-between mt-10">
-        <span
-          @click="handleTab(0)"
-          :class="activeIndex == 0 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
-        >
-          {{ t("agent.text_1") }}
-        </span>
-        <span
-          @click="handleTab(1)"
-          :class="activeIndex == 1 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
-        >
-          {{ t("agent.text_2") }}
-        </span>
-        <span
-          @click="handleTab(2)"
-          :class="activeIndex == 2 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
-        >
-          {{ t("agent.text_3") }}
-        </span>
-        <span
-          @click="handleTab(3)"
-          :class="activeIndex == 3 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
-        >
-          {{ t("agent.text_4") }}
-        </span>
-        <span
-          @click="handleTab(4)"
-          :class="activeIndex == 4 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
-        >
-          {{ t("agent.text_5") }}
-        </span>
+      <div class="d-flex mx-5 justify-between pt-8" :class="[currentLang === 'es' ? 'tab-box' : '']">
+        <div class="tab-box-item">
+          <span
+            @click="handleTab(0)"
+            :class="activeIndex == 0 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
+          >
+            {{ t("agent.text_1") }}
+          </span>
+        </div>
+        <div class="tab-box-item">
+          <span
+            @click="handleTab(1)"
+            :class="activeIndex == 1 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
+          >
+            {{ t("agent.text_2") }}
+          </span>
+        </div>
+        <div class="tab-box-item">
+          <span
+            @click="handleTab(2)"
+            :class="activeIndex == 2 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
+          >
+            {{ t("agent.text_3") }}
+          </span>
+        </div>
+        <div class="tab-box-item">
+          <span
+            @click="handleTab(3)"
+            :class="activeIndex == 3 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
+          >
+            {{ t("agent.text_4") }}
+          </span>
+        </div>
+         <div class="tab-box-item">
+          <span
+            @click="handleTab(4)"
+            :class="activeIndex == 4 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
+          >
+            {{ t("agent.text_5") }}
+          </span>
+        </div>
       </div>
     </div>
     <div class="m-agent-body" @scroll="handleScroll">
@@ -135,6 +147,23 @@ onMounted(() => {
     top: 0px !important;
     border-style: none !important;
     height: 70px !important;
+
+    .tab-box {
+      display: grid !important;
+      grid-template-columns: repeat(5,1fr) !important;
+      grid-gap: 10px !important; 
+      .tab-box-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+
+        span {
+          white-space: pre-wrap;
+          line-height: 14px;
+        }
+      }
+    }
   }
 
   .m-agent-header-active-bg {

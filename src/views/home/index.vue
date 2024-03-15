@@ -40,7 +40,6 @@ import { ProgressiveImage } from "vue-progressive-image";
 import { mainStore } from "@/store/main";
 import MOrder from "@/views/home/components/mobile/Order.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
-import { log } from "console";
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -607,7 +606,6 @@ const Dashboard = defineComponent({
           }
         });
       }
-      console.log(pagingGames.value);
       gameFilterBtnFlag.value = false;
     };
 
@@ -746,7 +744,7 @@ const Dashboard = defineComponent({
     })
 
     watch(mailMenuShow, (value) => {
-      handleGameFilterBtn(t('home.button.all_game'))
+      // handleGameFilterBtn(t('home.button.all_game'))
     })
 
     watch(gameFilterText, async (value: any) => {
@@ -950,6 +948,8 @@ const Dashboard = defineComponent({
           selectedCategoryName.value = "live";
           break;
       }
+
+      handleGameFilterBtn(selectedGameFilterBtn.value)
     }, { flush: 'pre', immediate: true, deep: true })
 
     onMounted(async () => {

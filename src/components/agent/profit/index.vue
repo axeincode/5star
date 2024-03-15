@@ -190,7 +190,7 @@ onMounted(async () => {
   <v-row class="mx-6 m-agent-profit-summary-tab my-0">
     <v-col
       cols="4"
-      class="text-center text-500-13"
+      class="text-center text-500-13 m-agent-profit-summary-tab-item"
       style="height: 100%"
       :class="
         summaryTabText == 'today' ? 'm-agent-profit-summary-tab-active white' : 'gray'
@@ -201,7 +201,7 @@ onMounted(async () => {
     </v-col>
     <v-col
       cols="4"
-      class="text-center text-500-13"
+      class="text-center text-500-13 m-agent-profit-summary-tab-item"
       style="height: 100%"
       :class="
         summaryTabText == 'week' ? 'm-agent-profit-summary-tab-active white' : 'gray'
@@ -212,7 +212,7 @@ onMounted(async () => {
     </v-col>
     <v-col
       cols="4"
-      class="text-center text-500-13"
+      class="text-center text-500-13 m-agent-profit-summary-tab-item"
       style="height: 100%"
       :class="
         summaryTabText == 'month' ? 'm-agent-profit-summary-tab-active white' : 'gray'
@@ -272,6 +272,11 @@ onMounted(async () => {
   background: $agent_card_notmet_bg;
   align-items: center;
   justify-content: center;
+  line-height: 15px;
+}
+.m-agent-profit-summary-tab-item {
+  display: flex;
+  align-items: center;
 }
 
 .m-agent-profit-summary-tab-active {
