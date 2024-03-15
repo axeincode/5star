@@ -12,6 +12,13 @@ import { storeToRefs } from 'pinia';
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import { useToast } from "vue-toastification";
 
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { dispatchUserInvite } = inviteStore();
@@ -23,12 +30,12 @@ const { t } = useI18n();
 const { width } = useDisplay();
 
 const invitationBonusItem = ref({
-    cash: "R$ 40.496.845",
+    cash: platformCurrency + " 40.496.845",
     content: "8099369 people received"
 })
 
 const bettingCommissionItem = ref({
-    cash: "R$ 38.776.550",
+    cash: platformCurrency + " 38.776.550",
     content: "7755310 people received",
 })
 const bonusDialog = ref<boolean>(false);
@@ -41,21 +48,21 @@ const slides = ref([
             grade: 3,
             totalGrade: 3,
             rate: 100,
-            cash: "R$ 10",
+            cash: platformCurrency + " 10",
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
             grade: 3,
             totalGrade: 10,
             rate: 30,
-            cash: "R$ 30",
+            cash: platformCurrency + " 30",
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
             grade: 3,
             totalGrade: 25,
             rate: 20,
-            cash: "R$ 60",
+            cash: platformCurrency + " 60",
         },
     ],
     [
@@ -64,21 +71,21 @@ const slides = ref([
             grade: 3,
             totalGrade: 10,
             rate: 30,
-            cash: "R$ 30",
+            cash: platformCurrency + " 30",
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
             grade: 3,
             totalGrade: 3,
             rate: 100,
-            cash: "R$ 10",
+            cash: platformCurrency + " 10",
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
             grade: 3,
             totalGrade: 25,
             rate: 20,
-            cash: "R$ 60",
+            cash: platformCurrency + " 60",
         },
     ],
     [
@@ -87,21 +94,21 @@ const slides = ref([
             grade: 3,
             totalGrade: 25,
             rate: 20,
-            cash: "R$ 60",
+            cash: platformCurrency + " 60",
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
             grade: 3,
             totalGrade: 10,
             rate: 30,
-            cash: "R$ 30",
+            cash: platformCurrency + " 30",
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
             grade: 3,
             totalGrade: 3,
             rate: 100,
-            cash: "R$ 10",
+            cash: platformCurrency + " 10",
         },
     ],
 ]);

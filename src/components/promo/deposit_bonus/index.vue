@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 </script>
@@ -8,7 +15,7 @@ const { t } = useI18n();
 <template>
   <div class="text-400-12 gray">
     {{ t("promo.text_15") }}
-    <span class="text-700-12 yellow">R$1800</span>
+    <span class="text-700-12 yellow">{{ platformCurrency }}1800</span>
   </div>
   <div class="text-400-12 gray mt-4">
     {{ t("promo.text_16") }}
@@ -18,7 +25,7 @@ const { t } = useI18n();
   </div>
   <div class="text-400-12 gray">
     {{ t("promo.text_18") }}
-    <span class="text-700-12 yellow">R$1800</span>
+    <span class="text-700-12 yellow">{{ platformCurrency }}1800</span>
   </div>
   <div class="text-400-12 gray mt-4">
     {{ t("promo.text_19") }}
@@ -34,22 +41,22 @@ const { t } = useI18n();
   </div>
   <div class="text-400-12 gray">
     {{ t("promo.text_23") }}
-    <span class="text-700-12 yellow">R$100</span>
+    <span class="text-700-12 yellow">{{ platformCurrency }}100</span>
   </div>
   <div class="text-400-12 gray mt-4">
     {{ t("promo.text_24") }}
   </div>
   <div class="text-400-12 gray mt-4">
     {{ t("promo.text_25") }}
-    <span class="text-700-12 yellow">R$1800</span>
+    <span class="text-700-12 yellow">{{ platformCurrency }}1800</span>
     {{ t("promo.text_26") }}
   </div>
   <div class="text-400-12 gray mt-4">
     {{ t("promo.text_27") }}
   </div>
   <div class="text-400-12 gray mt-4">
-    {{ t("promo.text_28") }}
-    <span class="text-700-12 yellow">R$1500.</span>
+    {{ t("promo.text_28", [platformCurrency]) }}
+    <span class="text-700-12 yellow">{{ platformCurrency }}1500.</span>
   </div>
   <div class="text-400-12 gray mt-4">
     {{ t("promo.text_29") }}

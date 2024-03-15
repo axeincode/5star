@@ -4,6 +4,14 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { type statisticsItem } from "@/interface/affiliate/invite"
 
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 
@@ -48,13 +56,13 @@ const statisticsItem = ref<statisticsItem>({
                 {{ t("affiliate.invite.text_3") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.today_revenue }}
+                {{ platformCurrency }} {{ statisticsItem.today_revenue }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-2 mb-4">
               <div class="text-400-10 gray">{{ t("affiliate.invite.text_4") }}</div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.yesterday_revenue }}
+                {{ platformCurrency }} {{ statisticsItem.yesterday_revenue }}
               </div>
             </v-col>
           </v-row>
@@ -82,7 +90,7 @@ const statisticsItem = ref<statisticsItem>({
                 {{ t("affiliate.invite.text_7") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.this_month_revenue.toFixed(2) }}
+                {{ platformCurrency }} {{ statisticsItem.this_month_revenue.toFixed(2) }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-2 mb-4">
@@ -100,7 +108,7 @@ const statisticsItem = ref<statisticsItem>({
                 {{ t("affiliate.invite.text_9") }}
               </div>
               <div class="m-invite-url-right-text mt-2">
-                R$ {{ statisticsItem.total_revenue.toFixed(2) }}
+                {{ platformCurrency }} {{ statisticsItem.total_revenue.toFixed(2) }}
               </div>
             </v-col>
           </v-row>
@@ -120,7 +128,7 @@ const statisticsItem = ref<statisticsItem>({
           <v-row class="mx-2 my-0">
             <v-col cols="12">
               <div class="d-flex mt-2">
-                <div class="m-invite-revenu-cash-text">R$ {{ revenuCash }}</div>
+                <div class="m-invite-revenu-cash-text">{{ platformCurrency }} {{ revenuCash }}</div>
                 <v-menu v-model="revenuCashMenuShow">
                   <template v-slot:activator="{ props }">
                     <img

@@ -8,6 +8,12 @@ import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
 import { type VipRebateHistoryItem } from "@/interface/vip";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -134,13 +140,13 @@ const fixPositionShow = computed(() => {
               min-width: 60px;
             "
           >
-            R$ {{ Number(item.amount).toFixed(2) }}
+            {{ platformCurrency }} {{ Number(item.amount).toFixed(2) }}
           </td>
           <td
             class="text-400-12 color-01983A"
             style="padding-top: 21px !important; padding-bottom: 21px !important"
           >
-            R$ {{ Number(item.cash_back).toFixed(2) }}
+            {{ platformCurrency }} {{ Number(item.cash_back).toFixed(2) }}
           </td>
           <td
             class="text-400-12"

@@ -4,12 +4,19 @@ import { useI18n } from 'vue-i18n';
 import { useDisplay } from "vuetify";
 import { type GetRouletteHistory } from '@/interface/vip';
 import anime, { AnimeInstance } from "animejs";
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const emit = defineEmits<{ (e: 'closeRouletteBonusDialog'): void }>()
 const { t } = useI18n();
 const { width } = useDisplay()
 
-const roulettePaidBonus = ref<string>("R$ 1.400.000");
+const roulettePaidBonus = ref<string>(platformCurrency + " 1.400.000");
 const spinNumber = ref<number>(10);
 const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
@@ -25,13 +32,13 @@ const rouletteHistory = ref<Array<GetRouletteHistory>>([
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 1",
+        rouletteResult: platformCurrency + " 1",
     },
     {
         id: 2,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 3,
@@ -43,7 +50,7 @@ const rouletteHistory = ref<Array<GetRouletteHistory>>([
         id: 4,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 5000",
+        rouletteResult: platformCurrency + " 5000",
     },
 ])
 
@@ -52,61 +59,61 @@ const rouletteWinnerHistory = ref<Array<GetRouletteHistory>>([
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 2,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 1",
+        rouletteResult: platformCurrency + " 1",
     },
     {
         id: 3,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 4,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 5,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 6,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 7,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 8,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 9,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 0.5",
+        rouletteResult: platformCurrency + " 0.5",
     },
     {
         id: 10,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 5000",
+        rouletteResult: platformCurrency + " 5000",
     },
 ])
 
@@ -115,43 +122,43 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
         id: 1,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 500",
+        rouletteResult: platformCurrency + " 500",
     },
     {
         id: 2,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 500",
+        rouletteResult: platformCurrency + " 500",
     },
     {
         id: 3,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 500",
+        rouletteResult: platformCurrency + " 500",
     },
     {
         id: 4,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 500",
+        rouletteResult: platformCurrency + " 500",
     },
     {
         id: 5,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 500",
+        rouletteResult: platformCurrency + " 500",
     },
     {
         id: 6,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 500",
+        rouletteResult: platformCurrency + " 500",
     },
     {
         id: 7,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 50",
+        rouletteResult: platformCurrency + " 50",
     },
     {
         id: 8,
@@ -163,13 +170,13 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
         id: 9,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 50",
+        rouletteResult: platformCurrency + " 50",
     },
     {
         id: 10,
         rouletteTime: "2023/06/20 23:19:00",
         user: "User9110245128",
-        rouletteResult: "R$ 50",
+        rouletteResult: platformCurrency + " 50",
     },
 ])
 
@@ -177,11 +184,11 @@ const roulettePrizeHistory = ref<Array<GetRouletteHistory>>([
 
 const wheelMap = ref<Array<rouletteItem>>([
     {
-        value: "R$ 5000",
+        value: platformCurrency + " 5000",
         color: "D07000",
     },
     {
-        value: "R$ 5",
+        value: platformCurrency + " 5",
         color: "FFBD00",
     },
     {
@@ -189,15 +196,15 @@ const wheelMap = ref<Array<rouletteItem>>([
         color: "FF5600",
     },
     {
-        value: "R$ 0.5",
+        value: platformCurrency + " 0.5",
         color: "FFBD00",
     },
     {
-        value: "R$ 500",
+        value: platformCurrency + " 500",
         color: "D07000",
     },
     {
-        value: "R$ 50",
+        value: platformCurrency + " 50",
         color: "FFBD00",
     },
     {
@@ -205,7 +212,7 @@ const wheelMap = ref<Array<rouletteItem>>([
         color: "31C2F0",
     },
     {
-        value: "R$ 10",
+        value: platformCurrency + " 10",
         color: "FFBD00",
     },
 ])
@@ -326,7 +333,7 @@ const showWinnerBody = () => {
             {{ t("vip.roulette_bonus.help_menu.text_4") }}
           </p>
           <p class="text-400-12 gray mx-6">
-            {{ t("vip.roulette_bonus.help_menu.text_5") }}
+            {{ t("vip.roulette_bonus.help_menu.text_5", [platformCurrency]) }}
           </p>
           <p class="text-400-12 gray mx-6">
             {{ t("vip.roulette_bonus.help_menu.text_6") }}
@@ -446,9 +453,9 @@ const showWinnerBody = () => {
               cols="3"
               class="pa-1 ma-0 text-500-10 white"
               v-else-if="
-                item.rouletteResult == 'R$ 5000' ||
-                item.rouletteResult == 'R$ 500' ||
-                item.rouletteResult == 'R$ 50'
+                item.rouletteResult == platformCurrency + ' 5000' ||
+                item.rouletteResult == platformCurrency + ' 500' ||
+                item.rouletteResult == platformCurrency + ' 50'
               "
               >{{ item.rouletteResult }}</v-col
             >
@@ -508,7 +515,7 @@ const showWinnerBody = () => {
             <v-col
               cols="3"
               class="pa-1 ma-0 text-500-10 white"
-              v-else-if="winnerItem.rouletteResult == 'R$ 5000'"
+              v-else-if="winnerItem.rouletteResult == platformCurrency + ' 5000'"
             >
               {{ winnerItem.rouletteResult }}
             </v-col>
@@ -539,9 +546,9 @@ const showWinnerBody = () => {
               cols="3"
               class="pa-1 ma-0 text-500-10 white"
               v-else-if="
-                prizeItem.rouletteResult == 'R$ 5000' ||
-                prizeItem.rouletteResult == 'R$ 500' ||
-                prizeItem.rouletteResult == 'R$ 50'
+                prizeItem.rouletteResult == platformCurrency + ' 5000' ||
+                prizeItem.rouletteResult == platformCurrency + ' 500' ||
+                prizeItem.rouletteResult == platformCurrency + ' 50'
               "
               >{{ prizeItem.rouletteResult }}</v-col
             >

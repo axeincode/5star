@@ -26,6 +26,13 @@ import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 import { adjustTrackEvent } from "@/utils/adjust";
 
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const router = useRouter();
@@ -364,7 +371,7 @@ onMounted(async () => {
                   : 'text-800-14 text-gray'
               "
             >
-              R$
+              {{ platformCurrency }}
               {{
                 rewardList.achievement == undefined
                   ? "0.00"
@@ -429,7 +436,7 @@ onMounted(async () => {
                   {{ item.content }}
                 </p>
                 <p class="text-800-14 active" v-if="item.value != ''">
-                  R$ {{ Number(item.value).toFixed(2) }}
+                  {{ platformCurrency }} {{ Number(item.value).toFixed(2) }}
                 </p>
               </div>
             </v-col>

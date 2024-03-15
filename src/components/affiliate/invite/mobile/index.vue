@@ -20,6 +20,13 @@ import MAchievementBonus from "../components/mobile/AchievementBonus.vue";
 import MInviteFooter from "../components/mobile/InviteFooter.vue";
 import MCommission from "../components/mobile/Commission.vue";
 
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { setMainBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { dispatchUserInvite } = inviteStore();
@@ -44,12 +51,12 @@ const commissionMenuShow = ref<boolean>(false);
 const morePeople = ref<number>(1025);
 
 const invitationBonusItem = ref({
-    cash: "R$ 40.496.845",
+    cash: platformCurrency + " 40.496.845",
     content: "8099369 people received"
 })
 
 const bettingCommissionItem = ref({
-    cash: "R$ 38.776.550",
+    cash: platformCurrency + " 38.776.550",
     content: "7755310 people received",
 })
 const bonusDialog = ref<boolean>(false);
@@ -66,27 +73,27 @@ const invitationBonusList = ref<GetInvitaionBonusData[]>([
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: platformCurrency + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: platformCurrency + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: platformCurrency + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: platformCurrency + " 12"
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: platformCurrency + " 12"
     }
 ])
 

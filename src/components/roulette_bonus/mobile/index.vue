@@ -7,13 +7,19 @@ import anime, { AnimeInstance } from "animejs";
 import { gameStore } from '@/store/game';
 import { storeToRefs } from 'pinia';
 import moment from "moment-timezone";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const emit = defineEmits<{ (e: 'closeRouletteBonusDialog'): void }>()
 const { t } = useI18n();
 const { width } = useDisplay()
 const { dispatchUserSpinPage, dispatchUserSpin } = gameStore();
 
-const roulettePaidBonus = ref<string>("R$ 1.400.000");
+const roulettePaidBonus = ref<string>(`${platformCurrency} 1.400.000`);
 const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
 const winnerToggleSwitch = ref<boolean>(false);
@@ -176,7 +182,7 @@ onMounted(() => {
             {{ t("vip.roulette_bonus.help_menu.text_4") }}
           </p>
           <p class="text-400-10 gray mx-6">
-            {{ t("vip.roulette_bonus.help_menu.text_5") }}
+            {{ t("vip.roulette_bonus.help_menu.text_5", [platformCurrency]) }}
           </p>
           <p class="text-400-10 gray mx-6">
             {{ t("vip.roulette_bonus.help_menu.text_6") }}
@@ -312,9 +318,9 @@ onMounted(() => {
               class="px-1 ma-0 text-900-9 white"
               style="padding-top: 2px; padding-bottom: 2px"
               v-else-if="
-                item.rouletteResult == 'R$ 5000' ||
-                item.rouletteResult == 'R$ 500' ||
-                item.rouletteResult == 'R$ 50'
+                item.rouletteResult == platformCurrency + ' 5000' ||
+                item.rouletteResult == platformCurrency + ' 500' ||
+                item.rouletteResult == platformCurrency + ' 50'
               "
               >{{ item.rouletteResult }}</v-col
             >
@@ -381,7 +387,7 @@ onMounted(() => {
             <v-col
               cols="3"
               class="pa-1 ma-0 text-500-10 white"
-              v-else-if="winnerItem.rouletteResult == 'R$ 5000'"
+              v-else-if="winnerItem.rouletteResult == platformCurrency + ' 5000'"
             >
               {{ winnerItem.rouletteResult }}
             </v-col>
@@ -415,9 +421,9 @@ onMounted(() => {
               cols="3"
               class="pa-1 ma-0 text-500-10 white"
               v-else-if="
-                prizeItem.rouletteResult == 'R$ 5000' ||
-                prizeItem.rouletteResult == 'R$ 500' ||
-                prizeItem.rouletteResult == 'R$ 50'
+                prizeItem.rouletteResult == platformCurrency + ' 5000' ||
+                prizeItem.rouletteResult == platformCurrency + ' 500' ||
+                prizeItem.rouletteResult == platformCurrency + ' 50'
               "
               >{{ prizeItem.rouletteResult }}</v-col
             >

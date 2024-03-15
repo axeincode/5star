@@ -17,6 +17,12 @@ import { useRouter } from "vue-router";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { refferalStore } from "@/store/refferal";
 import { appBarStore } from "@/store/appBar";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 const { t } = useI18n();
 const { setVipNavBarToggle } = vipStore();
 const { dispatchVipCycleawardReceive } = vipStore();
@@ -219,9 +225,9 @@ const refferalDialog = () => {
             <div class="progress-main-card-m">
                 <div class="progress-main-card-m-title">
                     <div class="progress-main-card-m-title-price">
-                        <span>R$ {{ vipInfo.deposit_exp }}</span>
+                        <span>{{ platformCurrency }} {{ vipInfo.deposit_exp }}</span>
                         <span> / </span>
-                        <span>R$ {{ vipInfo.rank_deposit_exp }}</span>
+                        <span>{{ platformCurrency }} {{ vipInfo.rank_deposit_exp }}</span>
                     </div>
                 </div>
                 <div class="progress-main-card-m-info">
@@ -239,9 +245,9 @@ const refferalDialog = () => {
             <div class="progress-main-card-b">
                 <div class="progress-main-card-b-title">
                     <div class="progress-main-card-b-title-price">
-                        <span>R$ {{ vipInfo.bet_exp }}</span>
+                        <span>{{ platformCurrency }} {{ vipInfo.bet_exp }}</span>
                         <span> / </span>
-                        <span>R$ {{ vipInfo.rank_bet_exp }}</span>
+                        <span>{{ platformCurrency }} {{ vipInfo.rank_bet_exp }}</span>
                     </div>
                 </div>
                 <div class="progress-main-card-b-info">
@@ -266,7 +272,7 @@ const refferalDialog = () => {
                     <span class="available-button" v-else @click="getVipButtonShow(false)">{{ t('vip.vip_level_info.progress.text_3') }}</span>
                 </div>
                 <div class="progress-main-reward-bg-b">
-                    R$ {{ awardValue() }}
+                    {{ platformCurrency }} {{ awardValue() }}
                 </div>
             </div>
             

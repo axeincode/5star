@@ -14,6 +14,12 @@ import VipRebateHistory from './components/VipRebateHistory.vue';
 import VipLevelRewardHistory from './components/VipLevelRewardHistory.vue';
 import VipTimesHistory from './components/VipTimesHistory.vue';
 import VipSigninHistory from './components/VipSigninHistory.vue';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -307,13 +313,13 @@ onMounted(async () => {
                 min-width: 60px;
               "
             >
-              R$ {{ Number(item.amount).toFixed(2) }}
+              {{ platformCurrency }} {{ Number(item.amount).toFixed(2) }}
             </td>
             <td
               class="text-400-12 color-01983A"
               style="padding-top: 21px !important; padding-bottom: 21px !important"
             >
-              R$ {{ Number(item.cash_back).toFixed(2) }}
+              {{ platformCurrency }} {{ Number(item.cash_back).toFixed(2) }}
             </td>
             <td
               class="text-400-12"

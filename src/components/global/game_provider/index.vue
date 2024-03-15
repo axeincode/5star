@@ -72,7 +72,21 @@ onMounted(async () => {
     </div>
   </v-row>
   <v-row class="ma-2" v-else>
-    <v-slide-group>
+    <div class="m-game-provider-img-container">
+      <div
+        v-for="(gameProviderItem, gameProviderIndex) in gameProviders"
+        :key="gameProviderIndex"
+      >
+        <img
+          :src="gameProviderItem.pictures"
+          width="126"
+          height="49"
+          class="mr-5"
+          @click="handleThirdParthVendor"
+        />
+      </div>
+    </div>
+    <!-- <v-slide-group>
       <v-slide-group-item
         v-for="(gameProviderItem, gameProviderIndex) in gameProviders"
         :key="gameProviderIndex"
@@ -85,7 +99,7 @@ onMounted(async () => {
           @click="handleThirdParthVendor"
         />
       </v-slide-group-item>
-    </v-slide-group>
+    </v-slide-group> -->
   </v-row>
 </template>
 
@@ -101,6 +115,21 @@ onMounted(async () => {
   }
   .v-slide-group__next {
     display: none !important;
+  }
+
+  .m-game-provider-img-container {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* WebKit */
+    }
+    ::-moz-scrollbar {
+      display: none; /* Firefox */
+    }
   }
 }
 </style>

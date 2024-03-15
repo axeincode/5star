@@ -4,6 +4,14 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import img_agent_6 from "@/assets/affiliate/invite/image/img_agent_6.png";
 
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 
@@ -54,7 +62,7 @@ const mobileWidth = computed(() => {
             <v-col cols="3">
               <img :src="item.img" :class="index == 0 ? 'img-gray' : ''" width="69" />
               <p class="text-900-24" :class="index == 0 ? 'gray' : 'color-F9BC01'">
-                R$ {{ item.value }}
+                {{ platformCurrency }} {{ item.value }}
               </p>
               <div class="achievement-reward-bar"></div>
             </v-col>

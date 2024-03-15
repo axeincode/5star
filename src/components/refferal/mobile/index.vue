@@ -11,6 +11,12 @@ import { ElNotification } from "element-plus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { useToast } from "vue-toastification";
 import * as clipboard from "clipboard-polyfill";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -140,7 +146,7 @@ onMounted(async () => {
           {{ t("refferal.description.text_1") }}
         </div>
         <div class="mt-3 mx-6 text-gray text-500-10" style="word-break: break-all;">
-          {{ t("refferal.description.text_2") }}
+          {{ t("refferal.description.text_2", [platformCurrency]) }}
         </div>
         <div class="mt-4 mx-6">
           <v-card
@@ -154,7 +160,7 @@ onMounted(async () => {
               {{ t("refferal.description.term_text") }}
             </div>
             <p class="ml-4 mr-2 mt-3 text-400-10 text-gray" style="word-break: break-all;">
-              {{ t("refferal.description.text_3") }}
+              {{ t("refferal.description.text_3", [platformCurrency]) }}
             </p>
           </v-card>
         </div>

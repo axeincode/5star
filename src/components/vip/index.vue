@@ -9,6 +9,12 @@ import { type GetSpinData } from "@/interface/vip";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -525,8 +531,8 @@ onMounted(() => {
                   <div class="d-flex mx-4">
                     <div class="white">{{ t("appBar.deposit") }}</div>
                     <div class="ml-auto">
-                      <Font class="text-gray">R$ {{ item.currentDepositAmount }} / </Font>
-                      <Font color="#F9BC01">R$ {{ item.totalDepositAmount }}</Font>
+                      <Font class="text-gray">{{ platformCurrency }} {{ item.currentDepositAmount }} / </Font>
+                      <Font color="#F9BC01">{{ platformCurrency }} {{ item.totalDepositAmount }}</Font>
                     </div>
                   </div>
                   <div>
@@ -542,8 +548,8 @@ onMounted(() => {
                   <div class="d-flex mx-4">
                     <div class="white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
-                      <Font class="text-gray">R$ {{ item.currentWagerAmount }} / </Font>
-                      <Font color="#623AEC">R$ {{ item.totalWagerAmount }}</Font>
+                      <Font class="text-gray">{{ platformCurrency }} {{ item.currentWagerAmount }} / </Font>
+                      <Font color="#623AEC">{{ platformCurrency }} {{ item.totalWagerAmount }}</Font>
                     </div>
                   </div>
                   <div>
@@ -831,11 +837,11 @@ onMounted(() => {
             <v-row class="pa-3 align-center">
               <v-col cols="6" md="3">
                 <p class="text-700-16 white">{{ t("vip.cashback_body.text_7") }}</p>
-                <p class="text-700-20 yellow mt-6">R$ 12345678910</p>
+                <p class="text-700-20 yellow mt-6">{{ platformCurrency }} 12345678910</p>
               </v-col>
               <v-col cols="6" md="5">
                 <p class="text-700-16 white">{{ t("vip.cashback_body.text_8") }}</p>
-                <p class="text-700-20 yellow mt-6">R$ 12345678910</p>
+                <p class="text-700-20 yellow mt-6">{{ platformCurrency }} 12345678910</p>
               </v-col>
               <v-col cols="12" md="4" class="text-right">
                 <v-btn
@@ -1035,7 +1041,7 @@ onMounted(() => {
                   {{ t("vip.vip_mission_body.text_8") }}
                 </p>
                 <p class="text-600-12 white mt-1">
-                  {{ t("vip.vip_mission_body.text_10") }}
+                  {{ t("vip.vip_mission_body.text_10", [platformCurrency]) }}
                 </p>
                 <div class="mission-progress-bg mx-4 mt-1">
                   <v-progress-linear
@@ -1105,7 +1111,7 @@ onMounted(() => {
                   {{ t("vip.vip_mission_body.text_5") }}
                 </p>
                 <p class="text-600-12 white mt-1">
-                  {{ t("vip.vip_mission_body.text_10") }}
+                  {{ t("vip.vip_mission_body.text_10", [platformCurrency]) }}
                 </p>
                 <v-btn
                   class="text-none button-dark mission-btn-3 mt-6"
@@ -1162,7 +1168,7 @@ onMounted(() => {
                         <p class="text-500-16 text-gray">
                           {{ t("vip.benifit_description_body.text_4") }}
                         </p>
-                        <p class="text-700-20 yellow">R$ 100</p>
+                        <p class="text-700-20 yellow">{{ platformCurrency }} 100</p>
                       </div>
                     </v-col>
                     <v-col cols="6" class="d-flex justify-center">
@@ -1170,7 +1176,7 @@ onMounted(() => {
                         <p class="text-500-16 text-gray">
                           {{ t("vip.benifit_description_body.text_5") }}
                         </p>
-                        <p class="text-700-20 yellow">R$ 800</p>
+                        <p class="text-700-20 yellow">{{ platformCurrency }} 800</p>
                       </div>
                     </v-col>
                   </v-row>
@@ -1186,7 +1192,7 @@ onMounted(() => {
                       <p class="text-500-16 text-gray">
                         {{ t("vip.benifit_description_body.text_5") }}
                       </p>
-                      <p class="text-700-20 yellow">R$ 800</p>
+                      <p class="text-700-20 yellow">{{ platformCurrency }} 800</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -1209,7 +1215,7 @@ onMounted(() => {
                         <p class="text-500-16 text-gray">
                           {{ t("vip.benifit_description_body.text_7") }}
                         </p>
-                        <p class="text-700-20 yellow">R$ 10</p>
+                        <p class="text-700-20 yellow">{{ platformCurrency }} 10</p>
                       </div>
                     </v-col>
                     <v-col cols="4">
@@ -1218,7 +1224,7 @@ onMounted(() => {
                           <p class="text-500-16 text-gray">
                             {{ t("vip.benifit_description_body.text_8") }}
                           </p>
-                          <p class="text-700-20 yellow">R$ 10 + 1 free spin</p>
+                          <p class="text-700-20 yellow">{{ platformCurrency }} 10 + 1 free spin</p>
                         </div>
                       </div>
                     </v-col>
@@ -1227,7 +1233,7 @@ onMounted(() => {
                         <p class="text-500-16 text-gray">
                           {{ t("vip.benifit_description_body.text_9") }}
                         </p>
-                        <p class="text-700-20 yellow">R$ 30 + 5 free spin</p>
+                        <p class="text-700-20 yellow">{{ platformCurrency }} 30 + 5 free spin</p>
                       </div>
                     </v-col>
                   </v-row>

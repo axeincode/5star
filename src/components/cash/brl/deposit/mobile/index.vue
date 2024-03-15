@@ -21,6 +21,12 @@ import MDepositInfoDialog from "./MDepositInfoDialog.vue";
 import store from '@/store';
 import { load } from 'webfontloader';
 import { useToast } from "vue-toastification";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -171,7 +177,7 @@ const { setOverlayScrimShow } = appBarStore();
 
 const depositToggleSwitch = ref<boolean>(false);
 
-const depositAmountUnit = ref<string>("R$");
+const depositAmountUnit = ref<string>(platformCurrency);
 
 const depositRate = ref<number>(0);
 
@@ -770,7 +776,7 @@ onMounted(async () => {
       <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" />
     </div>
     <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
-      R${{ depositAmount }} + R${{
+      {{ platformCurrency }} {{ depositAmount }} + {{ platformCurrency }}{{
         depositConfig["bonus"][0]["type"] == 0 && depositConfig["bonus"] != undefined
           ? depositRate
           : (Number(depositAmount) * depositRate).toFixed(2)

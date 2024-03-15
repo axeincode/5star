@@ -4,7 +4,13 @@ import Pagination from '@/components/global/pagination/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { appBarStore } from "@/store/appBar";
+// 获取平台货币
 import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -12,75 +18,75 @@ const { width } = useDisplay();
 const formsList = ref<Array<any>>([
     {
         date: "2023/1/29 17:50:36",
-        amount: "R$3000000000.00",
+        amount: platformCurrency + "3000000000.00",
         type: "Game Win",
         id: "re54er35sgf",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "-R$2.00",
+        amount: `-${ platformCurrency }2.00`,
         type: "Game Bet",
         id: "re54er35sgf",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "-R$10.00",
+        amount: `-${ platformCurrency }10.00`,
         type: "Game Bet",
         id: "re54er35sgf",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "R$0.81",
+        amount: platformCurrency + "0.81",
         type: "Berate",
         id: "4524",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "R$20.00",
+        amount: platformCurrency + "20.00",
         type: "Reffer reward",
         id: "45612456",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "-R$100.00",
+        amount: `-${ platformCurrency }100.00`,
         type: "Withdrawal PIX",
         id: "45612456",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "R$200.00",
+        amount: platformCurrency + "200.00",
         type: "Deposit PIX",
         id: "45612456",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "R$100.00",
+        amount: platformCurrency + "100.00",
         type: "Deposit PIX",
         id: "45612456",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {
         date: "2023/1/29 17:50:36",
-        amount: "R$100.00",
+        amount: platformCurrency + "100.00",
         type: "Deposit PIX",
         id: "45612456",
         note: "",
-        balance: "R$ 300000000.00"
+        balance: platformCurrency + " 300000000.00"
     },
     {},
     {},

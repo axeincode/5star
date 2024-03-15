@@ -5,6 +5,12 @@ import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { appBarStore } from "@/store/appBar";
 import { storeToRefs } from "pinia";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n()
 const { width } = useDisplay();
@@ -14,7 +20,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Cancelled",
         note: "",
     },
@@ -22,7 +28,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Cancelled",
         note: "",
     },
@@ -30,7 +36,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Complete",
         note: "",
     },
@@ -38,7 +44,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Complete",
         note: "",
     },
@@ -46,7 +52,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Complete",
         note: "Stale",
     },
@@ -54,7 +60,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Cancelled",
         note: "Stale",
     },
@@ -62,7 +68,7 @@ const formsList = ref<Array<any>>([
         date: "2023/1/29 17:50:36",
         id: "re54er35sgf",
         type: "pix",
-        amount: "R$ 150.00",
+        amount: platformCurrency + " 150.00",
         status: "Cancelled",
         note: "Stale",
     },

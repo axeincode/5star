@@ -21,6 +21,14 @@ import { type GetAchievementItem } from "@/interface/achievement";
 import { type ExplainItem } from "@/interface/achievement";
 import { achievementStore } from "@/store/achievement";
 
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const { dispatchAchievementAward } = achievementStore();
@@ -143,7 +151,7 @@ const achievementAward = async (achievement_item: ExplainItem, achievement_progr
               : 'color-414968'
           "
         >
-          R$ {{ item.award }}
+          {{ platformCurrency }} {{ item.award }}
         </p>
       </v-col>
       <v-col cols="7" class="text-center">

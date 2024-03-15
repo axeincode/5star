@@ -208,7 +208,7 @@ export const gameStore = defineStore({
                 } else {
                     this.setGameSearchList({ list: [], total: 0 });
                     // this.setErrorMessage(handleException(response.code));
-          this.setErrorMessage(response.message);
+                    this.setErrorMessage(response.message);
                 }
             }
             await network.sendMsg(route, {}, next, 1, 4);

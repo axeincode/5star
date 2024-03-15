@@ -36,6 +36,12 @@ import { bonusStore } from "@/store/bonus";
 import { bannerStore } from "@/store/banner";
 import { depositStore } from "@/store/deposit";
 import icon_public_81 from "@/assets/public/svg/icon_public_81.svg";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
@@ -89,8 +95,8 @@ const user = ref<GetUserData>({
   name: "Little Planes",
   grade_level: "Bronze",
   grade: "VIP 4",
-  wallet: "R$0",
-  currency: "R$",
+  wallet: platformCurrency + "0",
+  currency: platformCurrency,
 });
 
 const vipLevelImgs = ref<Array<any>>([
@@ -973,7 +979,7 @@ onMounted(async () => {
                   <div class="d-flex">
                     <div class="white">{{ t("appBar.deposit") }}</div>
                     <div class="ml-auto">
-                      <font>R$ 5642</font> / <font color="#F9BC01">R$ 10000</font>
+                      <font>{{ platformCurrency }} 5642</font> / <font color="#F9BC01">{{ platformCurrency }} 10000</font>
                     </div>
                   </div>
                   <div>
@@ -989,7 +995,7 @@ onMounted(async () => {
                   <div class="d-flex">
                     <div class="white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
-                      <font>R$ 5642</font> / <font color="#623AEC">R$ 10000</font>
+                      <font>{{ platformCurrency }} 5642</font> / <font color="#623AEC">{{ platformCurrency }} 10000</font>
                     </div>
                   </div>
                   <div>

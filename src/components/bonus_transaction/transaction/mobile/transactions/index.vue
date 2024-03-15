@@ -12,6 +12,12 @@ import * as clipboard from "clipboard-polyfill";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -23,11 +29,11 @@ const { pageSize, transactionHistoryItem } = toRefs(props);
 const formsList = ref<Array<any>>([
   {
     date: "2023/1/29 17:50:36",
-    amount: "R$3000000000.00",
+    amount: platformCurrency + "3000000000.00",
     type: "Game Win",
     id: "re54er35sgf",
     note: "",
-    balance: "R$ 300000000.00",
+    balance: platformCurrency + " 300000000.00",
   },
 ]);
 
@@ -335,7 +341,7 @@ onMounted(async () => {
                 padding-bottom: 21px !important;
               "
             >
-              {{ item.balance ? `R$ ${item.balance}` : "" }}
+              {{ item.balance ? `${ platformCurrency } ${item.balance}` : '' }}
             </td>
           </tr>
         </template>

@@ -30,6 +30,12 @@ import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
 import { useTimer } from 'vue-timer-hook';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const modules = [Pagination];
 
@@ -1100,10 +1106,10 @@ onMounted(async () => {
                     <div class="text-500-9 white">{{ t("appBar.deposit") }}</div>
                     <div class="ml-auto">
                       <font class="text-800-8 text-gray">
-                        R$ {{ vipInfo.deposit_exp }} /
+                        {{ platformCurrency }} {{ vipInfo.deposit_exp }} /
                       </font>
                       <font color="#F9BC01" class="text-800-8">
-                        R$ {{ item.deposit_exp }}
+                        {{ platformCurrency }} {{ item.deposit_exp }}
                       </font>
                     </div>
                   </div>
@@ -1121,10 +1127,10 @@ onMounted(async () => {
                     <div class="text-500-9 white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
                       <font class="text-800-8 text-gray">
-                        R$ {{ vipInfo.bet_exp }} /
+                        {{ platformCurrency }} {{ vipInfo.bet_exp }} /
                       </font>
                       <font color="#623AEC" class="text-800-8">
-                        R$ {{ item.bet_exp }}
+                        {{ platformCurrency }} {{ item.bet_exp }}
                       </font>
                     </div>
                   </div>
@@ -1234,7 +1240,7 @@ onMounted(async () => {
                       />
                     </div>
                     <div class="mt-6 text-600-9 white">
-                      {{ t("vip.reward_card_2.text_1") }} R$ {{ item.week_award }}
+                      {{ t("vip.reward_card_2.text_1") }} {{ platformCurrency }} {{ item.week_award }}
                     </div>
                     <div class="mt-2 mx-4">
                       <v-btn
@@ -1273,7 +1279,7 @@ onMounted(async () => {
                       />
                     </div>
                     <div class="mt-6 text-600-9 white">
-                      {{ t("vip.reward_card_3.text_1") }} R$ {{ item.month_award }}
+                      {{ t("vip.reward_card_3.text_1") }} {{ platformCurrency }} {{ item.month_award }}
                     </div>
                     <div class="mt-2 mx-4">
                       <v-btn
@@ -1312,7 +1318,7 @@ onMounted(async () => {
                       />
                     </div>
                     <div class="mt-6 text-600-9 white">
-                      {{ t("vip.reward_card_4.text_1") }} R$ {{ item.uprank_award }}
+                      {{ t("vip.reward_card_4.text_1") }} {{ platformCurrency }} {{ item.uprank_award }}
                     </div>
                     <div class="mt-2 mx-4">
                       <v-btn
@@ -1362,7 +1368,7 @@ onMounted(async () => {
               <div
                 class="text-800-14 white mt-4 mx-3 d-flex align-center m-cashback-my-card"
               >
-                <p class="text-800-20 white ml-4">R$ {{ vipInfo.now_cash_back }}</p>
+                <p class="text-800-20 white ml-4">{{ platformCurrency }} {{ vipInfo.now_cash_back }}</p>
                 <v-btn
                   class="text-none button-yellow ml-auto relative"
                   height="49px"
@@ -1449,14 +1455,14 @@ onMounted(async () => {
                     <v-col cols="12">
                       <p class="text-700-12 white">{{ t("vip.cashback_body.text_7") }}</p>
                       <p class="text-700-16 yellow mt-2">
-                        R$ {{ vipInfo.yesterday_cash_back }}
+                        {{ platformCurrency }} {{ vipInfo.yesterday_cash_back }}
                       </p>
                     </v-col>
                     <v-divider></v-divider>
                     <v-col cols="12">
                       <p class="text-700-12 white">{{ t("vip.cashback_body.text_8") }}</p>
                       <p class="text-700-16 yellow mt-2">
-                        R$ {{ vipInfo.history_cash_back }}
+                        {{ platformCurrency }} {{ vipInfo.history_cash_back }}
                       </p>
                     </v-col>
                     <v-col cols="12" md="4" class="text-right">
@@ -1727,7 +1733,7 @@ onMounted(async () => {
                         {{ t("vip.vip_mission_body.text_8") }}
                       </p>
                       <p class="text-600-10 white mt-1">
-                        {{ t("vip.vip_mission_body.text_10") }}
+                        {{ t("vip.vip_mission_body.text_10", [platformCurrency]) }}
                       </p>
                       <div class="mission-progress-bg mx-4 mt-3">
                         <v-progress-linear
@@ -1800,7 +1806,7 @@ onMounted(async () => {
                         {{ t("vip.vip_mission_body.text_5") }}
                       </p>
                       <p class="text-600-10 white mt-1">
-                        {{ t("vip.vip_mission_body.text_10") }}
+                        {{ t("vip.vip_mission_body.text_10", [platformCurrency]) }}
                       </p>
                       <v-btn
                         class="text-none button-dark m-mission-btn-3 mt-8 mx-2"
@@ -1876,14 +1882,14 @@ onMounted(async () => {
                       <p class="text-500-12 text-gray">
                         {{ t("vip.benifit_description_body.text_4") }}
                       </p>
-                      <p class="text-700-16 yellow mt-1">R$ {{ item.deposit_exp }}</p>
+                      <p class="text-700-16 yellow mt-1">{{ platformCurrency }} {{ item.deposit_exp }}</p>
                     </v-col>
                     <v-divider></v-divider>
                     <v-col cols="12">
                       <p class="text-500-12 text-gray">
                         {{ t("vip.benifit_description_body.text_5") }}
                       </p>
-                      <p class="text-700-16 yellow mt-1">R$ {{ item.bet_exp }}</p>
+                      <p class="text-700-16 yellow mt-1">{{ platformCurrency }} {{ item.bet_exp }}</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -1905,7 +1911,7 @@ onMounted(async () => {
                         {{ t("vip.benifit_description_body.text_5") }}
                       </p>
                       <p class="text-700-16 yellow mt-1">
-                        R$ {{ item.protection_conditions }}
+                        {{ platformCurrency }} {{ item.protection_conditions }}
                       </p>
                     </v-col>
                   </v-row>
@@ -1925,7 +1931,7 @@ onMounted(async () => {
                           {{ item.content }}
                           {{ t("vip.benifit_description_body.text_7") }}
                         </p>
-                        <p class="text-700-16 yellow mt-1">R$ {{ item.uprank_award }}</p>
+                        <p class="text-700-16 yellow mt-1">{{ platformCurrency }} {{ item.uprank_award }}</p>
                       </div>
                     </v-col>
                     <v-col cols="6">
@@ -1935,7 +1941,7 @@ onMounted(async () => {
                             {{ t("vip.benifit_description_body.text_8") }}
                           </p>
                           <p class="text-700-16 yellow mt-1">
-                            R$ {{ item.week_award }}
+                            {{ platformCurrency }} {{ item.week_award }}
                             <span class="text-500-12">+ 1 free spin</span>
                           </p>
                         </div>
@@ -1946,7 +1952,7 @@ onMounted(async () => {
                         {{ t("vip.benifit_description_body.text_9") }}
                       </p>
                       <p class="text-700-16 yellow mt-1">
-                        R$ {{ item.month_award }}
+                        {{ platformCurrency }} {{ item.month_award }}
                         <span class="text-500-12">+ 5 free spin</span>
                       </p>
                     </v-col>
