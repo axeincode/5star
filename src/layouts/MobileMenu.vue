@@ -123,7 +123,6 @@ const selectedCircleItem = computed(() => {
 })
 
 watch(circleMenuBtnClicked, (value) => {
-  console.log("1111111111111111111111111111111");
   homeBtnActive.value = false;
   homeIconColor.value = homeBtnActive.value ? "white" : "#7782AA"
 })

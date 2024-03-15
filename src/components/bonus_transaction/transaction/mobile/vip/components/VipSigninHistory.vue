@@ -105,7 +105,11 @@ const fixPositionShow = computed(() => {
             class="text-400-12"
             style="padding-top: 21px !important; padding-bottom: 21px !important"
           >
-            {{ moment(Number(item.created_at) * 1000).format("YYYY-MM-DD HH:mm:ss") }}
+            {{
+              item.created_at == ""
+                ? ""
+                : moment(Number(item.created_at) * 1000).format("YYYY-MM-DD HH:mm:ss")
+            }}
           </td>
           <td
             class="text-400-12 color-01983A"
@@ -115,7 +119,11 @@ const fixPositionShow = computed(() => {
               min-width: 60px;
             "
           >
-            {{ platformCurrency }} {{ Number(item.amount).toFixed(2) }}
+            {{
+              item.amount == ""
+                ? ""
+                : `${platformCurrency}${Number(item.amount).toFixed(2)}`
+            }}
           </td>
           <td
             class="text-400-12"
@@ -125,7 +133,7 @@ const fixPositionShow = computed(() => {
               min-width: 130px;
             "
           >
-            {{ `VIP ${item.vip_level}` }}
+            {{ item.vip_level == "" ? "" : `VIP ${item.vip_level}` }}
           </td>
           <td
             class="text-400-12"
@@ -136,7 +144,7 @@ const fixPositionShow = computed(() => {
             "
           >
             <div>
-              {{ t('transaction.vip.text_13') }}
+              {{ item.vip_level == "" ? "" : t("transaction.vip.text_13") }}
             </div>
           </td>
         </tr>

@@ -183,9 +183,9 @@ const handleSelectItem = (item: string) => {
     setOverlayScrimShow(false);
     setMainBlurEffectShow(false);
     setMailMenuShow(false);
-  } else if (item == t("Mail")) {
+  } else if (item == t("mobile_menu.mail")) {
     setMobileMenuMailToggle(true);
-  } else if (item == t("Casino")) {
+  } else if (item == t("mobile_menu.casino")) {
     setCasinoGameShow(casinoGameShow.value);
     router.push({ name: "Dashboard", query: { game: "casino" } });
   }
@@ -196,13 +196,13 @@ const handleSelectItem = (item: string) => {
       mailIconColor.value = "#7782AA";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("Mail"):
+    case t("mobile_menu.mail"):
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
       mailIconColor.value = "#ffffff";
       casinoIconColor.value = "#7782AA";
       break;
-    case t("Casino"):
+    case t("mobile_menu.casino"):
       casinoIconColor.value = "#ffffff";
       promoIconColor.value = "#7782AA";
       searchIconColor.value = "#7782AA";
@@ -232,7 +232,10 @@ onMounted(() => {
     :style="{ transform: `translateX(-50%)`, bottom: `${bottom}px` }"
     v-if="route.name !== 'Sports'"
   >
-    <div class="m-semicircle-item m-semicircle-promo" @click="handleSelectItem('Promo')">
+    <div
+      class="m-semicircle-item m-semicircle-promo"
+      @click="handleSelectItem(t('mobile_menu.promo'))"
+    >
       <div class="relative" style="height: 22px">
         <inline-svg
           :src="icon_public_97"
@@ -242,11 +245,17 @@ onMounted(() => {
         ></inline-svg>
         <!-- <p class="chat-box-text">{{ mailCount }}</p> -->
       </div>
-      <div class="text-600-10" :class="selectedItem == 'Promo' ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedText == t('mobile_menu.promo') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.promo") }}
       </div>
     </div>
-    <div class="m-semicircle-item m-semicircle-mail" @click="handleSelectItem('Mail')">
+    <div
+      class="m-semicircle-item m-semicircle-mail"
+      @click="handleSelectItem(t('mobile_menu.mail'))"
+    >
       <div class="relative" style="height: 22px">
         <inline-svg
           :src="icon_public_55"
@@ -256,13 +265,16 @@ onMounted(() => {
         ></inline-svg>
         <!-- <p class="chat-box-text">{{ mailCount }}</p> -->
       </div>
-      <div class="text-600-10" :class="selectedItem == 'Mail' ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedText == t('mobile_menu.mail') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.mail") }}
       </div>
     </div>
     <div
       class="m-semicircle-item m-semicircle-search"
-      @click="handleSelectItem('Casino')"
+      @click="handleSelectItem(t('mobile_menu.casino'))"
     >
       <inline-svg
         :src="icon_public_34"
@@ -270,7 +282,10 @@ onMounted(() => {
         height="22"
         :transform-source="casinoSvgTransform"
       ></inline-svg>
-      <div class="text-600-10" :class="selectedItem == 'Casino' ? 'white' : 'gray'">
+      <div
+        class="text-600-12"
+        :class="selectedText == t('mobile_menu.casino') ? 'white' : 'gray'"
+      >
         {{ t("mobile_menu.casino") }}
       </div>
     </div>

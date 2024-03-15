@@ -206,7 +206,7 @@ const Dashboard = defineComponent({
 
     const currentPage = ref<number>(1);
     const moreGameCurrentPage = ref<number>(1);
-    const limit = ref<number>(8);
+    const limit = ref<number>(6);
 
     const moreLoading = ref<boolean>(false);
     const moreIndex = ref<number>(0);
@@ -306,6 +306,7 @@ const Dashboard = defineComponent({
     })
 
     watch(homeMenuBtnClicked, (newValue) => {
+      console.log("dsfsdfsdfsdf");
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -313,6 +314,7 @@ const Dashboard = defineComponent({
     })
 
     watch(casinoGameShow, (newValue) => {
+      console.log("casinoGameShow");
       window.scrollTo({
         top: 450,
         behavior: "smooth",
@@ -435,10 +437,10 @@ const Dashboard = defineComponent({
     const gameFilterBtnFlag = ref<boolean>(false);
 
     const handleGameFilterBtn = async (gamFilterBtn: string) => {
-      window.scrollTo({
-        top: 380,
-        behavior: "smooth",
-      });
+      // window.scrollTo({
+      //   top: 450,
+      //   behavior: "smooth",
+      // });
       console.log(gamFilterBtn, t("home.button.all_game"));
       if (gameFilterBtnFlag.value) {
         return;
@@ -625,7 +627,7 @@ const Dashboard = defineComponent({
       if (element != undefined) {
         let curPos = element[0].scrollLeft;
         let index = gameGroupBtnList.value.findIndex(item => item.slug == selectedGameFilterBtn.value);
-        
+
         element[0].scrollTo({
           left: childNodes[index + 1].offsetLeft - element[0].offsetLeft - (element[0].offsetWidth - childNodes[index + 1].offsetWidth) / 2,
           behavior: 'smooth'
@@ -659,7 +661,7 @@ const Dashboard = defineComponent({
         await dispatchUserGame({
           game_categories_slug: selectedCategoryName.value,
           page: new_page_no,
-          limit: limit.value * new_page_no,
+          limit: limit.value,
         });
       } else {
         await dispatchGameSearch(
@@ -972,7 +974,6 @@ const Dashboard = defineComponent({
 
     onMounted(async () => {
       loading.value = true;
-
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -1577,7 +1578,7 @@ export default Dashboard;
           <v-row
             class="ml-4 original_game_text"
             :class="mobileWidth > 600 ? ' mt-12' : ' mt-4'"
-            v-if="item.games.length > 0"
+            v-if="item.games != undefined && item.games.length > 0"
             style="margin-bottom: 6px !important"
           >
             <!-- <inline-svg
@@ -1602,7 +1603,7 @@ export default Dashboard;
           </v-row>
 
           <v-row class="ml-4 mr-2 mt-2 mb-0 pc-game-row" v-if="mobileWidth > 600">
-            <template v-if="item.games.length > 0">
+            <template v-if="item.games != undefined && item.games.length > 0">
               <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
                 <div
                   class="original-game-img-width pc-game-img-width"
@@ -1620,7 +1621,7 @@ export default Dashboard;
             </template>
           </v-row>
           <v-row class="mx-1 mt-0 mb-0" v-else>
-            <template v-if="item.games.length > 0">
+            <template v-if="item.games != undefined && item.games.length > 0">
               <template v-for="(gameItem, gameIndex) in item.games" :key="gameIndex">
                 <v-col
                   cols="4"

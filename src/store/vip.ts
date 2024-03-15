@@ -93,7 +93,7 @@ export const vipStore = defineStore({
         } else {
           this.vipRebateHistory.list.push({
             notes_id: "",
-            created_at: 0,
+            created_at: "",
             amount: "",
             cash_back: "",
             vip_level: "",
@@ -114,7 +114,7 @@ export const vipStore = defineStore({
         } else {
           this.vipLevelRewardHistory.list.push({
             notes_id: "",
-            created_at: 0,
+            created_at: "",
             amount: "",
             vip_level: "",
             type: ""
@@ -125,6 +125,10 @@ export const vipStore = defineStore({
       // this.vipLevelRewardHistory = vipLevelRewardHistory;
     },
     setVipTimesHistory(vipTimesHistory: Vip.VipTimesHistoryData) {
+      this.vipTimesHistory = {
+        list: [],
+        total: 0
+      }
       const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
       let record = vipTimesHistory.list.slice(0, 9)
       baseArr.map((item) => {
@@ -133,7 +137,7 @@ export const vipStore = defineStore({
         } else {
           this.vipTimesHistory.list.push({
             notes_id: "",
-            created_at: 0,
+            created_at: "",
             amount: "",
             vip_level: "",
             type: ""
