@@ -13,6 +13,12 @@ import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import ParticipatingDialog from "./ParticipatingDialog.vue";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -155,7 +161,7 @@ const depositAmountList = ref<Array<string>>([
 
 const depositToggleSwitch = ref<boolean>(false);
 
-const depositAmountUnit = ref<string>("R$");
+const depositAmountUnit = ref<string>(platformCurrency);
 
 const depositRate = ref<string>("+100%");
 

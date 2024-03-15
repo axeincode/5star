@@ -3,6 +3,13 @@ import { ref, computed, watch, onMounted, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
 import { type StatisticsItem } from "@/interface/affiliate/invite"
 import { type InviteData } from "@/interface/invite";
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const props = defineProps<{ inviteItem: InviteData }>();
@@ -34,13 +41,13 @@ const { inviteItem } = toRefs(props);
             {{ t("affiliate.invite.text_3") }}
           </div>
           <div class="m-agent-invite-url-right-text mt-2">
-            R$ {{ Number(inviteItem.bonus_today).toFixed(2) }}
+            {{ platformCurrency }} {{ Number(inviteItem.bonus_today).toFixed(2) }}
           </div>
         </v-col>
         <v-col cols="6" md="3" lg="3" class="text-center py-2 mb-4">
           <div class="text-400-10 gray">{{ t("affiliate.invite.text_4") }}</div>
           <div class="m-agent-invite-url-right-text mt-2">
-            R$ {{ Number(inviteItem.bonus_yesterdays).toFixed(2) }}
+            {{ platformCurrency }} {{ Number(inviteItem.bonus_yesterdays).toFixed(2) }}
           </div>
         </v-col>
       </v-row>
@@ -68,7 +75,7 @@ const { inviteItem } = toRefs(props);
             {{ t("affiliate.invite.text_7") }}
           </div>
           <div class="m-agent-invite-url-right-text mt-2">
-            R$ {{ Number(inviteItem.bonus_month).toFixed(2) }}
+            {{ platformCurrency }} {{ Number(inviteItem.bonus_month).toFixed(2) }}
           </div>
         </v-col>
         <v-col cols="6" md="3" lg="3" class="text-center py-2 mb-4">
@@ -86,7 +93,7 @@ const { inviteItem } = toRefs(props);
             {{ t("affiliate.invite.text_9") }}
           </div>
           <div class="m-agent-invite-url-right-text mt-2">
-            R$ {{ Number(inviteItem.bonus_total).toFixed(2) }}
+            {{ platformCurrency }} {{ Number(inviteItem.bonus_total).toFixed(2) }}
           </div>
         </v-col>
       </v-row>

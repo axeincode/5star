@@ -40,6 +40,8 @@ import { ProgressiveImage } from "vue-progressive-image";
 import { mainStore } from "@/store/main";
 import MOrder from "@/views/home/components/mobile/Order.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+import { Network } from "@/net/Network";
+import { NETWORK } from '@/net/NetworkCfg';
 
 const GameProviders = defineAsyncComponent(() => import("@/components/global/game_provider/index.vue"));
 
@@ -739,6 +741,22 @@ const Dashboard = defineComponent({
       selectedGameItem.value = game_item;
     }
 
+    const getCategoriesFunc = async (sub_api: string) => {
+      let result;
+      const route: string = NETWORK.GAME_INFO.GAME_CATEGORY + sub_api
+      const network: Network = Network.getInstance();
+      try {
+        const res = await network.request({
+          url: route,
+          method: 'GET',
+        })
+        result = res.data || []
+      } catch (err) {
+        result = []
+      }
+      return result
+    }
+
     watch(gameConfirmDialogShow, (value: boolean) => {
       // setMailMenuShow(value);
     })
@@ -954,7 +972,6 @@ const Dashboard = defineComponent({
 
     onMounted(async () => {
       loading.value = true;
-      console.log(213123123123);
 
       window.scrollTo({
         top: 0,
@@ -963,14 +980,15 @@ const Dashboard = defineComponent({
       adjustTrackEvent({
         eventToken: "s2jbxh", // PAGE_VIEW
       });
-      await dispatchGameCategories(`?type=sports`);
-      await dispatchGameCategories(`?type=${filterTabText.value}`);
+      // await dispatchGameCategories(`?type=sports`);
+      // await dispatchGameCategories(`?type=${filterTabText.value}`);
+      const categorieList = await getCategoriesFunc(`?type=${filterTabText.value}`)
       // await dispatchUserActivityList({})
       await bannerLoad();
       await liveWinLoad();
       await betHistoryLoad();
       loading.value = false;
-      allGames.value = gameCategories.value;
+      allGames.value = categorieList;
       allGames.value.map(async (item: { slug: string; page_no: number; games: any; }) => {
         await dispatchGameSearch(
           "?game_categories_slug=" +
@@ -1003,7 +1021,6 @@ const Dashboard = defineComponent({
           setOriginalGames(gameSearchList.value.list.slice(0, 9));
         }
       });
-
       if (token.value != undefined) {
         await dispatchSocketConnect();
       }

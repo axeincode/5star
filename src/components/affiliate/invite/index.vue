@@ -22,6 +22,14 @@ import icon_public_31 from "@/assets/public/svg/icon_public_31.svg";
 import icon_public_32 from "@/assets/public/svg/icon_public_32.svg";
 import icon_public_33 from "@/assets/public/svg/icon_public_33.svg";
 
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const inviteList = ref([
@@ -45,12 +53,12 @@ const socialIcons = ref<Array<any>>([
 ]);
 const morePeople = ref<number>(1025);
 const invitationBonusItem = ref({
-    cash: "R$ 40.496.845",
+    cash: `${platformCurrency } 40.496.845`,
     content: "8099369 people received"
 })
 
 const bettingCommissionItem = ref({
-    cash: "R$ 38.776.550",
+    cash: `${platformCurrency } 38.776.550`,
     content: "7755310 people received",
 })
 const bonusDialog = ref<boolean>(false);
@@ -67,21 +75,21 @@ const slides = ref([
             grade: 3,
             totalGrade: 3,
             rate: 100,
-            cash: "R$ 10",
+            cash: `${platformCurrency } 10`,
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
             grade: 3,
             totalGrade: 10,
             rate: 30,
-            cash: "R$ 30",
+            cash: `${platformCurrency } 30`,
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
             grade: 3,
             totalGrade: 25,
             rate: 20,
-            cash: "R$ 60",
+            cash: `${platformCurrency } 60`,
         },
     ],
     [
@@ -90,21 +98,21 @@ const slides = ref([
             grade: 3,
             totalGrade: 10,
             rate: 30,
-            cash: "R$ 30",
+            cash: `${platformCurrency } 30`,
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
             grade: 3,
             totalGrade: 3,
             rate: 100,
-            cash: "R$ 10",
+            cash: `${platformCurrency } 10`,
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_07.png", import.meta.url).href,
             grade: 3,
             totalGrade: 25,
             rate: 20,
-            cash: "R$ 60",
+            cash: `${platformCurrency } 60`,
         },
     ],
     [
@@ -113,21 +121,21 @@ const slides = ref([
             grade: 3,
             totalGrade: 25,
             rate: 20,
-            cash: "R$ 60",
+            cash: `${platformCurrency } 60`,
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_08.png", import.meta.url).href,
             grade: 3,
             totalGrade: 10,
             rate: 30,
-            cash: "R$ 30",
+            cash: `${platformCurrency } 30`,
         },
         {
             headerImg: new URL("@/assets/affiliate/invite/image/img_agent_09.png", import.meta.url).href,
             grade: 3,
             totalGrade: 3,
             rate: 100,
-            cash: "R$ 10",
+            cash: `${platformCurrency } 10`,
         },
     ],
 ]);
@@ -151,27 +159,27 @@ const invitationBonusList = ref<GetInvitaionBonusData[]>([
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: `${platformCurrency } 12`
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: `${platformCurrency } 12`
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: `${platformCurrency } 12`
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: `${platformCurrency } 12`
     },
     {
         id: "User931469401",
         content: "Receive an invitation bonus",
-        cash: "R$ 12"
+        cash: `${platformCurrency } 12`
     }
 ])
 
@@ -291,7 +299,7 @@ onMounted(() => {
             >
               <div class="invite-url-title">{{ t("affiliate.invite.text_3") }}</div>
               <div class="invite-url-right-text mt-1">
-                R$ {{ statisticsItem.today_revenue }}
+                {{ platformCurrency }} {{ statisticsItem.today_revenue }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-1">
@@ -307,7 +315,7 @@ onMounted(() => {
                 {{ t("affiliate.invite.text_4") }}
               </div>
               <div class="invite-url-right-text mt-1">
-                R$ {{ statisticsItem.yesterday_revenue }}
+                {{ platformCurrency }} {{ statisticsItem.yesterday_revenue }}
               </div>
             </v-col>
           </v-row>
@@ -333,7 +341,7 @@ onMounted(() => {
                 {{ t("affiliate.invite.text_7") }}
               </div>
               <div class="invite-url-right-text mt-2">
-                R$ {{ statisticsItem.this_month_revenue.toFixed(2) }}
+                {{ platformCurrency }} {{ statisticsItem.this_month_revenue.toFixed(2) }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-1">
@@ -357,7 +365,7 @@ onMounted(() => {
             <v-col cols="12" class="text-center py-1">
               <div class="invite-url-title">{{ t("affiliate.invite.text_9") }}</div>
               <div class="invite-url-right-text mt-2">
-                R$ {{ statisticsItem.total_revenue.toFixed(2) }}
+                {{ platformCurrency }} {{ statisticsItem.total_revenue.toFixed(2) }}
               </div>
             </v-col>
           </v-row>
@@ -718,7 +726,7 @@ onMounted(() => {
             :class="[mobileWidth < 600 ? 'pt-2' : 'pt-4']"
             :style="[mobileWidth < 600 ? 'font-size: 26px' : '']"
           >
-            R$ {{ Math.ceil(slider) }}
+            {{ platformCurrency }} {{ Math.ceil(slider) }}
           </div>
           <div class="footer-text-7">
             <span>{{ t("affiliate.invite.invite_text_7") }}</span>

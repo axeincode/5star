@@ -15,6 +15,12 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import MConfirm from "@/components/global/confirm/mobile/index.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const emit = defineEmits<{ (e: "closeLoginBonusDialog"): void }>();
 const { t } = useI18n();
@@ -537,7 +543,7 @@ onMounted(async () => {
           <p class="text-center" style="line-height: normal">
             <font class="text-900-10 white">
               If you recharge
-              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_deposit }} </font>
+              <font class="text-900-10 purple"> {{ platformCurrency }} {{ vipSignIn.limited_deposit }} </font>
               today,
             </font>
           </p>
@@ -550,7 +556,7 @@ onMounted(async () => {
           <p class="text-center" style="line-height: normal">
             <font class="text-900-10 white">
               If you bet
-              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_bet }} </font>
+              <font class="text-900-10 purple"> {{ platformCurrency }} {{ vipSignIn.limited_bet }} </font>
               today,
             </font>
           </p>
@@ -563,19 +569,19 @@ onMounted(async () => {
           <p class="text-center" style="line-height: normal">
             <font class="text-900-10 white">
               If you recharge
-              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_deposit }} </font>
+              <font class="text-900-10 purple"> {{ platformCurrency }} {{ vipSignIn.limited_deposit }} </font>
               &nbsp;and&nbsp;
             </font>
             <font class="text-900-10 white">
               bet
-              <font class="text-900-10 purple"> R$ {{ vipSignIn.limited_bet }} </font>
+              <font class="text-900-10 purple"> {{ platformCurrency }} {{ vipSignIn.limited_bet }} </font>
               today,
             </font>
           </p>
         </template>
         <!-- <p class="text-center" style="line-height: normal">
           <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_1") }}</font>
-          <font class="text-900-10 purple">R$20 </font>
+          <font class="text-900-10 purple">{{ platformCurrency }}20 </font>
           <font class="text-900-10 white">{{ t("vip.login_bonus.footer_text_2") }}</font>
           <font class="text-900-10 purple">{{ t("vip.login_bonus.footer_text_3") }}</font>
         </p> -->

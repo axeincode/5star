@@ -1,10 +1,17 @@
 <script lang="ts" setup>
 import { ref, watch, computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { appCurrencyStore } from "@/store/app";
 
 const { t } = useI18n();
 const { width } = useDisplay();
+// 获取平台货币
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const mobileWidth: any = computed(() => {
   return width.value;
@@ -70,8 +77,8 @@ const mobileWidth: any = computed(() => {
       </v-col>
       <v-col cols="4" class="text-400-8 gray text-center py-2">
         <div>
-          {{ t("about.payment_methods.text_13") }} R$20 /
-          {{ t("about.payment_methods.text_14") }} R$49999
+          {{ t("about.payment_methods.text_13") }} {{ platformCurrency }}20 /
+          {{ t("about.payment_methods.text_14") }} {{ platformCurrency }}49999
         </div>
       </v-col>
     </v-row>
@@ -120,8 +127,8 @@ const mobileWidth: any = computed(() => {
       </v-col>
       <v-col cols="4" class="text-400-8 gray text-center py-2">
         <div>
-          {{ t("about.payment_methods.text_13") }} R$20 /
-          {{ t("about.payment_methods.text_14") }} R$49999
+          {{ t("about.payment_methods.text_13") }} {{ platformCurrency }}20 /
+          {{ t("about.payment_methods.text_14") }} {{ platformCurrency }}49999
         </div>
       </v-col>
     </v-row>

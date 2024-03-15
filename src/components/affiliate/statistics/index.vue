@@ -4,6 +4,12 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { inviteStore } from "@/store/invite";
 import { storeToRefs } from "pinia";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -70,7 +76,7 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_8") }}
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">{{ platformCurrency }} 0.00</v-col>
       <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
     </v-row>
@@ -79,34 +85,34 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_6") }}
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
     </v-row>
     <v-row class="mx-2 my-2 px-6 statistics-user-card">
       <v-col cols="3" class="pa-0 text-400-16 gray">
         {{ t("affiliate.statistics.text_9") }}
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
     </v-row>
     <v-row class="mx-2 my-2 px-6 statistics-commission-card">
       <v-col cols="3" class="pa-0 text-400-16 gray">
         {{ t("affiliate.statistics.text_8") }}
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
-      <v-col cols="3" class="pa-0 text-700-16 yellow">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">{{ platformCurrency }} 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">{{ platformCurrency }} 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 yellow">{{ platformCurrency }} 0.00</v-col>
     </v-row>
     <v-row class="mx-2 my-2 px-6 statistics-commission-card">
       <v-col cols="3" class="pa-0 text-400-16 gray">
         {{ t("affiliate.statistics.text_10") }}
         {{ t("affiliate.statistics.text_11") }}
       </v-col>
-      <v-col cols="3" class="pa-0 text-700-16 gray">R$ 0.00</v-col>
+      <v-col cols="3" class="pa-0 text-700-16 gray">{{ platformCurrency }} 0.00</v-col>
       <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-16 gray"> -- </v-col>
     </v-row>
@@ -158,7 +164,7 @@ onMounted(async () => {
       <p class="text-800-16 white">{{ t("affiliate.statistics.tab.text_1") }}</p>
     </v-col>
     <v-col cols="4" class="pa-0 text-center">
-      <p class="text-800-32 yellow">R$ 19000,34</p>
+      <p class="text-800-32 yellow">{{ platformCurrency }} 19000,34</p>
     </v-col>
     <v-col cols="4" class="pa-0 text-center">
       <v-btn class="text-none statistics-receive-btn" width="185" height="64">

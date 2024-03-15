@@ -1,6 +1,13 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const emit = defineEmits<{ (e: 'closeLoginBonusDialog'): void }>()
 const { t } = useI18n();
@@ -175,7 +182,7 @@ const handleLoginBonus = (day: number) => {
                 <v-col cols="8" class="pa-0 ma-0">
                     <div class="text-center">
                         <Font class="text-900-12 white">{{ t('vip.login_bonus.footer_text_1') }}</Font>
-                        <Font class="text-900-12 purple">R$20 </Font>
+                        <Font class="text-900-12 purple">{{ platformCurrency }}20 </Font>
                         <Font class="text-900-12 white">{{ t('vip.login_bonus.footer_text_2') }}</Font>
                         <Font class="text-900-12 purple">{{ t('vip.login_bonus.footer_text_3') }}</Font>
                     </div>

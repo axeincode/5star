@@ -2,6 +2,13 @@
 import { ref, watch, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -47,13 +54,13 @@ const mobileWidth: any = computed(() => {
       {{ t("about.bonus_terms.text_11") }}
     </div>
     <div class="text-400-10 gray my-2">
-      {{ t("about.bonus_terms.text_12") }}
+      {{ t("about.bonus_terms.text_12", [platformCurrency]) }}
     </div>
     <div class="text-400-10 gray my-2">
       {{ t("about.bonus_terms.text_13") }}
     </div>
     <div class="text-400-10 gray my-2">
-      {{ t("about.bonus_terms.text_14") }}
+      {{ t("about.bonus_terms.text_14", [platformCurrency]) }}
     </div>
     <div class="text-400-10 gray my-2">
       {{ t("about.bonus_terms.text_15") }}

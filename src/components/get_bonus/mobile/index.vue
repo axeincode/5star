@@ -4,6 +4,12 @@ import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const emit = defineEmits<{ (e: "closeGetBonusDialog"): void }>();
@@ -39,7 +45,7 @@ const depositDialogShow = () => {
       <div class="pt-4 text-center">
         <p class="text-center" style="line-height: normal">
           <font class="text-900-12 white">{{ t("vip.login_bonus.footer_text_1") }}</font>
-          <font class="text-900-12 purple">R$20 </font>
+          <font class="text-900-12 purple">{{ platformCurrency }}20 </font>
           <font class="text-900-12 white">{{ t("vip.login_bonus.footer_text_2") }}</font>
           <font class="text-900-12 purple">{{ t("vip.login_bonus.footer_text_3") }}</font>
         </p>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { refferalStore } from '@/store/refferal';
@@ -8,6 +8,13 @@ import { ElNotification } from 'element-plus'
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
+import { storeToRefs } from 'pinia';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -78,7 +85,7 @@ onMounted(() => {
                 {{ t('refferal.description.text_1') }}
             </div>
             <div class="mt-4 mx-10 text-gray text-500-14 text-justify">
-                {{ t('refferal.description.text_2') }}
+                {{ t('refferal.description.text_2', [platformCurrency]) }}
             </div>
             <div class="mt-6 mx-10">
                 <v-card height="420" theme="dark" color="#1D2027" class="overflow-y-auto">
@@ -86,7 +93,7 @@ onMounted(() => {
                         {{ t('refferal.description.term_text') }}
                     </div>
                     <p class="mx-4 mt-3 text-400-14 text-gray text-justify">
-                        {{ t('refferal.description.text_3') }}
+                        {{ t('refferal.description.text_3', [platformCurrency]) }}
                     </p>
                 </v-card>
             </div>

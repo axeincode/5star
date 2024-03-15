@@ -24,6 +24,12 @@ import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from '@/utils/currencyList';
 import { adjustTrackEvent } from '@/utils/adjust';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed<string>(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -49,7 +55,7 @@ const { setTimerValue } = depositStore();
 const { setDepositOrderTimeRefresh } = depositStore();
 const { setDepositCurrency } = depositStore();
 
-const selectedCurrencyUnit = ref<string>("R$");
+const selectedCurrencyUnit = ref<string>(platformCurrency);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,

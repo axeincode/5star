@@ -7,6 +7,13 @@ import moment from "moment-timezone";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
 
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 
@@ -45,62 +52,62 @@ const formsList = ref<Array<any>>([
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: "R$ 12",
+    bonus: `${platformCurrency } 12`,
   },
 ]);
 

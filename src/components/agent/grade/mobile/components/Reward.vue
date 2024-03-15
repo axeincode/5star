@@ -6,6 +6,13 @@ import img_agent_6 from "@/assets/affiliate/invite/image/img_agent_6.png";
 import { type GetAchievementItem } from "@/interface/achievement";
 import { type ExplainItem } from "@/interface/achievement";
 import { achievementStore } from "@/store/achievement";
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -78,7 +85,7 @@ const achievementAward = async (award_item: ExplainItem, award_progress: number)
                 : 'gray'
             "
           >
-            R$ {{ item.award }}
+            {{ platformCurrency }} {{ item.award }}
           </p>
           <div class="m-achievement-reward-bar"></div>
         </v-col>

@@ -2,6 +2,13 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+// 获取平台货币
+import { storeToRefs } from "pinia";
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -24,7 +31,7 @@ const mobileWidth = computed(() => {
             src="@/assets/public/image/img_public_15.png"
             :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']"
           />
-          <p class="statistics-profit-cash-text">R$ 19,34</p>
+          <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
           <p
             class="statistics-profit-text pa-0"
             :class="[mobileWidth < 960 ? 'my-2' : 'my-4']"
@@ -35,7 +42,7 @@ const mobileWidth = computed(() => {
         <div v-else>
           <v-row class="justify-center align-center">
             <v-col cols="6">
-              <p class="statistics-profit-cash-text">R$ 19,34</p>
+              <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
               <p
                 class="statistics-profit-text pa-0"
                 :class="[mobileWidth < 960 ? 'my-2' : 'my-8']"
@@ -56,19 +63,19 @@ const mobileWidth = computed(() => {
         <v-card theme="dark" color="#15161C" class="ma-4">
           <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
             <v-col cols="6" lg="3">
-              <p class="statistics-profit-cash-text-1">R$ 25.916</p>
+              <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 25.916</p>
               <p class="statistics-text-700 mt-4">
                 {{ t("affiliate.invite.invitation_bonus") }}
               </p>
             </v-col>
             <v-col cols="6" lg="3">
-              <p class="statistics-profit-cash-text-1">R$ 40.533,73</p>
+              <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 40.533,73</p>
               <p class="statistics-text-700 mt-4">
                 {{ t("affiliate.invite.betting_commision") }}
               </p>
             </v-col>
             <v-col cols="6" lg="3">
-              <p class="statistics-profit-cash-text-1">R$ 3.225</p>
+              <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 3.225</p>
               <p class="statistics-text-700 mt-4">
                 {{ t("affiliate.invite.achivement_bonus") }}
               </p>
@@ -116,7 +123,7 @@ const mobileWidth = computed(() => {
                 src="@/assets/public/image/img_public_16.png"
                 :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']"
               />
-              <p class="statistics-profit-cash-text">R$ 19,34</p>
+              <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
               <p
                 class="statistics-profit-text pa-0"
                 :class="[mobileWidth < 960 ? 'my-2' : 'my-4']"
@@ -127,7 +134,7 @@ const mobileWidth = computed(() => {
             <div v-else>
               <v-row class="justify-center align-center">
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text">R$ 19,34</p>
+                  <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
                   <p
                     class="statistics-profit-text pa-0"
                     :class="[mobileWidth < 960 ? 'my-2' : 'my-8']"
@@ -148,13 +155,13 @@ const mobileWidth = computed(() => {
             <v-card theme="dark" color="#15161C" class="ma-4">
               <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text-1">R$ 19,34</p>
+                  <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 19,34</p>
                   <p class="statistics-text-700 mt-4">
                     {{ t("affiliate.invite.betting_commision") }}
                   </p>
                 </v-col>
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text-1">R$ 0</p>
+                  <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 0</p>
                   <p class="statistics-text-700 mt-4">
                     {{ t("affiliate.invite.invitation_bonus") }}
                   </p>
@@ -192,7 +199,7 @@ const mobileWidth = computed(() => {
                 src="@/assets/public/image/img_public_16.png"
                 :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']"
               />
-              <p class="statistics-profit-cash-text">R$ 19,34</p>
+              <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
               <p
                 class="statistics-profit-text pa-0"
                 :class="[mobileWidth < 960 ? 'my-2' : 'my-4']"
@@ -203,7 +210,7 @@ const mobileWidth = computed(() => {
             <div v-else>
               <v-row class="justify-center align-center">
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text">R$ 19,34</p>
+                  <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
                   <p
                     class="statistics-profit-text pa-0"
                     :class="[mobileWidth < 960 ? 'my-2' : 'my-8']"
@@ -224,13 +231,13 @@ const mobileWidth = computed(() => {
             <v-card theme="dark" color="#15161C" class="ma-4">
               <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text-1">R$ 19,34</p>
+                  <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 19,34</p>
                   <p class="statistics-text-700 mt-4">
                     {{ t("affiliate.invite.betting_commision") }}
                   </p>
                 </v-col>
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text-1">R$ 0</p>
+                  <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 0</p>
                   <p class="statistics-text-700 mt-4">
                     {{ t("affiliate.invite.invitation_bonus") }}
                   </p>
@@ -268,7 +275,7 @@ const mobileWidth = computed(() => {
                 src="@/assets/public/image/img_public_16.png"
                 :class="[mobileWidth < 960 ? 'pa-4' : 'pa-10']"
               />
-              <p class="statistics-profit-cash-text">R$ 19,34</p>
+              <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
               <p
                 class="statistics-profit-text pa-0"
                 :class="[mobileWidth < 960 ? 'my-2' : 'my-4']"
@@ -279,7 +286,7 @@ const mobileWidth = computed(() => {
             <div v-else>
               <v-row class="justify-center align-center">
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text">R$ 19,34</p>
+                  <p class="statistics-profit-cash-text">{{ platformCurrency }} 19,34</p>
                   <p
                     class="statistics-profit-text pa-0"
                     :class="[mobileWidth < 960 ? 'my-2' : 'my-8']"
@@ -300,13 +307,13 @@ const mobileWidth = computed(() => {
             <v-card theme="dark" color="#15161C" class="ma-4">
               <v-row :class="[mobileWidth < 1280 ? 'py-4' : 'py-8']">
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text-1">R$ 19,34</p>
+                  <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 19,34</p>
                   <p class="statistics-text-700 mt-4">
                     {{ t("affiliate.invite.betting_commision") }}
                   </p>
                 </v-col>
                 <v-col cols="6">
-                  <p class="statistics-profit-cash-text-1">R$ 0</p>
+                  <p class="statistics-profit-cash-text-1">{{ platformCurrency }} 0</p>
                   <p class="statistics-text-700 mt-4">
                     {{ t("affiliate.invite.invitation_bonus") }}
                   </p>

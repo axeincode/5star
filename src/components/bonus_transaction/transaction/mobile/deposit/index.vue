@@ -12,6 +12,12 @@ import * as clipboard from "clipboard-polyfill";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -28,7 +34,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Cancelled",
     note: "",
   },
@@ -36,7 +42,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Cancelled",
     note: "",
   },
@@ -44,7 +50,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Cancelled",
     note: "",
   },
@@ -52,7 +58,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Cancelled",
     note: "",
   },

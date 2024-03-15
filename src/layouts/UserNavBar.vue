@@ -27,6 +27,12 @@ import img_vipemblem_100_149 from "@/assets/vip/image/img_vipemblem_100-149.png"
 import img_vipemblem_159_199 from "@/assets/vip/image/img_vipemblem_159-199.png";
 import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import { menuStore } from "@/store/menu";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
@@ -78,7 +84,7 @@ const user = ref<GetUserData>({
   grade_level: "Bronze",
   grade: "VIP 4",
   wallet: 0,
-  currency: "R$",
+  currency: platformCurrency,
 });
 
 const selectedVipLevel = ref<any>({
@@ -544,8 +550,8 @@ onMounted(async () => {
               <div class="d-flex mx-1">
                 <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
                 <div class="ml-auto text-800-8">
-                  <font>R$ {{ vipInfo.deposit_exp }}</font> /
-                  <font color="#F9BC01">R$ {{ vipInfo.rank_deposit_exp }}</font>
+                  <font>{{ platformCurrency }} {{ vipInfo.deposit_exp }}</font> /
+                  <font color="#F9BC01">{{ platformCurrency }} {{ vipInfo.rank_deposit_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">
@@ -561,8 +567,8 @@ onMounted(async () => {
               <div class="d-flex mx-1">
                 <div class="white text-500-8">{{ t("appBar.wager") }}</div>
                 <div class="ml-auto text-800-8">
-                  <font>R$ {{ vipInfo.bet_exp }}</font> /
-                  <font color="#623AEC">R$ {{ vipInfo.rank_bet_exp }}</font>
+                  <font>{{ platformCurrency }} {{ vipInfo.bet_exp }}</font> /
+                  <font color="#623AEC">{{ platformCurrency }} {{ vipInfo.rank_bet_exp }}</font>
                 </div>
               </div>
               <div style="margin-top: 2px">

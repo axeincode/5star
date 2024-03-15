@@ -7,6 +7,13 @@ import { appBarStore } from "@/store/appBar";
 import { withdrawStore } from "@/store/withdraw";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -26,7 +33,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Complete",
     note: "Payment Approved",
     actionType: 2,
@@ -35,7 +42,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Refunded",
     note: "Refunded By User Request ",
     actionType: 3,
@@ -44,7 +51,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Failed",
     note: "Payment Approved",
     actionType: 3,
@@ -53,7 +60,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Payment in progress",
     note: "Payment Approved",
     actionType: 4,
@@ -62,7 +69,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Refunded",
     note: "Rejected",
     actionType: 3,
@@ -71,7 +78,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "No Refunded",
     note: "Rejected",
     actionType: 3,
@@ -80,7 +87,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Complete",
     note: "Payment Approved",
     actionType: 3,
@@ -89,7 +96,7 @@ const formsList = ref<Array<any>>([
     date: "2023/1/29 17:50:36",
     id: "re54er35sgf",
     type: "pix",
-    amount: "R$ 150.00",
+    amount: platformCurrency + " 150.00",
     status: "Complete",
     note: "Payment Approved",
     actionType: 3,

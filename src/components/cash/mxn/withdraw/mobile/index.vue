@@ -29,6 +29,12 @@ import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from "@/utils/currencyList";
 import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
 import { adjustTrackEvent } from '@/utils/adjust';
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed<string>(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { name, width } = useDisplay();
 const { t } = useI18n();
@@ -152,7 +158,7 @@ const paymentMenuShow = ref<boolean>(false);
 
 const withdrawCheck = ref<boolean>(false);
 
-const selectedCurrencyUnit = ref<string>("R$")
+const selectedCurrencyUnit = ref<string>(platformCurrency)
 
 const refreshLoading = ref<boolean>(false);
 

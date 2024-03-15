@@ -5,6 +5,12 @@ import { useDisplay } from "vuetify";
 import { inviteStore } from "@/store/invite";
 import { storeToRefs } from "pinia";
 import { type StatisticsItem } from "@/interface/invite";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -113,7 +119,7 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.deposit_bonus).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.deposit_bonus).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
@@ -125,13 +131,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.deposit_amount[0]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.deposit_amount[0]).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.deposit_amount[1]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.deposit_amount[1]).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.deposit_amount[2]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.deposit_amount[2]).toFixed(2) }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-user-card">
@@ -141,13 +147,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.bet_amount[0]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.bet_amount[0]).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.bet_amount[1]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.bet_amount[1]).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.bet_amount[2]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.bet_amount[2]).toFixed(2) }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-commission-card">
@@ -157,13 +163,13 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_7") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.bet_bonus[0]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.bet_bonus[0]).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.bet_bonus[1]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.bet_bonus[1]).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 yellow">
-        R$ {{ Number(selectedItem.bet_bonus[2]).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.bet_bonus[2]).toFixed(2) }}
       </v-col>
     </v-row>
     <v-row class="mx-1 my-1 px-6 m-statistics-commission-card">
@@ -173,7 +179,7 @@ onMounted(async () => {
         {{ t("affiliate.statistics.text_11") }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray">
-        R$ {{ Number(selectedItem.achievement_award).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(selectedItem.achievement_award).toFixed(2) }}
       </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
       <v-col cols="3" class="pa-0 text-700-12 gray"> -- </v-col>
@@ -223,7 +229,7 @@ onMounted(async () => {
     </v-col>
     <v-col cols="7" class="pa-0 text-center">
       <p class="text-800-24 yellow">
-        R$ {{ Number(statisticsItem.receive_profit).toFixed(2) }}
+        {{ platformCurrency }} {{ Number(statisticsItem.receive_profit).toFixed(2) }}
       </p>
       <v-btn
         class="text-none mt-1 m-statistics-receive-btn"
