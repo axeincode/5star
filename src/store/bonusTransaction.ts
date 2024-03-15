@@ -41,8 +41,8 @@ export const bonusTransactionStore = defineStore({
         this.moreTransactionHistoryFlag = true;
       }
 
-      const baseArr = [0,1,2,3,4,5,6,7]
-      let record = transactionHistoryItem.record.slice(0, 8)
+      const baseArr = [0,1,2,3,4,5,6,7,8]
+      let record = transactionHistoryItem.record.slice(0, 9)
       baseArr.map((item) => {
         if(record[item]) {
           this.transactionHistoryItem.record.push(record[item])
@@ -59,9 +59,15 @@ export const bonusTransactionStore = defineStore({
           return {}
         }
       })
-      
-      // this.transactionHistoryItem.record = [...this.transactionHistoryItem.record, ...recordList]
       this.transactionHistoryItem.total_pages = transactionHistoryItem.total_pages;
+
+      // if (transactionHistoryItem.record.length == 0) {
+      //   this.moreTransactionHistoryFlag = false;
+      // } else {
+      //   this.transactionHistoryItem.record = [...this.transactionHistoryItem.record, ...transactionHistoryItem.record]
+      //   this.transactionHistoryItem.total_pages = transactionHistoryItem.total_pages;
+      //   this.moreTransactionHistoryFlag = true;
+      // }
     },
     setSuccess(success: boolean) {
       this.success = success
