@@ -19,7 +19,7 @@ const { t } = useI18n();
 const { width } = useDisplay()
 const { dispatchUserSpinPage, dispatchUserSpin } = gameStore();
 
-const roulettePaidBonus = ref<string>(`${platformCurrency} 1.400.000`);
+const roulettePaidBonus = ref<string>(`${platformCurrency.value} 1.400.000`);
 const winnerBodyHeight = ref<number>(0);
 const winnerBodyShow = ref<boolean>(false);
 const winnerToggleSwitch = ref<boolean>(false);

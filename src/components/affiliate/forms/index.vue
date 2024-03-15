@@ -52,62 +52,62 @@ const formsList = ref<Array<any>>([
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
   {
     time: "04/08 12:29:42",
     user: "User6910821714",
-    bonus: `${platformCurrency } 12`,
+    bonus: `${ platformCurrency.value } 12`,
   },
 ]);
 

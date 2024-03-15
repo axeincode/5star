@@ -43,6 +43,7 @@ const platformCurrency = computed(() => {
   return getPlatformCurrency.value;
 });
 
+
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
 const { dispatchUserProfile } = authStore();
@@ -95,8 +96,8 @@ const user = ref<GetUserData>({
   name: "Little Planes",
   grade_level: "Bronze",
   grade: "VIP 4",
-  wallet: platformCurrency + "0",
-  currency: platformCurrency,
+  wallet: platformCurrency.value + "0",
+  currency: platformCurrency.value,
 });
 
 const vipLevelImgs = ref<Array<any>>([

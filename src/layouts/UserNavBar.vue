@@ -84,7 +84,7 @@ const user = ref<GetUserData>({
   grade_level: "Bronze",
   grade: "VIP 4",
   wallet: 0,
-  currency: platformCurrency,
+  currency: platformCurrency.value,
 });
 
 const selectedVipLevel = ref<any>({
