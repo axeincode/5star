@@ -28,7 +28,7 @@ export enum EXITTYPE {
 export class NetworkData {
   private static instance: NetworkData
 
-  private token: string = ''
+  private token: string | undefined = ''
 
   private webhost: string = ''
 
@@ -63,6 +63,8 @@ export class NetworkData {
   public resetData() {
     Cookies.remove(CacheKey.TOKEN)
 
+    this.token = ""
+
     this.webhost = ''
 
     this.websocker_ip = ''
@@ -77,12 +79,17 @@ export class NetworkData {
    * @param token
    */
   public setToken(token: string): void {
+    this.token = token
     Cookies.set(CacheKey.TOKEN, token, { expires: 2 })
+    
   }
 
   /** Get current token */
   public getToken(): string | undefined {
-    return Cookies.get(CacheKey.TOKEN)
+    if (this.token == "" || this.token == undefined) {
+      this.token = Cookies.get(CacheKey.TOKEN)
+    }
+    return this.token
   }
 
   /**

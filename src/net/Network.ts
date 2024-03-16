@@ -53,6 +53,15 @@ export class Network {
   }
 
   /**
+   * Offer refresh
+   */
+  public refresh() {
+    this.service = this.createService()
+    this.request = this.createRequestFunction(this.service)
+  }
+
+
+  /**
    * Offer Agreement
    * @param route     Routing Interface routing distinction
    * @param msg       Package contents
