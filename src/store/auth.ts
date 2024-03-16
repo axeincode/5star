@@ -64,14 +64,18 @@ export const authStore = defineStore({
     setToken(token: string) {
       const networkData: NetworkData = NetworkData.getInstance();
       const netCfg: Netcfg = Netcfg.getInstance();
+      const network: Network = Network.getInstance();
       networkData.setToken(token);
       netCfg.setToken(token);
+      network.refresh()
       this.token = token;
     },
     removeToken() {
       this.token = undefined;
       const networkData: NetworkData = NetworkData.getInstance();
       networkData.resetData();
+      const network: Network = Network.getInstance();
+      network.refresh()
       this.userInfo = {
         uid: "User6696608024",
         name: "Little Planes",
