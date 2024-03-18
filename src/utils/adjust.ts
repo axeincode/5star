@@ -1,8 +1,6 @@
 
 import Adjust from "@adjustcom/adjust-web-sdk";
 
-(window as any)["AndroidWebView"].firebaseEvent = function(key: any, value: any) {}
-
 function isRunningAsMobileWebApp(): boolean {
   return window.matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone;
 }
