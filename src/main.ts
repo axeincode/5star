@@ -66,12 +66,12 @@ app.use(Vue3GoogleLogin, {
   clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 });
 
-window.FB.init({
-  appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-  cookie: true,
-  xfbml: true,
-  version: 'v8.0'
-});
+// window.FB.init({
+//   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+//   cookie: true,
+//   xfbml: true,
+//   version: 'v8.0'
+// });
 
 dayjs.locale('en', {
   name: 'en',
