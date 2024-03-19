@@ -215,6 +215,12 @@ const Login = defineComponent({
     // social login function
     const handleSocialSigin = (index: number) => {
       if (index === 0) {
+        window.FB.init({
+          appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+          cookie: true,
+          xfbml: true,
+          version: "v8.0",
+        });
         window.FB.login((authResponse: any) => {
           console.log("facebook登录", authResponse);
         });
