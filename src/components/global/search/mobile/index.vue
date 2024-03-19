@@ -305,7 +305,10 @@ onMounted(async () => {
           v-model="searchText"
         />
       </div>
-      <div class="m-search-loading-container relative pt-8" v-if="searchLoading && searchedGameList.length == 0">
+      <div
+        class="m-search-loading-container relative pt-8"
+        v-if="searchLoading && searchedGameList.length == 0"
+      >
         <div class="loading-body">
           <div class="dot-0"></div>
           <div class="dot-1"></div>
@@ -636,10 +639,10 @@ onMounted(async () => {
     font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
       Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
       Microsoft Yahei, sans-serif;
-    font-size: 10px !important;
-    font-style: normal;
-    font-weight: 400 !important;
-    line-height: normal;
+    // font-size: 10px !important;
+    // font-style: normal;
+    // font-weight: 400 !important;
+    // line-height: normal;
   }
 
   .more-btn-color {

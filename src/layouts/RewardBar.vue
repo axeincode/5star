@@ -191,7 +191,6 @@ const handleAhivBonus = async () => {
     .catch(() => {
       alertMessage(t("reward.err_text"), 0);
     });
-
   await getRewardList();
 };
 
@@ -472,7 +471,7 @@ onMounted(async () => {
                   {{ item.content }}
                 </p>
                 <p class="text-700-12 white" v-if="index == 0">
-                  {{ vipLevelAward.upgrade_gift }}
+                  {{ rewardList.level_up_num }}
                   <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
                 </p>
               </div>
@@ -709,12 +708,12 @@ onMounted(async () => {
     }
 
     .v-field__input::placeholder {
-      color: #7782aa;
+      color: white !important;
       text-align: center;
       font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
         DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
         WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
-      font-size: 10px;
+      font-size: 20px !important;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
@@ -741,9 +740,11 @@ onMounted(async () => {
 .m-claim-text {
   ::v-deep(.v-field__input) {
     &::placeholder {
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       color: #7782aa !important;
       text-align: center;
-      font-family: Inter;
       font-size: 10px !important;
       font-style: normal;
       font-weight: 400;
