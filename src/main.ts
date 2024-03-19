@@ -49,6 +49,13 @@ Adjust.initSdk({
   environment: 'sandbox', // or 'production'
 });
 
+// Declare the FB object
+declare global {
+  interface Window {
+    FB: any; // Adjust this type according to the actual type of FB object
+  }
+}
+
 const app = createApp(App)
 
 registerPlugins(app)
@@ -56,8 +63,15 @@ registerPlugins(app)
 app.use(i18n)
 
 app.use(Vue3GoogleLogin, {
-  clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com',
-})
+  clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+});
+
+window.FB.init({
+  appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+  cookie: true,
+  xfbml: true,
+  version: 'v8.0'
+});
 
 dayjs.locale('en', {
   name: 'en',

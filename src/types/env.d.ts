@@ -7,6 +7,8 @@ declare interface ImportMetaEnv {
   readonly VITE_SOKET_URL: string
   readonly VITE_ROUTER_HISTORY: "hash" | "html5"
   readonly VITE_PUBLIC_PATH: string
+  readonly VITE_FACEBOOK_APP_ID: string
+  readonly VITE_GOOGLE_CLIENT_ID: string
 }
 
 interface ImportMeta {

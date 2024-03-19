@@ -169,12 +169,6 @@ const Login = defineComponent({
           icon: WarningIcon,
           rtl: false,
         });
-        // state.notificationShow = !state.notificationShow;
-        // state.checkIcon = new URL(
-        //   "@/assets/public/svg/icon_public_17.svg",
-        //   import.meta.url
-        // ).href;
-        // state.notificationText = t("login.submit_result.err_text");
       }
 
       state.loading = false;
@@ -218,75 +212,28 @@ const Login = defineComponent({
       }, 100);
     };
 
-    // google Login  谷歌登录
-    const onSignInSuccessGoogle = (index: number) => {
+    // social login function
+    const handleSocialSigin = (index: number) => {
       if (index === 0) {
-        FB.login(function (response) {
-          console.log("facebook登录", response);
+        window.FB.login((authResponse: any) => {
+          console.log("facebook登录", authResponse);
         });
+        // event tracking
         adjustTrackEvent({
-          eventToken: "9mc4lb", // 9mc4lb
+          eventToken: "9mc4lb", // FACEBOOK_LOGIN
         });
       }
       if (index === 1) {
         googleTokenLogin({
-          clientId:
-            "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
-        }).then((res: any) => {
-          console.log("google登录", res);
+          clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        }).then((authResponse: any) => {
+          console.log("google登录", authResponse);
         });
+        // event tracking
         adjustTrackEvent({
           eventToken: "ifryfc", // GOOGLE_LOGIN
         });
       }
-    };
-
-    const statusChangeCallback = (response) => {
-      console.log("statusChangeCallback");
-      console.log(response); // The current login status of the person.
-      if (response.status === "connected") {
-        // Logged into your webpage and Facebook.
-        testAPI();
-      } else {
-        // Not logged into your webpage or we are unable to tell.
-        console.log("报错了");
-      }
-    };
-
-    const onSignInSuccess = () => {
-      FB.login(function (response) {
-        console.log(response);
-      });
-      // FB.init({
-      //   appId: '1782039332218801',
-      //   xfbml: true,
-      //   version: 'v18.0'
-      // });
-      // FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
-      //   statusChangeCallback(response);       // Returns the login status.
-      // // get your auth token and info
-      // })
-    };
-
-    const testAPI = () => {
-      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-      console.log("Welcome!  Fetching your information.... ");
-      FB.api("/me", function (response) {
-        console.log("Successful login for: " + response.name);
-      });
-    };
-
-    const onSignInError = (err: any) => {
-      console.log("失败了吗", err);
-      // logic if auth failed
-    };
-
-    const checkLoginState = () => {
-      // Called when a person is finished with the Login Button.
-      FB.getLoginStatus(function (response) {
-        // See the onlogin handler
-        statusChangeCallback(response);
-      });
     };
 
     watch(
@@ -298,9 +245,7 @@ const Login = defineComponent({
       { deep: true }
     );
 
-    onMounted(() => {
-      // onSignInSuccess()
-    });
+    onMounted(() => {});
 
     return {
       t,
@@ -313,12 +258,7 @@ const Login = defineComponent({
       handleEmailChange,
       handleEmailFocus,
       mergeEmail,
-      onSignInSuccessGoogle,
-      onSignInSuccess,
-      onSignInError,
-      testAPI,
-      statusChangeCallback,
-      checkLoginState,
+      handleSocialSigin,
     };
   },
 });
@@ -453,15 +393,11 @@ export default Login;
                 icon=""
                 width="36px"
                 height="36px"
-                @click="onSignInSuccessGoogle(index)"
+                @click="handleSocialSigin(index)"
               >
                 <img :src="item" width="36" />
               </v-btn>
             </v-sheet>
-            <!-- <div @click="onSignInSuccessGoogle">谷歌登录</div> -->
-            <!-- <button id="loginBtn" @click="onSignInSuccess" >登录</button>  -->
-            <!-- <div @click="onSignInSuccess">facebook登录</div> -->
-            <!-- <fb:login-button scope="public_profile,email" @click="checkLoginState();"></fb:login-button> -->
           </div>
         </v-col>
       </v-row>
