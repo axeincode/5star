@@ -442,7 +442,7 @@ export const vipStore = defineStore({
       const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
+          this.alertMessage({ message: (i18n as any).global.t('reward.success_text'), type: 1 });
           this.dispatchVipCycleawardList();
         } else {
           // this.setErrorMessage(handleException(response.code));
@@ -484,7 +484,7 @@ export const vipStore = defineStore({
       const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
+          this.alertMessage({ message: (i18n as any).global.t('reward.success_text'), type: 1 });
           this.dispatchVipLevelAward();
         } else {
           // this.setErrorMessage(handleException(response.code));
@@ -526,7 +526,7 @@ export const vipStore = defineStore({
       const next = (response: Vip.GetVipLevelUpReceiveResponse) => {
         if (response.code == 200) {
           this.setSuccess(true);
-          this.alertMessage({ message: i18n.global.t('reward.success_text'), type: 1 });
+          this.alertMessage({ message: (i18n as any).global.t('reward.success_text'), type: 1 });
           this.dispatchVipBetawardList();
         } else {
           // this.setErrorMessage(handleException(response.code));

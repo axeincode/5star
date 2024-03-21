@@ -96,6 +96,11 @@ const Login = defineComponent({
       return getErrMessage.value;
     });
 
+    const userInfo = computed(() => {
+      const { getUserInfo } = storeToRefs(authStore());
+      return getUserInfo.value;
+    });
+
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
@@ -122,7 +127,7 @@ const Login = defineComponent({
           {
             eventToken: EventToken.LOGIN, // LOGIN
           },
-          ""
+          userInfo.value.id
         );
         await dispatchUserProfile();
         await dispatchUserBalance();
@@ -278,7 +283,7 @@ const Login = defineComponent({
         //   // event tracking
         //   adjustTrackEvent("FACEBOOK_LOGIN",{
         //     eventToken: EventToken.FACEBOOK_LOGIN, // FACEBOOK_LOGIN
-        //   }, "");
+        //   }, userInfo.value.id);
         // }
         // })
       }
@@ -299,7 +304,7 @@ const Login = defineComponent({
           {
             eventToken: EventToken.GOOGLE_LOGIN, // GOOGLE_LOGIN
           },
-          ""
+          userInfo.value.id
         );
       }
     };

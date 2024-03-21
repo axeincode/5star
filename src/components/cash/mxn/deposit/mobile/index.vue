@@ -24,6 +24,7 @@ import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from '@/utils/currencyList';
 import { adjustTrackEvent } from '@/utils/adjust';
+import EventToken from '@/constants/EventToken';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed<string>(() => {
@@ -467,18 +468,18 @@ const handleDepositSubmit = async () => {
     if (localStorage.getItem("recharge_number") == null) {
       localStorage.setItem("recharge_number", "1");
       adjustTrackEvent("FIRST_RECHARGE", {
-        eventToken: "r15rr9", // FIRST_RECHARGE
-      }, "");
+        eventToken: EventToken.FIRST_RECHARGE, // FIRST_RECHARGE
+      }, depositAmount.value.toString());
     } else {
       localStorage.setItem("recharge_number", (Number(localStorage.getItem("recharge_number")) + 1).toString());
       if (Number(localStorage.getItem("recharge_number")) == 2) {
         adjustTrackEvent("SECOND_RECHARGE", {
-          eventToken: "ld7asn", // SECOND_RECHARGE
-        }, "");
+          eventToken: EventToken.SECOND_RECHARGE, // SECOND_RECHARGE
+        }, depositAmount.value.toString());
       } else {
         adjustTrackEvent("PAY_RECHARGE", {
-          eventToken: "gdlh3x", // PAY_RECHARGE
-        }, "");
+          eventToken: EventToken.PAY_RECHARGE, // PAY_RECHARGE
+        }, depositAmount.value.toString());
       }
     }
     await dispatchUserProfile();
@@ -671,8 +672,8 @@ watch(currencyMenuShow, (value) => {
 
 onMounted(async () => {
   adjustTrackEvent("PAGE_VIEW", {
-    eventToken: "s2jbxh", // PAGE_VIEW
-  }, "Login");
+    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
+  }, "");
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
   selectedCurrencyUnit.value = userBalance.value.currency;
@@ -1116,11 +1117,13 @@ onMounted(async () => {
     .v-selection-control {
       min-height: 20px !important;
     }
+
     .v-selection-control__wrapper,
     .v-selection-control__input {
       width: 20px;
       height: 20px;
     }
+
     .v-selection-control__wrapper {
       margin: 0 10px;
     }

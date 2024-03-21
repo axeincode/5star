@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import MConfirm from "@/components/global/confirm/mobile/index.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -138,9 +139,9 @@ onMounted(async () => {
   adjustTrackEvent(
     "PAGE_VIEW",
     {
-      eventToken: "s2jbxh", // PAGE_VIEW
+      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
     },
-    "login_bonus"
+    ""
   );
   if (localStorage.getItem("signin_day") == undefined) {
     localStorage.setItem("signin_day", "0");

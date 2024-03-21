@@ -39,7 +39,8 @@ import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 import { ProgressiveImage } from "vue-progressive-image";
 import { mainStore } from "@/store/main";
 import MOrder from "@/views/home/components/mobile/Order.vue";
-import { adjustTrackEvent, getMobileOperatingSystem } from "@/utils/adjust";
+import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 import { Network } from "@/net/Network";
 import { NETWORK } from '@/net/NetworkCfg';
 
@@ -979,8 +980,8 @@ const Dashboard = defineComponent({
       });
 
       adjustTrackEvent("PAGE_VIEW", {
-        eventToken: "s2jbxh", // PAGE_VIEW
-      }, "Home");
+        eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
+      }, "");
 
       // await dispatchGameCategories(`?type=sports`);
       // await dispatchGameCategories(`?type=${filterTabText.value}`);

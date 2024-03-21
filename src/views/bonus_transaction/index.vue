@@ -8,6 +8,7 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 // import Bonus from "@/components/bonus_transaction/bonus/index.vue";
 // import MBonus from "@/components/bonus_transaction/bonus/mobile/index.vue";
 // import Transaction from "@/components/bonus_transaction/transaction/index.vue";
@@ -90,13 +91,15 @@ const tabSelect = (index: number) => {
 };
 
 onMounted(() => {
+
   adjustTrackEvent(
     "PAGE_VIEW",
     {
-      eventToken: "s2jbxh", // PAGE_VIEW
+      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
     },
-    "Bonus_Transaction"
+    ""
   );
+
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
       affiliateWidth.value = "bonus-transaction-container";

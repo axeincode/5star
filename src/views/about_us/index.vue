@@ -89,13 +89,15 @@ watch(
 );
 
 onMounted(() => {
+
   adjustTrackEvent(
     "PAGE_VIEW",
     {
       eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
     },
-    "About_us"
+    ""
   );
+
   if (route.query.index) {
     activeMenuIndex.value = route.query.index;
     selectedMenuItem.value = menuList.value[activeMenuIndex.value];

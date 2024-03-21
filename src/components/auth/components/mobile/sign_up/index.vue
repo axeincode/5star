@@ -23,6 +23,7 @@ import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
 import { adjustTrackEvent } from "@/utils/adjust";
 import { googleTokenLogin } from "vue3-google-login";
+import EventToken from "@/constants/EventToken";
 
 const MSignup = defineComponent({
   components: {
@@ -151,6 +152,11 @@ const MSignup = defineComponent({
       return getErrMessage.value;
     });
 
+    const userInfo = computed(() => {
+      const { getUserInfo } = storeToRefs(authStore());
+      return getUserInfo.value;
+    });
+
     const passwordValidationList = computed((): boolean[] => {
       const password = state.formData.password;
 
@@ -249,9 +255,9 @@ const MSignup = defineComponent({
         adjustTrackEvent(
           "REGISTER",
           {
-            eventToken: "okjslo", // REGISTER
+            eventToken: EventToken.REGISTER, // REGISTER
           },
-          ""
+          userInfo.value.id
         );
         await dispatchUserProfile();
         await dispatchUserBalance();
@@ -393,9 +399,9 @@ const MSignup = defineComponent({
       adjustTrackEvent(
         "FB_REGISTER",
         {
-          eventToken: "4537ut", // FB_REGISTER
+          eventToken: EventToken.FB_REGISTER, // FB_REGISTER
         },
-        ""
+        userInfo.value.id
       );
     };
 
@@ -403,9 +409,9 @@ const MSignup = defineComponent({
       adjustTrackEvent(
         "GOOGLE_REGISTER",
         {
-          eventToken: "hcb820", // GOOGLE_REGISTER
+          eventToken: EventToken.GOOGLE_REGISTER, // GOOGLE_REGISTER
         },
-        ""
+        userInfo.value.id
       );
     };
 
@@ -464,8 +470,8 @@ const MSignup = defineComponent({
         // });
         // // event tracking
         // adjustTrackEvent("FACEBOOK_LOGIN", {
-        //   eventToken: "9mc4lb", // FACEBOOK_LOGIN
-        // }, "");
+        //   eventToken: EventToken.FACEBOOK_LOGIN, // FACEBOOK_LOGIN
+        // }, userInfo.value.id);
       }
       if (index === 1) {
         googleTokenLogin({
@@ -482,9 +488,9 @@ const MSignup = defineComponent({
         adjustTrackEvent(
           "GOOGLE_LOGIN",
           {
-            eventToken: "ifryfc", // GOOGLE_LOGIN
+            eventToken: EventToken.GOOGLE_LOGIN, // GOOGLE_LOGIN
           },
-          ""
+          userInfo.value.id.toString()
         );
       }
     };

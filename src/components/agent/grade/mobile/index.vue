@@ -71,7 +71,7 @@ onMounted(async () => {
     {
       eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
     },
-    "Agent-Grade"
+    ""
   );
   if (token.value) {
     await dispatchAchievementList();

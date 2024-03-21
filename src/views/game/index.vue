@@ -15,6 +15,7 @@ import "swiper/css/virtual";
 import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 import { useRoute, useRouter } from "vue-router";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -381,9 +382,9 @@ onMounted(async () => {
   adjustTrackEvent(
     "PAGE_VIEW",
     {
-      eventToken: "s2jbxh", // PAGE_VIEW
+      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
     },
-    "Game"
+    ""
   );
   window.addEventListener("resize", handleResize);
   mobileHeight.value = window.innerHeight;

@@ -7,7 +7,7 @@ import Adjust from "@adjustcom/adjust-web-sdk";
  *
  * @returns {boolean}
  */
-export function getMobileOperatingSystem(): boolean {
+function getMobileOperatingSystem(): boolean {
   var userAgent = navigator.userAgent;
 
   // Windows Phone must come first because its UA also contains "Android"
@@ -27,8 +27,15 @@ export function getMobileOperatingSystem(): boolean {
   return false;
 }
 
+var isMobileWebview : boolean = false;
+
+(window as any)["isMobile"] = ()=>{
+  isMobileWebview = true;
+}
+
+
 export function adjustTrackEvent(key: string, tokenParams: any,  value = null as any): void {
-  if (getMobileOperatingSystem()) {
+  if (isMobileWebview) {
     (window as any)["AndroidWebView"].firebaseEvent(key, value)
   } else {
     Adjust.trackEvent(tokenParams);

@@ -29,6 +29,10 @@ import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from "@/utils/currencyList";
 import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
 import { adjustTrackEvent } from '@/utils/adjust';
+import EventToken from '@/constants/EventToken';
+import router from '@/router';
+import { currencyStore } from '@/store/currency';
+
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed<string>(() => {
@@ -51,9 +55,6 @@ const { setDepositWithdrawToggle } = appBarStore();
 const { dispatchUserBalance } = userStore();
 const { dispatchCurrencyList } = currencyStore();
 const { setPixInfoToggle } = depositStore();
-import router from '@/router';
-import { currencyStore } from '@/store/currency';
-
 const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
 
@@ -379,8 +380,8 @@ const handleWithdrawSubmit = async () => {
   loading.value = false;
   if (success.value) {
     adjustTrackEvent("WITHDRAW", {
-      eventToken: "idmvzd", // WITHDRAW
-    }, "");
+      eventToken: EventToken.WITHDRAW, // WITHDRAW
+    }, withdrawAmount.value.toString());
     const toast = useToast();
     toast.success(t("withdraw_dialog.text_11"), {
       timeout: 3000,
@@ -505,7 +506,7 @@ const goWithdrawPage = () => {
 
 onMounted(async () => {
   adjustTrackEvent("PAGE_VIEW", {
-    eventToken: "s2jbxh", // PAGE_VIEW
+    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
   }, "");
   setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();

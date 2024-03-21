@@ -16,6 +16,7 @@ import SuspendAccount from "@/components/account/suspend_account/index.vue";
 import MSuspendAccount from "@/components/account/suspend_account/mobile/index.vue";
 import MDialog from "./dialog/index.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 
 // const UserInformation = defineAsyncComponent(() => import("@/components/account/user_information/pc/index.vue"));
 // const MUserInformation = defineAsyncComponent(() => import("@/components/account/user_information/mobile/index.vue"));
@@ -139,9 +140,11 @@ watch(activeAccountIndex, (value) => {
 })
 
 onMounted(() => {
+
   adjustTrackEvent("PAGE_VIEW", {
-    eventToken: "s2jbxh", // PAGE_VIEW
-  }, "Account");
+    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
+  }, "");
+
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
       accountWidth.value = "account-container";
