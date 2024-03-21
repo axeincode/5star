@@ -19,6 +19,7 @@ import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
 import { googleTokenLogin } from "vue3-google-login";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 
 const Login = defineComponent({
   components: {
@@ -116,9 +117,13 @@ const Login = defineComponent({
 
     const loginSuccess = async () => {
       if (success.value) {
-        adjustTrackEvent({
-          eventToken: "yzv017",
-        });
+        adjustTrackEvent(
+          "LOGIN",
+          {
+            eventToken: EventToken.LOGIN, // LOGIN
+          },
+          ""
+        );
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchCurrencyList();
@@ -162,7 +167,7 @@ const Login = defineComponent({
           rtl: false,
         });
       }
-    }
+    };
 
     // methods
     const handleLoginFormSubmit = async () => {
@@ -213,29 +218,45 @@ const Login = defineComponent({
       }, 100);
     };
 
-    const loginState = async(response: any) => {
+    const loginState = async (response: any) => {
       if (response.access_token) {
         const params = {
           id_token: response.access_token,
-          type: 2
-        }
+          type: 2,
+        };
         await dispatchQuickLogin(params);
         await loginSuccess();
       }
-    }
+    };
 
     // social login function
     const handleSocialSigin = (index: number) => {
       if (index === 0) {
-        window.FB.getLoginStatus((statusResponse: any) => {
-          if(statusResponse.status=="unknown"){
-            window.FB.login((response: any) => {
-              loginState(response);
-            }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
-          } else {
-            // onSignInSuccess(statusResponse);
+        window.FB.getLoginStatus(
+          (statusResponse: any) => {
+            if (statusResponse.status == "unknown") {
+              window.FB.login(
+                (response: any) => {
+                  loginState(response);
+                },
+                {
+                  scope: "public_profile,email,user_likes",
+                  return_scopes: true,
+                  auth_type: "reauthenticate",
+                  auth_nonce: "{random-nonce}",
+                }
+              );
+            } else {
+              // onSignInSuccess(statusResponse);
+            }
+          },
+          {
+            scope: "public_profile,email,user_likes",
+            return_scopes: true,
+            auth_type: "reauthenticate",
+            auth_nonce: "{random-nonce}",
           }
-        }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});  
+        );
         // login();
         // window.FB.init({
         //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
@@ -244,21 +265,21 @@ const Login = defineComponent({
         //   version: "v19.0",
         // });
         // FB.getLoginStatus((statusResponse: any) => {
-          // if(statusResponse.status=="unknown"){
-          //   FB.login(async (authResponse: any) => {
-              // const params = {
-              //   id_token: authResponse.access_token,
-              //   type: 2
-              // }
-              // await dispatchQuickLogin(params);
-              // await loginSuccess();
-          //     console.log("facebook登录", authResponse);
-          //   },{scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
-          //   // event tracking
-          //   adjustTrackEvent({
-          //     eventToken: "9mc4lb", // FACEBOOK_LOGIN
-          //   });
-          // }
+        // if(statusResponse.status=="unknown"){
+        //   FB.login(async (authResponse: any) => {
+        // const params = {
+        //   id_token: authResponse.access_token,
+        //   type: 2
+        // }
+        // await dispatchQuickLogin(params);
+        // await loginSuccess();
+        //     console.log("facebook登录", authResponse);
+        //   },{scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
+        //   // event tracking
+        //   adjustTrackEvent("FACEBOOK_LOGIN",{
+        //     eventToken: EventToken.FACEBOOK_LOGIN, // FACEBOOK_LOGIN
+        //   }, "");
+        // }
         // })
       }
       if (index === 1) {
@@ -267,15 +288,19 @@ const Login = defineComponent({
         }).then(async (res: any) => {
           const params = {
             id_token: res.access_token,
-            type: 1
-          }
+            type: 1,
+          };
           await dispatchQuickLogin(params);
           await loginSuccess();
         });
         // event tracking
-        adjustTrackEvent({
-          eventToken: "ifryfc", // GOOGLE_LOGIN
-        });
+        adjustTrackEvent(
+          "GOOGLE_LOGIN",
+          {
+            eventToken: EventToken.GOOGLE_LOGIN, // GOOGLE_LOGIN
+          },
+          ""
+        );
       }
     };
 
@@ -302,7 +327,7 @@ const Login = defineComponent({
       handleEmailFocus,
       mergeEmail,
       loginSuccess,
-      handleSocialSigin
+      handleSocialSigin,
     };
   },
 });

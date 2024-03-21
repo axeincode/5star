@@ -55,9 +55,13 @@ watch(vipNavBarToggle, (value: string) => {
 });
 
 onMounted(async () => {
-  adjustTrackEvent({
-    eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  adjustTrackEvent(
+    "PAGE_VIEW",
+    {
+      eventToken: "s2jbxh", // PAGE_VIEW
+    },
+    "VIP"
+  );
   if (localStorage.getItem("vipBar") === "1") {
     vipDrawer.value = true;
     document.body.style.height =

@@ -16,6 +16,7 @@ import MReferralSystem from "@/components/about_us/referral_system/mobile/index.
 import MAMLPolicy from "@/components/about_us/aml_policy/mobile/index.vue";
 import MKYCPolicy from "@/components/about_us/kyc_policy/mobile/index.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -88,9 +89,13 @@ watch(
 );
 
 onMounted(() => {
-  adjustTrackEvent({
-    eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  adjustTrackEvent(
+    "PAGE_VIEW",
+    {
+      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
+    },
+    "About_us"
+  );
   if (route.query.index) {
     activeMenuIndex.value = route.query.index;
     selectedMenuItem.value = menuList.value[activeMenuIndex.value];

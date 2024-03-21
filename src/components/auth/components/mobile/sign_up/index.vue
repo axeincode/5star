@@ -246,9 +246,13 @@ const MSignup = defineComponent({
 
     const registerSuccess = async () => {
       if (success.value) {
-        adjustTrackEvent({
-          eventToken: "okjslo",
-        });
+        adjustTrackEvent(
+          "REGISTER",
+          {
+            eventToken: "okjslo", // REGISTER
+          },
+          ""
+        );
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
@@ -292,7 +296,7 @@ const MSignup = defineComponent({
           });
         }
       }
-    }
+    };
 
     // handle form submit
     const handleSignupFormSubmit = async () => {
@@ -386,40 +390,64 @@ const MSignup = defineComponent({
     };
 
     const facebookRegister = () => {
-      adjustTrackEvent({
-        eventToken: "4537ut", // FB_REGISTER
-      });
+      adjustTrackEvent(
+        "FB_REGISTER",
+        {
+          eventToken: "4537ut", // FB_REGISTER
+        },
+        ""
+      );
     };
 
     const gooleRegister = () => {
-      adjustTrackEvent({
-        eventToken: "hcb820", // GOOGLE_REGISTER
-      });
+      adjustTrackEvent(
+        "GOOGLE_REGISTER",
+        {
+          eventToken: "hcb820", // GOOGLE_REGISTER
+        },
+        ""
+      );
     };
 
-    const loginState = async(response: any) => {
+    const loginState = async (response: any) => {
       if (response.access_token) {
         const params = {
           id_token: response.access_token,
-          type: 2
-        }
+          type: 2,
+        };
         await dispatchQuickRegister(params);
         await registerSuccess();
       }
-    }
+    };
 
     // 一键注册
     const onSignInSuccessGoogle = (index: number) => {
       if (index === 0) {
-        window.FB.getLoginStatus((statusResponse: any) => {
-          if(statusResponse.status=="unknown"){
-            window.FB.login((response: any) => {
-              loginState(response);
-            }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
-          } else {
-            // onSignInSuccess(statusResponse);
+        window.FB.getLoginStatus(
+          (statusResponse: any) => {
+            if (statusResponse.status == "unknown") {
+              window.FB.login(
+                (response: any) => {
+                  loginState(response);
+                },
+                {
+                  scope: "public_profile,email,user_likes",
+                  return_scopes: true,
+                  auth_type: "reauthenticate",
+                  auth_nonce: "{random-nonce}",
+                }
+              );
+            } else {
+              // onSignInSuccess(statusResponse);
+            }
+          },
+          {
+            scope: "public_profile,email,user_likes",
+            return_scopes: true,
+            auth_type: "reauthenticate",
+            auth_nonce: "{random-nonce}",
           }
-        }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});  
+        );
         // window.FB.init({
         //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
         //   cookie: true,
@@ -435,9 +463,9 @@ const MSignup = defineComponent({
         //   await registerSuccess();
         // });
         // // event tracking
-        // adjustTrackEvent({
+        // adjustTrackEvent("FACEBOOK_LOGIN", {
         //   eventToken: "9mc4lb", // FACEBOOK_LOGIN
-        // });
+        // }, "");
       }
       if (index === 1) {
         googleTokenLogin({
@@ -446,14 +474,18 @@ const MSignup = defineComponent({
         }).then(async (res: any) => {
           const params = {
             id_token: res.access_token,
-            type: 1
-          }
+            type: 1,
+          };
           await dispatchQuickRegister(params);
           await registerSuccess();
         });
-        adjustTrackEvent({
-          eventToken: "ifryfc", // GOOGLE_LOGIN
-        });
+        adjustTrackEvent(
+          "GOOGLE_LOGIN",
+          {
+            eventToken: "ifryfc", // GOOGLE_LOGIN
+          },
+          ""
+        );
       }
     };
 
@@ -482,7 +514,7 @@ const MSignup = defineComponent({
       cancelConfirm,
       goPrivatePolicy,
       registerSuccess,
-      onSignInSuccessGoogle
+      onSignInSuccessGoogle,
     };
   },
 });

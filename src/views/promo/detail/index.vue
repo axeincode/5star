@@ -56,9 +56,9 @@ const promoList = computed(() => {
 });
 
 onMounted(async () => {
-  adjustTrackEvent({
+  adjustTrackEvent("PAGE_VIEW", {
     eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  }, "Promo Detail");
   detailShow.value = false
   await dispatchUserActivityList();
   promoList.value.group_data[0].list_data.map(item => {

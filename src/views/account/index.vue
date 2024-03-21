@@ -139,9 +139,9 @@ watch(activeAccountIndex, (value) => {
 })
 
 onMounted(() => {
-  adjustTrackEvent({
+  adjustTrackEvent("PAGE_VIEW", {
     eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  }, "Account");
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
       accountWidth.value = "account-container";

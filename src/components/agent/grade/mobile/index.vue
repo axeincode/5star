@@ -8,6 +8,7 @@ import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import MAgentRealization from "./components/AgentRealization.vue";
 import { adjustTrackEvent } from "@/utils/adjust";
+import EventToken from "@/constants/EventToken";
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -65,9 +66,13 @@ const achievementItem = computed(() => {
 });
 
 onMounted(async () => {
-  adjustTrackEvent({
-    eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  adjustTrackEvent(
+    "PAGE_VIEW",
+    {
+      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
+    },
+    "Agent-Grade"
+  );
   if (token.value) {
     await dispatchAchievementList();
   } else {

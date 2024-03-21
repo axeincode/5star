@@ -627,7 +627,7 @@ const Dashboard = defineComponent({
         let index = gameGroupBtnList.value.findIndex(item => item.slug == selectedGameFilterBtn.value);
 
         element[0].scrollTo({
-          left: childNodes[index + 1].offsetLeft - element[0].offsetLeft - (element[0].offsetWidth - childNodes[index + 1].offsetWidth) / 2,
+          left: (childNodes[index + 1] as any).offsetLeft - (element[0] as any).offsetLeft - ((element[0] as any).offsetWidth - (childNodes[index + 1] as any).offsetWidth) / 2,
           behavior: 'smooth'
         });
 
@@ -978,13 +978,9 @@ const Dashboard = defineComponent({
         behavior: "smooth",
       });
 
-      // if (getMobileOperatingSystem()) {
-      //   adjustTrackEvent("PAGE_VIEW", "Home");
-      // } else {
-        adjustTrackEvent({
-          eventToken: "s2jbxh", // PAGE_VIEW
-        });
-      // }
+      adjustTrackEvent("PAGE_VIEW", {
+        eventToken: "s2jbxh", // PAGE_VIEW
+      }, "Home");
 
       // await dispatchGameCategories(`?type=sports`);
       // await dispatchGameCategories(`?type=${filterTabText.value}`);

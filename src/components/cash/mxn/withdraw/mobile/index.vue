@@ -378,9 +378,9 @@ const handleWithdrawSubmit = async () => {
   await dispatchUserWithdrawSubmit(formData)
   loading.value = false;
   if (success.value) {
-    adjustTrackEvent({
-      eventToken: "idmvzd",
-    });
+    adjustTrackEvent("WITHDRAW", {
+      eventToken: "idmvzd", // WITHDRAW
+    }, "");
     const toast = useToast();
     toast.success(t("withdraw_dialog.text_11"), {
       timeout: 3000,
@@ -504,9 +504,9 @@ const goWithdrawPage = () => {
 }
 
 onMounted(async () => {
-  adjustTrackEvent({
+  adjustTrackEvent("PAGE_VIEW", {
     eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  }, "");
   setDepositWithdrawToggle(false);
   await dispatchUserWithdrawCfg();
   await dispatchUserBalance();

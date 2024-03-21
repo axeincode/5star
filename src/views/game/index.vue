@@ -378,9 +378,13 @@ const handleResize = () => {
 };
 
 onMounted(async () => {
-  adjustTrackEvent({
-    eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  adjustTrackEvent(
+    "PAGE_VIEW",
+    {
+      eventToken: "s2jbxh", // PAGE_VIEW
+    },
+    "Game"
+  );
   window.addEventListener("resize", handleResize);
   mobileHeight.value = window.innerHeight;
   setMobileMenuShow(false);

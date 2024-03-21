@@ -90,9 +90,13 @@ const tabSelect = (index: number) => {
 };
 
 onMounted(() => {
-  adjustTrackEvent({
-    eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  adjustTrackEvent(
+    "PAGE_VIEW",
+    {
+      eventToken: "s2jbxh", // PAGE_VIEW
+    },
+    "Bonus_Transaction"
+  );
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {
       affiliateWidth.value = "bonus-transaction-container";

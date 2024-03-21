@@ -27,10 +27,10 @@ export function getMobileOperatingSystem(): boolean {
   return false;
 }
 
-export function adjustTrackEvent(key: any, value = null as any): void {
+export function adjustTrackEvent(key: string, tokenParams: any,  value = null as any): void {
   if (getMobileOperatingSystem()) {
-    (window as any)["AndroidWebView"].firebaseEvent(key.eventToken, value)
+    (window as any)["AndroidWebView"].firebaseEvent(key, value)
   } else {
-    Adjust.trackEvent(key);
+    Adjust.trackEvent(tokenParams);
   }
 }

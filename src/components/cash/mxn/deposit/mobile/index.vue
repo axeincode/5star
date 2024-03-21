@@ -466,19 +466,19 @@ const handleDepositSubmit = async () => {
     });
     if (localStorage.getItem("recharge_number") == null) {
       localStorage.setItem("recharge_number", "1");
-      adjustTrackEvent({
+      adjustTrackEvent("FIRST_RECHARGE", {
         eventToken: "r15rr9", // FIRST_RECHARGE
-      });
+      }, "");
     } else {
       localStorage.setItem("recharge_number", (Number(localStorage.getItem("recharge_number")) + 1).toString());
       if (Number(localStorage.getItem("recharge_number")) == 2) {
-        adjustTrackEvent({
+        adjustTrackEvent("SECOND_RECHARGE", {
           eventToken: "ld7asn", // SECOND_RECHARGE
-        });
+        }, "");
       } else {
-        adjustTrackEvent({
+        adjustTrackEvent("PAY_RECHARGE", {
           eventToken: "gdlh3x", // PAY_RECHARGE
-        });
+        }, "");
       }
     }
     await dispatchUserProfile();
@@ -670,9 +670,9 @@ watch(currencyMenuShow, (value) => {
 })
 
 onMounted(async () => {
-  adjustTrackEvent({
+  adjustTrackEvent("PAGE_VIEW", {
     eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  }, "Login");
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
   selectedCurrencyUnit.value = userBalance.value.currency;

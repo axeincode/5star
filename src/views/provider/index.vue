@@ -126,9 +126,9 @@ watch(searchText, async (value) => {
 })
 
 onMounted(async () => {
-  adjustTrackEvent({
+  adjustTrackEvent("PAGE_VIEW", {
     eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  }, "Provider");
   loading.value = true;
   window.scrollTo({
     top: 0,

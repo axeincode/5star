@@ -36,9 +36,13 @@ watch(
 );
 
 onMounted(async () => {
-  adjustTrackEvent({
-    eventToken: "s2jbxh", // PAGE_VIEW
-  });
+  adjustTrackEvent(
+    "PAGE_VIEW",
+    {
+      eventToken: "s2jbxh", // PAGE_VIEW
+    },
+    "Sports"
+  );
   window.addEventListener("resize", handleResize);
   betbyHeight.value = window.innerHeight;
   betbyShow.value = true;
