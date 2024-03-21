@@ -33,8 +33,8 @@ var isMobileWebview : boolean = false;
   isMobileWebview = true;
 }
 
-
 export function adjustTrackEvent(key: string, tokenParams: any,  value = null as any): void {
+  isMobileWebview = Boolean(localStorage.getItem("isMobile"));
   if (isMobileWebview) {
     (window as any)["AndroidWebView"].firebaseEvent(key, value)
   } else {

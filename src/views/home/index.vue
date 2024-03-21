@@ -974,6 +974,12 @@ const Dashboard = defineComponent({
     onMounted(async () => {
       loading.value = true;
 
+      if(route.query.mobile && route.query.mobile == "android") {
+        localStorage.setItem("isMobile", "true");
+      } else {
+        localStorage.setItem("isMobile", "false");
+      }
+
       window.scrollTo({
         top: 0,
         behavior: "smooth",
