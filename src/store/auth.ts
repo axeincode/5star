@@ -266,6 +266,38 @@ export const authStore = defineStore({
       }
       await network.sendMsg(route, data, next, 1);
     },
+    // 一键注册
+    async dispatchQuickRegister(data: SignIn.QuickRegisterRequestData) {
+      this.setSuccess(false);
+      const route: string = NETWORK.LOGIN.QUICK_REGISTER;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: SignIn.GetSigninResponseData) => {
+        if (response.code == 200) {
+          this.setToken(response.token);
+          this.setSuccess(true);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
+    // 一键登录
+    async dispatchQuickLogin(data: SignIn.QuickLoginRequestData) {
+      this.setSuccess(false);
+      const route: string = NETWORK.LOGIN.QUICK_LOGIN;
+      const network: Network = Network.getInstance();
+      // response call back function
+      const next = (response: SignIn.GetSigninResponseData) => {
+        if (response.code == 200) {
+          this.setToken(response.token);
+          this.setSuccess(true);
+        } else {
+          this.setErrorMessage(handleException(response.code));
+        }
+      }
+      await network.sendMsg(route, data, next, 1);
+    },
     // dispatch logout function
     dispatchSignout() {
       this.removeToken();

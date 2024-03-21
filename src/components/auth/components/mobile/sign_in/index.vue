@@ -29,7 +29,7 @@ const Login = defineComponent({
   setup(props, { emit }) {
     // translation
     const { t } = useI18n();
-    const { dispatchSignIn } = authStore();
+    const { dispatchSignIn, dispatchQuickLogin } = authStore();
     const { dispatchUserProfile } = authStore();
     const { setAuthModalType } = authStore();
     const { setAuthDialogVisible } = authStore();
@@ -114,15 +114,7 @@ const Login = defineComponent({
       state.currentPage = state.PAGE_TYPE.LOGIN_FORM;
     };
 
-    // methods
-    const handleLoginFormSubmit = async () => {
-      state.loading = true;
-
-      await dispatchSignIn({
-        uid: state.formData.emailAddress,
-        password: state.formData.password,
-      });
-
+    const loginSuccess = async () => {
       if (success.value) {
         adjustTrackEvent({
           eventToken: "yzv017",
@@ -170,7 +162,16 @@ const Login = defineComponent({
           rtl: false,
         });
       }
+    }
 
+    // methods
+    const handleLoginFormSubmit = async () => {
+      state.loading = true;
+      await dispatchSignIn({
+        uid: state.formData.emailAddress,
+        password: state.formData.password,
+      });
+      await loginSuccess();
       state.loading = false;
     };
 
@@ -212,28 +213,64 @@ const Login = defineComponent({
       }, 100);
     };
 
+    const loginState = async(response: any) => {
+      if (response.access_token) {
+        const params = {
+          id_token: response.access_token,
+          type: 2
+        }
+        await dispatchQuickLogin(params);
+        await loginSuccess();
+      }
+    }
+
     // social login function
     const handleSocialSigin = (index: number) => {
       if (index === 0) {
-        window.FB.init({
-          appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-          cookie: true,
-          xfbml: true,
-          version: "v8.0",
-        });
-        window.FB.login((authResponse: any) => {
-          console.log("facebook登录", authResponse);
-        });
-        // event tracking
-        adjustTrackEvent({
-          eventToken: "9mc4lb", // FACEBOOK_LOGIN
-        });
+        window.FB.getLoginStatus((statusResponse: any) => {
+          if(statusResponse.status=="unknown"){
+            window.FB.login((response: any) => {
+              loginState(response);
+            }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
+          } else {
+            // onSignInSuccess(statusResponse);
+          }
+        }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});  
+        // login();
+        // window.FB.init({
+        //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+        //   cookie: true,
+        //   xfbml: true,
+        //   version: "v19.0",
+        // });
+        // FB.getLoginStatus((statusResponse: any) => {
+          // if(statusResponse.status=="unknown"){
+          //   FB.login(async (authResponse: any) => {
+              // const params = {
+              //   id_token: authResponse.access_token,
+              //   type: 2
+              // }
+              // await dispatchQuickLogin(params);
+              // await loginSuccess();
+          //     console.log("facebook登录", authResponse);
+          //   },{scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
+          //   // event tracking
+          //   adjustTrackEvent({
+          //     eventToken: "9mc4lb", // FACEBOOK_LOGIN
+          //   });
+          // }
+        // })
       }
       if (index === 1) {
         googleTokenLogin({
           clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-        }).then((authResponse: any) => {
-          console.log("google登录", authResponse);
+        }).then(async (res: any) => {
+          const params = {
+            id_token: res.access_token,
+            type: 1
+          }
+          await dispatchQuickLogin(params);
+          await loginSuccess();
         });
         // event tracking
         adjustTrackEvent({
@@ -264,7 +301,8 @@ const Login = defineComponent({
       handleEmailChange,
       handleEmailFocus,
       mergeEmail,
-      handleSocialSigin,
+      loginSuccess,
+      handleSocialSigin
     };
   },
 });

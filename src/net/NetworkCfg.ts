@@ -4,6 +4,8 @@ export namespace NETWORK {
   export class LOGIN {
     static LOGIN: string = '/login' //Login
     static REGISTER: string = '/register' //Registration
+    static QUICK_LOGIN: string = '/quick/login'
+    static QUICK_REGISTER: string = '/quick/register'
   }
 
   //Business logic after entering the home page

@@ -22,6 +22,7 @@ import { useRoute, useRouter } from "vue-router";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
 import { adjustTrackEvent } from "@/utils/adjust";
+import { googleTokenLogin } from "vue3-google-login";
 
 const MSignup = defineComponent({
   components: {
@@ -40,7 +41,7 @@ const MSignup = defineComponent({
     // translation
     const { t } = useI18n();
     const { name } = useDisplay();
-    const { dispatchSignUp } = authStore();
+    const { dispatchSignUp, dispatchQuickRegister } = authStore();
     const { setAuthDialogVisible } = authStore();
     const { dispatchUserProfile } = authStore();
     const { setNickNameDialogVisible } = authStore();
@@ -59,8 +60,8 @@ const MSignup = defineComponent({
       socialIconList: [
         new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
         new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_30.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_31.svg", import.meta.url).href,
+        // new URL("@/assets/public/svg/icon_public_30.svg", import.meta.url).href,
+        // new URL("@/assets/public/svg/icon_public_31.svg", import.meta.url).href,
       ],
       PAGE_TYPE: {
         SIGNUP_FORM: 0,
@@ -243,47 +244,7 @@ const MSignup = defineComponent({
       emit("switchAuthDialog", "login");
     };
 
-    // handle form submit
-    const handleSignupFormSubmit = async () => {
-      if (!validateEmail()) {
-        state.isShowEmailValidaton = true;
-        return;
-      }
-
-      if (!validatePassword()) {
-        state.isShowPasswordValidation = true;
-        return;
-      }
-
-      if (!state.formData.isAgreed) {
-        const toast = useToast();
-        toast.success(t("signup.formPage.agree_alert_text"), {
-          timeout: 3000,
-          closeOnClick: false,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          draggable: false,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: WarningIcon,
-          rtl: false,
-        });
-        return;
-      }
-
-      state.loading = true;
-      await dispatchSignUp({
-        uid: state.formData.emailAddress,
-        password: state.formData.password,
-        referral_code: state.formData.promoCode,
-        browser: "",
-        device: "",
-        model: "",
-        brand: "",
-        imei: "",
-      });
-      state.loading = false;
+    const registerSuccess = async () => {
       if (success.value) {
         adjustTrackEvent({
           eventToken: "okjslo",
@@ -331,6 +292,50 @@ const MSignup = defineComponent({
           });
         }
       }
+    }
+
+    // handle form submit
+    const handleSignupFormSubmit = async () => {
+      if (!validateEmail()) {
+        state.isShowEmailValidaton = true;
+        return;
+      }
+
+      if (!validatePassword()) {
+        state.isShowPasswordValidation = true;
+        return;
+      }
+
+      if (!state.formData.isAgreed) {
+        const toast = useToast();
+        toast.success(t("signup.formPage.agree_alert_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
+        });
+        return;
+      }
+
+      state.loading = true;
+      await dispatchSignUp({
+        uid: state.formData.emailAddress,
+        password: state.formData.password,
+        referral_code: state.formData.promoCode,
+        browser: "",
+        device: "",
+        model: "",
+        brand: "",
+        imei: "",
+      });
+      state.loading = false;
+      await registerSuccess();
     };
 
     const goRegisterPage = (): void => {
@@ -392,6 +397,66 @@ const MSignup = defineComponent({
       });
     };
 
+    const loginState = async(response: any) => {
+      if (response.access_token) {
+        const params = {
+          id_token: response.access_token,
+          type: 2
+        }
+        await dispatchQuickRegister(params);
+        await registerSuccess();
+      }
+    }
+
+    // 一键注册
+    const onSignInSuccessGoogle = (index: number) => {
+      if (index === 0) {
+        window.FB.getLoginStatus((statusResponse: any) => {
+          if(statusResponse.status=="unknown"){
+            window.FB.login((response: any) => {
+              loginState(response);
+            }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
+          } else {
+            // onSignInSuccess(statusResponse);
+          }
+        }, {scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});  
+        // window.FB.init({
+        //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+        //   cookie: true,
+        //   xfbml: true,
+        //   version: "v19.0",
+        // });
+        // window.FB.login(async (authResponse: any) => {
+        //   const params = {
+        //     id_token: authResponse.access_token,
+        //     type: 2
+        //   }
+        //   await dispatchQuickRegister(params);
+        //   await registerSuccess();
+        // });
+        // // event tracking
+        // adjustTrackEvent({
+        //   eventToken: "9mc4lb", // FACEBOOK_LOGIN
+        // });
+      }
+      if (index === 1) {
+        googleTokenLogin({
+          clientId:
+            "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
+        }).then(async (res: any) => {
+          const params = {
+            id_token: res.access_token,
+            type: 1
+          }
+          await dispatchQuickRegister(params);
+          await registerSuccess();
+        });
+        adjustTrackEvent({
+          eventToken: "ifryfc", // GOOGLE_LOGIN
+        });
+      }
+    };
+
     return {
       t,
       ...toRefs(state),
@@ -416,6 +481,8 @@ const MSignup = defineComponent({
       mergeEmail,
       cancelConfirm,
       goPrivatePolicy,
+      registerSuccess,
+      onSignInSuccessGoogle
     };
   },
 });
@@ -569,8 +636,8 @@ export default MSignup;
         </p>
         <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
       </v-row>
-      <v-row class="mt-6">
-        <v-col cols="8" offset="2">
+      <v-row class="mt-6 m-justify-content">
+        <v-col cols="4">
           <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
             <v-sheet
               v-for="(item, index) in socialIconList"
@@ -584,6 +651,7 @@ export default MSignup;
                 icon=""
                 height="36px"
                 width="36px"
+                @click="onSignInSuccessGoogle(index)"
               >
                 <img :src="item" width="36" />
               </v-btn>
@@ -832,6 +900,10 @@ export default MSignup;
     background: #15161c;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }
+}
+
+.m-justify-content {
+  justify-content: center;
 }
 
 .m-signup-container::-webkit-scrollbar {

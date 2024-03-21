@@ -9,3 +9,18 @@ export type GetSigninResponseData = {
   token: string
   message: string
 }
+
+export interface QuickRegisterRequestData {
+  id_token: string
+  type: number
+  browser?: string
+  device?: string
+  model?: string
+  brand?: string
+  imei?: string
+}
+
+export interface QuickLoginRequestData {
+  id_token: string
+  type: number
+}
