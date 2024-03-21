@@ -154,7 +154,7 @@ export const gameStore = defineStore({
                     stickyTop: 0,
                     themeName: "demo-green-dark-table",
                     onLogin: async () => {
-                        if (Cookies.get(CacheKey.TOKEN) == "") {
+                        if (Cookies.get(CacheKey.TOKEN) == "" || !Cookies.get(CacheKey.TOKEN)) {
                             this.openDialog('login');
                         } else {
                             this.closeKill();

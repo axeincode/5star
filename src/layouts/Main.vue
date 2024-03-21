@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted, defineAsyncComponent, watchEffect } from 'vue';
+import { ref, computed, watch, onMounted, defineAsyncComponent, watchEffect, nextTick } from 'vue';
 import { useDisplay } from 'vuetify';
 import { appBarStore } from '@/store/appBar';
 import { refferalStore } from '@/store/refferal';
@@ -12,6 +12,7 @@ import { useI18n } from "vue-i18n";
 import Footer from "./Footer.vue";
 import { useRoute } from 'vue-router';
 import { mainStore } from "@/store/main";
+import { useScroll } from "@/hooks/scrollTo.ts";
 
 import Deposit from "@/components/cash/mxn/deposit/index.vue";
 import MDeposit from "@/components/cash/mxn/deposit/mobile/index.vue";
@@ -100,7 +101,7 @@ const { setMailMenuShow } = mailStore();
 const { setNavBarToggle } = appBarStore();
 const { setLevelUpDialogVisible } = vipStore();
 const { setSearchDialogShow } = mainStore();
-
+const { scrollTo } = useScroll()
 type dialogType = "login" | "signup" | "signout";
 
 const route = useRoute();
@@ -521,6 +522,12 @@ watch(route, (to) => {
 onMounted(() => {
   console.log(route.query.code);
   window.addEventListener("resize", handleResize);
+  // window.addEventListener('scroll', (e) => {
+  //         // 获取滚动的值并打印出来
+  //     const scrollTop = window.scrollY || window.pageYOffset;
+  //   // 在滚动时执行的操作
+  //   console.log('Scrolling...', scrollTop);
+  // });
   mainHeight.value = window.innerHeight;
   if (overlayScrimShow.value) {
     overlayScrimBackground.value = "transparent";
@@ -532,6 +539,11 @@ onMounted(() => {
   setDepositDialogToggle(false);
   setWithdrawDialogToggle(false);
 })
+
+// 监听路由页面 home 初始化时间
+const routeInited = () => {
+  scrollTo()
+}
 </script>
 
 <template>
@@ -840,7 +852,7 @@ onMounted(() => {
 
     <!------------------------------ Main Page ------------------------------------------->
 
-    <router-view />
+    <router-view @inited="routeInited" />
 
     <!-- back top -->
 

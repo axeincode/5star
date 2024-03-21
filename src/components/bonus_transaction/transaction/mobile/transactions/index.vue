@@ -66,7 +66,7 @@ const moreTransactionHistoryFlag = computed(() => {
 })
 
 const handleNext = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value;
+  startIndex.value = (page_no - 1) * (pageSize.value - 1);
   endIndex.value = startIndex.value + pageSize.value;
   currentList.value = transactionHistoryItem.value.record.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
@@ -115,6 +115,7 @@ const handleCopyID = async (id: string) => {
   );
 }
 watch(transactionHistoryItem, (value) => {
+  console.log(value, 'transactionHistoryItem - watch');
   paginationLength.value = moreTransactionHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
 }, { deep: true });
 

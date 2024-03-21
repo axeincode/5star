@@ -159,7 +159,7 @@ const refundWithdrawalSubmit = async (id: number, index: number) => {
 }
 
 const handleNext = async (page_no: number) => {
-  startIndex.value = (page_no - 1) * pageSize.value;
+  startIndex.value = (page_no - 1) * (pageSize.value - 1);
   endIndex.value = startIndex.value + pageSize.value;
   currentList.value = withdrawHistoryItem.value.record.slice(startIndex.value, endIndex.value);
   if (currentList.value.length == 0) {
@@ -206,10 +206,10 @@ const handleCopyID = async (id: number) => {
   );
 }
 
-watch(withdrawHistoryItem, (value) => {
+watch(() => withdrawHistoryItem.value, (value) => {
   // paginationLength.value = withdrawHistoryItem.value.total_pages
     paginationLength.value = moreWithdrawHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
-}, { deep: true, immediate: true })
+}, { deep: true })
 
 onMounted(async () => {
   // paginationLength.value = withdrawHistoryItem.value.total_pages

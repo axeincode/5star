@@ -8,7 +8,7 @@
 import App from './App.vue'
 
 // Composables
-import { createApp } from 'vue'
+import { createApp, ComponentPublicInstance } from 'vue'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
@@ -43,6 +43,8 @@ import 'dayjs/locale/en';
 import Vue3GoogleLogin from 'vue3-google-login';
 
 import Adjust from '@adjustcom/adjust-web-sdk';
+
+import { getErrorInfoCollector } from '@/utils/errorInfoCollector'
 
 Adjust.initSdk({
   appToken: 'gmx6cdn8x3pc',
@@ -129,5 +131,26 @@ const options: PluginOptions = {
 };
 
 app.use(Toast, options);
+
+// 设置全局错误处理程序
+app.config.errorHandler = (err: unknown, vm: ComponentPublicInstance | null, info: string) => {
+  // 将错误转换为 Error 类型
+  const error = err as Error;
+
+  // 发送错误信息到服务器
+  sendErrorToServer(error, vm, info);
+};
+
+// 发送错误信息到服务器
+function sendErrorToServer(error: Error, vm: any, info: string) {
+  // 构造要发送的错误数据
+  const errorData = {
+    error: error.toString(),
+    component: vm.$.type.name || 'Anonymous',
+    info: info
+  };
+
+  getErrorInfoCollector(error.toString())
+}
 
 app.mount('#app')

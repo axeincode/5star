@@ -16,6 +16,15 @@ import VipTimesHistory from './components/VipTimesHistory.vue';
 import VipSigninHistory from './components/VipSigninHistory.vue';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
+
+enum History {
+  rateBack = 'vipRebateHistory',
+  rank = 'vipLevelRewardHistory',
+  weekIy = 'vipWeekIyHistory',
+  monthly = 'vipMonthlyHistory',
+  login = 'vipSigninHistory',
+}
+
 const platformCurrency = computed(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
@@ -23,6 +32,7 @@ const platformCurrency = computed(() => {
 
 const { t } = useI18n();
 const { width } = useDisplay();
+const { setKeyOfVipHistoryEmpty } = vipStore();
 const { dispatchVipRebateHistory } = vipStore();
 const { dispatchVipTimesHistory } = vipStore();
 const { dispatchVipLevelRewardHistory } = vipStore();
@@ -34,7 +44,7 @@ const props = defineProps<{
 
 const { pageSize } = toRefs(props);
 
-const paginationLength = ref<number>(0);
+const paginationLength = ref<number>(1);
 
 const loading = ref<boolean>(false);
 const loadingIndex = ref<number>(0)
@@ -44,15 +54,34 @@ const currentList = ref<Array<VipRebateHistoryItem>>([]);
 const selectedHistoryIndex = ref<number>(1);
 
 const transactionVIPMenuShow = ref<boolean>(false);
-const selectedVipMenuItem = ref<string>(t('transaction.vip.text_1'));
-const transactionVipMenuList = ref<Array<string>>([
-  t('transaction.vip.text_1'),
-  t('transaction.vip.text_2'),
-  t('transaction.vip.text_3'),
-  t('transaction.vip.text_4'),
-  t('transaction.vip.text_13')
+const selectedVipMenuItem = ref<string>(History.rateBack);
+const transactionVipMenuList = ref<any[]>([
+  {
+    value: History.rateBack,
+    label: 'transaction.vip.text_1'
+  },
+  {
+    value: History.rank,
+    label: 'transaction.vip.text_2'
+  },
+  {
+    value: History.weekIy,
+    label: 'transaction.vip.text_3'
+  },
+  {
+    value: History.monthly,
+    label: 'transaction.vip.text_4'
+  },
+  {
+    value: History.login,
+    label: 'transaction.vip.text_13'
+  },
 ]);
-
+  //     'vipRebateHistory',
+  // t('transaction.vip.text_2'),
+  // t('transaction.vip.text_3'),
+  // t('transaction.vip.text_4'),
+  // t('transaction.vip.text_13')
 const tempHistoryList = [{},{},{},{},{},{}];
 
 const mobileWidth = computed(() => {
@@ -86,52 +115,105 @@ const fixPositionShow = computed(() => {
   const { getFixPositionEnable } = storeToRefs(appBarStore());
   return getFixPositionEnable.value;
 });
+// 菜单标题
+const vipMenuTitle = computed(() => {
+  const item = transactionVipMenuList.value.find(item => item.value === selectedVipMenuItem.value)
+  return item?.label;
+});
 
 const pageNo = async (page_no: number) => {
-  if (selectedVipMenuItem.value == t('transaction.vip.text_1')) {
-    await dispatchVipRebateHistory({
-      page_num: page_no,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipRebateHistory.value.total;
+  // if (selectedVipMenuItem.value == 'vipRebateHistory') {
+  //   await dispatchVipRebateHistory({
+  //     page_num: page_no,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipRebateHistory.value.total;
+  // }
+  // if (selectedVipMenuItem.value == 'vipLevelRewardHistory') {
+  //   await dispatchVipLevelRewardHistory({
+  //     page_num: page_no,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipLevelRewardHistory.value.total;
+  // }
+  // if (selectedVipMenuItem.value == 'vipTimesHistory') {
+  //   selectedHistoryIndex.value = 1;
+  //   await dispatchVipTimesHistory({
+  //     index: 1,
+  //     page_num: page_no,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipTimesHistory.value.total;
+  // }
+  // if (selectedVipMenuItem.value == 'vipTimesHistory') {
+  //   selectedHistoryIndex.value = 2;
+  //   await dispatchVipTimesHistory({
+  //     index: 2,
+  //     page_num: page_no,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipTimesHistory.value.total;
+  // }
+  // if (selectedVipMenuItem.value == 'vipSigninHistory') {
+  //   await dispatchVipSigninHistory({
+  //     page_num: page_no,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   })
+  //   paginationLength.value = vipSigninHistory.value.total;
+  // }
+  let total = 0
+  switch(selectedVipMenuItem.value) {
+    case History.rateBack:
+      await dispatchVipRebateHistory({
+        page_num: page_no,
+        page_size: pageSize.value,
+        start_time: Math.ceil(moment().valueOf() / 1000),
+      });
+      total = vipRebateHistory.value.total;
+      break;
+    case History.rank:
+      await dispatchVipLevelRewardHistory({
+        page_num: page_no,
+        page_size: pageSize.value,
+        start_time: Math.ceil(moment().valueOf() / 1000),
+      });
+      total = vipLevelRewardHistory.value.total;
+      break;
+    case History.weekIy:
+      selectedHistoryIndex.value = 1;
+      await dispatchVipTimesHistory({
+        index: 1,
+        page_num: page_no,
+        page_size: pageSize.value,
+        start_time: Math.ceil(moment().valueOf() / 1000),
+      });
+      total = vipTimesHistory.value.total;
+      break;
+    case History.monthly:
+        selectedHistoryIndex.value = 2;
+        await dispatchVipTimesHistory({
+          index: 2,
+          page_num: page_no,
+          page_size: pageSize.value,
+          start_time: Math.ceil(moment().valueOf() / 1000),
+        });
+      total = vipTimesHistory.value.total;
+      break;
+    case History.login:
+      await dispatchVipSigninHistory({
+        page_num: page_no,
+        page_size: pageSize.value,
+        start_time: Math.ceil(moment().valueOf() / 1000),
+      })
+      total = vipSigninHistory.value.total;
+      break;
   }
-  if (selectedVipMenuItem.value == t('transaction.vip.text_2')) {
-    await dispatchVipLevelRewardHistory({
-      page_num: page_no,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipLevelRewardHistory.value.total;
-  }
-  if (selectedVipMenuItem.value == t('transaction.vip.text_3')) {
-    selectedHistoryIndex.value = 1;
-    await dispatchVipTimesHistory({
-      index: 1,
-      page_num: page_no,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipTimesHistory.value.total;
-  }
-  if (selectedVipMenuItem.value == t('transaction.vip.text_4')) {
-    selectedHistoryIndex.value = 2;
-    await dispatchVipTimesHistory({
-      index: 2,
-      page_num: page_no,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipTimesHistory.value.total;
-  }
-  if (selectedVipMenuItem.value == t('transaction.vip.text_13')) {
-    await dispatchVipSigninHistory({
-      page_num: page_no,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    })
-    paginationLength.value = vipSigninHistory.value.total;
-  }
+  paginationLength.value = getTotalPages(total, pageSize.value)
 }
 
 const handleNext = (page_no: number) => {
@@ -151,50 +233,57 @@ const handleTransactionMenuDropdown = (item: string) => {
 // })
 
 watch(selectedVipMenuItem, async (value) => {
-  if (value == t('transaction.vip.text_1')) {
-    await dispatchVipRebateHistory({
-      page_num: 1,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipRebateHistory.value.total;
-  }
-  if (value == t('transaction.vip.text_2')) {
-    await dispatchVipLevelRewardHistory({
-      page_num: 1,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipLevelRewardHistory.value.total;
-  }
-  if (value == t('transaction.vip.text_4')) {
-    selectedHistoryIndex.value = 2;
-    await dispatchVipTimesHistory({
-      index: 2,
-      page_num: 1,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipTimesHistory.value.total;
-  }
-  if (value == t('transaction.vip.text_3')) {
-    selectedHistoryIndex.value = 1;
-    await dispatchVipTimesHistory({
-      index: 1,
-      page_num: 1,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    });
-    paginationLength.value = vipTimesHistory.value.total;
-  }
-  if (value == t('transaction.vip.text_13')) {
-    await dispatchVipSigninHistory({
-      page_num: 1,
-      page_size: pageSize.value,
-      start_time: Math.ceil(moment().valueOf() / 1000),
-    })
-    paginationLength.value = vipSigninHistory.value.total;
-  }
+  setKeyOfVipHistoryEmpty(History.rateBack);
+  setKeyOfVipHistoryEmpty(History.rank);
+  setKeyOfVipHistoryEmpty(History.weekIy);
+  setKeyOfVipHistoryEmpty(History.monthly);
+  setKeyOfVipHistoryEmpty(History.login);
+
+  pageNo(1)
+  // if (value == 'vipRebateHistory') {
+  //   await dispatchVipRebateHistory({
+  //     page_num: 1,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipRebateHistory.value.total;
+  // }
+  // if (value == t('transaction.vip.text_2')) {
+  //   await dispatchVipLevelRewardHistory({
+  //     page_num: 1,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipLevelRewardHistory.value.total;
+  // }
+  // if (value == t('transaction.vip.text_4')) {
+  //   selectedHistoryIndex.value = 2;
+  //   await dispatchVipTimesHistory({
+  //     index: 2,
+  //     page_num: 1,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipTimesHistory.value.total;
+  // }
+  // if (value == t('transaction.vip.text_3')) {
+  //   selectedHistoryIndex.value = 1;
+  //   await dispatchVipTimesHistory({
+  //     index: 1,
+  //     page_num: 1,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   });
+  //   paginationLength.value = vipTimesHistory.value.total;
+  // }
+  // if (value == t('transaction.vip.text_13')) {
+  //   await dispatchVipSigninHistory({
+  //     page_num: 1,
+  //     page_size: pageSize.value,
+  //     start_time: Math.ceil(moment().valueOf() / 1000),
+  //   })
+  //   paginationLength.value = vipSigninHistory.value.total;
+  // }
 })
 
 onMounted(async () => {
@@ -203,169 +292,37 @@ onMounted(async () => {
     page_size: pageSize.value,
     start_time: Math.ceil(moment().valueOf() / 1000),
   });
-  paginationLength.value = vipRebateHistory.value.total
+  paginationLength.value = getTotalPages(vipRebateHistory.value.total, pageSize.value - 1)
 });
+// 计算页数
+function getTotalPages(total:number, pageSize: number) {
+  if(total === 0) {
+    return 1
+  }
+  return Math.ceil(total / pageSize);
+}
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
-    <!-- <v-table
-      class="m-forms-bonus-table-bg"
-      :class="fixPositionShow ? 'table-position-overflow' : ''"
-      theme="dark"
-      fixed-header
-      style="padding: 16px"
-    >
-      <thead class="forms-table-header">
-        <tr>
-          <th
-            class="text-700-12 black text-center"
-            style="border-radius: 8px 0px 0px 8px"
-          >
-            <div class="forms-table-border0">
-              <div style="width: 50px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.vip.text_5") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border1">
-              <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.vip.text_6") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border1">
-              <div style="width: 90px; margin-left: 20px; margin-right: 20px">
-                {{ t("transaction.vip.text_7") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border1">
-              <div style="margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.vip.text_8") }}
-              </div>
-            </div>
-          </th>
-          <th class="text-700-12 black text-center">
-            <div class="forms-table-border2">
-              <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.vip.text_9") }}
-              </div>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody class="forms-table-body">
-        <template v-if="vipRebateHistory.list.length == 0">
-          <tr v-for="(item, index) in tempHistoryList" :key="index">
-            <td
-              class="text-400-12"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            ></td>
-            <td
-              class="text-400-12"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 60px;
-              "
-            ></td>
-            <td
-              class="text-400-12"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            ></td>
-            <td
-              class="text-400-12 color-D42763"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 130px;
-              "
-            ></td>
-            <td
-              class="text-400-12"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 130px;
-              "
-            ></td>
-          </tr>
-        </template>
-        <template v-else>
-          <tr
-            v-for="(item, index) in vipRebateHistory.list.slice(startIndex, endIndex)"
-            :key="index"
-          >
-            <td
-              class="text-400-12"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            >
-              {{ moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss") }}
-            </td>
-            <td
-              class="text-400-12"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 60px;
-              "
-            >
-              {{ platformCurrency }} {{ Number(item.amount).toFixed(2) }}
-            </td>
-            <td
-              class="text-400-12 color-01983A"
-              style="padding-top: 21px !important; padding-bottom: 21px !important"
-            >
-              {{ platformCurrency }} {{ Number(item.cash_back).toFixed(2) }}
-            </td>
-            <td
-              class="text-400-12"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 130px;
-              "
-            >
-              VIP {{ item.vip_level }} / {{ Number(item.vip_rate).toFixed(2) }}%
-            </td>
-            <td
-              class="text-400-12"
-              style="
-                padding-top: 21px !important;
-                padding-bottom: 21px !important;
-                min-width: 130px;
-              "
-            >
-              <div>
-                {{ item.game_type }}
-              </div>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </v-table> -->
     <VipRebateHistory
       :currentList="vipRebateHistory.list"
-      v-if="selectedVipMenuItem == t('transaction.vip.text_1')"
+      v-if="selectedVipMenuItem == History.rateBack"
     />
     <VipLevelRewardHistory
       :currentList="vipLevelRewardHistory.list"
-      v-if="selectedVipMenuItem == t('transaction.vip.text_2')"
+      v-if="selectedVipMenuItem == History.rank"
     />
     <VipTimesHistory
       :currentList="vipTimesHistory.list"
       :selectedHistoryIndex="selectedHistoryIndex"
       v-if="
-        selectedVipMenuItem == t('transaction.vip.text_3') ||
-        selectedVipMenuItem == t('transaction.vip.text_4')
+        selectedVipMenuItem == History.weekIy ||
+        selectedVipMenuItem == History.monthly
       "
     />
     <VipSigninHistory
       :currentList="vipSigninHistory.list"
-      v-if="selectedVipMenuItem == t('transaction.vip.text_13')"
+      v-if="selectedVipMenuItem == History.login"
     />
   </v-row>
   <v-row class="m-bonus-transaction-table-5">
@@ -381,7 +338,7 @@ onMounted(async () => {
             <v-list-item
               class="bonus-item text-700-12 px-2"
               v-bind="props"
-              :title="selectedVipMenuItem"
+              :title="t(vipMenuTitle)"
               :append-icon="
                 transactionVIPMenuShow ? 'mdi-chevron-down' : 'mdi-chevron-up'
               "
@@ -396,15 +353,15 @@ onMounted(async () => {
             :key="i"
             :value="item"
             class="bonus-item mx-2"
-            @click="handleTransactionMenuDropdown(item)"
+            @click="handleTransactionMenuDropdown(item.value)"
             :class="
-              selectedVipMenuItem == item
+              selectedVipMenuItem == item.value
                 ? 'm-transaction-vip-menu-selected-item white'
                 : 'gray'
             "
             style="min-height: 36px !important"
           >
-            <v-list-item-title class="text-400-12">{{ item }}</v-list-item-title>
+            <v-list-item-title class="text-400-12">{{ t(item.label) }}</v-list-item-title>
           </v-list-item>
           <v-list-item
             class="mx-2 m-transaction-vip-menu-last py-0"
@@ -566,6 +523,14 @@ onMounted(async () => {
 .table-position-overflow {
   .v-table__wrapper {
     overflow: hidden !important;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+@media (max-width: 600px) {
+  ::v-deep(.v-pagination__item--is-active) {
+    display: block;
   }
 }
 </style>

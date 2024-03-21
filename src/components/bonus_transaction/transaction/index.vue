@@ -21,13 +21,20 @@ import { vipStore } from "@/store/vip";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import moment from "moment-timezone";
 
+enum Tab {
+  transactions = 'transactions',
+  deposit = 'deposit',
+  withdrawal = 'withdrawal',
+  vip = 'vip',
+}
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const route = useRoute();
-const { dispatchWithdrawalHistory } = withdrawStore();
-const { dispatchUserDepositHistory } = depositStore();
+const { dispatchWithdrawalHistory, setWithdrawHistoryItemEmpty } = withdrawStore();
+const { dispatchUserDepositHistory, setDepositHistoryIteEmpty } = depositStore();
+const { dispatchTransactionHistory, setTransactionHistoryItemEmpty } = bonusTransactionStore();
 const { dispatchGameHistory } = gameStore();
-const { dispatchTransactionHistory } = bonusTransactionStore();
 const { dispatchVipRebateHistory } = vipStore();
 const { dispatchVipLevelRewardHistory } = vipStore();
 const { dispatchVipTimesHistory } = vipStore();
@@ -58,7 +65,6 @@ const vipRebateHistory = computed(() => {
 
 const vipLevelRewardHistory = computed(() => {
   const { getVipLevelRewardHistory } = storeToRefs(vipStore());
-  console.log(getVipLevelRewardHistory.value);
   // getVipLevelRewardHistory.value.list.map((item) => {
   //   item.type = "Rank Bonus";
   // });
@@ -73,18 +79,34 @@ const vipTimesHistory = computed(() => {
   return getVipTimesHistory.value;
 });
 
-const transactionTabs = ref<Array<string>>([
+const transactionTabs = ref<any[]>([
+  {
+    value: Tab.transactions,
+    label: 'transaction.tab.transactions'
+  },
+  {
+    value: Tab.deposit,
+    label: 'transaction.tab.deposit'
+  },
+    {
+    value: Tab.withdrawal,
+    label: 'transaction.tab.withdrawal'
+  },
+  {
+    value: Tab.vip,
+    label: 'transaction.tab.vip'
+  },
   // t("transaction.tab.game_history"),
-  t("transaction.tab.transactions"),
-  t("transaction.tab.deposit"),
-  t("transaction.tab.withdrawal"),
-  t("transaction.tab.vip"),
+  // t("transaction.tab.transactions"),
+  // t("transaction.tab.deposit"),
+  // t("transaction.tab.withdrawal"),
+  // t("transaction.tab.vip"),
   // t("transaction.tab.referral"),
 ]);
 const pageSize = ref<number>(9);
 const pageNum = ref<number>(1);
 const vipTimesHistoryIndex = ref<number>(1);
-const selectedTab = ref<any>(t("transaction.tab.transactions"));
+const selectedTab = ref<any>(Tab.transactions);
 
 const transactionTab = computed(() => {
   const { getTransactionTab } = storeToRefs(bonusTransactionStore());
@@ -103,8 +125,31 @@ const touchless = () => {
   return false;
 };
 
-const transactionTabToggle = (item: string) => {
+const transactionTabToggle = async (item: string) => {
   selectedTab.value = item;
+  switch(selectedTab.value) {
+    case Tab.transactions :
+      setTransactionHistoryItemEmpty()
+       await dispatchTransactionHistory({
+        page_size: pageSize.value,
+        start_time: Math.ceil(moment().valueOf() / 1000),
+      });
+      break;
+    case Tab.deposit :
+        setDepositHistoryIteEmpty()
+        await dispatchUserDepositHistory({
+          page_size: pageSize.value,
+          start_time: Math.ceil(moment().valueOf() / 1000),
+        });
+      break;
+    case Tab.withdrawal :
+      setWithdrawHistoryItemEmpty()
+      await dispatchWithdrawalHistory({
+        page_size: pageSize.value,
+        start_time: Math.ceil(moment().valueOf() / 1000),
+      });
+      break;
+  }
 };
 
 watch(selectedTab, async (value) => {
@@ -124,7 +169,7 @@ watch(selectedTab, async (value) => {
 onMounted(async () => {
   selectedTab.value = route.query.tab
     ? route.query.tab
-    : t("transaction.tab.transactions");
+    : Tab.transactions;
   selectedTab.value =
     transactionTab.value == "" ? selectedTab.value : transactionTab.value;
   // await dispatchGameHistory({
@@ -180,12 +225,12 @@ onMounted(async () => {
     >
       <v-btn
         class="ma-2 text-none transaction-tab-btn"
-        :class="selectedTab == item ? 'white' : 'text-gray'"
-        :color="selectedTab == item ? '#1D2027' : 'transparent'"
-        @click="transactionTabToggle(item)"
+        :class="selectedTab == item.value ? 'white' : 'text-gray'"
+        :color="selectedTab == item.value ? '#1D2027' : 'transparent'"
+        @click="transactionTabToggle(item.value)"
         :width="mobileWidth < 600 ? 106 : 150"
       >
-        {{ item }}
+        {{ t(item.label) }}
       </v-btn>
     </v-slide-group-item>
   </v-slide-group>
@@ -198,54 +243,64 @@ onMounted(async () => {
       <MGameHistory v-else />
     </v-window-item> -->
     <v-window-item
-      :value="t('transaction.tab.transactions')"
+      :value="Tab.transactions"
       style="margin-left: 10px; margin-right: 10px"
     >
-      <Transactions v-if="mobileWidth > 600" />
-      <MTransactions
-        :pageSize="pageSize"
-        :transactionHistoryItem="transactionHistoryItem"
-        v-else
-      />
+      <div v-if="selectedTab == Tab.transactions">
+        <Transactions v-if="mobileWidth > 600" />
+        <MTransactions
+          :pageSize="pageSize"
+          :transactionHistoryItem="transactionHistoryItem"
+          v-else
+        />
+      </div>
     </v-window-item>
     <v-window-item
-      :value="t('transaction.tab.deposit')"
+      :value="Tab.deposit"
       style="margin-left: 10px; margin-right: 10px"
     >
+      <div v-if="selectedTab == Tab.deposit">
+
       <Deposit v-if="mobileWidth > 600" />
       <MDeposit :pageSize="pageSize" :depositHistoryItem="depositHistoryItem" v-else />
+      </div>
+
     </v-window-item>
     <v-window-item
-      :value="t('transaction.tab.withdrawal')"
+      :value="Tab.withdrawal"
       style="margin-left: 10px; margin-right: 10px"
     >
-      <Withdrawal
-        :pageSize="pageSize"
-        :withdrawHistoryItem="withdrawHistoryItem"
-        v-if="mobileWidth > 600"
-      />
-      <MWithdrawal
-        :pageSize="pageSize"
-        :withdrawHistoryItem="withdrawHistoryItem"
-        v-else
-      />
+      <div v-if="selectedTab == Tab.withdrawal">
+        <Withdrawal
+          :pageSize="pageSize"
+          :withdrawHistoryItem="withdrawHistoryItem"
+          v-if="mobileWidth > 600"
+        />
+        <MWithdrawal
+          :pageSize="pageSize"
+          :withdrawHistoryItem="withdrawHistoryItem"
+          v-else
+        />
+      </div>
     </v-window-item>
     <v-window-item
-      :value="t('transaction.tab.vip')"
+      :value="Tab.vip"
       style="margin-left: 10px; margin-right: 10px"
     >
-      <Vip
-        :pageSize="pageSize"
-        :withdrawHistoryItem="withdrawHistoryItem"
-        v-if="mobileWidth > 600"
-      />
-      <MVip
-        :pageSize="pageSize"
-        :vipRebateHistory="vipRebateHistory"
-        :vipLevelRewardHistory="vipLevelRewardHistory"
-        :vipTimesHistory="vipTimesHistory"
-        v-else
-      />
+      <div v-if="selectedTab == Tab.vip">
+        <Vip
+          :pageSize="pageSize"
+          :withdrawHistoryItem="withdrawHistoryItem"
+          v-if="mobileWidth > 600"
+        />
+        <MVip
+          :pageSize="pageSize"
+          :vipRebateHistory="vipRebateHistory"
+          :vipLevelRewardHistory="vipLevelRewardHistory"
+          :vipTimesHistory="vipTimesHistory"
+          v-else
+        />
+      </div>
     </v-window-item>
     <!-- <v-window-item
       :value="t('transaction.tab.referral')"

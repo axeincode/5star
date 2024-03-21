@@ -788,8 +788,8 @@ const handleGameFilter = (filterText: string) => {
   setMainBlurEffectShow(false);
   setOverlayScrimShow(false);
   setTimeout(()=>{window.scrollTo({
-    top: 250,
-    behavior: "smooth",
+  top: 250,
+  behavior: "smooth",
   });}, 500);
 }
 

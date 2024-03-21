@@ -79,8 +79,8 @@ export const depositStore = defineStore({
         this.moreDepositHistoryFlag = true;
       }
 
-      const baseArr = [0,1,2,3,4,5,6,7,8]
-      let record = depositHistoryItem.record.slice(0, 9)
+      const baseArr = [0,1,2,3,4,5,6,7]
+      let record = depositHistoryItem.record.slice(0, 8)
       baseArr.map((item) => {
         if(record[item]) {
           this.depositHistoryItem.record.push(record[item])
@@ -100,6 +100,13 @@ export const depositStore = defineStore({
 
       // this.depositHistoryItem.record = [...this.depositHistoryItem.record, ...recordList]
       this.depositHistoryItem.total_pages = depositHistoryItem.total_pages;
+    },
+    setDepositHistoryIteEmpty() {
+      this.depositHistoryItem = {
+        record: [],
+        total_pages: 0
+      }
+      this.moreDepositHistoryFlag = false;
     },
     setDepositConfirmDialogToggle(depositConfirmDialogToggle: boolean) {
       this.depositConfirmDialogToggle = depositConfirmDialogToggle

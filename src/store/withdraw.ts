@@ -45,7 +45,7 @@ export const withdrawStore = defineStore({
       // withdrawHistoryItem.record.map(item => {
       //   this.withdrawHistoryItem.record.push(item);
       // })
-      console.log(withdrawHistoryItem, 'withdrawHistoryItem');
+      console.log(withdrawHistoryItem, 'setWithdrawHistoryItem');
 
       if (withdrawHistoryItem.record.length < 9) {
         this.moreWithdrawHistoryFlag = false;
@@ -53,8 +53,8 @@ export const withdrawStore = defineStore({
         this.moreWithdrawHistoryFlag = true;
       }
 
-      const baseArr = [0,1,2,3,4,5,6,7,8]
-      let record = withdrawHistoryItem.record.slice(0, 9)
+      const baseArr = [0,1,2,3,4,5,6,7]
+      let record = withdrawHistoryItem.record.slice(0, 8)
       baseArr.map((item) => {
         if(record[item]) {
           this.withdrawHistoryItem.record.push(record[item])
@@ -75,6 +75,11 @@ export const withdrawStore = defineStore({
 
       // this.withdrawHistoryItem.record = [...this.withdrawHistoryItem.record, ...recordList]
       this.withdrawHistoryItem.total_pages = withdrawHistoryItem.total_pages;
+    },
+    setWithdrawHistoryItemEmpty() {
+      this.withdrawHistoryItem.record = [];
+      this.withdrawHistoryItem.total_pages = 0;
+      this.moreWithdrawHistoryFlag = false;
     },
     setSmsVerificationItem(smsVerificationItem: Withdraw.SmsSendResponseItem) {
       this.smsVerificationItem = smsVerificationItem

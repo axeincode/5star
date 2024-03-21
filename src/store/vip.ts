@@ -85,9 +85,10 @@ export const vipStore = defineStore({
       this.vipTasks = vipTasks;
     },
     setVipRebateHistory(vipRebateHistory: Vip.VipRebateHistoryData) {
-      const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-      let record = vipRebateHistory.list.slice(0, 9)
-      baseArr.map((item) => {
+      let tempResData = vipRebateHistory
+      const baseArr = [0, 1, 2, 3, 4, 5, 6, 7]
+      let record = tempResData.list.slice(0, 8)
+      baseArr.forEach((item) => {
         if (record[item]) {
           this.vipRebateHistory.list.push(record[item])
         } else {
@@ -104,11 +105,13 @@ export const vipStore = defineStore({
         }
       })
       // this.vipRebateHistory = vipRebateHistory;
+      this.vipRebateHistory.total = tempResData.total;
     },
     setVipLevelRewardHistory(vipLevelRewardHistory: Vip.VipLevelRewardHistoryData) {
-      const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-      let record = vipLevelRewardHistory.list.slice(0, 9)
-      baseArr.map((item) => {
+      let tempResData = vipLevelRewardHistory
+      const baseArr = [0, 1, 2, 3, 4, 5, 6, 7]
+      let record = tempResData.list.slice(0, 8)
+      baseArr.forEach((item) => {
         if (record[item]) {
           this.vipLevelRewardHistory.list.push(record[item])
         } else {
@@ -122,16 +125,14 @@ export const vipStore = defineStore({
           return {}
         }
       })
+      this.vipLevelRewardHistory.total = tempResData.total;
       // this.vipLevelRewardHistory = vipLevelRewardHistory;
     },
     setVipTimesHistory(vipTimesHistory: Vip.VipTimesHistoryData) {
-      this.vipTimesHistory = {
-        list: [],
-        total: 0
-      }
+      let tempResData = vipTimesHistory
       const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-      let record = vipTimesHistory.list.slice(0, 9)
-      baseArr.map((item) => {
+      let record = tempResData.list.slice(0, 9)
+      baseArr.forEach((item) => {
         if (record[item]) {
           this.vipTimesHistory.list.push(record[item])
         } else {
@@ -145,6 +146,7 @@ export const vipStore = defineStore({
           return {}
         }
       })
+      this.vipTimesHistory.total = tempResData.total;
       // this.vipTimesHistory = vipTimesHistory
     },
     setVipSignIn(vipSignIn: Vip.VipSignInData) {
@@ -175,8 +177,49 @@ export const vipStore = defineStore({
     setVipBetawardList(vipBetawardList: Vip.vipBetawardListData) {
       this.vipBetawardList = vipBetawardList;
     },
-    setVipSigninHistory(vipSigninHistoryList: Vip.VipSigninHistoryData) {
-      this.vipSigninHistoryList = vipSigninHistoryList;
+    setVipSigninHistory(vipSigninHistoryList: Vip.VipSigninHistoryData, reset: boolean = false) {
+      let tempResData = vipSigninHistoryList
+      const baseArr = [0, 1, 2, 3, 4, 5, 6, 7]
+      let record = tempResData.list.slice(0, 8)
+      baseArr.forEach((item) => {
+        if (record[item]) {
+          this.vipSigninHistoryList.list.push(record[item])
+        } else {
+          this.vipSigninHistoryList.list.push({
+            notes_id: "",
+            created_at: "",
+            amount: "",
+            vip_level: "",
+            sign_day: 0
+          })
+        }
+      })
+      this.vipSigninHistoryList.total = tempResData.total;
+    },
+    // 根据key清空缓存的list
+    setKeyOfVipHistoryEmpty(key:string) {
+      switch(key) {
+        case 'vipRebateHistory':
+          this.vipRebateHistory.list = [];
+          this.vipRebateHistory.total = 0;
+          break
+        case 'vipLevelRewardHistory':
+          this.vipLevelRewardHistory.list = [];
+          this.vipLevelRewardHistory.total = 0;
+          break
+        case 'vipWeekIyHistory':
+          this.vipTimesHistory.list = [];
+          this.vipTimesHistory.total = 0;
+          break
+        case 'vipMonthlyHistory':
+          this.vipTimesHistory.list = [];
+          this.vipTimesHistory.total = 0;
+          break
+        case 'vipSigninHistory':
+          this.vipSigninHistoryList.list = [];
+          this.vipSigninHistoryList.total = 0;
+          break
+      }
     },
     // Reward collection prompt information  奖励领取提示信息
     alertMessage(successMessage: Vip.SuccessMessageParams) {

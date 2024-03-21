@@ -64,7 +64,7 @@ const Dashboard = defineComponent({
     MOrder,
     ProgressiveImage,
   },
-  setup() {
+  setup(props,context) {
     const { t } = useI18n();
     const { name, width } = useDisplay();
     const { dispatchGameCategories } = gameStore();
@@ -308,15 +308,15 @@ const Dashboard = defineComponent({
 
     watch(homeMenuBtnClicked, (newValue) => {
       window.scrollTo({
-        top: 0,
-        behavior: "smooth",
+      top: 0,
+      behavior: "smooth",
       });
     })
 
     watch(casinoGameShow, (newValue) => {
       window.scrollTo({
-        top: 450,
-        behavior: "smooth",
+      top: 450,
+      behavior: "smooth",
       });
     })
 
@@ -1225,6 +1225,8 @@ const Dashboard = defineComponent({
           behavior: "smooth",
         });
       }
+
+      context.emit('inited')
     });
 
     return {
@@ -1672,7 +1674,7 @@ export default Dashboard;
                 (mobileWidth > 600 &&
                   Number(item.game_count) > 7 &&
                   7 * Number(item.page_no) < Number(item.game_count))) &&
-              item.games.length > 0
+              item.games?.length > 0
             "
           >
             <div style="width: 100%" class="text-center">

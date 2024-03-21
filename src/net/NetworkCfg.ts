@@ -144,4 +144,9 @@ export namespace NETWORK {
     static SMS_VERIFICATION_CODE = '/user/sms/send'; // Send SMS verification code
     static SUBMIT_SMS_CODE = '/user/sms/submit'; // Submit SMS verification code for verification
   }
+
+  // collector log api
+  export class COLLECTOR_LOG {
+    static OPERATE_COLLECTOR_LOG = '/log/collector/new';
+  }
 }
