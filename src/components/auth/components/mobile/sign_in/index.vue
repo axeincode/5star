@@ -316,7 +316,36 @@ const Login = defineComponent({
       { deep: true }
     );
 
-    onMounted(() => {});
+    const loginWithFacebook = () => {
+      // 调用Facebook登录API
+      window.FB.login((response: any) => {
+        if (response.authResponse) {
+          // 用户已登录并授权
+          // 这里可以根据需要执行进一步的操作，例如向服务器发送令牌进行验证等
+          console.log('Login successful:', response.authResponse);
+        } else {
+          // 用户取消登录或发生错误
+          console.log('Login cancelled or encountered an error');
+        }
+      }, { scope: 'email' }); // 可以在这里指定您需要的权限
+    }
+
+    onMounted(() => {
+      // window.FB.init({
+      //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+      //   autoLogAppEvents: true,
+      //   xfbml: true,
+      //   version: 'v18.0'
+      // });
+      // (function(d, s, id){
+      //   let js:any = d.getElementsByTagName(s)[0];
+      //   let fjs:any = d.getElementsByTagName(s)[0];
+      //   if (d.getElementById(id)) {return;}
+      //   js = d.createElement(s); js.id = id;
+      //   js.src = "https://connect.facebook.net/en_US/sdk.js";
+      //   fjs.parentNode.insertBefore(js, fjs);
+      // }(document, 'script', 'facebook-jssdk'));
+    });
 
     return {
       t,

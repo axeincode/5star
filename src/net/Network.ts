@@ -402,6 +402,7 @@ export class Network {
           "Authorization": 'Bearer ' + token,
           // "X-Language": "en",
           "X-Language": localStorage.getItem('lang') || 'en',
+          "X-Currency": sessionStorage.getItem('currency')
         },
         timeout: timeout,
         baseURL: import.meta.env.VITE_BASE_API,

@@ -133,6 +133,18 @@ export const gameStore = defineStore({
             setAuthDialogVisible(true);
             setOverlayScrimShow(false);
         },
+        openDepositDialog() {
+            const { setDepositWithdrawToggle } = appBarStore();
+            const { setNavBarToggle } = appBarStore();
+            const { setUserNavBarToggle } = appBarStore();
+            const { setDepositDialogToggle } = appBarStore();
+            const { setCashDialogToggle } = appBarStore();
+            setDepositWithdrawToggle(true);
+            setNavBarToggle(false);
+            setUserNavBarToggle(false);
+            setDepositDialogToggle(true);
+            setCashDialogToggle(true);
+        },
         closeKill() {
             (this.betby as any)?.kill();
         },
@@ -140,9 +152,7 @@ export const gameStore = defineStore({
             this.gameBigWinItem = gameBigWinItem;
         },
         async getGameBetbyInit() {
-            if (!this.enterGameItem.reserve) {
-                await this.dispatchGameEnter({ id: '9999', demo: false });
-            }
+            await this.dispatchGameEnter({ id: '9999', demo: false });
             this.betby = new BTRenderer().initialize(
                 {
                     token: this.enterGameItem.reserve || '',
@@ -171,6 +181,9 @@ export const gameStore = defineStore({
                     onSessionRefresh: async () => {
                         this.closeKill();
                         await this.getGameBetbyInit();
+                    },
+                    onRecharge: () => {
+                        this.openDepositDialog();
                     }
                 });
         },
