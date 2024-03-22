@@ -20,6 +20,8 @@ import { currencyStore } from "@/store/currency";
 import { googleTokenLogin } from "vue3-google-login";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
+import { useRoute } from "vue-router";
+import { gameStore } from "@/store/game";
 
 const Login = defineComponent({
   components: {
@@ -30,6 +32,7 @@ const Login = defineComponent({
   setup(props, { emit }) {
     // translation
     const { t } = useI18n();
+    const route = useRoute();
     const { dispatchSignIn, dispatchQuickLogin } = authStore();
     const { dispatchUserProfile } = authStore();
     const { setAuthModalType } = authStore();
@@ -45,6 +48,8 @@ const Login = defineComponent({
     const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
     const { dispatchCurrencyList } = currencyStore();
+    const {  getGameBetbyInit, closeKill } = gameStore();
+  
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
@@ -154,6 +159,10 @@ const Login = defineComponent({
           setAuthModalType("");
           setAuthDialogVisible(false);
         }, 100);
+        if (route.name == 'Sports') {
+          await closeKill();
+          await getGameBetbyInit();
+        }
         await dispatchSocketConnect();
       } else {
         const toast = useToast();
