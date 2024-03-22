@@ -105,7 +105,9 @@ const BannerComponent = defineComponent({
       const { getBannerList } = storeToRefs(bannerStore());
       state.slides.length = 0;
       getBannerList.value.forEach((element) => {
-        state.slides.push(element.image_path);
+        if (element.image_path) {
+          state.slides.push(element.image_path);
+        }
       });
     });
     const slideImageClick = async (index: number) => {

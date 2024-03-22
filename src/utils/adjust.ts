@@ -52,7 +52,8 @@ export default class AdjustClass {
   public setMobile(type: boolean): void {
     this.isMobileWebview = type;
     if (this.isMobileWebview) {
-      if (!(window as any)["AndroidWebView"]) (window as any)["AndroidWebView"] = {};
+      // if (!(window as any)["AndroidWebView"]) (window as any)["AndroidWebView"] = {};
+      // (window as any)["AndroidWebView"].firebaseEvent = function(key:string, value:string, params:string){}
     }
   }
 

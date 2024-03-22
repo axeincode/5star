@@ -2,12 +2,14 @@
 import { ref, defineAsyncComponent, watch, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 import { vipStore } from "@/store/vip";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 const vipTab = ref("Progress");
+const route = useRoute();
 const vipNavigation = ref<any>(null);
 const {
   dispatchVipInfo,
@@ -63,13 +65,17 @@ onMounted(async () => {
   } else {
     vipDrawer.value = false;
   }
-  AdjustClass.getInstance().adjustTrackEvent({
+  await dispatchVipCycleawardList();
+  await dispatchVipBetawardList();
+  let isMobile: boolean = false
+      if (route.query.mobile && route.query.mobile == "android"){
+        isMobile = true
+      }
+  AdjustClass.getInstance(isMobile).adjustTrackEvent({
     key: "PAGE_VIEW",
     value: "vip",
     params: "",
   });
-  await dispatchVipCycleawardList();
-  await dispatchVipBetawardList();
 });
 </script>
 

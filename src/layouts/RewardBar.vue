@@ -3,7 +3,7 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { ref, computed, watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { mailStore } from "@/store/mail";
 import { menuStore } from "@/store/menu";
 import { authStore } from "@/store/auth";
@@ -36,7 +36,7 @@ const platformCurrency = computed(() => {
 
 const { t } = useI18n();
 const { width } = useDisplay();
-const router = useRouter();
+const route = useRoute();
 const { setRewardNavShow } = menuStore();
 const { setMailMenuShow } = mailStore();
 const { setOverlayScrimShow } = appBarStore();
@@ -265,7 +265,11 @@ const handleScroll = (event: any) => {
 };
 
 onMounted(async () => {
-  AdjustClass.getInstance().adjustTrackEvent({
+  let isMobile: boolean = false
+      if (route.query.mobile && route.query.mobile == "android"){
+        isMobile = true
+      }
+  AdjustClass.getInstance(isMobile).adjustTrackEvent({
     key: "PAGE_VIEW",
     value: "reward",
     params: "",
