@@ -12,7 +12,7 @@ import { storeToRefs } from "pinia";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
 import type * as Game from "@/interface/game";
 import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 const { t } = useI18n();
@@ -127,11 +127,11 @@ watch(searchText, async (value) => {
 })
 
 onMounted(async () => {
-
-  adjustTrackEvent("PAGE_VIEW", {
-    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-  }, "");
-
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "provider",
+    params: "",
+  });
   loading.value = true;
   window.scrollTo({
     top: 0,

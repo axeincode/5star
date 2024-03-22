@@ -18,7 +18,7 @@ import { throwStatement } from "@babel/types";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
 import { googleTokenLogin } from "vue3-google-login";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 const Login = defineComponent({
@@ -122,13 +122,11 @@ const Login = defineComponent({
 
     const loginSuccess = async () => {
       if (success.value) {
-        adjustTrackEvent(
-          "LOGIN",
-          {
-            eventToken: EventToken.LOGIN, // LOGIN
-          },
-          userInfo.value.id
-        );
+        AdjustClass.getInstance().adjustTrackEvent({
+          key: "LOGIN",
+          value: userInfo.value.id.toString(),
+          params: "",
+        });
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchCurrencyList();
@@ -280,10 +278,13 @@ const Login = defineComponent({
         // await loginSuccess();
         //     console.log("facebook登录", authResponse);
         //   },{scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
-        //   // event tracking
-        //   adjustTrackEvent("FACEBOOK_LOGIN",{
-        //     eventToken: EventToken.FACEBOOK_LOGIN, // FACEBOOK_LOGIN
-        //   }, userInfo.value.id);
+
+        // AdjustClass.getInstance().adjustTrackEvent({
+        //   key: "FACEBOOK_LOGIN",
+        //   value: userInfo.value.id.toString(),
+        //   params: "",
+        // });
+
         // }
         // })
       }
@@ -298,14 +299,11 @@ const Login = defineComponent({
           await dispatchQuickLogin(params);
           await loginSuccess();
         });
-        // event tracking
-        adjustTrackEvent(
-          "GOOGLE_LOGIN",
-          {
-            eventToken: EventToken.GOOGLE_LOGIN, // GOOGLE_LOGIN
-          },
-          userInfo.value.id
-        );
+        AdjustClass.getInstance().adjustTrackEvent({
+          key: "GOOGLE_LOGIN",
+          value: userInfo.value.id.toString(),
+          params: "",
+        });
       }
     };
 

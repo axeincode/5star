@@ -15,7 +15,7 @@ import GameProviders from "@/components/global/game_provider/index.vue";
 import SuspendAccount from "@/components/account/suspend_account/index.vue";
 import MSuspendAccount from "@/components/account/suspend_account/mobile/index.vue";
 import MDialog from "./dialog/index.vue";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 // const UserInformation = defineAsyncComponent(() => import("@/components/account/user_information/pc/index.vue"));
@@ -140,10 +140,11 @@ watch(activeAccountIndex, (value) => {
 })
 
 onMounted(() => {
-
-  adjustTrackEvent("PAGE_VIEW", {
-    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-  }, "");
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "account",
+    params: "",
+  });
 
   if (mobileWidth.value > 1280) {
     if (rightBarToggle.value) {

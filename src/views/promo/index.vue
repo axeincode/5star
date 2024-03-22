@@ -16,7 +16,7 @@ import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { agentStore } from "@/store/agent";
 import { storeToRefs } from "pinia";
 import { type PromoListData } from "@/interface/promo";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 const { setAuthModalType } = authStore();
@@ -205,10 +205,11 @@ const handleContent = (item: PromoListData) => {
 }
 
 onMounted(async () => {
-
-  adjustTrackEvent("PAGE_VIEW", {
-    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-  }, "");
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "promo",
+    params: "",
+  });
 
   window.scrollTo({
     top: 0,

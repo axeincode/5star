@@ -21,7 +21,7 @@ import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import { googleTokenLogin } from "vue3-google-login";
 import EventToken from "@/constants/EventToken";
 
@@ -252,13 +252,11 @@ const MSignup = defineComponent({
 
     const registerSuccess = async () => {
       if (success.value) {
-        adjustTrackEvent(
-          "REGISTER",
-          {
-            eventToken: EventToken.REGISTER, // REGISTER
-          },
-          userInfo.value.id
-        );
+        AdjustClass.getInstance().adjustTrackEvent({
+          key: "REGISTER",
+          value: userInfo.value.id.toString(),
+          params: "",
+        });
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
@@ -396,23 +394,19 @@ const MSignup = defineComponent({
     };
 
     const facebookRegister = () => {
-      adjustTrackEvent(
-        "FB_REGISTER",
-        {
-          eventToken: EventToken.FB_REGISTER, // FB_REGISTER
-        },
-        userInfo.value.id
-      );
+      AdjustClass.getInstance().adjustTrackEvent({
+        key: "FB_REGISTER",
+        value: userInfo.value.id.toString(),
+        params: "",
+      });
     };
 
     const gooleRegister = () => {
-      adjustTrackEvent(
-        "GOOGLE_REGISTER",
-        {
-          eventToken: EventToken.GOOGLE_REGISTER, // GOOGLE_REGISTER
-        },
-        userInfo.value.id
-      );
+      AdjustClass.getInstance().adjustTrackEvent({
+        key: "GOOGLE_REGISTER",
+        value: userInfo.value.id.toString(),
+        params: "",
+      });
     };
 
     const loginState = async (response: any) => {
@@ -467,11 +461,12 @@ const MSignup = defineComponent({
         //   }
         //   await dispatchQuickRegister(params);
         //   await registerSuccess();
+        // AdjustClass.getInstance().adjustTrackEvent({
+        //   key: "FACEBOOK_LOGIN",
+        //   value: userInfo.value.id.toString(),
+        //   params: "",
         // });
-        // // event tracking
-        // adjustTrackEvent("FACEBOOK_LOGIN", {
-        //   eventToken: EventToken.FACEBOOK_LOGIN, // FACEBOOK_LOGIN
-        // }, userInfo.value.id);
+        // });
       }
       if (index === 1) {
         googleTokenLogin({
@@ -484,14 +479,12 @@ const MSignup = defineComponent({
           };
           await dispatchQuickRegister(params);
           await registerSuccess();
+          AdjustClass.getInstance().adjustTrackEvent({
+            key: "GOOGLE_LOGIN",
+            value: userInfo.value.id.toString(),
+            params: "",
+          });
         });
-        adjustTrackEvent(
-          "GOOGLE_LOGIN",
-          {
-            eventToken: EventToken.GOOGLE_LOGIN, // GOOGLE_LOGIN
-          },
-          userInfo.value.id.toString()
-        );
       }
     };
 

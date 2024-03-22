@@ -24,7 +24,7 @@ import { loginBonusStore } from "@/store/loginBonus";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 // 获取平台货币
@@ -265,13 +265,11 @@ const handleScroll = (event: any) => {
 };
 
 onMounted(async () => {
-  adjustTrackEvent(
-    "PAGE_VIEW",
-    {
-      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-    },
-    ""
-  );
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "reward",
+    params: "",
+  });
   if (token.value) {
     await getRewardList();
   }

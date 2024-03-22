@@ -81,7 +81,7 @@ export class NetworkData {
   public setToken(token: string): void {
     this.token = token
     Cookies.set(CacheKey.TOKEN, token, { expires: 2 })
-    
+
   }
 
   /** Get current token */

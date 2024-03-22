@@ -15,7 +15,7 @@ import MPaymentMethods from "@/components/about_us/payment_methods/mobile/index.
 import MReferralSystem from "@/components/about_us/referral_system/mobile/index.vue";
 import MAMLPolicy from "@/components/about_us/aml_policy/mobile/index.vue";
 import MKYCPolicy from "@/components/about_us/kyc_policy/mobile/index.vue";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 const { t } = useI18n();
@@ -89,14 +89,11 @@ watch(
 );
 
 onMounted(() => {
-
-  adjustTrackEvent(
-    "PAGE_VIEW",
-    {
-      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-    },
-    ""
-  );
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "about_us",
+    params: "",
+  });
 
   if (route.query.index) {
     activeMenuIndex.value = route.query.index;

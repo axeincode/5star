@@ -7,7 +7,7 @@ import { promoStore } from "@/store/promo";
 import { storeToRefs } from "pinia";
 import { type PromoListData } from "@/interface/promo";
 import { authStore } from "@/store/auth";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 // import img_hp_4 from "@/assets/promo/image/img_hp_4.png";
 // import img_hp_5 from "@/assets/promo/image/img_hp_5.png";
@@ -57,11 +57,11 @@ const promoList = computed(() => {
 });
 
 onMounted(async () => {
-
-  adjustTrackEvent("PAGE_VIEW", {
-    eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-  }, "");
-
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "promo_detail",
+    params: "",
+  });
   detailShow.value = false
   await dispatchUserActivityList();
   promoList.value.group_data[0].list_data.map(item => {

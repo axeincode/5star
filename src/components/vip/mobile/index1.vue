@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
 import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 
 const vipTab = ref("Progress");
@@ -56,13 +56,11 @@ watch(vipNavBarToggle, (value: string) => {
 });
 
 onMounted(async () => {
-  // adjustTrackEvent(
-  //   "PAGE_VIEW",
-  //   {
-  //     eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-  //   },
-  //   ""
-  // );
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "vip",
+    params: "",
+  });
   if (localStorage.getItem("vipBar") === "1") {
     vipDrawer.value = true;
     document.body.style.height =

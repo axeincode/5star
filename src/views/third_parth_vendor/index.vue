@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { adjustTrackEvent } from "@/utils/adjust";
+import AdjustClass from "@/utils/adjust";
 import { useRouter, useRoute } from "vue-router";
 import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
@@ -35,15 +35,12 @@ const handleGameProviderPage = (slug: string) => {
 };
 
 onMounted(async () => {
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "third_parth_vendor",
+    params: "",
+  });
   loading.value = true;
-  adjustTrackEvent(
-    "PAGE_VIEW",
-    {
-      eventToken: EventToken.PAGE_VIEW, // PAGE_VIEW
-    },
-    ""
-  );
-
   await dispatchGameCategories("?type=providers");
   window.scrollTo({
     top: 0,
