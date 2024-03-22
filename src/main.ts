@@ -42,14 +42,7 @@ import 'dayjs/locale/en';
 // vue3 google login
 import Vue3GoogleLogin from 'vue3-google-login';
 
-import Adjust from '@adjustcom/adjust-web-sdk';
-
 import { getErrorInfoCollector } from '@/utils/errorInfoCollector'
-
-Adjust.initSdk({
-  appToken: 'gmx6cdn8x3pc',
-  environment: 'sandbox', // or 'production'
-});
 
 // Declare the FB object
 declare global {

@@ -12,7 +12,7 @@ import { useI18n } from "vue-i18n";
 import Footer from "./Footer.vue";
 import { useRoute } from 'vue-router';
 import { mainStore } from "@/store/main";
-import { useScroll } from "@/hooks/scrollTo.ts";
+import { useScroll } from "@/hooks/scrollTo";
 
 import Deposit from "@/components/cash/mxn/deposit/index.vue";
 import MDeposit from "@/components/cash/mxn/deposit/mobile/index.vue";
@@ -542,7 +542,7 @@ onMounted(() => {
 
 // 监听路由页面 home 初始化时间
 const routeInited = () => {
-  scrollTo()
+  scrollTo(0)
 }
 </script>
 

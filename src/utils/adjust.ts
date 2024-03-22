@@ -1,7 +1,6 @@
 
 import Adjust from "@adjustcom/adjust-web-sdk";
 
-
 export interface AdjustData {
   key: string
   value: string
