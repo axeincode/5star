@@ -124,7 +124,7 @@ const Login = defineComponent({
       if (success.value) {
         AdjustClass.getInstance().adjustTrackEvent({
           key: "LOGIN",
-          value: userInfo.value.id.toString(),
+          value: String(userInfo.value.id),
           params: "",
         });
         await dispatchUserProfile();
