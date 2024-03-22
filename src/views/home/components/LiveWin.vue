@@ -331,7 +331,6 @@ const liveWinList = ()=>{
   margin: 0 1.8px;
   padding: 8px 7px 4px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
   border-bottom-left-radius: 8px 8px;
   border-bottom-right-radius: 8px 8px;
 

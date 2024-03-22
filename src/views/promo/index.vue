@@ -247,7 +247,7 @@ const i18nButtonText = (eng: string) => {
           {{ t("promo.text_1") }}
         </div>
       </div>
-      <div
+      <!-- <div
         class="mt-8 text-center relative ml-2 m-promo-navigation-event-card"
         :class="activeIndex == 1 ? 'm-promo-navigation-event-card-active' : ''"
         @click="handleBtnTab(1)"
@@ -278,7 +278,7 @@ const i18nButtonText = (eng: string) => {
         <div class="text-600-8" :class="activeIndex == 2 ? 'white' : 'gray'">
           {{ t("promo.text_3") }}
         </div>
-      </div>
+      </div> -->
     </v-navigation-drawer>
     <v-main class="m-promo-navigation-body">
       <template v-if="!promoShow">

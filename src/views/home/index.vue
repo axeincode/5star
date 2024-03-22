@@ -974,18 +974,12 @@ const Dashboard = defineComponent({
     onMounted(async () => {
       loading.value = true;
 
-      if (route.query.mobile && route.query.mobile == "android") {
-        localStorage.setItem("isMobile", "true");
-      } else {
-        localStorage.setItem("isMobile", "false");
-      }
-
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
 
-      let isMobile: boolean = localStorage.getItem("isMobile") == "true" ? true : false
+      let isMobile: boolean = !!route.query.mobile && route.query.mobile == "android"
 
       AdjustClass.getInstance(isMobile).adjustTrackEvent({ key: "PAGE_VIEW", value: "home", params: "" });
 
@@ -2309,7 +2303,7 @@ export default Dashboard;
 }
 
 .m-carousel-img-border {
-  border-radius: 16px 6px;
+  // border-radius: 16px 6px;
 }
 
 .v-carousel__controls {
@@ -2592,7 +2586,6 @@ export default Dashboard;
   margin: 0;
   padding: 10px 12px 3px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
   border-bottom-left-radius: 8px 8px;
   border-bottom-right-radius: 8px 8px;
 

@@ -187,11 +187,15 @@ onMounted(() => {
   .m-agent-body {
     // margin-top: 70px;
     // padding-top: 8px;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 80px);
     overflow-y: scroll;
     position: absolute;
     top: 70px;
     width: 100%;
+  }
+
+  .v-navigation-drawer__content {
+    height: calc(100vh - 10px);
   }
 }
 </style>

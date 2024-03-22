@@ -27,7 +27,11 @@ const { t } = useI18n();
     <div class="mx-4 text-400-12 text-white">{{ t("agent.text_41") }}</div>
     <div class="mx-4 text-400-12 text-white mt-5">{{ t("agent.text_42") }}</div>
     <div class="mx-4 text-400-12 text-white mt-5">{{ t("agent.text_43") }}</div>
-    <div class="mx-4 text-400-12 text-white mt-5 mb-4">{{ t("agent.text_44") }}</div>
+    <div class="mx-4 text-400-12 text-white mt-5 faq-mb-100">{{ t("agent.text_44") }}</div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.faq-mb-100 {
+    margin-bottom: 100px !important;
+}
+</style>

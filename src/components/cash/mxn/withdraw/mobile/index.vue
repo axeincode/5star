@@ -242,7 +242,14 @@ const validateAmount = (): boolean => {
 const handleAmountInputFocus = (): void => {
 }
 
-const handleAmountInputChange = (): void => {
+const handleAmountInputChange = (event: any): void => {
+  const input = event.target as HTMLInputElement;
+  const newValue = input.value;
+  // 如果输入的值第一个字符为 0，则阻止输入
+  if (newValue.length === 1 && String(newValue[0]) === '0') {
+    withdrawAmount.value = ''
+    input.value = '';
+  }
 }
 
 const handleAmountInputBlur = (): void => {

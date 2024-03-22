@@ -322,14 +322,28 @@ const handleAmountInputFocus = (): void => {
   }
 }
 
-const handleAmountInputChange = (): void => {
+// 保存定时器
+const isShowAmountTimeout = ref<null | ReturnType<typeof setTimeout>>(null);
+
+const handleAmountInputChange = ($event: any): void => {
+  if (/^0/.test($event.target.value)) {
+    // 如果以 0 开头，则移除第一个字符
+    depositAmount.value = $event.target.value.slice(1);
+  }
+
   if (validateAmount()) {
     isShowAmountValidation.value = false;
   } else {
     isShowAmountValidation.value = true;
-    setTimeout(() => {
+
+    // 摧毁定时器，防止多次创建
+    if (isShowAmountTimeout.value) {
+      clearTimeout(isShowAmountTimeout.value);
+    }
+
+    isShowAmountTimeout.value = setTimeout(() => {
       isShowAmountValidation.value = false;
-    }, 5000)
+    }, 5000);
   }
 }
 
