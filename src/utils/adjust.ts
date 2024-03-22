@@ -52,7 +52,12 @@ export default class AdjustClass {
    */
   public setMobile(type: boolean): void {
     this.isMobileWebview = type;
+    if (this.isMobileWebview) {
+      if (!(window as any)["AndroidWebView"]) (window as any)["AndroidWebView"] = {};
+      (window as any)["AndroidWebView"].firebaseEvent = function(key:string, value:string, params:string){}
+    }
   }
+
 
   /**
    * send event
@@ -60,12 +65,13 @@ export default class AdjustClass {
    */
   public adjustTrackEvent(tokenParams: AdjustData): void {
     if (this.isMobileWebview) {
-      (window as any)["AndroidWebView"].firebaseEvent(tokenParams.key, tokenParams.value, tokenParams.params)
+      (window as any)["AndroidWebView"].firebaseEvent(tokenParams.key, tokenParams.value, tokenParams.params);
     } else {
       // web目前不需要上报处理
       // Adjust.addGlobalCallbackParameters([{key:this.getKey(tokenParams.key), value:tokenParams.value}]);
       // Adjust.trackEvent(tokenParams);
     }
+    console.log(this.isMobileWebview)
   }
 
   /**

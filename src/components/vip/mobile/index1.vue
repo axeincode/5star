@@ -56,11 +56,6 @@ watch(vipNavBarToggle, (value: string) => {
 });
 
 onMounted(async () => {
-  AdjustClass.getInstance().adjustTrackEvent({
-    key: "PAGE_VIEW",
-    value: "vip",
-    params: "",
-  });
   if (localStorage.getItem("vipBar") === "1") {
     vipDrawer.value = true;
     document.body.style.height =
@@ -68,6 +63,11 @@ onMounted(async () => {
   } else {
     vipDrawer.value = false;
   }
+  AdjustClass.getInstance().adjustTrackEvent({
+    key: "PAGE_VIEW",
+    value: "vip",
+    params: "",
+  });
   await dispatchVipCycleawardList();
   await dispatchVipBetawardList();
 });
