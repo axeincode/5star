@@ -270,7 +270,6 @@ watch(mobileWidth, (newValue: number) => {
 })
 
 watch(currencyMenuShow, async (value: boolean) => {
-  console.log(value);
   if (mobileWidth.value < 600) {
     if (value) {
       await dispatchCurrencyList();
@@ -407,7 +406,6 @@ const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
 }
 
 const handleCurrencyMenuShow = async () => {
-  currencyMenuShow.value = !currencyMenuShow.value;
   await dispatchUserBalance();
   await dispatchUserBonus();
 }

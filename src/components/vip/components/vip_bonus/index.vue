@@ -39,7 +39,7 @@ const vipBetawardList = computed(() => {
         <div class="bonus-main-cashback">
             <div class="bonus-main-cashback-l">
                 <span>{{ t('vip.vip_level_info.bonus.text_1') }}</span>
-                <span>{{ platformCurrency }} {{ vipBetawardList.now_cash_back }}</span>
+                <span>{{ platformCurrency }} {{ Math.floor(Number(vipBetawardList.now_cash_back) * 100) / 100 }}</span>
             </div>
             <div class="bonus-main-cashback-r">
                 <span v-if="+vipBetawardList.now_cash_back > 0" @click="dispatchVipBetawardReceive({ type: 7 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>

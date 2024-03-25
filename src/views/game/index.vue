@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted, onUnmounted } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
 import { useDisplay } from "vuetify";
@@ -16,6 +16,10 @@ import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 import { useRoute, useRouter } from "vue-router";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
+import CloseIframe from "@/components/close_iframe/index.vue";
+
+// 是否显示关闭按钮
+const displayedCloseBtn = ref<boolean>(false)
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -359,6 +363,9 @@ const isNumeric = (value: any) => {
 };
 
 const handleIframeLoad = () => {
+  // 打开游戏，显示关闭按钮
+  displayedCloseBtn.value = true
+
   if (enterGameItem.value.weburl != "") {
     frameShow.value = true;
   }
@@ -377,6 +384,13 @@ const handleMessageFromIframe = (event: any) => {
 const handleResize = () => {
   mobileHeight.value = window.innerHeight;
 };
+
+// 点击关闭按钮回调
+const closeGame = () => {
+  router.go(-1);
+  // 关闭按钮显示
+  displayedCloseBtn.value = false
+}
 
 onMounted(async () => {
   AdjustClass.getInstance().adjustTrackEvent({
@@ -426,6 +440,9 @@ onUnmounted(() => {
 });
 </script>
 <template>
+
+  <CloseIframe v-if="displayedCloseBtn" @close="closeGame"></CloseIframe>
+
   <div class="game-body" v-if="mobileWidth < 600">
     <div class="m-game-frame-body">
       <div class="m-loading-container relative" v-if="!frameShow">
