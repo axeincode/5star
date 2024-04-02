@@ -62,6 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
+<div v-if="drawer">
   <v-navigation-drawer
     temporary
     location="right"
@@ -133,6 +134,7 @@ onMounted(() => {
       <MGrade v-if="activeIndex == 4" />
     </div>
   </v-navigation-drawer>
+</div>
 </template>
 
 <style lang="scss">
@@ -188,7 +190,7 @@ onMounted(() => {
     // margin-top: 70px;
     // padding-top: 8px;
     height: calc(100vh - 80px);
-    overflow-y: scroll;
+    overflow: hidden;
     position: absolute;
     top: 70px;
     width: 100%;
@@ -196,6 +198,7 @@ onMounted(() => {
 
   .v-navigation-drawer__content {
     height: calc(100vh - 10px);
+    overflow-y: hidden;
   }
 }
 </style>

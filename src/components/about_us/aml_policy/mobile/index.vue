@@ -42,16 +42,17 @@ const mobileWidth: any = computed(() => {
         </el-collapse-item>
         <el-collapse-item :title="t('about.aml_policy.text_19')" name="3">
           <div>{{ t("about.aml_policy.text_20") }}</div>
-          <div class="mt-1">{{ t("about.aml_policy.text_21") }}</div>
+          <!-- <div class="mt-1">{{ t("about.aml_policy.text_21") }}</div> -->
         </el-collapse-item>
         <el-collapse-item :title="t('about.aml_policy.text_22')" name="4">
           <div>{{ t("about.aml_policy.text_23") }}</div>
         </el-collapse-item>
         <el-collapse-item :title="t('about.aml_policy.text_24')" name="5">
           <div class="text-700-12 white">{{ t("about.aml_policy.text_25") }}</div>
+          <div>{{ t("about.aml_policy.text_25_1") }}</div>
           <div class="text-700-12 white">{{ t("about.aml_policy.text_26") }}</div>
           <div>{{ t("about.aml_policy.text_27") }}</div>
-          <div>{{ t("about.aml_policy.text_28") }}</div>
+          <!-- <div>{{ t("about.aml_policy.text_28") }}</div> -->
           <div class="text-700-12 white my-1">{{ t("about.aml_policy.text_29") }}</div>
           <div>{{ t("about.aml_policy.text_30") }}</div>
         </el-collapse-item>

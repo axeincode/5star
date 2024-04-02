@@ -21,6 +21,7 @@ import icon_public_30 from "@/assets/public/svg/icon_public_30.svg";
 import icon_public_31 from "@/assets/public/svg/icon_public_31.svg";
 import icon_public_32 from "@/assets/public/svg/icon_public_32.svg";
 import icon_public_33 from "@/assets/public/svg/icon_public_33.svg";
+import { toFormatNum } from '@/utils/numFormat';
 
 // 获取平台货币
 import { storeToRefs } from "pinia";
@@ -299,7 +300,7 @@ onMounted(() => {
             >
               <div class="invite-url-title">{{ t("affiliate.invite.text_3") }}</div>
               <div class="invite-url-right-text mt-1">
-                {{ platformCurrency }} {{ statisticsItem.today_revenue }}
+                {{ platformCurrency }} {{ toFormatNum(statisticsItem.today_revenue) }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-1">
@@ -315,7 +316,7 @@ onMounted(() => {
                 {{ t("affiliate.invite.text_4") }}
               </div>
               <div class="invite-url-right-text mt-1">
-                {{ platformCurrency }} {{ statisticsItem.yesterday_revenue }}
+                {{ platformCurrency }} {{ toFormatNum(statisticsItem.yesterday_revenue) }}
               </div>
             </v-col>
           </v-row>
@@ -341,7 +342,7 @@ onMounted(() => {
                 {{ t("affiliate.invite.text_7") }}
               </div>
               <div class="invite-url-right-text mt-2">
-                {{ platformCurrency }} {{ statisticsItem.this_month_revenue.toFixed(2) }}
+                {{ platformCurrency }} {{ toFormatNum(statisticsItem.this_month_revenue) }}
               </div>
             </v-col>
             <v-col cols="6" md="3" lg="3" class="text-center py-1">
@@ -365,7 +366,7 @@ onMounted(() => {
             <v-col cols="12" class="text-center py-1">
               <div class="invite-url-title">{{ t("affiliate.invite.text_9") }}</div>
               <div class="invite-url-right-text mt-2">
-                {{ platformCurrency }} {{ statisticsItem.total_revenue.toFixed(2) }}
+                {{ platformCurrency }} {{ toFormatNum(statisticsItem.total_revenue) }}
               </div>
             </v-col>
           </v-row>
@@ -726,7 +727,7 @@ onMounted(() => {
             :class="[mobileWidth < 600 ? 'pt-2' : 'pt-4']"
             :style="[mobileWidth < 600 ? 'font-size: 26px' : '']"
           >
-            {{ platformCurrency }} {{ Math.ceil(slider) }}
+            {{ platformCurrency }} {{ toFormatNum(Math.ceil(slider)) }}
           </div>
           <div class="footer-text-7">
             <span>{{ t("affiliate.invite.invite_text_7") }}</span>

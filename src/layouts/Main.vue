@@ -91,7 +91,7 @@ const { setAccountDialogShow } = appBarStore();
 const { setActiveAccountIndex } = appBarStore();
 // const { setBonusDashboardDialogVisible } = appBarStore();
 const { setAuthModalType } = authStore();
-const { setNickNameDialogVisible } = authStore();
+const { setNickNameDialogVisible,setAuthDialogVisible } = authStore();
 const { setRefferalDialogShow } = refferalStore();
 const { setLoginBonusDialogVisible } = loginBonusStore();
 const { setRouletteBonusDialogVisible } = loginBonusStore();
@@ -520,7 +520,11 @@ watch(route, (to) => {
 }, { flush: 'pre', immediate: true, deep: true })
 
 onMounted(() => {
-  console.log(route.query.code);
+  // console.log(route.query.code);
+  // 带有邀请注册码的，直接打开注册弹窗
+  if(route.query.code){
+    setAuthDialogVisible(true)
+  }
   window.addEventListener("resize", handleResize);
   // window.addEventListener('scroll', (e) => {
   //         // 获取滚动的值并打印出来
@@ -542,7 +546,7 @@ onMounted(() => {
 
 // 监听路由页面 home 初始化时间
 const routeInited = () => {
-  scrollTo(0)
+  // scrollTo()
 }
 </script>
 
@@ -674,7 +678,6 @@ const routeInited = () => {
         mobileVersion == 'sm' ? 'dialog-bottom-transition' : 'scale-transition'
       "
       :class="[mobileVersion == 'sm' ? 'mobile-auth-dialog-position' : '']"
-      @click:outside="authDialog = false"
       persistent
       style="z-index: 2147483646"
     >
@@ -777,14 +780,13 @@ const routeInited = () => {
       <MLevelUpDialog v-else />
     </v-dialog>
 
-    <!----------------------------------- refferal dialog --------------------------------->
+    <!----------------------------------- refferal dialog @click:outside="closeReferDialog"--------------------------------->
 
     <v-dialog
       v-model="refferalDialog"
       persistent
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="true"
-      @click:outside="closeReferDialog"
       style="z-index: 2147483646"
     >
       <RefferalDialog v-if="mobileWidth > 600" />
@@ -798,7 +800,7 @@ const routeInited = () => {
       :width="mobileWidth < 600 ? '340' : '471'"
       @click:outside="closeLoginBonusDialog"
       :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
-      style="z-index: 10000000000000020"
+      style="z-index: 2147483646"
     >
       <LoginBonusDialog
         v-if="mobileWidth > 600"
@@ -852,8 +854,22 @@ const routeInited = () => {
 
     <!------------------------------ Main Page ------------------------------------------->
 
-    <router-view @inited="routeInited" />
-
+    <router-view v-slot="{ Component, route }">
+      <!-- 缓存路由 -->
+      <keep-alive>
+        <component
+          v-if="route.meta.keepAlive"
+          :is="Component"
+          :key="route.path"
+        />
+      </keep-alive>
+      <!-- 正常路由 -->
+      <component
+        v-if="!route.meta.keepAlive"
+        :is="Component"
+        :key="route.path"
+      />
+    </router-view>
     <!-- back top -->
 
     <el-backtop :right="16" :bottom="70">

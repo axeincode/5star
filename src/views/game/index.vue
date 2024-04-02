@@ -382,6 +382,8 @@ const handleMessageFromIframe = (event: any) => {
 };
 
 const handleResize = () => {
+  const doc = document.documentElement
+  doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
   mobileHeight.value = window.innerHeight;
 };
 
@@ -399,6 +401,7 @@ onMounted(async () => {
     params: "",
   });
   window.addEventListener("resize", handleResize);
+  handleResize()
   mobileHeight.value = window.innerHeight;
   setMobileMenuShow(false);
   window.scrollTo({
@@ -452,12 +455,12 @@ onUnmounted(() => {
           <div class="dot-0"></div>
         </div>
       </div>
-      <div id="game_wrapper">
+      <div id="game_wrapper safari_only">
         <iframe
           v-if="enterGameItem.method == 'HTML'"
           ref="gameFrameRef"
           :srcdoc="enterGameItem.weburl"
-          :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
+          :style="{ height: frameShow ? '100%' : '0px', position: 'fixed' }"
           class="home-game-frame-area"
           @load="handleIframeLoad"
         ></iframe>
@@ -465,7 +468,7 @@ onUnmounted(() => {
           v-else
           ref="gameFrameRef"
           :src="enterGameItem.weburl"
-          :style="{ height: frameShow ? mobileHeight + 'px' : '0px', position: 'fixed' }"
+          :style="{ height: frameShow ? '100%' : '0px', position: 'fixed' }"
           class="home-game-frame-area"
           @load="handleIframeLoad"
         ></iframe>
@@ -481,18 +484,18 @@ onUnmounted(() => {
           <div class="dot-0"></div>
         </div>
       </div>
-      <div id="game_wrapper">
+      <div id="game_wrapper safari_only">
         <iframe
           v-if="enterGameItem.method == 'HTML'"
           :srcdoc="enterGameItem.weburl"
           class="home-game-frame-area"
-          :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
+          :style="{ height: frameShow ?'100%' : '0px' }"
           @load="handleIframeLoad"
         ></iframe>
         <iframe
           :src="enterGameItem.weburl"
           class="home-game-frame-area"
-          :style="{ height: frameShow ? 'calc(100vh - 130px)' : '0px' }"
+          :style="{ height: frameShow ? '100%' : '0px' }"
           @load="handleIframeLoad"
           v-else
         ></iframe>
@@ -614,6 +617,11 @@ onUnmounted(() => {
   </div>
 </template>
 <style lang="scss">
+_::-webkit-full-page-media,
+_:future,
+:root .safari_only {
+  height: calc(100vh - 120px); //解决Safari浏览器底部遮挡问题
+}
 @keyframes expandAnimation {
   0% {
     scale: 1.3;

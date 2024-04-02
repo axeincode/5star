@@ -25,3 +25,7 @@ declare class starx {
     static getState(): boolean;
     static on(key: string, call: Function): any;
 }
+
+interface Window {
+    fbAsyncInit?: () => void;
+}

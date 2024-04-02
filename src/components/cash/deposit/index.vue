@@ -13,6 +13,7 @@ import { useDisplay } from 'vuetify';
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import ParticipatingDialog from "@/components/cash/deposit/ParticipatingDialog.vue";
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -33,14 +34,14 @@ const promotionDialogVisible = ref<boolean>(false);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
     icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-    name: "BRL",
+    name: platformCurrency.value,
     value: 5.25
 })
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "",
   icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
   name: "PIX",
-  description: "20~150.000 BRL",
+  description: "20~150.000 " + platformCurrency.value,
   min: 149,
   max: 588.88
 })
@@ -88,7 +89,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "1",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_1",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -96,7 +97,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "2",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_2",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -104,7 +105,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "3",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_3",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -112,7 +113,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "4",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_4",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -120,7 +121,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "5",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_5",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -128,7 +129,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "6",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_6",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -136,7 +137,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "7",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_7",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -144,7 +145,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     id: "8",
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_8",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -410,7 +411,7 @@ const overlayScrimShow = computed(() => {
           ]"
           @click="handleDepositAmount(depositAmountItem)"
         >
-          {{ platformCurrency }} {{ depositAmountItem }}
+          {{ platformCurrency }} {{ toFormatNum(depositAmountItem) }}
           <div class="deposit-amount-area" v-if="!bonusCheck"></div>
           <div class="deposit-amount-rate-text" v-if="!bonusCheck">{{ depositRate }}</div>
         </v-btn>

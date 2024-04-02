@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, Suspense } from "vue";
 import { RouterView } from "vue-router";
+// import FP from '@fingerprintjs/fingerprintjs-pro';
 
 // // 自动更新
 // function autoUpdate(): void {
@@ -80,9 +81,20 @@ import { RouterView } from "vue-router";
 //   });
 // }
 
+const fingerprint = ref<string>('');
 
-onMounted(() => {
+onMounted(async () => {
   // autoUpdate()
+  // 获取fingerprint指纹
+  // try {
+  //   const fp = await FP.load({
+  //     token: 'F2FGYiUPWrRUc2mVnpnR'
+  //   });
+  //   const result = await fp.get();
+  //   fingerprint.value = result.visitorId;
+  // } catch (error) {
+  //   console.error('Failed to get browser fingerprint:', error);
+  // }
 });
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted, toRefs } from "vue";
+import { ref, computed, watch, onMounted, toRefs, nextTick } from "vue";
 import Pagination from "@/components/global/pagination/index.vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
@@ -25,6 +25,8 @@ enum History {
   login = 'vipSigninHistory',
 }
 
+const emit = defineEmits(['inited'])
+
 const platformCurrency = computed(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
@@ -43,7 +45,7 @@ const props = defineProps<{
 }>();
 
 const { pageSize } = toRefs(props);
-
+const pageRef = ref(null)
 const paginationLength = ref<number>(1);
 
 const loading = ref<boolean>(false);
@@ -52,7 +54,7 @@ const startIndex = ref<number>(0);
 const endIndex = ref<number>(8);
 const currentList = ref<Array<VipRebateHistoryItem>>([]);
 const selectedHistoryIndex = ref<number>(1);
-
+const startTime = ref(Math.ceil(moment().valueOf() / 1000))
 const transactionVIPMenuShow = ref<boolean>(false);
 const selectedVipMenuItem = ref<string>(History.rateBack);
 const transactionVipMenuList = ref<any[]>([
@@ -87,7 +89,9 @@ const tempHistoryList = [{},{},{},{},{},{}];
 const mobileWidth = computed(() => {
   return width.value;
 });
-
+const readPageSize = computed(() => {
+  return pageSize.value - 1;
+});
 const vipRebateHistory = computed(() => {
   const { getVipRebateHistory } = storeToRefs(vipStore());
   return getVipRebateHistory.value;
@@ -166,21 +170,21 @@ const pageNo = async (page_no: number) => {
   //   })
   //   paginationLength.value = vipSigninHistory.value.total;
   // }
-  let total = 0
+  let total = 1
   switch(selectedVipMenuItem.value) {
     case History.rateBack:
       await dispatchVipRebateHistory({
         page_num: page_no,
-        page_size: pageSize.value,
-        start_time: Math.ceil(moment().valueOf() / 1000),
+        page_size: readPageSize.value,
+        start_time: startTime.value,
       });
       total = vipRebateHistory.value.total;
       break;
     case History.rank:
       await dispatchVipLevelRewardHistory({
         page_num: page_no,
-        page_size: pageSize.value,
-        start_time: Math.ceil(moment().valueOf() / 1000),
+        page_size: readPageSize.value,
+        start_time: startTime.value,
       });
       total = vipLevelRewardHistory.value.total;
       break;
@@ -189,8 +193,8 @@ const pageNo = async (page_no: number) => {
       await dispatchVipTimesHistory({
         index: 1,
         page_num: page_no,
-        page_size: pageSize.value,
-        start_time: Math.ceil(moment().valueOf() / 1000),
+        page_size: readPageSize.value,
+        start_time: startTime.value,
       });
       total = vipTimesHistory.value.total;
       break;
@@ -199,21 +203,21 @@ const pageNo = async (page_no: number) => {
         await dispatchVipTimesHistory({
           index: 2,
           page_num: page_no,
-          page_size: pageSize.value,
-          start_time: Math.ceil(moment().valueOf() / 1000),
+          page_size: readPageSize.value ,
+          start_time: startTime.value,
         });
       total = vipTimesHistory.value.total;
       break;
     case History.login:
       await dispatchVipSigninHistory({
         page_num: page_no,
-        page_size: pageSize.value,
-        start_time: Math.ceil(moment().valueOf() / 1000),
+        page_size: readPageSize.value,
+        start_time: startTime.value,
       })
       total = vipSigninHistory.value.total;
       break;
   }
-  paginationLength.value = getTotalPages(total, pageSize.value)
+  paginationLength.value = total
 }
 
 const handleNext = (page_no: number) => {
@@ -233,12 +237,14 @@ const handleTransactionMenuDropdown = (item: string) => {
 // })
 
 watch(selectedVipMenuItem, async (value) => {
+  pageRef.value!.resetPageNo()
+  
+  paginationLength.value = 1;
   setKeyOfVipHistoryEmpty(History.rateBack);
   setKeyOfVipHistoryEmpty(History.rank);
   setKeyOfVipHistoryEmpty(History.weekIy);
   setKeyOfVipHistoryEmpty(History.monthly);
   setKeyOfVipHistoryEmpty(History.login);
-
   pageNo(1)
   // if (value == 'vipRebateHistory') {
   //   await dispatchVipRebateHistory({
@@ -289,18 +295,21 @@ watch(selectedVipMenuItem, async (value) => {
 onMounted(async () => {
   await dispatchVipRebateHistory({
     page_num: 1,
-    page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
+    page_size: readPageSize.value,
+    start_time: startTime.value,
   });
-  paginationLength.value = getTotalPages(vipRebateHistory.value.total, pageSize.value - 1)
+  paginationLength.value = vipRebateHistory.value.total
+
+  // 初始化完成
+  emit('inited')
 });
 // 计算页数
-function getTotalPages(total:number, pageSize: number) {
-  if(total === 0) {
-    return 1
-  }
-  return Math.ceil(total / pageSize);
-}
+// function getTotalPages(total:number, pageSize: number) {
+//   if(total === 0) {
+//     return 1
+//   }
+//   return Math.ceil(total / pageSize);
+// }
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
@@ -375,6 +384,7 @@ function getTotalPages(total:number, pageSize: number) {
     <v-col class="d-flex justify-end" style="padding-right: 10px;">
       <!-- <div style="width: 100%"> -->
         <Pagination
+          ref="pageRef"
           :length="paginationLength"
           @handlePrev="handlePrev"
           @handleNext="handleNext"
@@ -528,9 +538,4 @@ function getTotalPages(total:number, pageSize: number) {
 </style>
 
 <style lang="scss" scoped>
-@media (max-width: 600px) {
-  ::v-deep(.v-pagination__item--is-active) {
-    display: block;
-  }
-}
 </style>

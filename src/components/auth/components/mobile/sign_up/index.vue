@@ -24,6 +24,8 @@ import { currencyStore } from "@/store/currency";
 import AdjustClass from "@/utils/adjust";
 import { googleTokenLogin } from "vue3-google-login";
 import EventToken from "@/constants/EventToken";
+import { loginWithSocialMedia, loginType } from "@/plugins/third-party-login";
+import { ThirdPartyWayEnum } from '@/enums/userEnum'
 
 const MSignup = defineComponent({
   components: {
@@ -31,7 +33,7 @@ const MSignup = defineComponent({
     SuccessIcon,
     WarningIcon,
   },
-  emits: ["close", "switchAuthDialog"],
+  emits: ["close", "switchAuthDialog","setSignInForm"],
   props: {
     signUpDialogCheck: {
       type: Boolean,
@@ -59,8 +61,16 @@ const MSignup = defineComponent({
       dialog: true,
       isAgreed: true,
       socialIconList: [
-        new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+        {
+          url: new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
+          value: ThirdPartyWayEnum.FACEBOOK_LOGIN
+        },
+        {
+          url: new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+          value: ThirdPartyWayEnum.GOOGLE_LOGIN
+        },
+        // new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
+        // new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
         // new URL("@/assets/public/svg/icon_public_30.svg", import.meta.url).href,
         // new URL("@/assets/public/svg/icon_public_31.svg", import.meta.url).href,
       ],
@@ -108,6 +118,7 @@ const MSignup = defineComponent({
       loading: false,
       mailCardHeight: 0,
       emailPartName: "",
+      promoCodeDisabled:false
     });
 
     watch(
@@ -248,20 +259,15 @@ const MSignup = defineComponent({
 
     const goSignInPage = (): void => {
       emit("switchAuthDialog", "login");
+      emit("setSignInForm", state.formData);
     };
 
     const registerSuccess = async () => {
       if (success.value) {
-        AdjustClass.getInstance().adjustTrackEvent({
-          key: "REGISTER",
-          value: userInfo.value.id.toString(),
-          params: "",
-        });
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchSocketConnect();
         await dispatchCurrencyList();
-
         setAuthDialogVisible(false);
         setNickNameDialogVisible(true);
         const toast = useToast();
@@ -277,8 +283,14 @@ const MSignup = defineComponent({
           icon: SuccessIcon,
           rtl: false,
         });
+
+        // 数据埋点
+        AdjustClass.getInstance().adjustTrackEvent({
+          key: "REGISTER",
+          value: userInfo.value.id.toString(),
+          params: "",
+        });
       } else {
-        console.log;
         if (
           errMessage.value ==
           "The account you entered has been used by someone else, please input again"
@@ -335,7 +347,7 @@ const MSignup = defineComponent({
       await dispatchSignUp({
         uid: state.formData.emailAddress,
         password: state.formData.password,
-        referral_code: state.formData.promoCode,
+        referral_code: state.formData.promoCode.trim().replace(/\s+/g, ' '),
         browser: "",
         device: "",
         model: "",
@@ -344,7 +356,23 @@ const MSignup = defineComponent({
       });
       state.loading = false;
       await registerSuccess();
+      if(!localStorage.getItem(userInfo.value.name)){
+        localStorage.setItem(userInfo.value.name,'0');
+      }else{
+        localStorage.setItem(userInfo.value.name,'1');
+      }
+      if(route.query.code){
+        funcUrlDel()
+      }
     };
+    // 带有邀请码进来注册完后去掉url上的参数
+   const funcUrlDel=()=>{
+    let url = window.location.href;
+    if (url.indexOf("?") != -1) {
+      url = url.replace(/(\?|#)[^'"]*/, '');
+      window.history.pushState({}, '0', url);
+    }
+   }
 
     const goRegisterPage = (): void => {
       state.currentPage = state.PAGE_TYPE.SIGNUP_FORM;
@@ -383,7 +411,11 @@ const MSignup = defineComponent({
 
     onMounted(() => {
       console.log("promo code::::::::::::::::::::", route.query.code);
+        // 带有邀请注册码的自动填入，并且邀请注册码输入框不让填写
       state.formData.promoCode = route.query.code ? route.query.code.toString() : "";
+      if(route.query.code){
+        state.promoCodeDisabled=true
+      }
     });
 
     const router = useRouter();
@@ -421,71 +453,10 @@ const MSignup = defineComponent({
     };
 
     // 一键注册
-    const onSignInSuccessGoogle = (index: number) => {
-      if (index === 0) {
-        window.FB.getLoginStatus(
-          (statusResponse: any) => {
-            if (statusResponse.status == "unknown") {
-              window.FB.login(
-                (response: any) => {
-                  loginState(response);
-                },
-                {
-                  scope: "public_profile,email,user_likes",
-                  return_scopes: true,
-                  auth_type: "reauthenticate",
-                  auth_nonce: "{random-nonce}",
-                }
-              );
-            } else {
-              // onSignInSuccess(statusResponse);
-            }
-          },
-          {
-            scope: "public_profile,email,user_likes",
-            return_scopes: true,
-            auth_type: "reauthenticate",
-            auth_nonce: "{random-nonce}",
-          }
-        );
-        // window.FB.init({
-        //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-        //   cookie: true,
-        //   xfbml: true,
-        //   version: "v19.0",
-        // });
-        // window.FB.login(async (authResponse: any) => {
-        //   const params = {
-        //     id_token: authResponse.access_token,
-        //     type: 2
-        //   }
-        //   await dispatchQuickRegister(params);
-        //   await registerSuccess();
-        // AdjustClass.getInstance().adjustTrackEvent({
-        //   key: "FACEBOOK_LOGIN",
-        //   value: userInfo.value.id.toString(),
-        //   params: "",
-        // });
-        // });
-      }
-      if (index === 1) {
-        googleTokenLogin({
-          clientId:
-            "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
-        }).then(async (res: any) => {
-          const params = {
-            id_token: res.access_token,
-            type: 1,
-          };
-          await dispatchQuickRegister(params);
-          await registerSuccess();
-          AdjustClass.getInstance().adjustTrackEvent({
-            key: "GOOGLE_LOGIN",
-            value: userInfo.value.id.toString(),
-            params: "",
-          });
-        });
-      }
+    const onSignInSuccessGoogle = async (value: string) => {
+      await loginWithSocialMedia(value, 'register');
+      await registerSuccess();
+      loginType(value);
     };
 
     return {
@@ -631,6 +602,7 @@ export default MSignup;
           variant="solo"
           density="comfortable"
           v-model="formData.promoCode"
+          :disabled="promoCodeDisabled"
         />
       </v-row>
       <div class="mt-2" style="display: flex; align-items: center; height: 46px">
@@ -682,9 +654,9 @@ export default MSignup;
                 icon=""
                 height="36px"
                 width="36px"
-                @click="onSignInSuccessGoogle(index)"
+                @click="onSignInSuccessGoogle(item.value)"
               >
-                <img :src="item" width="36" />
+                <img :src="item.url" width="36" />
               </v-btn>
             </v-sheet>
           </div>
@@ -922,7 +894,7 @@ export default MSignup;
   background: $color_1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 80px;
+  padding-bottom: 120px;
 
   .v-field--variant-solo {
     background: transparent !important;

@@ -135,6 +135,12 @@ const submitNickName = async () => {
       icon: SuccessIcon,
       rtl: false,
     });
+
+    if(!localStorage.getItem(userInfo.value.name)){
+        localStorage.setItem(userInfo.value.name,'0');
+      }else{
+        localStorage.setItem(userInfo.value.name,'1');
+      }
     emit("close");
   } else {
     const toast = useToast();

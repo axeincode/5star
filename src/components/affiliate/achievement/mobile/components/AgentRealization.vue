@@ -20,6 +20,7 @@ import img_agentemblem_15 from "@/assets/affiliate/achievement/img_agentemblem_1
 import { type GetAchievementItem } from "@/interface/achievement";
 import { type ExplainItem } from "@/interface/achievement";
 import { achievementStore } from "@/store/achievement";
+import { toFormatNum } from '@/utils/numFormat';
 
 // 获取平台货币
 import { storeToRefs } from "pinia";
@@ -151,7 +152,7 @@ const achievementAward = async (achievement_item: ExplainItem, achievement_progr
               : 'color-414968'
           "
         >
-          {{ platformCurrency }} {{ item.award }}
+          {{ platformCurrency }} {{ toFormatNum(item.award) }}
         </p>
       </v-col>
       <v-col cols="7" class="text-center">

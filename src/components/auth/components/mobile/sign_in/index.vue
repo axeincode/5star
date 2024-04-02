@@ -22,6 +22,9 @@ import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 import { useRoute } from "vue-router";
 import { gameStore } from "@/store/game";
+import { jwtDecode } from "jwt-decode";
+import { loginWithSocialMedia, loginType } from "@/plugins/third-party-login";
+import { ThirdPartyWayEnum } from '@/enums/userEnum'
 
 const Login = defineComponent({
   components: {
@@ -29,6 +32,11 @@ const Login = defineComponent({
     WarningIcon,
   },
   emits: ["close", "switch"],
+  props: {
+    signInForm: {
+      type: Object as any,
+    },
+  },
   setup(props, { emit }) {
     // translation
     const { t } = useI18n();
@@ -62,8 +70,14 @@ const Login = defineComponent({
         password: "",
       },
       socialIconList: [
-        new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
-        new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+        {
+          url: new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
+          value: ThirdPartyWayEnum.FACEBOOK_LOGIN
+        },
+        {
+          url: new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+          value: ThirdPartyWayEnum.GOOGLE_LOGIN
+        },
       ],
       isShowPassword: false,
       notificationShow: false,
@@ -127,11 +141,6 @@ const Login = defineComponent({
 
     const loginSuccess = async () => {
       if (success.value) {
-        AdjustClass.getInstance().adjustTrackEvent({
-          key: "LOGIN",
-          value: String(userInfo.value.id),
-          params: "",
-        });
         await dispatchUserProfile();
         await dispatchUserBalance();
         await dispatchCurrencyList();
@@ -154,6 +163,12 @@ const Login = defineComponent({
           closeButton: "button",
           icon: SuccessIcon,
           rtl: false,
+        });
+        // 埋点统计
+        AdjustClass.getInstance().adjustTrackEvent({
+          key: "LOGIN",
+          value: String(userInfo.value.id),
+          params: "",
         });
         setTimeout(() => {
           setAuthModalType("");
@@ -189,6 +204,11 @@ const Login = defineComponent({
         password: state.formData.password,
       });
       await loginSuccess();
+      if(!localStorage.getItem(userInfo.value.name)){
+        localStorage.setItem(userInfo.value.name,'0');
+      }else{
+        localStorage.setItem(userInfo.value.name,'1');
+      }
       state.loading = false;
     };
 
@@ -242,78 +262,10 @@ const Login = defineComponent({
     };
 
     // social login function
-    const handleSocialSigin = (index: number) => {
-      if (index === 0) {
-        window.FB.getLoginStatus(
-          (statusResponse: any) => {
-            if (statusResponse.status == "unknown") {
-              window.FB.login(
-                (response: any) => {
-                  loginState(response);
-                },
-                {
-                  scope: "public_profile,email,user_likes",
-                  return_scopes: true,
-                  auth_type: "reauthenticate",
-                  auth_nonce: "{random-nonce}",
-                }
-              );
-            } else {
-              // onSignInSuccess(statusResponse);
-            }
-          },
-          {
-            scope: "public_profile,email,user_likes",
-            return_scopes: true,
-            auth_type: "reauthenticate",
-            auth_nonce: "{random-nonce}",
-          }
-        );
-        // login();
-        // window.FB.init({
-        //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-        //   cookie: true,
-        //   xfbml: true,
-        //   version: "v19.0",
-        // });
-        // FB.getLoginStatus((statusResponse: any) => {
-        // if(statusResponse.status=="unknown"){
-        //   FB.login(async (authResponse: any) => {
-        // const params = {
-        //   id_token: authResponse.access_token,
-        //   type: 2
-        // }
-        // await dispatchQuickLogin(params);
-        // await loginSuccess();
-        //     console.log("facebook登录", authResponse);
-        //   },{scope: 'public_profile,email,user_likes', return_scopes: true, auth_type: 'reauthenticate', auth_nonce: '{random-nonce}'});
-
-        // AdjustClass.getInstance().adjustTrackEvent({
-        //   key: "FACEBOOK_LOGIN",
-        //   value: userInfo.value.id.toString(),
-        //   params: "",
-        // });
-
-        // }
-        // })
-      }
-      if (index === 1) {
-        googleTokenLogin({
-          clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-        }).then(async (res: any) => {
-          const params = {
-            id_token: res.access_token,
-            type: 1,
-          };
-          await dispatchQuickLogin(params);
-          await loginSuccess();
-        });
-        AdjustClass.getInstance().adjustTrackEvent({
-          key: "GOOGLE_LOGIN",
-          value: userInfo.value.id.toString(),
-          params: "",
-        });
-      }
+    const handleSocialSigin = async (value: string) => {
+      await loginWithSocialMedia(value, 'login');
+      await loginSuccess();
+      loginType(value);
     };
 
     watch(
@@ -325,35 +277,11 @@ const Login = defineComponent({
       { deep: true }
     );
 
-    const loginWithFacebook = () => {
-      // 调用Facebook登录API
-      window.FB.login((response: any) => {
-        if (response.authResponse) {
-          // 用户已登录并授权
-          // 这里可以根据需要执行进一步的操作，例如向服务器发送令牌进行验证等
-          console.log('Login successful:', response.authResponse);
-        } else {
-          // 用户取消登录或发生错误
-          console.log('Login cancelled or encountered an error');
-        }
-      }, { scope: 'email' }); // 可以在这里指定您需要的权限
-    }
-
     onMounted(() => {
-      // window.FB.init({
-      //   appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-      //   autoLogAppEvents: true,
-      //   xfbml: true,
-      //   version: 'v18.0'
-      // });
-      // (function(d, s, id){
-      //   let js:any = d.getElementsByTagName(s)[0];
-      //   let fjs:any = d.getElementsByTagName(s)[0];
-      //   if (d.getElementById(id)) {return;}
-      //   js = d.createElement(s); js.id = id;
-      //   js.src = "https://connect.facebook.net/en_US/sdk.js";
-      //   fjs.parentNode.insertBefore(js, fjs);
-      // }(document, 'script', 'facebook-jssdk'));
+      if(props.signInForm.emailAddress){
+        state.formData.emailAddress=props.signInForm.emailAddress
+        state.formData.password=props.signInForm.password
+      }
     });
 
     return {
@@ -368,7 +296,7 @@ const Login = defineComponent({
       handleEmailFocus,
       mergeEmail,
       loginSuccess,
-      handleSocialSigin,
+      handleSocialSigin
     };
   },
 });
@@ -390,6 +318,7 @@ export default Login;
       </div>
     </div>
 
+    <!-- S 登录 -->
     <template v-if="currentPage === PAGE_TYPE.LOGIN_FORM">
       <div class="relative mt-8">
         <v-text-field
@@ -402,6 +331,7 @@ export default Login;
           @input="handleEmailChange"
           :onfocus="handleEmailFocus"
         />
+        <!-- 邮箱自动补全 -->
         <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
           <v-list theme="dark" bg-color="#15161C">
             <v-list-item
@@ -503,15 +433,16 @@ export default Login;
                 icon=""
                 width="36px"
                 height="36px"
-                @click="handleSocialSigin(index)"
+                @click="handleSocialSigin(item.value)"
               >
-                <img :src="item" width="36" />
+                <img :src="item.url" width="36" />
               </v-btn>
             </v-sheet>
           </div>
         </v-col>
       </v-row>
     </template>
+    <!-- E 登录 -->
 
     <!-- Forgot password -->
 
@@ -740,7 +671,7 @@ export default Login;
   background: $color_1;
   overflow-y: auto;
   height: calc(100vh - 50px);
-  padding-bottom: 80px;
+  padding-bottom: 120px;
 
   .v-field--variant-solo {
     background: transparent !important;

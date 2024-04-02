@@ -36,6 +36,8 @@ import { bonusStore } from "@/store/bonus";
 import { bannerStore } from "@/store/banner";
 import { depositStore } from "@/store/deposit";
 import icon_public_81 from "@/assets/public/svg/icon_public_81.svg";
+import { BtTabEnum } from '@/enums/bonusTransactionEnum';
+
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -500,19 +502,19 @@ const goBonusPage = () => {
 const goTransactionPage = () => {
   router.push({ name: 'Bonuses And Transactions' });
   setBonusTabIndex(1);
-  setTransactionTab(t('transaction.tab.transactions'));
+  setTransactionTab(BtTabEnum.transactions);
 }
 
 const goDepositPage = () => {
   router.push({ name: 'Bonuses And Transactions' });
   setBonusTabIndex(1);
-  setTransactionTab(t('transaction.tab.transactions'));
+  setTransactionTab(BtTabEnum.transactions);
 }
 
 const goWithdrawPage = () => {
   router.push({ name: 'Bonuses And Transactions' });
   setBonusTabIndex(1);
-  setTransactionTab(t('transaction.tab.withdrawal'));
+  setTransactionTab(BtTabEnum.withdrawal);
 }
 
 const goGameHistoryPage = () => {
@@ -1624,6 +1626,7 @@ onMounted(async () => {
 
 .refer-friend-background {
   background-image: url("@/assets/public/image/bg_public_28.png") !important;
+  background-size: 100% 100% !important;
 }
 
 .refer-friend-img-position {
@@ -1645,6 +1648,7 @@ onMounted(async () => {
 
 .app-background {
   background-image: url("@/assets/public/image/bg_public_29.png") !important;
+  background-size: 100% 100% !important;
 }
 
 .app-img-position {

@@ -17,6 +17,7 @@ import { useRouter } from "vue-router";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import { refferalStore } from "@/store/refferal";
 import { appBarStore } from "@/store/appBar";
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -225,9 +226,9 @@ const refferalDialog = () => {
             <div class="progress-main-card-m">
                 <div class="progress-main-card-m-title">
                     <div class="progress-main-card-m-title-price">
-                        <span>{{ platformCurrency }} {{ vipInfo.deposit_exp }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipInfo.deposit_exp) }}</span>
                         <span> / </span>
-                        <span>{{ platformCurrency }} {{ vipInfo.rank_deposit_exp }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipInfo.rank_deposit_exp) }}</span>
                     </div>
                 </div>
                 <div class="progress-main-card-m-info">
@@ -245,9 +246,9 @@ const refferalDialog = () => {
             <div class="progress-main-card-b">
                 <div class="progress-main-card-b-title">
                     <div class="progress-main-card-b-title-price">
-                        <span>{{ platformCurrency }} {{ vipInfo.bet_exp }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipInfo.bet_exp) }}</span>
                         <span> / </span>
-                        <span>{{ platformCurrency }} {{ vipInfo.rank_bet_exp }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipInfo.rank_bet_exp) }}</span>
                     </div>
                 </div>
                 <div class="progress-main-card-b-info">
@@ -272,7 +273,7 @@ const refferalDialog = () => {
                     <span class="available-button" v-else @click="getVipButtonShow(false)">{{ t('vip.vip_level_info.progress.text_3') }}</span>
                 </div>
                 <div class="progress-main-reward-bg-b">
-                    {{ platformCurrency }} {{ awardValue() }}
+                    {{ platformCurrency }} {{ toFormatNum(awardValue()) }}
                 </div>
             </div>
             

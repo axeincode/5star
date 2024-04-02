@@ -60,7 +60,7 @@ const selectedCurrencyUnit = ref<string>(platformCurrency.value);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
-  name: "MXN",
+  name: platformCurrency.value,
   value: 5.25
 })
 
@@ -69,7 +69,7 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   icon: "",
   name: "",
   channel_type: "",
-  description: "20~150.000 BRL",
+  description: "20~150.000 " + platformCurrency.value,
   min: 149,
   max: 588.88
 })
@@ -120,7 +120,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_1",
     channel_type: "",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -326,8 +326,8 @@ const handleAmountInputFocus = (): void => {
 const isShowAmountTimeout = ref<null | ReturnType<typeof setTimeout>>(null);
 
 const handleAmountInputChange = ($event: any): void => {
-  if (/^0/.test($event.target.value)) {
-    // 如果以 0 开头，则移除第一个字符
+  if (/^(?:0|\.)$/.test($event.target.value)) {
+    // 如果以 0或. 开头，则移除第一个字符
     depositAmount.value = $event.target.value.slice(1);
   }
 
@@ -394,6 +394,13 @@ const handleDepositSubmit = async () => {
   // formData.amount = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
   formData.amount = Number(depositAmount.value)
   formData.is_bonus = bonusCheck.value ? false : true;
+
+  // 先打开一个新页面，成功请求有url再赋值，不成功则关闭
+  let winRef:any = null
+  // oxxo 7 codi 8 都会返回url，打开页面
+  if(selectedPaymentItem.value.id === '7' || selectedPaymentItem.value.id === '8') {
+   winRef = window.open('about:blank', '_blank')
+  }
   await dispatchUserDepositSubmit(formData);
   loading.value = false;
   if (success.value) {
@@ -407,20 +414,30 @@ const handleDepositSubmit = async () => {
       // }
 
       // 处理跳转新窗口浏览器拦截
-      const elementA = document.createElement('a');
-      const elementAid = 'newpage'
-      elementA.setAttribute('href', depositSubmit.value.url);
-      elementA.setAttribute('target', '_blank');
-      elementA.setAttribute('id', elementAid);
-      // 防止反复添加
-      if (!document.getElementById(elementAid)) {
-        document.body.appendChild(elementA);
-      }
-      elementA.click();
-      elementA.addEventListener('click', function (event) {
-        event.preventDefault(); // 阻止默认行为
-        window.location.href = this.href; // 手动跳转
-      });
+      // const elementA = document.createElement('a');
+      // const elementAid = 'newpage'
+      // elementA.setAttribute('href', depositSubmit.value.url);
+      // elementA.setAttribute('target', '_blank');
+      // elementA.setAttribute('id', elementAid);
+      // // 防止反复添加
+      // if (!document.getElementById(elementAid)) {
+      //   document.body.appendChild(elementA);
+      // }
+      // elementA.click();
+      // elementA.addEventListener('click', function (event) {
+      //   event.preventDefault(); // 阻止默认行为
+      //   window.location.href = this.href; // 手动跳转
+      // });
+      // const form = document.createElement('form');
+      // form.action = depositSubmit.value.url;
+      // form.target = '_blank';
+      // form.method = 'POST';
+      // document.body.appendChild(form);
+      // form.submit();
+
+      setTimeout(() => {
+        if(winRef) winRef.location = depositSubmit.value.url
+      }, 0)
 
       const toast = useToast();
       toast.success(t("deposit_dialog.text_1"), {
@@ -438,6 +455,9 @@ const handleDepositSubmit = async () => {
       stopCheckDepositAmount.value = true;
       depositAmount.value = "";
       return;
+    } else {
+      // 不成功关闭
+      if(winRef) winRef.close()
     }
     if (depositSubmit.value.code_url != "") {
       depositAmountWithBonus.value = depositConfig.value["bonus"].length > 0 && depositConfig.value["bonus"][0]["type"] == 0 ? Number(depositAmount.value) + Number(depositRate.value) : Number((Number(depositAmount.value) * (1 + Number(depositRate.value))).toFixed(2))
@@ -760,6 +780,8 @@ onMounted(async () => {
     <v-row class="mt-6 mx-10 text-400-12 gray">
       {{ t("deposit_dialog.choose_payment_method") }}
     </v-row>
+
+    <!-- 付款方式 -->
     <v-menu
       offset="4"
       class="mt-1"
@@ -827,6 +849,7 @@ onMounted(async () => {
         </v-row>
       </v-list>
     </v-menu>
+    
     <div class="mx-4 mt-2">
       <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
     </div>

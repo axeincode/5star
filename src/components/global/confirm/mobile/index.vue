@@ -3,6 +3,7 @@ import { ref, computed, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -22,7 +23,7 @@ const { selectedAward } = toRefs(props);
     <div class="m-confirm-dialog-header">
       <p class="text-800-16">{{ t("confirm.text_1") }}</p>
     </div>
-    <p class="text-900-24 white text-center mt-5">{{ platformCurrency }} {{ selectedAward }}</p>
+    <p class="text-900-24 white text-center mt-5">{{ platformCurrency }} {{ toFormatNum(selectedAward) }}</p>
     <div class="mt-5 mx-4">
       <v-btn
         class="button-bright m-confirm-btn"

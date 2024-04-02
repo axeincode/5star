@@ -62,6 +62,7 @@ const fixPositionShow = computed(() => {
     theme="dark"
     fixed-header
     style="padding: 16px"
+    height="570px"
   >
     <thead class="forms-table-header">
       <tr>
@@ -100,25 +101,21 @@ const fixPositionShow = computed(() => {
         <tr v-for="(item, index) in tempHistoryList" :key="index">
           <td
             class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
+            style=""
           ></td>
           <td
             class="text-400-12"
             style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
               min-width: 60px;
             "
           ></td>
           <td
             class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
+            style=""
           ></td>
           <td
             class="text-400-12"
             style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
               min-width: 130px;
             "
           ></td>
@@ -128,7 +125,7 @@ const fixPositionShow = computed(() => {
         <tr v-for="(item, index) in currentList" :key="index">
           <td
             class="text-400-12"
-            style="padding-top: 21px !important; padding-bottom: 21px !important"
+            style=""
           >
             {{
               item.created_at == ""
@@ -139,8 +136,6 @@ const fixPositionShow = computed(() => {
           <td
             class="text-400-12 color-01983A"
             style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
               min-width: 60px;
             "
           >
@@ -151,8 +146,6 @@ const fixPositionShow = computed(() => {
           <td
             class="text-400-12"
             style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
               min-width: 130px;
             "
           >
@@ -167,8 +160,6 @@ const fixPositionShow = computed(() => {
           <td
             class="text-400-12"
             style="
-              padding-top: 21px !important;
-              padding-bottom: 21px !important;
               min-width: 130px;
             "
           >

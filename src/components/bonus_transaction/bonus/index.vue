@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia';
 import { type GetBonusData } from "@/interface/bonus";
 import { bonusStore } from "@/store/bonus";
 import moment from "moment-timezone";
+import { toFormatNum } from '@/utils/numFormat';
 
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
@@ -113,7 +114,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4">
           <div class="text-400-12 text-gray">{{ t("bonus.total_text") }}</div>
-          <div class="text-600-14 white">{{ platformCurrency }} {{ userBalance.amount }}</div>
+          <div class="text-600-14 white">{{ platformCurrency }} {{ toFormatNum(userBalance.amount) }}</div>
         </v-list-item-title>
         <!-- <template v-slot:append>
           <img src="@/assets/public/svg/btn_public_02.svg" />
@@ -125,7 +126,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4">
           <div class="text-400-12 text-gray">{{ t("bonus.bonus_money_text") }}</div>
-          <div class="text-600-14 white">{{ platformCurrency }} {{ userBalance.availabe_balance }}</div>
+          <div class="text-600-14 white">{{ platformCurrency }} {{ toFormatNum(userBalance.availabe_balance) }}</div>
         </v-list-item-title>
       </v-list-item>
       <v-list-item class="bg-color-1 mt-4">
@@ -134,7 +135,7 @@ onMounted(async () => {
         </template>
         <v-list-item-title class="ml-4">
           <div class="text-400-12 text-gray">{{ t("bonus.withdraw_text") }}</div>
-          <div class="text-600-14 white">{{ platformCurrency }} {{ userBalance.availabe_balance }}</div>
+          <div class="text-600-14 white">{{ platformCurrency }} {{ toFormatNum(userBalance.availabe_balance) }}</div>
         </v-list-item-title>
       </v-list-item>
     </v-col>

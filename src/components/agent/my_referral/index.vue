@@ -12,7 +12,7 @@ import { useToast } from "vue-toastification";
 import { authStore } from "@/store/auth";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { appCurrencyStore } from "@/store/app";
-
+import { toFormatNum } from '@/utils/numFormat';
 const { dispatchUserInvite } = inviteStore();
 const { dispatchInviteAward } = inviteStore();
 // 获取平台货币
@@ -152,7 +152,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div class="myReferral">
     <div class="relative">
       <img src="@/assets/public/svg/img_public_26.svg" style="width: 100%" />
       <div class="m-my-referral-report-card">
@@ -185,7 +185,7 @@ onMounted(async () => {
         </v-col>
       </v-row>
       <div class="m-referral-reward-card-1 mx-7 text-700-18 text-white">
-        {{ platformCurrency }} {{ inviteItem.available_bonus }}
+        {{ platformCurrency }} {{ toFormatNum(inviteItem.available_bonus) }}
       </div>
     </div>
     <v-card class="mx-2 m-agent-referral-partner-card">
@@ -202,6 +202,7 @@ onMounted(async () => {
           <div
             class="text-700-10 text-black text-center mt-2"
             @click="inviteUrlCopy(inviteItem.web_invite_url)"
+            style="line-height: 10px;"
           >
             {{ t("agent.text_10") }}
           </div>
@@ -247,6 +248,14 @@ onMounted(async () => {
     <MInviteFooter />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.myReferral {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+</style>
 
 <style lang="scss">
 .m-my-referral-report-card {

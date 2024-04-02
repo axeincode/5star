@@ -22,7 +22,7 @@ const { setRefferalDialogShow } = refferalStore();
 
 const invitedUser = ref<number>(28560);
 const earnMoney = ref<number>(85601479);
-const host = ref<string>("xxx.com");
+const host = ref<string>("HOY777.com");
 const refferalCode = ref<string>("xxxxxxxxxx");
 const siteUrl = ref<string>("https://HOY777.com/xxxxxxxxxx");
 
@@ -107,7 +107,7 @@ onMounted(() => {
             <div class="refferal-dialog-header text-center">
                 <img src="@/assets/public/image/img_public_08.png" style="margin-top: -10px" />
                 <div class="mt-8 text-center text-700-18 yellow">
-                    {{ t('refferal.dialog.header.title_text') }}
+                    {{ t('refferal.dialog.header.title_text', [platformCurrency]) }}
                 </div>
                 <div class="mt-8 text-center text-700-22 white">
                     {{ t('refferal.dialog.header.body_text') }}
@@ -116,7 +116,7 @@ onMounted(() => {
                     <Font color="#F9BC01">{{ invitedUser.toLocaleString() }}</Font>
                     {{ t('refferal.dialog.header.body_text_1') }}
                     <Font color="#F9BC01">{{ earnMoney.toLocaleString() }}</Font>
-                    {{ t('refferal.dialog.header.body_text_2') }}
+                    {{ t('refferal.dialog.header.body_text_2', [platformCurrency]) }}
                     <Font color="#F9BC01">{{ host }}</Font>
                     {{ t('refferal.dialog.header.body_text_3') }}
                 </div>

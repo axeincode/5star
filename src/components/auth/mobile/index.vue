@@ -3,18 +3,24 @@ import { ref, toRefs, watch, onMounted, onUnmounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
+import { useRoute } from 'vue-router';
 import MSignIn from "@/components/auth/components/mobile/sign_in/index.vue";
 import MSignUp from "@/components/auth/components/mobile/sign_up/index.vue";
 
 type dialogType = "login" | "signup" | "signout";
 
 const { t } = useI18n();
+const route = useRoute();
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
 
 const dialogCheckBox = ref<boolean>(false);
 const signUpDialogCheck = ref<boolean>(false);
+const signInForm = ref({
+  emailAddress: "",
+  password: "",
+});
 
 const authModalType = computed(() => {
   const { getAuthModalType } = storeToRefs(authStore());
@@ -33,12 +39,23 @@ const switchAuthDialog = (type: string) => {
   dialogCheckBox.value = type == "signup" ? true : false;
 };
 
+const setSignInForm=(from:any)=>{
+  signInForm.value.emailAddress=from.emailAddress
+  signInForm.value.password=from.password
+}
+
 watch(dialogCheckBox, (value) => {
   let type = value ? "signup" : "signin";
   setAuthModalType(type);
 });
 
 onMounted(() => {
+  console.log(route.query.code,'2222222222222')
+  if(route.query.code){
+    // 带有邀请注册码的，直接打开注册弹窗
+    setAuthModalType('signup');
+    dialogCheckBox.value=true
+  }
   dialogCheckBox.value = authModalType.value == "signup" ? true : false;
 });
 </script>
@@ -62,9 +79,10 @@ onMounted(() => {
       <MSignUp
         v-if="dialogCheckBox"
         @switchAuthDialog="switchAuthDialog"
+        @setSignInForm="setSignInForm"
         :signUpDialogCheck="signUpDialogCheck"
       />
-      <MSignIn v-else />
+      <MSignIn v-else  :signInForm="signInForm"/>
     </div>
     <v-btn class="m-close-btn" icon="true" width="30" height="30" @click="closeDialog">
       <img src="@/assets/public/svg/icon_public_10.svg" />

@@ -9,7 +9,7 @@ import { onMounted } from "vue";
 import { onActivated } from "vue";
 import { getCurrentInstance } from "vue";
 import { defineAsyncComponent } from "vue";
-import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router'
+import { RouteLocationNormalized, RouteLocationNormalizedLoaded, onBeforeRouteLeave } from 'vue-router'
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 // import GameProviders from "@/components/global/game_provider/index.vue";
@@ -176,7 +176,7 @@ const Dashboard = defineComponent({
       is_favorite: false,
     });
 
-    const selectedGameFilterBtn = ref<any>(t("home.button.all_game"));
+    const selectedGameFilterBtn = ref<any>('all_game'); // 改用常用的值来做判断，多语言作为判断值切换语言时有问题
     const gameConfirmDialogShow = ref<boolean>(false);
     const filterTabText = ref<string>("lobby");
     const gameGroupBtnList = ref<Array<any>>([]);
@@ -440,15 +440,14 @@ const Dashboard = defineComponent({
       //   top: 450,
       //   behavior: "smooth",
       // });
-      console.log(gamFilterBtn, t("home.button.all_game"));
       if (gameFilterBtnFlag.value) {
         return;
       }
       gameFilterBtnFlag.value = true;
       currentPage.value = 1;
-      selectedGameFilterBtn.value = gamFilterBtn == "original" ? t("home.button.all_game") : gamFilterBtn;
+      selectedGameFilterBtn.value = gamFilterBtn == "original" ? 'all_game' : gamFilterBtn;
       switch (selectedGameFilterBtn.value) {
-        case t("home.button.all_game"):
+        case 'all_game':
           gameFilterIconColor1.value = "#FFFFFF";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -676,7 +675,7 @@ const Dashboard = defineComponent({
       gameSearchList.value.list.map((item: { image: any; }) => {
         // item.image = state.testGames[Math.floor(Math.random() * 28)];
       });
-      if (gamFilterBtn == t("home.button.all_game")) {
+      if (gamFilterBtn == 'all_game') {
         allGames.value.map((item: { slug: string; games: any[]; page_no: number; }) => {
           if (item.slug == slug) {
             item.games = [...item.games, ...gameSearchList.value.list];
@@ -866,9 +865,9 @@ const Dashboard = defineComponent({
     }
 
     watch(route, (to) => {
-      selectedGameFilterBtn.value = route.query.filter ? route.query.filter : t("home.button.all_game");
+      selectedGameFilterBtn.value = route.query.filter ? route.query.filter : 'all_game';
       switch (selectedGameFilterBtn.value) {
-        case t("home.button.all_game"):
+        case 'all_game':
           gameFilterIconColor1.value = "#FFFFFF";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -973,7 +972,7 @@ const Dashboard = defineComponent({
 
     onMounted(async () => {
       loading.value = true;
-
+      
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -1108,9 +1107,9 @@ const Dashboard = defineComponent({
       }, 1000);
 
       selectedCategoryName.value = route.query.filter ? route.query.filter : "";
-      selectedGameFilterBtn.value = route.query.filter ? route.query.filter : t("home.button.all_game");
+      selectedGameFilterBtn.value = route.query.filter ? route.query.filter : 'all_game';
       switch (selectedGameFilterBtn.value) {
-        case t("home.button.all_game"):
+        case 'all_game':
           gameFilterIconColor1.value = "#FFFFFF";
           gameFilterIconColor2.value = "#7782AA";
           gameFilterIconColor3.value = "#7782AA";
@@ -1220,12 +1219,27 @@ const Dashboard = defineComponent({
       if (route.query.mobile && route.query.mobile == "android"){
         isMobile = true
       }
-
+      
       AdjustClass.getInstance(isMobile).adjustTrackEvent({ key: "PAGE_VIEW", value: "home", params: "" });
 
-      context.emit('inited')
+      // context.emit('inited')
     });
 
+    // 跳转条款， 缓存home页面，返回到跳转前的位置
+    const placeScroll = ref()
+    onBeforeRouteLeave((to, from, next) => {
+      //在路由跳转之前，对当前浏览位置进行保存
+      placeScroll.value = document.documentElement.scrollTop;
+      next();
+    });
+    //组件激活
+    onActivated(() => {
+      if (placeScroll.value != null && placeScroll.value > 0) {
+        //组件激活后进行浏览位置的赋值
+        document.documentElement.scrollTop = placeScroll.value;
+        document.body.scrollTop = placeScroll.value;
+      }
+    });
     return {
       t,
       ...toRefs(state),
@@ -1397,11 +1411,11 @@ export default Dashboard;
                 class="mr-6 text-none"
                 height="48"
                 :class="
-                  selectedGameFilterBtn == t('home.button.all_game')
+                  selectedGameFilterBtn == 'all_game'
                     ? 'black home-game-filter-btn button-bright'
                     : 'text-gray btn-211f31'
                 "
-                @click="handleGameFilterBtn(t('home.button.all_game'))"
+                @click="handleGameFilterBtn('all_game')"
               >
                 <inline-svg
                   :src="icon_public_34"
@@ -1492,11 +1506,11 @@ export default Dashboard;
               class="mr-3 text-none"
               height="36"
               :class="
-                selectedGameFilterBtn == t('home.button.all_game')
+                selectedGameFilterBtn == 'all_game'
                   ? 'black home-game-filter-btn button-bright'
                   : 'text-gray btn-211f31'
               "
-              @click="handleGameFilterBtn(t('home.button.all_game'))"
+              @click="handleGameFilterBtn('all_game')"
             >
               <inline-svg
                 :src="icon_public_34"
@@ -1506,7 +1520,7 @@ export default Dashboard;
                 :transform-source="gameTransform1"
               >
               </inline-svg>
-              {{ t("home.button.all_game") }}
+              {{ t("home.button.all_game") }} 
             </v-btn>
             <div
               v-for="(item, index) in gameGroupBtnList"
@@ -1580,7 +1594,7 @@ export default Dashboard;
       </v-row>
 
       <!-- game list -->
-      <template v-if="selectedGameFilterBtn == t('home.button.all_game')">
+      <template v-if="selectedGameFilterBtn == 'all_game'">
         <template v-for="(item, index) in allGames" :key="index">
           <v-row
             class="ml-4 original_game_text"
@@ -1675,7 +1689,7 @@ export default Dashboard;
             "
           >
             <div style="width: 100%" class="text-center">
-              <template v-if="selectedGameFilterBtn != t('home.button.all_game')">
+              <template v-if="selectedGameFilterBtn != 'all_game'">
                 <p class="text-700-14 gray text-center" v-if="mobileWidth < 600">
                   {{ t("home.more_text_1") }}
                   <font color="white">{{ 6 * item.page_no }}</font>
@@ -1899,7 +1913,7 @@ export default Dashboard;
 
       <!-------------------- game providers -------------->
 
-      <GameProviders v-if="selectedGameFilterBtn == t('home.button.all_game')" />
+      <GameProviders v-if="selectedGameFilterBtn == 'all_game'" />
 
       <!--------------------- Game History ---------------------->
       <!-- <component :is="gameHistoryComponent" v-if="bannerComponent"></component> -->

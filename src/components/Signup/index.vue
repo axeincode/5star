@@ -211,7 +211,7 @@ const Signup = defineComponent({
       await dispatchSignUp({
         uid: state.formData.emailAddress,
         password: state.formData.password,
-        referral_code: state.formData.promoCode,
+        referral_code: state.formData.promoCode.trim().replace(/\s+/g, ' '),
         browser: "",
         device: "",
         model: "",

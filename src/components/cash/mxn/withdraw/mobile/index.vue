@@ -32,7 +32,8 @@ import AdjustClass from '@/utils/adjust';
 import EventToken from '@/constants/EventToken';
 import router from '@/router';
 import { currencyStore } from '@/store/currency';
-
+import { BtTabEnum } from '@/enums/bonusTransactionEnum';
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed<string>(() => {
@@ -63,7 +64,7 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   icon: "",
   name: "",
   channel_type: "",
-  description: "20~150.000 BRL",
+  description: "20~150.000 " + platformCurrency.value,
   min: 149,
   max: 588.88
 })
@@ -129,7 +130,7 @@ const paymentList = ref<Array<GetPaymentItem>>([
     icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
     name: "PIX_1",
     channel_type: "",
-    description: "20~150.000 BRL",
+    description: "20~150.000 " + platformCurrency.value,
     min: 149,
     max: 588.88
   },
@@ -505,7 +506,7 @@ const goWithdrawPage = () => {
   cashDialogShow();
   router.push({ name: 'Bonuses And Transactions' });
   setBonusTabIndex(1);
-  setTransactionTab(t('transaction.tab.withdrawal'));
+  setTransactionTab(BtTabEnum.withdrawal);
 }
 
 onMounted(async () => {
@@ -574,7 +575,7 @@ onMounted(async () => {
     <v-row class="mt-6 mx-10 text-500-10 white align-center">
       {{ t("withdraw_dialog.withdraw_amount") }}
       {{ selectedCurrencyUnit }}
-      {{ availableAmount }}
+      {{ toFormatNum(availableAmount) }}
       <div style="margin-left: auto" class="relative pr-4">
         <img
           @click="refreshWithdrawalConfig"
@@ -601,13 +602,13 @@ onMounted(async () => {
     <div class="mt-3 mx-10 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_5") }}
       <span class="text-700-12" style="margin-left: auto">
-        {{ feeAmount }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ toFormatNum(feeAmount) }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
       {{ t("withdraw_dialog.text_6") }}
       <span class="text-700-12" style="margin-left: auto">
-        {{ cashableAmount }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ toFormatNum(cashableAmount) }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
@@ -617,7 +618,7 @@ onMounted(async () => {
         style="margin-left: auto"
         :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'green' : ''"
       >
-        {{ residualAmount.toFixed(2) }}&nbsp;{{ selectedCurrencyUnit }}
+        {{ toFormatNum(residualAmount) }}&nbsp;{{ selectedCurrencyUnit }}
       </span>
     </div>
     <div
@@ -630,7 +631,7 @@ onMounted(async () => {
         style="margin-left: auto"
         :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'orange' : ''"
       >
-        {{ (userBalance.amount - userBalance.availabe_balance).toFixed(2) }}
+        {{ toFormatNum(userBalance.amount - userBalance.availabe_balance) }}
         &nbsp;{{ selectedCurrencyUnit }}
         <v-menu
           offset="10"

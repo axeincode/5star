@@ -9,6 +9,7 @@ import { type GetSpinData } from "@/interface/vip";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -531,8 +532,8 @@ onMounted(() => {
                   <div class="d-flex mx-4">
                     <div class="white">{{ t("appBar.deposit") }}</div>
                     <div class="ml-auto">
-                      <Font class="text-gray">{{ platformCurrency }} {{ item.currentDepositAmount }} / </Font>
-                      <Font color="#F9BC01">{{ platformCurrency }} {{ item.totalDepositAmount }}</Font>
+                      <Font class="text-gray">{{ platformCurrency }} {{ toFormatNum(item.currentDepositAmount) }} / </Font>
+                      <Font color="#F9BC01">{{ platformCurrency }} {{ toFormatNum(item.totalDepositAmount) }}</Font>
                     </div>
                   </div>
                   <div>
@@ -548,8 +549,8 @@ onMounted(() => {
                   <div class="d-flex mx-4">
                     <div class="white">{{ t("appBar.wager") }}</div>
                     <div class="ml-auto">
-                      <Font class="text-gray">{{ platformCurrency }} {{ item.currentWagerAmount }} / </Font>
-                      <Font color="#623AEC">{{ platformCurrency }} {{ item.totalWagerAmount }}</Font>
+                      <Font class="text-gray">{{ platformCurrency }} {{ toFormatNum(item.currentWagerAmount) }} / </Font>
+                      <Font color="#623AEC">{{ platformCurrency }} {{ toFormatNum(item.totalWagerAmount) }}</Font>
                     </div>
                   </div>
                   <div>

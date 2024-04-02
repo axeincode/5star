@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { vipStore } from "@/store/vip";
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -39,7 +40,7 @@ const vipBetawardList = computed(() => {
         <div class="bonus-main-cashback">
             <div class="bonus-main-cashback-l">
                 <span>{{ t('vip.vip_level_info.bonus.text_1') }}</span>
-                <span>{{ platformCurrency }} {{ Math.floor(Number(vipBetawardList.now_cash_back) * 100) / 100 }}</span>
+                <span>{{ platformCurrency }} {{ toFormatNum(vipBetawardList.now_cash_back) }}</span>
             </div>
             <div class="bonus-main-cashback-r">
                 <span v-if="+vipBetawardList.now_cash_back > 0" @click="dispatchVipBetawardReceive({ type: 7 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>
@@ -49,7 +50,7 @@ const vipBetawardList = computed(() => {
         <div class="bonus-main-membership">
             <div class="bonus-main-membership-l">
                 <span>{{ t('vip.vip_level_info.bonus.text_3') }}</span>
-                <span>{{ platformCurrency }} {{ vipCycleawardList.membership_day_gift }}</span>
+                <span>{{ platformCurrency }} {{ toFormatNum(vipCycleawardList.membership_day_gift) }}</span>
             </div>
             <div class="bonus-main-membership-r">
                 <span v-if="+vipCycleawardList.membership_day_gift > 0" @click="dispatchVipCycleawardReceive({ type: 2 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>
@@ -65,7 +66,7 @@ const vipBetawardList = computed(() => {
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>{{ t('vip.vip_level_info.bonus.text_5') }}</span>
-                        <span>{{ platformCurrency }} {{ vipCycleawardList.week_gift }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipCycleawardList.week_gift) }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
                         <span v-if="+vipCycleawardList.week_gift > 0" @click="dispatchVipCycleawardReceive({ type: 3 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>
@@ -80,7 +81,7 @@ const vipBetawardList = computed(() => {
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>{{ t('vip.vip_level_info.bonus.text_6') }}</span>
-                        <span>{{ platformCurrency }} {{ vipCycleawardList.month_gift }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipCycleawardList.month_gift) }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
                         <span v-if="+vipCycleawardList.month_gift > 0" @click="dispatchVipCycleawardReceive({ type: 4 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>
@@ -95,7 +96,7 @@ const vipBetawardList = computed(() => {
                 <div class="bonus-main-gift-cycle-t">
                     <div class="bonus-main-gift-cycle-t-l">
                         <span>{{ t('vip.vip_level_info.bonus.text_7') }}</span>
-                        <span>{{ platformCurrency }} {{ vipLevelAward.uprank_gift }}</span>
+                        <span>{{ platformCurrency }} {{ toFormatNum(vipLevelAward.uprank_gift) }}</span>
                     </div>
                     <div class="bonus-main-gift-cycle-t-r">
                         <span v-if="+vipLevelAward.uprank_gift > 0" @click="dispatchVipLevelAwardReceive({ type: 6 })">{{ t('vip.vip_level_info.bonus.text_2') }}</span>

@@ -1,10 +1,9 @@
-<script lang="ts" setup>
+<script lang="ts" name="page" setup>
 import { onMounted, toRefs } from "vue";
 import { ref, computed } from "vue";
 import { useDisplay } from "vuetify";
 
 const props = defineProps<{ length: number }>();
-
 const emit = defineEmits<{
   (e: "handlePrev", pageNo: number): void;
   (e: "handleNext", pageNo: number): void;
@@ -28,6 +27,13 @@ const handlePrev = () => {
 const handleNext = () => {
   emit("handleNext", pageNo.value);
 };
+
+const resetPageNo = ():void => {
+  pageNo.value = 1
+}
+
+defineExpose({resetPageNo, pageNo})
+
 
 onMounted(() => {
   if (mobileWidth.value > 600) {

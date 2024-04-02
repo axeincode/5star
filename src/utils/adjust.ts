@@ -11,9 +11,9 @@ export default class AdjustClass {
 
   private static instance: AdjustClass
 
-  private token: string = "gmx6cdn8x3pc"
+  public token: string = "gmx6cdn8x3pc"
 
-  private isMobileWebview: boolean = false
+  public isMobileWebview: boolean = false
 
   constructor() {
 

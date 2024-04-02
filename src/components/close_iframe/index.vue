@@ -19,6 +19,8 @@ let isDragging = false;
 // 鼠标按下/触摸开始事件处理函数
 const handleStart = (event: MouseEvent | TouchEvent) => {
   event.preventDefault();
+  // 设置按钮完全不透明
+  draggableButton.value.style.opacity = "1"; 
 
   // 空值检查，确保元素引用不为空
   if (!draggableButton.value) return;
@@ -35,6 +37,9 @@ const handleStart = (event: MouseEvent | TouchEvent) => {
 // 鼠标移动/触摸移动事件处理函数
 const handleMove = (event: MouseEvent | TouchEvent) => {
   event.preventDefault();
+
+  // 设置按钮完全不透明
+  draggableButton.value.style.opacity = "1"; 
 
   // 空值检查，确保元素引用不为空
   if (!draggableButton.value) return;
@@ -87,10 +92,15 @@ const handleEnd = (event: MouseEvent | TouchEvent) => {
     // 执行按钮的单击事件
     // 触发自定义事件，并传递数据给父组件
     emit('close');
+  } else {
+    // 设置按钮完全不透明
+    draggableButton.value.style.opacity = "0.5"; 
   }
 
   // 重置拖动状态
   isDragging = false;
+  // 重置按钮透明度
+  draggableButton.value.style.opacity = "0.5"; 
 };
 
 onMounted(() => {
@@ -132,7 +142,7 @@ window.addEventListener('resize', () => {
   left: 20px;
   top: 20px;
   cursor: pointer;
-  background: url(@/assets/common/close-iframe.svg) #000;
+  background: url(@/assets/common/close-iframe.svg);
   border: none;
   border-radius: 50%;
   background-repeat: no-repeat;
@@ -140,5 +150,13 @@ window.addEventListener('resize', () => {
   color: transparent;
   opacity: 1;
   z-index: 111111111;
+  outline: none;
+  opacity: 0.5;
+  transition: opacity .5s;
 }
+
+.draggable-button:hover {
+  opacity: 1;
+}
+
 </style>

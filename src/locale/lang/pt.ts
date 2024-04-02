@@ -80,7 +80,7 @@ export const lang: langType = {
       "username": "Nome de usuário",
       "validation": {
         "username": {
-          "title": "Este é o nome que os outros verão no HOY777.COM",
+          "title": "Este é o nome que os outros verão no Hoy777.com",
           "items": [
             "2 a 20 caracteres de comprimento",
             "O apelido não deve ser igual ao seu e-mail"
@@ -144,7 +144,7 @@ export const lang: langType = {
       "hot_text": "Hot",
       "recently_played": "Jogado recentemente",
       "favorites": "Favoritos",
-      "game_originals": "Brazstar Originals",
+      "game_originals": "HOY777 Originals",
       "slots": "Caça-níqueis",
       "live_casino": "Cassino ao vivo",
       "provider_text": "Provedores"
@@ -357,7 +357,7 @@ export const lang: langType = {
       "text_118": "7.2. Você será notificado de que começaremos a cobrar as tarifas no décimo primeiro mês de inatividade e sempre terá a opção de fazer login e sacar seus fundos.",
       "text_119": "7.3. A Tarifa de Conta Inativa será retirada de sua Conta mensalmente na medida em que sua Conta permanecer em crédito e somente durante o período em que não houver Atividade da Conta após o período inicial de doze meses. Se a Tarifa de Conta Inativa tiver que ser sacada da sua Conta e o saldo da sua Conta for inferior a €5 (ou moeda equivalente), a Tarifa de Conta Inativa incluirá os fundos restantes da sua Conta.",
       "text_120": "8. Depósito de fundos",
-      "text_121": "8.1. Taxas e encargos podem se aplicar a depósitos e saques de clientes, que podem ser encontrados no site. Na maioria dos casos, absorvemos as taxas de transação para depósitos em sua Conta HOY777.COM. O cliente é responsável por seus próprios encargos bancários que possam ser incorridos devido ao depósito de fundos conosco.",
+      "text_121": "8.1. Taxas e encargos podem se aplicar a depósitos e saques de clientes, que podem ser encontrados no site. Na maioria dos casos, absorvemos as taxas de transação para depósitos em sua Conta Hoy777.com. O cliente é responsável por seus próprios encargos bancários que possam ser incorridos devido ao depósito de fundos conosco.",
       "text_122": "8.2. A Empresa não é uma instituição financeira e usa um processador de pagamento eletrônico terceirizado para processar depósitos com cartão de crédito e débito; eles não são processados diretamente por nós. Se você depositar fundos por meio de um cartão de crédito ou de débito, sua Conta somente será creditada se recebermos um código de aprovação e autorização da instituição emissora do pagamento. Se o emissor do seu cartão não der essa autorização, sua Conta não será creditada com esses fundos.",
       "text_123": "8.3. O usuário concorda em pagar integralmente todos e quaisquer pagamentos e encargos devidos a nós ou aos provedores de pagamento em relação ao seu uso do Serviço. Além disso, concorda em não fazer estornos, renunciar, cancelar ou reverter de outra forma qualquer um de seus depósitos e, em qualquer caso, nos reembolsará e compensará por tais depósitos não pagos, incluindo quaisquer despesas incorridas por nós no processo de coleta de seu depósito, e concorda que quaisquer ganhos de apostas que utilizem esses fundos estornados serão perdidos. O usuário reconhece e concorda que sua conta de jogador não é uma conta bancária e, portanto, não é garantida, segurada ou protegida por qualquer sistema de seguro bancário ou de depósito ou por qualquer outro sistema de seguro similar de qualquer outra jurisdição, inclusive, mas não limitado à sua jurisdição local. Além disso, a conta de jogador não rende juros sobre nenhum dos fundos nela mantidos.",
       "text_124": "8.4. Se decidir aceitar qualquer uma de nossas ofertas promocionais ou de bônus inserindo um código de bônus durante o depósito, o usuário concorda com os Termos de Bônus e com os termos de cada bônus específico.",
@@ -401,7 +401,7 @@ export const lang: langType = {
       "text_162": "10.2. Reservamo-nos o direito de usar processadores de pagamento eletrônico de terceiros e/ou bancos comerciais para processar os pagamentos feitos pelo usuário, e o usuário concorda em se vincular aos termos e condições desses processadores, desde que sejam informados ao usuário e que esses termos não entrem em conflito com estes Termos.",
       "text_163": "10.3. Todas as transações feitas em nosso site podem ser verificadas para evitar atividades de lavagem de dinheiro ou financiamento de terrorismo. As transações suspeitas serão informadas à autoridade competente.",
       "text_164": "11. Erros, falhas de funcionamento e interrupções",
-      "text_165": "11.1 A Brazstar faz todos os esforços para garantir que não sejam cometidos erros nos preços oferecidos ou nas apostas aceitas. Entretanto, erros humanos e/ou de sistemas podem ocasionalmente resultar em erros.",
+      "text_165": "11.1 A HOY777 faz todos os esforços para garantir que não sejam cometidos erros nos preços oferecidos ou nas apostas aceitas. Entretanto, erros humanos e/ou de sistemas podem ocasionalmente resultar em erros.",
       "text_166": "11.2 Nesta cláusula 10, apresentamos uma descrição das coisas que podem dar errado e os direitos que temos em tais casos. No entanto, o usuário deve estar ciente de que esta cláusula não substitui ou cancela quaisquer direitos que o usuário possa ter de acordo com as leis e regulamentos do consumidor e não pretendemos que isso aconteça.",
       "text_167": "11.3 Abaixo estão algumas definições importantes para ajudá-lo a entender esta cláusula:",
       "text_168": "Um \"mau funcionamento\" refere-se ao fato de um processo automatizado não operar conforme projetado ou pretendido, por exemplo, quando um software de computador produz um desvio de suas especificações ou parâmetros de desempenho pretendidos, ou quando dois softwares não fazem interface ou não se comunicam entre si da maneira pretendida ou projetada, em ambos os casos, de modo a produzir um resultado que não é o resultado pretendido ou projetado. Esses problemas de funcionamento podem ou não ser aparentes para nós ou para o Usuário e podem vir à tona somente quando as instruções de liquidação, os resultados do jogo, os ganhos ou os saques forem investigados e analisados retrospectivamente.",
@@ -412,7 +412,7 @@ export const lang: langType = {
       "text_173": "11.5 Se, como resultado de um mau funcionamento, a sua Conta for creditada com ganhos que você não teria recebido se não fosse por esse mau funcionamento, teremos o direito de anular a transação relevante e reter os ganhos relevantes. Isso se aplica mesmo que o produto de jogo relevante pudesse ter produzido a mesma quantia ou uma quantia semelhante de ganhos sem a intervenção da falha e se aplica independentemente de a falha ter sido aparente para você ou para nós ou não. Se tivermos pago tais Apostas ou atividades de jogo e/ou se o cliente tiver sacado tais ganhos, esses valores serão considerados como mantidos pelo cliente em confiança para nós e deverão ser imediatamente reembolsados quando uma exigência de pagamento for feita por nós ao cliente.",
       "text_174": "11.6 Quando qualquer mau funcionamento for ou se tornar aparente ou óbvio para você, ou se você suspeitar que um mau funcionamento possa estar ocorrendo, você concorda em interromper imediatamente o uso do(s) Serviço(s) relevante(s) e nos informar imediatamente.",
       "text_175": "Erros",
-      "text_176": "11.7 No caso de um erro, o mesmo se aplica às falhas, conforme estabelecido acima. Apenas para os mercados de apostas esportivas, no caso de quaisquer erros nos preços transmitidos (incluindo os chamados erros \"palpáveis\", \"óbvios\" ou \"flagrantes\", por exemplo, quando o preço exibido for materialmente/significativamente diferente daqueles disponíveis no mercado geral e/ou o preço estiver claramente incorreto, dependendo de todas as circunstâncias), a Brazstar poderá liquidar as Apostas pelo preço correto no momento da aceitação (ou o Preço Inicial no caso de corridas de cavalos, o que for maior).",
+      "text_176": "11.7 No caso de um erro, o mesmo se aplica às falhas, conforme estabelecido acima. Apenas para os mercados de apostas esportivas, no caso de quaisquer erros nos preços transmitidos (incluindo os chamados erros \"palpáveis\", \"óbvios\" ou \"flagrantes\", por exemplo, quando o preço exibido for materialmente/significativamente diferente daqueles disponíveis no mercado geral e/ou o preço estiver claramente incorreto, dependendo de todas as circunstâncias), a HOY777 poderá liquidar as Apostas pelo preço correto no momento da aceitação (ou o Preço Inicial no caso de corridas de cavalos, o que for maior).",
       "text_177": "11.8 Quando qualquer Erro for ou se tornar aparente ou óbvio para o usuário, ou quando o usuário suspeitar que um Erro possa estar ocorrendo, o usuário concorda em interromper imediatamente o uso do(s) Serviço(s) relevante(s) e nos informar imediatamente.",
       "text_178": "Interrupções",
       "text_179": "11.9 Nossa prioridade é garantir que lidemos com as interrupções de forma justa e que não prejudique sistematicamente nossos clientes.",
@@ -442,7 +442,7 @@ export const lang: langType = {
       "text_204": "13.2. Todas as comunicações e avisos a serem dados sob estes Termos por nós ao usuário deverão, a menos que especificado de outra forma nestes Termos, ser publicados no Site e/ou enviados para ",
       "text_205": "o endereço de e-mail registrado que mantemos em nosso sistema para o Cliente relevante. O método de tal comunicação ficará a nosso critério único e exclusivo.",
       "text_206": "13.3. Todas as comunicações e notificações a serem feitas nos termos destes Termos, tanto por você quanto por nós, deverão ser feitas por escrito no idioma inglês e devem ser enviadas para e do endereço de e-mail registrado em sua conta.",
-      "text_207": "13.4. Ocasionalmente, poderemos entrar em contato com você por e-mail com o objetivo de oferecer informações sobre apostas, ofertas promocionais exclusivas e outras informações do HOY777.COM. Você concorda em receber esses e-mails quando concorda com estes Termos ao se registrar no Site. Você pode optar por não receber tais ofertas promocionais de nós a qualquer momento, enviando uma solicitação ao Suporte ao Cliente.",
+      "text_207": "13.4. Ocasionalmente, poderemos entrar em contato com você por e-mail com o objetivo de oferecer informações sobre apostas, ofertas promocionais exclusivas e outras informações do Hoy777.com. Você concorda em receber esses e-mails quando concorda com estes Termos ao se registrar no Site. Você pode optar por não receber tais ofertas promocionais de nós a qualquer momento, enviando uma solicitação ao Suporte ao Cliente.",
       "text_208": "14. Assuntos fora de nosso controle",
       "text_209": "Não podemos ser responsabilizados por qualquer falha ou atraso no fornecimento do Serviço devido a um evento de Força Maior que possa ser razoavelmente considerado fora do nosso controle, apesar da execução de medidas preventivas razoáveis, tais como: caso fortuito; disputa comercial ou trabalhista; corte de energia; ato, falha ou omissão de qualquer governo ou autoridade; obstrução ou falha de serviços de telecomunicação; ou qualquer outro atraso ou falha causado por terceiros, e não seremos responsáveis por qualquer perda ou dano resultante que o usuário possa sofrer. Em tal caso, reservamo-nos o direito de cancelar ou suspender o Serviço sem incorrer em qualquer responsabilidade.",
       "text_210": "15. Responsabilidade civil",
@@ -453,7 +453,7 @@ export const lang: langType = {
       "text_215": "16.1. Se suspeitarmos que você é ou recebermos uma notificação de que você é atualmente menor de 18 anos ou era menor de 18 anos (ou abaixo da maioridade conforme estipulado nas leis da jurisdição aplicável a você) quando você fez alguma aposta por meio do Serviço, sua Conta será suspensa (bloqueada) para impedir que você faça outras apostas ou saques de sua Conta. Em seguida, investigaremos o assunto, inclusive se você apostou como agente ou em nome de uma pessoa menor de 18 anos (ou abaixo da maioridade, conforme estipulado nas leis da jurisdição aplicável a você). Se for constatado que você: (a) está atualmente; (b) tinha menos de 18 anos ou estava abaixo da idade de maioridade que se aplica a você no momento relevante; ou (c) apostou como agente ou a mando de uma pessoa com menos de 18 anos ou abaixo da idade de maioridade que se aplica:",
       "text_216": "todos os ganhos atuais ou que devam ser creditados em sua conta serão retidos;",
       "text_217": "todos os ganhos obtidos com apostas por meio do Serviço enquanto for menor de idade deverão ser pagos a nós mediante solicitação (se você não cumprir essa disposição, tentaremos recuperar todos os custos associados à recuperação de tais valores); e/ou",
-      "text_218": "Quaisquer valores depositados em sua Conta que não sejam ganhos serão devolvidos a você OU retidos até que você complete 18 anos de idade, a nosso critério exclusivo. Reservamo-nos o direito de deduzir as taxas de transação de pagamento do valor a ser devolvido, incluindo as taxas de transação para depósitos em sua conta HOY777.COM que cobrimos.",
+      "text_218": "Quaisquer valores depositados em sua Conta que não sejam ganhos serão devolvidos a você OU retidos até que você complete 18 anos de idade, a nosso critério exclusivo. Reservamo-nos o direito de deduzir as taxas de transação de pagamento do valor a ser devolvido, incluindo as taxas de transação para depósitos em sua conta Hoy777.com que cobrimos.",
       "text_219": "16.2. Essa condição também se aplica a você se tiver mais de 18 anos de idade, mas estiver fazendo suas apostas em uma jurisdição que especifique uma idade superior a 18 anos para apostas legais e você estiver abaixo da idade mínima legal nessa jurisdição.",
       "text_220": "16.3. Caso suspeitemos que o usuário esteja violando as disposições desta Cláusula ou tentando utilizá-las para fins fraudulentos, reservamo-nos o direito de tomar qualquer medida necessária para investigar o assunto, inclusive informar as agências de aplicação da lei relevantes.",
       "text_221": "17. Fraude",
@@ -506,7 +506,7 @@ export const lang: langType = {
       "text_268": "21.10.2.9. Todos os bônus têm uma data de validade. A data de validade padrão para bônus em dinheiro é de 30 dias. A data de validade pode ser diferente para bônus específicos. Nesse caso, a data de validade será indicada nos termos e condições do bônus em questão. Os requisitos de apostas precisam ter sido cumpridos na data de expiração. Poderemos cancelar ou debitar o crédito de bônus da conta do jogador após a data de expiração.",
       "text_269": "21.10.2.10. O requisito de aposta padrão para o dinheiro de bônus de cassino é 35 vezes o valor do bônus recebido e para apostas esportivas é 35 vezes o valor do bônus recebido. Isso pode ser diferente para promoções específicas, desde que seja especificado de acordo com os termos e condições relevantes.",
       "text_270": "21.10.2.11. Os requisitos de apostas de um bônus significam a quantidade total de apostas que devem ser feitas antes que o bônus e quaisquer ganhos acumulados sejam transferidos para o seu saldo em dinheiro e possam ser retirados. Os requisitos de apostas para cada bônus são definidos nos termos específicos do bônus e serão expressos como um múltiplo do valor do bônus, ou do bônus mais o valor do depósito. O requisito de apostas para bônus será definido nos termos específicos para esse bônus. Nem todas as apostas contarão para os requisitos de apostas. Apostas em Blackjack, roletas, jogos de fliperama (Heads or Better, Dice Twister, etc.), jogos de videopôquer (Jacks or Better, Aces and Faces, etc.), Baccarat, Casino Hold'em, ",
-      "text_271": "Os jogos 2 Ways Royal, Craps e Sic Bo contribuem com 25% das apostas reais nesses jogos para os requisitos de apostas. A contribuição das apostas em jogos de mesa é de 25%, Sic Bo, Royal Craps, Baccarat, Red Dog 0%. A maioria dos jogos de caça-níqueis contribui com 50%. Os Brazstar Originals contribuem com 100% para os requisitos de apostas. Essas porcentagens podem ser alteradas de tempos em tempos, portanto, entre em contato com o suporte ao cliente do site sempre que necessário para descobrir a contribuição de apostas de um determinado jogo.",
+      "text_271": "Os jogos 2 Ways Royal, Craps e Sic Bo contribuem com 25% das apostas reais nesses jogos para os requisitos de apostas. A contribuição das apostas em jogos de mesa é de 25%, Sic Bo, Royal Craps, Baccarat, Red Dog 0%. A maioria dos jogos de caça-níqueis contribui com 50%. Os HOY777 Originals contribuem com 100% para os requisitos de apostas. Essas porcentagens podem ser alteradas de tempos em tempos, portanto, entre em contato com o suporte ao cliente do site sempre que necessário para descobrir a contribuição de apostas de um determinado jogo.",
       "text_272": "21.11. Requisitos de apostas",
       "text_273": "21.11.1. Após receber o bônus, ele é transferido para o saldo do bônus até o momento em que os requisitos de apostas forem atingidos.",
       "text_274": "21.11.2. Os requisitos de apostas são um multiplicador que representa o número de vezes que o usuário deve jogar um bônus antes de poder sacar os ganhos. Após atingir os requisitos de apostas, o bônus ou os ganhos acumulados são transferidos para o saldo principal.",
@@ -516,13 +516,13 @@ export const lang: langType = {
       "text_278": "21.11.6. Todo usuário tem o direito de abandonar os bônus fazendo a solicitação ao suporte ao cliente do site para zerar o saldo do bônus.",
       "text_279": "21.12. Rodadas Grátis Com as rodadas grátis, você pode jogar gratuitamente em um jogo no site com a mesma chance de ganhar que quando joga com dinheiro real. Os ganhos nas rodadas grátis são convertidos em dinheiro de bônus ou dinheiro real. Quando convertidos em dinheiro de bônus, será necessário apostar o dinheiro de bônus 35 vezes antes que ele seja transferido para o seu saldo em dinheiro, após o que poderá ser sacado.",
       "text_280": "22. Reclamações",
-      "text_281": "22.1. Se tiver alguma reclamação, você pode enviar um e-mail para o suporte ao cliente do site em support@HOY777.COM.",
+      "text_281": "22.1. Se tiver alguma reclamação, você pode enviar um e-mail para o suporte ao cliente do site em support@Hoy777.com.",
       "text_283": "22.2. A Pistis Trade N.V. envidará seus melhores esforços para resolver prontamente uma questão relatada.",
-      "text_284": "22.3. Se tiver alguma dúvida em relação a qualquer transação, entre em contato com a Pistis Trade N.V. pelo e-mail support@HOY777.COM com os detalhes da dúvida. Analisaremos todas as transações questionadas ou contestadas. Nosso julgamento é definitivo.",
+      "text_284": "22.3. Se tiver alguma dúvida em relação a qualquer transação, entre em contato com a Pistis Trade N.V. pelo e-mail support@Hoy777.com com os detalhes da dúvida. Analisaremos todas as transações questionadas ou contestadas. Nosso julgamento é definitivo.",
       "text_285": "22.4. NÃO OBSTANTE O DISPOSTO ACIMA, NÃO ASSUMIMOS QUALQUER RESPONSABILIDADE PERANTE VOCÊ OU QUALQUER TERCEIRO AO RESPONDER A QUALQUER RECLAMAÇÃO QUE RECEBEMOS OU AO TOMAR MEDIDAS RELACIONADAS A ELA.",
       "text_286": "23. Propriedade intelectual",
       "text_287": "23.1. Somos os únicos proprietários da marca registrada Pistis Trade N.V. e do logotipo da Pistis Trade N.V.. Qualquer uso não autorizado da marca registrada Pistis Trade N.V. e do logotipo da Pistis Trade N.V. poderá resultar em processo judicial.",
-      "text_288": "23.2. HOY777.COM é o localizador uniforme de recursos do Site operado pela Pistis Trade N.V. e não é permitido o uso não autorizado desse URL em outro site ou plataforma digital sem o nosso consentimento prévio por escrito.",
+      "text_288": "23.2. Hoy777.com é o localizador uniforme de recursos do Site operado pela Pistis Trade N.V. e não é permitido o uso não autorizado desse URL em outro site ou plataforma digital sem o nosso consentimento prévio por escrito.",
       "text_289": "23.3. A Pistis Trade N.V. é a proprietária ou a legítima licenciada dos direitos sobre a tecnologia, o software e os sistemas comerciais usados neste Site.",
       "text_290": "23.4. O conteúdo e a estrutura das páginas do Site da Pistis Trade N.V. pertencem à Pistis Trade N.V., com todos os direitos reservados. Os direitos autorais deste Site, incluindo todos os textos, gráficos, códigos, arquivos e links, pertencem à Pistis Trade N.V. e o site não pode ser reproduzido, transmitido ou armazenado, no todo ou em parte, sem nosso consentimento por escrito. Seu registro e uso do nosso sistema não conferem, portanto, nenhum direito à propriedade intelectual contida em nosso sistema.",
       "text_291": "23.5. Os links para o Site e qualquer uma de suas páginas não podem ser incluídos em nenhum outro site sem o consentimento prévio por escrito da Pistis Trade N.V..",
@@ -579,7 +579,7 @@ export const lang: langType = {
       "text_343": "26.2.21 se você violar os termos de qualquer promoção, por exemplo, se você tiver aberto mais de uma Conta para aproveitar uma promoção limitada a uma por cliente;",
       "text_344": "26.2.22 se você se envolver em qualquer comportamento abusivo, ofensivo ou inadequado em relação a outros usuários dos nossos Serviços (por exemplo, durante o jogo, por meio de nossas funções de bate-papo etc.) ou em relação à nossa equipe;",
       "text_345": "26.2.23 se o usuário violar os Termos de Uso de alguma outra forma material ou grave; ou",
-      "text_346": "26.2.24 se tomarmos conhecimento de que você jogou em qualquer outro site de jogos de azar on-line (inclusive qualquer site operado por um membro do grupo de empresas da Brazstar) e, em relação a esse site, você for suspeito ou tiver se envolvido em qualquer uma das atividades descritas nesta cláusula 26.2.",
+      "text_346": "26.2.24 se tomarmos conhecimento de que você jogou em qualquer outro site de jogos de azar on-line (inclusive qualquer site operado por um membro do grupo de empresas da HOY777) e, em relação a esse site, você for suspeito ou tiver se envolvido em qualquer uma das atividades descritas nesta cláusula 26.2.",
       "text_347": "27. Suspensão ou rescisão de sua conta por nós",
       "text_348": "27.1 Se tivermos motivos razoáveis para suspeitar que você se envolveu em qualquer Atividade Proibida, suspenderemos sua Conta sem notificação, e sua Conta permanecerá suspensa enquanto o assunto for investigado. Você concorda em cooperar totalmente com essa investigação. Seus fundos não poderão ser acessados ou retirados durante os períodos de suspensão, e qualquer saldo permanecerá na Conta. Também poderemos fazer um relatório para as autoridades regulatórias ou policiais relevantes.",
       "text_349": "27.2 Se a nossa investigação resultar em nossa decisão (agindo de forma razoável) de que o problema foi resolvido de forma satisfatória, suspenderemos a suspensão da Conta. Se a nossa investigação resultar em nossa decisão (agindo de forma razoável) de que você se envolveu em qualquer Atividade Proibida, restringiremos ou encerraremos permanentemente a sua Conta. Nessas circunstâncias, seus dados poderão ser repassados a quaisquer autoridades regulatórias ou policiais aplicáveis ou a quaisquer outros terceiros externos relevantes.",
@@ -653,15 +653,15 @@ export const lang: langType = {
       "text_11": "Como entrar em contato conosco",
       "text_12": "Esperamos que você reserve um tempo para ler esta política. É importante verificar com frequência se há atualizações nesta política. Se fizermos alterações que considerarmos importantes, informaremos você colocando um aviso no Serviço relevante e/ou entrando em contato com você por outros métodos, como e-mail.",
       "text_13": "2. Detalhes do controlador",
-      "text_14": "As referências neste documento a \"nós\", \"nosso\", \"nós\" ou \"brazstar\" são referências aos seguintes controladores de dados: Pistis Trade N.V., uma empresa registrada de acordo com a Lei de Curaçao, número de registro 162576 Endereço: Zuikertuintjeweg Z/N (Torre Zuikertuin), Curaçao.",
+      "text_14": "As referências neste documento a \"nós\", \"nosso\", \"nós\" ou \"HOY777\" são referências aos seguintes controladores de dados: Pistis Trade N.V., uma empresa registrada de acordo com a Lei de Curaçao, número de registro 162576 Endereço: Zuikertuintjeweg Z/N (Torre Zuikertuin), Curaçao.",
       "text_15": "A Pistis Trade N.V. tem o compromisso de proteger suas informações pessoais. Esta Política de Privacidade permite que você saiba quais informações coletamos quando você usa nossos serviços, por que coletamos essas informações e como usamos as informações coletadas.",
-      "text_16": "Observe que esta Política de Privacidade será acordada entre você e a HOY777.COM. (\"Nós\", \"Nos\" ou \"Nosso\", conforme apropriado). Esta Política de Privacidade é parte integrante dos Termos e Condições do brazstar. com.",
-      "text_17": "O site HOY777.COM ('Cassino', 'Site', 'Empresa', 'Nós', 'Nos', 'Nosso') pertence e é operado pela Pistis Trade N.V., uma empresa registrada de acordo com a Lei de Curaçao, com o número de registro 162576: Zuikertuintjeweg Z/N (Torre Zuikertuin), Curaçao. A Pistis Trade N.V. é licenciada e regulamentada pela Autoridade de Jogos de Curaçao e opera sob a Licença nº 365/JAZ emitida para o Provedor de Serviços de Jogos, autorizado e regulamentado pelo Governo de Curaçao.",
+      "text_16": "Observe que esta Política de Privacidade será acordada entre você e a Hoy777.com. (\"Nós\", \"Nos\" ou \"Nosso\", conforme apropriado). Esta Política de Privacidade é parte integrante dos Termos e Condições do HOY777. com.",
+      "text_17": "O site Hoy777.com ('Cassino', 'Site', 'Empresa', 'Nós', 'Nos', 'Nosso') pertence e é operado pela Pistis Trade N.V., uma empresa registrada de acordo com a Lei de Curaçao, com o número de registro 162576: Zuikertuintjeweg Z/N (Torre Zuikertuin), Curaçao. A Pistis Trade N.V. é licenciada e regulamentada pela Autoridade de Jogos de Curaçao e opera sob a Licença nº 365/JAZ emitida para o Provedor de Serviços de Jogos, autorizado e regulamentado pelo Governo de Curaçao.",
       "text_18": "Periodicamente, poderemos fazer alterações nesta Política de Privacidade e o notificaremos sobre essas alterações publicando os termos modificados em nossas plataformas. Recomendamos que você reveja esta Política de Privacidade regularmente.",
       "text_19": "3. Entre em contato conosco",
       "text_20": "(incluindo detalhes de contato do Diretor de Proteção de Dados (\"DPO\")",
-      "text_21": "Se tiver alguma dúvida sobre como a Betfair lida com seus dados pessoais, entre em contato com o nosso Diretor Internacional de Proteção de Dados (DPO) e com as Equipes de Proteção de Dados da Brazstar:",
-      "text_22": "dataprotection@HOY777.COM Se desejar exercer seus direitos de proteção de dados, consulte a seção \"Seus direitos\" abaixo.",
+      "text_21": "Se tiver alguma dúvida sobre como a Betfair lida com seus dados pessoais, entre em contato com o nosso Diretor Internacional de Proteção de Dados (DPO) e com as Equipes de Proteção de Dados da HOY777:",
+      "text_22": "dataprotection@Hoy777.com Se desejar exercer seus direitos de proteção de dados, consulte a seção \"Seus direitos\" abaixo.",
       "text_23": "4. Informações que coletamos",
       "text_24": "Quando você usa nossos Serviços, coletamos os seguintes tipos de informações:",
       "text_25": "Informações que você nos fornece:",
@@ -684,7 +684,7 @@ export const lang: langType = {
       "text_42": "Nem todas as informações pessoais que mantemos sobre você sempre virão diretamente de você. Também podemos coletar informações de terceiros, como nossos parceiros, prestadores de serviços e sites disponíveis publicamente (ou seja, plataformas de mídia social), para cumprir nossas obrigações legais e regulamentares, oferecer Serviços que acreditamos ser de interesse, ajudar-nos a manter a precisão dos dados e fornecer e aprimorar os Serviços.",
       "text_43": "Se você fizer login em um de nossos produtos por meio do Facebook ou do Google, o Facebook ou o Google nos fornecerá alguns de seus detalhes de usuário do Facebook ou do Google. Poderemos usar esses detalhes para fins de nosso processo de registro e para comercializar nossos produtos e Serviços para você no Facebook ou no Google.",
       "text_44": "5. MEIOS DE COLETA E PROCESSAMENTO DE DADOS",
-      "text_45": "Podemos coletar automaticamente determinados dados conforme discutido acima e receber Informações Pessoais sobre você quando você fornecer tais informações por meio dos serviços ou de outras comunicações e interações no site HOY777.COM. Também podemos receber Informações Pessoais de fornecedores e prestadores de serviços on-line e de listas de clientes legalmente adquiridas de fornecedores terceirizados. Além disso, podemos contratar os serviços de prestadores de serviços terceirizados para fornecer suporte técnico para processar suas transações on-line e manter sua conta. Teremos acesso a todas as informações que você fornecer a esses fornecedores, prestadores de serviços e serviços de comércio eletrônico de terceiros, e usaremos as Informações Pessoais conforme estabelecido nesta Política de Privacidade abaixo. Essas informações somente serão divulgadas a terceiros fora da empresa de acordo com esta Política de Privacidade. Tomamos medidas para garantir que nossos acordos com prestadores de serviços terceirizados e fornecedores on-line protejam sua privacidade.",
+      "text_45": "Podemos coletar automaticamente determinados dados conforme discutido acima e receber Informações Pessoais sobre você quando você fornecer tais informações por meio dos serviços ou de outras comunicações e interações no site Hoy777.com. Também podemos receber Informações Pessoais de fornecedores e prestadores de serviços on-line e de listas de clientes legalmente adquiridas de fornecedores terceirizados. Além disso, podemos contratar os serviços de prestadores de serviços terceirizados para fornecer suporte técnico para processar suas transações on-line e manter sua conta. Teremos acesso a todas as informações que você fornecer a esses fornecedores, prestadores de serviços e serviços de comércio eletrônico de terceiros, e usaremos as Informações Pessoais conforme estabelecido nesta Política de Privacidade abaixo. Essas informações somente serão divulgadas a terceiros fora da empresa de acordo com esta Política de Privacidade. Tomamos medidas para garantir que nossos acordos com prestadores de serviços terceirizados e fornecedores on-line protejam sua privacidade.",
       "text_46": "4. USO DE INFORMAÇÕES",
       "text_47": "Usamos as Informações Pessoais que coletamos do usuário para prestar nossos Serviços, fornecer suporte ao cliente, realizar as verificações de segurança e identidade necessárias, processar qualquer uma de suas transações on-line, auxiliar sua participação em promoções de terceiros, atender a determinados requisitos comerciais e para qualquer outra finalidade relacionada à operação dos Serviços. Dessa forma, poderemos compartilhar suas Informações Pessoais com nossos parceiros cuidadosamente selecionados (incluindo quaisquer outras partes que tenham acordos de compartilhamento de dados com os últimos).",
       "text_48": "Suas Informações Pessoais também podem ser usadas por nós para lhe fornecer: (1) ofertas promocionais e informações sobre nossos produtos e serviços; e (2) ofertas promocionais e informações sobre os produtos e serviços de nossos parceiros, a fim de ampliar a gama de produtos fornecidos e melhorar nosso atendimento ao cliente. De tempos em tempos, podemos solicitar informações por meio de pesquisas ou concursos. A participação nessas pesquisas ou concursos é totalmente voluntária e você tem a opção de divulgar ou não essas informações. As informações solicitadas podem incluir informações de contato (como nome, endereço para correspondência e número de telefone) e informações demográficas (como CEP ou código postal ou idade). Ao aceitar qualquer prêmio de concurso ou ganhos nossos, o usuário concorda com o uso de seu nome para fins publicitários e promocionais sem compensação adicional, exceto quando proibido por lei. A menos que tenha optado por não receber informações promocionais, também poderemos usar suas Informações Pessoais (inclusive seu endereço de e-mail e número de telefone) para lhe fornecer informações sobre nossos produtos, serviços e promoções, inclusive outros produtos de jogos (inclusive pôquer on-line, cassino, apostas, gamão) e produtos e serviços de terceiros cuidadosamente selecionados por nós.",
@@ -727,7 +727,7 @@ export const lang: langType = {
       "text_85": "17. Outros sites",
       "text_86": "Nosso site pode conter links para outros sites, que estão fora de nosso controle e não são cobertos por esta Política de Privacidade. Se você acessar outros sites usando os links fornecidos, os operadores desses sites poderão coletar informações suas, que serão usadas por eles de acordo com a política de privacidade deles, que pode ser diferente da nossa. Não somos responsáveis. Somente os operadores desses sites serão responsáveis por sua funcionalidade ou por possíveis erros nos sites vinculados.",
       "text_87": "18. Exclusão de dados",
-      "text_88": "Para solicitar a exclusão de seus dados, entre em contato com support@HOY777.COM. Observe que, de acordo com o Artigo 17(3)(b) do GDPR, os requisitos legais têm precedência sobre o direito de ser esquecido. Portanto, para cumprir os regulamentos de AML, reteremos seus dados por cinco anos. Depois disso, poderemos processar sua solicitação."
+      "text_88": "Para solicitar a exclusão de seus dados, entre em contato com support@Hoy777.com. Observe que, de acordo com o Artigo 17(3)(b) do GDPR, os requisitos legais têm precedência sobre o direito de ser esquecido. Portanto, para cumprir os regulamentos de AML, reteremos seus dados por cinco anos. Depois disso, poderemos processar sua solicitação."
     },
     "responsible_gambling": {
       "text_1": "Jogando com responsabilidade",
@@ -793,10 +793,10 @@ export const lang: langType = {
       "text_10": "5. Uma aposta deve ser liquidada para contar para os requisitos de apostas; as apostas não liquidadas não contarão.",
       "text_11": "6. Todos os bônus de depósito e de dinheiro grátis expirarão após 30 dias.",
       "text_12": "7. A aposta máxima com dinheiro de bônus é de {0} 25 ou o equivalente em sua moeda local. Qualquer tentativa de burlar a aposta máxima de {0} 25 é estritamente proibida.",
-      "text_13": "8. Antes de qualquer retirada ser processada, seu jogo será revisado para verificar se há algum padrão de jogo irregular. Para fins de jogo justo, apostas iguais, de margem zero ou baixa, apostas de hedge ou estratégias de apostas de alta variação serão consideradas jogos irregulares para fins de requisito de jogo do Bônus. Caso a Brazstar considere que ocorreu um jogo irregular, ela se reserva o direito de reter quaisquer saques e/ou confiscar todos os ganhos e, se aplicável, após cancelar os bônus, reintegrar o depósito na conta do jogador, sem necessariamente informar o jogador.",
-      "text_14": "9. {0}25 é a aposta máxima permitida ao jogar com dinheiro de bônus. Se, após a revisão do jogo, a Brazstar descobrir que um jogador está violando essa condição, o bônus e os ganhos serão perdidos.",
-      "text_15": "10. A gerência do HOY777.COM reserva-se o direito de anular quaisquer bônus e/ou ganhos obtidos por comportamento fraudulento, conforme descrito acima.",
-      "text_16": "11. A gerência da HOY777.COM tem o direito de atualizar essas regras a qualquer momento.",
+      "text_13": "8. Antes de qualquer retirada ser processada, seu jogo será revisado para verificar se há algum padrão de jogo irregular. Para fins de jogo justo, apostas iguais, de margem zero ou baixa, apostas de hedge ou estratégias de apostas de alta variação serão consideradas jogos irregulares para fins de requisito de jogo do Bônus. Caso a HOY777 considere que ocorreu um jogo irregular, ela se reserva o direito de reter quaisquer saques e/ou confiscar todos os ganhos e, se aplicável, após cancelar os bônus, reintegrar o depósito na conta do jogador, sem necessariamente informar o jogador.",
+      "text_14": "9. {0}25 é a aposta máxima permitida ao jogar com dinheiro de bônus. Se, após a revisão do jogo, a HOY777 descobrir que um jogador está violando essa condição, o bônus e os ganhos serão perdidos.",
+      "text_15": "10. A gerência do Hoy777.com reserva-se o direito de anular quaisquer bônus e/ou ganhos obtidos por comportamento fraudulento, conforme descrito acima.",
+      "text_16": "11. A gerência da Hoy777.com tem o direito de atualizar essas regras a qualquer momento.",
       "text_17": "12. O seu dinheiro real será usado antes do seu dinheiro de bônus ao fazer apostas em nossos jogos. A sua aposta poderá incluir dinheiro real e dinheiro de bônus se a sua aposta exceder o seu saldo em dinheiro real.",
       "text_18": "13. Você pode clicar em \"Bonus details\" (Detalhes do bônus) no cartão de bônus e encontrar um botão \"Cancel Bonus\" (Cancelar bônus) na parte inferior. Caso perca o saldo do bônus e o tenha obtido abaixo do valor de 0,01 USD, seu bônus será automaticamente cancelado. O início do saque de fundos da plataforma ou o envio de uma gorjeta na moeda em que você tem o Bônus ativo levará ao cancelamento do Bônus e à dedução do valor do Bônus. A transferência de fundos para o Cofre na moeda em que você tem o Bônus ativo não estará disponível até que o Bônus seja totalmente desbloqueado ou cancelado. Observe que, após o cancelamento, o Bônus não poderá ser reativado.",
       "text_19": "14. Você pode completar o requisito de apostas somente se for selecionado pelo cassino Jogos internos e caça-níqueis. Esses jogos podem ser encontrados na categoria \"Apostas de bônus\" ou no cartão de bônus no painel lateral. Observe que sua aposta nos jogos internos será contada com um multiplicador de 0,2. Para os caça-níqueis, o multiplicador de apostas é sempre 1."
@@ -804,7 +804,7 @@ export const lang: langType = {
     "payment_methods": {
       "text_1": "Métodos de pagamento",
       "text_2": "Última atualização: 10.10.2023",
-      "text_3": "Todos os métodos de depósito e saque na Brazstar são seguros e fáceis de usar. Os métodos de pagamento são específicos para cada país.",
+      "text_3": "Todos os métodos de depósito e saque na HOY777 são seguros e fáceis de usar. Os métodos de pagamento são específicos para cada país.",
       "text_4": "Abaixo estão os métodos disponíveis para seu país:",
       "text_5": "1. Métodos de depósito",
       "text_6": "FORMA DE PAGAMENTO",
@@ -823,16 +823,16 @@ export const lang: langType = {
       "text_2": "Última atualização: 10.10.2023",
       "text_3": "1. Como funciona o programa de indicação?",
       "text_4": "Compartilhe seu link e código de indicação com amigos ou promova sua oferta de indicação em redes sociais, fóruns e outros canais de comunicação.",
-      "text_5": "Cada novo jogador que se cadastrar no HOY777.COM com a sua oferta se tornará seu indicado e ganhará comissões e recompensas de bônus para cada aposta em cassino e esportes.",
+      "text_5": "Cada novo jogador que se cadastrar no Hoy777.com com a sua oferta se tornará seu indicado e ganhará comissões e recompensas de bônus para cada aposta em cassino e esportes.",
       "text_6": "2. Bônus de convite",
-      "text_7": "Convide amigos que ainda não estão no Brazstar. Você receberá {0} 12,00 para cada amigo que se cadastrar e fizer um depósito. Não há limite para o número de amigos que você pode convidar. Isso significa que também não há limite para o quanto você pode ganhar!",
+      "text_7": "Convide amigos que ainda não estão no HOY777. Você receberá {0} 12,00 para cada amigo que se cadastrar e fizer um depósito. Não há limite para o número de amigos que você pode convidar. Isso significa que também não há limite para o quanto você pode ganhar!",
       "text_8": "Termos do bônus de convite:",
-      "text_9": "O saldo é pago diretamente em seu Cash Balance, com o qual você pode jogar no Brazstar ou sacar.",
+      "text_9": "O saldo é pago diretamente em seu Cash Balance, com o qual você pode jogar no HOY777 ou sacar.",
       "text_10": "Seu amigo deve se inscrever por meio de seu link de convite pessoal.",
       "text_11": "Seu amigo deve ter depositado pelo menos {0} 50,00 para que você receba a recompensa do convite.",
       "text_12": "Se um amigo que você convidou não for do mesmo país que você, você receberá uma recompensa padrão de € 2,00 convertida em sua moeda local pela taxa de câmbio justa.",
-      "text_13": "Você não pode criar novas contas Brazstar e se inscrever por meio de seu próprio link para receber o prêmio. O programa Indique um Amigo foi criado para que nossos jogadores convidem amigos para a plataforma Brazstar. Qualquer outro uso desse programa é estritamente proibido.",
-      "text_14": "A Brazstar pode suspender ou encerrar o programa Indique um Amigo ou a capacidade do usuário de participar dele a qualquer momento e por qualquer motivo. Reservamo-nos o direito de suspender contas ou remover o Saldo em Dinheiro se notarmos qualquer atividade que acreditemos ser abusiva, fraudulenta ou que viole os Termos de Serviço do HOY777.COM ou os Termos do Indique um Amigo. Reservamo-nos o direito de analisar e investigar todas as atividades de indicação e de suspender contas ou modificar indicações a nosso critério exclusivo, conforme considerarmos justo e apropriado.",
+      "text_13": "Você não pode criar novas contas HOY777 e se inscrever por meio de seu próprio link para receber o prêmio. O programa Indique um Amigo foi criado para que nossos jogadores convidem amigos para a plataforma HOY777. Qualquer outro uso desse programa é estritamente proibido.",
+      "text_14": "A HOY777 pode suspender ou encerrar o programa Indique um Amigo ou a capacidade do usuário de participar dele a qualquer momento e por qualquer motivo. Reservamo-nos o direito de suspender contas ou remover o Saldo em Dinheiro se notarmos qualquer atividade que acreditemos ser abusiva, fraudulenta ou que viole os Termos de Serviço do Hoy777.com ou os Termos do Indique um Amigo. Reservamo-nos o direito de analisar e investigar todas as atividades de indicação e de suspender contas ou modificar indicações a nosso critério exclusivo, conforme considerarmos justo e apropriado.",
       "text_15": "3. Quanto eu ganho por uma indicação?",
       "text_16": "Além do bônus de convite, você também pode receber 30% de comissão pela aposta de cada indicado.",
       "text_17": "Recompensas de comissão",
@@ -850,7 +850,7 @@ export const lang: langType = {
       "text_29": "5. Como visualizar as estatísticas da minha indicação?",
       "text_30": "Para visualizar as estatísticas de uma indicação e as informações do perfil do usuário, selecione a indicação na lista de suas indicações na guia Indicações.",
       "text_31": "6. Posso receber materiais promocionais?",
-      "text_32": "A Brazstar oferece visuais de marca e banners de vários tamanhos para sua conveniência."
+      "text_32": "A HOY777 oferece visuais de marca e banners de vários tamanhos para sua conveniência."
     },
     "aml_policy": {
       "text_1": "Política de AML da Pistis Trade N.V.",
@@ -958,7 +958,7 @@ export const lang: langType = {
     "kyc_policy": {
       "text_1": "Política KYC da Pistis Trade N.V.",
       "text_2": "Última atualização: 10.10.2023",
-      "text_3": "Quando um usuário faz um total agregado de depósitos que excede EUR 2.000 ou solicita um saque de qualquer valor na Plataforma https://HOY777.COM, é obrigatório que ele realize um processo KYC completo",
+      "text_3": "Quando um usuário faz um total agregado de depósitos que excede EUR 2.000 ou solicita um saque de qualquer valor na Plataforma https://Hoy777.com, é obrigatório que ele realize um processo KYC completo",
       "text_4": "Durante esse processo, o usuário terá que inserir alguns detalhes básicos sobre si mesmo e, em seguida, carregar",
       "text_5": "1) Uma cópia de um documento de identidade com foto emitido pelo governo (em alguns casos, frente e verso, dependendo do documento)",
       "text_6": "2) Uma selfie de si mesmo segurando o documento de identificação",
@@ -1075,14 +1075,14 @@ export const lang: langType = {
         "text_8": "Política KYC"
       },
       "footer_4": {
-        "text": "O site HOY777.COM oferece jogos com uma experiência de aventura de propriedade direta da Pistis Trade N.V.; para ser um usuário do nosso site, você deve ter 18 anos ou mais. Não nos responsabilizamos pela violação de suas leis locais relativas a jogos on-line. Jogue com responsabilidade e divirta-se no HOY777.COM."
+        "text": "O site Hoy777.com oferece jogos com uma experiência de aventura de propriedade direta da Pistis Trade N.V.; para ser um usuário do nosso site, você deve ter 18 anos ou mais. Não nos responsabilizamos pela violação de suas leis locais relativas a jogos on-line. Jogue com responsabilidade e divirta-se no Hoy777.com."
       },
       "logo": {
-        "text_1": "O HOY777.COM é operado pela Pistis Trade N.V., número de registro da empresa 162576, com endereço registrado em Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao e é licenciado e autorizado pelo Governo de Curaçao e opera sob a Licença Mestre do Provedor de Serviços de Jogos, N.V. #365/JAZ Número de Licença: GLH-OCCHKTWxxxxxxxxxxxxxx.",
-        "text_2": "O jogo pode ser viciante. Por favor, jogue com responsabilidade. O HOY777.COM aceita apenas clientes maiores de 18 anos de idade."
+        "text_1": "O Hoy777.com é operado pela Pistis Trade N.V., número de registro da empresa 162576, com endereço registrado em Zuikertuintjeweg Z/N (Zuikertuin Tower), Curaçao e é licenciado e autorizado pelo Governo de Curaçao e opera sob a Licença Mestre do Provedor de Serviços de Jogos, N.V. #365/JAZ Número de Licença: GLH-OCCHKTWxxxxxxxxxxxxxx.",
+        "text_2": "O jogo pode ser viciante. Por favor, jogue com responsabilidade. O Hoy777.com aceita apenas clientes maiores de 18 anos de idade."
       },
       "footer_6": {
-        "text": "© 2023 HOY777.COM Todos os direitos reservados."
+        "text": "© 2023 Hoy777.com Todos os direitos reservados."
       }
     }
   },
@@ -1331,7 +1331,7 @@ export const lang: langType = {
     "text_4": "Bônus",
     "text_5": "Desistência",
     "dialog": {
-      "title_text": "Show do HOY777.COM",
+      "title_text": "Show do Hoy777.com",
       "content_text_1": "Tem certeza de que deseja excluir a tarefa?",
       "determine_btn_text": "Determinar",
       "cancel_btn_text": "Cancelar"
@@ -1426,7 +1426,7 @@ export const lang: langType = {
       "minimum_duration_text": "Suspensão mínima: 1 dia(s)",
       "confirm_text": "Confirmar",
       "dialog": {
-        "title_text": "Show do HOY777.COM",
+        "title_text": "Show do Hoy777.com",
         "content_text_1": "Tem certeza de que deseja suspender sua conta por ",
         "content_text_2": " dias?",
         "determine_btn_text": "Determinar",
@@ -1442,7 +1442,7 @@ export const lang: langType = {
         "title_text": "Indique um amigo e ganhe 20 reais imediatamente",
         "body_text": "Convide amigos, ganhe dinheiro",
         "body_text_1": " usuários já participaram da campanha Invite. New Users e ganharam um total combinado de ",
-        "body_text_2": "BRL em prêmios em dinheiro no ",
+        "body_text_2": "{0} em prêmios em dinheiro no ",
         "body_text_3": " plataforma.",
         "body_text_4": "Como funcionam os convites"
       },
@@ -1456,9 +1456,9 @@ export const lang: langType = {
     "copy_success_text": "Copiado para a área de transferência.",
     "description": {
       "text_1": "Convide seus amigos",
-      "text_2": "Convide amigos que ainda não estão no HOY777.COM. Você receberá {0} 20,00 para cada amigo que se cadastrar e fizer um depósito. Não há limite para o número de amigos que você pode convidar. Isso significa que também não há limite para o quanto você pode ganhar!",
+      "text_2": "Convide amigos que ainda não estão no Hoy777.com. Você receberá {0} 20,00 para cada amigo que se cadastrar e fizer um depósito. Não há limite para o número de amigos que você pode convidar. Isso significa que também não há limite para o quanto você pode ganhar!",
       "term_text": "Termos:",
-      "text_3": "O saldo é pago diretamente em seu saldo em dinheiro, com o qual você pode jogar no Brazstar ou sacar. Seu amigo deve se cadastrar por meio de seu link de convite pessoal. Seu amigo deve ter depositado pelo menos {0} 50,00 para que você receba a recompensa do convite. Se um amigo que você convidou não for do mesmo país que você, você receberá uma recompensa padrão de {0} 20,00 convertida para a sua moeda local à taxa de câmbio justa. Você não pode criar novas contas Brazstar e se inscrever por meio de seu próprio link para receber a recompensa. O programa Indique um Amigo foi criado para que nossos jogadores convidem amigos para a plataforma Brazstar. Qualquer outro uso desse programa é estritamente proibido. A Brazstar poderá suspender ou encerrar o programa Indique um Amigo ou a capacidade do usuário de participar dele a qualquer momento, por qualquer motivo. Nós nos reservamos o direito de suspender contas ou remover o saldo de caixa se notarmos qualquer atividade que acreditamos ser abusiva, fraudulenta ou que viole os Termos de Serviço do HOY777.COM ou os Termos do Indique um Amigo. Reservamo-nos o direito de analisar e investigar todas as atividades de indicação e de suspender contas ou modificar indicações a nosso critério exclusivo, conforme considerarmos justo e apropriado.",
+      "text_3": "O saldo é pago diretamente em seu saldo em dinheiro, com o qual você pode jogar no HOY777 ou sacar. Seu amigo deve se cadastrar por meio de seu link de convite pessoal. Seu amigo deve ter depositado pelo menos {0} 50,00 para que você receba a recompensa do convite. Se um amigo que você convidou não for do mesmo país que você, você receberá uma recompensa padrão de {0} 20,00 convertida para a sua moeda local à taxa de câmbio justa. Você não pode criar novas contas HOY777 e se inscrever por meio de seu próprio link para receber a recompensa. O programa Indique um Amigo foi criado para que nossos jogadores convidem amigos para a plataforma HOY777. Qualquer outro uso desse programa é estritamente proibido. A HOY777 poderá suspender ou encerrar o programa Indique um Amigo ou a capacidade do usuário de participar dele a qualquer momento, por qualquer motivo. Nós nos reservamos o direito de suspender contas ou remover o saldo de caixa se notarmos qualquer atividade que acreditamos ser abusiva, fraudulenta ou que viole os Termos de Serviço do Hoy777.com ou os Termos do Indique um Amigo. Reservamo-nos o direito de analisar e investigar todas as atividades de indicação e de suspender contas ou modificar indicações a nosso critério exclusivo, conforme considerarmos justo e apropriado.",
       "back_btn_text": "Voltar"
     }
   },
@@ -1826,7 +1826,7 @@ export const lang: langType = {
     "text_12": "Obter login diário",
     "text_13": "Bonu$",
     "text_14": "voltar",
-    "text_15": "A Brazstar tem o compromisso de proporcionar uma experiência perfeita e sem preocupações para nossos clientes, com todas as transações de jogadores concluídas em 3 minutos. Oferecemos serviços de depósito e saque seguros, confiáveis e rápidos, 24 horas por dia.",
+    "text_15": "A HOY777 tem o compromisso de proporcionar uma experiência perfeita e sem preocupações para nossos clientes, com todas as transações de jogadores concluídas em 3 minutos. Oferecemos serviços de depósito e saque seguros, confiáveis e rápidos, 24 horas por dia.",
     "text_17": "Como funciona o \"Bônus de depósito de 10% todos os dias\"?",
     "text_18": "O \"Bônus de depósito de 10% todos os dias\" de um bônus de depósito de até ",
     "text_19": "Para reivindicá-lo, tudo o que você precisa fazer é:",
@@ -1834,7 +1834,7 @@ export const lang: langType = {
     "text_21": "Fazer um depósito",
     "text_22": "Receba seu depósito + bônus",
     "text_23": "Deposite um mínimo de ",
-    "text_24": "O bônus de boas-vindas é estritamente para maiores de 18 anos (assim como o uso do restante do site) e está disponível para novos jogadores que se inscreverem em uma conta Brazstar e atenderem aos critérios estipulados abaixo.",
+    "text_24": "O bônus de boas-vindas é estritamente para maiores de 18 anos (assim como o uso do restante do site) e está disponível para novos jogadores que se inscreverem em uma conta HOY777 e atenderem aos critérios estipulados abaixo.",
     "text_25": "Depois que o depósito for feito (desde que você tenha optado pelo \"Bônus de Depósito de 10% Todos os Dias\" durante o depósito), você receberá instantânea e automaticamente 10% do valor do seu depósito até ",
     "text_26": " como um bônus.",
     "text_27": "Esse evento pode ser participado 3 vezes por dia.",

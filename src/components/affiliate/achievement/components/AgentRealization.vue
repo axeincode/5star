@@ -16,6 +16,7 @@ import img_agentemblem_11 from "@/assets/affiliate/achievement/img_agentemblem_1
 import img_agentemblem_12 from "@/assets/affiliate/achievement/img_agentemblem_12.png";
 import img_agentemblem_13 from "@/assets/affiliate/achievement/img_agentemblem_13.png";
 import img_agentemblem_14 from "@/assets/affiliate/achievement/img_agentemblem_14.png";
+import { toFormatNum } from '@/utils/numFormat';
 
 // 获取平台货币
 import { storeToRefs } from "pinia";
@@ -152,7 +153,7 @@ const mobileWidth = computed(() => {
           class="text-900-18"
           :class="item.grade >= 1000 ? 'color-F9BC01' : 'color-414968'"
         >
-          {{ platformCurrency }} {{ item.grade }}
+          {{ platformCurrency }} {{ toFormatNum(item.grade) }}
         </p>
       </v-col>
       <v-col cols="2" class="text-center pa-0">

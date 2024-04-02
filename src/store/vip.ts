@@ -46,7 +46,8 @@ export const vipStore = defineStore({
     vipSigninHistoryList: {
       total: 0,
       list: []
-    } as Vip.VipSigninHistoryData
+    } as Vip.VipSigninHistoryData,
+    timerValue: 0 as number, //10分钟倒计时存储
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -65,7 +66,8 @@ export const vipStore = defineStore({
     getVipCycleawardList: (state) => state.vipCycleawardList,
     getVipLevelAward: (state) => state.vipLevelAward,
     getVipBetawardList: (state) => state.vipBetawardList,
-    getVipSigninHistoryList: (state) => state.vipSigninHistoryList
+    getVipSigninHistoryList: (state) => state.vipSigninHistoryList,
+    getTimerValue: (state) => state.timerValue,
   },
   actions: {
     // set functions
@@ -86,6 +88,7 @@ export const vipStore = defineStore({
     },
     setVipRebateHistory(vipRebateHistory: Vip.VipRebateHistoryData) {
       let tempResData = vipRebateHistory
+      this.vipRebateHistory.list = []
       const baseArr = [0, 1, 2, 3, 4, 5, 6, 7]
       let record = tempResData.list.slice(0, 8)
       baseArr.forEach((item) => {
@@ -109,6 +112,7 @@ export const vipStore = defineStore({
     },
     setVipLevelRewardHistory(vipLevelRewardHistory: Vip.VipLevelRewardHistoryData) {
       let tempResData = vipLevelRewardHistory
+      this.vipLevelRewardHistory.list = []
       const baseArr = [0, 1, 2, 3, 4, 5, 6, 7]
       let record = tempResData.list.slice(0, 8)
       baseArr.forEach((item) => {
@@ -130,8 +134,9 @@ export const vipStore = defineStore({
     },
     setVipTimesHistory(vipTimesHistory: Vip.VipTimesHistoryData) {
       let tempResData = vipTimesHistory
+      this.vipTimesHistory.list = []
       const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-      let record = tempResData.list.slice(0, 9)
+      let record = tempResData.list.slice(0, 8)
       baseArr.forEach((item) => {
         if (record[item]) {
           this.vipTimesHistory.list.push(record[item])
@@ -151,6 +156,9 @@ export const vipStore = defineStore({
     },
     setVipSignIn(vipSignIn: Vip.VipSignInData) {
       this.vipSignIn = vipSignIn;
+      // if(this.vipSignIn.signin_day===0&&this.vipSignIn.vip_level===0){
+
+      // }
     },
     setLevelUpDialogVisible(levelUpDialogVisible: boolean) {
       this.levelUpDialogVisible = levelUpDialogVisible;
@@ -177,8 +185,12 @@ export const vipStore = defineStore({
     setVipBetawardList(vipBetawardList: Vip.vipBetawardListData) {
       this.vipBetawardList = vipBetawardList;
     },
+    setTimerValue(timerValue: number) {
+      this.timerValue = timerValue
+    },
     setVipSigninHistory(vipSigninHistoryList: Vip.VipSigninHistoryData, reset: boolean = false) {
       let tempResData = vipSigninHistoryList
+      this.vipSigninHistoryList.list = []
       const baseArr = [0, 1, 2, 3, 4, 5, 6, 7]
       let record = tempResData.list.slice(0, 8)
       baseArr.forEach((item) => {

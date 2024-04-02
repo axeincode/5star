@@ -18,6 +18,7 @@ import img_agentemblem_13 from "@/assets/affiliate/achievement/img_agentemblem_1
 import img_agentemblem_14 from "@/assets/affiliate/achievement/img_agentemblem_14.png";
 import img_agentemblem_15 from "@/assets/affiliate/achievement/img_agentemblem_15.png";
 import { type AchievementItem, type GetAchievementItem } from "@/interface/achievement";
+import { toFormatNum } from '@/utils/numFormat';
 import { achievementStore } from "@/store/achievement";
 // 获取平台货币
 import { storeToRefs } from "pinia";
@@ -191,7 +192,7 @@ const hideReceivedAchievementList = () => {
               v-if="imageItem.min < item.num && imageItem.max >= item.num"
             />
           </template>
-          <p class="text-900-18 gray opacity-45">{{ platformCurrency }} {{ item.award }}</p>
+          <p class="text-900-18 gray opacity-45">{{ platformCurrency }} {{ toFormatNum(item.award) }}</p>
         </v-col>
         <v-col cols="7" class="text-center">
           <p class="text-700-12 mt-4 gray opacity-45">
@@ -251,7 +252,7 @@ const hideReceivedAchievementList = () => {
             v-if="imageItem.min < item.num && imageItem.max >= item.num"
           />
         </template>
-        <p class="text-900-18 color-F9BC01">{{ platformCurrency }} {{ item.award }}</p>
+        <p class="text-900-18 color-F9BC01">{{ platformCurrency }} {{ toFormatNum(item.award) }}</p>
       </v-col>
       <v-col cols="7" class="text-center">
         <p class="text-700-12 mt-4 white">

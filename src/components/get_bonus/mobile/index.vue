@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed,onMounted,watchEffect,onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 import { appBarStore } from "@/store/appBar";
+import { useTimer } from "vue-timer-hook";
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -12,10 +14,21 @@ const platformCurrency = computed(() => {
 });
 
 const { t } = useI18n();
+const router = useRouter();
 const emit = defineEmits<{ (e: "closeGetBonusDialog"): void }>();
 const { setDepositWithdrawToggle } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
+const { setTimerValue } = vipStore();
+const timer_value = ref<number>(600);
+const time = new Date();
+time.setSeconds(time.getSeconds() + timer_value.value); // 10分钟
+const timer = useTimer(Number(time));
+
+const timerValue = computed(() => {
+  const { getTimerValue } = storeToRefs(vipStore());
+  return getTimerValue.value;
+});
 
 const depositDialogShow = () => {
   emit("closeGetBonusDialog");
@@ -23,6 +36,34 @@ const depositDialogShow = () => {
   setDepositDialogToggle(true);
   setCashDialogToggle(true);
 };
+
+// 点击图片调整活动详情页
+const jumpActivityDetails=()=>{
+  router.push({name: "Promo_Detail",query:{id:'2'}})
+  emit("closeGetBonusDialog");
+}
+
+onMounted(()=>{
+  if (timerValue.value == 0) {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timer_value.value); // 10分钟
+    timer.start();
+  } else {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timerValue.value);
+    timer.restart(Number(time));
+  }
+  watchEffect(async () => {
+    if (timer.isExpired.value) {
+      setTimerValue(time.getSeconds() + timer_value.value);
+    }
+  });
+})
+
+onUnmounted(() => {
+  setTimerValue(timer.minutes.value * 60 + timer.seconds.value);
+  // console.log(timer.minutes.value, timer.seconds.value);
+});
 </script>
 
 <template>
@@ -43,15 +84,24 @@ const depositDialogShow = () => {
     </v-btn>
     <div class="mt-11 mx-3 m-get-bonus-dialog-card-1">
       <div class="pt-4 text-center">
-        <p class="text-center" style="line-height: normal">
-          <font class="text-900-12 white">{{ t("vip.login_bonus.footer_text_1") }}</font>
-          <font class="text-900-12 purple">{{ platformCurrency }}20 </font>
-          <font class="text-900-12 white">{{ t("vip.login_bonus.footer_text_2") }}</font>
-          <font class="text-900-12 purple">{{ t("vip.login_bonus.footer_text_3") }}</font>
+        <p class="text-left text-container" style="line-height: normal">
+          <font class="text-400-12 text-color-green">{{
+            t("vip.login_bonus.footer_text_1")
+          }}</font>
+          <!-- <font class="text-900-12 purple">{{ platformCurrency }}20 </font> -->
+          <font class="text-700-12 white">{{
+            t("vip.login_bonus.footer_text_2")
+          }}</font>
+          <font class="text-400-12 text-color-green">{{
+            t("vip.login_bonus.footer_text_3")
+          }}</font>
+          <font class="text-700-12 text-color-yellow">{{
+            t("vip.login_bonus.footer_text_4")
+          }}</font>
         </p>
-        <p class="text-center" style="line-height: normal">
-          <font class="text-900-12 white">{{ t("vip.login_bonus.footer_text_4") }}</font>
-        </p>
+        <!-- <p class="text-center" style="line-height: normal">
+          <font class="text-700-12 white">{{ t("vip.login_bonus.footer_text_4") }}</font>
+        </p> -->
       </div>
       <div class="mt-4 mx-4">
         <v-btn
@@ -60,11 +110,11 @@ const depositDialogShow = () => {
           height="48"
           @click="depositDialogShow"
         >
-          {{ t("get_bonus.text_1") }}
+          <span class="white">{{ t("get_bonus.text_1") }}</span>
         </v-btn>
       </div>
     </div>
-    <div class="mt-4 m-get-bonus-dialog-card-2">
+    <!-- <div class="mt-4 m-get-bonus-dialog-card-2">
       <img
         src="@/assets/vip/image/img_ci_5.png"
         width="168"
@@ -83,8 +133,32 @@ const depositDialogShow = () => {
       <p class="text-800-18 color-F9BC01 m-get-bonus-dialog-text-2">
         {{ t("get_bonus.text_3") }}
       </p>
+    </div> -->
+    <img
+      src="@/assets/vip/image/img_vip_register-bg.png"
+      width="320"
+      height="123"
+      class="m-get-bonus-dialog-img-register mx-3 mt-2"
+      @click="jumpActivityDetails"
+    />
+    <div class="m-get-bonus-dialog-bottom  mx-3">
+      <div class="bottom-text-container">
+        <span class="text-700-12 white"> {{t("vip.login_bonus.footer_text_5") }}</span>
+        <span class="text-700-12 text-color-yellow">{{t("vip.login_bonus.footer_text_6") }}</span>
+        <span class="text-700-12 white">{{t("vip.login_bonus.footer_text_7") }}</span>
+      </div>
+      <div class="time-container">
+        <span class="time-frame text-700-12">{{ timer.minutes.value.toString().padStart(1, "0").length>1?'1':'0' }}</span>
+        <span class="time-frame text-700-12">{{ timer.minutes.value.toString().padStart(1, "0").length>1?"0":timer.minutes.value.toString().padStart(1, "0")[0] }}</span>
+        <div class="time-dot-container">
+          <span class="time-dot"></span>
+          <span class="time-dot"></span>
+        </div>
+        <span class="time-frame text-700-12 ml-0">{{ timer.seconds.value.toString().padStart(2, "0")[0] }}</span>
+        <span class="time-frame text-700-12">{{ timer.seconds.value.toString().padStart(2, "0")[1]}}</span>
+      </div>
     </div>
-    <div class="mt-1 m-get-bonus-dialog-card-3">
+    <!-- <div class="mt-1 m-get-bonus-dialog-card-3">
       <img
         src="@/assets/vip/image/img_ci_2.png"
         width="102"
@@ -95,7 +169,7 @@ const depositDialogShow = () => {
       <p class="text-800-14 white m-get-bonus-dialog-text-4">
         {{ t("get_bonus.text_4") }}
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -105,7 +179,7 @@ const depositDialogShow = () => {
   width: 340px;
   height: 397px;
   border-radius: 16px;
-  background: #29263c;
+  background: #1d2027;
   .m-get-bonus-dialog-header-img {
     position: absolute;
     left: 50%;
@@ -120,16 +194,18 @@ const depositDialogShow = () => {
     right: 5px;
   }
   .m-get-bonus-dialog-card-1 {
-    height: 137px;
+    height: 150px;
     border-radius: 14px;
-    background: #1D2027;
+    background: #15161c;
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
   .m-get-bonus-dialog-btn {
     .v-btn__content {
       color: var(--Text-Dark-Black-000000, #000);
       text-align: center;
-      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -185,6 +261,59 @@ const depositDialogShow = () => {
     right: 48px;
     width: 108px;
     line-height: normal;
+  }
+  .m-get-bonus-dialog-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .bottom-text-container {
+    width: 170px;
+    line-height: 17px;
+  }
+  .time-container {
+    display: flex;
+    align-items: center;
+  }
+  .time-frame {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: #15161C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F9BC01;
+    &:not(:first-child){
+      margin-left: 4px;
+    }
+  }
+  .time-dot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // margin-right: 4px;
+    width: 12px;
+  }
+  .time-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #15161C;
+    &:not(:first-child){
+      margin-top: 4px;
+    }
+  }
+  .text-container {
+    margin-left: 17px;
+    line-height: 17px;
+  }
+  .text-color-green {
+    color: #7782aa;
+  }
+  .text-color-yellow {
+    color: #f9bc01;
   }
 }
 </style>

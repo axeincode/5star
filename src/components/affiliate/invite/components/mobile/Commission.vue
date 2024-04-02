@@ -3,6 +3,7 @@ import { onMounted, watch } from "vue";
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { storeToRefs } from "pinia";
 import { appCurrencyStore } from "@/store/app";
@@ -73,7 +74,7 @@ watch(slider, (newValue) => {
             {{ t("affiliate.invite.invite_text_6") }}
           </div>
           <div class="footer-body-cash-text pt-2" style="font-size: 26px">
-            {{ platformCurrency }} {{ Math.ceil(slider) }}
+            {{ platformCurrency }} {{ toFormatNum(Math.ceil(slider)) }}
           </div>
           <div class="text-400-10 gray mx-2">
             <span>{{ t("affiliate.invite.invite_text_7") }}</span>

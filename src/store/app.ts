@@ -8,7 +8,7 @@ export const appCurrencyStore = defineStore({
   id: 'platformCurrency',
   state: (): State => {
     return {
-      platformCurrency: 'MAX',
+      platformCurrency: '$',
     };
   },
   getters: {

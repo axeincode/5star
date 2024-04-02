@@ -3,9 +3,26 @@ import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+const currentLang = ref<string | null>(localStorage.getItem("lang"));
+
+const coverTextShowClass = (type:string) => {
+  console.log(currentLang.value, 'currentLang');
+  
+  if(type === 'text') {
+    if(currentLang.value === 'es') {
+      return ['sub-card-text-cover-style']
+    }
+  } else if(type === 'num') {
+    if(currentLang.value === 'es') {
+      return ['sub-card-num-cover-style']
+    }
+  }
+
+}
 </script>
 
 <template>
+<!-- S 第一部分的告示card -->
   <v-row class="ma-0 pa-0 mx-1 mt-13">
     <v-col :cols="4" class="ma-0 pa-0 px-1 relative">
       <img src="@/assets/agent/image/img_agent_14.png" class="m-agent-faq-center-arrow" />
@@ -14,7 +31,7 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_100.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">360</div>
             </div>
           </div>
@@ -81,7 +98,7 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_100.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">120</div>
             </div>
           </div>
@@ -111,7 +128,7 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_100.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">60</div>
             </div>
           </div>
@@ -169,6 +186,8 @@ const { t } = useI18n();
       </v-card>
     </v-col>
   </v-row>
+<!-- E 第一部分的告示card -->
+
   <v-row class="ma-0 pa-0 mx-1 mt-13">
     <v-col :cols="4" class="ma-0 pa-0 px-1 relative">
       <img
@@ -180,9 +199,9 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_101.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">150</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B1:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}B1:</div>
               <div class="text-700-12 text-center">300</div>
             </div>
           </div>
@@ -238,9 +257,9 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_101.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
               <div class="text-700-12 text-center">150</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B3:</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}B3:</div>
               <div class="text-700-12 text-center">300</div>
             </div>
           </div>
@@ -286,6 +305,7 @@ const { t } = useI18n();
       </v-card>
     </v-col>
   </v-row>
+
   <v-row class="ma-0 pa-0 mx-1 mt-13">
     <v-col :cols="4" class="ma-0 pa-0 px-1 relative">
       <img
@@ -297,12 +317,12 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_102.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
-              <div class="text-700-12 text-center">50</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B1:</div>
-              <div class="text-700-12 text-center">150</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}C1:</div>
-              <div class="text-700-12 text-center">300</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">50</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}B1:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">150</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}C1:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">300</div>
             </div>
           </div>
           <div class="relative text-center">
@@ -337,12 +357,12 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_102.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
-              <div class="text-700-12 text-center">15</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B3:</div>
-              <div class="text-700-12 text-center">45</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}C3:</div>
-              <div class="text-700-12 text-center">90</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">15</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}B3:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">45</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}C3:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">90</div>
             </div>
           </div>
           <div class="relative text-center">
@@ -371,12 +391,12 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_102.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}A:</div>
-              <div class="text-700-12 text-center">1500</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B3:</div>
-              <div class="text-700-12 text-center">4500</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}C3:</div>
-              <div class="text-700-12 text-center">9000</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}A:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">1500</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}B3:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">4500</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}C3:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">9000</div>
             </div>
           </div>
           <div class="relative text-center">
@@ -396,6 +416,7 @@ const { t } = useI18n();
       </v-card>
     </v-col>
   </v-row>
+
   <v-row class="ma-0 pa-0 mx-1 mt-13">
     <v-col :cols="4" class="ma-0 pa-0 px-1 relative">
       <img
@@ -407,12 +428,12 @@ const { t } = useI18n();
           <div class="relative">
             <img src="@/assets/agent/svg/img_agent_102.svg" style="width: 100%" />
             <div class="m-agent-faq-center-sub-card-text">
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}B1:</div>
-              <div class="text-700-12 text-center">50</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}C1:</div>
-              <div class="text-700-12 text-center">150</div>
-              <div class="text-400-10 text-center">{{ t("agent.text_45") }}D1:</div>
-              <div class="text-700-12 text-center">300</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}B1:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">50</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}C1:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">150</div>
+              <div class="text-400-10 text-center" :class="coverTextShowClass('text')">{{ t("agent.text_45") }}D1:</div>
+              <div class="text-700-12 text-center" :class="coverTextShowClass('num')">300</div>
             </div>
           </div>
           <div class="relative text-center">
@@ -439,6 +460,19 @@ const { t } = useI18n();
   </v-row>
 </template>
 
+<style lang="scss" scoped>
+.sub-card-text-cover-style {
+  word-break: break-all;
+  word-wrap: break-word;
+  padding: 0 4px;
+  line-height: 9px;
+  font-size: 10px;
+}
+.sub-card-num-cover-style {
+  line-height: 13px;
+  font-size: 10px;
+}
+</style>
 <style lang="scss">
 .m-agent-faq-center-card {
   height: 286px;

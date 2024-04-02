@@ -113,6 +113,7 @@ const liveWinList = ()=>{
 <template>
   <div class="m-home-live-win" v-if="mobileWidth < 600">
     <!-- <img src="@/assets/home/svg/live_win_1.svg" class="m-live-win-img-width" /> -->
+    <!-- 标题 -->
     <div class="live-win-header-new">
       <div class="live-win-header-new-title">
         <inline-svg
