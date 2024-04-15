@@ -968,7 +968,7 @@ onMounted(() => {
               >
                 <img src="@/assets/public/image/img_public_11.png" />
                 <p class="text-500-12 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
+                  {{ t("vip.vip_mission_body.text_4", [platformCurrency]) }}
                 </p>
                 <p class="text-600-12 white mt-1">
                   {{ t("vip.vip_mission_body.text_5") }}
@@ -997,7 +997,7 @@ onMounted(() => {
                 </div>
                 <img src="@/assets/public/image/img_public_11.png" />
                 <p class="text-500-12 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
+                  {{ t("vip.vip_mission_body.text_4", [platformCurrency]) }}
                 </p>
                 <p class="text-600-12 white mt-1">
                   {{ t("vip.vip_mission_body.text_8") }}
@@ -1036,7 +1036,7 @@ onMounted(() => {
                 </div>
                 <img src="@/assets/public/image/img_public_11.png" />
                 <p class="text-500-12 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
+                  {{ t("vip.vip_mission_body.text_4", [platformCurrency]) }}
                 </p>
                 <p class="text-600-12 white mt-1">
                   {{ t("vip.vip_mission_body.text_8") }}
@@ -1080,7 +1080,7 @@ onMounted(() => {
                 </div>
                 <img src="@/assets/public/image/img_public_11.png" />
                 <p class="text-500-12 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
+                  {{ t("vip.vip_mission_body.text_4", [platformCurrency]) }}
                 </p>
                 <p class="text-600-12 white mt-1">
                   {{ t("vip.vip_mission_body.text_5") }}
@@ -1106,7 +1106,7 @@ onMounted(() => {
               >
                 <img src="@/assets/public/image/img_public_13.png" />
                 <p class="text-500-12 text-gray mt-2">
-                  {{ t("vip.vip_mission_body.text_4") }}
+                  {{ t("vip.vip_mission_body.text_4", [platformCurrency]) }}
                 </p>
                 <p class="text-600-12 white mt-1">
                   {{ t("vip.vip_mission_body.text_5") }}

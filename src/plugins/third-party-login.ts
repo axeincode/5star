@@ -1,22 +1,36 @@
 import { computed } from "vue";
-import { ElLoading } from "element-plus";
 import { googleTokenLogin } from "vue3-google-login";
 import { authStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import AdjustClass from "@/utils/adjust";
 import { ThirdPartyWayEnum } from '@/enums/userEnum'
+import { log } from "console";
 
 let indexValue = ''; // ThirdPartyWayEnum.GOOGLE_LOGIN FACEBOOK_LOGIN
 let typeValue = "";
 
-// 接受android傳遞的token
-(window as any).googleLogin = (token: string) => {
-    console.log(indexValue, typeValue);
-    loginOrRegister(token, indexValue, typeValue);
-}
 
-// 全局 window 对象
+// // 全局 window 对象
 const globalWindow: any = window;
+
+// // 接受android傳遞的token - google 登录模拟
+// globalWindow.googleLogin = (token: string) => {
+//   console.log(indexValue, typeValue);
+//   if(token) {
+//     loginOrRegister(token, indexValue, typeValue);
+//   } else {
+//     console.error('登录/注册失败，检查接口')
+//   }
+// }
+// // 接受android傳遞的token  - facebook 登录模拟
+// globalWindow.facebookLogin = (token: string) => {
+//   console.log(indexValue, typeValue);
+//   if(token) {
+//     loginOrRegister(token, indexValue, typeValue);
+//   } else {
+//     console.error('登录/注册失败，检查接口')
+//   }
+// }
 
 const { dispatchQuickLogin, dispatchQuickRegister } = authStore();
 
@@ -29,11 +43,11 @@ const userInfo = computed(() => {
 /**
  * 封装登录函数
  * @param index 0:facebook  1:google
- * @returns 
+ * @returns
  */
 const loginWithSocialMedia = async (value: string, type: string): Promise<any> => {
   // 显示 loading 动画
-  const loading = ElLoading.service({ lock: true });
+  // const loading = ElLoading.service({ lock: true });
   try {
     // 根据不同的登录类型执行相应的登录逻辑
     switch (value) {
@@ -49,16 +63,15 @@ const loginWithSocialMedia = async (value: string, type: string): Promise<any> =
     throw error;
   } finally {
     // 无论如何都关闭 loading 动画
-    loading.close();
+    // loading.close();
   }
 };
 
 /**
  * 判断登录和注册
- * @param type 
+ * @param type
  */
 const loginOrRegister = async (token: string, value: string, type: string) => {
-  console.log(value, type, 'loginOrRegister');
 
     let val = 1;
     if (value === ThirdPartyWayEnum.FACEBOOK_LOGIN) {
@@ -67,46 +80,47 @@ const loginOrRegister = async (token: string, value: string, type: string) => {
     if (value === ThirdPartyWayEnum.GOOGLE_LOGIN) {
         val = 1;
     }
-    let params = { 
+    let params = {
         id_token: token,
         type: val,
     }
-    
+
     if (type === "login") {
         // 登录
         await dispatchQuickLogin(params);
+        console.log(params, 'dispatchQuickLogin');
     } else {
         // 注册
         await dispatchQuickRegister(params);
+        console.log(params, 'dispatchQuickRegister');
     }
-}
-
-const startAndroid = (index: number, type: string) => {
-
+    return true
 }
 
 // Google 登录逻辑封装
 const loginWithGoogle = (value: string, type: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     try {
-        if (AdjustClass.getInstance().isMobileWebview) {
-            // 啟動android原生登錄流程 
-            (window as any)["AndroidWebView"].googleLogin();
+        // if (AdjustClass.getInstance().isMobileWebview) {
+        //     indexValue = value;
+        //     typeValue = type;
+        //     // 啟動android原生登錄流程
+        //     globalWindow["AndroidWebView"].googleLogin((result: any) => {
+        //       console.log('原生返回', result)
+        //       resolve(true);
+        //     })
+        // } else {
+        googleTokenLogin({
+            clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        }).then(async (res: any) => {
             indexValue = value;
             typeValue = type;
-        } else {
-            googleTokenLogin({
-                clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-            }).then(async (res: any) => {
-                console.log(res, 'googleTokenLogin-callback');
-                await loginOrRegister(res.access_token, value, type);
-                indexValue = value;
-                typeValue = type;
-                resolve(res);
-            });
-        }
+            await loginOrRegister(res.access_token, value, type);
+          resolve(true);
+        });
+        // }
     } catch (error) {
-      reject(error);
+      reject();
     }
   });
 };
@@ -115,29 +129,37 @@ const loginWithGoogle = (value: string, type: string): Promise<any> => {
 const loginWithFacebook = (value: string, type: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     try {
-      globalWindow.FB.init({
-        appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-        cookie: true,
-        xfbml: true,
-        version: "v19.0",
-      });
-      globalWindow.FB.getLoginStatus((response: any) => {
-        if (response.status !== "connected") {
-          globalWindow.FB.login((res: any) => {
-            console.log(res, 'FB.login');
-            
-            (window as any).FB.api("/me?fields=email,name", async (response: any) => {
-                console.log(response, 'FB.api');
-                await loginOrRegister(res.access_token, value, type);
-                resolve(res);
-              });
-          });
-        } else {
-          resolve(response.authResponse);
-        }
-      });
+      // if (AdjustClass.getInstance().isMobileWebview) {
+      //   indexValue = value;
+      //   typeValue = type;
+      //   // 啟動android原生登錄流程
+      //   globalWindow["AndroidWebView"].facebookLogin((result: any) => {
+      //     console.log('result', result)
+      //     resolve(true);
+      //   })
+      // } else {
+        globalWindow.FB.init({
+          appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+          cookie: true,
+          xfbml: true,
+          version: "v19.0",
+        });
+
+        globalWindow.FB.getLoginStatus(async (response: any) => {
+          indexValue = value;
+          typeValue = type;
+          if (response.status !== "connected") {
+            globalWindow.FB.login((res: any) => {
+              loginOrRegister(res.authResponse.accessToken, value, type);
+            });
+          } else {
+              await loginOrRegister(response.authResponse.accessToken, value, type);
+          }
+        });
+        resolve(true);
+      // }
     } catch (error) {
-      reject(error);
+      reject();
     }
   });
 };
@@ -161,4 +183,4 @@ const loginType = (value: string) => {
     });
 }
 
-export { loginWithSocialMedia, loginType };
+export { loginWithSocialMedia, loginType, loginOrRegister };

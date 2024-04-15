@@ -27,6 +27,7 @@ import CashHeader from "@/components/cash/mxn/header/index.vue";
 // import MLogin from "@/components/Login/mobile/index.vue";
 import MNickName from "@/components/auth/components/mobile/sign_up/NickName.vue";
 import Signout from "@/components/Signout/index.vue";
+import StaticActivityPage from "@/components/static_activity_page/index.vue";
 import MSignout from "@/components/Signout/mobile/index.vue";
 import MAuth from "@/components/auth/mobile/index.vue";
 import LoginBonusDialog from "@/components/login_bonus/index.vue";
@@ -41,16 +42,20 @@ import MLoginBonusDialog from "@/components/login_bonus/mobile/index.vue";
 // import MenuSemiCircle from "@/components/global/menu_semi_circle/index.vue";
 // import LevelUpDialog from "@/components/level_up/index.vue";
 // import MLevelUpDialog from "@/components/level_up/mobile/index.vue";
-
+import { CookieService } from "@/utils/cookieService";
 import { mailStore } from "@/store/mail";
 import router from '@/router';
 import { depositStore } from '@/store/deposit';
+import { activityAppStore } from '@/store/activityApp';
+import { liveChatStore } from "@/store/liveChat";
+const { setLiveChatMaximize, LiveChatWidget } = liveChatStore();
 
 const GetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/index.vue"));
 const MGetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/mobile/index.vue"));
 const MenuSemiCircle = defineAsyncComponent(() => import("@/components/global/menu_semi_circle/index.vue"));
 const LevelUpDialog = defineAsyncComponent(() => import("@/components/level_up/index.vue"));
 const MLevelUpDialog = defineAsyncComponent(() => import("@/components/level_up/mobile/index.vue"));
+const ActivityApp = defineAsyncComponent(() => import("@/components/activity_app/index.vue"));
 // const Deposit = defineAsyncComponent(() => import("@/components/cash/deposit/index.vue"));
 // const MDeposit = defineAsyncComponent(() => import("@/components/cash/deposit/mobile/index.vue"));
 // const Withdraw = defineAsyncComponent(() => import("@/components/cash/withdraw/index.vue"));
@@ -74,6 +79,7 @@ const MRouletteBonusDialog = defineAsyncComponent(() => import("@/components/rou
 const MAccountDialog = defineAsyncComponent(() => import("@/views/account/dialog/index.vue"));
 const VipUpgradeDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_upgrade_dialog/index.vue"));
 const VipUpRankDialog = defineAsyncComponent(() => import("@/components/vip/components/vip_uprank_dialog/index.vue"));
+const GroupDialog = defineAsyncComponent(() => import("@/components/vip/components/group_dialog/index.vue"));
 const Search = defineAsyncComponent(() => import("@/components/global/search/index.vue"));
 const MSearch = defineAsyncComponent(() => import("@/components/global/search/mobile/index.vue"));
 const MDepositConfirm = defineAsyncComponent(() => import("@/components/cash/mxn/deposit/mobile/MDepositConfirm.vue"));
@@ -138,6 +144,7 @@ const nickNameDialog = ref<boolean>(false);
 const levelUpDialog = ref<boolean>(false);
 const searchDialog = ref<boolean>(false);
 const depositConfirmDialog = ref<boolean>(false);
+const groupVisible=ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
@@ -220,6 +227,17 @@ const closeDialog = (type: dialogType) => {
   mobileDialog.value = false;
   setAuthModalType("");
 };
+
+const staticActivityDialog = ref<boolean>(true); // 静态活动页面显示
+// 关闭静态页面弹框
+const closeStaticActivityDialog = () => {
+  staticActivityDialog.value = false
+}
+
+// 判断是否已经勾选当天不显示静态活动弹框
+if (CookieService.getCookie('Static_Activity')) {
+  staticActivityDialog.value = false
+}
 
 const closeNickNameDialog = () => {
   setMainBlurEffectShow(false);
@@ -515,11 +533,58 @@ const handleResize = () => {
   mainHeight.value = window.innerHeight;
 }
 
+const fixBtnContainer = ref(false)
 watch(route, (to) => {
   // console.log(to.path);
+  if(to.path === '/sports') {
+    fixBtnContainer.value = false;
+  } else {
+    fixBtnContainer.value = true;
+  }
 }, { flush: 'pre', immediate: true, deep: true })
 
+// 打开加入group弹窗
+const openGroupDialog=()=>{
+  groupVisible.value=true
+}
+
+// 打开客服
+const openLiveChat=()=>{
+  if(userInfo.value?.id) {
+    LiveChatWidget?.call?.("set_customer_name", userInfo.value?.id || '');
+    // 最大化
+    setLiveChatMaximize()
+  }
+}
+
+const { setAppConfirmDialogShow } = activityAppStore();
+// 打开下载app弹框
+const openActivityApp = () => {
+  setAppConfirmDialogShow(true)
+}
+
+// 获取模式
+const mobile = computed(() => {
+  const { getMobile } = storeToRefs(activityAppStore());
+  return getMobile.value;
+});
+
+// 定义状态
+const isSwinging = ref(false);
+
+// 摇摆按钮函数
+const swingButton = () => {
+  isSwinging.value = true;
+  setTimeout(() => {
+    isSwinging.value = false;
+  }, 1600);
+};
+
+
 onMounted(() => {
+  // 在组件挂载时启动摇摆按钮定时器
+  setInterval(swingButton, 10000); // 每10秒执行一次
+
   // console.log(route.query.code);
   // 带有邀请注册码的，直接打开注册弹窗
   if(route.query.code){
@@ -543,6 +608,8 @@ onMounted(() => {
   setDepositDialogToggle(false);
   setWithdrawDialogToggle(false);
 })
+
+
 
 // 监听路由页面 home 初始化时间
 const routeInited = () => {
@@ -583,8 +650,8 @@ const routeInited = () => {
     </v-navigation-drawer>
 
     <!---------------------- Deposit Dialog ----------------------------------------------->
-
-    <v-dialog
+  <!-- 存款菜单弹窗 -->
+    <!-- <v-dialog
       v-model="cashDialog"
       class="cash-header-dialog"
       :width="''"
@@ -593,11 +660,11 @@ const routeInited = () => {
       :transition="'dialog-top-transition'"
       @click:outside="setCashDialogToggle(false)"
       v-if="mobileVersion == 'sm'"
-    >
-      <MCashHeader />
-    </v-dialog>
-
-    <v-dialog
+    > -->
+      <MCashHeader v-if="cashDialog&&mobileVersion == 'sm'" v-model="cashDialog"  />
+    <!-- </v-dialog> -->
+    <!-- 存款充值 -->
+    <!-- <v-dialog
       v-model="withdrawDialog"
       :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
       :width="''"
@@ -608,13 +675,13 @@ const routeInited = () => {
       persistent
       v-if="mobileVersion == 'sm'"
     >
-      <template v-if="withdrawDialog">
-        <Withdraw v-if="mobileWidth > 600" />
-        <MWithdraw v-else />
-      </template>
-    </v-dialog>
-
-    <v-dialog
+      <template v-if="withdrawDialog"> -->
+        <!-- <Withdraw v-if="mobileWidth > 600" /> -->
+        <MWithdraw v-if="withdrawDialog&&mobileVersion == 'sm'" v-model="withdrawDialog" />
+      <!-- </template>
+    </v-dialog> -->
+    <!-- 存款选择 -->
+    <!-- <v-dialog
       v-model="depositDialog"
       :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
       :width="''"
@@ -626,10 +693,10 @@ const routeInited = () => {
       v-if="mobileVersion == 'sm'"
     >
       <template v-if="depositDialog">
-        <Deposit v-if="mobileWidth > 600" />
-        <MDeposit class="m-deposit-sub-dialog" v-else />
-      </template>
-    </v-dialog>
+        <Deposit v-if="mobileWidth > 600" /> -->
+        <MDeposit class="m-deposit-sub-dialog"  v-if="depositDialog&&mobileVersion == 'sm'" v-model="depositDialog" />
+      <!-- </template>
+    </v-dialog> -->
 
     <v-dialog
       v-model="cashDialog"
@@ -653,8 +720,8 @@ const routeInited = () => {
     </v-dialog>
 
     <!---------------------------------- Deposit Confirm ----------------------------------------->
-
-    <v-dialog
+  <!-- 充值确认 -->
+    <!-- <v-dialog
       class="m-deposit-cofirm-dialog"
       v-model="depositConfirmDialog"
       :width="''"
@@ -663,9 +730,9 @@ const routeInited = () => {
       persistent
       v-if="mobileVersion == 'sm'"
       :transition="'dialog-top-transition'"
-    >
-      <MDepositConfirm />
-    </v-dialog>
+    > -->
+      <MDepositConfirm  v-if="depositConfirmDialog&&mobileVersion == 'sm'" v-model="depositConfirmDialog" />
+    <!-- </v-dialog> -->
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
@@ -685,6 +752,17 @@ const routeInited = () => {
       <template v-else>
         <MAuth />
       </template>
+    </v-dialog>
+
+    <!-------------------------------      静态活动页面     ------------------------------------>
+    <v-dialog
+      v-model="staticActivityDialog"
+      :width="mobileWidth < 600 ? 328 : 471"
+      :scrim="true"
+      persistent
+      style="z-index: 1000001"
+    >
+      <StaticActivityPage v-if="mobileVersion == 'sm'" @close="closeStaticActivityDialog" />
     </v-dialog>
 
     <!-------------------------------      SIGNUP     ------------------------------------>
@@ -852,6 +930,9 @@ const routeInited = () => {
     <VipUpgradeDialog />
     <VipUpRankDialog />
 
+    <!-- join group dialog -->
+    <GroupDialog v-if="groupVisible" v-model="groupVisible"></GroupDialog>
+
     <!------------------------------ Main Page ------------------------------------------->
 
     <router-view v-slot="{ Component, route }">
@@ -870,6 +951,26 @@ const routeInited = () => {
         :key="route.path"
       />
     </router-view>
+
+    <!-- fix钉 按钮集合 -->
+    <div v-show="fixBtnContainer">
+      <!-- message btn -->
+      <div class="m-message-btn" @click="openGroupDialog">
+        <img src="@/assets/public/svg/message.svg" class="m-back-icon-position" />
+      </div>
+
+      <!-- service btn -->
+      <div class="m-service-btn" @click="openLiveChat">
+        <img src="@/assets/public/svg/service-icon.svg" class="m-back-icon-position" />
+      </div>
+
+      <!-- 点击打开下载app页面 -->
+      <div class="m-activity-app-btn" :class="{ 'm-activity-app-swinging-button': isSwinging }" @click="openActivityApp" v-if="mobile">
+        <img src="@/assets/activity_app/app-floating-button.svg" class="m-back-icon-position" />
+      </div>
+    </div>
+
+
     <!-- back top -->
 
     <el-backtop :right="16" :bottom="70">
@@ -878,12 +979,17 @@ const routeInited = () => {
       </div>
     </el-backtop>
 
+
     <!-- mobile menu semicircle toggle -->
 
     <MenuSemiCircle v-if="mobileWidth < 600" />
 
     <!-------------------------------- Footer Tab ----------------------------------------->
     <Footer v-if="route.path != '/promo'" />
+
+    <!-- 下载app -->
+    <ActivityApp />
+
   </v-main>
 </template>
 <style lang="scss">
@@ -903,6 +1009,78 @@ const routeInited = () => {
 .el-backtop {
   width: 44px;
   height: 44px;
+  z-index: 1000;
+}
+
+.m-message-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 190px;
+  width: 44px;
+  height: 44px;
+  background: rgba(22, 130, 241, 1);;
+  border-radius: 44px;
+  filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
+  z-index: 1000;
+  .m-back-icon-position {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.m-service-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 130px;
+  width: 44px;
+  height: 44px;
+  background: rgba(22, 130, 241, 1);;
+  border-radius: 44px;
+  filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
+  z-index: 1000;
+  .m-back-icon-position {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.m-activity-app-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 250px;
+  width: 44px;
+  height: 44px;
+  background: #FFD632;
+  border-radius: 44px;
+  filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
+  z-index: 1000;
+  .m-back-icon-position {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes swing {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(20deg); }
+  50% { transform: rotate(-20deg); }
+  75% { transform: rotate(10deg); }
+}
+
+.m-activity-app-swinging-button {
+  animation: swing .8s ease-in-out infinite;
 }
 
 .m-back-top {

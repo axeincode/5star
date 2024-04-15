@@ -55,10 +55,12 @@ onMounted(async () => {
 </script>
 
 <template>
-    <v-overlay
+    <v-dialog
         v-model="vipOverlay"
-        contained
+        persistent
+        :scrim="true"
         class="align-center justify-center vip-position"
+        style="z-index: 99999"
     >
         <div class="vip-overlay">
             <div class="vip-overlay-header">
@@ -99,7 +101,7 @@ onMounted(async () => {
                 ></v-checkbox>
             </div> -->
         </div>
-    </v-overlay>
+    </v-dialog>
 </template>
 
 <style lang="scss" scoped>
@@ -121,10 +123,10 @@ onMounted(async () => {
 }
 ::v-deep(.v-overlay__content) {
     width: 100%;
-    top: auto;
+    top: 140px;
 }
 .vip-overlay {
-    width: 90%;
+    width: 335px;
     height: 411px;
     margin: 0 auto;
     border: 1px solid #23262F;

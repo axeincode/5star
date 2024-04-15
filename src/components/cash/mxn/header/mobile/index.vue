@@ -15,6 +15,12 @@ import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+  },
+});
+
 const { name, width } = useDisplay();
 const { t } = useI18n();
 const { setDepositDialogToggle } = appBarStore();
@@ -46,6 +52,17 @@ const pixInfoItem = ref<GetPixInfo>({
   id: "",
   first_name: "",
   last_name: "",
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const modelValueNew = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit("update:modelValue", val);
+  },
 });
 
 const userInfo = computed((): GetUserInfo => {
@@ -279,172 +296,165 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-    class="mobile-cash-header"
-    :class="depositHeaderBlurEffectShow ? 'm-deposit-header-bg-blur' : ''"
+  <v-dialog
+    v-model="modelValueNew"
+    class="cash-header-dialog"
+    :width="''"
+    :fullscreen="true"
+    :scrim="false"
+    :transition="'dialog-top-transition'"
+    persistent
   >
-    <div class="d-flex align-center relative m-header">
-      <v-menu
-        offset="-5"
-        :close-on-content-click="false"
-        content-class="m-personal-info-menu"
-        v-model:model-value="pixInfoMenuShow"
-        :transition="{
+    <div
+      class="mobile-cash-header"
+      :class="depositHeaderBlurEffectShow ? 'm-deposit-header-bg-blur' : ''"
+    >
+      <div class="d-flex align-center relative m-header">
+        <v-menu
+          offset="-5"
+          :close-on-content-click="false"
+          content-class="m-personal-info-menu"
+          v-model:model-value="pixInfoMenuShow"
+          :transition="{
           enterActiveClass: 'my-enter-active-class',
           leaveActiveClass: 'my-leave-active-class',
         }"
-        v-if="userBalance.currency.toLocaleUpperCase() == 'BRL'"
-      >
-        <template v-slot:activator="{ props }">
-          <v-btn
-            class="m-deposit-header-btn"
-            v-bind="props"
-            @click="handlePersonalInfoToggle"
-          >
-            <div class="m-deposit-header-account-bg relative">
-              <div class="m-deposit-header-account-bg-1">
-                <img
-                  src="@/assets/public/svg/icon_public_59.svg"
-                  width="16"
-                  class="deposit-header-account-position"
-                />
-              </div>
-            </div>
-            <!-- <v-icon class="header-mdi-icon">mdi-chevron-right</v-icon> -->
-            <img
-              src="@/assets/public/svg/icon_public_11.svg"
-              width="16"
-              class="ml-1"
-              v-if="!pixInfoMenuShow"
-            />
-            <img
-              src="@/assets/public/svg/icon_public_50.svg"
-              width="16"
-              class="ml-1"
-              v-else
-            />
-          </v-btn>
-        </template>
-        <v-list
-          theme="dark"
-          bg-color="#1D2027"
-          class="px-2"
-          :width="mobileWidth > 600 ? 471 : mobileWidth"
+          v-if="userBalance.currency.toLocaleUpperCase() == 'BRL'"
         >
-          <v-list-item class="pt-4">
-            <div class="text-center text-400-12 gray">
-              {{ t("deposit_dialog.personal_information.header_text") }}
-            </div>
-          </v-list-item>
-          <div
-            @click="handleConfirmValidation"
-            class="m-personal-information-id-text mx-4"
-          >
-            <v-text-field
-              :label="t('deposit_dialog.personal_information.id_text')"
-              style="margin: 0px"
-              class="form-textfield dark-textfield"
-              variant="solo"
-              density="comfortable"
-              :disabled="userInfo.id_number != ''"
-              append-icon="mdi"
-              color="#7782AA"
-              v-model="pixInfoItem.id"
-              @input="handlePixInfoID"
-            />
-            <img
-              src="@/assets/public/svg/icon_public_19.svg"
-              class="personal-info-key-position"
-              v-if="confirmValidation"
-            />
-          </div>
-          <div
-            class="mx-4 d-flex m-personal-information-id-text"
-            @click="handleConfirmValidation"
-          >
-            <v-text-field
-              :label="t('deposit_dialog.personal_information.first_name')"
-              class="form-textfield dark-textfield mx-1"
-              variant="solo"
-              density="comfortable"
-              append-icon="mdi"
-              color="#7782AA"
-              v-model="pixInfoItem.first_name"
-              :disabled="userInfo.first_name != ''"
-              @input="handlePixInfoFirstName"
-              @mousedown="handleConfirmValidation"
-            />
-            <img
-              src="@/assets/public/svg/icon_public_19.svg"
-              class="personal-info-key-position-1"
-              v-if="confirmValidation"
-            />
-            <v-text-field
-              :label="t('deposit_dialog.personal_information.last_name')"
-              class="form-textfield dark-textfield mx-1"
-              variant="solo"
-              density="comfortable"
-              append-icon="mdi"
-              color="#7782AA"
-              v-model="pixInfoItem.last_name"
-              :disabled="userInfo.last_name != ''"
-              @input="handlePixInfoLastName"
-            >
-            </v-text-field>
-            <img
-              src="@/assets/public/svg/icon_public_19.svg"
-              class="personal-info-key-position-2"
-              v-if="confirmValidation"
-            />
-          </div>
-          <v-list-item class="text-center">
-            <v-btn
-              class="mx-16 mt-2 mb-6 m-personal-confirm-btn"
-              :class="isPersonalBtnReady ? 'personal-btn-ready' : ''"
-              height="48px"
-              :onclick="handlePixInfoSubmit"
-            >
-              {{ t("deposit_dialog.personal_information.confirm_text") }}
+          <template v-slot:activator="{ props }">
+            <v-btn class="m-deposit-header-btn" v-bind="props" @click="handlePersonalInfoToggle">
+              <div class="m-deposit-header-account-bg relative">
+                <div class="m-deposit-header-account-bg-1">
+                  <img
+                    src="@/assets/public/svg/icon_public_59.svg"
+                    width="16"
+                    class="deposit-header-account-position"
+                  />
+                </div>
+              </div>
+              <!-- <v-icon class="header-mdi-icon">mdi-chevron-right</v-icon> -->
+              <img
+                src="@/assets/public/svg/icon_public_11.svg"
+                width="16"
+                class="ml-1"
+                v-if="!pixInfoMenuShow"
+              />
+              <img src="@/assets/public/svg/icon_public_50.svg" width="16" class="ml-1" v-else />
             </v-btn>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <div class="m-deposit-toggle">
-        <input type="checkbox" id="m-deposit-toggle" v-model="cashToggleSwitch" />
-        <label for="m-deposit-toggle">
-          <div class="deposit">
-            <inline-svg
-              :src="icon_public_60"
-              width="18"
-              height="18"
-              :transform-source="depositTransform"
+          </template>
+          <v-list
+            theme="dark"
+            bg-color="#1D2027"
+            class="px-2"
+            :width="mobileWidth > 600 ? 471 : mobileWidth"
+          >
+            <v-list-item class="pt-4">
+              <div
+                class="text-center text-400-12 gray"
+              >{{ t("deposit_dialog.personal_information.header_text") }}</div>
+            </v-list-item>
+            <div @click="handleConfirmValidation" class="m-personal-information-id-text mx-4">
+              <v-text-field
+                :label="t('deposit_dialog.personal_information.id_text')"
+                style="margin: 0px"
+                class="form-textfield dark-textfield"
+                variant="solo"
+                density="comfortable"
+                :disabled="userInfo.id_number != ''"
+                append-icon="mdi"
+                color="#7782AA"
+                v-model="pixInfoItem.id"
+                @input="handlePixInfoID"
+              />
+              <img
+                src="@/assets/public/svg/icon_public_19.svg"
+                class="personal-info-key-position"
+                v-if="confirmValidation"
+              />
+            </div>
+            <div
+              class="mx-4 d-flex m-personal-information-id-text"
+              @click="handleConfirmValidation"
             >
-            </inline-svg>
-            <p class="text-700-10 ml-1">{{ t("appBar.deposit") }}</p>
-          </div>
-          <div class="withdraw">
-            <inline-svg
-              :src="icon_public_65"
-              width="18"
-              height="18"
-              :transform-source="withdrawTransform"
-            >
-            </inline-svg>
-            <p class="text-700-10 ml-1">{{ t("appBar.withdraw") }}</p>
-          </div>
-        </label>
+              <v-text-field
+                :label="t('deposit_dialog.personal_information.first_name')"
+                class="form-textfield dark-textfield mx-1"
+                variant="solo"
+                density="comfortable"
+                append-icon="mdi"
+                color="#7782AA"
+                v-model="pixInfoItem.first_name"
+                :disabled="userInfo.first_name != ''"
+                @input="handlePixInfoFirstName"
+                @mousedown="handleConfirmValidation"
+              />
+              <img
+                src="@/assets/public/svg/icon_public_19.svg"
+                class="personal-info-key-position-1"
+                v-if="confirmValidation"
+              />
+              <v-text-field
+                :label="t('deposit_dialog.personal_information.last_name')"
+                class="form-textfield dark-textfield mx-1"
+                variant="solo"
+                density="comfortable"
+                append-icon="mdi"
+                color="#7782AA"
+                v-model="pixInfoItem.last_name"
+                :disabled="userInfo.last_name != ''"
+                @input="handlePixInfoLastName"
+              ></v-text-field>
+              <img
+                src="@/assets/public/svg/icon_public_19.svg"
+                class="personal-info-key-position-2"
+                v-if="confirmValidation"
+              />
+            </div>
+            <v-list-item class="text-center">
+              <v-btn
+                class="mx-16 mt-2 mb-6 m-personal-confirm-btn"
+                :class="isPersonalBtnReady ? 'personal-btn-ready' : ''"
+                height="48px"
+                :onclick="handlePixInfoSubmit"
+              >{{ t("deposit_dialog.personal_information.confirm_text") }}</v-btn>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <div class="m-deposit-toggle">
+          <input type="checkbox" id="m-deposit-toggle" v-model="cashToggleSwitch" />
+          <label for="m-deposit-toggle">
+            <div class="deposit">
+              <inline-svg
+                :src="icon_public_60"
+                width="18"
+                height="18"
+                :transform-source="depositTransform"
+              ></inline-svg>
+              <p class="text-700-10 ml-1">{{ t("appBar.deposit") }}</p>
+            </div>
+            <div class="withdraw">
+              <inline-svg
+                :src="icon_public_65"
+                width="18"
+                height="18"
+                :transform-source="withdrawTransform"
+              ></inline-svg>
+              <p class="text-700-10 ml-1">{{ t("appBar.withdraw") }}</p>
+            </div>
+          </label>
+        </div>
+        <v-btn
+          class="m-deposit-close-button"
+          icon="true"
+          @click="cashDialogShow"
+          width="40"
+          height="40"
+        >
+          <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
+        </v-btn>
       </div>
-      <v-btn
-        class="m-deposit-close-button"
-        icon="true"
-        @click="cashDialogShow"
-        width="40"
-        height="40"
-      >
-        <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
-      </v-btn>
     </div>
-  </div>
+  </v-dialog>
 </template>
 
 <style lang="scss">
@@ -621,9 +631,9 @@ onMounted(async () => {
   .v-btn__content {
     color: #fff;
     text-align: center;
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
-      Microsoft Yahei, sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+      DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+      WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     font-size: 14px !important;
     text-transform: none;
     font-style: normal;
@@ -732,9 +742,9 @@ onMounted(async () => {
 
   .Vue-Toastification__toast-body {
     color: var(--sec-text, #7782aa);
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
-      Microsoft Yahei, sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+      DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+      WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 500;

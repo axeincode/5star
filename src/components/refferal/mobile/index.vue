@@ -180,41 +180,74 @@ onMounted(async () => {
         <div class="mt-5 text-center text-700-14 white">
           {{ t("refferal.dialog.header.body_text") }}
         </div>
-        <div class="mt-3">
+        <div class="mt-2">
           <img
             src="@/assets/public/image/bg_public_02_01.png"
             class="full-width"
           />
         </div>
-        <div class="mt-4 mx-6 white text-400-14">
+        <div class="mt-2 mx-6 white text-400-14">
           {{ t("refferal.description.text_1") }}
         </div>
         <div
-          class="mt-3 mx-6 text-gray text-500-10"
+          class="mt-2 mx-6 text-gray text-500-10"
           style="word-break: break-all"
         >
           {{ t("refferal.description.text_2", [platformCurrency]) }}
         </div>
-        <div class="mt-4 mx-6">
+        <div
+          class="mt-2 mx-6 mb-1 text-gray text-500-10"
+          style="word-break: break-all"
+        >
+          {{ t("refferal.description.text_3", [platformCurrency]) }}
+        </div>
+        <div class="mt-2 mx-6">
           <v-card
-            height="262"
+            height="232"
             theme="dark"
             color="#15161C"
             class="overflow-y-auto description-card"
             style="scroll-padding: 20px"
           >
-            <div class="mx-4 mt-4 text-600-14 text-gray">
-              {{ t("refferal.description.term_text") }}
+            <div class="mx-4 mt-2 text-600-14 text-gray">
+              {{ t("refferal.description.term_text_1") }}
             </div>
-            <p
-              class="ml-4 mr-2 mt-3 text-400-10 text-gray"
+             <!-- <div class="mx-4 mt-2 text-600-14 text-gray">
+              {{ t("refferal.description.term_text_2") }}
+            </div> -->
+               <p
+              class="ml-4 mr-2 mt-2 text-400-10 text-gray"
               style="word-break: break-all"
             >
-              {{ t("refferal.description.text_3", [platformCurrency]) }}
+              {{ t("refferal.description.term_text_2", [platformCurrency]) }}
+            </p>
+             <div class="mx-4 mt-2 text-600-14 text-gray">
+              {{ t("refferal.description.term_text_3") }}
+            </div>
+            <p
+              class="ml-4 mr-2 mt-2 text-400-10 text-gray"
+              style="word-break: break-all"
+            >
+              {{ t("refferal.description.text_4", [platformCurrency]) }}
+            </p>
+            <div class="mx-4 mt-2 text-600-14 text-gray">
+              {{ t("refferal.description.term_text_4") }}
+            </div>
+             <p
+              class="ml-4 mr-2 mt-2 text-400-10 text-gray"
+              style="word-break: break-all"
+            >
+              {{ t("refferal.description.text_5", [platformCurrency]) }}
+            </p>
+             <p
+              class="ml-4 mr-2 mt-2 mb-1 text-400-10 text-gray"
+              style="word-break: break-all"
+            >
+              {{ t("refferal.description.text_6", [platformCurrency]) }}
             </p>
           </v-card>
         </div>
-        <div class="mt-6 mx-6">
+        <div class="mt-3 mx-6">
           <v-btn
             class="button-dark m-reffer-btn-font text-none"
             width="-webkit-fill-available"
@@ -280,7 +313,7 @@ onMounted(async () => {
           </div>
           <div
             class="
-              mt-3
+              mt-2
               text-center text-500-12
               color-31E598
               boder-bottom-31E598
@@ -291,25 +324,25 @@ onMounted(async () => {
           </div>
         </div>
         <div class="refferal-dialog-body">
-          <div class="text-center mt-4 text-700-18 white">
+          <div class="text-center mt-2 text-700-18 white">
             {{ t("refferal.dialog.body.text_1") }}
           </div>
           <div
-            class="text-center mt-4 text-500-12 text-gray"
+            class="text-center mt-2 text-500-12 text-gray"
             @click="copyToClipboard(inviteItem.invite_code)"
           >
             {{ t("refferal.dialog.body.text_2") }}
             {{ inviteItem.invite_code }}
             {{ t("refferal.dialog.body.text_3") }}
           </div>
-          <div class="text-center mt-4 mx-6">
+          <div class="text-center mt-2 mx-6">
             <v-card theme="dark" color="#15161C" height="40">
               <div class="text-400-14 text-gray mt-2">
                 {{ inviteItem.web_invite_url }}
               </div>
             </v-card>
           </div>
-          <div class="text-center mt-4 mx-6">
+          <div class="text-center mt-2 mx-6">
             <v-btn
               class="button-bright m-reffer-btn-font text-none"
               width="-webkit-fill-available"

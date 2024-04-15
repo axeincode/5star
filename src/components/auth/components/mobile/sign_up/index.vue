@@ -24,8 +24,9 @@ import { currencyStore } from "@/store/currency";
 import AdjustClass from "@/utils/adjust";
 import { googleTokenLogin } from "vue3-google-login";
 import EventToken from "@/constants/EventToken";
-import { loginWithSocialMedia, loginType } from "@/plugins/third-party-login";
+import { loginWithSocialMedia, loginType, loginOrRegister } from "@/plugins/third-party-login";
 import { ThirdPartyWayEnum } from '@/enums/userEnum'
+import { ElLoading } from "element-plus";
 
 const MSignup = defineComponent({
   components: {
@@ -66,7 +67,7 @@ const MSignup = defineComponent({
           value: ThirdPartyWayEnum.FACEBOOK_LOGIN
         },
         {
-          url: new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+          url: new URL("@/assets/public/svg/icon_public_google.svg", import.meta.url).href,
           value: ThirdPartyWayEnum.GOOGLE_LOGIN
         },
         // new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
@@ -118,7 +119,9 @@ const MSignup = defineComponent({
       loading: false,
       mailCardHeight: 0,
       emailPartName: "",
-      promoCodeDisabled:false
+      promoCodeDisabled:false,
+      indexValue: "",
+      typeValue: ""
     });
 
     watch(
@@ -245,8 +248,9 @@ const MSignup = defineComponent({
       state.isShowUsernameValidation = false;
     };
 
-    const handleOnEmailInputBlur = (): void => {
+    const handleOnEmailInputBlur = (e:any): void => {
       // handleValidateEmail();
+      state.formData.emailAddress =e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
       state.isShowEmailValidaton = false;
       setTimeout(() => {
         state.mailCardHeight = 0;
@@ -314,8 +318,13 @@ const MSignup = defineComponent({
       }
     };
 
-    // handle form submit
-    const handleSignupFormSubmit = async () => {
+    // handle form submit  登录提交
+    const handleSignupFormSubmit = async (event) => {
+      // 不是回车键不触发 event.keyCode判断是不是软键盘触发
+      if(event.keyCode !== undefined && event.keyCode !== 13) return
+      //关闭手机软键盘
+      document.activeElement.blur();
+
       if (!validateEmail()) {
         state.isShowEmailValidaton = true;
         return;
@@ -378,7 +387,8 @@ const MSignup = defineComponent({
       state.currentPage = state.PAGE_TYPE.SIGNUP_FORM;
     };
 
-    const handleEmailChange = () => {
+    const handleEmailChange = (e:any) => {
+      state.formData.emailAddress =e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
       handleValidateEmail();
       if (state.formData.emailAddress.includes("@")) {
         state.emailPartName = state.formData.emailAddress.split("@")[0];
@@ -452,11 +462,84 @@ const MSignup = defineComponent({
       }
     };
 
+    // 全局 window 对象
+    const globalWindow: any = window;
+
+    // 接受android傳遞的token - google 登录模拟
+    globalWindow.googleLogin = async (token: string) => {
+      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      if(token) {
+        await loginOrRegister(token, state.indexValue, state.typeValue);
+        await registerSuccess();
+        elLoading.close();
+        loginType(state.indexValue);
+      } else {
+        const toast = useToast();
+        toast.error(t("login.submit_result.err_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
+        });
+        elLoading.close();
+      }
+    }
+    // 接受android傳遞的token  - facebook 登录模拟
+    globalWindow.fbrLogin = async (token: string) => {
+      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      if(token) {
+        await loginOrRegister(token, state.indexValue, state.typeValue);
+        await registerSuccess();
+        elLoading.close();
+        loginType(state.indexValue);
+      } else {
+        const toast = useToast();
+        toast.error(t("login.submit_result.err_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
+        });
+        elLoading.close();
+      }
+    }
+
     // 一键注册
     const onSignInSuccessGoogle = async (value: string) => {
-      await loginWithSocialMedia(value, 'register');
-      await registerSuccess();
-      loginType(value);
+      // const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      try {
+        if (AdjustClass.getInstance().isMobileWebview) {
+            state.indexValue = value;
+            state.typeValue = 'register';
+            // 啟動android原生登錄流程
+            if (value === "google") {
+              globalWindow["AndroidWebView"].googleLogin();
+            }
+            if (value === "facebook") {
+              globalWindow["AndroidWebView"].facebookLogin();
+            }
+        } else {
+          await loginWithSocialMedia(value, 'register');
+          await registerSuccess();
+          loginType(value);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        // elLoading.close();
+      }
     };
 
     return {
@@ -505,7 +588,8 @@ export default MSignup;
         </div>
       </div>
     </div>
-    <v-form v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" class="full-width">
+    <!-- S 表单 -->
+    <v-form @submit.prevent v-if="currentPage === PAGE_TYPE.SIGNUP_FORM" class="full-width">
       <div class="relative mt-10 pa-0">
         <v-text-field
           :label="t('signup.formPage.emailAddress')"
@@ -516,6 +600,7 @@ export default MSignup;
           :onblur="handleOnEmailInputBlur"
           @input="handleEmailChange"
           :onfocus="handleEmailFocus"
+          @keypress="handleSignupFormSubmit"
         />
         <ValidationBox
           v-if="isShowEmailValidaton"
@@ -564,6 +649,8 @@ export default MSignup;
           </v-list>
         </div>
       </div>
+      <!-- 邮箱 / -->
+
       <div class="mt-6 relative pa-0">
         <v-text-field
           :label="t('signup.formPage.password')"
@@ -574,6 +661,7 @@ export default MSignup;
           v-model="formData.password"
           :onfocus="handleOnPasswordInputFocus"
           :onblur="handleOnPasswordInputBlur"
+          @keypress="handleSignupFormSubmit"
         />
         <img
           v-if="isShowPassword"
@@ -595,6 +683,8 @@ export default MSignup;
           :validationList="passwordValidationList"
         />
       </div>
+      <!-- 密码 / -->
+
       <v-row class="mt-2">
         <v-text-field
           :label="t('signup.formPage.promoCode')"
@@ -603,8 +693,11 @@ export default MSignup;
           density="comfortable"
           v-model="formData.promoCode"
           :disabled="promoCodeDisabled"
+          @keypress="handleSignupFormSubmit"
         />
       </v-row>
+      <!-- 邀请码 / -->
+
       <div class="mt-2" style="display: flex; align-items: center; height: 46px">
         <v-checkbox
           v-model="formData.isAgreed"
@@ -663,8 +756,9 @@ export default MSignup;
         </v-col>
       </v-row>
     </v-form>
+    <!-- E 表单 -->
 
-    <!-- Confirm cancel. -->
+    <!-- Confirm cancel. 确认取消 -->
     <div v-if="currentPage == PAGE_TYPE.CONFIRM_CANCEL" class="full-width">
       <v-row style="margin-top: 100px" class="mx-4">
         <p class="text-700-20 white center full-width">
@@ -698,7 +792,7 @@ export default MSignup;
       </v-row>
     </div>
 
-    <!-- Already registered notification -->
+    <!-- Already registered notification 已经注册过提醒 -->
     <div v-if="currentPage == PAGE_TYPE.ALREADY_REGISTERED" class="full-width">
       <v-row>
         <p class="m-label-text-md slate-gray center full-width px-8">
@@ -992,6 +1086,17 @@ export default MSignup;
 }
 
 .m-agreement-checkbox {
+  width: fit-content;
+  flex-shrink: 0;
+
+  .v-input__control {
+    margin-right: 5px;
+  }
+  .v-selection-control__wrapper {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
   i.v-icon {
     color: #15161c;
     background-color: #01983a;

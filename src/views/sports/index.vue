@@ -95,12 +95,22 @@ onMounted(async () => {
   }
 }
 
+// .p-betby-main {
+//   width: 100%;
+//   max-width: 1300px;
+//   min-height: 500px;
+//   margin: 0 auto;
+// }
+
 .p-betby-main {
-  width: 100%;
-  max-width: 1300px;
-  min-height: 500px;
-  margin: 0 auto;
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    max-width: 1300px;
+    min-height: 500px;
+    margin: 0 auto
 }
+
 
 .m-loading-container {
   position: absolute;

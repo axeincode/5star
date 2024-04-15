@@ -196,14 +196,13 @@ onMounted(async () => {
       class="mx-3 m-provider-loading-container"
       :class="gameConfirmDialogShow ? 'm-provider-bg-blur' : ''"
     >
-      <div class="d-flex align-center">
+      <div class="d-flex align-center" @click="goToBackPage">
         <v-btn
           class="text-none m-provider-back-btn"
           variant="elevated"
           icon="mdi-chevron-left"
           width="20"
           height="20"
-          @click="goToBackPage"
         >
         </v-btn>
         <p class="text-800-14 white ml-2">{{ t("provider.text_1") }}</p>

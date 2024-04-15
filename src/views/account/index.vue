@@ -17,6 +17,7 @@ import MSuspendAccount from "@/components/account/suspend_account/mobile/index.v
 import MDialog from "./dialog/index.vue";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
+import { getQueryParams } from "@/utils/getPublicInformation";
 
 // const UserInformation = defineAsyncComponent(() => import("@/components/account/user_information/pc/index.vue"));
 // const MUserInformation = defineAsyncComponent(() => import("@/components/account/user_information/mobile/index.vue"));
@@ -126,8 +127,10 @@ const mDialogHide = () => {
   mobileDialogVisible.value = false;
 }
 
+const queryParams = getQueryParams()
+
 const goBeforePage = () => {
-  router.go(-1);
+  router.push({ path:'/', query: queryParams });
   /*setTimeout(() => {
     activeMenuIndex.value = route.query.index ? route.query.index : 0
     setActiveAccountIndex(activeMenuIndex.value)

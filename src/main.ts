@@ -42,7 +42,23 @@ import 'dayjs/locale/en';
 // vue3 google login
 import Vue3GoogleLogin from 'vue3-google-login';
 
+
 import { getErrorInfoCollector } from '@/utils/errorInfoCollector'
+
+import FP from '@fingerprintjs/fingerprintjs-pro';
+
+// 获取fingerprint指纹
+(async () => {
+  try {
+    const fp = await FP.load({
+      token: 'F2FGYiUPWrRUc2mVnpnR'
+    });
+    const result = await fp.get();
+    localStorage.setItem('result', JSON.stringify(result));
+  } catch (error) {
+    console.error('Failed to get browser fingerprint:', error);
+  }
+})()
 
 // Declare the FB object
 declare global {

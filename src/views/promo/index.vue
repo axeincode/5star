@@ -485,7 +485,7 @@ const i18nButtonText = (eng: string) => {
 
     .m-promo-navigation-card {
       // height: 160px;
-      border-radius: 4px;
+      border-radius: 0px;
       background: $agent_card_notmet_bg;
       box-shadow: none !important;
 

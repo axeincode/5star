@@ -36,6 +36,24 @@ import { BtTabEnum } from '@/enums/bonusTransactionEnum';
 import { toFormatNum } from '@/utils/numFormat';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
+
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+  },
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const modelValueNew = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit("update:modelValue", val);
+  },
+});
+
 const platformCurrency = computed<string>(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
@@ -58,6 +76,11 @@ const { dispatchCurrencyList } = currencyStore();
 const { setPixInfoToggle } = depositStore();
 const { setBonusTabIndex } = bonusTransactionStore();
 const { setTransactionTab } = bonusTransactionStore();
+
+const depositWithdrawToggle = computed(() => {
+  const { getDepositWithdrawToggle } = storeToRefs(appBarStore());
+  return getDepositWithdrawToggle.value;
+})
 
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "1",
@@ -220,7 +243,7 @@ watch(withdrawConfig, (newValue) => {
       icon: userBalance.value.currency == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       channel_type: item.channel_type,
-      description: item.min + "~" + item.max + " " + item.currecy_type,
+      description: item.min + "~" + item.max + " " + platformCurrency.value,
       min: item.min,
       max: item.max
     })
@@ -314,7 +337,12 @@ const showWithdrawInfoDialog = (type: string) => {
   withdrawInfoDialog.value = true
 }
 
-const handleWithdrawSubmit = async () => {
+const handleWithdrawSubmit = async (event) => {
+  // 不是回车键不触发  event.keyCode判断是不是软键盘触发
+  if(event.keyCode !== undefined && event.keyCode !== 13) return
+  //关闭手机软键盘
+  document.activeElement.blur();
+
   if (Number(withdrawAmount.value) == 0 || Number(userBalance.value.availabe_balance) == 0) {
     const toast = useToast();
     toast.success('Your current cash withdrawal amount is insufficient', {
@@ -527,7 +555,7 @@ onMounted(async () => {
       icon: userBalance.value.currency == "MXN" ? mxnPaymentChannel.value[item.channel_type.toLowerCase()] : new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
       name: item.channel_name,
       channel_type: item.channel_type,
-      description: item.min + "~" + item.max + " " + item.currecy_type,
+      description: item.min + "~" + item.max + " " + platformCurrency.value,
       min: item.min,
       max: item.max
     })
@@ -568,240 +596,233 @@ onMounted(async () => {
       :withdraw_type="withdraw_type"
     />
   </v-dialog>
-  <div
-    class="mobile-withdraw-container"
-    :class="depositBlurEffectShow || phoneBindingDialog ? 'deposit-bg-blur' : ''"
+  <v-dialog
+    v-model="modelValueNew"
+    :class="depositBlurEffectShow ? 'm-deposit-dialog' : ''"
+    :width="''"
+    :fullscreen="true"
+    :scrim="false"
+    :transition="depositWithdrawToggle ? 'dialog-bottom-transition' : ''"
+    style="top: 60px"
+    persistent
   >
-    <v-row class="mt-6 mx-10 text-500-10 white align-center">
-      {{ t("withdraw_dialog.withdraw_amount") }}
-      {{ selectedCurrencyUnit }}
-      {{ toFormatNum(availableAmount) }}
-      <div style="margin-left: auto" class="relative pr-4">
-        <img
-          @click="refreshWithdrawalConfig"
-          src="@/assets/public/svg/icon_public_16.svg"
-          width="12"
-          class="m-withdraw-balance-refresh-img"
-          :class="refreshLoading ? 'm-img-loading' : ''"
-        />
-      </div>
-    </v-row>
-    <v-row class="mt-2 mx-3 relative">
-      <v-text-field
-        :label="`${t('withdraw_dialog.amount')}(${selectedCurrencyUnit})`"
-        class="form-textfield dark-textfield m-withdraw-amount-text mb-0"
-        variant="solo"
-        density="comfortable"
-        color="#7782AA"
-        v-model="withdrawAmount"
-        :onfocus="handleAmountInputFocus"
-        :onblur="handleAmountInputBlur"
-        @input="handleAmountInputChange"
-      />
-    </v-row>
-    <div class="mt-3 mx-10 text-400-12 gray d-flex align-center">
-      {{ t("withdraw_dialog.text_5") }}
-      <span class="text-700-12" style="margin-left: auto">
-        {{ toFormatNum(feeAmount) }}&nbsp;{{ selectedCurrencyUnit }}
-      </span>
-    </div>
-    <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
-      {{ t("withdraw_dialog.text_6") }}
-      <span class="text-700-12" style="margin-left: auto">
-        {{ toFormatNum(cashableAmount) }}&nbsp;{{ selectedCurrencyUnit }}
-      </span>
-    </div>
-    <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
-      {{ t("withdraw_dialog.text_7") }}
-      <span
-        class="text-700-12"
-        style="margin-left: auto"
-        :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'green' : ''"
-      >
-        {{ toFormatNum(residualAmount) }}&nbsp;{{ selectedCurrencyUnit }}
-      </span>
-    </div>
     <div
-      class="mt-2 mx-10 text-400-12 gray d-flex align-center"
-      v-if="withdrawAmount != '' && Number(withdrawAmount) != 0"
+      class="mobile-withdraw-container"
+      :class="depositBlurEffectShow || phoneBindingDialog ? 'deposit-bg-blur' : ''"
     >
-      {{ t("withdraw_dialog.text_12") }}
-      <span
-        class="text-700-12 d-flex align-center"
-        style="margin-left: auto"
-        :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'orange' : ''"
-      >
-        {{ toFormatNum(userBalance.amount - userBalance.availabe_balance) }}
-        &nbsp;{{ selectedCurrencyUnit }}
-        <v-menu
-          offset="10"
-          v-model="helpMenuShow"
-          content-class="m-withdraw-non-balance-menu"
-        >
-          <template v-slot:activator="{ props }">
-            <inline-svg
-              :src="icon_public_22"
-              width="14"
-              height="14"
-              class="ml-2"
-              :transform-source="(el: any) => iconSvgTransform(el, '#7782AA')"
-              v-bind="props"
-            >
-            </inline-svg>
-          </template>
-          <div class="m-withdraw-non-balance-menu-card pa-4 text-400-10 gray">
-            {{ t("withdraw_dialog.text_13") }}
-          </div>
-        </v-menu>
-      </span>
-    </div>
-    <div class="mx-4 mt-2">
-      <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
-    </div>
-    <v-row class="mt-2 mx-10 text-400-12 gray">
-      {{ t("withdraw_dialog.withdraw_payment_method") }}
-    </v-row>
-    <v-menu
-      offset="4"
-      class="mt-1"
-      v-model:model-value="paymentMenuShow"
-      content-class="m-withdraw-payment-menu"
-    >
-      <template v-slot:activator="{ props }">
-        <v-card
-          color="#15161C"
-          theme="dark"
-          class="mx-6 mt-4 m-deposit-card-height"
-          style="border-radius: 8px"
-        >
-          <v-list-item
-            v-bind="props"
-            class="payment-item m-deposit-card-height m-withdraw-currency-item"
-            value="payment dropdown"
-            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-          >
-            <template v-slot:prepend>
-              <img :src="selectedPaymentItem.icon" width="52" />
-            </template>
-            <v-list-item-title class="ml-2 text-400-12 d-flex align-center">
-              {{ selectedPaymentItem.name }}
-              <inline-svg
-                :src="icon_public_09"
-                width="20"
-                height="20"
-                :transform-source="(el: any) => svgTransform(el, '#12FF76')"
-                style="margin-left: auto"
-                v-if="userBalance.currency.toLocaleUpperCase() != 'BRL'"
-              >
-              </inline-svg>
-            </v-list-item-title>
-          </v-list-item>
-        </v-card>
-      </template>
-      <v-list theme="dark" bg-color="#15161C" class="mr-6">
-        <v-row class="m-payment-width-370 px-2">
-          <v-col
-            cols="12"
-            v-for="(paymentItem, paymentIndex) in paymentList"
-            :key="paymentIndex"
-            class="pa-1"
-          >
-            <v-card
-              color="#23262F"
-              theme="dark"
-              class="text-center"
-              :class="selectedPaymentItem.name == paymentItem.name ? 'border-active' : ''"
-              style="border-radius: 8px; box-shadow: none"
-            >
-              <v-list-item
-                class="payment-select-item pa-2"
-                :value="paymentItem.name"
-                @click="handleSelectPayment(paymentItem)"
-              >
-                <v-row class="align-center">
-                  <v-col cols="4" class="text-center">
-                    <img :src="paymentItem.icon" width="62" />
-                  </v-col>
-                  <v-col cols="5" class="text-left">
-                    <v-list-item-title class="text-400-12">
-                      {{ paymentItem.name }}
-                    </v-list-item-title>
-                    <v-list-item-title class="text-400-12">
-                      {{ paymentItem.description }}
-                    </v-list-item-title>
-                  </v-col>
-                  <v-col
-                    cols="3"
-                    v-if="userBalance.currency.toLocaleUpperCase() != 'BRL'"
-                  >
-                    <inline-svg
-                      :src="icon_public_09"
-                      width="20"
-                      height="20"
-                      :transform-source="(el: any) => svgTransform(el, '#12FF76')"
-                    >
-                    </inline-svg>
-                    <img
-                      src="@/assets/public/svg/icon_public_109.svg"
-                      class="ml-2"
-                      @click="showWithdrawInfoDialog(paymentItem.channel_type)"
-                    />
-                  </v-col>
-                </v-row>
-              </v-list-item>
-            </v-card>
-          </v-col>
+      <v-row class="mt-6 mx-10 text-500-10 white align-center">
+        {{ t("withdraw_dialog.withdraw_amount") }}
+        {{ platformCurrency }}
+        {{ toFormatNum(availableAmount) }}
+        <div style="margin-left: auto" class="relative pr-4">
+          <img
+            @click="refreshWithdrawalConfig"
+            src="@/assets/public/svg/icon_public_16.svg"
+            width="12"
+            class="m-withdraw-balance-refresh-img"
+            :class="refreshLoading ? 'm-img-loading' : ''"
+          />
+        </div>
+      </v-row>
+      <form action="javascript:return true;" @submit.prevent>
+        <v-row class="mt-2 mx-3 relative">
+          <v-text-field
+            :label="`${t('withdraw_dialog.amount')}(${platformCurrency})`"
+            class="form-textfield dark-textfield m-withdraw-amount-text mb-0"
+            variant="solo"
+            density="comfortable"
+            color="#7782AA"
+            v-model="withdrawAmount"
+            :onfocus="handleAmountInputFocus"
+            :onblur="handleAmountInputBlur"
+            @input="handleAmountInputChange"
+            @keypress="handleWithdrawSubmit"
+          />
         </v-row>
-      </v-list>
-    </v-menu>
-    <div class="mx-10 my-4">
-      <!-- <v-checkbox
+      </form>
+      <div class="mt-3 mx-10 text-400-12 gray d-flex align-center">
+        {{ t("withdraw_dialog.text_5") }}
+        <span
+          class="text-700-12"
+          style="margin-left: auto"
+        >{{ toFormatNum(feeAmount) }}&nbsp;{{ platformCurrency }}</span>
+      </div>
+      <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
+        {{ t("withdraw_dialog.text_6") }}
+        <span
+          class="text-700-12"
+          style="margin-left: auto"
+        >{{ toFormatNum(cashableAmount) }}&nbsp;{{ platformCurrency }}</span>
+      </div>
+      <div class="mt-2 mx-10 text-400-12 gray d-flex align-center">
+        {{ t("withdraw_dialog.text_7") }}
+        <span
+          class="text-700-12"
+          style="margin-left: auto"
+          :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'green' : ''"
+        >{{ toFormatNum(residualAmount) }}&nbsp;{{ platformCurrency }}</span>
+      </div>
+      <div
+        class="mt-2 mx-10 text-400-12 gray d-flex align-center"
+        v-if="withdrawAmount != '' && Number(withdrawAmount) != 0"
+      >
+        {{ t("withdraw_dialog.text_12") }}
+        <span
+          class="text-700-12 d-flex align-center"
+          style="margin-left: auto"
+          :class="withdrawAmount != '' && Number(withdrawAmount) != 0 ? 'orange' : ''"
+        >
+          {{ toFormatNum(userBalance.amount - userBalance.availabe_balance) }}
+          &nbsp;{{ platformCurrency }}
+          <v-menu offset="10" v-model="helpMenuShow" content-class="m-withdraw-non-balance-menu">
+            <template v-slot:activator="{ props }">
+              <inline-svg
+                :src="icon_public_22"
+                width="14"
+                height="14"
+                class="ml-2"
+                :transform-source="(el: any) => iconSvgTransform(el, '#7782AA')"
+                v-bind="props"
+              ></inline-svg>
+            </template>
+            <div
+              class="m-withdraw-non-balance-menu-card pa-4 text-400-10 gray"
+            >{{ t("withdraw_dialog.text_13") }}</div>
+          </v-menu>
+        </span>
+      </div>
+      <div class="mx-4 mt-2">
+        <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
+      </div>
+      <v-row class="mt-2 mx-10 text-400-12 gray">{{ t("withdraw_dialog.withdraw_payment_method") }}</v-row>
+      <v-menu
+        offset="4"
+        class="mt-1"
+        v-model:model-value="paymentMenuShow"
+        content-class="m-withdraw-payment-menu"
+      >
+        <template v-slot:activator="{ props }">
+          <v-card
+            color="#15161C"
+            theme="dark"
+            class="mx-6 mt-4 m-deposit-card-height"
+            style="border-radius: 8px"
+          >
+            <v-list-item
+              v-bind="props"
+              class="payment-item m-deposit-card-height m-withdraw-currency-item"
+              value="payment dropdown"
+              :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+            >
+              <template v-slot:prepend>
+                <img :src="selectedPaymentItem.icon" width="52" />
+              </template>
+              <v-list-item-title class="ml-2 text-400-12 d-flex align-center">
+                {{ selectedPaymentItem.name }}
+                <inline-svg
+                  :src="icon_public_09"
+                  width="20"
+                  height="20"
+                  :transform-source="(el: any) => svgTransform(el, '#12FF76')"
+                  style="margin-left: auto"
+                  v-if="userBalance.currency.toLocaleUpperCase() != 'BRL'"
+                ></inline-svg>
+              </v-list-item-title>
+            </v-list-item>
+          </v-card>
+        </template>
+        <v-list theme="dark" bg-color="#15161C" class="mr-6">
+          <v-row class="m-payment-width-370 px-2">
+            <v-col
+              cols="12"
+              v-for="(paymentItem, paymentIndex) in paymentList"
+              :key="paymentIndex"
+              class="pa-1"
+            >
+              <v-card
+                color="#23262F"
+                theme="dark"
+                class="text-center"
+                :class="selectedPaymentItem.name == paymentItem.name ? 'border-active' : ''"
+                style="border-radius: 8px; box-shadow: none"
+              >
+                <v-list-item
+                  class="payment-select-item pa-2"
+                  :value="paymentItem.name"
+                  @click="handleSelectPayment(paymentItem)"
+                >
+                  <v-row class="align-center">
+                    <v-col cols="4" class="text-center">
+                      <img :src="paymentItem.icon" width="62" />
+                    </v-col>
+                    <v-col cols="5" class="text-left">
+                      <v-list-item-title class="text-400-12">{{ paymentItem.name }}</v-list-item-title>
+                      <v-list-item-title class="text-400-12">{{ paymentItem.description }}</v-list-item-title>
+                    </v-col>
+                    <v-col cols="3" v-if="userBalance.currency.toLocaleUpperCase() != 'BRL'">
+                      <inline-svg
+                        :src="icon_public_09"
+                        width="20"
+                        height="20"
+                        :transform-source="(el: any) => svgTransform(el, '#12FF76')"
+                      ></inline-svg>
+                      <img
+                        src="@/assets/public/svg/icon_public_109.svg"
+                        class="ml-2"
+                        @click="showWithdrawInfoDialog(paymentItem.channel_type)"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-list-item>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-list>
+      </v-menu>
+      <div class="mx-10 my-4">
+        <!-- <v-checkbox
         hide-details
         icon
         class="deposit-checkbox"
         v-model="withdrawCheck"
         :label="t('withdraw_dialog.text_8')"
-      /> -->
-      <div class="text-400-12 gray">{{ t("withdraw_dialog.text_8") }}</div>
-    </div>
-    <v-row class="mt-0 mx-10 text-400-10 gray">
-      {{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig?.fee?.rate) * 100 }}%
-    </v-row>
-    <!-- <v-row class="mt-4 mx-14 text-400-10 gray">
+        />-->
+        <div class="text-400-12 gray">{{ t("withdraw_dialog.text_8") }}</div>
+      </div>
+      <v-row
+        class="mt-0 mx-10 text-400-10 gray"
+      >{{ t("withdraw_dialog.text_1") }}{{ Number(withdrawConfig?.fee?.rate) * 100 }}%</v-row>
+      <!-- <v-row class="mt-4 mx-14 text-400-10 gray">
       {{ t("withdraw_dialog.text_2") }}{{ selectedCurrencyUnit }}0
-    </v-row> -->
-    <v-row class="mt-4 mx-10 text-400-10 gray">
-      {{ t("withdraw_dialog.text_3") }}
-    </v-row>
-    <v-row class="mt-4 mx-10 text-400-10 gray">
-      {{ t("withdraw_dialog.text_4") }}
-    </v-row>
-    <!-- <v-row
+      </v-row>-->
+      <v-row class="mt-4 mx-10 text-400-10 gray">{{ t("withdraw_dialog.text_3") }}</v-row>
+      <v-row class="mt-4 mx-10 text-400-10 gray">{{ t("withdraw_dialog.text_4") }}</v-row>
+      <!-- <v-row
       class="m-deposit-footer-text-position text-600-10 white justify-center mx-2 mt-10"
     >
       {{ feeRate * 100 }} {{ t("withdraw_dialog.other_text") }}{{ selectedCurrencyUnit }}
       {{ Number(withdrawAmount) * (1 - Number(feeRate)) }}
       {{ t("withdraw_dialog.other_text_1") }}
-    </v-row> -->
-    <div class="m-withdraw-btn-position">
-      <v-btn
-        class="my-3 mx-6 m-deposit-btn"
-        :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
-        height="48px"
-        style="width: -moz-available !important; width: -webkit-fill-available"
-        :loading="loading"
-        :onclick="handleWithdrawSubmit"
-      >
-        {{ t("withdraw_dialog.withdraw_btn_text") }}
-      </v-btn>
-      <div class="d-flex align-center justify-center mt-2" @click="goWithdrawPage">
-        <img src="@/assets/public/svg/icon_public_108.svg" />
-        <span class="text-400-12 blue ml-1" style="text-decoration: underline">
-          {{ t("withdraw_dialog.text_9") }}
-        </span>
+      </v-row>-->
+      <div class="m-withdraw-btn-position">
+        <v-btn
+          class="my-3 mx-6 m-deposit-btn"
+          :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
+          height="48px"
+          style="width: -moz-available !important; width: -webkit-fill-available"
+          :loading="loading"
+          :onclick="handleWithdrawSubmit"
+        >{{ t("withdraw_dialog.withdraw_btn_text") }}</v-btn>
+        <div class="d-flex align-center justify-center mt-2" @click="goWithdrawPage">
+          <img src="@/assets/public/svg/icon_public_108.svg" />
+          <span
+            class="text-400-12 blue ml-1"
+            style="text-decoration: underline"
+          >{{ t("withdraw_dialog.text_9") }}</span>
+        </div>
       </div>
     </div>
-  </div>
+  </v-dialog>
 </template>
 
 <style lang="scss">
@@ -1026,9 +1047,9 @@ onMounted(async () => {
   .v-btn__content {
     color: #fff;
     text-align: center;
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
-      Microsoft Yahei, sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+      DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+      WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;

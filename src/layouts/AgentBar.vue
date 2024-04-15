@@ -21,15 +21,15 @@ const MGrade = defineAsyncComponent(
 const { setMailMenuShow } = mailStore();
 const { setAgentNavBarToggle } = agentStore();
 
-const { t } = useI18n();
-
+const { t, locale } = useI18n();
 const drawer = ref<boolean>(false);
 const activeIndex = ref<number>(0);
 
 const scrollTop = ref<number>(0);
 
-const currentLang = ref<string | null>(localStorage.getItem("lang"));
-
+const currentLang = computed(() => {
+  return locale.value
+});
 const agentNavBarToggle = computed(() => {
   const { getAgentNavBarToggle } = storeToRefs(agentStore());
   return getAgentNavBarToggle.value;
@@ -85,36 +85,37 @@ onMounted(() => {
         :class="[currentLang === 'es' ? 'tab-box' : '']"
       >
         <div class="tab-box-item">
-          <span
+          <div
             @click="handleTab(0)"
             :class="activeIndex == 0 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
           >
             {{ t("agent.text_1") }}
-          </span>
+          </div>
         </div>
+        
         <div class="tab-box-item">
-          <span
+          <div
             @click="handleTab(1)"
             :class="activeIndex == 1 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
           >
             {{ t("agent.text_2") }}
-          </span>
+          </div>
         </div>
         <div class="tab-box-item">
-          <span
+          <div
             @click="handleTab(2)"
             :class="activeIndex == 2 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
           >
             {{ t("agent.text_3") }}
-          </span>
+          </div>
         </div>
         <div class="tab-box-item">
-          <span
+          <div
             @click="handleTab(3)"
             :class="activeIndex == 3 ? 'text-700-12 text-white' : 'text-400-12 text-gray'"
           >
             {{ t("agent.text_4") }}
-          </span>
+          </div>
         </div>
         <!-- <div class="tab-box-item">
           <span
@@ -153,18 +154,21 @@ onMounted(() => {
     border-style: none !important;
     height: 70px !important;
 
+
     .tab-box {
       display: grid !important;
-      grid-template-columns: repeat(5, 1fr) !important;
-      grid-gap: 10px !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      grid-gap: 15px !important;
+      margin: 0 14px !important;
 
       .tab-box-item {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0 4px;
+        // padding: 0 8px;
+        // width: 230px;
 
-        span {
+        div {
           white-space: pre-wrap;
           line-height: 14px;
         }

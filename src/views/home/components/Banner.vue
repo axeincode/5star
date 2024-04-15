@@ -8,6 +8,8 @@ import {
   watch,
   onMounted,
   defineEmits,
+  onActivated, 
+  onDeactivated
 } from "vue";
 import { storeToRefs } from "pinia";
 import { refferalStore } from "@/store/refferal";
@@ -25,6 +27,9 @@ import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 import { useRouter } from "vue-router";
 import { promoStore } from "@/store/promo";
 import { STATEMENT_TYPES } from "@babel/types";
+import { agentStore } from "@/store/agent";
+import { vipStore } from "@/store/vip";
+import { useOpenUrl } from '@/plugins/openPage'
 
 const BannerComponent = defineComponent({
   components: {
@@ -43,11 +48,15 @@ const BannerComponent = defineComponent({
     const { width } = useDisplay();
     const router = useRouter();
     const { dispatchUserActivityList } = promoStore();
+    const { setAgentNavBarToggle } = agentStore();
+    const { setVipNavBarToggle } = vipStore();
+    const { openUrl } = useOpenUrl()
     /**
      * 初始化swiper
      * Initialize swiper
      */
     const swiper = ref<any>(null);
+    const swiperShow = ref<boolean>(false);
     const { dispatchBannerList } = bannerStore();
     const state = reactive({
       /**
@@ -98,56 +107,117 @@ const BannerComponent = defineComponent({
       const { getToken } = storeToRefs(authStore());
       return getToken.value;
     });
+    
+    const bannerList = computed(() => {
+      const { getBannerList } = storeToRefs(bannerStore());
+      return getBannerList.value
+    })
 
     onMounted(async () => {
       await dispatchBannerList();
-
-      const { getBannerList } = storeToRefs(bannerStore());
+      swiperShow.value = true;
       state.slides.length = 0;
-      getBannerList.value.forEach((element) => {
+      bannerList.value.forEach((element) => {
         if (element.image_path) {
           state.slides.push(element.image_path);
         }
       });
     });
+
+    // 提前手动关闭swiper，缓存组件时，就可以避免不动的问题
+    onActivated(() => {
+      console.log('onActivated=============');
+      swiperShow.value = true;
+    })
+    onDeactivated(() => {
+      console.log('onDeactivated=============');
+      swiperShow.value = false;
+    })
+
+    // click_feedback枚举类型如下:
+    // - 0 无响应
+    // - 1 打开弹窗
+    // - 2 打开客服
+    // - 3 下载APP
+    // - 4 打开客服列表
+    // - 5 站内页面 此情况下需要关注content内容 具体定义见下文
+    // - 6 站外链接
+    // - 7 游戏分类 此情况下需要关注content内容, 为游戏分类字符串 比如bgaming
+    // - 8 具体游戏 此情况下需要关注content内容, 为具体游戏id 比如 1234
+    // - 9 打开活动广告页面 此情况下需要关注content内容, 为活动广告页面id 比如 1
     const slideImageClick = async (index: number) => {
-      const { getBannerList } = storeToRefs(bannerStore());
-      let type: number = getBannerList.value[index % getBannerList.value.length].click_feedback;
+      console.log("slideImageClick", index);
+      const currentIndex = index % bannerList.value.length
+      const currentItem = bannerList.value[currentIndex]
+      let type: number =
+        bannerList.value[currentIndex].click_feedback;
+      console.log(type, 'type');
+
+      // 5 站内页面 此情况下需要关注content内容
       if (type == 5) {
-        window.location.href = getBannerList.value[index].content;
+        const contentValue = currentItem.content;
+        console.log(contentValue, 'contentValue');
+        
+        switch (contentValue) {
+          case "invite_popup":
+            setAgentNavBarToggle(true)
+            break;
+          case "vip":
+            setVipNavBarToggle('1');
+            break;
+          default:
+            // window.location.href = contentValue;
+            openUrl(contentValue)
+            break;
+        }
       }
+
+      // 站外链接 打开新页签
       if (type == 6) {
-        window.location.href = getBannerList.value[index].content;
+        if(!currentItem.content) return;
+        // window.open(currentItem.content, '_blank')
+        openUrl(currentItem.content, true)
       }
+
+      //
       if (type == 7) {
-        emit("handleBannerCategory", getBannerList.value[index].content);
+        emit("handleBannerCategory", currentItem.content);
       }
       if (type == 8) {
-        window.location.href = "game/" + getBannerList.value[index].content;
+        window.location.href = "game/" + currentItem.content;
       }
-      if(type == 9) {
-        console.log(index);
-        router.push({ name: "Promo_Detail", query: { id: parseInt(getBannerList.value[index % getBannerList.value.length].content) } });
+      if (type == 9) {
+        console.log(currentIndex);
+        router.push({
+          name: "Promo_Detail",
+          query: {
+            id: parseInt(
+              currentItem.content
+            ),
+          },
+        });
       }
     };
     const calcSlide = () => {
-      let res = [...state.slides, ...state.slides];
-      //let res = [...state.slides];
+      // let res = [...state.slides, ...state.slides];
+
+      let res = [...state.slides];
       return res;
     };
     const handleSlideChange = (event: any) => {
-      let bullets = document.getElementsByClassName("swiper-pagination-bullet");
+      // let bullets = document.getElementsByClassName("swiper-pagination-bullet");
 
-      for (let i = 0; i < bullets.length; i++) {
-        if (i == event.activeIndex % state.slides.length)
-          bullets[event.activeIndex % state.slides.length].classList.add(
-            "swiper-pagination-bullet-active"
-          );
-        else {
-          bullets[i].classList.remove("swiper-pagination-bullet-active");
-        }
-      }
+      // for (let i = 0; i < bullets.length; i++) {
+      //   if (i == event.activeIndex % state.slides.length)
+      //     bullets[event.activeIndex % state.slides.length].classList.add(
+      //       "swiper-pagination-bullet-active"
+      //     );
+      //   else {
+      //     bullets[i].classList.remove("swiper-pagination-bullet-active");
+      //   }
+      // }
     };
+    
     return {
       ...toRefs(state),
       mobileWidth,
@@ -160,6 +230,7 @@ const BannerComponent = defineComponent({
       refferalAppBarShow,
       calcSlide,
       handleSlideChange,
+      swiperShow
     };
   },
 });
@@ -189,7 +260,11 @@ export default BannerComponent;
       style="border-radius: 8px"
       @swiper="getSwiperRef"
     >
-      <swiper-slide v-for="(slide, index) in slides" :key="index" :virtualIndex="index">
+      <swiper-slide
+        v-for="(slide, index) in slides"
+        :key="index"
+        :virtualIndex="index"
+      >
         <img
           :src="slide"
           class="slider-img-width"
@@ -205,42 +280,47 @@ export default BannerComponent;
 
   <!-- 屏幕宽度小于600展示区域 -->
   <!-- Screen width is less than 600 display area -->
-  <div class="relative m-home-swiper" :class="!refferalAppBarShow ? 'mt-2' : ''" v-else>
-    <swiper
-      :modules="modules"
-      :slidesPerView="1"
-      :spaceBetween="6"
-      :centeredSlides="true"
-      :loop="true"
-      :autoplay="{
-        delay: 2000,
-        disableOnInteraction: false,
-      }"
-      :pagination="{
-        el: '.swiper-pagination',
-        clickable: true,
-      }"
-      :navigation="false"
-      :virtual="true"
-      class="mx-2"
-      style="border-radius: 8px"
-      @swiper="getSwiperRef"
-      @slideChange="handleSlideChange"
-    >
-      <swiper-slide
-        v-for="(slide, index) in calcSlide()"
-        :key="index"
-        :virtualIndex="index"
+  <div
+    class="relative m-home-swiper"
+    :class="!refferalAppBarShow ? 'mt-2' : ''"
+    v-else
+  >
+    <template v-if="swiperShow">
+      <swiper
+        :modules="modules"
+        :slidesPerView="1"
+        :spaceBetween="6"
+        :centeredSlides="true"
+        :loop="true"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+        }"
+        :pagination="{
+          el: '.swiper-pagination',
+          clickable: true,
+        }"
+        :navigation="false"
+        :virtual="true"
+        class="mx-2"
+        @swiper="getSwiperRef"
+        @slideChange="handleSlideChange"
       >
-        <img
-          :src="slide"
-          class="m-slider-img-width"
-          :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
-          @click="slideImageClick(index)"
-        />
-      </swiper-slide>
-    </swiper>
-    <div class="swiper-pagination" slot="pagination"></div>
+        <swiper-slide
+          v-for="(slide, index) in calcSlide()"
+          :key="index"
+          :virtualIndex="index"
+        >
+          <img
+            :src="slide"
+            class="m-slider-img-width"
+            :class="mobileWidth < 600 ? 'm-carousel-img-border' : ''"
+            @click="slideImageClick(index)"
+          />
+        </swiper-slide>
+      </swiper>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </template>
   </div>
 </template>
 
@@ -318,9 +398,9 @@ export default BannerComponent;
     opacity: 1;
     margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 2px) !important;
   }
-  .swiper-pagination-bullet:not(:nth-child(-n + 3)) {
-    display: none !important;
-  }
+  // .swiper-pagination-bullet:not(:nth-child(-n + 3)) {
+    // display: none !important;
+  // }
   .swiper-pagination {
     bottom: -12px !important;
   }

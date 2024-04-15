@@ -47,7 +47,7 @@ const vipBetawardList = computed(() => {
                 <span class="available-button" v-else>{{ t('vip.vip_level_info.bonus.text_2') }}</span>
             </div>
         </div>
-        <div class="bonus-main-membership">
+        <!-- <div class="bonus-main-membership">
             <div class="bonus-main-membership-l">
                 <span>{{ t('vip.vip_level_info.bonus.text_3') }}</span>
                 <span>{{ platformCurrency }} {{ toFormatNum(vipCycleawardList.membership_day_gift) }}</span>
@@ -60,7 +60,7 @@ const vipBetawardList = computed(() => {
                 <span>{{ t('vip.vip_level_info.bonus.text_4') }} </span>
                 <span>21:23:22</span>
             </div>
-        </div>
+        </div> -->
         <div class="bonus-main-gift">
             <div class="bonus-main-gift-cycle">
                 <div class="bonus-main-gift-cycle-t">

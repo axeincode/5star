@@ -1088,6 +1088,7 @@ export type langType = {
         title: string
         menu_1: string
         menu_2: string
+        menu_3: string
       }
       about_us: {
         title: string
@@ -1131,6 +1132,7 @@ export type langType = {
       text_4: string
       text_5: string
       text_6: string
+      text_7: string
     }
     deposit_currency: string
     choose_payment_method: string
@@ -1156,6 +1158,8 @@ export type langType = {
     }
     text_1: string
     text_2: string
+    text_3: string
+    text_4: string
   }
   transaction_history: {
     type: {
@@ -1297,6 +1301,13 @@ export type langType = {
       text_9: string
       text_10: string
       text_11: string
+      text_12: string
+      text_13: string
+      text_14: string
+      text_15: string
+      text_16: string
+      text_17: string
+      text_18: string
       summary_text: string
       receive_btn_text: string
       total_profit_text: string
@@ -1493,8 +1504,14 @@ export type langType = {
     description: {
       text_1: string
       text_2: string
-      term_text: string
       text_3: string
+      term_text_1:string
+      term_text_2:string
+      term_text_3:string
+      text_4: string
+      term_text_4: string
+      text_5:string
+      text_6: string
       back_btn_text: string
     }
   }
@@ -1672,6 +1689,9 @@ export type langType = {
         text_14: string,
         text_15: string,
         text_16: string,
+        text_17:string,
+        text_18:string,
+        text_19:string,
       },
       bonus: {
         text_1: string,

@@ -18,6 +18,7 @@ import { withdrawStore } from "@/store/withdraw";
 import { depositStore } from "@/store/deposit";
 import { gameStore } from "@/store/game";
 import { vipStore } from "@/store/vip";
+import { mainStore } from "@/store/main";
 import { bonusTransactionStore } from "@/store/bonusTransaction";
 import moment from "moment-timezone";
 import { BtTabEnum } from '@/enums/bonusTransactionEnum';
@@ -32,6 +33,7 @@ const { dispatchGameHistory } = gameStore();
 const { dispatchVipRebateHistory } = vipStore();
 const { dispatchVipLevelRewardHistory } = vipStore();
 const { dispatchVipTimesHistory } = vipStore();
+const { dispatchTimeunix } = mainStore()
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -108,6 +110,11 @@ const transactionTab = computed(() => {
   return getTransactionTab.value;
 });
 
+const timeunix = computed(() => {
+  const { getTimeunixDvalue } = storeToRefs(mainStore());
+  return getTimeunixDvalue.value;
+});
+
 watch(
   transactionTab,
   (newValue) => {
@@ -129,7 +136,7 @@ const transactionTabToggle = async (item: string) => {
         setTransactionHistoryItemEmpty()
         await dispatchTransactionHistory({
           page_size: pageSize.value,
-          start_time: Math.ceil(moment().valueOf() / 1000),
+          start_time: Math.ceil(moment().valueOf() / 1000  + timeunix.value),
         });
         inited()
       break;
@@ -137,7 +144,7 @@ const transactionTabToggle = async (item: string) => {
         setDepositHistoryIteEmpty()
         await dispatchUserDepositHistory({
           page_size: pageSize.value,
-          start_time: Math.ceil(moment().valueOf() / 1000),
+          start_time: Math.ceil(moment().valueOf() / 1000  + timeunix.value),
         });
         inited()
       break;
@@ -145,7 +152,7 @@ const transactionTabToggle = async (item: string) => {
         setWithdrawHistoryItemEmpty()
         await dispatchWithdrawalHistory({
           page_size: pageSize.value,
-          start_time: Math.ceil(moment().valueOf() / 1000),
+          start_time: Math.ceil(moment().valueOf() / 1000  + timeunix.value),
         });
         inited()
       break;
@@ -178,21 +185,24 @@ onMounted(async () => {
     : BtTabEnum.transactions;
   selectedTab.value =
     transactionTab.value == "" ? selectedTab.value : transactionTab.value;
+  await dispatchTimeunix()
+  console.log(timeunix.value, 'timeunixDValue');
+  
   // await dispatchGameHistory({
   //   page_size: pageSize.value,
   //   start_time: Math.ceil(moment().valueOf() / 1000),
   // });
-  await dispatchUserDepositHistory({
-    page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
-  });
-  await dispatchWithdrawalHistory({
-    page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
-  });
+  // await dispatchUserDepositHistory({
+  //   page_size: pageSize.value,
+  //   start_time: Math.ceil(moment().valueOf() / 1000),
+  // });
+  // await dispatchWithdrawalHistory({
+  //   page_size: pageSize.value,
+  //   start_time: Math.ceil(moment().valueOf() / 1000),
+  // });
   await dispatchTransactionHistory({
     page_size: pageSize.value,
-    start_time: Math.ceil(moment().valueOf() / 1000),
+    start_time: Math.ceil(moment().valueOf() / 1000 + timeunix.value) ,
     lid: Number(0).toString(),
   });
   // await dispatchVipRebateHistory({
@@ -217,6 +227,7 @@ onMounted(async () => {
   <v-slide-group
     class="mt-2 slide-tab-btns slide-tabs"
     v-model="selectedTab"
+    center-active
     show-arrows
     style="touch-action: none"
     :style="{
@@ -227,7 +238,7 @@ onMounted(async () => {
     <v-slide-group-item
       v-for="(item, index) in transactionTabs"
       :key="index"
-      :value="item"
+      :value="item.value"
     >
       <v-btn
         class="ma-2 text-none transaction-tab-btn"

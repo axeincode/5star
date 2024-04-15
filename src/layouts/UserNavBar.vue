@@ -30,15 +30,18 @@ import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import { menuStore } from "@/store/menu";
 import { BtTabEnum } from '@/enums/bonusTransactionEnum';
 import { toFormatNum } from '@/utils/numFormat';
+import { activityAppStore } from '@/store/activityApp';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 import BScroll from '@better-scroll/core'
+import { useOpenUrl } from '@/plugins/openPage'
 
 const platformCurrency = computed(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
 });
 
+const { setAppConfirmDialogShow } = activityAppStore();
 const { setAuthModalType } = authStore();
 const { setUserNavBarToggle } = appBarStore();
 const { setDepositDialogToggle } = appBarStore();
@@ -65,6 +68,7 @@ const { setAgentNavBarToggle } = agentStore();
 const { name, width } = useDisplay()
 const { t } = useI18n();
 const router = useRouter();
+const { openUrl } = useOpenUrl()
 
 const drawer = ref<boolean>(false);
 
@@ -304,6 +308,16 @@ const handleAgentNavBarShow = () => {
   setUserNavBarToggle(false);
 }
 
+// 下载app
+const downloadLink = computed(() => {
+  const { getDownloadLink } = storeToRefs(activityAppStore());
+  return getDownloadLink.value;
+});
+const downloadAppEvent = () => {
+  setUserNavBarToggle(false);
+  setAppConfirmDialogShow(true)
+}
+
 const goAccountPage = () => {
   accountPageShow.value = true;
   setAccountDialogShow(true);
@@ -432,6 +446,7 @@ onMounted(async () => {
 	    easeTime: 300
 	  },
     momentum: false,
+    bounce: false,
 	  	// 监听内容变化，自动执行bs.refresh()方法
 	  observeDOM : true
   })
@@ -539,43 +554,43 @@ onMounted(async () => {
                     {{ vipLevelImgs[0].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 1 && vipInfo.level < 25"
                   >
                     {{ vipLevelImgs[1].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 25 && vipInfo.level < 50"
                   >
                     {{ vipLevelImgs[2].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 50 && vipInfo.level < 75"
                   >
                     {{ vipLevelImgs[3].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 75 && vipInfo.level < 100"
                   >
                     {{ vipLevelImgs[4].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 100 && vipInfo.level < 150"
                   >
                     {{ vipLevelImgs[5].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 150 && vipInfo.level < 200"
                   >
                     {{ vipLevelImgs[6].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center"
+                    class="text-800-10 color-F9BC01 text-center level-text"
                     v-if="vipInfo.level >= 200"
                   >
                     {{ vipLevelImgs[7].content }}
@@ -706,7 +721,7 @@ onMounted(async () => {
               </template>
               <v-list-item-title class="ml-2">{{ t('navBar.menu_item_1.affiliate') }}</v-list-item-title>
             </v-list-item>
-            <v-list-item class="m-user-item app-background" value="app" height="36">
+            <v-list-item class="m-user-item app-background" value="app" height="36" @click="downloadAppEvent">
               <template v-slot:prepend>
                 <img src="@/assets/public/svg/icon_public_66.svg" width="18" />
               </template>
@@ -813,6 +828,11 @@ onMounted(async () => {
   /* Button Shadow */
   // box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
   margin: 43.5px auto 0;
+}
+
+.level-text {
+  width: 53px;
+  word-wrap: break-word;
 }
 
 .m-refer-friend-img-position {

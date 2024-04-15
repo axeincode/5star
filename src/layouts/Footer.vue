@@ -3,15 +3,20 @@ import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { agentStore } from "@/store/agent";
+import { vipStore } from "@/store/vip";
+
 const { t } = useI18n();
 const { name, width } = useDisplay();
 const route = useRoute();
 const router = useRouter();
+const { setAgentNavBarToggle } = agentStore();
+const { setVipNavBarToggle } = vipStore();
 
 const footerIcons = ref([
   new URL("@/assets/public/svg/icon_public_80.svg", import.meta.url).href,
   new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
-  new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+  new URL("@/assets/public/svg/icon_public_google.svg", import.meta.url).href,
   new URL("@/assets/public/svg/icon_public_30.svg", import.meta.url).href,
   new URL("@/assets/public/svg/icon_public_31.svg", import.meta.url).href,
   new URL("@/assets/public/svg/icon_public_32.svg", import.meta.url).href,
@@ -29,13 +34,22 @@ const mobileWidth = computed(() => {
 const goToAboutPage = (index: number) => {
   router.push({ name: "About_US", query: { index: index } });
 };
+const oepnDialog = (val: string) => {
+  if(val === 'vip') {
+    setVipNavBarToggle('2');
+  }
+  if(val ==='affiliate') {
+    setAgentNavBarToggle(true);
+  }
+};
 </script>
 
 <template>
   <div class="py-4 footer" :class="mobileWidth > 600 ? 'mx-8 pc-max' : 'mx-2'">
     <!-------------------- footer bar -------------->
     <v-row class="mx-2" :class="mobileWidth > 600 ? 'mt-10' : 'mt-7'">
-      <v-col cols="3" sm="4" md="2" lg="2" class="px-1">
+      <!-- 游戏自研 -->
+      <v-col cols="3" sm="4" md="2" lg="2" class="px-1" v-if="false">
         <div class="footer-title" :class="mobileWidth > 600 ? 'ml-10' : 'ml-2'">
           {{ t("home.footer.game.title") }}
         </div>
@@ -52,18 +66,25 @@ const goToAboutPage = (index: number) => {
           {{ t("home.footer.game.menu_4") }}
         </div>
       </v-col>
-      <v-col cols="3" sm="4" md="2" lg="2" class="px-1 pl-2">
+
+      <!-- helpful -->
+      <v-col cols="5" sm="6" md="2" lg="2" class="px-1 pl-2">
         <div class="footer-title" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.title") }}
         </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
+        <!-- <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.menu_1") }}
-        </div>
-        <div class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
+        </div> -->
+        <div @click="oepnDialog('vip')" class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
           {{ t("home.footer.helpful_links.menu_2") }}
         </div>
+        <div @click="oepnDialog('affiliate')" class="footer-text-1" :class="mobileWidth < 600 ? 'ml-2' : ''">
+          {{ t("home.footer.helpful_links.menu_3") }}
+        </div>
       </v-col>
-      <v-col cols="6" sm="4" md="3" lg="3" class="px-1">
+
+      <!-- 关于我们 -->
+      <v-col cols="7" sm="6" md="3" lg="3" class="px-1">
         <div class="footer-title" :class="mobileWidth < 600 ? 'ml-12' : ''">
           {{ t("home.footer.about_us.title") }}
         </div>

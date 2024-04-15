@@ -60,6 +60,11 @@ export function clearThousandFilter(str: string): string {
  * @return {string}
  */
 export function toFormatNum(num: string | number): string {
+  // 判断num是否null/undefined非数字，返回0
+  if (!(/^\d+(\.\d+)?$/.test(String(num)))) {
+    return '0.00'
+  }
+  
   if (!num || isNaN(Number(num))) return num.toString(); // Falsy || "-"
   return keepNDecimalPlaces(num);
 }

@@ -2,8 +2,8 @@ import type { langType } from "./lang-base";
 
 export const lang: langType = {
   "main": {
-    "signupButton": "Registro",
-    "loginButton": "Acceso",
+    "signupButton": "Registrarse",
+    "loginButton": "Iniciar sesión",
     "logo_text_1": "HOY",
     "logo_text_2": "777"
   },
@@ -53,19 +53,19 @@ export const lang: langType = {
       },
       "promoCode": "Código de referencia/promoción (opcional)",
       "agree": {
-        "prefix": "Estoy de acuerdo",
-        "bold": "Acuerdo de usuario y confirmar",
-        "suffix": "Tengo por lo menos 18 años de edad"
+        "prefix": "Estoy de acuerdo con los",
+        "bold": "Términos y Condiciones de la plataforma",
+        "suffix": " y confirmo que que soy mayor de 18 años."
       },
       "agree_alert_text": "Acepta seguir los términos",
       "alreadyAccount": "Ya tienes una cuenta?",
       "signIn": "Iniciar sesión",
-      "button": "Inscribirse",
+      "button": "Registrarse",
       "divider": "O"
     },
     "confirmCancelPage": {
       "title": "Estás seguro de que deseas cancelar tu registro?",
-      "description": "Te esperan 200€ en bonos de depósito.",
+      "description": "Beneficios por Registro\r\r\r\r\nGana un 75% extra en tu primer depósito.\r\r\r\r\nPuedes obtener bonos diarios durante 7 días seguidos iniciando sesión ",
       "continue": "Continuar",
       "cancel": "Sí, quiero cancelar"
     },
@@ -79,7 +79,7 @@ export const lang: langType = {
       "username": "Nombre de usuario",
       "validation": {
         "username": {
-          "title": "Este es el nombre que otros verán en Hoy777.com",
+          "title": "Este es el nombre que otros verán en HOY777.COM",
           "items": {
             "0": "2-20 caracteres de longitud",
             "1": "El apodo no debe ser como tu correo electrónico"
@@ -117,7 +117,7 @@ export const lang: langType = {
   "signout": {
     "text_1": "No olvides consultar nuestra gran selección de promociones!",
     "text_2": "Estás seguro de que quieres cerrar sesión?",
-    "text_3": "No olvides consultar nuestra gran selección de promociones de casinos y deportes antes de salir!",
+    "text_3": "No olvides iniciar sesión mañana en HOY777 para recibir tu bono de inicio de sesión continuo y bonificación de CashBack.",
     "button": "Cerrar sesión"
   },
   "navBar": {
@@ -129,7 +129,7 @@ export const lang: langType = {
     "unlock_text": "Desbloqueado",
     "spin_text": "GIRAR",
     "live_support": "Soporte en sitio",
-    "earn_free_text": "Gana $ gratis",
+    "earn_free_text": "Gana {0} gratis",
     "login_bonus_text": "Bono de inicio de sesión VIP",
     "lucky_wheel_text": "Rueda de la suerte",
     "refer_earn_text": "Refiere y gana",
@@ -215,11 +215,11 @@ export const lang: langType = {
     "logo_text_2": "777",
     "id": "ID",
     "account": "Cuenta",
-    "deposit": "Depósito",
+    "deposit": "Depositar",
     "wager": "Apuesta",
     "bonuses": "Bonificaciones",
     "game_history": "Historia del juego",
-    "transactions": "Comercio",
+    "transactions": "Transacciones ",
     "refer_friend": "Recomendar amigos",
     "earn_money": "Ganar dinero",
     "withdraw": "Retirar",
@@ -356,7 +356,7 @@ export const lang: langType = {
       "text_118": "7.2. You will be notified that we will start charging you the fees on the eleventh month of inactivity and you will always have the option to log in and withdraw your funds.",
       "text_119": "7.3. The Inactive Account Fee will be withdrawn from your Account on a monthly basis to the extent that your Account remains in credit and only for the period during which there remains no Account Activity after the initial twelve month period has passed. If the Inactive Account Fee is due to be withdrawn from your Account and the balance of your Account is less than €5 (or equivalent currency), the Inactive Account Fee shall comprise the remaining funds in your Account.",
       "text_120": "8. Deposit of Funds",
-      "text_121": "8.1. Fees and charges may apply to customer deposits and withdrawals, which can be found on the Website. In most cases we absorb transaction fees for deposits to your  Account. You are responsible for your own bank charges that you may incur due to depositing funds with us.",
+      "text_121": "8.1. Fees and charges may apply to customer deposits and withdrawals, which can be found on the Website. In most cases we absorb transaction fees for deposits to your HOY777.COM Account. You are responsible for your own bank charges that you may incur due to depositing funds with us.",
       "text_122": "8.2. Company is not a financial institution and uses a third party electronic payment processor to process credit and debit card deposits; they are not processed directly by us. If you deposit funds by either a credit card or a debit card, your Account will only be credited if we receive an approval and authorization code from the payment issuing institution. If your card issuer gives no such authorisation, your Account will not be credited with those funds.",
       "text_123": "8.3. You agree to fully pay any and all payments and charges due to us or to payment providers in connection with your use of the Service. You further agree not to make any charge-backs or renounce or cancel or otherwise reverse any of your deposits, and in any such event you will refund and compensate us for such unpaid deposits including any expenses incurred by us in the process of collecting your deposit, and you agree that any winnings from wagers utilizing those charged back funds will be forfeited. You acknowledge and agree that your player account is not a bank account and is therefore not guaranteed, insured or otherwise protected by any deposit or banking insurance system or by any other similar insurance system of any other jurisdiction, including but not limited to your local jurisdiction. Furthermore, the player account does not bear interest on any of the funds held in it.",
       "text_124": "8.4. If you decide to accept any of our promotional or bonus offers by entering a bonus code during deposit, you agree to the Terms of Bonuses and terms of each specific bonus.",
@@ -441,7 +441,7 @@ export const lang: langType = {
       "text_204": "13.2. All communications and notices to be given under these Terms by us to you shall, unless otherwise specified in these Terms, be either posted on the Website and/or sent to ",
       "text_205": "the Registered Email Address we hold on our system for the relevant Customer. The method of such communication shall be in our sole and exclusive discretion.",
       "text_206": "13.3. All communications and notices to be given under these Terms by either you or us shall be in writing in the English language and must be given to and from the Registered Email Address in your Account.",
-      "text_207": "13.4. From time to time, we may contact you by email for the purpose of offering you information about betting, unique promotional offerings, and other information from Hoy777.com. You agree to receive such emails when you agree to these Terms when registering at the Website. You can choose to opt out of receiving such promotional offerings from us at any time by submitting a request to the Customer Support.",
+      "text_207": "13.4. From time to time, we may contact you by email for the purpose of offering you information about betting, unique promotional offerings, and other information from HOY777.COM. You agree to receive such emails when you agree to these Terms when registering at the Website. You can choose to opt out of receiving such promotional offerings from us at any time by submitting a request to the Customer Support.",
       "text_208": "14. Matters Beyond Our Control",
       "text_209": "We cannot be held liable for any failure or delay in providing the Service due to an event of Force Majeure which could reasonably be considered to be outside our control despite our execution of reasonable preventative measures such as: an act of God; trade or labour dispute; power cut; act, failure or omission of any government or authority; obstruction or failure of telecommunication services; or any other delay or failure caused by a third party, and we will not be liable for any resulting loss or damage that you may suffer. In such an event, we reserve the right to cancel or suspend the Service without incurring any liability.",
       "text_210": "15. Liability",
@@ -452,7 +452,7 @@ export const lang: langType = {
       "text_215": "16.1. If we suspect that you are or receive notification that you are currently under 18 years or were under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you) when you placed any bets through the Service your Account will be suspended (locked) to prevent you placing any further bets or making any withdrawals from your Account. We will then investigate the matter, including whether you have been betting as an agent for, or otherwise on behalf, of a person under 18 years (or below the age of majority as stipulated in the laws of the jurisdiction applicable to you). If having found that you: (a) are currently; (b) were under 18 years or below the majority age which applies to you at the relevant time; or (c) have been betting as an agent for or at the behest of a person under 18 years or below the majority age which applies:",
       "text_216": "all winnings currently or due to be credited to your Account will be retained;",
       "text_217": "all winnings gained from betting through the Service whilst under age must be paid to us on demand (if you fail to comply with this  provision we will seek to recover all costs associated with recovery of such sums); and/or",
-      "text_218": "any monies deposited in your Account which are not winnings will be returned to you OR retained until you turn 18 years old at our sole discretion. We reserve the right to deduct payment transaction fees from the amount to return, including transaction fees for deposits to your Hoy777.com account which we covered.",
+      "text_218": "any monies deposited in your Account which are not winnings will be returned to you OR retained until you turn 18 years old at our sole discretion. We reserve the right to deduct payment transaction fees from the amount to return, including transaction fees for deposits to your HOY777.COM account which we covered.",
       "text_219": "16.2. This condition also applies to you if you are over the age of 18 years but you are placing your bets within a jurisdiction which specifies a higher age than 18 years for legal betting and you are below that legal minimum age in that jurisdiction.",
       "text_220": "16.3. In the event we suspect you are in breach of the provisions of this Clause or are attempting to rely on them for a fraudulent purpose, we reserve the right to take any action necessary in order to investigate the matter, including informing the relevant law enforcement agencies.",
       "text_221": "17. Fraud",
@@ -515,13 +515,13 @@ export const lang: langType = {
       "text_278": "21.11.6. Every user has the right to abandon the bonuses by making the request to Website customer support in order to zero the bonus balance.",
       "text_279": "21.12. Free Spins With free spins, you get to play free on a game on the Website with the same chance of winning as when you play with your real money. Winnings on free spins are converted to bonus money or real money. When converted to bonus money you will need to wager the bonus money 35 times before it is transferred to your cash balance after which it can be withdrawn.",
       "text_280": "22. Complaints",
-      "text_281": "22.1. If you have a complaint, you can email the Website customer support at support{'@'}Hoy777.com.",
+      "text_281": "22.1. If you have a complaint, you can email the Website customer support at support@HOY777.COM.",
       "text_283": "22.2. Pistis Trade N.V. will use best efforts to resolve a reported matter promptly.",
-      "text_284": "22.3. If you have a query with regard to any transaction you may contact Pistis Trade N.V. at support{'@'}Hoy777.com with details of the query. We will review any queried or disputed transactions. Our judgment is final.",
+      "text_284": "22.3. If you have a query with regard to any transaction you may contact Pistis Trade N.V. at support@HOY777.COM with details of the query. We will review any queried or disputed transactions. Our judgment is final.",
       "text_285": "22.4. NOTWITHSTANDING THE FOREGOING, WE TAKE NO LIABILITY WHATSOEVER TO YOU OR TO ANY THIRD PARTY WHEN RESPONDING TO ANY COMPLAINT THAT WE RECEIVED OR TOOK ACTION IN CONNECTION THEREWITH.",
       "text_286": "23. Intellectual Property",
       "text_287": "23.1. We are the sole owners of the trademark Pistis Trade N.V. and the Pistis Trade N.V. logo. Any unauthorized use of the Pistis Trade N.V. trademark and the Pistis Trade N.V. logo may result in prosecution.",
-      "text_288": "23.2. Hoy777.com is the uniform resource locator of the Website operated by Pistis Trade N.V. and no unauthorized use may be made of this URL on another website or digital platform without our prior written consent.",
+      "text_288": "23.2. HOY777.COM is the uniform resource locator of the Website operated by Pistis Trade N.V. and no unauthorized use may be made of this URL on another website or digital platform without our prior written consent.",
       "text_289": "23.3. Pistis Trade N.V. is the owner or the rightful licensee of the rights to the technology, software and business systems used within this Website.",
       "text_290": "23.4. The contents and structure of the Pistis Trade N.V. ́s Website pages belong to Pistis Trade N.V., all rights reserved. The copyright in this Website including all text, graphics, code, files, and links belongs to Pistis Trade N.V. and the site may not be reproduced, transmitted or stored in whole or in part without our written consent. Your registration and use of our system do therefore not confer any rights whatsoever to the intellectual property contained in our system.",
       "text_291": "23.5. Links to the Website and any of the pages therein may not be included in any other website without the prior written consent of Pistis Trade N.V..",
@@ -654,13 +654,13 @@ export const lang: langType = {
       "text_13": "2. Controller details",
       "text_14": "References in this document to “us”, “our”, “we” or “HOY777” are references to the following data controllers:Pistis Trade N.V. , a company registered in accordance with Curaçao Law, registration No. 162576 Address: Zuikertuintjeweg Z/N (Zuikertuin Tower), Curacao.",
       "text_15": "Pistis Trade N.V. is committed to protecting your personal information. This Privacy Policy lets you know what information we collect when you use our services, why we collect this information and how we use the collected information.",
-      "text_16": "Please note that this Privacy Policy will be agreed between you and Hoy777.com. (‘We’, ‘Us’ or ‘Our’, as appropriate). This Privacy Policy is an integrated part of HOY777. com's Terms and Conditions.",
-      "text_17": "The website Hoy777.com ('Casino', 'Website', 'Company', 'We', 'Us', 'Our') is owned and operated Pistis Trade N.V. , a company registered in accordance with Curaçao Law, registration No. 162576 Address: Zuikertuintjeweg Z/N (Zuikertuin Tower), Curacao. Pistis Trade N.V. is licensed and regulated by the Curacao Gaming Authority and operates under the License No. 365/JAZ issued to Gaming Services Provider, Authorized and Regulated by the Government of Curaçao.",
+      "text_16": "Please note that this Privacy Policy will be agreed between you and HOY777.COM. (‘We’, ‘Us’ or ‘Our’, as appropriate). This Privacy Policy is an integrated part of HOY777. com's Terms and Conditions.",
+      "text_17": "The website HOY777.COM ('Casino', 'Website', 'Company', 'We', 'Us', 'Our') is owned and operated Pistis Trade N.V. , a company registered in accordance with Curaçao Law, registration No. 162576 Address: Zuikertuintjeweg Z/N (Zuikertuin Tower), Curacao. Pistis Trade N.V. is licensed and regulated by the Curacao Gaming Authority and operates under the License No. 365/JAZ issued to Gaming Services Provider, Authorized and Regulated by the Government of Curaçao.",
       "text_18": "We may periodically make changes to this Privacy Policy and will notify you of these changes by posting the modified terms on our platforms. We recommend that you revisit this Privacy Policy regularly.",
       "text_19": "3. Contact Us",
       "text_20": "(including contact details for the Data Protection Officer (\"DPO\")",
       "text_21": "If you have any concerns about how Betfair handles your personal data, you can contact our HOY777 International Data Protection Officers (DPO) and Data Protection Teams at:",
-      "text_22": "dataprotection{'@'}Hoy777.com If you wish to exercise your Data Protection rights, please see the 'Your Rights' section below.",
+      "text_22": "dataprotection@HOY777.COM If you wish to exercise your Data Protection rights, please see the 'Your Rights' section below.",
       "text_23": "4. Information we collect",
       "text_24": "When you use our Services, we collect the following types of information:",
       "text_25": "Information you provide us:",
@@ -683,7 +683,7 @@ export const lang: langType = {
       "text_42": "Not all the personal information we hold about you will always come directly from you. We may also collect information from third parties such as our partners, service providers and publicly available websites (i.e. social media platforms), to comply with our legal and regulatory obligations, offer Services we think may be of interest, to help us maintain data accuracy and provide and enhance the Services.",
       "text_43": "If you log into one of our products through Facebook or Google, Facebook or Google provides us with some of your Facebook or Google user details. We may use these details for the purposes of our registration process and to market our products and Services to you on Facebook or Google.",
       "text_44": "5. MEANS OF COLLECTING AND PROCESSING DATA",
-      "text_45": "We may automatically collect certain data as discussed above and receive Personal Information about you where you provide such information through the services or other communications and interactions on the Hoy777.com site. We may also receive Personal Information from online vendors and service providers, and from customer lists lawfully acquired from third-party vendors. In addition, we may engage the services of third-party service providers to provide technical support to process your online transactions and maintain your account. We will have access to any information you provide to such vendors, service providers and third-party e-commerce services, and we will use the Personal Information as set out in this Privacy Policy below. This information will only be disclosed to third parties outside the company in accordance with this Privacy Policy. We take steps to ensure that our arrangements with third-party service providers and online vendors protect your privacy.",
+      "text_45": "We may automatically collect certain data as discussed above and receive Personal Information about you where you provide such information through the services or other communications and interactions on the HOY777.COM site. We may also receive Personal Information from online vendors and service providers, and from customer lists lawfully acquired from third-party vendors. In addition, we may engage the services of third-party service providers to provide technical support to process your online transactions and maintain your account. We will have access to any information you provide to such vendors, service providers and third-party e-commerce services, and we will use the Personal Information as set out in this Privacy Policy below. This information will only be disclosed to third parties outside the company in accordance with this Privacy Policy. We take steps to ensure that our arrangements with third-party service providers and online vendors protect your privacy.",
       "text_46": "4. INFORMATION USE",
       "text_47": "We use the Personal Information we collect from you to deliver our Services, to provide customer support, to undertake necessary security and identity verification checks, to process any of your online transactions, to assist your participation in third-party promotions, meet certain business requirements and for any other purpose related to the operation of the Services. As such, we may share your Personal Information with our carefully selected partners (including any other parties that have data sharing arrangements with the latter).",
       "text_48": "Your Personal Information may also be used by us to provide you with: (1) promotional offers and information regarding our products and services; and (2) promotional offers and information regarding the products and services of our partners, in order to enlarge the range of provided products and improve our customer service. From time-to-time, we may request information from you via surveys or contests. Participation in these surveys or contests is completely voluntary and you have the choice of whether or not to disclose such information. Information requested may include contact information (such as name, correspondence address and telephone number), and demographic information (such as zip or postal code or age). By accepting any contest prize or winnings from us, you consent to use of your name for advertising and promotional purposes without additional compensation, except where prohibited by law. Unless you have elected not to receive promotional information, we may also use your Personal Information (including your email address and phone number) to provide you with information regarding our products, services and promotions, including other gaming products (including online poker, casino, betting, backgammon) and products and services from third parties carefully selected by us.",
@@ -726,7 +726,7 @@ export const lang: langType = {
       "text_85": "17. Other websites",
       "text_86": "Our web site may contain links to other web sites, which are outside our control and are not covered by this Privacy Policy. If you access other sites using the links provided, the operators of these sites may collect information from you, which will be used by them in accordance with their privacy policy, which may differ from ours. We are not responsible. Solely the operators of these websites shall be responsible for their functionality or possible errors on the linked sites.",
       "text_87": "18. Data Deletion",
-      "text_88": "To request for your data to be deleted please contact support{'@'}Hoy777.com. Please note under GDPR Article 17(3)(b) legal requirements take precedence over the right to be forgotten. Therefore in order to comply with AML regulations, we will retain your data for five years. After this we will be able to process your request."
+      "text_88": "To request for your data to be deleted please contact support@HOY777.COM. Please note under GDPR Article 17(3)(b) legal requirements take precedence over the right to be forgotten. Therefore in order to comply with AML regulations, we will retain your data for five years. After this we will be able to process your request."
     },
     "responsible_gambling": {
       "text_1": "Gambling with responsibility",
@@ -754,7 +754,7 @@ export const lang: langType = {
       "text_23": "",
       "text_24": "4.Information and contact",
       "text_25": "Our support will help You via email at any time without any additional costs and will not give out any information about You without your consent to anyone else:",
-      "text_26": "•\temail: support{'@'}hoy777.com",
+      "text_26": "•\temail: support@hoy777.com",
       "text_27": "",
       "text_28": "In addition You can also take test, to see if You might be addicted to gambling:",
       "text_29": "https://www.begambleaware.org/gambling-problems/do-i-have-a-gambling-problem/",
@@ -779,7 +779,7 @@ export const lang: langType = {
       "text_48": "https://famisafe.wondershare.com/internet-filter/best-internet-filters.html",
       "text_49": "7. Self-Exclusion:",
       "text_50": "In case You are diagnosed with a gambling addiction or You are trying to stay away from gambling for a different reason, we want to help. “Self-Exclusion” means, that You exclude yourself from all gambling services, You choose. This exclusion cannot be undone for a set amount of time. If You wish to self-exclude from gambling, please message our support. They will explain everything that is needed and will be able to exclude You from 6 months up to 5 years. ",
-      "text_51": "•\temail: support{'@'}hoy777.com",
+      "text_51": "•\temail: support@hoy777.com",
       "text_52": "Please keep in mind that Self Exclusion is permanent for the set period of time and will not be undone for your own protection. During Self Exclusion You are not allowed to create a new Account and every attempt to create a new Account during Self Exclusion is a violation of our Terms of Service and may result in the permanent ban of your original Account. "
     },
     "bonus_terms": {
@@ -794,11 +794,11 @@ export const lang: langType = {
       "text_9": "4. All bonuses are subject to 35 times wagering on bonus amount.",
       "text_10": "5. A bet must be settled to count towards wagering requirements, unsettled bets will not count.",
       "text_11": "6. All deposit and free cash bonuses will expire after 30 days.",
-      "text_12": "7. The maximum bet with bonus money is R$25 or the equivalent in your local currency. Any attempt to circumvent the R$25 maximum bet is strictly      prohibited.",
+      "text_12": "7. The maximum bet with bonus money is {0}25 or the equivalent in your local currency. Any attempt to circumvent the {0}25 maximum bet is strictly      prohibited.",
       "text_13": "8. Before any withdrawals are processed, your play will be reviewed for any irregular playing patterns. For fair gaming purposes, equal, zero or low margin bets, hedge betting, or high variance betting strategies shall all be considered irregular gaming for Bonus playthrough requirement purposes. Should HOY777 deem that irregular game play has occurred, it reserves the right to withhold any withdrawals and/or confiscate all winnings, and if applicable, after canceling bonuses, to reinstate the deposit on the player’s account, without necessarily informing the player.",
-      "text_14": "9. R$25 is the maximum bet allowed when playing with bonus money. If, after gameplay is reviewed, HOY777 finds that a player is in breach of this condition, their bonus and winnings will be forfeit.",
-      "text_15": "10. Hoy777.com management reserves the right to void any bonuses and/or winnings obtained by fraudulent behavior as described above.",
-      "text_16": "11. Hoy777.com management has the right to update these rules at any time.",
+      "text_14": "9. {0}25 is the maximum bet allowed when playing with bonus money. If, after gameplay is reviewed, HOY777 finds that a player is in breach of this condition, their bonus and winnings will be forfeit.",
+      "text_15": "10. HOY777.COM management reserves the right to void any bonuses and/or winnings obtained by fraudulent behavior as described above.",
+      "text_16": "11. HOY777.COM management has the right to update these rules at any time.",
       "text_17": "12. Your Real Money will be used before your Bonus Money when placing wagers on our games. Your wager may include both Real and Bonus Money if your wager exceeds your Real Money balance.",
       "text_18": "13. You can click on the “Bonus details” on the Bonus card and find a “Cancel Bonus” button in the bottom. In case you lose the Bonus balance and got it below the amount of 0.01 USD, your Bonus will be automatically canceled. The initiating of the withdrawal funds from the platform or sending a tip in the currency in which you have the active Bonus will lead to Bonus cancellation and the Bonus amount deduction.Transferring funds to the Vault in the currency in which you have the active Bonus will not be available until the Bonus is fully unlocked or canceled. Please note, that after the cancellation, the Bonus can’t be re-activated.",
       "text_19": "14. You can complete the wagering requirement only if selected by the casino In-house games and Slots. These games can be found in the “Bonus wagering” category or on the bonus card in the side panel. Note that your wager in In-house games will be counted with 0.2 multiplier. For Slots, the wager multiplier is always 1."
@@ -829,7 +829,7 @@ export const lang: langType = {
       "text_2": "Last updated: 10.10.2023",
       "text_3": "1. How does the referral program work?",
       "text_4": "Share your referral link and code with friends or promote your referral offer on social networks, forums, and other communication channels.",
-      "text_5": "Every new player who joins the Hoy777.com with your offer becomes your referral and will earn you commissions and bonus rewards for every casino and sports bet.",
+      "text_5": "Every new player who joins the HOY777.COM with your offer becomes your referral and will earn you commissions and bonus rewards for every casino and sports bet.",
       "text_6": "2. Invitation bonus",
       "text_7": "Invite friends who aren't on HOY777 yet. You will receive 12.00 {0} for each friend that signs up and makes a deposit. There's no limit to how many friends you can invite. That means there's also no limit to how much you can earn!",
       "text_8": "Invitation bonus Terms:",
@@ -838,7 +838,7 @@ export const lang: langType = {
       "text_11": "Your friend must have deposited at least 50.00 {0} in order for you to receive the invitation reward.",
       "text_12": "If a friend that you have invited is not from the same country as you, you will receive a default reward of €2.00 converted to your local currency at the fair exchange rate.",
       "text_13": "You cannot create new HOY777 accounts and sign up through your own link to receive the reward. The Refer A Friend program is made for our players to invite friends to the HOY777 platform. Any other use of this program is strictly prohibited.",
-      "text_14": "HOY777 may suspend or terminate the Refer A Friend program or the user's ability to participate in it at any time for any reason. We reserve the right to suspend accounts or remove Cash Balance if we notice any activity that we believe is abusive, fraudulent, or in violation of the Hoy777.com Terms of Service or Refer A Friend Terms. We reserve the right to review and investigate all referral activities and to suspend accounts or modify referrals in our sole discretion as deemed fair and appropriate.",
+      "text_14": "HOY777 may suspend or terminate the Refer A Friend program or the user's ability to participate in it at any time for any reason. We reserve the right to suspend accounts or remove Cash Balance if we notice any activity that we believe is abusive, fraudulent, or in violation of the HOY777.COM Terms of Service or Refer A Friend Terms. We reserve the right to review and investigate all referral activities and to suspend accounts or modify referrals in our sole discretion as deemed fair and appropriate.",
       "text_15": "3. How much do I earn per one referral?",
       "text_16": "In addition to the invite bonus, you can also get 30% commission for each referral's bet.",
       "text_17": "Commission rewards",
@@ -880,13 +880,12 @@ export const lang: langType = {
       "text_19": "3. Organization of the AML for the Website",
       "text_20": "In accordance with the AML legislation, the Website has appointed the “highest level” for the prevention of ML: The full management of the Company are in charge. Furthermore, an AMLCO (Anti Money Laundering Compliance Officer) oversees the enforcement of the AML policy and procedures within the System. The AMLCO is placed under the direct responsibility of the general Management.",
       "text_21": "AML policy changes and implementation Step one verification must be done by every user and customer to withdraw. Regarding of the choice of payment, the amount of payment, the amount of withdraw, the choice of withdraw and nationality of the user/customer step one verification must be done first. Step one verification is a document that must be filled out by the user/customer himself. Following information’s must be filled in: first name, second name, date of birth, country of usual residence, gender and full address.",
-      "text_22": "4. AML policy changes and implementation requirements.",
+      "text_22": "4. Requirements",
       "text_23": "Each major change of the Website’s AML policy is subject to be approval by the general management of the Company and the Anti money laundering compliance officer.",
       "text_24": "5. Three step Verification",
       "text_25": "Step one: ",
-      "text_25_1":"Step one verification must be done by every user and customer to withdraw. Regarding of the choice of payment, the amount of payment, the amount of withdraw, the choice of withdraw and nationality of the user/customer step one verification must be done first. Step one verification is a document that must be filled out by the user/customer himself. Following information’s must be filled in: first name, second name, date of birth, country of usual residence, gender and full address. ",
       "text_26": "Step two: ",
-      "text_27": "Step two verification must be done by every user which makes a deposit over 2000 EUR (two thousand Euro) or withdraws any amount. Until step two verification is done the withdraw, tip or deposit will be hold. Step two verification will lead the user or customer to a subpage where they must send in their ID. The user/customer must take a picture of their ID, while a paperclip with a six-digit random generated number is next to their ID: Only an official ID may be used for ID verification, depending on the country the variety of accepted IDs may be different. There will also be an electronic check if the filled in Data from the step one verification is correct. The electronic check will check via two different databanks to ensure the given information’s matches with the filled document and the name from the ID: If the electronic test fails or is not possible the user/customer is required to send in a conformation of their current residence. A certificate of registration by the government or a similar document is required.",
+      "text_27": "Step two verification must be done by every user which makes a deposit over 2000 EUR (two thousand Euro) or withdraws any amount. Until step two verification is done the withdraw, tip or deposit will be hold. Step two verification will lead the user or customer to a subpage where they must send in their ID. The user/customer must take a picture of their ID, while a paperclip with a six-digit random generated number is next to their ID: Only an official ID may be used for ID verification, depending on the country the variety of accepted IDs may be different.",
       "text_28": "There will also be an electronic check if the filled in Data from the step one verification is correct. The electronic check will check via two different databanks to ensure the given information’s matches with the filled document and the name from the ID: If the electronic test fails or is not possible the user/customer is required to send in a conformation of their current residence. A certificate of registration by the government or a similar document is required.",
       "text_29": "Step three: ",
       "text_30": "Step three verification must be done by every user which makes a deposit over 5000 EUR (five thousand Euro) or withdraws over 5000 EUR (five thousand Euro) or sends another user over 3000 EUR (three thousand Euro). Until step three verification is done the withdraw, tip or deposit will be hold. For step 3 a user/customer will be asked for a source of wealth. ",
@@ -961,7 +960,7 @@ export const lang: langType = {
       "text_99": "All data given by any user/customer will be stored securely, will not be sold or given to any third party. Only if forced by law, or in order to prevent money laundering data may be shared with the AML-authority of the affected state. The Website will follow all guidelines and rules of the data protection directive (officially Directive 95/46/EC) ",
       "text_100": "19. Contact us:",
       "text_101": "If you have any questions about our AML and KYC Policy or if you have any complaints about our AML and KYC Policy or about the procedures done with your account and your data, please contact us:",
-      "text_102": "•\tby email: support{'@'}hoy777.com",
+      "text_102": "•\tby email: support@hoy777.com",
       "text_103": "",
       "text_104": "",
       "text_105": "",
@@ -985,7 +984,7 @@ export const lang: langType = {
     "kyc_policy": {
       "text_1": "KYC Policy of Pistis Trade N.V.",
       "text_2": "Last updated: 10.10.2023",
-      "text_3": "When a user makes an aggregate lifetime total of deposits exceeding EUR 2000 or requests a withdrawal of any amount inside the https://Hoy777.com Platform, then it is compulsory for them to perform a full KYC process",
+      "text_3": "When a user makes an aggregate lifetime total of deposits exceeding EUR 2000 or requests a withdrawal of any amount inside the https://HOY777.COM Platform, then it is compulsory for them to perform a full KYC process",
       "text_4": "During this process, the user will have to input some basic details about themselves and then upload",
       "text_5": "1) A copy of Government Issued Photo ID (in some cases front and back depending on the doc)",
       "text_6": "2) A selfie of themselves holding the ID doc",
@@ -1088,7 +1087,8 @@ export const lang: langType = {
       "helpful_links": {
         "title": "Enlaces relacionados",
         "menu_1": "Justo",
-        "menu_2": "Club vip"
+        "menu_2": "Club vip",
+        "menu_3": "Afiliado",
       },
       "about_us": {
         "title": "Sobre nosotros",
@@ -1102,14 +1102,14 @@ export const lang: langType = {
         "text_8": "Política KYC"
       },
       "footer_4": {
-        "text": "El sitio web HOY777.com ofrece juegos de aventuras propiedad directamente de Pistis Trade NV. Para convertirse en usuario de nuestro sitio web, debe tener 18 años de edad o más. No somos responsables de las violaciones de las leyes locales relacionadas con los juegos en línea. Juega responsablemente y diviértete en Hoy777.com."
+        "text": "El sitio web HOY777.com ofrece juegos de aventuras propiedad directamente de Pistis Trade NV. Para convertirse en usuario de nuestro sitio web, debe tener 18 años de edad o más. No somos responsables de las violaciones de las leyes locales relacionadas con los juegos en línea. Juega responsablemente y diviértete en HOY777.COM."
       },
       "logo": {
-        "text_1": "Hoy777.com es operado por Pistis Trade NV, número de registro de empresa 162576, con domicilio social en Zuikertuintjeweg Z/N (Zuikertuin Tower), Curazao, con licencia y autorización del Gobierno de Curazao y opera bajo la Licencia maestra de proveedor de servicios de juego, NV # Número de licencia 365/JAZ: GLH-OCCHKTWxxxxxxxxxx.",
-        "text_2": "El juego puede ser adictivo. Por favor, juega responsablemente. Hoy777.com sólo acepta clientes mayores de 18 años."
+        "text_1": "HOY777.COM es operado por Pistis Trade NV, número de registro de empresa 162576, con domicilio social en Zuikertuintjeweg Z/N (Zuikertuin Tower), Curazao, con licencia y autorización del Gobierno de Curazao y opera bajo la Licencia maestra de proveedor de servicios de juego, NV # Número de licencia 365/JAZ: GLH-OCCHKTWxxxxxxxxxx.",
+        "text_2": "El juego puede ser adictivo. Por favor, juega responsablemente. HOY777.COM sólo acepta clientes mayores de 18 años."
       },
       "footer_6": {
-        "text": "2023 Hoy777.com Todos los derechos reservados."
+        "text": "2023 HOY777.COM Todos los derechos reservados."
       }
     }
   },
@@ -1118,7 +1118,7 @@ export const lang: langType = {
     "menu": "Menú",
     "casino": "Casino",
     "share": "Bono",
-    "sport": "Educación Física",
+    "sport": "Deportes",
     "mail": "Correo",
     "reward": "Remuneración",
     "search": "Buscar",
@@ -1145,7 +1145,7 @@ export const lang: langType = {
     "check_text": "No participar en promociones.",
     "other_text": "tarifa del 0,00%,",
     "other_text_1": "Bono depositado en su cuenta",
-    "deposit_btn_text": "Depósito",
+    "deposit_btn_text": "Depositar",
     "personal_information": {
       "header_text": "Introduce los datos de tu foto",
       "id_text": "Número de identificación (CPF)",
@@ -1156,7 +1156,9 @@ export const lang: langType = {
       "confirm_warning_text": "Póngase en contacto con el servicio de atención al cliente para modificar"
     },
     "text_1": "Envío exitoso, comuníquese con el servicio de atención al cliente si necesita modificarlo.",
-    "text_2": "Una vez realizado el depósito, se activará la bonificación seleccionada. Si ya ha realizado un ingreso, no cambie la bonificación seleccionada hasta que el ingreso se acredite en el saldo de juego."
+    "text_2": "Una vez realizado el depósito, se activará la bonificación seleccionada. Si ya ha realizado un ingreso, no cambie la bonificación seleccionada hasta que el ingreso se acredite en el saldo de juego.",
+    "text_3": "Recompensas",
+    "text_4":'COMPROBAR',
   },
   "transaction_history": {
     "type": {
@@ -1201,7 +1203,7 @@ export const lang: langType = {
     "text_4": "Tiempo de pago: 5 minutos a 72 horas.",
     "other_text": "% costo,",
     "other_text_1": "Deposite en su cuenta",
-    "withdraw_btn_text": "Retirar",
+    "withdraw_btn_text": "Depositar",
     "withdraw_warning_text": "La cantidad de efectivo que se puede retirar excede el límite",
     "text_5": "cuota de servicio",
     "text_6": "cobrable",
@@ -1288,14 +1290,21 @@ export const lang: langType = {
       "grade_text_1": "Nivel 1",
       "grade_text_2": "Nivel 2",
       "grade_text_3": "Nivel 3",
-      "text_4": "Registrado",
-      "text_5": "Usuario",
-      "text_6": "Depósito",
-      "text_7": "Cantidad",
-      "text_8": "Comisión",
-      "text_9": "Apuesta",
-      "text_10": "Logro",
-      "text_11": "Remuneración",
+      "text_4": "Usuarios",
+      "text_5": "registrados",
+      "text_6": "depositada",
+      "text_7": "de comisión",
+      "text_8": "Cantidad",
+      "text_9": "de apuesta",
+      "text_10": "Logros y",
+      "text_11": "remuneraciones.",
+      "text_12": "Usuarios registrados",
+      "text_13": "Usuarios depositados",
+      "text_14": "Cantidad de comisión",
+      "text_15": "Cantidad depositada",
+      "text_16": "Cantidad de apuesta",
+      "text_17": "Cantidad de comisión",
+      "text_18": "Logros y remuneraciones",
       "summary_text": "Resumir",
       "receive_btn_text": "Recibir",
       "total_profit_text": "El beneficio total",
@@ -1304,17 +1313,17 @@ export const lang: langType = {
       "text_2": "Entonces, lo que tienes que hacer es mejorar tus habilidades de juego, pensar en cómo ganar el juego y compartirlo con todos para ayudar a más personas a ganar con tu método.",
       "text_3": "¡Queremos que todos los jugadores se diviertan en BETFIERY, tanto en términos de ganar apuestas como en el juego en sí!",
       "tab": {
-        "text_1": "Beneficio de hoy",
+        "text_1": "Beneficios de hoy",
         "text_2": "Ganancia esta semana",
-        "text_3": "Ganancia este mes",
+        "text_3": "Ganancias de este mes",
         "today": {
-          "profit_today_text": "Beneficio de hoy"
+          "profit_today_text": "Beneficios de hoy"
         },
         "week": {
-          "profit_this_week_text": "Ganancia esta semana"
+          "profit_this_week_text": "Ganancias de esta semana"
         },
         "month": {
-          "profit_this_month_text": "Ganancias este mes"
+          "profit_this_month_text": "Ganancias de este mes"
         },
         "profit_tab_text_1": "Sus ganancias estarán compuestas de dos partes, a saber, [Bono de invitación] [Comisión de apuestas].",
         "profit_tab_text_2": "Comisión de apuestas:",
@@ -1335,7 +1344,7 @@ export const lang: langType = {
   "bonus": {
     "title_text": "Saldo y bonificación de tu cuenta",
     "account_balance": "Saldo de la cuenta",
-    "total_text": "Todo",
+    "total_text": "Total",
     "bonus_money": "Bono",
     "withdraw_text": "Cantidad de retiro",
     "super_bonus_text": "% de bono de cena",
@@ -1358,7 +1367,7 @@ export const lang: langType = {
     "text_4": "Bono",
     "text_5": "Confiscado",
     "dialog": {
-      "title_text": "Exposición Hoy777.com",
+      "title_text": "Exposición HOY777.COM",
       "content_text_1": "¿Estás seguro de que deseas eliminar esta tarea?",
       "determine_btn_text": "Decidir",
       "cancel_btn_text": "Cancelar"
@@ -1367,7 +1376,7 @@ export const lang: langType = {
   "transaction": {
     "tab": {
       "game_history": "Historia del juego",
-      "transactions": "Comercio",
+      "transactions": "Transacciones ",
       "deposit": "Depósito",
       "withdrawal": "Retirar",
       "vip": "VIP",
@@ -1453,7 +1462,7 @@ export const lang: langType = {
       "minimum_duration_text": "Estancia mínima: 1 día",
       "confirm_text": "Confirmar",
       "dialog": {
-        "title_text": "Exposición Hoy777.com",
+        "title_text": "Exposición HOY777.COM",
         "content_text_1": "¿Estás seguro de que quieres congelar tu cuenta?",
         "content_text_2": "¿días?",
         "determine_btn_text": "Decidir",
@@ -1462,16 +1471,16 @@ export const lang: langType = {
     }
   },
   "refferal": {
-    "app_bar_title": "Cada usuario de recarga podrá obtener al menos $12 por cada invitación.",
+    "app_bar_title": "Cada usuario de recarga podrá obtener al menos {0}12 por cada invitación.",
     "earn_btn_text": "Ganar",
     "dialog": {
       "header": {
         "tabs_text1": "Recomendar a un amigo",
         "tabs_text2": "Promotion details and bonus withdrawal",
-        "title_text": "Recomienda a un amigo y gana 25 MXN inmediatamente",
+        "title_text": "Recomienda a un amigo y gana 25 {0} inmediatamente",
         "body_text": "Invita amigos y gana dinero.",
         "body_text_1": "usuarios ya han participado en la campaña Invita a Nuevos Usuarios y han ganado un total combinado de",
-        "body_text_2": "MXN en recompensas en efectivo en la plataforma",
+        "body_text_2": "{0} en recompensas en efectivo en la plataforma",
         "body_text_3": "Plataforma.",
         "body_text_4": "Así funcionan las invitaciones"
       },
@@ -1484,10 +1493,16 @@ export const lang: langType = {
     },
     "copy_success_text": "Copiar al portapapeles.",
     "description": {
-      "text_1": "Invita a tus amigos",
-      "text_2": "Invita a amigos que aún no estén en Blue.game. Recibirás 20,00 BRL por cada amigo que se registre y haga un depósito. No hay límite en el número de amigos que puedes invitar. Eso significa que tampoco hay límite para lo que puedes ganar.",
-      "term_text": "Términos:",
-      "text_3": "Lorem Ipsum es simplemente el texto ficticio de la industria tipográfica. Lorem Ipsum ha sido el texto ficticio estándar de la industria desde el siglo XVI, cuando un impresor desconocido tomó una galera de tipos y la desordenó para hacer un libro de muestras tipográficas. Ha sobrevivido no sólo a cinco siglos, sino también al salto a la composición electrónica, permaneciendo esencialmente inalterado. Se popularizó en los años 60 con la aparición de las hojas Letraset, que contenían pasajes de Lorem Ipsum, y más recientemente con programas de autoedición como Aldus PageMaker, que incluían versiones de Lorem Ipsum. Lorem Ipsum es simplemente el texto ficticio de la industria de la impresión y la composición tipográfica. Lorem Ipsum no es más que el texto ficticio de la industria de la impresión y la composición tipográfica. Lorem Ipsum ha sido el texto ficticio estándar de la industria desde el siglo XVI, cuando un impresor desconocido tomó una galera de tipos y la mezcló para hacer un libro de muestras tipográficas. Ha sobrevivido no sólo a cinco siglos, sino también al salto a la composición electrónica, permaneciendo esencialmente inalterado. Se popularizó en los años 60 con la aparición de las hojas Letraset, que contenían pasajes de Lorem Ipsum, y más recientemente con programas de autoedición como Aldus PageMaker, que incluían versiones de Lorem Ipsum. Lorem Ipsum no es más que el texto ficticio de la industria tipográfica.",
+      "text_1": "Invitar a nuevos usuarios y formar tu propio equipo de agentes.",
+      "text_2": "HOY777 ha lanzado un exclusivo programa de afiliados. Ahora no solo puedes disfrutar de la diversión de los juegos aquí, sino que también puedes ganar dinero fácilmente, sin riesgos ni inversión, ¡con un retorno de hasta el 1000%! Según las estadísticas, el ingreso mensual promedio de todos los agentes de HOY777 está entre $30,000 y $100,000MXN.",
+      "text_3":"¡Únete a nosotros ahora y gana tu primer ingreso en la vida!",
+      "term_text_1": "Modelo de ingresos.",
+      "term_text_2": "Tus ganancias = bonificación por invitación + comisión de apuestas de 3 niveles.",
+      "term_text_3": "Bonificación por invitación.",
+      "text_4": "Cada persona que se registre y deposite a través de tu enlace de invitación te generará una ganancia de $25. Si logras invitar exitosamente a 30 personas diariamente, al cabo de un mes, habrías acumulado ganancias por un total de =$25*30*30=$22500.",
+      "term_text_4": "Comisión de apuestas de nivel 3.",
+      "text_5": "En el modelo de ganancias multinivel, los usuarios invitados por sus miembros de nivel inferior también se convertirán en miembros de su equipo, y cada miembro del equipo generará ingresos constantes para usted. Según nuestras estadísticas, una vez que haya construido su equipo de agentes, los ingresos generados por las comisiones de apuestas de nivel 3 superarán con creces el bono de invitación, ¡y le proporcionarán ingresos permanentes!",
+      "text_6": "Haz clic aquí para obtener más información detallada sobre las comisiones de apuestas de tercer nivel. ",
       "back_btn_text": "ATRÁS"
     }
   },
@@ -1503,7 +1518,7 @@ export const lang: langType = {
     "reward_card_1": {
       "daily_free_bonus_text": "Bono diario gratis",
       "text_1": "Tiradas gratis*",
-      "text_2": "Se puede utilizar como"
+      "text_2": "Se pondrá retirar dentro de:"
     },
     "reward_card_2": {
       "vip_week_gift_text": "Regalos de la semana VIP",
@@ -1553,13 +1568,13 @@ export const lang: langType = {
       "text_1": "Mi misión VIP",
       "text_2": "Completamente",
       "text_3": "Hoy",
-      "text_4": "Gana 10 victorias en juegos intensivos para obtener $10 x 2,5 veces las ganancias",
+      "text_4": "Gana 10 victorias en juegos intensivos para obtener {0}10 x 2,5 veces las ganancias",
       "text_5": "Premio: Giro gratis*1",
       "text_6": "Comenzar",
       "text_7": "En curso...",
       "text_8": "Premio: Giro gratis*2",
       "text_9": "Premio: Giro gratis*3",
-      "text_10": "Bono VIP: R$ 3",
+      "text_10": "Bono VIP: {0} 3",
       "text_11": "Ir al juego",
       "text_12": "Recibir premio",
       "text_13": "Puedes empezar de nuevo mañana",
@@ -1593,17 +1608,17 @@ export const lang: langType = {
     },
     "footer_body": {
       "text_1": "Grupo vip",
-      "text_2": "Únase a nuestro grupo VIP para obtener acceso instantáneo a más eventos y bonificaciones",
+      "text_2": "Unete a nuestro grupo VIP para obtener acceso instantáneo a más eventos y bonificaciones",
       "text_3": "Únete ahora"
     },
     "login_bonus": {
       "title_text": "Bono de inicio de sesión",
-      "day_1_text": "Primer día",
-      "day_2_text": "El día siguiente",
-      "day_3_text": "El tercer día",
-      "day_4_text": "El cuarto dia",
-      "day_5_text": "Quinto día",
-      "day_6_text": "El sexto dia",
+      "day_1_text": "Día 1",
+      "day_2_text": "Día 2",
+      "day_3_text": "Día 3",
+      "day_4_text": "Día 4",
+      "day_5_text": "Día 5",
+      "day_6_text": "Día 6",
       "day_7_text": "Día 7",
       "day_8_text": "Día ∞",
       "footer_text_1": "Sorry, your current ",
@@ -1648,28 +1663,30 @@ export const lang: langType = {
     },
     "vip_level_info": {
       "progress": {
-        "text_1": "Obtén recompensas cada vez que llenes la barra de progreso. ¡La actualización te permite obtener recompensas mejores y mayores!",
+        "text_1": "Cada vez que completes la barra de progreso, recibes una recompensa. ¡Mejorar te permite acceder a recompensas aún más altas!",
         "text_2": "Recompensas disponibles",
-        "text_3": "Declaración",
+        "text_3": "Reclamar",
         "text_4": "Ver registros",
         "text_5": "Debes haber realizado un depósito o haber recomendado a un amigo dentro de los últimos 30 días para recibir el bono.",
         "text_6": "Referencia",
         "text_7": "Depósito",
         "text_8": "Grupo vip",
-        "text_9": "Únase a nuestro grupo VIP para obtener acceso instantáneo a más eventos y bonificaciones",
+        "text_9": "Unete a nuestro grupo VIP para obtener acceso instantáneo a más eventos y bonificaciones",
         "text_10": "Únete ahora",
-        "text_11": "¿Qué es la \"recompensa por ascenso de rango\"?",
+        "text_11": "¿Por qué debería convertirme en VIP en Hoy777? ",
         "text_12": "Depósito",
-        "text_13": "apuesta",
-        "text_14": "¿Qué es la \"recompensa por ascenso de rango\"? ¿Qué es la \"recompensa por ascenso de rango\"? ¿Qué es la \"recompensa por ascenso de rango\"? ¿Qué es la \"recompensa por ascenso de rango\"? ¿Qué es la \"recompensa por ascenso de rango\"?",
-        "text_15": "¿Qué es un \"Bono Semanal\"?",
-        "text_16": "¿Qué es un \"Bono Semanal\"? ¿Qué es un \"Bono Semanal\"? ¿Qué es un \"Bono Semanal\"? ¿Qué es un \"Bono Semanal\"? ¿Qué es un \"Bono Semanal\"?"
+        "text_13": "Apuesta",
+        "text_14": "En Hoy777 apreciamos de verdad a nuestros VIPs y creemos que se merecen más. Por eso obtendrás una de las recompensas VIP más altas del mercado. Bonos semanales, personales y muchas más ventajas te esperan. Sigue conquistando la plataforma, conviértete en VIP y consigue tus increíbles recompensas. ",
+        "text_15": "Niveles y rangos ",
+        "text_16": "A medida que juegues y cambies, ganarás experiencia. Cuando ganes suficiente experiencia, pasarás al siguiente nivel. Obtén recompensas cada vez que llenes la barra de progreso. Tienes que mantener una cierta cantidad de recargas y apuestas en un plazo de 7 días para que el nivel VIP no baje.",
+        "text_17": "Reciba bonificaciones gratuitas todos los miércoles y sea el primero en conocerlas.",
+        "text_18": "Los privilegios VIP sólo están disponibles para los jugadores activos, si un jugador no es un jugador activo será degradado y no podrá recibir sus recompensas VIP originales. El depósito semanal mínimo y el comportamiento de apuestas basado en su nivel VIP actual protegerán eficazmente su nivel VIP"
       },
       "bonus": {
         "text_1": "Devolución de dinero",
-        "text_2": "Declaración",
+        "text_2": "Reclamar",
         "text_3": "Dia del miembro",
-        "text_4": "Se puede utilizar como",
+        "text_4": "Se pondrá retirar dentro de:",
         "text_5": "Regalos de la semana VIP",
         "text_6": "Regalo mensual VIP",
         "text_7": "Bonificación de nivel VIP"
@@ -1690,46 +1707,46 @@ export const lang: langType = {
         "week": "Recompensas semanales de nivel Bronce",
         "moon": "Recompensas mensuales de nivel Bronce",
         "cash": "Premio en efectivo de medalla de bronce para los niveles 1 ~ 24",
-        "mosaic": "Reembolso de código (0.2%)"
+        "mosaic": "Proporción de reembolso (0.2%)"
       },
       "silver": {
         "week": "Recompensas semanales de nivel Plata",
         "moon": "Recompensas mensuales de plata",
         "cash": "Premio en efectivo de plata de nivel 25 ~ 49",
-        "mosaic": "Reembolso de código (0.3%)"
+        "mosaic": "Proporción de reembolso (0.3%)"
       },
       "gold": {
         "week": "Recompensas semanales de nivel oro",
         "moon": "Recompensas mensuales de nivel oro",
         "cash": "Recompensas en efectivo de oro para los niveles 50 ~ 74",
-        "mosaic": "Reembolso de código (0.4%)"
+        "mosaic": "Proporción de reembolso (0.4%)"
       },
       "platinum": {
         "week": "Recompensas semanales de nivel Platino",
         "moon": "Recompensas mensuales de nivel Platino",
         "cash": "Recompensas en efectivo de platino para los niveles 75 ~ 99",
-        "mosaic": "Reembolso de codificación (0.5%)",
+        "mosaic": "Proporción de reembolso (0.5%)",
         "withdraw": "Descuento en la tarifa de retiro (1.0%)"
       },
       "diamonds": {
         "week": "Recompensas semanales de diamantes",
         "moon": "Recompensas mensuales de nivel Diamante",
         "cash": "Premio en efectivo de diamantes de nivel 100 ~ 149",
-        "mosaic": "Reembolso de código (0.6%)",
+        "mosaic": "Proporción de reembolso (0.6%)",
         "withdraw": "Descuento en la tarifa de retiro (1.0%), "
       },
       "yellow_diamond": {
         "week": "Recompensas semanales del ranking Diamante Amarillo",
         "moon": "Recompensas mensuales de nivel diamante amarillo",
         "cash": "Premio en efectivo Diamante Amarillo Nivel 150~199",
-        "mosaic": "Reembolso de código (0.7%)",
+        "mosaic": "Proporción de reembolso (0.7%)",
         "withdraw": "Descuento en la tarifa de retiro (1.5%)"
       },
       "blue_diamond": {
         "week": "Recompensas semanales del ranking Diamante Azul",
         "moon": "Recompensas mensuales del nivel Diamante Azul",
         "cash": "Premio en efectivo de diamante azul para nivel 200 y superior",
-        "mosaic": "Reembolso de código (0.8%)",
+        "mosaic": "Proporción de reembolso (0.8%)",
         "withdraw": "Descuento en la tarifa de retiro (1.5%)"
       }
     }
@@ -1761,7 +1778,7 @@ export const lang: langType = {
     "text_2": "Ver todos los bonos",
     "text_3": "Solicitar un código promocional",
     "text_4": "Ingrese el código promocional que desee",
-    "text_5": "Declaración",
+    "text_5": "Reclamar",
     "text_6": "Bono de logro",
     "text_7": "Añadir",
     "text_8": "Devolución de dinero",
@@ -1792,9 +1809,9 @@ export const lang: langType = {
     "text_7": "No mostrar de nuevo"
   },
   "agent": {
-    "text_1": "Mi recomendación",
+    "text_1": "Mis recomendaciones",
     "text_2": "Preguntas frecuentes",
-    "text_3": "Ganancia",
+    "text_3": "Ganancias",
     "text_4": "Informe",
     "text_5": "Nivel",
     "text_6": "Informe",
@@ -1848,7 +1865,7 @@ export const lang: langType = {
     "text_1": "Todas las actividades",
     "text_2": "Eventos VIP",
     "text_3": "Promociones",
-    "text_4": "Bono de depósito$",
+    "text_4": "Bono de depósito{0}",
     "text_5": "- Cada día -",
     "text_6": "Comprobar los detalles",
     "text_7": "Primer deposito",
@@ -1857,7 +1874,7 @@ export const lang: langType = {
     "text_10": "Completar",
     "text_11": "Ahora",
     "text_12": "Obtenga inicio de sesión diario",
-    "text_13": "Bono$",
+    "text_13": "Bono{0}",
     "text_14": "Atrás",
     "text_15": "Bono de depósito diario del 10% hasta",
     "text_16": "HOY777 se compromete a brindarles a nuestros clientes una experiencia fluida y sin complicaciones, con todas las transacciones de los jugadores completadas en 3 minutos. Brindamos servicios de depósito y retiro seguros, confiables y rápidos las 24 horas, los 7 días de la semana.",
@@ -1872,7 +1889,7 @@ export const lang: langType = {
     "text_25": "Una vez realizado el depósito (siempre que haya seleccionado el \"Bono de depósito diario del 10%\" durante el período de depósito), recibirá inmediata y automáticamente el 10% del monto del depósito, hasta",
     "text_26": "Como beneficio adicional.",
     "text_27": "En este evento se puede participar 3 veces al día.",
-    "text_28": "Esto significa que por cada R$100 que deposites, recibirás R$10 adicionales en efectivo de bonificación, hasta",
+    "text_28": "Esto significa que por cada {0}100 que deposites, recibirás {0}10 adicionales en efectivo de bonificación, hasta",
     "text_29": "Estándar",
     "text_30": "Términos de bonificación",
     "text_31": "Aplica a el bono de bienvenida.",
@@ -1938,5 +1955,27 @@ export const lang: langType = {
     "text_1": "Tiene una orden abierta",
     "text_2": "cuenta atrás ",
     "text_3": "continuar"
+  },
+  "activity_app": {
+    "text_1": "Recibir recompensas por descargar aplicaciones",
+    "text_2": "DISPONIBLE PARA",
+    "text_3": "Recompensa de inicio de sesión de la aplicación",
+    "text_4": "¡Recompensa gratuita!",
+    "text_5": "Tiempo de reclamación",
+    "text_6": "Iniciar sesión en la aplicación",
+    "text_7": "Descargar la aplicación para obtener",
+    "text_8": "Descargar la aplicación"
+  },
+  "static_activity": {
+    "text_1": "ANUNCIO",
+    "text_2": "Bienvenido a HOY777.COM",
+    "text_3": "¡Bonificación de hasta {0} 10,000 para nuevos usuarios en su primer depósito!",
+    "text_4": "Bonificación diaria de hasta {0} 3,000 en el primer depósito cada día.",
+    "text_5": "¡Recompensa por depósito en HOY777! ¡Después de depositar, puede recibir un bono gratuito todos los días durante 7 días seguidos!",
+    "text_6": "VIP Bronce: ¡Total de bonificaciones recibidas {0} 10!",
+    "text_7": "VIP Plata: ¡Total de bonificaciones recibidas {0} 27!",
+    "text_8": "VIP Oro: ¡Total de bonificaciones recibidas {0} 44!",
+    "text_9": "¡Cuanto más alto sea el nivel VIP, mayores serán las bonificaciones!",
+    "text_10": "Retiros rápidos las 24 horas, los 7 días de la semana a SPEI."
   }
 };

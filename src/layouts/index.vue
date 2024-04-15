@@ -18,6 +18,7 @@ import MobileMenuLayout from "./MobileMenu.vue";
 
 import { useDisplay } from "vuetify";
 import { refferalStore } from "@/store/refferal";
+import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
 
@@ -40,12 +41,19 @@ const LiveChat = defineAsyncComponent(() => import("./live_chat/index.vue"));
 
 const route = useRoute();
 const { width } = useDisplay();
-const isScroll = ref(false);
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
   return getRefferalAppBarShow.value;
 });
+
+// 横屏遮罩层监听操作
+const isGameScroll = computed(() => {
+  const { getIsScroll } = storeToRefs(gameStore());
+  return getIsScroll.value;
+});
+
+const isScroll = ref(false)
 
 const agentNavBarToggle = computed(() => {});
 
@@ -65,18 +73,18 @@ const bonusDashboardDialogShow = computed(() => {
 
 const judgeScreen = () => {
   if (window.orientation == 90 || window.orientation == -90) {
-    isScroll.value = true;
+    isScroll.value = true
   }
   window.addEventListener(
     "onorientationchange" in window ? "orientationchange" : "resize",
     function () {
       if (window.orientation === 180 || window.orientation === 0) {
         setTimeout(() => {
-          isScroll.value = false;
+          isScroll.value = false
         }, 200);
       }
       if (window.orientation === 90 || window.orientation === -90) {
-        isScroll.value = true;
+        isScroll.value = true
       }
     },
     false
@@ -93,7 +101,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <screen v-if="isScroll||mobileWidth > 1024" />
+  <screen v-if="(isScroll || mobileWidth > 1024) && isGameScroll" />
   <v-app v-else :class="fixPositionShow ? 'appbar-position-fix' : ''">
     <RefferalLayout v-if="refferalAppBarShow" />
     <AppBarLayout />

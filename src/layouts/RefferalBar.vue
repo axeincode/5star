@@ -1,11 +1,20 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { appBarStore } from "@/store/appBar";
 import { refferalStore } from "@/store/refferal";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
+import { activityAppStore } from '@/store/activityApp';
+const { setAppConfirmDialogShow, downloadAppAcquisition, runningSystem } = activityAppStore();
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
+import { toFormatNum } from '@/utils/numFormat';
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -25,10 +34,24 @@ const headerBlurEffectShow = computed(() => {
   return getHeaderBlurEffectShow.value;
 });
 
+const activityAppBonus = computed(() => {
+  const { getActivityBonus } = storeToRefs(activityAppStore());
+  return getActivityBonus.value;
+});
+
 const openRefferalDialogShow = () => {
   setOverlayScrimShow(false);
   setRefferalDialogShow(true);
 };
+
+// 获取下载app活动信息
+downloadAppAcquisition()
+
+onMounted(() => {
+  // 获取当前运行的是否浏览器
+  runningSystem()
+})
+
 </script>
 
 <template>
@@ -42,7 +65,7 @@ const openRefferalDialogShow = () => {
   >
     <v-toolbar-title class="d-flex align-center justify-center">
       <p class="white" :class="mobileWidth < 600 ? 'text-500-10 wrap' : 'text-700-16'">
-        {{ t("refferal.app_bar_title") }}
+        {{ t('activity_app.text_7') }} {{ platformCurrency }}{{ toFormatNum(activityAppBonus) }}
       </p>
       <img
         src="@/assets/public/image/img_public_09.png"
@@ -53,9 +76,9 @@ const openRefferalDialogShow = () => {
         rounded
         :height="mobileWidth < 600 ? '24px' : '28px'"
         class="text-none ml-3 earn-btn-bg"
-        @click="openRefferalDialogShow"
+        @click="setAppConfirmDialogShow(true)"
       >
-        {{ t("refferal.earn_btn_text") }}
+        EARM
       </v-btn>
     </v-toolbar-title>
     <v-btn
@@ -87,7 +110,7 @@ const openRefferalDialogShow = () => {
 
 <style lang="scss">
 .refferal-app-bar-background {
-  background: linear-gradient(90deg, #3F86DA 0%, #33D785 47.8%, #FFEA2F 100%) !important;
+  background: url(@/assets/activity_app/activity-app-header.png) !important;
 
   .v-toolbar__content {
     height: 48px;
@@ -118,13 +141,14 @@ const openRefferalDialogShow = () => {
   }
 
   .earn-btn-bg {
-    background: #1D2027 !important;
+    background: #F9BC01 !important;
+    border-radius: 4px;
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
 
     .v-btn__content {
       font-weight: 700;
       font-size: 16px;
-      color: #ffffff;
+      color: #000000;
     }
 
     @media (max-width: 600px) {

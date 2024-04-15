@@ -103,16 +103,21 @@ const handleEnd = (event: MouseEvent | TouchEvent) => {
   draggableButton.value.style.opacity = "0.5"; 
 };
 
+// 点击关闭按钮
+const handleClose=()=>{
+  emit('close');
+}
+
 onMounted(() => {
   // 添加鼠标按下/触摸开始事件监听器
-  draggableButton.value?.addEventListener('mousedown', handleStart);
-  draggableButton.value?.addEventListener('touchstart', handleStart);
+  // draggableButton.value?.addEventListener('mousedown', handleStart);
+  // draggableButton.value?.addEventListener('touchstart', handleStart);
 });
 
 onUnmounted(() => {
   // 移除事件监听器
-  draggableButton.value?.removeEventListener('mousedown', handleStart);
-  draggableButton.value?.removeEventListener('touchstart', handleStart);
+  // draggableButton.value?.removeEventListener('mousedown', handleStart);
+  // draggableButton.value?.removeEventListener('touchstart', handleStart);
 });
 
 // 监听窗口大小改变事件，重新计算按钮位置限制
@@ -130,7 +135,7 @@ window.addEventListener('resize', () => {
 
 <template>
   <!-- 拖拽按钮 -->
-  <button ref="draggableButton" class="draggable-button"></button>
+  <button ref="draggableButton" class="draggable-button" @click="handleClose"></button>
 </template>
 
 <style scoped lang="scss">

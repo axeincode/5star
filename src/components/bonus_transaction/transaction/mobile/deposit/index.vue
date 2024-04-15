@@ -12,6 +12,7 @@ import * as clipboard from "clipboard-polyfill";
 import { useToast } from "vue-toastification";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import { toFormatNum } from '@/utils/numFormat'
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -144,6 +145,8 @@ const handlePrev = async (page_no: number) => {
 }
 
 watch(depositHistoryItem, (value) => {
+  console.log(value, 'depositHistoryItem-watch');
+  
   paginationLength.value = moreDepositHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
 }, { deep: true, immediate: true })
 
@@ -181,6 +184,11 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
   })
 
   return fomarttedAmount
+}
+
+// 有值则转化，没值显示空
+const getFormatAmount = (amount) => {
+  return amount ? `${platformCurrency.value}${toFormatNum(Number(amount))}` : ''
 }
 </script>
 <template>
@@ -299,7 +307,7 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
                 min-width: 130px;
               "
             >
-              {{ formatCurrency(Number(item.amount), item.currency) }}
+             {{ getFormatAmount(item.amount) }}
             </td>
             <td
               class="text-400-12 text-center"

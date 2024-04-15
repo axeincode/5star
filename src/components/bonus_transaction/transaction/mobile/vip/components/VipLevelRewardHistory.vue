@@ -41,7 +41,41 @@ const vipLevels = computed(() => {
 const vipLevelText = (value: number) => {
     for (let i in vipLevels.value) {
         if (vipLevels.value[i].level === value) {
-            return vipLevels.value[i].rank_name;
+             // 英文西班牙判断
+      if (localStorage.getItem("lang") === "en") {
+        return vipLevels.value[i].rank_name;
+      } else {
+        let levelText = "Hierro negro";
+        switch (vipLevels.value[i].rank_name) {
+          case "Iron":
+            levelText = "Hierro negro";
+            break;
+          case "Bronze":
+            levelText = "Bronce";
+            break;
+          case "Silver":
+            levelText = "Plata";
+            break;
+          case "Gold":
+            levelText = "Oro";
+            break;
+          case "Platinum":
+            levelText = "Platino";
+            break;
+          case "Diamond":
+            levelText = "Diamante";
+            break;
+          case "Yellow Diamond":
+            levelText = "Diamante amarillo";
+            break;
+          case "Blue Diamond":
+            levelText = "Diamante azul";
+            break;
+          default:
+            break;
+        }
+        return levelText;
+      }
         }
     }
 }
@@ -68,30 +102,30 @@ const fixPositionShow = computed(() => {
       <tr>
         <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px">
           <div class="forms-table-border0">
-            <div style="width: 50px; margin-left: 16px; margin-right: 16px">
-              {{ t("transaction.vip.text_5") }}
-            </div>
+            <div
+              style="width: 50px; margin-left: 16px; margin-right: 16px"
+            >{{ t("transaction.vip.text_5") }}</div>
           </div>
         </th>
         <th class="text-700-12 black text-center">
           <div class="forms-table-border1">
-            <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-              {{ t("transaction.vip.text_10") }}
-            </div>
+            <div
+              style="width: 100px; margin-left: 16px; margin-right: 16px"
+            >{{ t("transaction.vip.text_10") }}</div>
           </div>
         </th>
         <th class="text-700-12 black text-center">
           <div class="forms-table-border1">
-            <div style="width: 90px; margin-left: 20px; margin-right: 20px">
-              {{ t("transaction.vip.text_11") }}
-            </div>
+            <div
+              style="width: 90px; margin-left: 20px; margin-right: 20px"
+            >{{ t("transaction.vip.text_11") }}</div>
           </div>
         </th>
         <th class="text-700-12 black text-center">
           <div class="forms-table-border2">
-            <div style="width: 100px; margin-left: 16px; margin-right: 16px">
-              {{ t("transaction.vip.text_9") }}
-            </div>
+            <div
+              style="width: 100px; margin-left: 16px; margin-right: 16px"
+            >{{ t("transaction.vip.text_9") }}</div>
           </div>
         </th>
       </tr>
@@ -99,77 +133,53 @@ const fixPositionShow = computed(() => {
     <tbody class="forms-table-body">
       <template v-if="currentList.length == 0">
         <tr v-for="(item, index) in tempHistoryList" :key="index">
-          <td
-            class="text-400-12"
-            style=""
-          ></td>
-          <td
-            class="text-400-12"
-            style="
+          <td class="text-400-12" style></td>
+          <td class="text-400-12" style="
               min-width: 60px;
-            "
-          ></td>
-          <td
-            class="text-400-12"
-            style=""
-          ></td>
-          <td
-            class="text-400-12"
-            style="
+            "></td>
+          <td class="text-400-12" style></td>
+          <td class="text-400-12" style="
               min-width: 130px;
-            "
-          ></td>
+            "></td>
         </tr>
       </template>
       <template v-else>
         <tr v-for="(item, index) in currentList" :key="index">
-          <td
-            class="text-400-12"
-            style=""
-          >
+          <td class="text-400-12" style>
             {{
-              item.created_at == ""
-                ? ""
-                : moment(Number(item.created_at) * 1000).format("YYYY-MM-DD HH:mm:ss")
+            item.created_at == ""
+            ? ""
+            : moment(Number(item.created_at) * 1000).format("YYYY-MM-DD HH:mm:ss")
             }}
           </td>
-          <td
-            class="text-400-12 color-01983A"
-            style="
+          <td class="text-400-12 color-01983A" style="
               min-width: 60px;
-            "
-          >
+            ">
             {{
-              item.amount == "" ? "" : platformCurrency + Number(item.amount).toFixed(2)
+            item.amount == "" ? "" : platformCurrency + Number(item.amount).toFixed(2)
             }}
           </td>
-          <td
-            class="text-400-12"
-            style="
+          <td class="text-400-12" style="
               min-width: 130px;
-            "
-          >
+            ">
             {{
-              item.type == ""
-                ? ""
-                : Number(item.type) == 2
-                ? `${vipLevelText(Number(item.vip_level))}`
-                : `VIP ${item.vip_level}`
+            item.type == ""
+            ? ""
+            : Number(item.type) == 2
+            ? `${vipLevelText(Number(item.vip_level))}`
+            : `VIP ${item.vip_level}`
             }}
           </td>
-          <td
-            class="text-400-12"
-            style="
+          <td class="text-400-12" style="
               min-width: 130px;
-            "
-          >
+            ">
             <div>
               {{
-                item.type == ""
-                  ? ""
-                  : Number(item.type) == 2
-                  ? "Rank Bonus"
-                  : "Level Bonus"
+              item.type == ""
+              ? ""
+              : Number(item.type) == 2
+              ? "Rank Bonus"
+              : "Level Bonus"
               }}
             </div>
           </td>

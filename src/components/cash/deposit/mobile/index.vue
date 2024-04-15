@@ -22,6 +22,7 @@ import store from '@/store';
 import { load } from 'webfontloader';
 import { useToast } from "vue-toastification";
 import { toFormatNum } from '@/utils/numFormat';
+import { useOpenUrl } from '@/plugins/openPage'
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -45,6 +46,7 @@ const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
 const { setPixInfoToggle } = depositStore();
 const { dispatchUserProfile } = authStore();
+const { openUrl } = useOpenUrl()
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
@@ -416,7 +418,8 @@ const handleDepositSubmit = async () => {
       }, 10)
       return;
     }
-    window.open(depositSubmit.value.url, '_blank');
+    // window.open(depositSubmit.value.url, '_blank');
+    openUrl(depositSubmit.value.url, true)
     const toast = useToast();
     toast.success("Successfully submitted", {
       timeout: 3000,

@@ -20,9 +20,15 @@ export default function initProgress(router: {
 }) {
     router.afterEach(cancelTopProgress);
     router.beforeEach((to, from, next) => {
+        let htmlElement: any = document.querySelector('html')
         if (to.name !== 'Sports') {
+            // 退出游戏去掉overflow属性
+            htmlElement.style.removeProperty('overflow')
             const { closeKill } = gameStore();
             closeKill();
+        } else {
+            // 进入游戏设置overflow属性
+            htmlElement.style.overflow = "visible"
         }
         tryInitProgress();
         return next();

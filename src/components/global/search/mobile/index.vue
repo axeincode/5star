@@ -130,7 +130,12 @@ const handleEnterGame = async (id: number, name: string) => {
   router.push(`/game/${id}/${replaceName}`);
 };
 
-const handleSearchInput = async () => {
+const handleSearchInput = async (event) => {
+  // 不是回车键不触发  event.keyCode判断是不是软键盘触发
+  if(event.keyCode !== undefined && event.keyCode === 13) {
+    //关闭手机软键盘
+    document.activeElement.blur();
+  }
   if (searchText.value.length >= 3) {
     searchLoading.value = true;
     await dispatchGameSearch(
@@ -289,6 +294,7 @@ onMounted(async () => {
   > -->
     <div style="position: absolute; top: 50px; width: 100dvw">
       <div class="pt-3">
+      <form action="javascript:return true;" @submit.prevent>
         <v-text-field
           ref="searchRef"
           :placeholder="t('home.search')"
@@ -302,8 +308,10 @@ onMounted(async () => {
           color="#7782AA"
           :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
           @input="handleSearchInput"
+          @keypress="handleSearchInput"
           v-model="searchText"
         />
+      </form>
       </div>
       <div
         class="m-search-loading-container relative pt-8"

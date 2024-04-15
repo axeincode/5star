@@ -22,13 +22,13 @@ const vipLevels = computed(() => {
 const vipCardInfo = [
     {
         icon: img_vipemblem_1,
-        title: vipLevels.value[0].rank_name,
+        title: t('vip.vip_level_content.text_1'),
         vip: '(VIP 0)',
         info: []
     },
     {
         icon: img_vipemblem_1_24,
-        title: vipLevels.value[1].rank_name,
+        title: t('vip.vip_level_content.text_2'),
         vip: '(VIP1-24)',
         info: [
             t('vip.vip_level_info.bronze.week'), 
@@ -39,7 +39,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_25_49,
-        title: vipLevels.value[25].rank_name,
+        title: t('vip.vip_level_content.text_3'),
         vip: '(VIP25-49)',
         info: [
             t('vip.vip_level_info.silver.week'), 
@@ -50,7 +50,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_50_74,
-        title: vipLevels.value[50].rank_name,
+        title: t('vip.vip_level_content.text_4'),
         vip: '(VIP50-75)',
         info: [
             t('vip.vip_level_info.gold.week'), 
@@ -61,7 +61,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_75_99,
-        title: vipLevels.value[76].rank_name,
+        title: t('vip.vip_level_content.text_5'),
         vip: '(VIP76-99)',
         info: [
             t('vip.vip_level_info.platinum.week'), 
@@ -73,7 +73,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_100_149,
-        title: vipLevels.value[100].rank_name,
+        title: t('vip.vip_level_content.text_6'),
         vip: '(VIP100-149)',
         info: [
             t('vip.vip_level_info.diamonds.week'), 
@@ -85,7 +85,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_159_199,
-        title: vipLevels.value[159].rank_name,
+        title: t('vip.vip_level_content.text_7'),
         vip: '(VIP150-199)',
         info: [
             t('vip.vip_level_info.yellow_diamond.week'), 
@@ -97,7 +97,7 @@ const vipCardInfo = [
     },
     {
         icon: img_vipemblem_200,
-        title: vipLevels.value[200].rank_name,
+        title: t('vip.vip_level_content.text_8'),
         vip: '(VIP200)',
         info: [
             t('vip.vip_level_info.blue_diamond.week'), 

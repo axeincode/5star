@@ -2,7 +2,6 @@ import router from '@/router';
 import { authStore } from "@/store/auth";
 import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
-import { log } from 'console';
 
 export async function getErrorInfoCollector(logMas: string) {
   const { getUserInfo } = authStore() // 获取用户信息

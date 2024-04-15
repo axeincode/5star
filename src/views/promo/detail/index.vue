@@ -7,6 +7,7 @@ import { promoStore } from "@/store/promo";
 import { storeToRefs } from "pinia";
 import { type PromoListData } from "@/interface/promo";
 import { authStore } from "@/store/auth";
+import { type GetUserInfo } from "@/interface/user";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 // import img_hp_4 from "@/assets/promo/image/img_hp_4.png";
@@ -50,6 +51,11 @@ const depositDialogShow = () => {
   setDepositDialogToggle(true);
   setCashDialogToggle(true);
 };
+
+const userInfo = computed((): GetUserInfo => {
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value;
+})
 
 const promoList = computed(() => {
   const { getUserActivityList } = storeToRefs(promoStore());
@@ -214,6 +220,7 @@ const i18nButtonText = (eng: string) => {
               width="-webkit-fill-available"
               height="55px"
               @click="handleContent"
+              :disabled="userInfo.is_first_deposit&&selectedItem.name=='首充活动'"
             >
               {{ i18nButtonText(selectedItem.button_text) }}
             </v-btn>

@@ -17,6 +17,23 @@ import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 
+const props = defineProps({
+  modelValue: {
+    type: Boolean
+  }
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const modelValueNew = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit("update:modelValue", val);
+  }
+});
+
 const { t } = useI18n();
 const { setDepositConfirmDialogToggle } = depositStore();
 const { setTimerValue } = depositStore();
@@ -26,7 +43,7 @@ const timer_value = ref<number>(3600);
 const mxnPaymentChannel = ref<any>({
   spei: icon_public_106,
   oxxo: icon_public_105,
-  codi: icon_public_107,
+  codi: icon_public_107
 });
 
 const depositConfirmItem = ref<any>({});
@@ -78,10 +95,10 @@ const depositInfoCopy = (content: string) => {
         hideProgressBar: true,
         closeButton: "button",
         icon: SuccessIcon,
-        rtl: false,
+        rtl: false
       });
     },
-    (error) => {
+    error => {
       console.error("Could not copy text: ", error);
     }
   );
@@ -116,114 +133,125 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="m-deposit-confirm-dialog">
-    <div class="m-deposit-confirm-dailog-header">
-      <v-btn
-        class="m-close-button"
-        icon="true"
-        width="24"
-        height="24"
-        @click="closeDepositConfirmDialog"
-      >
-        <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
-      </v-btn>
-    </div>
-    <div class="m-deposit-confirm-dailog-body px-8 py-2">
-      <img :src="mxnPaymentChannel[channnelName]" width="63" />
-      <div class="m-order-amount text-center mt-2 pa-2">
-        <div class="text-700-14 white">{{ t("deposit_confirm.text_1") }}</div>
-        <div class="text-900-28 yellow">$ {{ depositConfirmItem.deposit_amount }}</div>
-        <div class="text-700-10 orange">
-          {{ t("deposit_confirm.text_2") }}&nbsp;
-          {{ timer.minutes.value.toString().padStart(2, "0") }}:
-          {{ timer.seconds.value.toString().padStart(2, "0") }}
+  <v-dialog
+    v-model="modelValueNew"
+    class="m-deposit-cofirm-dialog"
+    :width="''"
+    :fullscreen="true"
+    :scrim="false"
+    persistent
+    :transition="'dialog-top-transition'"
+  >
+    <div class="m-deposit-confirm-dialog">
+      <!-- 关闭 -->
+      <div class="m-deposit-confirm-dailog-header">
+        <v-btn
+          class="m-close-button"
+          icon="true"
+          width="24"
+          height="24"
+          @click="closeDepositConfirmDialog"
+        >
+          <img src="@/assets/public/svg/icon_public_52.svg" width="18" />
+        </v-btn>
+      </div>
+      <!-- 内容 -->
+      <div class="m-deposit-confirm-dailog-body px-8 py-2">
+        <img :src="mxnPaymentChannel[channnelName]" width="63" />
+        <div class="m-order-amount text-center mt-2 pa-2">
+          <div class="text-700-14 white">{{ t("deposit_confirm.text_1") }}</div>
+          <div class="text-900-28 yellow">$ {{ depositConfirmItem.deposit_amount }}</div>
+          <div class="text-700-10 orange">
+            {{ t("deposit_confirm.text_2") }}&nbsp;
+            {{ timer.minutes.value.toString().padStart(2, "0") }}:
+            {{ timer.seconds.value.toString().padStart(2, "0") }}
+          </div>
+        </div>
+        <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_3") }}</div>
+        <div class="m-provider-body py-2 px-4">
+          <div class="text-700-12 white">{{ depositConfirmItem.bank_name }}</div>
+          <v-btn
+            class="m-copy-button"
+            icon="true"
+            width="24"
+            height="24"
+            @click="depositInfoCopy(depositConfirmItem.bank_name)"
+          >
+            <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
+          </v-btn>
+        </div>
+        <div class="text-400-12 gray my-2 ml-4 d-flex align-center">
+          {{ t("deposit_confirm.text_4") }}
+          <div class="text_400-10 green" style="margin-left: auto">{{ t("deposit_confirm.text_5") }}</div>
+        </div>
+        <div class="m-provider-body py-2 px-4">
+          <div class="text-700-12 white">{{ depositConfirmItem.account_number }}</div>
+          <v-btn
+            class="m-copy-button"
+            icon="true"
+            width="24"
+            height="24"
+            @click="depositInfoCopy(depositConfirmItem.account_number)"
+          >
+            <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
+          </v-btn>
+        </div>
+        <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_6") }}</div>
+        <div class="m-provider-body py-2 px-4">
+          <div class="text-700-12 white">{{ depositConfirmItem.account_name }}</div>
+          <v-btn
+            class="m-copy-button"
+            icon="true"
+            width="24"
+            height="24"
+            @click="depositInfoCopy(depositConfirmItem.account_name)"
+          >
+            <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
+          </v-btn>
+        </div>
+        <div class="text-400-12 blue my-2 d-flex align-center">
+          <img :src="icon_public_104" />&nbsp;
+          <div style="text-decoration: underline">{{ t("deposit_confirm.text_7") }}</div>
+        </div>
+        <div class="text-400-12 gray my-2">{{ t("deposit_confirm.text_8") }}</div>
+        <div class="text-400-10 gray">{{ t("deposit_confirm.text_9") }}</div>
+        <div class="text-400-10 gray">
+          {{ t("deposit_confirm.text_10") }}
+          <span
+            class="text-700-10 yellow"
+          >${{ depositConfirmItem.deposit_amount }}</span>
+        </div>
+        <div class="text-400-10 gray">{{ t("deposit_confirm.text_11") }}</div>
+        <v-btn
+          class="m-transfer-complete mt-4 mb-16"
+          width="-webkit-fill-available"
+          height="48"
+          @click="closeDepositConfirmDialog"
+        >{{ t("deposit_confirm.text_12") }}</v-btn>
+      </div>
+      <!-- 底部 icon显示栏 -->
+      <div class="m-deposit-confirm-dailog-footer d-flex align-center px-10">
+        <div class="text-400-12 gray">{{ t("deposit_confirm.text_13") }}</div>
+        <div class="d-flex align-center" style="margin-left: auto">
+          <img :src="icon_public_110" class="mr-3" />
+          <img :src="icon_public_111" class="mr-3" />
+          <img :src="icon_public_112" class="mr-3" />
+          <img :src="icon_public_113" />
         </div>
       </div>
-      <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_3") }}</div>
-      <div class="m-provider-body py-2 px-4">
-        <div class="text-700-12 white">{{ depositConfirmItem.bank_name }}</div>
-        <v-btn
-          class="m-copy-button"
-          icon="true"
-          width="24"
-          height="24"
-          @click="depositInfoCopy(depositConfirmItem.bank_name)"
-        >
-          <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
-        </v-btn>
-      </div>
-      <div class="text-400-12 gray my-2 ml-4 d-flex align-center">
-        {{ t("deposit_confirm.text_4") }}
-        <div class="text_400-10 green" style="margin-left: auto">
-          {{ t("deposit_confirm.text_5") }}
-        </div>
-      </div>
-      <div class="m-provider-body py-2 px-4">
-        <div class="text-700-12 white">{{ depositConfirmItem.account_number }}</div>
-        <v-btn
-          class="m-copy-button"
-          icon="true"
-          width="24"
-          height="24"
-          @click="depositInfoCopy(depositConfirmItem.account_number)"
-        >
-          <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
-        </v-btn>
-      </div>
-      <div class="text-400-12 gray my-2 mx-4">{{ t("deposit_confirm.text_6") }}</div>
-      <div class="m-provider-body py-2 px-4">
-        <div class="text-700-12 white">{{ depositConfirmItem.account_name }}</div>
-        <v-btn
-          class="m-copy-button"
-          icon="true"
-          width="24"
-          height="24"
-          @click="depositInfoCopy(depositConfirmItem.account_name)"
-        >
-          <img src="@/assets/public/svg/icon_public_71.svg" width="18" />
-        </v-btn>
-      </div>
-      <div class="text-400-12 blue my-2 d-flex align-center">
-        <img :src="icon_public_104" />&nbsp;
-        <div style="text-decoration: underline">{{ t("deposit_confirm.text_7") }}</div>
-      </div>
-      <div class="text-400-12 gray my-2">{{ t("deposit_confirm.text_8") }}</div>
-      <div class="text-400-10 gray">{{ t("deposit_confirm.text_9") }}</div>
-      <div class="text-400-10 gray">
-        {{ t("deposit_confirm.text_10") }}
-        <span class="text-700-10 yellow">${{ depositConfirmItem.deposit_amount }}</span>
-      </div>
-      <div class="text-400-10 gray">{{ t("deposit_confirm.text_11") }}</div>
-      <v-btn
-        class="m-transfer-complete mt-4 mb-16"
-        width="-webkit-fill-available"
-        height="48"
-        @click="closeDepositConfirmDialog"
-      >
-        {{ t("deposit_confirm.text_12") }}
-      </v-btn>
     </div>
-    <div class="m-deposit-confirm-dailog-footer d-flex align-center px-10">
-      <div class="text-400-12 gray">{{ t("deposit_confirm.text_13") }}</div>
-      <div class="d-flex align-center" style="margin-left: auto">
-        <img :src="icon_public_110" class="mr-3" />
-        <img :src="icon_public_111" class="mr-3" />
-        <img :src="icon_public_112" class="mr-3" />
-        <img :src="icon_public_113" />
-      </div>
-    </div>
-  </div>
+  </v-dialog>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-deposit-confirm-dialog {
   background: #1d2027;
   height: 100vh;
 
   .m-deposit-confirm-dailog-header {
+    // position: fixed;
+    // top: 0px;
     height: 36px;
-    position: fixed;
-    top: 0px;
     width: 100%;
 
     .m-close-button {
@@ -236,9 +264,10 @@ onUnmounted(() => {
   }
 
   .m-deposit-confirm-dailog-body {
-    position: absolute;
-    height: calc(100vh - 36px);
-    top: 36px;
+    // position: absolute;
+    // top: 36px;
+    box-sizing: border-box;
+    height: calc(100vh - 36px - 32px);
     overflow-y: scroll;
     width: 100%;
     padding-bottom: 52px !important;
@@ -269,7 +298,7 @@ onUnmounted(() => {
       box-shadow: 0px 3px 4px 1px #00000036;
       border-radius: 8px;
 
-      .v-btn__content {
+      ::v-deep(.v-btn__content) {
         font-family: Inter;
         font-size: 14px;
         font-weight: 700;
@@ -279,10 +308,10 @@ onUnmounted(() => {
   }
 
   .m-deposit-confirm-dailog-footer {
-    position: fixed;
+    // position: fixed;
+    // bottom: 0px;
     height: 32px;
     background: #23262f;
-    bottom: 0px;
     width: 100%;
   }
 }

@@ -13,6 +13,7 @@ import { authStore } from "@/store/auth";
 import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { appCurrencyStore } from "@/store/app";
 import { toFormatNum } from '@/utils/numFormat';
+import { useOpenUrl } from '@/plugins/openPage'
 const { dispatchUserInvite } = inviteStore();
 const { dispatchInviteAward } = inviteStore();
 // 获取平台货币
@@ -26,7 +27,7 @@ const emit = defineEmits<{ (e: "goReportTab", index: number): void }>();
 const { t } = useI18n();
 const svgColor = ref<string>("#ffffff");
 const size = ref<number>(64);
-
+const { openUrl } = useOpenUrl()
 const notificationText = ref<string>("");
 
 const loading = ref<boolean>(false);
@@ -86,7 +87,8 @@ const sendTelegramAppInvite = () => {
     ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
     : import.meta.env.VITE_BASE_URL;
   const url = `${Telegram_BASE_URL}${BASE_URL}`;
-  window.location.href = url;
+  // window.location.href = url;
+  openUrl(url)
 };
 
 const sendWhatsAppInvite = () => {
@@ -96,7 +98,8 @@ const sendWhatsAppInvite = () => {
     ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
     : import.meta.env.VITE_BASE_URL;
   const url = `${WHATSAPP_BASE_URL}${BASE_URL}`;
-  window.location.href = url;
+  // window.location.href = url;
+  openUrl(url)
 };
 
 const sendFacebookAppInvite = () => {
@@ -105,7 +108,8 @@ const sendFacebookAppInvite = () => {
     ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
     : import.meta.env.VITE_BASE_URL;
   const url = `${FACEBOOK_BASE_URL}${BASE_URL}`;
-  window.location.href = url;
+  // window.location.href = url;
+  openUrl(url)
 };
 
 const sendTwitterAppInvite = () => {
@@ -114,7 +118,8 @@ const sendTwitterAppInvite = () => {
     ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
     : import.meta.env.VITE_BASE_URL;
   const url = `${TWITTER_BASE_URL}${BASE_URL}`;
-  window.location.href = url;
+  // window.location.href = url;
+  openUrl(url)
 };
 
 const sendEmailAppInvite = () => {
@@ -123,7 +128,8 @@ const sendEmailAppInvite = () => {
     ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
     : import.meta.env.VITE_BASE_URL;
   const url = `${EMAIL_BASE_URL}${BASE_URL}`;
-  window.location.href = url;
+  // window.location.href = url;
+  openUrl(url)
 };
 
 const inviteAward = async () => {

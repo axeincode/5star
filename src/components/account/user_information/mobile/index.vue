@@ -363,12 +363,12 @@ onMounted(async () => {
         </div>
       </v-col>
     </v-row>
-    <v-btn class="m-account-speaker-bg" icon @click="contactService">
+    <!-- <v-btn class="m-account-speaker-bg" icon @click="contactService">
       <img
         src="@/assets/public/svg/icon_public_75.svg"
         class="m-account-speaker-img-position"
       />
-    </v-btn>
+    </v-btn> -->
     <v-dialog
       v-model="dialogVisible"
       :width="mobileWidth < 600 ? 328 : 471"

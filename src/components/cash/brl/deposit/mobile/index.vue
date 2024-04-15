@@ -362,7 +362,12 @@ const errMessage = computed(() => {
   return getErrMessage.value
 })
 
-const handleDepositSubmit = async () => {
+const handleDepositSubmit = async (event) => {
+  // 不是回车键不触发  event.keyCode判断是不是软键盘触发
+  if(event.keyCode !== undefined && event.keyCode !== 13) return
+  //关闭手机软键盘
+  document.activeElement.blur();
+
   if (Number(depositAmount.value) == 0) return;
   if (depositConfig.value.deposit_user_switch) {
     setPixInfoToggle(true);
@@ -738,31 +743,37 @@ onMounted(async () => {
         </v-btn>
       </v-col>
     </v-row>
+
+    <!-- 金额输入 -->
     <v-row class="mt-4 mx-1 relative">
-      <v-text-field
-        :label="`${t('deposit_dialog.amount')}(${selectedCurrencyItem.name})`"
-        class="form-textfield dark-textfield m-deposit-amount-text"
-        variant="solo"
-        density="comfortable"
-        color="#7782AA"
-        style="border-radius: 8px"
-        v-model="depositAmount"
-        :onfocus="handleAmountInputFocus"
-        :onblur="handleAmountInputBlur"
-        @input="handleAmountInputChange"
-      />
-      <ValidationBox
-        v-if="isShowAmountValidation"
-        :validationText2="
-          t('withdraw_dialog.validation.text_2') +
-          selectedPaymentItem.min +
-          ', ' +
-          t('withdraw_dialog.validation.text_3') +
-          selectedPaymentItem.max +
-          '.'
-        "
-      />
+      <form action="javascript:return true;" @submit.prevent>
+        <v-text-field
+          :label="`${t('deposit_dialog.amount')}(${selectedCurrencyItem.name})`"
+          class="form-textfield dark-textfield m-deposit-amount-text"
+          variant="solo"
+          density="comfortable"
+          color="#7782AA"
+          style="border-radius: 8px"
+          v-model="depositAmount"
+          :onfocus="handleAmountInputFocus"
+          :onblur="handleAmountInputBlur"
+          @input="handleAmountInputChange"
+          @keypress="handleDepositSubmit"
+        />
+        <ValidationBox
+          v-if="isShowAmountValidation"
+          :validationText2="
+            t('withdraw_dialog.validation.text_2') +
+            selectedPaymentItem.min +
+            ', ' +
+            t('withdraw_dialog.validation.text_3') +
+            selectedPaymentItem.max +
+            '.'
+          "
+        />
+      </form>
     </v-row>
+
     <div class="mt-0 mx-4 d-flex align-center">
       <div>
         <v-checkbox

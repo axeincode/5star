@@ -1027,7 +1027,7 @@ const vipRebateAward = async () => {
 
 const goToTransactionPage = () => {
   setBonusTabIndex(1);
-  router.push({name: "Bonuses And Transactions", query: { tab: "VIP" }})
+  router.push({name: "Bonuses And Transactions", query: { tab: "vip" }})
 }
 
 onMounted(async () => {

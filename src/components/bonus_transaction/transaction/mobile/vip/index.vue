@@ -5,6 +5,7 @@ import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
 import { vipStore } from "@/store/vip";
+import { mainStore } from "@/store/main";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
 import { type VipRebateHistoryItem, type VipRebateHistoryData, type VipLevelRewardHistoryData, type VipTimesHistoryData } from "@/interface/vip";
@@ -31,6 +32,10 @@ const platformCurrency = computed(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
 });
+const timeunix = computed(() => {
+  const { getTimeunixDvalue } = storeToRefs(mainStore());
+  return getTimeunixDvalue.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -54,7 +59,7 @@ const startIndex = ref<number>(0);
 const endIndex = ref<number>(8);
 const currentList = ref<Array<VipRebateHistoryItem>>([]);
 const selectedHistoryIndex = ref<number>(1);
-const startTime = ref(Math.ceil(moment().valueOf() / 1000))
+const startTime = ref(Math.ceil(moment().valueOf() / 1000)  + timeunix.value)
 const transactionVIPMenuShow = ref<boolean>(false);
 const selectedVipMenuItem = ref<string>(History.rateBack);
 const transactionVipMenuList = ref<any[]>([

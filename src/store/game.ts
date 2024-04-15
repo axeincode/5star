@@ -7,6 +7,7 @@ import { authStore } from "@/store/auth";
 import { appBarStore } from "@/store/appBar";
 import Cookies from "js-cookie";
 import CacheKey from "@/constants/cacheKey";
+import { refferalStore } from "@/store/refferal";
 
 type dialogType = "login" | "signup";
 
@@ -45,7 +46,8 @@ export const gameStore = defineStore({
             high_rollers: [],
             lucky_bets: []
         } as Game.GameBigWinData,
-        favoriteGameList: [] as Array<number | string>
+        favoriteGameList: [] as Array<number | string>,
+        isScroll: true as boolean, // 是否需要打开横屏遮罩监听
     }),
     getters: {
         getSuccess: (state) => state.success,
@@ -65,11 +67,16 @@ export const gameStore = defineStore({
         getLanguage: (state) => state.language,
         getGameBigWinItem: (state) => state.gameBigWinItem,
         getFavoriteGameList: (state) => state.favoriteGameList,
+        getIsScroll: (state) => state.isScroll,
     },
     actions: {
         // set functions
         setSuccess(success: boolean) {
             this.success = success
+        },
+        // 设置是否显示横屏遮罩层
+        setIsScroll(param: boolean) {
+            this.isScroll = param
         },
         setErrorMessage(message: string) {
             this.errMessage = message
@@ -152,6 +159,8 @@ export const gameStore = defineStore({
             this.gameBigWinItem = gameBigWinItem;
         },
         async getGameBetbyInit() {
+            const { setRefferalAppBarShow } = refferalStore();
+            setRefferalAppBarShow(false)
             await this.dispatchGameEnter({ id: '9999', demo: false });
             this.betby = new BTRenderer().initialize(
                 {
@@ -159,9 +168,9 @@ export const gameStore = defineStore({
                     lang: this.language,
                     target: document.getElementById('betby'),
                     brand_id: "2331516940205559808",
-                    betSlipOffsetTop: 0,
+                    betSlipOffsetTop: 60,
                     betslipZIndex: 999,
-                    stickyTop: 0,
+                    stickyTop: 60,
                     themeName: "demo-green-dark-table",
                     onLogin: async () => {
                         if (Cookies.get(CacheKey.TOKEN) == "" || !Cookies.get(CacheKey.TOKEN)) {
@@ -175,8 +184,10 @@ export const gameStore = defineStore({
                         this.openDialog('signup');
                     },
                     onTokenExpired: async () => {
-                        this.closeKill();
-                        await this.getGameBetbyInit();
+                        // this.closeKill();
+                        // await this.getGameBetbyInit();
+                        await this.dispatchGameEnter({ id: '9999', demo: false });
+                        return this.enterGameItem.reserve;
                     },
                     onSessionRefresh: async () => {
                         this.closeKill();

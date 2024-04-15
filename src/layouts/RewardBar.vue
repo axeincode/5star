@@ -264,6 +264,10 @@ const handleScroll = (event: any) => {
   scrollTop.value = event.target.scrollTop;
 };
 
+const lang=computed(()=>{
+  return localStorage.getItem('lang')
+})
+
 onMounted(async () => {
   let isMobile: boolean = false
       if (route.query.mobile && route.query.mobile == "android"){
@@ -310,12 +314,13 @@ onMounted(async () => {
         <v-col cols="3" class="pa-1 text-right">
           <v-btn
             class="text-none m-reward-claim-btn"
+            
             width="100%"
             height="40"
             @click="claimClicked"
             v-reset-font-size="{ textNode: 'v-btn__content' }"
           >
-            {{ t("reward.text_5") }}
+          <span :class="lang=='es'?'scale-btn-text':''">{{t("reward.text_5")}}</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -512,6 +517,10 @@ onMounted(async () => {
   top: 0px !important;
   z-index: 2147483645 !important;
   background: $agent_card_bg !important;
+
+  .scale-btn-text {
+    scale: 0.8;
+  }
 
   .m-reward-menu {
     z-index: 1000;

@@ -27,6 +27,13 @@ import img_public_28 from "@/assets/public/image/img_public_28.png";
 import { type GameBigWinItem } from "@/interface/game";
 import vipLevelGroups from "@/utils/VipLevelGroup";
 
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed<string>(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const selectedBtnText = ref<string>("home.bet_history.text_2");
@@ -428,7 +435,7 @@ onMounted(async () => {
               class="py-1 d-flex align-center"
               style="flex-basis: 0; flex-grow: 1"
             >
-              <img :src="imgList[Math.floor(Math.random() * 4)]" width="22" />
+              <img :src="item.game_icon" width="22" />
               <p class="text-500-16 gray text-center ml-2 game-text-overflow">
                 {{ item.game_name }}
               </p>
@@ -509,10 +516,10 @@ onMounted(async () => {
           <v-col cols="4" class="text-700-12 gray py-0">
             {{ t("home.bet_history.text_6") }}
           </v-col>
-          <v-col cols="3" class="text-700-12 gray py-0 text-right">
+          <v-col cols="4" class="text-700-12 gray py-0 text-center">
             <p class="ml-2">{{ t("home.bet_history.text_7") }}</p>
           </v-col>
-          <v-col cols="5" class="text-700-12 gray text-right py-0">
+          <v-col cols="4" class="text-700-12 gray text-right py-0">
             {{ t("home.bet_history.text_8") }}
           </v-col>
         </v-row>
@@ -531,12 +538,13 @@ onMounted(async () => {
         <swiper-slide v-for="(item, index) in selectedBetHistoryList" :key="index">
           <v-row class="mx-4 mt-1 align-center">
             <v-col cols="4" class="py-1 d-flex align-center">
-              <img :src="imgList[Math.floor(Math.random() * 4)]" width="16" />
+              <img :src="item.game_icon" width="22" style="aspect-ratio: 1/1;object-fit: cover;object-position: top;" />
+              <!-- <img :src="item.game_icon" width="16"/> -->
               <p class="text-400-12 gray text-left ml-2 game-text-overflow">
                 {{ item.game_name }}
               </p>
             </v-col>
-            <v-col cols="3" class="py-1 text-center">
+            <v-col cols="4" class="py-1 text-center">
               <p
                 class="text-400-12"
                 :class="Number(item.multiplier) > 1 ? 'color-01983A' : 'gray'"
@@ -545,11 +553,11 @@ onMounted(async () => {
               </p>
             </v-col>
             <v-col
-              cols="5"
+              cols="4"
               class="py-1 text-700-12 text-right"
               :class="Number(item.win_amount) > 10 ? 'color-01983A' : 'gray'"
             >
-              $ {{ item.win_amount }}
+              {{ platformCurrency }}{{ item.win_amount }}
             </v-col>
           </v-row>
         </swiper-slide>

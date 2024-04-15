@@ -5,6 +5,8 @@ import { authStore } from "@/store/auth";
 import { useI18n } from "vue-i18n";
 import { resetAllStores } from "@/store";
 import { gameStore } from "@/store/game";
+import { getQueryParams } from "@/utils/getPublicInformation";
+
 const emit = defineEmits<{
   (e: "close"): void;
 }>();
@@ -15,11 +17,13 @@ const signoutContainerBackground = ref<string>("transparent");
 const signoutContainerHeight = ref<number>(201);
 const signoutContainerOverflow = ref<string>("hidden");
 
+const queryParams = getQueryParams()
+
 const signOut = (): void => {
   emit("close");
   dispatchSignout();
   resetAllStores();
-  router.push({ path: '/' })
+  router.push({ path: '/', query: queryParams })
   setTimeout(() => {
     window.location.reload();
   }, 300);
@@ -160,6 +164,7 @@ onMounted(() => {
       font-size: 24px;
       font-weight: 700;
       text-align: center;
+      line-height: 24px;
     }
 
     .m-signout-notice {
@@ -184,10 +189,10 @@ onMounted(() => {
       }
     }
     .m-signout-box {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      // position: absolute;
+      // bottom: 20px;
+      // left: 50%;
+      // transform: translateX(-50%);
     }
 
     // close modal button

@@ -134,11 +134,20 @@ const selectedHistoryConfig = ref<any>({});
 const handleHistoryConfigDropdown = async (item: any) => {
   selectedBonusItem.value = item.name;
   selectedHistoryConfig.value = item;
+  // console.log(selectedDate.value, '1111');
+  let params = {
+    first_time: moment(selectedDate.value[0]).valueOf() / 1000,
+    last_time: moment(selectedDate.value[1]).valueOf() / 1000
+  }
+  if(selectedDate.value[0] === selectedDate.value[1]) {
+    params.last_time = moment(selectedDate.value[1]).add(1, 'day').valueOf() / 1000
+  }
+  // console.log(params, 'params');
+  
   await dispatchUserInviteHistory({
     index: selectedHistoryConfig.value.index,
     size: selectedPageSize.value,
-    first_time: moment(selectedDate.value[0]).valueOf() / 1000,
-    last_time: moment(selectedDate.value[1]).valueOf() / 1000,
+    ...params
   });
 };
 
@@ -218,10 +227,6 @@ onMounted(async () => {
     // mouseWheel: true,  //可以用鼠标滚轮滚动
     probeType: 3,    //开启滚动事件
     click: true,
-    // preventDefault:
-    // bounce: false,
-    // 鼠标滑轮配置
-	  // 监听内容变化，自动执行bs.refresh()方法
 	  observeDOM : true
   })
 
@@ -243,7 +248,6 @@ onMounted(async () => {
   <div class="report">
     <div class="scroll-wrapper" ref='bscrollRef'>
       <div class="content">
-      <!-- <div class="content"> -->
         <!-- 日期 -->
         <v-row class="mx-2 mt-0">
           <div class="m-agent-report-date-picker relative" @click="datePickerShow = true">
@@ -415,7 +419,6 @@ onMounted(async () => {
                 @handleNext="handleNext"
               />
         </v-row>
-        <!-- </div> -->
       </div>
     </div>
   </div>

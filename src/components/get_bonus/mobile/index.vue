@@ -2,6 +2,7 @@
 import { ref, computed,onMounted,watchEffect,onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { vipStore } from "@/store/vip";
+import { promoStore } from "@/store/promo";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { appBarStore } from "@/store/appBar";
@@ -24,10 +25,16 @@ const timer_value = ref<number>(600);
 const time = new Date();
 time.setSeconds(time.getSeconds() + timer_value.value); // 10分钟
 const timer = useTimer(Number(time));
+const { dispatchUserActivityList } = promoStore();
 
 const timerValue = computed(() => {
   const { getTimerValue } = storeToRefs(vipStore());
   return getTimerValue.value;
+});
+
+const promoList = computed(() => {
+  const { getUserActivityList } = storeToRefs(promoStore());
+  return getUserActivityList.value;
 });
 
 const depositDialogShow = () => {
@@ -39,11 +46,11 @@ const depositDialogShow = () => {
 
 // 点击图片调整活动详情页
 const jumpActivityDetails=()=>{
-  router.push({name: "Promo_Detail",query:{id:'2'}})
+  router.push({name: "Promo_Detail",query:{id:promoList.value.group_data[0].list_data[0].id}})
   emit("closeGetBonusDialog");
 }
 
-onMounted(()=>{
+onMounted(async()=>{
   if (timerValue.value == 0) {
     const time = new Date();
     time.setSeconds(time.getSeconds() + timer_value.value); // 10分钟
@@ -58,6 +65,7 @@ onMounted(()=>{
       setTimerValue(time.getSeconds() + timer_value.value);
     }
   });
+  await dispatchUserActivityList();
 })
 
 onUnmounted(() => {
@@ -135,7 +143,7 @@ onUnmounted(() => {
       </p>
     </div> -->
     <img
-      src="@/assets/vip/image/img_vip_register-bg.png"
+      :src="promoList.group_data[0].list_data[0].image_path||''"
       width="320"
       height="123"
       class="m-get-bonus-dialog-img-register mx-3 mt-2"

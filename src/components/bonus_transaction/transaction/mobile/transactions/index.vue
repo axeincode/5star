@@ -4,6 +4,7 @@ import Pagination from "@/components/global/pagination/index.vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { appBarStore } from "@/store/appBar";
+import { mainStore } from "@/store/main";
 import { storeToRefs } from "pinia";
 import moment from "moment-timezone";
 import { type TransactionHistoryResponse, type TransactionHistoryItem } from "@/interface/transaction";
@@ -66,9 +67,9 @@ const success = computed(() => {
   return getSuccess.value
 })
 
-const fixPositionShow = computed(() => {
-  const { getFixPositionEnable } = storeToRefs(appBarStore());
-  return getFixPositionEnable.value;
+const timeunix = computed(() => {
+  const { getTimeunixDvalue } = storeToRefs(mainStore());
+  return getTimeunixDvalue.value;
 });
 
 // 是否显示下一页
@@ -80,6 +81,10 @@ const moreTransactionHistoryFlag = computed(() => {
 const TransactionHistoryList = computed(() => {
   return transactionHistoryItem.value.record.slice(startIndex.value, endIndex.value)
 })
+const fixPositionShow = computed(() => {
+  const { getFixPositionEnable } = storeToRefs(appBarStore());
+  return getFixPositionEnable.value;
+});
 
 const handleNext = async (page_no: number) => {
 
@@ -140,6 +145,8 @@ watch(transactionHistoryItem, (value) => {
 
 onMounted(async () => {
   // paginationLength.value = moreTransactionHistoryFlag.value ? paginationLength.value + 1 : paginationLength.value
+  console.log(timeunix.value, '111111');
+  
 });
 </script>
 <template>

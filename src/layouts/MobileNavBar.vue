@@ -1541,6 +1541,8 @@ onMounted(async () => {
         </v-list-group>
       </v-list>
       <v-divider class="divider"></v-divider>
+
+      <!--  -->
       <v-list>
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
@@ -1589,6 +1591,8 @@ onMounted(async () => {
             {{ t("navBar.menu_item_1.vip_club") }}
           </v-list-item-title>
         </v-list-item>
+        
+        <!-- Affiliate -->
         <v-list-item
           class="m-avatar-img m-user-item1 m-nav-menu"
           style="
@@ -1663,13 +1667,14 @@ onMounted(async () => {
       <!-- <v-list>
         
       </v-list> -->
+      <!-- S 选择语言 -->
       <v-list>
         <v-menu
-          location="center"
+          location="end center"
           offset="16"
           content-class="m-language-dropdown m-user-item1"
           v-model:model-value="languageMenu"
-          transition="slide-x-transition"
+          transition=""
         >
           <template v-slot:activator="{ props }">
             <v-card color="#15161C" theme="dark" class="mx-2 m-language-item" height="40">
@@ -1713,6 +1718,8 @@ onMounted(async () => {
           </v-list>
         </v-menu>
       </v-list>
+      <!-- E 选择语言 -->
+
       <v-list-item class="m-theme-toggle" v-if="false">
         <input type="checkbox" id="m-theme-toggle" v-model="soundCheckBox" />
         <label for="m-theme-toggle">

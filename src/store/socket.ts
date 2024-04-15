@@ -42,7 +42,7 @@ export const socketStore = defineStore({
       this.socket.onclose = this.handleClose;
     },
     handleOpen() {
-      console.log('WebSocket connection established');
+      // console.log('WebSocket connection established');
     },
     handleMessage(event: MessageEvent) {
       console.log('Received message:', event.data);

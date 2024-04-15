@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, watch } from "vue";
+import { defineComponent, reactive, toRefs, computed, watch, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { authStore } from "@/store/auth";
 import { userStore } from "@/store/user";
@@ -23,8 +23,18 @@ import EventToken from "@/constants/EventToken";
 import { useRoute } from "vue-router";
 import { gameStore } from "@/store/game";
 import { jwtDecode } from "jwt-decode";
-import { loginWithSocialMedia, loginType } from "@/plugins/third-party-login";
+import { loginWithSocialMedia, loginType, loginOrRegister } from "@/plugins/third-party-login";
 import { ThirdPartyWayEnum } from '@/enums/userEnum'
+import { getQueryParams } from "@/utils/getPublicInformation";
+import { activityAppStore } from "@/store/activityApp";
+import { mainStore } from "@/store/main";
+import { ElLoading } from "element-plus";
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const Login = defineComponent({
   components: {
@@ -57,7 +67,10 @@ const Login = defineComponent({
     const { width } = useDisplay();
     const { dispatchCurrencyList } = currencyStore();
     const {  getGameBetbyInit, closeKill } = gameStore();
-  
+    const {  downloadApprReceive } = activityAppStore();
+    const {  userDownloadAppAcquisition } = activityAppStore();
+    const { dispatchTimeunix } = mainStore()
+
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
@@ -75,7 +88,7 @@ const Login = defineComponent({
           value: ThirdPartyWayEnum.FACEBOOK_LOGIN
         },
         {
-          url: new URL("@/assets/public/svg/icon_public_29.svg", import.meta.url).href,
+          url: new URL("@/assets/public/svg/icon_public_google.svg", import.meta.url).href,
           value: ThirdPartyWayEnum.GOOGLE_LOGIN
         },
       ],
@@ -91,6 +104,8 @@ const Login = defineComponent({
       bodyHeight: 0,
       clientId:
         "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
+      indexValue: "",
+      typeValue: "",
     });
     const mobileWidth = computed(() => {
       return width.value;
@@ -140,6 +155,8 @@ const Login = defineComponent({
     };
 
     const loginSuccess = async () => {
+      console.log('loginSuccess', success.value);
+
       if (success.value) {
         await dispatchUserProfile();
         await dispatchUserBalance();
@@ -148,9 +165,13 @@ const Login = defineComponent({
         await dispatchVipInfo();
         await dispatchVipLevels();
         await dispatchVipLevelAward();
+
+        // 获取服务器时间戳
+        dispatchTimeunix()
         // await dispatchSocketConnect();
         setOverlayScrimShow(false);
         setRefferalDialogShow(true);
+
         const toast = useToast();
         toast.success(t("login.submit_result.success_text"), {
           timeout: 3000,
@@ -164,6 +185,7 @@ const Login = defineComponent({
           icon: SuccessIcon,
           rtl: false,
         });
+
         // 埋点统计
         AdjustClass.getInstance().adjustTrackEvent({
           key: "LOGIN",
@@ -179,6 +201,7 @@ const Login = defineComponent({
           await getGameBetbyInit();
         }
         await dispatchSocketConnect();
+
       } else {
         const toast = useToast();
         toast.success(t("login.submit_result.err_text"), {
@@ -196,19 +219,66 @@ const Login = defineComponent({
       }
     };
 
+    // 获取活动奖金
+    const activityAppBonus = computed(() => {
+      const { getActivityBonus } = storeToRefs(activityAppStore());
+      return getActivityBonus.value;
+    });
+
+    // 获取app下载活动id
+    let downloadID = computed(() => {
+      const { getDownloadID } = storeToRefs(activityAppStore());
+      return getDownloadID.value;
+    });
+
     // methods
-    const handleLoginFormSubmit = async () => {
+    const handleLoginFormSubmit = async (event) => {
+      // 不是回车键不触发  event.keyCode判断是不是软键盘触发
+      if(event.keyCode !== undefined && event.keyCode !== 13) return
+      //关闭手机软键盘
+      document.activeElement.blur();
+
       state.loading = true;
+
       await dispatchSignIn({
         uid: state.formData.emailAddress,
         password: state.formData.password,
       });
+
       await loginSuccess();
       if(!localStorage.getItem(userInfo.value.name)){
         localStorage.setItem(userInfo.value.name,'0');
       }else{
         localStorage.setItem(userInfo.value.name,'1');
       }
+
+      setTimeout(async () => {
+        const queryParams = getQueryParams()
+        // 如果用户是app登录，那就领取奖励
+        if (queryParams['mobile']) {
+          try {
+            await downloadApprReceive({id: Number(downloadID.value)})
+            const toast = useToast();
+            toast.success(`${t('activity_app.text_1')} ${platformCurrency.value}${activityAppBonus.value}`, {
+              timeout: 3000,
+              closeOnClick: false,
+              pauseOnFocusLoss: false,
+              pauseOnHover: false,
+              draggable: false,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: SuccessIcon,
+              rtl: false,
+            });
+
+            await userDownloadAppAcquisition()
+          } catch (error) {
+
+          }
+        }
+      }, 500);
+
       state.loading = false;
     };
 
@@ -216,15 +286,18 @@ const Login = defineComponent({
       state.isShowPassword = !state.isShowPassword;
     };
 
-    const handleEmailBlur = () => {
+    const handleEmailBlur = (e:any) => {
       // console.log("onblur")
+      // 去除空格和特殊符号
+      state.formData.emailAddress =e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
       setTimeout(() => {
         state.mailCardHeight = 0;
       }, 100);
     };
 
-    const handleEmailChange = () => {
-      // console.log("onchange")
+    const handleEmailChange = (e:any) => {
+      // 去除空格和特殊符号
+      state.formData.emailAddress =e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
       if (state.formData.emailAddress.includes("@")) {
         state.emailPartName = state.formData.emailAddress.split("@")[0];
         state.mailCardHeight = 220;
@@ -261,11 +334,86 @@ const Login = defineComponent({
       }
     };
 
+    // 全局 window 对象
+    const globalWindow: any = window;
+
+    // 接受android傳遞的token - google 登录模拟
+    globalWindow.googleLogin = async (token: string) => {
+      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      if(token) {
+        await loginOrRegister(token, state.indexValue, state.typeValue);
+        await loginSuccess();
+        elLoading.close();
+        loginType(state.indexValue);
+      } else {
+        const toast = useToast();
+        toast.error(t("login.submit_result.err_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
+        });
+        elLoading.close();
+      }
+    }
+    // 接受android傳遞的token  - facebook 登录模拟
+    globalWindow.fbrLogin = async (token: string) => {
+      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      if(token) {
+        await loginOrRegister(token, state.indexValue, state.typeValue);
+        await loginSuccess();
+        elLoading.close();
+        loginType(state.indexValue);
+      } else {
+        const toast = useToast();
+        toast.error(t("login.submit_result.err_text"), {
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: false,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: WarningIcon,
+          rtl: false,
+        });
+        elLoading.close();
+      }
+    }
+
     // social login function
     const handleSocialSigin = async (value: string) => {
-      await loginWithSocialMedia(value, 'login');
-      await loginSuccess();
-      loginType(value);
+      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      try {
+        state.loading = true;
+        if (AdjustClass.getInstance().isMobileWebview) {
+            state.indexValue = value;
+            state.typeValue = 'login';
+            // 啟動android原生登錄流程
+            if (value === "google") {
+              globalWindow["AndroidWebView"].googleLogin();
+            }
+            if (value === "facebook") {
+              globalWindow["AndroidWebView"].facebookLogin();
+            }
+        } else {
+          await loginWithSocialMedia(value, 'login');
+          await loginSuccess();
+          loginType(value);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        state.loading = false;
+        elLoading.close();
+      }
     };
 
     watch(
@@ -283,6 +431,7 @@ const Login = defineComponent({
         state.formData.password=props.signInForm.password
       }
     });
+
 
     return {
       t,
@@ -320,97 +469,101 @@ export default Login;
 
     <!-- S 登录 -->
     <template v-if="currentPage === PAGE_TYPE.LOGIN_FORM">
-      <div class="relative mt-8">
-        <v-text-field
-          :label="t('signup.formPage.emailAddress')"
-          class="form-textfield dark-textfield m-login-email mx-0"
-          variant="solo"
-          density="comfortable"
-          v-model="formData.emailAddress"
-          :onblur="handleEmailBlur"
-          @input="handleEmailChange"
-          :onfocus="handleEmailFocus"
-        />
-        <!-- 邮箱自动补全 -->
-        <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
-          <v-list theme="dark" bg-color="#15161C">
-            <v-list-item
-              class="text-600-12 white"
-              value="gmail"
-              @click="mergeEmail('@gmail.com')"
-            >
-              {{ emailPartName }}@gmail.com
-            </v-list-item>
-            <v-list-item
-              class="text-600-12 white"
-              value="hotmail"
-              @click="mergeEmail('@hotmail.com')"
-              >{{ emailPartName }}@hotmail.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="yahoo"
-              @click="mergeEmail('@yahoo.com')"
-              >{{ emailPartName }}@yahoo.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="icloud"
-              @click="mergeEmail('@icloud.com')"
-              >{{ emailPartName }}@icloud.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="outlook"
-              @click="mergeEmail('@outlook.com')"
-              >{{ emailPartName }}@outlook.com</v-list-item
-            >
-          </v-list>
-        </div>
-      </div>
-      <div class="mt-6 relative pa-0">
-        <v-text-field
-          :label="t('signup.formPage.password')"
-          class="form-textfield dark-textfield ma-0 m-login-password"
-          variant="solo"
-          density="comfortable"
-          :type="isShowPassword ? 'text' : 'password'"
-          v-model="formData.password"
-        />
-        <div v-if="isShowPassword" @click="showPassword" class="m-password-icon">
-          <img
-            src="@/assets/public/svg/icon_public_07.svg"
-            class="m-disable-password"
-            width="16"
+      <!-- 表单提交 -->
+      <form action="javascript:return true;" @submit.prevent>
+        <div class="relative mt-8">
+          <v-text-field
+            :label="t('signup.formPage.emailAddress')"
+            class="form-textfield dark-textfield m-login-email mx-0"
+            variant="solo"
+            density="comfortable"
+            v-model="formData.emailAddress"
+            :onblur="handleEmailBlur"
+            @input="handleEmailChange"
+            :onfocus="handleEmailFocus"
+            @keypress="handleLoginFormSubmit"
           />
+          <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
+            <v-list theme="dark" bg-color="#15161C">
+              <v-list-item
+                class="text-600-12 white"
+                value="gmail"
+                @click="mergeEmail('@gmail.com')"
+              >
+                {{ emailPartName }}@gmail.com
+              </v-list-item>
+              <v-list-item
+                class="text-600-12 white"
+                value="hotmail"
+                @click="mergeEmail('@hotmail.com')"
+                >{{ emailPartName }}@hotmail.com</v-list-item
+              >
+              <v-list-item
+                class="text-600-12 white"
+                value="yahoo"
+                @click="mergeEmail('@yahoo.com')"
+                >{{ emailPartName }}@yahoo.com</v-list-item
+              >
+              <v-list-item
+                class="text-600-12 white"
+                value="icloud"
+                @click="mergeEmail('@icloud.com')"
+                >{{ emailPartName }}@icloud.com</v-list-item
+              >
+              <v-list-item
+                class="text-600-12 white"
+                value="outlook"
+                @click="mergeEmail('@outlook.com')"
+                >{{ emailPartName }}@outlook.com</v-list-item
+              >
+            </v-list>
+          </div>
         </div>
-        <div v-else @click="showPassword" class="m-password-icon">
-          <img
-            src="@/assets/public/svg/icon_public_06.svg"
-            class="m-disable-password"
-            width="16"
+        <div class="mt-6 relative pa-0">
+          <v-text-field
+            :label="t('signup.formPage.password')"
+            class="form-textfield dark-textfield ma-0 m-login-password"
+            variant="solo"
+            density="comfortable"
+            :type="isShowPassword ? 'text' : 'password'"
+            v-model="formData.password"
+            @keypress="handleLoginFormSubmit"
           />
+          <div v-if="isShowPassword" @click="showPassword" class="m-password-icon">
+            <img
+              src="@/assets/public/svg/icon_public_07.svg"
+              class="m-disable-password"
+              width="16"
+            />
+          </div>
+          <div v-else @click="showPassword" class="m-password-icon">
+            <img
+              src="@/assets/public/svg/icon_public_06.svg"
+              class="m-disable-password"
+              width="16"
+            />
+          </div>
         </div>
-      </div>
-      <v-row class="mt-2">
-        <p
-          class="ml-9 login-forget-passwrod-text text-400-12"
-          @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD"
-        >
-          {{ t("login.formPage.forgetPassword") }}
-        </p>
-      </v-row>
+        <v-row class="mt-2">
+          <p
+            class="ml-9 login-forget-passwrod-text text-400-12"
+            @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD"
+          >
+            {{ t("login.formPage.forgetPassword") }}
+          </p>
+        </v-row>
+      </form>
       <v-row style="margin-top: 100px">
-        <v-btn
-          class="ma-3 button-bright m-signin-btn-text"
-          width="94%"
-          height="48px"
-          :loading="loading"
-          :disabled="!isFormDataReady"
-          :onclick="handleLoginFormSubmit"
-        >
-          {{ t("login.formPage.button") }}
-        </v-btn>
+          <v-btn
+            type="search"
+            class="ma-3 button-bright m-signin-btn-text"
+            width="94%"
+            height="48px"
+            :loading="loading"
+            :onclick="handleLoginFormSubmit"
+          >
+            {{ t("login.formPage.button") }}
+          </v-btn>
       </v-row>
       <v-row class="mt-4">
         <p class="m-divide-text">
@@ -522,8 +675,8 @@ export default Login;
         </p>
         <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
       </v-row>
-      <v-row class="mt-6">
-        <v-col cols="8" offset="2">
+      <v-row class="mt-6  m-justify-content">
+        <v-col cols="4">
           <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
             <v-sheet
               v-for="(item, index) in socialIconList"
@@ -538,7 +691,7 @@ export default Login;
                 width="36px"
                 height="36px"
               >
-                <img :src="item" width="36" />
+                <img :src="item.url" width="36" />
               </v-btn>
             </v-sheet>
           </div>
@@ -837,5 +990,11 @@ export default Login;
       opacity: 1 !important;
     }
   }
+}
+
+.top-loading {
+  z-index: 99999999999999 !important;
+  color: var(--Primary-Button-32CFEC, #009B3A) !important;
+  background: rgba(0, 0, 0, 0.7);
 }
 </style>

@@ -39,7 +39,7 @@ const mobileWidth = computed(() => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .mobile-amount-validation-box-container {
   position: absolute;
   bottom: 291px;

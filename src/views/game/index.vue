@@ -17,6 +17,8 @@ import { useRoute, useRouter } from "vue-router";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 import CloseIframe from "@/components/close_iframe/index.vue";
+import { getDeviceType } from "@/utils/getPublicInformation";
+import { getQueryParams } from "@/utils/getPublicInformation";
 
 // 是否显示关闭按钮
 const displayedCloseBtn = ref<boolean>(false)
@@ -25,6 +27,7 @@ const { t } = useI18n();
 const { width } = useDisplay();
 const { setMailMenuShow } = mailStore();
 const { dispatchGameEnter } = gameStore();
+const { setIsScroll } = gameStore();
 const { setMobileMenuShow } = gameStore();
 const route = useRoute();
 const router = useRouter();
@@ -366,6 +369,9 @@ const handleIframeLoad = () => {
   // 打开游戏，显示关闭按钮
   displayedCloseBtn.value = true
 
+  // 打开游戏，关闭横屏遮罩层的监听
+  setIsScroll(false)
+
   if (enterGameItem.value.weburl != "") {
     frameShow.value = true;
   }
@@ -377,6 +383,8 @@ const handleIframeLoad = () => {
 const handleMessageFromIframe = (event: any) => {
   console.log(event);
   if (event.data.url == "bluesite:exit") {
+    // 关闭游戏，打开横屏遮罩层的监听
+    setIsScroll(true)
     router.go(-1);
   }
 };
@@ -387,11 +395,16 @@ const handleResize = () => {
   mobileHeight.value = window.innerHeight;
 };
 
+const queryParams = getQueryParams()
+
 // 点击关闭按钮回调
 const closeGame = () => {
-  router.go(-1);
+  // 关闭游戏，打开横屏遮罩层的监听
+  setIsScroll(true)
+  // router.go(-1);
+  router.push({path: "/", query: queryParams})
   // 关闭按钮显示
-  displayedCloseBtn.value = false
+  // displayedCloseBtn.value = false
 }
 
 onMounted(async () => {
@@ -402,6 +415,27 @@ onMounted(async () => {
   });
   window.addEventListener("resize", handleResize);
   handleResize()
+
+  // 判断是否切换横竖屏
+  window.addEventListener(
+    "onorientationchange" in window ? "orientationchange" : "resize",
+    function () {
+      frameShow.value = true;
+      setTimeout(() => {
+        // 页面重载
+        window.location.reload();
+        frameShow.value = false;
+      }, 200);
+    },
+    false
+  );
+
+  // 判断初始化是否在游戏页面并且是移动端，则关闭遮罩层
+  if(['ios', 'android'].includes(getDeviceType())) {
+    // 打开游戏，关闭横屏遮罩层的监听
+    setIsScroll(false)
+  }
+
   mobileHeight.value = window.innerHeight;
   setMobileMenuShow(false);
   window.scrollTo({
@@ -446,7 +480,7 @@ onUnmounted(() => {
 
   <CloseIframe v-if="displayedCloseBtn" @close="closeGame"></CloseIframe>
 
-  <div class="game-body" v-if="mobileWidth < 600">
+  <div class="game-body" v-if="mobileWidth < 600 || ['ios', 'android'].includes(getDeviceType())">
     <div class="m-game-frame-body">
       <div class="m-loading-container relative" v-if="!frameShow">
         <div class="loading-body">

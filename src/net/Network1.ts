@@ -9,6 +9,7 @@ import { authStore } from "@/store/auth";
 import router from "@/router";
 
 const NETWORK_CODE:number = 200
+let timer: any = null;
 
 /**
  * 事件对象
@@ -82,19 +83,19 @@ export class Network {
 
     /**
      * 发送post的
-     * @param route 
-     * @param msg 
-     * @param next 
-     * @param timeout 
+     * @param route
+     * @param msg
+     * @param next
+     * @param timeout
      */
     private POST(route: string, msg: any, next?: Function, timeout: number = this.netCfg.getTimeout()) {
-       
+
     }
 
     /**
      * 发送get命令
-     * @param route 
-     * @param msg 
+     * @param route
+     * @param msg
      */
     private GET(route: string, msg: any) {
     }
@@ -111,11 +112,13 @@ export class Network {
 
     /**
      * pomelo建立连接，设定回调捆绑
-     * @param host 
-     * @param port 
-     * @param connectcb 
+     * @param host
+     * @param port
+     * @param connectcb
      */
     public connect(connectFuc?: Function) {
+        clearInterval(timer);
+        timer = null;
         if (connectFuc) this.connectCall = connectFuc;
         // if (this.netCfg.getToken() == "") return;
         if (Cookies.get(CacheKey.TOKEN) == "") return;
@@ -153,7 +156,7 @@ export class Network {
                 // TODO 發送第一個包的位置
                 // 例子
                 // this.sendMsg(NETWORK.HALL.AUTH_VALID, null, (msg: WsProto.IAuthValidResp) => {
-                    
+
                 // });
                 this.sendMsg('message.user.login', { token: Cookies.get(CacheKey.TOKEN) }, (msg: '发送消息') => {})
                 break;
@@ -173,12 +176,19 @@ export class Network {
                 }
                 this.kicked(event);
                 break;
+            case 'close':
+                if (Cookies.get(CacheKey.TOKEN)) {
+                  timer = setInterval(() => {
+                    this.connect();
+                  }, 30000)
+                }
+                break;
         }
     };
 
     /**
      * 服务端主动断开链接
-     * @param event 
+     * @param event
      */
     private kicked(event: any) {
         // 处理主动断线
@@ -214,7 +224,7 @@ export class Network {
 
     /**
      * 获取pomelo的状态
-     * @returns 
+     * @returns
      */
     public getState() {
         return starx.getState();
@@ -222,7 +232,7 @@ export class Network {
 
     /**
      * 清理所有发包协议
-     * 
+     *
      */
     public destroy() {
         this.sendCount = {};
@@ -232,9 +242,9 @@ export class Network {
 
     /**
      * 数据解析
-     * @param msg 
-     * @param type 
-     * @param version 
+     * @param msg
+     * @param type
+     * @param version
      */
     private msgParsing(route: string, msg: any, type: SENDTYPE) {
         // TODO 根據情況重構

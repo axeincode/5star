@@ -40,6 +40,8 @@ import { BtTabEnum } from '@/enums/bonusTransactionEnum';
 
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
+const { setPlatformCurrency } = appCurrencyStore()
+
 const platformCurrency = computed(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
@@ -301,6 +303,42 @@ const formatCurrency = (currency: number, locale: string, currencyUnit: string) 
   return fomarttedAmount
 }
 
+// 获取货币符号
+const formatCurrencySymbols = (currency: string) => {
+  let locale = 'pt-BR';
+  const currencyUnit = currency
+  switch (currencyUnit) {
+    case "BRL":
+      locale = 'pt-BR';
+      break;
+    case "PHP":
+      locale = 'en-PH';
+      break;
+    case "PEN":
+      locale = 'en-PE';
+      break;
+    case "MXN":
+      locale = 'es-MX';
+      break;
+    case "CLP":
+      locale = 'es-CL';
+      break;
+    case "USD":
+      locale = 'en-US';
+    case "COP":
+      locale = 'es-CO';
+      break;
+  }
+
+  const currencySymbol = Number(0).toLocaleString(locale, {
+    style: "currency",
+    currency: currencyUnit,
+  })
+
+  const parts = currencySymbol.split('0');
+  return parts[0]
+}
+
 const toggleLanguage = () => {
   currentLanguage.value = currentLanguage.value === "en" ? "zh" : "en";
 };
@@ -391,10 +429,13 @@ watch(currencyList, (() => {
     imageIndex.value.push(currencyImages.findIndex(item => item.name == currency.currency) != -1 ? currencyImages.findIndex(item => item.name == currency.currency) : 0);
   });
 }))
-
+// 切换货币
 const handleSelectCurrency = async (item: GetCurrencyBalanceList) => {
   selectedCurrencyItem.value = item;
+
   sessionStorage.setItem('currency', item.currency);
+  // 切换币种的时候，更变全平台货币的符号
+  setPlatformCurrency(formatCurrencySymbols(item.currency))
   await dispatchSetUserCurrency(item.currency);
   if (route.name == 'Sports') {
     await closeKill();
@@ -459,6 +500,9 @@ watch(userBalance, (value) => {
   user.value.wallet = formatCurrency(Number(value.amount), locale, currencyUnit);
   user.value.currency = value.currency
   selectedCurrencyItem.value.currency = value.currency
+  // 设置货币符号
+  setPlatformCurrency(formatCurrencySymbols(currencyUnit))
+
   /*currencyList.value.map(item => {
     if (item.name == "BRL") {
       item.value = Number(value.amount)
@@ -468,7 +512,7 @@ watch(userBalance, (value) => {
 
 watch(socketBalance, (value) => {
   console.log("socketBalance================", value);
-  if (value.op_type == 201) {
+  if (value.op_type == 201||value.op_type ==2010) {
     setTimerValue(0);
     localStorage.removeItem("spei");
     localStorage.removeItem("timer");
@@ -719,7 +763,7 @@ onMounted(async () => {
                         </v-list-item-title>
                         <template v-slot:append>
                           <p class="text-700-14 white">
-                            $ {{ parseFloat(currencyItem.amount).toFixed(2) }}
+                            {{ formatCurrencySymbols(currencyItem.currency) }} {{ parseFloat(currencyItem.amount).toFixed(2) }}
                           </p>
                         </template>
                       </v-list-item>
@@ -801,7 +845,7 @@ onMounted(async () => {
                         }}</v-list-item-title>
                         <template v-slot:append>
                           <p class="text-700-10 white">
-                            $ {{ parseFloat(currencyItem.amount).toFixed(2) }}
+                            {{ formatCurrencySymbols(currencyItem.currency) }} {{ parseFloat(currencyItem.amount).toFixed(2) }}
                           </p>
                         </template>
                       </v-list-item>

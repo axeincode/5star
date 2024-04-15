@@ -284,7 +284,7 @@ onMounted(async () => {
                           {{ item.type == 0 ? t("bonus.text_3") : t("bonus.text_4") }}
                         </div>
                         <div class="mt-2">
-                          {{ item.currency?.toLocaleUpperCase() }}
+                          {{ platformCurrency }}
                           {{ item.receive }}
                         </div>
                       </v-col>

@@ -149,4 +149,16 @@ export namespace NETWORK {
   export class COLLECTOR_LOG {
     static OPERATE_COLLECTOR_LOG = '/log/collector/new';
   }
+
+  // 下载app活动 api
+  export class DOWNLOADAPP {
+    static  USER_DOWAPP_INFO_ACQUISTION = '/user/downloadapp/list';
+    static DOWAPP_INFO_ACQUISTION = '/downloadapp/list';
+    static DOWAPP_RECEIVE = '/user/downloadapp/receive';
+  }
+
+  // 通用 api
+  export class COMMON {
+    static SERVER_TIMESTAMP = '/timeunix';
+  }
 }

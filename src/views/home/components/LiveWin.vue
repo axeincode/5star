@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, computed, onUnmounted, onActivated, onDeactivated } from "vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { useRouter } from "vue-router";
@@ -26,6 +26,13 @@ import { Pagination, Virtual, Autoplay, Navigation } from "swiper/modules";
 import vipLevelGroups from "@/utils/VipLevelGroup";
 import { storeToRefs } from "pinia";
 import {GameBigWinItem} from "@/interface/game"
+
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed<string>(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -99,9 +106,23 @@ const goGame = (item: any) => {
   router.push(`/game/${item.game_id}`);
 }
 
+const swiper = ref<any>(null);
+const swiperShow = ref<boolean>(true);
+const getSwiperRef = (swiperInstance: any) => {
+  swiper.value = swiperInstance;
+};
+
 onMounted(async () => {
   await dispatchGameBigWin();
 });
+
+// 提前手动关闭swiper，缓存组件时，就可以避免不动的问题
+onActivated(() => {
+  swiperShow.value = true;
+})
+onDeactivated(() => {
+  swiperShow.value = false;
+})
 
 const liveWinList = ()=>{
   let res =[...gameBigWinItem.value.lucky_bets, ...gameBigWinItem.value.lucky_bets];
@@ -137,7 +158,8 @@ const liveWinList = ()=>{
     </div> -->
     <div class="live-win-body">
       <Swiper
-      :modules="modules"
+        v-if="swiperShow"
+        :modules="modules"
         :slidesPerView="5"
         :spaceBetween="8"
         :loop="true"
@@ -147,6 +169,7 @@ const liveWinList = ()=>{
         }"
         class="mx-2"
         style="height: auto"
+        @swiper="getSwiperRef"
       >
         <SwiperSlide
           v-for="(item, index) in liveWinList()"
@@ -165,7 +188,7 @@ const liveWinList = ()=>{
               <img :src="vipLevelGroups[item.user_vip_group]" width="12" />
               <p class="text-500-8 white ml-1">{{ item.user_name }}</p>
             </div>
-            <div class="text-900-10 color-12FF76">${{ item.win_amount }}</div>
+            <div class="text-900-10 color-12FF76">{{ platformCurrency }}{{ item.win_amount }}</div>
           </div>
         </SwiperSlide>
       </Swiper>
@@ -206,7 +229,7 @@ const liveWinList = ()=>{
               <img :src="vipLevelGroups[item.user_vip_group]" width="21" />
               <p class="text-400-14 white ml-2">{{ item.user_name }}</p>
             </div>
-            <div class="text-900-18 color-12FF76">${{ item.win_amount }}</div>
+            <div class="text-900-18 color-12FF76">{{ platformCurrency }}{{ item.win_amount }}</div>
           </div>
         </SwiperSlide>
       </Swiper>

@@ -67,14 +67,13 @@ onMounted(async () => {
       class="mx-3 m-third-parth-vendor-loading-container"
       :class="gameConfirmDialogShow ? 'm-third-parth-vendor-bg-blur' : ''"
     >
-      <div class="d-flex align-center">
+      <div class="d-flex align-center" @click="goToBackPage">
         <v-btn
           class="text-none m-third-parth-vendor-back-btn"
           variant="elevated"
           icon="mdi-chevron-left"
           width="20"
           height="20"
-          @click="goToBackPage"
         >
         </v-btn>
         <p class="text-800-14 white ml-2">{{ t("home.game_providers") }}</p>

@@ -51,6 +51,9 @@ watch(vipNavBarToggle, (value: string) => {
     vipDrawer.value = true;
     document.body.style.height =
       vipNavigation.value.getBoundingClientRect().height + "px";
+  } else if(value === "2") { 
+    initVip();
+    vipDrawer.value = true;
   } else {
     vipDrawer.value = false;
     document.body.style.height = "auto";
@@ -62,7 +65,9 @@ onMounted(async () => {
     vipDrawer.value = true;
     document.body.style.height =
       vipNavigation.value.getBoundingClientRect().height + "px";
-  } else {
+  } else if(localStorage.getItem("vipBar") === "2") {
+    vipDrawer.value = true;
+  }else {
     vipDrawer.value = false;
   }
   await dispatchVipCycleawardList();

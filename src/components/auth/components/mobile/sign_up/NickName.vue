@@ -107,7 +107,12 @@ const getSwiperRef = (swiperInstance: any) => {
   swiper.value = swiperInstance;
 };
 
-const submitNickName = async () => {
+const submitNickName = async (event) => {
+  // 不是回车键不触发  event.keyCode判断是不是软键盘触发
+  if(event.keyCode !== undefined && event.keyCode !== 13) return
+  //关闭手机软键盘
+  document.activeElement.blur();
+
   if (!validateUserName()) {
     isShowUsernameValidation.value = true;
     return;
@@ -198,22 +203,26 @@ onMounted(() => {
         {{ t("signup.displayNamePage.title") }}
       </p>
     </div>
+    <!-- 修改用户昵称 -->
     <div class="mx-5 mt-16 relative m-display-name-input">
-      <v-text-field
-        :label="t('signup.displayNamePage.username')"
-        class="form-textfield dark-textfield ma-0 m-signup-displayname"
-        variant="solo"
-        density="comfortable"
-        v-model="userName"
-        :onfocus="handleOnUserNameInputFocus"
-        :onblur="handleOnUserNameInputBlur"
-      />
-      <ValidationBox
-        v-if="isShowUsernameValidation"
-        :title="t('signup.displayNamePage.validation.username.title')"
-        :descriptionList="userNameValidationStrList"
-        :validationList="userNameValidationList"
-      />
+      <form action="javascript:return true;" @submit.prevent>
+        <v-text-field
+          :label="t('signup.displayNamePage.username')"
+          class="form-textfield dark-textfield ma-0 m-signup-displayname"
+          variant="solo"
+          density="comfortable"
+          v-model="userName"
+          :onfocus="handleOnUserNameInputFocus"
+          :onblur="handleOnUserNameInputBlur"
+          @keypress="submitNickName"
+        />
+        <ValidationBox
+          v-if="isShowUsernameValidation"
+          :title="t('signup.displayNamePage.validation.username.title')"
+          :descriptionList="userNameValidationStrList"
+          :validationList="userNameValidationList"
+        />
+      </form>
     </div>
     <v-row class="mx-5 mt-5">
       <v-btn

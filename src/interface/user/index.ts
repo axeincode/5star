@@ -23,6 +23,7 @@ export interface GetUserInfo {
   sys_communications: false
   locked_personal_info_fields: Array<string>
   create_at: number
+  is_first_deposit:boolean
 }
 export interface GetUserAmount {
   amount: number
