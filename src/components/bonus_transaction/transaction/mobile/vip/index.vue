@@ -131,50 +131,6 @@ const vipMenuTitle = computed(() => {
 });
 
 const pageNo = async (page_no: number) => {
-  // if (selectedVipMenuItem.value == 'vipRebateHistory') {
-  //   await dispatchVipRebateHistory({
-  //     page_num: page_no,
-  //     page_size: pageSize.value,
-  //     start_time: Math.ceil(moment().valueOf() / 1000),
-  //   });
-  //   paginationLength.value = vipRebateHistory.value.total;
-  // }
-  // if (selectedVipMenuItem.value == 'vipLevelRewardHistory') {
-  //   await dispatchVipLevelRewardHistory({
-  //     page_num: page_no,
-  //     page_size: pageSize.value,
-  //     start_time: Math.ceil(moment().valueOf() / 1000),
-  //   });
-  //   paginationLength.value = vipLevelRewardHistory.value.total;
-  // }
-  // if (selectedVipMenuItem.value == 'vipTimesHistory') {
-  //   selectedHistoryIndex.value = 1;
-  //   await dispatchVipTimesHistory({
-  //     index: 1,
-  //     page_num: page_no,
-  //     page_size: pageSize.value,
-  //     start_time: Math.ceil(moment().valueOf() / 1000),
-  //   });
-  //   paginationLength.value = vipTimesHistory.value.total;
-  // }
-  // if (selectedVipMenuItem.value == 'vipTimesHistory') {
-  //   selectedHistoryIndex.value = 2;
-  //   await dispatchVipTimesHistory({
-  //     index: 2,
-  //     page_num: page_no,
-  //     page_size: pageSize.value,
-  //     start_time: Math.ceil(moment().valueOf() / 1000),
-  //   });
-  //   paginationLength.value = vipTimesHistory.value.total;
-  // }
-  // if (selectedVipMenuItem.value == 'vipSigninHistory') {
-  //   await dispatchVipSigninHistory({
-  //     page_num: page_no,
-  //     page_size: pageSize.value,
-  //     start_time: Math.ceil(moment().valueOf() / 1000),
-  //   })
-  //   paginationLength.value = vipSigninHistory.value.total;
-  // }
   let total = 1
   switch(selectedVipMenuItem.value) {
     case History.rateBack:
@@ -306,7 +262,7 @@ onMounted(async () => {
   paginationLength.value = vipRebateHistory.value.total
 
   // 初始化完成
-  emit('inited')
+  emit('inited', false)
 });
 // 计算页数
 // function getTotalPages(total:number, pageSize: number) {

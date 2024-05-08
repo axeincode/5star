@@ -98,7 +98,7 @@ const submitCancel = async () => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // bonus dialog container
 .bonus-dialog-container {
   background-color: #15161c;

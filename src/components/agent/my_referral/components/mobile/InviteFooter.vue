@@ -39,7 +39,7 @@ const mobileWidth = computed(() => {
   </v-card>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-agent-referral-footer-card-bg {
   background: linear-gradient(
     52deg,

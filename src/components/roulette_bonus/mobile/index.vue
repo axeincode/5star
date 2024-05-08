@@ -437,7 +437,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-roulette-bonus-help-menu {
   left: 50% !important;
   transform: translateX(-50%) !important;
@@ -844,4 +844,33 @@ onMounted(() => {
     }
   }
 }
+</style>
+
+<style lang="scss">
+.m-roulette-bonus-dialog-body {
+    .m-roulette-bonus-dialog-body-2 {
+      .v-btn__content {
+        text-align: center;
+        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+      }
+    }
+
+    .m-roulette-bonus-dialog-body-4 {
+      .v-btn__content {
+        color: #fff;
+        text-align: center;
+        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: normal;
+      }
+    }
+  }
+
 </style>

@@ -236,36 +236,38 @@ const handleVerifyCode = () => {
 </template>
 
 <style lang="scss">
-.user-info-body:before {
-    content: "";
-    position: absolute;
-    left: -10px;
-    top: 60px;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #1D2027;
-}
-
-.user-info-item {
-    height: 56px !important;
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-
-}
-
-.account-edit-btn {
-    background: transparent !important;
-    box-shadow: none !important;
-
-    .v-btn__content {
-        font-weight: 400;
-        font-size: 12px;
-        color: #7782AA;
+.user-info-body {
+    &:before {
+        content: "";
+        position: absolute;
+        left: -10px;
+        top: 60px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid #1D2027;
     }
-}
 
-.user-pwd-spacing {
-    letter-spacing: 2px;
+    .user-info-item {
+        height: 56px !important;
+        box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
+
+    }
+
+    .account-edit-btn {
+        background: transparent !important;
+        box-shadow: none !important;
+
+        .v-btn__content {
+            font-weight: 400;
+            font-size: 12px;
+            color: #7782AA;
+        }
+    }
+
+    .user-pwd-spacing {
+        letter-spacing: 2px;
+    }
 }
 </style>

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from 'vue';
+// import ActivityDrawer from '../ActivityDrawer.vue'
+import ActivityDrawer from '../activityDrawer/activityDialog.vue'
 import { appBarStore } from '@/store/appBar';
 import { authStore } from "@/store/auth";
 import { userStore } from '@/store/user';
@@ -9,6 +11,7 @@ import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
 import { type GetPixInfo } from '@/interface/deposit';
 import { type GetUserInfo } from "@/interface/user";
+import { activityAppStore } from '@/store/activityApp';
 import ValidationBox from '@/components/cash/mxn/deposit/ValidationBox.vue';
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
@@ -22,13 +25,18 @@ import { useToast } from "vue-toastification";
 import icon_public_105 from "@/assets/public/svg/icon_public_105.svg";
 import icon_public_106 from "@/assets/public/svg/icon_public_106.svg";
 import icon_public_107 from "@/assets/public/svg/icon_public_107.svg";
+// import icon_public_160 from "@/assets/public/svg/icon_public_160.svg";
+import icon_public_Vector from "@/assets/public/svg/Vector.svg";
+import icon_public_161 from "@/assets/public/svg/icon_public_161.svg";
 import { getUnitByCurrency } from '@/utils/currencyUnit';
 import currencyListValue from '@/utils/currencyList';
 import AdjustClass from '@/utils/adjust';
 import EventToken from '@/constants/EventToken';
+import usePageLoading from "@/hooks/pageLoading"
+import LoadingBtn from "@/components/global/loadingBtn.vue"
+
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
-
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -36,6 +44,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
+const { pageLoading, setPageLoading, Loading } = usePageLoading()
 
 const modelValueNew = computed({
   get() {
@@ -45,7 +54,7 @@ const modelValueNew = computed({
     emit("update:modelValue", val);
   },
 });
-
+const { runningSystem } = activityAppStore();
 const depositWithdrawToggle = computed(() => {
   const { getDepositWithdrawToggle } = storeToRefs(appBarStore());
   return getDepositWithdrawToggle.value;
@@ -153,6 +162,13 @@ const paymentList = ref<Array<GetPaymentItem>>([
 
 const depositAmountList = ref<Array<any>>([])
 
+  
+// 获取模式
+const mobile = computed(() => {
+  const { getMobile } = storeToRefs(activityAppStore());
+  return getMobile.value;
+});
+
 const depositBlurEffectShow = computed(() => {
   const { getDepositBlurEffectShow } = storeToRefs(appBarStore());
   return getDepositBlurEffectShow.value
@@ -164,7 +180,7 @@ const depositToggleSwitch = ref<boolean>(false);
 
 const depositRate = ref<number>(0);
 
-const depositAmount = ref<string | number>(0)
+const depositAmount = ref<string | number>('')
 
 const stopCheckDepositAmount = ref<boolean>(false)
 // 是否展示充值活动说明框
@@ -187,13 +203,16 @@ const depositInfoDialogVisible = ref<boolean>(false);
 const mxnPaymentChannel = ref<any>({
   spei: icon_public_106,
   oxxo: icon_public_105,
-  codi: icon_public_107
+  codi: icon_public_107,
+  visa: icon_public_161
 })
 
 const notificationShow = ref<boolean>(false);
 const currencyMenuShow = ref<boolean>(false);
 const paymentMenuShow = ref<boolean>(false);
 const bonusAmount = ref<number>(0);
+const showActivityDrawer=ref<boolean>(false);
+const activityId=ref<string>('');
 
 const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
 
@@ -290,15 +309,21 @@ watch(depositConfig, (newValue) => {
         }
       }
     })
+
+    // 充值档位初始化
     depositAmountList.value.push({
       depositSelect: item,
       bonus: bonusAmount,
       type: bonusType
     })
-    console.log(depositAmountList.value,'depositAmountList.valuedepositAmountList.value')
+
     // 当没有充值活动时，不展示活动说明框
    showDepositBonusCard.value=depositAmountList.value.some((item:any)=>item.bonus!==0)
   })
+
+  // 默认选择300档位
+  handleDepositAmount('300')
+  
   // depositAmountList.value = newValue["list"];
   // bonusAmount.value = newValue["bonus"][0]["type"] == 0 ? Number(newValue["bonus"][0].award) : Number(newValue["bonus"][0].rate) * 100
 }, { deep: true });
@@ -336,6 +361,7 @@ const formatCurrency = (currency: number, locale: string, currencyUnit: string) 
 
 const handleSelectPayment = (item: GetPaymentItem) => {
   selectedPaymentItem.value = item;
+  paymentMenuShow.value=false
 }
 
 const validateAmount = (): boolean => {
@@ -347,6 +373,8 @@ const validateAmount = (): boolean => {
 }
 
 const handleAmountInputFocus = (): void => {
+  console.log('handleAmountInputFocus');
+  
   if (validateAmount()) {
     isShowAmountValidation.value = false;
   } else {
@@ -436,10 +464,10 @@ const handleDepositSubmit = async () => {
 
   // 先打开一个新页面，成功请求有url再赋值，不成功则关闭
   let winRef:any = null
-  // oxxo 7 codi 8 都会返回url，打开页面
+  // oxxo 7 codi 8 codi 9 都会返回url，打开页面
   // 浏览器端处理
-  if(!appInstance) {
-    if(selectedPaymentItem.value.id === '7' || selectedPaymentItem.value.id === '8') {
+  if(mobile.value) {
+    if(selectedPaymentItem.value.id === '7' || selectedPaymentItem.value.id === '8'|| selectedPaymentItem.value.id === '9') {
       winRef = window.open('about:blank', '_blank')
     }
   }
@@ -477,10 +505,8 @@ const handleDepositSubmit = async () => {
       // form.method = 'POST';
       // document.body.appendChild(form);
       // form.submit();
-
       setTimeout(() => {
-        
-        if(!appInstance) { 
+        if(mobile.value) { 
          // 浏览器端打开新页面
          if(winRef) winRef.location = depositSubmit.value.url
         } else {
@@ -488,7 +514,6 @@ const handleDepositSubmit = async () => {
           window["AndroidWebView"].openUrl(depositSubmit.value.url)
         }
       }, 0)
-
       const toast = useToast();
       toast.success(t("deposit_dialog.text_1"), {
         timeout: 3000,
@@ -682,12 +707,11 @@ const promoBlurEffectShow = computed(() => {
 // 跳转活动页
 const jumpPromocione=()=>{
   if(!userInfo.value.is_first_deposit){
-     router.push({name: "Promo_Detail",query:{id:promoList.value.group_data[0].list_data[0].id}})
+    activityId.value=promoList.value.group_data[0].list_data[0].id
   }else{
-     router.push({name: "Promo_Detail",query:{id:promoList.value.group_data[0].list_data[1].id}})
+    activityId.value=promoList.value.group_data[0].list_data[1].id
   }
-  setDepositDialogToggle(false);
-  setCashDialogToggle(false);
+  showActivityDrawer.value=true
 }
 
 watch(bonusCheck, (newValue) => {
@@ -793,6 +817,7 @@ const countDepositAmount=(item:any)=>{
 }
 
 onMounted(async () => {
+  setPageLoading(true)
   AdjustClass.getInstance().adjustTrackEvent({
     key: "PAGE_VIEW",
     value: "deposit",
@@ -801,12 +826,14 @@ onMounted(async () => {
   setDepositWithdrawToggle(false);
   await dispatchUserDepositCfg();
   await dispatchUserActivityList();
+  runningSystem()
   selectedCurrencyUnit.value = userBalance.value.currency;
   currencyList.value.map(item => {
     if (item.name == userBalance.value.currency) {
       selectedCurrencyItem.value = item;
     }
   })
+  setPageLoading(false)
 })
 </script>
 
@@ -821,240 +848,296 @@ onMounted(async () => {
     style="top: 60px"
     persistent
   >
-    <div class="mobile-deposit-container" :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''">
-      <v-row class="mt-6 mx-10 text-400-12 gray">{{ t("deposit_dialog.deposit_currency") }}</v-row>
-      <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
-        <template v-slot:activator="{ props }">
-          <v-card
-            color="#15161C"
-            theme="dark"
-            class="mx-6 mt-4 m-deposit-card-height"
-            style="border-radius: 8px"
-          >
-            <v-list-item
-              v-bind="props"
-              class="currency-item m-deposit-card-height"
-              value="currency dropdown"
+    <div
+      class="mobile-deposit-container"
+      :class="depositBlurEffectShow ? 'deposit-bg-blur' : ''"
+    >
+      <Loading v-if="pageLoading" height="100%"></Loading>
+      <template v-else>
+        <v-row class="mt-6 mx-10 text-400-12 gray">{{
+          t("deposit_dialog.deposit_currency")
+        }}</v-row>
+        <v-menu offset="4" class="mt-1" v-model:model-value="currencyMenuShow">
+          <template v-slot:activator="{ props }">
+            <v-card
+              color="#15161C"
+              theme="dark"
+              class="mx-6 mt-4 m-deposit-card-height"
+              style="border-radius: 8px"
             >
-              <template v-slot:prepend>
-                <img :src="selectedCurrencyItem.icon" width="20" />
-              </template>
-              <v-list-item-title class="ml-2 text-400-12">{{ selectedCurrencyItem.name }}</v-list-item-title>
-            </v-list-item>
-          </v-card>
-        </template>
-        <!-- <v-list theme="dark" bg-color="#15161C" class="px-2">
-        <v-list-item
-          class="currency-item pl-6"
-          :value="currencyItem.name"
-          :class="
-            selectedCurrencyItem.name == currencyItem.name ? 'currency-selected-item' : ''
-          "
-          v-for="(currencyItem, currencyIndex) in currencyList"
-          :key="currencyIndex"
-          @click="handleSelectCurrency(currencyItem)"
-        >
-          <template v-slot:prepend>
-            <img :src="currencyItem.icon" width="20" />
+              <v-list-item
+                v-bind="props"
+                class="currency-item m-deposit-card-height"
+                value="currency dropdown"
+              >
+                <template v-slot:prepend>
+                  <img :src="selectedCurrencyItem.icon" width="20" />
+                </template>
+                <v-list-item-title class="ml-2 text-400-12">{{
+                  selectedCurrencyItem.name
+                }}</v-list-item-title>
+              </v-list-item>
+            </v-card>
           </template>
-          <v-list-item-title class="ml-2 text-400-12">
-            {{ currencyItem.name }}
-          </v-list-item-title>
-        </v-list-item>
-        </v-list>-->
-      </v-menu>
-      <v-row class="mt-6 mx-10 text-400-12 gray">{{ t("deposit_dialog.choose_payment_method") }}</v-row>
-
-      <!-- 付款方式 -->
-      <v-menu
-        offset="4"
-        class="mt-1"
-        v-model:model-value="paymentMenuShow"
-        content-class="m-deposit-payment-menu"
-      >
-        <template v-slot:activator="{ props }">
-          <v-card
-            color="#15161C"
-            theme="dark"
-            class="mx-6 mt-4 m-deposit-card-height"
-            style="border-radius: 8px"
+          <!-- <v-list theme="dark" bg-color="#15161C" class="px-2">
+          <v-list-item
+            class="currency-item pl-6"
+            :value="currencyItem.name"
+            :class="
+              selectedCurrencyItem.name == currencyItem.name ? 'currency-selected-item' : ''
+            "
+            v-for="(currencyItem, currencyIndex) in currencyList"
+            :key="currencyIndex"
+            @click="handleSelectCurrency(currencyItem)"
           >
-            <v-list-item
-              v-bind="props"
-              class="payment-item m-deposit-card-height"
-              value="payment dropdown"
-              :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-            >
-              <template v-slot:prepend>
-                <img :src="selectedPaymentItem.icon" width="52" />
-              </template>
-              <v-list-item-title class="ml-2 text-400-12">{{ selectedPaymentItem.name }}</v-list-item-title>
-            </v-list-item>
-          </v-card>
-        </template>
-        <v-list theme="dark" bg-color="#15161C" class="mr-6">
-          <v-row class="m-payment-width-370 px-2">
-            <v-col
-              cols="12"
-              v-for="(paymentItem, paymentIndex) in paymentList"
-              :key="paymentIndex"
-              class="pa-1"
-            >
-              <v-card
-                color="#23262F"
-                theme="dark"
-                class="text-center"
-                :class="selectedPaymentItem.name == paymentItem.name ? 'border-active' : ''"
-                style="border-radius: 8px; box-shadow: none"
-              >
-                <v-list-item
-                  class="payment-select-item pa-2"
-                  :value="paymentItem.name"
-                  @click="handleSelectPayment(paymentItem)"
-                >
-                  <v-row class="align-center">
-                    <v-col cols="4" class="text-center">
-                      <img :src="paymentItem.icon" width="62" />
-                    </v-col>
-                    <v-col cols="8" class="text-left">
-                      <v-list-item-title class="text-400-12">{{ paymentItem.name }}</v-list-item-title>
-                      <v-list-item-title class="text-400-12">{{ paymentItem.description }}</v-list-item-title>
-                    </v-col>
-                  </v-row>
-                </v-list-item>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-list>
-      </v-menu>
+            <template v-slot:prepend>
+              <img :src="currencyItem.icon" width="20" />
+            </template>
+            <v-list-item-title class="ml-2 text-400-12">
+              {{ currencyItem.name }}
+            </v-list-item-title>
+          </v-list-item>
+          </v-list>-->
+        </v-menu>
+        <v-row class="mt-6 mx-10 text-400-12 gray">{{
+          t("deposit_dialog.choose_payment_method")
+        }}</v-row>
 
-      <div class="mx-4 mt-2">
-        <img src="@/assets/public/image/bg_public_02_01.png" style="width: 100%" />
-      </div>
-      <v-row class="mt-2 mx-10 text-400-12 gray">{{ t("deposit_dialog.deposit_amount") }}</v-row>
-      <v-row class="mt-2 mx-4">
-        <v-col
-          cols="4"
-          class="py-1 px-2"
-          v-for="(depositAmountItem, depositAmountIndex) in depositAmountList"
-          :key="depositAmountIndex"
-        >
-          <v-btn
-            class="my-1 text-none"
-            height="40px"
-            :class="[
-            depositAmountItem.depositSelect == depositAmount
-              ? 'm-deposit-amout-btn-black'
-              : 'm-deposit-amout-btn-white',
-          ]"
-            @click="handleDepositAmount(depositAmountItem.depositSelect)"
-          >
-            <div class="m-deposit-amout-btn-text-box">
-              <span
-                class="m-deposit-amout-btn-text-price"
-              >{{ platformCurrency }}{{ depositAmountItem.depositSelect }}</span>
-              <div
-                class="m-deposit-amout-btn-text-award-price"
-                v-if="!bonusCheck && depositAmountItem.bonus != 0"
-              >
-                <font class="text-700-6 white">{{ t("deposit_dialog.text_3")}}</font>
-                <font
-                  class="text-700-6 award-price-color"
-                >{{ platformCurrency }}{{countDepositAmount(depositAmountItem)}}</font>
-              </div>
-            </div>
-
-            <div class="m-deposit-amount-area" v-if="!bonusCheck && depositAmountItem.bonus != 0">
-              <div class="m-deposit-amount-rate-text">
-                {{
-                depositAmountItem.type == 0
-                ? depositAmountItem.bonus
-                : Number(depositAmountItem.bonus) * 100 + "%"
-                }}
-              </div>
-            </div>
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-row class="mt-3 mx-3 relative">
-        <v-text-field
-          :label="`${t('deposit_dialog.amount')}(${platformCurrency})`"
-          class="form-textfield dark-textfield m-deposit-amount-text"
-          variant="solo"
-          density="comfortable"
-          color="#7782AA"
+        <!-- 付款方式 -->
+        <v-card
+          color="#15161C"
+          theme="dark"
+          class="mx-6 mt-4 m-deposit-card-height"
           style="border-radius: 8px"
-          v-model="depositAmount"
-          :onfocus="handleAmountInputFocus"
-          :onblur="handleAmountInputBlur"
-          @input="handleAmountInputChange"
-        />
-        <ValidationBox
-          v-if="isShowAmountValidation"
-          :validationText2="
-          t('withdraw_dialog.validation.text_2') +
-          selectedPaymentItem.min +
-          ', ' +
-          t('withdraw_dialog.validation.text_3') +
-          selectedPaymentItem.max +
-          '.'
-        "
-        />
-      </v-row>
-      <div class="mt-0 mx-4 d-flex align-center">
-        <div>
-          <v-checkbox
-            hide-details
-            icon
-            class="amount-checkbox"
-            v-model="bonusCheck"
-            label="Not participating in promotional activities"
+        >
+          <v-list-item
+            v-bind="props"
+            class="payment-item m-deposit-card-height"
+            value="payment dropdown"
+            :append-icon="paymentMenuShow ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+            @click="paymentMenuShow = !paymentMenuShow"
+          >
+            <template v-slot:prepend>
+              <!-- <img :src="selectedPaymentItem.icon" width="52" /> -->
+              <inline-svg :src="selectedPaymentItem.icon" width="62"></inline-svg>
+            </template>
+            <v-list-item-title class="ml-2 text-400-12">{{
+              selectedPaymentItem.name
+            }}</v-list-item-title>
+          </v-list-item>
+        </v-card>
+        <div v-if="paymentMenuShow">
+          <v-list theme="dark" bg-color="#15161C" class="mr-6 ml-6">
+            <v-row class="m-payment-width-370 px-2">
+              <v-col
+                cols="12"
+                v-for="(paymentItem, paymentIndex) in paymentList"
+                :key="paymentIndex"
+                class="pa-1"
+              >
+                <v-card
+                  color="#23262F"
+                  theme="dark"
+                  class="text-center"
+                  :class="
+                    selectedPaymentItem.name == paymentItem.name
+                      ? 'border-active'
+                      : ''
+                  "
+                  style="border-radius: 8px; box-shadow: none"
+                >
+                  <v-list-item
+                    class="payment-select-item pa-2"
+                    :value="paymentItem.name"
+                    @click="handleSelectPayment(paymentItem)"
+                  >
+                    <v-row class="align-center">
+                      <v-col cols="4" class="text-center">
+                        <!-- ios端用img显示svg会显示模糊 -->
+                        <img v-if="paymentItem.id !== '9'" :src="paymentItem.icon" width="62" height="28" />
+                        <inline-svg v-else :src="paymentItem.icon" width="62"></inline-svg>
+                        <!-- <inline-svg :src="paymentItem.icon" width="62"></inline-svg> -->
+                      </v-col>
+                      <v-col cols="8" class="text-left">
+                        <v-list-item-title class="text-400-12">{{
+                          paymentItem.name
+                        }}</v-list-item-title>
+                        <v-list-item-title class="text-400-12">{{
+                          paymentItem.description
+                        }}</v-list-item-title>
+                      </v-col>
+                    </v-row>
+                  </v-list-item>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-list>
+        </div>
+
+        <div class="mx-4 mt-2">
+          <img
+            src="@/assets/public/image/bg_public_02_01.png"
+            style="width: 100%"
           />
         </div>
+        <v-row class="mt-2 mx-10 text-400-12 gray">{{
+          t("deposit_dialog.deposit_amount")
+        }}</v-row>
 
-        <!-- <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" /> -->
-      </div>
-      <!-- <v-row class="m-deposit-footer-text-position text-600-10 white justify-center mx-2">
-      {{ selectedCurrencyUnit }}{{ depositAmount }} + {{ selectedCurrencyUnit }}
-      {{
-        depositConfig["bonus"].length > 0 &&
-        depositConfig["bonus"][0]["type"] == 0 &&
-        depositConfig["bonus"] != undefined
-          ? depositRate
-          : (Number(depositAmount) * depositRate).toFixed(2)
-      }}
-      {{ t("deposit_dialog.other_text_1") }}
-      </v-row>-->
-      <template v-if="showDepositBonusCard">
-        <div
-          v-if="!bonusCheck"
-          class="m-deposit-bonus-card mx-6 px-2 py-2"
-          :class="bonusCheck ? '' : 'm-deposit-bonus-card-border'"
-        >
-          <div class="m-deposit-btn-check" @click="jumpPromocione">
-            <span>{{ t("deposit_dialog.text_4") }}</span>
-            <span class="ml-1">{{'>'}}</span>
+        <!-- 存款数额档次 -->
+        <v-row class="mt-2 mx-4">
+          <v-col
+            cols="4"
+            class="py-1 px-2"
+            v-for="(depositAmountItem, depositAmountIndex) in depositAmountList"
+            :key="depositAmountIndex"
+          >
+            <v-btn
+              class="text-none"
+              :class="[
+                depositAmountItem.depositSelect == depositAmount
+                  ? 'm-deposit-amout-btn-black'
+                  : 'm-deposit-amout-btn-white'
+              ]"
+              @click="handleDepositAmount(depositAmountItem.depositSelect)"
+            >
+              <div class="m-deposit-amout-btn-text-box">
+                <span class="m-deposit-amout-btn-text-price"
+                  >{{ platformCurrency
+                  }}{{ depositAmountItem.depositSelect }}</span
+                >
+                <div
+                  class="m-deposit-amout-btn-text-award-price"
+                >
+                  <!-- <font class="text-700-6 white">{{
+                    t("deposit_dialog.text_3")
+                  }}</font> -->
+                  <font v-if="!bonusCheck && depositAmountItem.bonus != 0" class="text-700-6 award-price-color"
+                    >= {{ platformCurrency
+                    }}{{ countDepositAmount(depositAmountItem) }}</font
+                  >
+                </div>
+              </div>
+              <!-- 比例 -->
+              <div
+                class="m-deposit-amount-area"
+                v-if="!bonusCheck && depositAmountItem.bonus != 0"
+              >
+                <inline-svg
+                  v-if="depositAmountItem.depositSelect == 300 || depositAmountItem.depositSelect == 1000"
+                  class="svg-hot"
+                  :src="icon_public_Vector"
+                  width="8"
+                  height="11"
+                ></inline-svg>
+                <div class="m-deposit-amount-rate-text">
+                  {{
+                    depositAmountItem.type == 0
+                      ? depositAmountItem.bonus
+                      : '+' + Number(depositAmountItem.bonus) * 100 + "%"
+                  }}
+                </div>
+              </div>
+              <!-- 火标志 -->
+              <!-- <div
+                class="m-deposit-amount-hot animated infinite tada"
+                v-if="
+                  depositAmountItem.depositSelect == 300 ||
+                    depositAmountItem.depositSelect == 1000
+                "
+              >
+                <inline-svg
+                  :src="icon_public_Vector"
+                  width="20"
+                  height="20"
+                  style="margin: 6px 0px 0px 6px"
+                ></inline-svg>
+              </div> -->
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <!-- 输入存款数 -->
+        <v-row class="mt-3 mx-3 relative">
+          <!-- :onfocus="handleAmountInputBlur"
+            :onblur="handleAmountInputFocus" -->
+          <v-text-field
+            :label="`${t('deposit_dialog.amount')}(${platformCurrency})`"
+            class="form-textfield dark-textfield m-deposit-amount-text"
+            variant="solo"
+            density="comfortable"
+            color="#7782AA"
+            style="border-radius: 8px"
+            v-model="depositAmount"
+            @input="handleAmountInputChange"
+          />
+          <ValidationBox
+            v-if="isShowAmountValidation"
+            :validationText2="
+              t('withdraw_dialog.validation.text_2') +
+                selectedPaymentItem.min +
+                ', ' +
+                t('withdraw_dialog.validation.text_3') +
+                selectedPaymentItem.max +
+                '.'
+            "
+          />
+        </v-row>
+
+        <!-- 确认 check -->
+        <div class="mt-0 mx-4 d-flex align-center">
+          <div>
+            <v-checkbox
+              hide-details
+              icon
+              class="amount-checkbox"
+              v-model="bonusCheck"
+              :label="t('withdraw_dialog.text_14')"
+            />
           </div>
-          <div class="d-flex align-center">
-            <img src="@/assets/vip/image/img_vip_10.png" width="21" />
-            <div class="text-700-12 white">{{ depositConfig.name }}</div>
+
+          <!-- <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" width="16" /> -->
+        </div>
+
+        <template v-if="showDepositBonusCard">
+          <div
+            v-if="!bonusCheck"
+            class="m-deposit-bonus-card mx-6 px-2 py-2"
+            :class="bonusCheck ? '' : 'm-deposit-bonus-card-border'"
+          >
+            <div class="m-deposit-btn-check" @click="jumpPromocione">
+              <span>{{ t("deposit_dialog.text_4") }}</span>
+              <span class="ml-1">{{ ">" }}</span>
+            </div>
+            <div class="d-flex align-center">
+              <img src="@/assets/vip/image/img_vip_10.png" width="21" />
+              <div class="text-700-12 white" style="flex: 1;">
+                {{ depositConfig.name }}
+              </div>
+            </div>
+            <div class="d-flex align-start ml-6">
+              <img src="@/assets/public/svg/icon_public_03.svg" />
+              <div class="text-400-8 gray">{{ t("deposit_dialog.text_2") }}</div>
+            </div>
           </div>
-          <div class="d-flex align-start ml-6">
-            <img src="@/assets/public/svg/icon_public_03.svg" />
-            <div class="text-400-8 gray">{{ t("deposit_dialog.text_2") }}</div>
-          </div>
+        </template>
+        <div class="m-deposit-btn-position">
+          <v-btn
+            class="my-3 mx-6 m-deposit-btn"
+            :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
+            height="48px"
+            :onclick="handleDepositSubmit"
+            style="width: -moz-available; width: -webkit-fill-available"
+          >
+            <LoadingBtn v-if="loading"></LoadingBtn>
+            <div v-else>
+              {{ t("deposit_dialog.deposit_btn_text") }}
+            </div>
+          </v-btn
+          >
         </div>
       </template>
-      <div class="m-deposit-btn-position">
-        <v-btn
-          class="my-4 mx-6 m-deposit-btn"
-          :class="isDepositBtnReady ? 'm-deposit-btn-ready' : ''"
-          height="48px"
-          :loading="loading"
-          :onclick="handleDepositSubmit"
-          style="width: -moz-available; width: -webkit-fill-available"
-        >{{ t("deposit_dialog.deposit_btn_text") }}</v-btn>
-      </div>
+
       <v-dialog
         v-model="promotionDialogVisible"
         width="326"
@@ -1080,9 +1163,14 @@ onMounted(async () => {
       </v-dialog>
     </div>
   </v-dialog>
+  <ActivityDrawer
+    v-model="showActivityDrawer"
+    :id="activityId"
+  ></ActivityDrawer>
 </template>
 
-<style lang="scss">
+
+<style lang="scss" scoped>
 .m-deposit-payment-menu {
   left: 24px !important;
 }
@@ -1090,8 +1178,10 @@ onMounted(async () => {
 // container
 .mobile-deposit-container {
   overflow-y: auto;
-  padding-bottom: 10px;
-
+  padding-bottom: 90px;
+  background-color: #1d2027;
+  height: 100%;
+  
   .m-deposit-bonus-card {
     // height: 83px;
     border-radius: 8px;
@@ -1109,23 +1199,17 @@ onMounted(async () => {
     border: 1px solid #009b3a;
   }
 
-  .form-textfield div.v-field__field {
-    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+  :deep(.form-textfield) {
+    .v-field__field {
+      box-shadow: 12px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
+    }
   }
-
-  .form-textfield div.v-field--variant-solo,
-  .v-field--variant-solo-filled {
-    background: transparent;
-  }
-
-  background-color: #1d2027;
-  height: 100%;
 
   .m-deposit-card-height {
     height: 40px;
   }
 
-  .v-list-item__prepend {
+  :deep(.v-list-item__prepend) {
     padding-left: 20px;
   }
 
@@ -1141,14 +1225,15 @@ onMounted(async () => {
     color: #ffffff;
   }
 
-  .m-deposit-amout-btn-black {
-    background: #009b3a;
-    border-radius: 4px;
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
+  .m-deposit-amout-btn-black,
+  .m-deposit-amout-btn-white {
+    height: 52px;
     width: 100% !important;
-    color: white !important;
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
+    color: #ffffff;
+    border-radius: 8px;
 
-    .v-btn__content {
+    :deep(.v-btn__content) {
       font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
         DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
         WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
@@ -1157,46 +1242,55 @@ onMounted(async () => {
       font-weight: 700;
       line-height: normal;
     }
+  }
+
+  .m-deposit-amout-btn-black {
+    background: #009b3a;
   }
 
   .m-deposit-amout-btn-white {
     background: #23262f;
-    border-radius: 4px;
-    color: #ffffff;
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21) !important;
-    width: 100% !important;
-
-    .v-btn__content {
-      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-    }
   }
 
   .m-deposit-amount-area {
-    width: 37px;
+    width: 60px;
     position: absolute;
     top: 0;
     right: 0;
-    background: #f97001;
-    border-radius: 0px 4px;
-    height: 11px;
-  }
+    background: #F94B01;
+    border-radius: 0px 8px;
+    height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  .m-deposit-amount-rate-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 8px;
-    font-weight: 400;
-    color: #ffffff;
-    letter-spacing: normal;
+    .svg-hot {
+      margin-right: 4px;
+      margin-bottom: 2px;
+    }
+
+    .m-deposit-amount-rate-text {
+      font-family: Inter;
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: normal;
+    }
   }
+  // .m-deposit-amount-hot {
+  //   width: 16px;
+  //   height: 16px;
+  //   position: absolute;
+  //   top: -8px;
+  //   right: 40px;
+  //   svg {
+  //     width: 16px;
+  //     height: 16px;
+  //     margin: 0px !important;
+  //   }
+  // }
+
+
 
   .m-deposit-btn {
     text-align: center;
@@ -1205,7 +1299,7 @@ onMounted(async () => {
     /* Button Shadow */
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
 
-    .v-btn__content {
+    :deep(.v-btn__content) {
       color: #fff;
       text-align: center;
       font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
@@ -1218,59 +1312,60 @@ onMounted(async () => {
     }
   }
 
-  .m-deposit-btn-ready {
-    background: #009b3a;
-    /* Button Shadow */
-    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
-
-    .v-btn__content {
-      color: white;
+  :deep(.dark-textfield) {
+    .v-field__field {
+      background-color: #15161c !important;
     }
-  }
-
-  .dark-textfield .v-field__field {
-    background-color: #15161c !important;
-  }
-
-  .v-field--variant-solo {
-    background: transparent !important;
-  }
-
-  .amount-checkbox .v-input--selection-controls__ripple {
-    padding: 16px !important;
-    border: 1px solid yellow !important;
   }
 
   .amount-checkbox {
     margin: 5px 0px 15px;
 
-    i.v-icon {
-      color: #15161c;
-      background-color: #01983a;
-      width: 16px;
-      height: 16px;
-      border-radius: 4px;
-      margin-top: 4px;
-    }
+    :deep(.v-input__control) {
+      .v-input--selection-controls__ripple {
+        padding: 16px !important;
+        border: 1px solid yellow !important;
+      }
 
-    i.mdi-checkbox-blank-outline {
-      background-color: #15161c;
-      box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
-      border-radius: 4px;
-    }
+      .v-selection-control {
+        min-height: 20px !important;
 
-    .v-selection-control {
-      min-height: 20px !important;
-    }
+        .v-selection-control__wrapper,
+        .v-selection-control__input {
+          width: 20px;
+          height: 20px;
+        }
 
-    .v-selection-control__wrapper,
-    .v-selection-control__input {
-      width: 20px;
-      height: 20px;
-    }
+        .v-selection-control__wrapper {
+          margin: 0 10px;
+        }
+      }
 
-    .v-selection-control__wrapper {
-      margin: 0 10px;
+      i.v-icon {
+        color: #15161c;
+        background-color: #01983a;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        margin-top: 4px;
+      }
+
+      i.mdi-checkbox-blank-outline {
+        background-color: #15161c;
+        box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
+        border-radius: 4px;
+      }
+
+      .v-label {
+        color: #7782aa !important;
+        // background: rgba(119, 130, 170, 1);
+        font-weight: 400;
+        font-size: 10px !important;
+        font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+          DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+          WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+        opacity: 1;
+      }
     }
   }
 
@@ -1283,25 +1378,59 @@ onMounted(async () => {
   .m-deposit-amout-btn-text-box {
     display: flex;
     flex-direction: column;
-    margin-top: 6px;
-  }
-  .m-deposit-amout-btn-text-award-price {
-    display: flex;
     align-items: center;
-    scale: 0.6;
+    justify-content: center;
+    height: 52px;
+    position: relative;
+
+    .m-deposit-amout-btn-text-price {
+      font-family: Inter, -apple-system;
+      font-size: 12px;
+      line-height: 15px;
+      font-weight: 700;
+    }
+
+    .m-deposit-amout-btn-text-award-price {
+      // display: flex;
+      // align-items: center;
+      // scale: 0.6;
+      height: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .award-price-color {
+      color: #f9bc01;
+      margin-left: 3px;
+    }
   }
-  .award-price-color {
-    color: #f9bc01;
-    margin-left: 3px;
-  }
+
+
 }
 
 .m-deposit-btn-position {
-  // position: absolute;
-  // bottom: 48px;
-  // left: 50%;
-  // transform: translateX(-50%);
-  // width: 98%;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background: #1d2027;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0px -4px 6px 1px #0000004d;
+
+  .m-deposit-btn-ready {
+    background: #009b3a;
+    /* Button Shadow */
+    box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
+
+    :deep(.v-btn__content) {
+      color: white;
+    }
+  }
 }
 
 .m-deposit-footer-text-position {
@@ -1330,18 +1459,18 @@ onMounted(async () => {
   }
 }
 
-.amount-checkbox {
-  .v-label {
-    color: #7782aa !important;
-    // background: rgba(119, 130, 170, 1);
-    font-weight: 400;
-    font-size: 10px !important;
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-      DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-      WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
-    opacity: 1;
-  }
-}
+// .amount-checkbox {
+//   .v-label {
+//     color: #7782aa !important;
+//     // background: rgba(119, 130, 170, 1);
+//     font-weight: 400;
+//     font-size: 10px !important;
+//     font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
+//       DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+//       WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+//     opacity: 1;
+//   }
+// }
 
 .m-promotion-dialog-position {
   z-index: 2550;
@@ -1352,14 +1481,19 @@ onMounted(async () => {
   z-index: 2550;
 }
 
-.v-dialog--persistent .v-dialog__content {
-  transform: none !important;
+// .v-dialog--persistent .v-dialog__content {
+//   transform: none !important;
+// }
+:deep(.v-dialog--persistent) {
+  .v-dialog__content {
+    transform: none !important;
+  }
 }
 
 .m-deposit-amount-text {
   transform-origin: top !important;
 
-  .v-field__field {
+  :deep(.v-field__field) {
     .v-label.v-field-label {
       font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
         DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,

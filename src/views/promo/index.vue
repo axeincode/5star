@@ -233,7 +233,7 @@ const i18nButtonText = (eng: string) => {
       <div
         class="text-center relative ml-2 m-promo-navigation-event-card"
         :class="activeIndex == 0 ? 'm-promo-navigation-event-card-active' : ''"
-        style="margin-top: 96px !important"
+        style="margin-top: 106px !important"
         @click="handleBtnTab(0)"
       >
         <inline-svg
@@ -294,7 +294,7 @@ const i18nButtonText = (eng: string) => {
         <v-card
           v-for="(item, index) in promoList.group_data[0].list_data"
           class="m-promo-navigation-card mx-2 relative"
-          :style="{ marginTop: index == 0 ? '96px !important' : '8px !important' }"
+          :style="{ marginTop: index == 0 ? '106px !important' : '8px !important' }"
         >
           <img
             :src="item.image_path"
@@ -405,6 +405,7 @@ const i18nButtonText = (eng: string) => {
 .m-promo-navigation-layout {
   margin-top: -100px;
   z-index: 13 !important;
+  height: calc(100% + 124px);
 
   .m-promo-navigation-drawer {
     background: $agent_card_notmet_bg !important;

@@ -7,6 +7,7 @@ import CacheKey from "@/constants/cacheKey";
 import { socketStore } from "@/store/socket";
 import { authStore } from "@/store/auth";
 import router from "@/router";
+import { getUrl } from "@/utils";
 
 const NETWORK_CODE:number = 200
 let timer: any = null;
@@ -131,7 +132,7 @@ export class Network {
         //     connectcb: this.connectConnector.bind(this),
         // };
         let cfg: starxMsg = {
-            host: "wss://pix.kim",
+            host: getUrl('ws'),
             port: port,
             path: "/user/connect/ws",
             connectcb: this.connectConnector.bind(this),

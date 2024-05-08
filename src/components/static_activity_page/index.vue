@@ -5,14 +5,32 @@ import { useI18n } from "vue-i18n";
 import { CookieService } from "@/utils/cookieService";
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
+
+const props = defineProps({
+  modelValue: {
+    type: Boolean
+  }
+});
+
+const emit = defineEmits(["update:modelValue", 'close']);
+
+const modelValueNew = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit("update:modelValue", val);
+  }
+});
+
 const platformCurrency = computed(() => {
   const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
   return getPlatformCurrency.value;
 });
 
-const emit = defineEmits<{
-  (e: "close"): void;
-}>();
+// const emit = defineEmits<{
+//   (e: "close"): void;
+// }>();
 const { t } = useI18n();
 
 const activityCheck = ref(false)
@@ -24,10 +42,16 @@ const checkboxChanged = () => {
     CookieService.deleteCookie('Static_Activity')
   }
 }
-
 </script>
 
 <template>
+<v-dialog
+  v-model="modelValueNew"
+  :width="328"
+  :scrim="true"
+  persistent
+  style="z-index: 1000002"
+>
   <div class="m-static-activity-container">
     <div class="m-static-activity-animation-container">
       <div class="m-static-activity-title">
@@ -36,18 +60,18 @@ const checkboxChanged = () => {
 
       <div class="m-static-activity-content">
         <p class="content-title">{{ t('static_activity.text_2') }}</p>
-        <p>🎁 {{ t('static_activity.text_3', [platformCurrency]) }}</p>
-        <p>🎁 {{ t('static_activity.text_4', [platformCurrency]) }}</p>
-        <p>🎁 {{ t('static_activity.text_5') }}</p>
-        <p style="margin: 0;">👉 {{ t('static_activity.text_6', [platformCurrency]) }}</p>
-        <p style="margin: 0;">👉 {{ t('static_activity.text_7', [platformCurrency]) }}</p>
-        <p>👉 {{ t('static_activity.text_8', [platformCurrency]) }}</p>
+        <p>🎁 {{ t('static_activity.text_3') }} <span class="highline-text-1">{{ t('static_activity.text_3_1', [platformCurrency]) }}</span> {{ t('static_activity.text_3_2') }}</p>
+        <p>🎁 {{ t('static_activity.text_4') }} <span class="highline-text-1">{{ t('static_activity.text_4_1', [platformCurrency]) }}</span> {{ t('static_activity.text_4_2') }}</p>
+        <p>🎁 {{ t('static_activity.text_5') }} <span class="highline-text-1">{{ t('static_activity.text_5_1') }}</span></p>
+        <p style="margin: 0;">👉 {{ t('static_activity.text_6') }} <span class="highline-text-1">{{ t('static_activity.text_6_1', [platformCurrency]) }}</span> {{ t('static_activity.text_6_2') }}</p>
+        <p style="margin: 0;">👉 {{ t('static_activity.text_7') }} <span class="highline-text-1">{{ t('static_activity.text_7_1', [platformCurrency]) }}</span> {{ t('static_activity.text_7_2') }}</p>
+        <p>👉 {{ t('static_activity.text_8') }} <span class="highline-text-1">{{ t('static_activity.text_8_1', [platformCurrency]) }}</span> {{ t('static_activity.text_8_2') }}</p>
         <p>{{ t('static_activity.text_9') }}</p>
-        <p style="margin: 0;">✅ {{ t('static_activity.text_10') }}</p>
+        <p style="margin: 0;" class="highline-text-2">✅ {{ t('static_activity.text_10') }}</p>
       </div>
 
-      <div class="d-flex align-center">
-        <div style="margin: auto;">
+      <div class=" d-flex align-center">
+        <div class="static-activity-checkbox_c" style="margin: auto;">
           <v-checkbox
             hide-details
             icon
@@ -72,20 +96,22 @@ const checkboxChanged = () => {
       </v-btn>
     </div>
   </div>
+</v-dialog>
 </template>
 
 <style lang="scss">
 .m-static-activity-container {
-  border-radius: 8px 8px 0px 0px;
   width: 328px;
   height: 569px;
 
   .m-static-activity-animation-container {
-    border-radius: 8px 8px 0px 0px;
+    border-radius: 8px 8px 8px 8px;
     background: #1d2027 !important;
     width: 328px;
     height: 569px;
     position: relative;
+    display: flex;
+    flex-direction: column;
 
     // close modal button
     .close-button {
@@ -98,10 +124,11 @@ const checkboxChanged = () => {
 
     .m-static-activity-content {
       width: 280px;
-      height: 435px;
+      // height: 435px;
+      flex: 1;
       border-radius: 8px;
       background: rgba(21, 22, 28, 1);
-      margin: 16px auto;
+      margin: 16px auto 0px;
       padding: 13px 16px 32px 16px;
       overflow-y: auto;
 
@@ -116,6 +143,9 @@ const checkboxChanged = () => {
       .content-title {
         text-align: center;
         margin-bottom: 20px;
+        font-weight: 700;
+        color: white;
+        font-size: 18px;
       }
     }
 
@@ -140,6 +170,17 @@ const checkboxChanged = () => {
       background: url(@/assets/static_pop_frame/top-bg.svg) no-repeat;
       background-color: rgba(0, 155, 58, 1);
       background-size: 100% 100%;
+    }
+
+    .highline-text-1 {
+      color: #F9BC01 !important;
+      font-weight: 800 !important;
+      font-family: $font_family !important;
+    }
+    .highline-text-2 {
+      color: #DE3D12 !important;
+      font-weight: 800 !important;
+      font-family: $font_family !important;
     }
   }
 
@@ -167,7 +208,7 @@ const checkboxChanged = () => {
     }
 
     .v-selection-control {
-      min-height: 20px !important;
+      height:30px !important;
     }
 
     .v-selection-control__wrapper,

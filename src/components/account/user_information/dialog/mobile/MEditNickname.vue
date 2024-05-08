@@ -153,7 +153,7 @@ const submitNickName = async () => {
 </script>
 
 <template>
-  <div class="m-user-container">
+  <div class="m-user-container--nickname">
     <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
     <v-row class="relative ma-2" style="margin-top: 110px !important">
       <v-text-field
@@ -205,7 +205,7 @@ const submitNickName = async () => {
 
 <style lang="scss">
 // account dialog container
-.m-user-container {
+.m-user-container--nickname {
   .form-textfield div.v-field__field {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }

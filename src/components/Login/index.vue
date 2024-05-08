@@ -16,6 +16,7 @@ import { useRoute } from "vue-router";
 import { gameStore } from "@/store/game";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
+import { loginBonusStore } from "@/store/loginBonus";
 
 const Login = defineComponent({
   components: {
@@ -37,6 +38,7 @@ const Login = defineComponent({
     const { dispatchVipLevels } = vipStore();
     const route = useRoute();
     const { dispatchGameEnter, getGameBetbyInit, closeKill } = gameStore();
+    const { setLoginBonusDialogVisible } = loginBonusStore();
 
     // initiate component state
     const state = reactive({
@@ -69,6 +71,11 @@ const Login = defineComponent({
       (): boolean =>
         state.formData.emailAddress.length > 0 && state.formData.password.length > 0
     );
+
+    const vipSignIn = computed(() => {
+        const { getVipSignIn } = storeToRefs(vipStore());
+        return getVipSignIn.value;
+    });
 
     // flag when login successed
     const success = computed(() => {
@@ -184,7 +191,10 @@ const Login = defineComponent({
           rtl: false,
         });
       }
-
+      // 打开VIP活动签到
+      if(vipSignIn.value.is_signin!=2){
+        setLoginBonusDialogVisible(true);
+      }
       state.loading = false;
     };
 

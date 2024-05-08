@@ -6,6 +6,7 @@ import { storeToRefs } from "pinia";
 import { depositStore } from "@/store/deposit";
 import { useTimer } from "vue-timer-hook";
 import { authStore } from "@/store/auth";
+import { activityAppStore } from '@/store/activityApp';
 
 const { t } = useI18n();
 const { setDepositConfirmDialogToggle } = depositStore();
@@ -110,6 +111,13 @@ onMounted(() => {
     timer.restart(Number(time));
   }
 });
+
+// 获取模式
+const mobile = computed(() => {
+  const { getMobile } = storeToRefs(activityAppStore());
+  return getMobile.value;
+});
+
 // onBeforeUnmount(() => {
 //   localStorage.setItem("timer", timer.minutes.value.toString());
 // });
@@ -119,7 +127,7 @@ onMounted(() => {
   <div
     v-if="depositOrderDialog"
     class="m-order-container px-4"
-    :style="[refferalAppBarShow ? 'top: 92px' : 'top: 60px']"
+    :style="[refferalAppBarShow ? 'top: 108px' : 'top: 60px', !mobile ? 'top: 60px !important' : '']"
   >
     <v-row class="ma-0 pa-0 align-center" style="height: 48px">
       <v-col cols="7" class="pa-0">

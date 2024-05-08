@@ -60,7 +60,7 @@ const confirmDailogShow = () => {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .suspend-account-body:before {
     content: "";
     position: absolute;

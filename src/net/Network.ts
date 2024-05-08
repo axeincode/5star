@@ -3,7 +3,8 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { get } from "lodash-es"
 import { createWebSocket } from '@/plugins/socket'
 import { getFingerprintInfor } from "@/utils/getPublicInformation";
-
+import { getErrorInfoCollector } from '@/utils/errorInfoCollector'
+import { getUrl } from '@/utils';
 /**
  * Event Object
  */
@@ -343,6 +344,14 @@ export class Network {
         }
       },
       (error: any) => {
+        const { code, message } = error
+        if (code === 'ECONNABORTED' || message.indexOf('timeout') !== -1) {
+          // 请求超时
+          const currentUrl = error.config.url;
+          const params = error.config.params;
+          getErrorInfoCollector(`api network connection timeout: "${currentUrl}". Parameters passed: "${params}"`)
+        }
+
         // Status is the HTTP status code
         const status = get(error, 'response.status')
         switch (status) {
@@ -408,11 +417,41 @@ export class Network {
           "X-Currency": sessionStorage.getItem('currency')
         },
         timeout: timeout,
-        baseURL: import.meta.env.VITE_BASE_API,
+        baseURL: getUrl('api'),
         data: {}
       }
 
       return service(Object.assign(configDefault, config))
     }
+  }
+
+
+
+  public commonGet(route: string, data: any) {
+    return new Promise((resolve,reject)=>{
+      this.request({
+        url: route,
+        method: 'GET',
+        params: data
+      }).then((response: any) => {
+        resolve(response);
+      }).catch((error:any)=>{
+        reject(error)
+      })
+    })
+  }
+
+  public commonPost(route: string, data: any) {
+    return new Promise((resolve,reject)=>{
+      this.request({
+        url: route,
+        method: 'post',
+        data
+      }).then((response: any) => {
+        resolve(response);
+      }).catch((error:any)=>{
+        reject(error)
+      })
+    })
   }
 }

@@ -48,7 +48,18 @@ import router from '@/router';
 import { depositStore } from '@/store/deposit';
 import { activityAppStore } from '@/store/activityApp';
 import { liveChatStore } from "@/store/liveChat";
+import { useDialog } from "@/hooks/dialog";
 const { setLiveChatMaximize, LiveChatWidget } = liveChatStore();
+const { authDialog } = useDialog();
+
+// 获取平台货币
+import { appCurrencyStore } from "@/store/app";
+const platformCurrency = computed(() => {
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
+  return getPlatformCurrency.value;
+});
+
+import { toFormatNum } from '@/utils/numFormat';
 
 const GetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/index.vue"));
 const MGetBonusDialog = defineAsyncComponent(() => import("@/components/get_bonus/mobile/index.vue"));
@@ -95,6 +106,7 @@ const { setMenuBlurEffectShow } = appBarStore();
 const { setOverlayScrimShow } = appBarStore();
 const { setAccountDialogShow } = appBarStore();
 const { setActiveAccountIndex } = appBarStore();
+const { dispatchVipSignIn } = vipStore();
 // const { setBonusDashboardDialogVisible } = appBarStore();
 const { setAuthModalType } = authStore();
 const { setNickNameDialogVisible,setAuthDialogVisible } = authStore();
@@ -108,6 +120,8 @@ const { setNavBarToggle } = appBarStore();
 const { setLevelUpDialogVisible } = vipStore();
 const { setSearchDialogShow } = mainStore();
 const { scrollTo } = useScroll()
+
+
 type dialogType = "login" | "signup" | "signout";
 
 const route = useRoute();
@@ -132,8 +146,11 @@ const signUpForm = computed(() => {
   return getSignUpForm.value
 })
 
-// authentication dialog
-const authDialog = ref<boolean>(false);
+const controlLevel = computed(() => {
+  const { getControlLevel } = storeToRefs(appBarStore());
+  return getControlLevel.value
+})
+
 const signupDialog = ref<boolean>(false);
 const signoutDialog = ref<boolean>(false);
 const loginDialog = ref<boolean>(false);
@@ -144,7 +161,7 @@ const nickNameDialog = ref<boolean>(false);
 const levelUpDialog = ref<boolean>(false);
 const searchDialog = ref<boolean>(false);
 const depositConfirmDialog = ref<boolean>(false);
-const groupVisible=ref<boolean>(false);
+const groupVisible = ref<boolean>(false);
 // const bonusDashboardDialog = ref<boolean>(false);
 const overlayScrimBackground = ref<string>('rgb(var(--v-theme-on-surface))')
 
@@ -160,14 +177,14 @@ watch(searchDialogShow, (value) => {
   setMailMenuShow(value);
 })
 
-const authDialogVisible = computed(() => {
-  const { getAuthDialogVisible } = storeToRefs(authStore());
-  return getAuthDialogVisible.value;
-});
+// const authDialogVisible = computed(() => {
+//   const { getAuthDialogVisible } = storeToRefs(authStore());
+//   return getAuthDialogVisible.value;
+// });
 
-watch(authDialogVisible, (value) => {
-  authDialog.value = value;
-})
+// watch(authDialogVisible, (value) => {
+//   authDialog.value = value;
+// })
 
 const nickNameDialogVisible = computed(() => {
   const { getNickNameDialogVisible } = storeToRefs(authStore());
@@ -232,6 +249,7 @@ const staticActivityDialog = ref<boolean>(true); // 静态活动页面显示
 // 关闭静态页面弹框
 const closeStaticActivityDialog = () => {
   staticActivityDialog.value = false
+  // 打开活动指引弹窗
 }
 
 // 判断是否已经勾选当天不显示静态活动弹框
@@ -396,6 +414,13 @@ watch(getBonusDialogVisible, (newValue) => {
   setMainBlurEffectShow(newValue);
 }, { deep: true })
 
+// 判断是否在首页
+const isHomePage = ref(route.path === '/');
+// 使用 watch 监听路由变化
+watch(() => route.path, (newPath) => {
+  isHomePage.value = newPath === '/';
+});
+
 const closeLoginBonusDialog = () => {
   setLoginBonusDialogVisible(false);
   setMainBlurEffectShow(false);
@@ -557,11 +582,40 @@ const openLiveChat=()=>{
   }
 }
 
-const { setAppConfirmDialogShow } = activityAppStore();
+const { setAppConfirmDialogShow, automaticPopUpApp, setAppGuidance, setShowAppGuidance } = activityAppStore();
 // 打开下载app弹框
 const openActivityApp = () => {
   setAppConfirmDialogShow(true)
+  // automaticPopUpApp(true)
 }
+
+const activityAppBonus = computed(() => {
+  const { getActivityBonus } = storeToRefs(activityAppStore());
+  return getActivityBonus.value;
+});
+
+const showAppGuidance = computed(() => {
+  const { getShowAppGuidance } = storeToRefs(activityAppStore());
+  return getShowAppGuidance.value;
+});
+
+// 点击引导框执行函数
+const appGuidanceEvent = () => {
+  setAppGuidance(true)
+  setShowAppGuidance(false)
+  setAppConfirmDialogShow(true)
+  // 如果在首页，就打开监听
+  // if (isHomePage.value) {
+  //   automaticPopUpApp(false)
+  // } else {
+  //   automaticPopUpApp(true)
+  // }
+}
+
+const appConfirmDialogShow = computed(() => {
+  const { getAppConfirmDialogShow } = storeToRefs(activityAppStore());
+  return getAppConfirmDialogShow.value
+})
 
 // 获取模式
 const mobile = computed(() => {
@@ -580,16 +634,34 @@ const swingButton = () => {
   }, 1600);
 };
 
+const token = computed(() => {
+  const { getToken } = storeToRefs(authStore());
+  return getToken.value;
+});
 
-onMounted(() => {
+onMounted(async() => {
   // 在组件挂载时启动摇摆按钮定时器
   setInterval(swingButton, 10000); // 每10秒执行一次
 
+  // 初始化，默认打开弹框
+  // setAppConfirmDialogShow(true)
+
+  // 判断下载app是否需要自动弹出
+  // 如果在首页，就打开监听
+  // if (isHomePage.value) {
+  //   automaticPopUpApp(false)
+  // } else {
+  //   automaticPopUpApp(true)
+  // }
+
   // console.log(route.query.code);
   // 带有邀请注册码的，直接打开注册弹窗
-  if(route.query.code){
-    setAuthDialogVisible(true)
+  if (!token.value) {
+    if(route.query.code){
+      setAuthDialogVisible(true)
+    }
   }
+  
   window.addEventListener("resize", handleResize);
   // window.addEventListener('scroll', (e) => {
   //         // 获取滚动的值并打印出来
@@ -615,14 +687,17 @@ onMounted(() => {
 const routeInited = () => {
   // scrollTo()
 }
+
+const test=ref(true)
 </script>
 
 <template>
   <v-main
+    id="mainContainer"
     class="main-background"
     :class="mainBlurEffectShow ? 'main-bg-blur' : ''"
     :style="{
-      height: mobileWidth < 600 && mailMenuShow ? mainHeight + 'px' : 'fit-content',
+      // height: mobileWidth < 600 && mailMenuShow ? mainHeight + 'px' : 'fit-content',
       overflow: mobileWidth < 600 && mailMenuShow ? 'hidden' : 'hidden',
     }"
   >
@@ -643,14 +718,11 @@ const routeInited = () => {
       }"
       v-if="mobileWidth < 600"
     >
-      <MSearch
-        :searchDialogShow="searchDialogShow"
-        @searchCancel="setSearchDialogShow(false)"
-      />
+      <MSearch :searchDialogShow="searchDialogShow" @searchCancel="setSearchDialogShow(false)" />
     </v-navigation-drawer>
 
     <!---------------------- Deposit Dialog ----------------------------------------------->
-  <!-- 存款菜单弹窗 -->
+    <!-- 存款菜单弹窗 -->
     <!-- <v-dialog
       v-model="cashDialog"
       class="cash-header-dialog"
@@ -660,8 +732,8 @@ const routeInited = () => {
       :transition="'dialog-top-transition'"
       @click:outside="setCashDialogToggle(false)"
       v-if="mobileVersion == 'sm'"
-    > -->
-      <MCashHeader v-if="cashDialog&&mobileVersion == 'sm'" v-model="cashDialog"  />
+    >-->
+    <MCashHeader v-if="cashDialog&&mobileVersion == 'sm'" v-model="cashDialog" />
     <!-- </v-dialog> -->
     <!-- 存款充值 -->
     <!-- <v-dialog
@@ -675,11 +747,11 @@ const routeInited = () => {
       persistent
       v-if="mobileVersion == 'sm'"
     >
-      <template v-if="withdrawDialog"> -->
-        <!-- <Withdraw v-if="mobileWidth > 600" /> -->
-        <MWithdraw v-if="withdrawDialog&&mobileVersion == 'sm'" v-model="withdrawDialog" />
-      <!-- </template>
-    </v-dialog> -->
+    <template v-if="withdrawDialog">-->
+    <!-- <Withdraw v-if="mobileWidth > 600" /> -->
+    <MWithdraw v-if="withdrawDialog&&mobileVersion == 'sm'" v-model="withdrawDialog" />
+    <!-- </template>
+    </v-dialog>-->
     <!-- 存款选择 -->
     <!-- <v-dialog
       v-model="depositDialog"
@@ -693,10 +765,14 @@ const routeInited = () => {
       v-if="mobileVersion == 'sm'"
     >
       <template v-if="depositDialog">
-        <Deposit v-if="mobileWidth > 600" /> -->
-        <MDeposit class="m-deposit-sub-dialog"  v-if="depositDialog&&mobileVersion == 'sm'" v-model="depositDialog" />
-      <!-- </template>
-    </v-dialog> -->
+    <Deposit v-if="mobileWidth > 600" />-->
+    <MDeposit
+      class="m-deposit-sub-dialog"
+      v-if="depositDialog&&mobileVersion == 'sm'"
+      v-model="depositDialog"
+    />
+    <!-- </template>
+    </v-dialog>-->
 
     <v-dialog
       v-model="cashDialog"
@@ -720,7 +796,7 @@ const routeInited = () => {
     </v-dialog>
 
     <!---------------------------------- Deposit Confirm ----------------------------------------->
-  <!-- 充值确认 -->
+    <!-- 充值确认 -->
     <!-- <v-dialog
       class="m-deposit-cofirm-dialog"
       v-model="depositConfirmDialog"
@@ -730,13 +806,16 @@ const routeInited = () => {
       persistent
       v-if="mobileVersion == 'sm'"
       :transition="'dialog-top-transition'"
-    > -->
-      <MDepositConfirm  v-if="depositConfirmDialog&&mobileVersion == 'sm'" v-model="depositConfirmDialog" />
+    >-->
+    <MDepositConfirm
+      v-if="depositConfirmDialog&&mobileVersion == 'sm'"
+      v-model="depositConfirmDialog"
+    />
     <!-- </v-dialog> -->
 
     <!-----------------------Authentication Dialog --------------------------------------->
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="authDialog"
       :width="mobileVersion == 'sm' ? '' : 471"
       :fullscreen="mobileVersion == 'sm'"
@@ -747,23 +826,27 @@ const routeInited = () => {
       :class="[mobileVersion == 'sm' ? 'mobile-auth-dialog-position' : '']"
       persistent
       style="z-index: 2147483646"
-    >
-      <template v-if="mobileVersion != 'sm'"> </template>
-      <template v-else>
-        <MAuth />
-      </template>
-    </v-dialog>
+    >-->
+    <template v-if="mobileVersion != 'sm'"></template>
+    <template v-else>
+      <MAuth v-if="authDialog" v-model="authDialog" />
+    </template>
+    <!-- </v-dialog> -->
 
     <!-------------------------------      静态活动页面     ------------------------------------>
-    <v-dialog
+    <!-- <v-dialog
       v-model="staticActivityDialog"
       :width="mobileWidth < 600 ? 328 : 471"
       :scrim="true"
       persistent
       style="z-index: 1000001"
-    >
-      <StaticActivityPage v-if="mobileVersion == 'sm'" @close="closeStaticActivityDialog" />
-    </v-dialog>
+    >-->
+    <StaticActivityPage
+      v-model="staticActivityDialog"
+      v-if="staticActivityDialog && mobileVersion == 'sm'"
+      @close="closeStaticActivityDialog"
+    />
+    <!-- </v-dialog> -->
 
     <!-------------------------------      SIGNUP     ------------------------------------>
 
@@ -797,7 +880,7 @@ const routeInited = () => {
         @switch="switchDialog('signup')"
       />
       <MSignup v-else @close="closeDialog('signup')" @switch="switchDialog('signup')" />
-    </v-dialog> -->
+    </v-dialog>-->
 
     <!-------------------------------      LOGIN     ------------------------------------>
 
@@ -820,31 +903,39 @@ const routeInited = () => {
         @switch="switchDialog('login')"
       />
       <MLogin v-else @close="closeDialog('login')" @switch="switchDialog('login')" />
-    </v-dialog> -->
+    </v-dialog>-->
 
     <!-------------------------------      NICKNAME     ------------------------------------>
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="nickNameDialog"
       width="320"
       :scrim="true"
       transition="scale-transition"
       @click:outside="closeNickNameDialog"
-    >
-      <MNickName @close="closeNickNameDialog" />
-    </v-dialog>
+    >-->
+    <MNickName v-if="nickNameDialog" @close="closeNickNameDialog" v-model="nickNameDialog" />
+    <!-- </v-dialog> -->
 
     <!-------------------------------      SIGNOUT     ------------------------------------>
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="signoutDialog"
       :width="mobileWidth < 600 ? 328 : 471"
       :scrim="true"
       @click:outside="closeDialog('signout')"
-    >
-      <Signout v-if="mobileVersion != 'sm'" @close="closeDialog('signout')" />
-      <MSignout v-else @close="closeDialog('signout')" />
-    </v-dialog>
+    >-->
+    <Signout
+      v-if="signoutDialog && mobileWidth > 600"
+      @close="closeDialog('signout')"
+      v-model="signoutDialog"
+    />
+    <MSignout
+      v-else-if="signoutDialog"
+      @close="closeDialog('signout')"
+      v-model="signoutDialog"
+    />
+    <!-- </v-dialog> -->
 
     <!----------------------------------- level up dialog --------------------------------->
 
@@ -860,32 +951,37 @@ const routeInited = () => {
 
     <!----------------------------------- refferal dialog @click:outside="closeReferDialog"--------------------------------->
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="refferalDialog"
       persistent
       :width="mobileWidth < 600 ? '360' : '471'"
       :scrim="true"
       style="z-index: 2147483646"
-    >
-      <RefferalDialog v-if="mobileWidth > 600" />
-      <MRefferalDialog v-else />
-    </v-dialog>
+    >-->
+    <RefferalDialog v-if="mobileWidth > 600&&refferalDialog" v-model="refferalDialog" />
+    <MRefferalDialog v-if="mobileWidth <= 600&&refferalDialog" v-model="refferalDialog" />
+    <!-- </v-dialog> -->
 
     <!----------------------------------- login bonus dialog --------------------------------->
 
-    <v-dialog
+    <!-- <v-dialog
       v-model="loginBonusDialog"
       :width="mobileWidth < 600 ? '340' : '471'"
       @click:outside="closeLoginBonusDialog"
       :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
       style="z-index: 2147483646"
-    >
-      <LoginBonusDialog
-        v-if="mobileWidth > 600"
-        @closeLoginBonusDialog="closeLoginBonusDialog"
-      />
-      <MLoginBonusDialog v-else @closeLoginBonusDialog="closeLoginBonusDialog" />
-    </v-dialog>
+    >-->
+    <LoginBonusDialog
+      v-if="mobileWidth > 600&&loginBonusDialog"
+      v-model="loginBonusDialog"
+      @closeLoginBonusDialog="closeLoginBonusDialog"
+    />
+    <MLoginBonusDialog
+      v-if="mobileWidth <= 600&&loginBonusDialog"
+      v-model="loginBonusDialog"
+      @closeLoginBonusDialog="closeLoginBonusDialog"
+    />
+    <!-- </v-dialog> -->
 
     <!----------------------------------- deposit and get bonus dialog --------------------------------->
 
@@ -895,10 +991,7 @@ const routeInited = () => {
       @click:outside="closeGetBonusDialog"
       :class="mobileWidth < 600 ? 'm-get-bonus-dialog' : ''"
     >
-      <GetBonusDialog
-        v-if="mobileWidth > 600"
-        @closeGetBonusDialog="closeGetBonusDialog"
-      />
+      <GetBonusDialog v-if="mobileWidth > 600" @closeGetBonusDialog="closeGetBonusDialog" />
       <MGetBonusDialog v-else @closeGetBonusDialog="closeGetBonusDialog" />
     </v-dialog>
 
@@ -918,14 +1011,16 @@ const routeInited = () => {
 
     <!----------------------------------- account dialog --------------------------------->
 
-    <v-dialog v-model="accountDialog" width="312" @click:outside="accountDialogClose">
-      <MAccountDialog
-        @mDialogHide="accountDialogClose"
-        :avatar="userInfo.avatar"
-        :nickName="userInfo.name"
-        @selectActiveIndex="selectActiveIndex"
-      />
-    </v-dialog>
+    <!-- <v-dialog v-model="accountDialog" width="312" @click:outside="accountDialogClose"> -->
+    <MAccountDialog
+      v-if="accountDialog"
+      v-model="accountDialog"
+      @mDialogHide="accountDialogClose"
+      :avatar="userInfo.avatar"
+      :nickName="userInfo.name"
+      @selectActiveIndex="selectActiveIndex"
+    />
+    <!-- </v-dialog> -->
 
     <VipUpgradeDialog />
     <VipUpRankDialog />
@@ -938,38 +1033,40 @@ const routeInited = () => {
     <router-view v-slot="{ Component, route }">
       <!-- 缓存路由 -->
       <keep-alive>
-        <component
-          v-if="route.meta.keepAlive"
-          :is="Component"
-          :key="route.path"
-        />
+        <component v-if="route.meta.keepAlive" :is="Component" :key="route.path" />
       </keep-alive>
       <!-- 正常路由 -->
-      <component
-        v-if="!route.meta.keepAlive"
-        :is="Component"
-        :key="route.path"
-      />
+      <component v-if="!route.meta.keepAlive" :is="Component" :key="route.path" />
     </router-view>
 
     <!-- fix钉 按钮集合 -->
     <div v-show="fixBtnContainer">
       <!-- message btn -->
-      <div class="m-message-btn" @click="openGroupDialog">
+      <div class="m-message-btn" @click="openGroupDialog" :style="{'z-index': controlLevel ? '9' : '1000'}">
         <img src="@/assets/public/svg/message.svg" class="m-back-icon-position" />
       </div>
 
       <!-- service btn -->
-      <div class="m-service-btn" @click="openLiveChat">
+      <div class="m-service-btn" @click="openLiveChat" :style="{'z-index': controlLevel ? '9' : '1000'}">
         <img src="@/assets/public/svg/service-icon.svg" class="m-back-icon-position" />
       </div>
 
       <!-- 点击打开下载app页面 -->
-      <div class="m-activity-app-btn" :class="{ 'm-activity-app-swinging-button': isSwinging }" @click="openActivityApp" v-if="mobile">
-        <img src="@/assets/activity_app/app-floating-button.svg" class="m-back-icon-position" />
-      </div>
-    </div>
+      <div class="m-activity-app-btn" v-if="mobile" :style="{'z-index': controlLevel ? '9' : '1000'}">
+          <transition
+            enter-active-class="animated-lr hinge-lr fadeInRight"
+            leave-active-class="animated-lr hinge-lr fadeOutRight"
+          >
+            <div v-show="isHomePage && showAppGuidance && !appConfirmDialogShow" class="app-content" @click="appGuidanceEvent">
+              {{ t('activity_app.text_9') }} <span>{{ platformCurrency }}{{ toFormatNum(activityAppBonus) }}</span>
+            </div>
+          </transition>
 
+          <div style="position: absolute;" :class="{ 'm-activity-app-swinging-button': isSwinging, 'm-activity-app-prompt': true }" @click="openActivityApp" >
+            <img src="@/assets/activity_app/app-floating-button.svg" class="m-back-icon-position" />
+          </div>
+        </div>
+    </div>
 
     <!-- back top -->
 
@@ -978,7 +1075,6 @@ const routeInited = () => {
         <img src="@/assets/public/svg/icon_public_101.svg" class="m-back-icon-position" />
       </div>
     </el-backtop>
-
 
     <!-- mobile menu semicircle toggle -->
 
@@ -989,7 +1085,6 @@ const routeInited = () => {
 
     <!-- 下载app -->
     <ActivityApp />
-
   </v-main>
 </template>
 <style lang="scss">
@@ -1018,7 +1113,7 @@ const routeInited = () => {
   bottom: 190px;
   width: 44px;
   height: 44px;
-  background: rgba(22, 130, 241, 1);;
+  background: rgba(22, 130, 241, 1);
   border-radius: 44px;
   filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
   z-index: 1000;
@@ -1038,7 +1133,7 @@ const routeInited = () => {
   bottom: 130px;
   width: 44px;
   height: 44px;
-  background: rgba(22, 130, 241, 1);;
+  background: rgba(22, 130, 241, 1);
   border-radius: 44px;
   filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
   z-index: 1000;
@@ -1058,11 +1153,11 @@ const routeInited = () => {
   bottom: 250px;
   width: 44px;
   height: 44px;
-  background: #FFD632;
+  background: #ffd632;
   border-radius: 44px;
   filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.4));
   z-index: 1000;
-  .m-back-icon-position {
+  & > .m-back-icon-position {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -1072,15 +1167,71 @@ const routeInited = () => {
   }
 }
 
+.m-activity-app-prompt::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: rgba(222, 61, 18, 1);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.app-content {
+  position: absolute;
+  top: 0;
+  left: -279px;
+  box-sizing: border-box;
+  padding: 5px 62px;
+  border-top-left-radius: 50px; /* 左上角圆角 */
+  border-bottom-left-radius: 50px; /* 左下角圆角 */
+  border-top-right-radius: 50px; /* 右上角圆角 */
+  border-bottom-right-radius: 50px; /* 右下角圆角 */
+  background-image: linear-gradient(
+    to right,
+    rgba(249, 188, 1, 1),
+    rgba(228, 172, 0, 1)
+  ); /* 左到右的渐变，从红色到蓝色 */
+  width: 316px;
+  height: 44px;
+  font-size: 10px;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 400;
+
+  span {
+    color: #fff;
+  }
+
+  &::after {
+    content: "";
+    width: 67.75px;
+    height: 44px;
+    background: url(@/assets/activity_app/img_ci_13.svg);
+    position: absolute;
+    top: -5px;
+    left: -18px;
+  }
+}
+
 @keyframes swing {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(20deg); }
-  50% { transform: rotate(-20deg); }
-  75% { transform: rotate(10deg); }
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
 }
 
 .m-activity-app-swinging-button {
-  animation: swing .8s ease-in-out infinite;
+  animation: swing 0.8s ease-in-out infinite;
 }
 
 .m-back-top {

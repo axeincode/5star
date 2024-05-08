@@ -155,6 +155,7 @@ onUnmounted(() => {
         <span class="text-700-12 text-color-yellow">{{t("vip.login_bonus.footer_text_6") }}</span>
         <span class="text-700-12 white">{{t("vip.login_bonus.footer_text_7") }}</span>
       </div>
+      <div class="time-remind">
       <div class="time-container">
         <span class="time-frame text-700-12">{{ timer.minutes.value.toString().padStart(1, "0").length>1?'1':'0' }}</span>
         <span class="time-frame text-700-12">{{ timer.minutes.value.toString().padStart(1, "0").length>1?"0":timer.minutes.value.toString().padStart(1, "0")[0] }}</span>
@@ -164,6 +165,8 @@ onUnmounted(() => {
         </div>
         <span class="time-frame text-700-12 ml-0">{{ timer.seconds.value.toString().padStart(2, "0")[0] }}</span>
         <span class="time-frame text-700-12">{{ timer.seconds.value.toString().padStart(2, "0")[1]}}</span>
+      </div>
+      <span class="text-400-10 mt-1" style="color:#7782AA">{{t("vip.login_bonus.footer_text_9") }}</span>
       </div>
     </div>
     <!-- <div class="mt-1 m-get-bonus-dialog-card-3">
@@ -272,12 +275,16 @@ onUnmounted(() => {
   }
   .m-get-bonus-dialog-bottom {
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: space-between;
   }
   .bottom-text-container {
     width: 170px;
     line-height: 17px;
+  }
+  .time-remind {
+    display: flex;
+    flex-direction: column;
   }
   .time-container {
     display: flex;
@@ -287,11 +294,11 @@ onUnmounted(() => {
     width: 24px;
     height: 24px;
     border-radius: 4px;
-    background: #15161C;
+    background: #DE3D12;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #F9BC01;
+    color: #fff;
     &:not(:first-child){
       margin-left: 4px;
     }
@@ -308,13 +315,13 @@ onUnmounted(() => {
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: #15161C;
+    background: #fff;
     &:not(:first-child){
       margin-top: 4px;
     }
   }
   .text-container {
-    margin-left: 17px;
+    margin:0 17px;
     line-height: 17px;
   }
   .text-color-green {

@@ -76,7 +76,7 @@ export default ValidationBox;
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media (max-width: 600px) {
   .label-text-sm {
     font-size: 10px !important;

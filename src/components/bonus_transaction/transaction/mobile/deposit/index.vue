@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch, toRefs } from "vue";
+import { ref, computed, watch, toRefs,onMounted } from "vue";
 import Pagination from "@/components/global/pagination/index.vue";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
@@ -75,6 +75,7 @@ const endIndex = ref<number>(8);
 const currentList = ref<Array<DepositHistoryItem>>([]);
 
 const notificationText = ref<string>('Successful replication');
+const isScrollRight=ref(false)
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -190,11 +191,43 @@ const formatCurrency = (currency: number, currencyUnit: string) => {
 const getFormatAmount = (amount) => {
   return amount ? `${platformCurrency.value}${toFormatNum(Number(amount))}` : ''
 }
+
+const handleScroll=()=>{
+  const scrollContainer = document.getElementsByClassName('v-table__wrapper')[0];
+  scrollContainer.addEventListener('scroll', ()=> {
+  // 当前滚动位置
+  const scrollPosition = scrollContainer.scrollLeft;
+  // 容器总宽度
+  const totalWidth = scrollContainer.scrollWidth;
+  // 容器可视区域宽度
+  const containerWidth = scrollContainer.clientWidth;
+ 
+  // 检查是否滚动到最右边
+  if (scrollPosition + containerWidth >= totalWidth) {
+    isScrollRight.value=true
+    // 执行到达最右边时的操作
+  }else{
+     isScrollRight.value=false
+  }
+});
+}
+onMounted(async () => {
+  handleScroll()
+});
+// 存款状态
+// -2:订单已关闭
+// -1:支付失败
+// 0-订单生成
+// 1-支付中
+// 2-支付成功,
+// 3-业务处理完成
+// 4-已退款
+// 5-金额过低（订单失败）
 </script>
 <template>
   <v-row class="mx-2 mt-1 m-forms-bonus-table1">
     <v-table
-      class="m-forms-bonus-table-bg"
+      class="m-forms-bonus-table-bg relative"
       :class="fixPositionShow ? 'table-position-overflow' : ''"
       theme="dark"
       fixed-header
@@ -203,52 +236,46 @@ const getFormatAmount = (amount) => {
     >
       <thead class="forms-table-header">
         <tr>
-          <th
-            class="text-700-12 black text-center"
-            style="border-radius: 8px 0px 0px 8px"
-          >
+          <th class="text-700-12 black text-center" style="border-radius: 8px 0px 0px 8px">
             <div class="forms-table-border0">
-              <div style="width: 50px; margin-left: 16px; margin-right: 20px">
-                {{ t("transaction.transactions.date") }}
-              </div>
+              <div
+                style="width: 50px; margin-left: 16px; margin-right: 20px"
+              >{{ t("transaction.transactions.date") }}</div>
             </div>
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 80px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.amount") }}
-              </div>
+              <div
+                style="width: 80px; margin-left: 16px; margin-right: 16px"
+              >{{ t("transaction.transactions.amount") }}</div>
             </div>
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 50px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.game_history.status") }}
-              </div>
+              <div
+                style="width: 50px; margin-left: 16px; margin-right: 16px"
+              >{{ t("transaction.game_history.status") }}</div>
             </div>
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 50px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.type") }}
-              </div>
+              <div
+                style="width: 50px; margin-left: 16px; margin-right: 16px"
+              >{{ t("transaction.transactions.type") }}</div>
             </div>
           </th>
           <th class="text-700-12 black text-center">
             <div class="forms-table-border1">
-              <div style="width: 120px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.id") }}
-              </div>
+              <div
+                style="width: 120px; margin-left: 16px; margin-right: 16px"
+              >{{ t("transaction.transactions.id") }}</div>
             </div>
           </th>
-          <th
-            class="text-700-12 black text-center"
-            style="border-radius: 0px 8px 8px 0px"
-          >
+          <th class="text-700-12 black text-center" style="border-radius: 0px 8px 8px 0px">
             <div class="forms-table-border2">
-              <div style="width: 90px; margin-left: 16px; margin-right: 16px">
-                {{ t("transaction.transactions.note") }}
-              </div>
+              <div
+                style="width: 90px; margin-left: 16px; margin-right: 16px"
+              >{{ t("transaction.transactions.note") }}</div>
             </div>
           </th>
         </tr>
@@ -256,34 +283,22 @@ const getFormatAmount = (amount) => {
       <tbody class="forms-table-body">
         <template v-if="depositHistoryItem.record.length == 0">
           <tr v-for="(item, index) in formsList" :key="index">
-            <td
-              class="text-400-12 text-center"
-              style=""
-            ></td>
+            <td class="text-400-12 text-center" style></td>
             <td
               class="text-400-12 text-center"
               style="
                 min-width: 60px;
               "
             ></td>
-            <td
-              class="text-400-12 text-center"
-              style=""
-            ></td>
+            <td class="text-400-12 text-center" style></td>
             <td
               class="text-400-12 text-center color-01983A"
               style="
                 min-width: 130px;
               "
             ></td>
-            <td
-              class="text-400-12 text-center"
-              style=""
-            ></td>
-            <td
-              class="text-400-12 text-center"
-              style=""
-            ></td>
+            <td class="text-400-12 text-center" style></td>
+            <td class="text-400-12 text-center" style></td>
           </tr>
         </template>
         <template v-else>
@@ -291,14 +306,11 @@ const getFormatAmount = (amount) => {
             v-for="(item, index) in depositHistoryItem.record.slice(startIndex, endIndex)"
             :key="index"
           >
-            <td
-              class="text-400-12 text-center"
-              style=""
-            >
+            <td class="text-400-12 text-center" style>
               {{
-                item.created_at
-                  ? moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
-                  : ""
+              item.created_at
+              ? moment(item.created_at * 1000).format("YYYY-MM-DD HH:mm:ss")
+              : ""
               }}
             </td>
             <td
@@ -306,13 +318,8 @@ const getFormatAmount = (amount) => {
               style="
                 min-width: 130px;
               "
-            >
-             {{ getFormatAmount(item.amount) }}
-            </td>
-            <td
-              class="text-400-12 text-center"
-              style=""
-            >
+            >{{ getFormatAmount(item.amount) }}</td>
+            <td class="text-400-12 text-center" style>
               <div v-if="item.status == -2" class="white">Closed</div>
               <div v-if="item.status == -1" class="red">Failed</div>
               <div v-if="item.status == 0" class="red">Generated</div>
@@ -320,15 +327,14 @@ const getFormatAmount = (amount) => {
               <div v-if="item.status == 2" class="color-01983A">Success</div>
               <div v-if="item.status == 3" class="color-01983A">Completion</div>
               <div v-if="item.status == 4" class="white">Refunded</div>
+              <div v-if="item.status == 5" class="white">Low Amount(Failed)</div>
             </td>
             <td
               class="text-400-12 text-center"
               style="
                 min-width: 40px;
               "
-            >
-              {{ item.type }}
-            </td>
+            >{{ item.type }}</td>
             <td
               class="text-400-12 text-center"
               style="
@@ -337,9 +343,9 @@ const getFormatAmount = (amount) => {
             >
               <div class="d-flex justify-center">
                 {{
-                  item.id.toString().length > 11
-                    ? item.id.toString().slice(0, 11) + "..."
-                    : item.id
+                item.id.toString().length > 11
+                ? item.id.toString().slice(0, 11) + "..."
+                : item.id
                 }}
                 <img
                   v-show="item.id"
@@ -350,14 +356,12 @@ const getFormatAmount = (amount) => {
                 />
               </div>
             </td>
-            <td
-              class="text-400-12 text-center"
-              style=""
-            >
-              {{ item.note }}
-            </td>
+            <td class="text-400-12 text-center" style>{{ item.note }}</td>
           </tr>
         </template>
+        <div class="arrow" v-if="!isScrollRight">
+          <img class="arrow-img" src="@/assets/public/svg/arrow-right.svg" />
+        </div>
       </tbody>
     </v-table>
   </v-row>
@@ -426,6 +430,23 @@ const getFormatAmount = (amount) => {
   .forms-table-border-right {
     padding-right: 20px;
     border-right: 1px solid #7782aa !important;
+  }
+}
+
+.arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateX(-50%, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 32px;
+  background: #000;
+  .arrow-img {
+    width: 14px;
+    height: 14px;
   }
 }
 

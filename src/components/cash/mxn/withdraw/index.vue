@@ -10,6 +10,7 @@ import { type GetCurrencyItem } from '@/interface/deposit';
 import { type GetPaymentItem } from '@/interface/deposit';
 import ValidationBox from './ValidationBox.vue';
 import Notification from "@/components/global/notification/index.vue";
+import Loading from "@/components/global/loading.vue";
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 import { storeToRefs } from 'pinia';
@@ -161,6 +162,7 @@ const notificationText = ref<string>("");
 const isShowAmountValidaton = ref<boolean>(false);
 
 const isDepositBtnReady = ref<boolean>(false);
+const pageLoading = ref<boolean>(false);
 
 const availableAmount = ref<number>(108.88);
 
@@ -281,7 +283,9 @@ watch(withdrawAmount, (newValue) => {
 })
 
 onMounted(async () => {
+  // pageLoading.value = true;
   await dispatchUserWithdrawCfg();
+  // pageLoading.value = false;
 })
 
 const overlayScrimShow = computed(() => {
@@ -296,138 +300,142 @@ const overlayScrimShow = computed(() => {
     class="deposit-overlay"
   ></div>
   <div class="withdraw-container">
-    <v-row class="mt-6 ml-16 deposit-text">
-      {{ t("withdraw_dialog.withdraw_currency") }}
-    </v-row>
-    <v-menu offset="4" class="mt-1">
-      <template v-slot:activator="{ props }">
-        <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
+    <Loading v-if="pageLoading" height="100%"></Loading>
+    <template v-else>
+      <v-row class="mt-6 ml-16 deposit-text">
+        {{ t("withdraw_dialog.withdraw_currency") }}
+      </v-row>
+      <v-menu offset="4" class="mt-1">
+        <template v-slot:activator="{ props }">
+          <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
+            <v-list-item
+              v-bind="props"
+              class="currency-item deposit-card-height"
+              value="currency dropdown"
+              append-icon="mdi-chevron-down"
+            >
+              <template v-slot:prepend>
+                <img :src="selectedCurrencyItem.icon" width="26" />
+              </template>
+              <v-list-item-title class="ml-2">{{
+                selectedCurrencyItem.name
+              }}</v-list-item-title>
+            </v-list-item>
+          </v-card>
+        </template>
+        <v-list theme="dark" bg-color="#1D2027" class="px-2">
           <v-list-item
-            v-bind="props"
-            class="currency-item deposit-card-height"
-            value="currency dropdown"
-            append-icon="mdi-chevron-down"
+            class="currency-item pl-6"
+            :value="currencyItem.name"
+            v-for="(currencyItem, currencyIndex) in currencyList"
+            :key="currencyIndex"
+            @click="handleSelectCurrency(currencyItem)"
           >
             <template v-slot:prepend>
-              <img :src="selectedCurrencyItem.icon" width="26" />
+              <img :src="currencyItem.icon" width="26" />
             </template>
-            <v-list-item-title class="ml-2">{{
-              selectedCurrencyItem.name
-            }}</v-list-item-title>
+            <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
           </v-list-item>
-        </v-card>
-      </template>
-      <v-list theme="dark" bg-color="#1D2027" class="px-2">
-        <v-list-item
-          class="currency-item pl-6"
-          :value="currencyItem.name"
-          v-for="(currencyItem, currencyIndex) in currencyList"
-          :key="currencyIndex"
-          @click="handleSelectCurrency(currencyItem)"
+        </v-list>
+      </v-menu>
+      <v-row class="mt-6 ml-16 deposit-text">
+        {{ t("withdraw_dialog.withdraw_payment_method") }}
+      </v-row>
+      <v-menu offset="4" class="mt-1">
+        <template v-slot:activator="{ props }">
+          <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
+            <v-list-item
+              v-bind="props"
+              class="payment-item deposit-card-height"
+              value="payment dropdown"
+              append-icon="mdi-chevron-down"
+            >
+              <template v-slot:prepend>
+                <img :src="selectedPaymentItem.icon" />
+              </template>
+              <v-list-item-title class="ml-2">{{
+                selectedPaymentItem.name
+              }}</v-list-item-title>
+            </v-list-item>
+          </v-card>
+        </template>
+        <v-list theme="dark" bg-color="#181522">
+          <v-row class="payment-width-370">
+            <v-col
+              cols="6"
+              v-for="(paymentItem, paymentIndex) in paymentList"
+              :key="paymentIndex"
+            >
+              <v-card color="#15161C" theme="dark" class="deposit-card-height text-center">
+                <v-list-item
+                  class="payment-select-item pa-2"
+                  :value="paymentItem.name"
+                  @click="handleSelectPayment(paymentItem)"
+                >
+                  <img :src="paymentItem.icon" />
+                  <v-list-item-title>{{ paymentItem.name }}</v-list-item-title>
+                  <v-list-item-title>{{ paymentItem.description }}</v-list-item-title>
+                </v-list-item>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-list>
+      </v-menu>
+      <v-row class="mt-6 ml-16 withdraw-text">
+        {{ t("withdraw_dialog.withdraw_amount") }}
+      </v-row>
+      <v-row class="relative">
+        <v-text-field
+          :label="`${t('withdraw_dialog.amount')}(${selectedCurrencyItem.name})`"
+          class="form-textfield dark-textfield mx-14"
+          variant="solo"
+          density="comfortable"
+          color="#7782AA"
+          v-model="withdrawAmount"
+          :onfocus="handleAmountInputFocus"
+          :onblur="handleAmountInputBlur"
+          @input="handleAmountInputChange"
+        />
+        <ValidationBox
+          :validationText2="
+            t('withdraw_dialog.validation.text_2') +
+            selectedPaymentItem.min +
+            ', ' +
+            t('withdraw_dialog.validation.text_2') +
+            selectedPaymentItem.max +
+            '.'
+          "
+          v-if="isShowAmountValidaton"
+        />
+      </v-row>
+      <v-row class="mt-4 ml-16 other-text">
+        {{ t("withdraw_dialog.text_1") }}
+      </v-row>
+      <v-row class="mt-4 ml-16 other-text">
+        {{ t("withdraw_dialog.text_2") }}
+      </v-row>
+      <v-row class="mt-4 ml-16 other-text">
+        {{ t("withdraw_dialog.text_3") }}
+      </v-row>
+      <v-row class="mt-4 ml-16 other-text">
+        {{ t("withdraw_dialog.text_4") }}
+      </v-row>
+      <v-row class="mt-16 deposit-other-text justify-center">
+        {{ t("withdraw_dialog.other_text") }}
+      </v-row>
+      <v-row class="mt-2 mx-8">
+        <v-btn
+          class="ma-3 button-bright text-none"
+          width="-webkit-fill-available"
+          height="54px"
+          :disabled="!isDepositBtnReady"
+          :onclick="handleWithdrawSubmit"
         >
-          <template v-slot:prepend>
-            <img :src="currencyItem.icon" width="26" />
-          </template>
-          <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-    <v-row class="mt-6 ml-16 deposit-text">
-      {{ t("withdraw_dialog.withdraw_payment_method") }}
-    </v-row>
-    <v-menu offset="4" class="mt-1">
-      <template v-slot:activator="{ props }">
-        <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
-          <v-list-item
-            v-bind="props"
-            class="payment-item deposit-card-height"
-            value="payment dropdown"
-            append-icon="mdi-chevron-down"
-          >
-            <template v-slot:prepend>
-              <img :src="selectedPaymentItem.icon" />
-            </template>
-            <v-list-item-title class="ml-2">{{
-              selectedPaymentItem.name
-            }}</v-list-item-title>
-          </v-list-item>
-        </v-card>
-      </template>
-      <v-list theme="dark" bg-color="#181522">
-        <v-row class="payment-width-370">
-          <v-col
-            cols="6"
-            v-for="(paymentItem, paymentIndex) in paymentList"
-            :key="paymentIndex"
-          >
-            <v-card color="#15161C" theme="dark" class="deposit-card-height text-center">
-              <v-list-item
-                class="payment-select-item pa-2"
-                :value="paymentItem.name"
-                @click="handleSelectPayment(paymentItem)"
-              >
-                <img :src="paymentItem.icon" />
-                <v-list-item-title>{{ paymentItem.name }}</v-list-item-title>
-                <v-list-item-title>{{ paymentItem.description }}</v-list-item-title>
-              </v-list-item>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-list>
-    </v-menu>
-    <v-row class="mt-6 ml-16 withdraw-text">
-      {{ t("withdraw_dialog.withdraw_amount") }}
-    </v-row>
-    <v-row class="relative">
-      <v-text-field
-        :label="`${t('withdraw_dialog.amount')}(${selectedCurrencyItem.name})`"
-        class="form-textfield dark-textfield mx-14"
-        variant="solo"
-        density="comfortable"
-        color="#7782AA"
-        v-model="withdrawAmount"
-        :onfocus="handleAmountInputFocus"
-        :onblur="handleAmountInputBlur"
-        @input="handleAmountInputChange"
-      />
-      <ValidationBox
-        :validationText2="
-          t('withdraw_dialog.validation.text_2') +
-          selectedPaymentItem.min +
-          ', ' +
-          t('withdraw_dialog.validation.text_2') +
-          selectedPaymentItem.max +
-          '.'
-        "
-        v-if="isShowAmountValidaton"
-      />
-    </v-row>
-    <v-row class="mt-4 ml-16 other-text">
-      {{ t("withdraw_dialog.text_1") }}
-    </v-row>
-    <v-row class="mt-4 ml-16 other-text">
-      {{ t("withdraw_dialog.text_2") }}
-    </v-row>
-    <v-row class="mt-4 ml-16 other-text">
-      {{ t("withdraw_dialog.text_3") }}
-    </v-row>
-    <v-row class="mt-4 ml-16 other-text">
-      {{ t("withdraw_dialog.text_4") }}
-    </v-row>
-    <v-row class="mt-16 deposit-other-text justify-center">
-      {{ t("withdraw_dialog.other_text") }}
-    </v-row>
-    <v-row class="mt-2 mx-8">
-      <v-btn
-        class="ma-3 button-bright text-none"
-        width="-webkit-fill-available"
-        height="54px"
-        :disabled="!isDepositBtnReady"
-        :onclick="handleWithdrawSubmit"
-      >
-        {{ t("withdraw_dialog.withdraw_btn_text") }}
-      </v-btn>
-    </v-row>
+          {{ t("withdraw_dialog.withdraw_btn_text") }}
+        </v-btn>
+      </v-row>
+    </template>
+
     <Notification
       :notificationShow="notificationShow"
       :notificationText="notificationText"

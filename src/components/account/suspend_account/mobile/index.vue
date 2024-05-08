@@ -79,12 +79,12 @@ const contactService = () => {
         </v-btn>
       </v-col>
     </v-row>
-    <v-btn class="m-account-speaker-bg" icon @click="contactService">
+    <!-- <v-btn class="m-account-speaker-bg" icon @click="contactService">
       <img
         src="@/assets/public/svg/icon_public_75.svg"
         class="m-account-speaker-img-position"
       />
-    </v-btn>
+    </v-btn> -->
     <v-dialog
       v-model="dialogVisible"
       width="326"
@@ -101,6 +101,23 @@ const contactService = () => {
   background-color: #1D2027;
   border-radius: 0px 0px 12px 12px !important;
   height: 400px;
+
+  .m-account-speaker-bg {
+    width: 44px;
+    height: 44px;
+    background: #009b3a;
+    border-radius: 44px;
+    position: absolute;
+    right: 20px;
+    top: 328px;
+
+    .m-account-speaker-img-position {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 
   .v-field__field {
     background: #15161C !important;

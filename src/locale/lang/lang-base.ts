@@ -187,6 +187,24 @@ export type langType = {
       text_38: string
       text_39: string
       text_40: string
+      text_41: string
+      text_42: string
+      text_44: string
+      text_45: string
+      text_46: string
+      text_47: string
+      text_48: string
+      text_49: string
+      text_50: string
+      text_51: string
+      text_52: string
+      text_53: string
+      text_54: string
+      text_55: string
+      text_56: string
+      text_57: string
+      text_58: string
+      text_59: string
     }
     language: {
       title: string
@@ -1075,6 +1093,8 @@ export type langType = {
       text_11: string
       text_12: string
       text_13: string
+      text_14: string
+      text_15: string
     }
     footer: {
       game: {
@@ -1111,7 +1131,8 @@ export type langType = {
       footer_6: {
         text: string
       }
-    }
+    },
+    viewall: string
   }
   mobile_menu: {
     home: string
@@ -1386,6 +1407,7 @@ export type langType = {
       withdrawal: string
       vip: string
       referral: string
+      report: string
     }
     game_history: {
       game: string
@@ -1422,6 +1444,13 @@ export type langType = {
       text_11: string
       text_12: string
       text_13: string
+    },
+    report: {
+      invitationbonus: string
+      bettingCommission: string
+      date: string
+      user: string
+      bonus: string
     }
   }
   account: {
@@ -1638,6 +1667,7 @@ export type langType = {
       footer_text_6: string
       footer_text_7: string
       footer_text_8: string,
+      footer_text_9: string,
       validation_text_1: string
     }
     roulette_bonus: {
@@ -1769,6 +1799,28 @@ export type langType = {
         cash: string,
         mosaic: string,
         withdraw: string
+      },
+      rule: {
+        text1: string,
+        text2: string,
+        text3: string,
+        text4: string,
+        text5: string,
+        text6: string,
+        text7: string,
+        text8: string,
+        text9: string,
+        text10: string,
+        text11: string,
+        text12: string,
+        text13: string,
+        text14: string,
+        text15: string,
+        text16: string,
+        text17: string,
+        text18: string,
+        text19: string,
+        text20: string,
       }
     }
   }
@@ -1969,6 +2021,7 @@ export type langType = {
   game_confirm: {
     text_1: string
     text_2: string
+    text_3: string
   },
   deposit_confirm: {
     text_1: string
@@ -2027,5 +2080,9 @@ export type langType = {
     text_1: string
     text_2: string
     text_3: string
+  }
+  game: {
+    text_1: string
+    text_2: string
   }
 };

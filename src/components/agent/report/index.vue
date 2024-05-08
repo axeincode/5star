@@ -13,6 +13,7 @@ import { appBarStore } from "@/store/appBar";
 import { appCurrencyStore } from "@/store/app";
 import BScroll from '@better-scroll/core'
 
+const emit = defineEmits<{ (e: 'inited', val:boolean): void }>();
 const bscrollRef:any = ref(null)
 const BS:any = ref(null)
 
@@ -242,6 +243,7 @@ onMounted(async () => {
   setTimeout(() => {
     BS.value.refresh()
   }, 500)
+  emit('inited', false)
 });
 </script>
 <template>

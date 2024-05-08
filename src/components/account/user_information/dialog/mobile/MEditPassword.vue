@@ -150,7 +150,7 @@ const submitPassword = async () => {
 </script>
 
 <template>
-    <div class="m-user-container">
+    <div class="m-user-container--meditpw">
         <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
         <v-row class="mt-4 relative" :class="mobileWidth < 600 ? 'mx-2' : 'mx-10'">
             <v-text-field :label="t('account.password.current_text')" class="form-textfield dark-textfield m-account-password-edit-current" variant="solo"
@@ -198,7 +198,7 @@ const submitPassword = async () => {
 
 <style lang="scss">
 // account dialog container
-.m-user-container {
+.m-user-container--meditpw {
     .form-textfield div.v-field__field {
         box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
     }

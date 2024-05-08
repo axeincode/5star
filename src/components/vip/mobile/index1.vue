@@ -19,6 +19,7 @@ const {
 } = vipStore();
 const vipItems = ["Progress", "Benefits", "VIP Bonus"];
 const vipDrawer = ref<boolean>(true);
+const pageLoading = ref<boolean>(false)
 const Benefits = defineAsyncComponent(
   () => import("@/components/vip/components/benefits/index.vue")
 );
@@ -49,8 +50,9 @@ watch(vipNavBarToggle, (value: string) => {
   if (value === "1") {
     initVip();
     vipDrawer.value = true;
-    document.body.style.height =
-      vipNavigation.value.getBoundingClientRect().height + "px";
+    // 重置了body的高度为视口高度，就没有滚动了 影响首页游戏分类的监听时间监听
+    // document.body.style.height =
+    //   vipNavigation.value.getBoundingClientRect().height + "px";
   } else if(value === "2") { 
     initVip();
     vipDrawer.value = true;
@@ -61,10 +63,13 @@ watch(vipNavBarToggle, (value: string) => {
 });
 
 onMounted(async () => {
+  console.log('vipDrawer ========= mount')
+  pageLoading.value = true;
   if (localStorage.getItem("vipBar") === "1") {
     vipDrawer.value = true;
-    document.body.style.height =
-      vipNavigation.value.getBoundingClientRect().height + "px";
+    // 重置了body的高度为视口高度，就没有滚动了 影响首页游戏分类的监听时间监听
+    // document.body.style.height =
+    //   vipNavigation.value.getBoundingClientRect().height + "px";
   } else if(localStorage.getItem("vipBar") === "2") {
     vipDrawer.value = true;
   }else {
@@ -81,6 +86,7 @@ onMounted(async () => {
     value: "vip",
     params: "",
   });
+  pageLoading.value = false;
 });
 </script>
 
@@ -94,25 +100,23 @@ onMounted(async () => {
   >
     <div class="vip-main" ref="vipNavigation">
       <div class="vip-main-header">
-        <v-btn
-          class="m-vip-drawer-close-button"
-          icon="true"
-          width="20"
-          height="20"
-          @click="setVipNavBarToggle('0')"
-        >
-          <img :src="icon_public_10" width="18" />
-        </v-btn>
+        <!--  -->
+        <span>{{ t('transaction.tab.vip') }}</span>
+        <img :src="icon_public_10" @click="setVipNavBarToggle('0')" width="18" class="m-vip-drawer-close-button" />
       </div>
-      <v-tabs center-active dark v-model="vipTab">
-        <v-tab v-for="item in vipItems" :key="item" :value="item">
+      <v-tabs center-active v-model="vipTab" class="vip-tabs">
+        <v-tab v-for="item in vipItems" :tag="'div'" :key="item" :value="item">
           {{ item }}
         </v-tab>
       </v-tabs>
-      <div class="vip-main-content">
-        <Progress v-if="vipTab === 'Progress'"></Progress>
-        <Benefits v-if="vipTab === 'Benefits'"></Benefits>
-        <VipBonus v-if="vipTab === 'VIP Bonus'"></VipBonus>
+
+      <div class="vip-main-content" v-show="pageLoading">
+        <Loading  height="100%"></Loading>
+      </div>
+      <div class="vip-main-content" v-show="!pageLoading">
+        <Progress v-show="vipTab === 'Progress'"></Progress>
+        <Benefits v-show="vipTab === 'Benefits'"></Benefits>
+        <VipBonus v-show="vipTab === 'VIP Bonus'"></VipBonus>
       </div>
     </div>
   </v-navigation-drawer>
@@ -127,16 +131,8 @@ onMounted(async () => {
   z-index: 10000 !important;
   overflow: hidden;
 
-  .m-vip-drawer-close-button {
-    box-shadow: none !important;
-    background-color: transparent !important;
-    position: absolute !important;
-    top: 16px;
-    right: 16px;
-    z-index: 99;
-  }
-
   .vip-main-content {
+    padding-top: 4px;
     padding-bottom: 32px;
   }
 }
@@ -147,6 +143,58 @@ onMounted(async () => {
   height: 100%;
   &-header {
     height: 40px;
+    width: 100vw;
+    // position: fixed;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+
+    .m-vip-drawer-close-button {
+      box-shadow: none !important;
+      background-color: transparent !important;
+      position: absolute !important;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      z-index: 99;
+    }
+  }
+  .vip-tabs {
+    padding: 4px 16px;
+    ::v-deep(.v-tab) {
+      background: #15161c !important;
+      border-radius: 4px !important;
+      height: 35px;
+      position: relative;
+      border: none;
+      &::after {
+        border: none;
+      }
+    }
+    ::v-deep(.v-tab--selected) {
+      background: #1D2027 !important;
+      box-shadow: 0px 4px 6px 1px #0000004D;
+      height: 35px;
+
+      &::after {
+        content: '';
+        width: 24px;
+        height: 2px;
+        background: #009B3A;
+        position: absolute;
+        top: auto;
+        left: 50%;
+        bottom: 0px;
+        transform: translateX(-50%);
+        border-radius: 4px 0px 0px 0px;
+        opacity: 1;
+        border: none;
+      }
+    }
   }
   &-content {
     height: calc(100% - 100px);

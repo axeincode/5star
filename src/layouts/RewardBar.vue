@@ -34,6 +34,22 @@ const platformCurrency = computed(() => {
   return getPlatformCurrency.value;
 });
 
+const props = defineProps({
+  modelValue: {
+    type: Boolean
+  }
+});
+const emit = defineEmits(["update:modelValue"]);
+
+const modelValueNew = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit("update:modelValue", val);
+  }
+});
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const route = useRoute();
@@ -44,7 +60,7 @@ const { setMainBlurEffectShow } = appBarStore();
 const {
   setLevelUpDialogVisible,
   dispatchVipRebateAward,
-  dispatchVipLevelAward,
+  dispatchVipLevelAward
 } = vipStore();
 
 const { setAuthModalType } = authStore();
@@ -84,23 +100,23 @@ const bonus_items = ref<Array<any>>([
   {
     image: img_vip_4,
     content: t("reward.text_8"),
-    value: 0,
+    value: 0
   },
   {
     image: img_public_21,
     content: t("reward.text_10"),
-    value: 0,
+    value: 0
   },
   {
     image: img_public_22,
     content: t("reward.text_11"),
-    value: 0,
+    value: 0
   },
   {
     image: img_public_1,
     content: t("reward.text_12"),
-    value: "",
-  },
+    value: ""
+  }
   // {
   //   image: img_public_2,
   //   content: t("reward.text_13"),
@@ -111,12 +127,12 @@ const bonus_items = ref<Array<any>>([
 const items_2 = ref<Array<any>>([
   {
     image: img_public_23,
-    content: t("reward.text_15"),
+    content: t("reward.text_15")
   },
   {
     image: img_vip_3,
-    content: t("reward.text_17"),
-  },
+    content: t("reward.text_17")
+  }
 ]);
 
 // get Token
@@ -134,11 +150,11 @@ const rewardNavigationShow = computed(() => {
   return getRewardNavShow.value;
 });
 
-watch(rewardNavigationShow, (value) => {
+watch(rewardNavigationShow, value => {
   rewardNavShow.value = value;
 });
 
-watch(rewardNavShow, (value) => {
+watch(rewardNavShow, value => {
   if (!value) {
     setRewardNavShow(false);
     setOverlayScrimShow(false);
@@ -254,7 +270,7 @@ const alertMessage = (message: string, type: number) => {
     hideProgressBar: true,
     closeButton: "button",
     icon: type == 1 ? SuccessIcon : WarningIcon,
-    rtl: false,
+    rtl: false
   });
 };
 const claimClicked = async () => {};
@@ -264,19 +280,19 @@ const handleScroll = (event: any) => {
   scrollTop.value = event.target.scrollTop;
 };
 
-const lang=computed(()=>{
-  return localStorage.getItem('lang')
-})
+const lang = computed(() => {
+  return localStorage.getItem("lang");
+});
 
 onMounted(async () => {
-  let isMobile: boolean = false
-      if (route.query.mobile && route.query.mobile == "android"){
-        isMobile = true
-      }
+  let isMobile: boolean = false;
+  if (route.query.mobile && route.query.mobile == "android") {
+    isMobile = true;
+  }
   AdjustClass.getInstance(isMobile).adjustTrackEvent({
     key: "PAGE_VIEW",
     value: "reward",
-    params: "",
+    params: ""
   });
   if (token.value) {
     await getRewardList();
@@ -286,16 +302,13 @@ onMounted(async () => {
 
 <template>
   <v-navigation-drawer
-    v-model="rewardNavShow"
+    v-model="modelValueNew"
     location="bottom"
     temporary
     :touchless="true"
     class="m-reward-navigation-drawer"
   >
-    <div
-      :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'"
-      v-if="token"
-    >
+    <div :class="scrollTop == 0 ? 'm-reward-menu' : 'm-reward-menu-active-bg'" v-if="token">
       <p class="text-700-12 white pt-8 mx-4" v-if="token">{{ t("reward.text_3") }}</p>
 
       <v-row class="mx-4 my-1 align-center" v-if="token">
@@ -314,13 +327,12 @@ onMounted(async () => {
         <v-col cols="3" class="pa-1 text-right">
           <v-btn
             class="text-none m-reward-claim-btn"
-            
             width="100%"
             height="40"
             @click="claimClicked"
             v-reset-font-size="{ textNode: 'v-btn__content' }"
           >
-          <span :class="lang=='es'?'scale-btn-text':''">{{t("reward.text_5")}}</span>
+            <span :class="lang=='es'?'scale-btn-text':''">{{t("reward.text_5")}}</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -372,9 +384,7 @@ onMounted(async () => {
                   ? 'text-400-12 white'
                   : 'text-400-12 text-gray'
               "
-            >
-              {{ t("reward.text_6") }}
-            </p>
+            >{{ t("reward.text_6") }}</p>
             <p
               :class="
                 rewardList.achievement_status == 1
@@ -384,9 +394,9 @@ onMounted(async () => {
             >
               {{ platformCurrency }}
               {{
-                rewardList.achievement == undefined
-                  ? "0.00"
-                  : parseFloat(rewardList.achievement).toFixed(2)
+              rewardList.achievement == undefined
+              ? "0.00"
+              : parseFloat(rewardList.achievement).toFixed(2)
               }}
             </p>
           </v-col>
@@ -401,9 +411,7 @@ onMounted(async () => {
               height="32"
               :disabled="rewardList.achievement_status == 1 ? false : true"
               @click="handleAhivBonus"
-            >
-              {{ t("reward.text_7") }}
-            </v-btn>
+            >{{ t("reward.text_7") }}</v-btn>
           </v-col>
         </v-row>
       </div>
@@ -418,12 +426,9 @@ onMounted(async () => {
         </div>
         <v-btn
           class="text-none m-reward-join-btn"
-          width="96"
           height="32"
           @click="openLoginDialog"
-        >
-          {{ t("reward.text_22") }}
-        </v-btn>
+        >{{ t("reward.text_22") }}</v-btn>
       </div>
 
       <div class="m-reward-body mx-4 mb-4">
@@ -443,12 +448,11 @@ onMounted(async () => {
                 <p
                   class="text-400-12 white"
                   :class="!token && index != 3 ? 'text-gray' : ''"
-                >
-                  {{ item.content }}
-                </p>
-                <p class="text-800-14 active" v-if="item.value != ''">
-                  {{ platformCurrency }} {{ Number(item.value).toFixed(2) }}
-                </p>
+                >{{ item.content }}</p>
+                <p
+                  class="text-800-14 active"
+                  v-if="item.value != ''"
+                >{{ platformCurrency }} {{ Number(item.value).toFixed(2) }}</p>
               </div>
             </v-col>
             <v-col cols="3" class="d-flex align-center py-1">
@@ -463,9 +467,7 @@ onMounted(async () => {
                 @click="handleBonus(index)"
                 :disabled="item.value == 0 && index != 3 ? true : false"
                 v-reset-font-size="{ textNode: 'v-btn__content' }"
-              >
-                {{ t("reward.text_7") }}
-              </v-btn>
+              >{{ t("reward.text_7") }}</v-btn>
             </v-col>
           </v-row>
         </template>
@@ -479,12 +481,12 @@ onMounted(async () => {
             </v-col>
             <v-col cols="6" class="py-1 d-flex align-center">
               <div>
-                <p class="text-700-12 color-F9BC01">
-                  {{ item.content }}
-                </p>
+                <p class="text-700-12 color-F9BC01">{{ item.content }}</p>
                 <p class="text-700-12 white" v-if="index == 0">
                   {{ rewardList.level_up_num }}
-                  <font class="text-400-10 gray">{{ t("reward.text_16") }}</font>
+                  <font
+                    class="text-400-10 gray"
+                  >{{ t("reward.text_16") }}</font>
                 </p>
               </div>
             </v-col>
@@ -499,9 +501,7 @@ onMounted(async () => {
                 height="32"
                 @click="handleMyReward(index)"
                 :disabled="rewardList.level_up_num <= 0 && index == 0 ? true : false"
-              >
-                {{ t("reward.text_7") }}
-              </v-btn>
+              >{{ t("reward.text_7") }}</v-btn>
             </v-col>
           </v-row>
         </template>
@@ -515,7 +515,7 @@ onMounted(async () => {
   height: 100% !important;
   width: 100% !important;
   top: 0px !important;
-  z-index: 2147483645 !important;
+  z-index: 999999 !important;
   background: $agent_card_bg !important;
 
   .scale-btn-text {
@@ -545,7 +545,7 @@ onMounted(async () => {
     width: 100% !important;
     height: 110px !important;
     position: fixed;
-    z-index: 100000000 !important;
+    z-index: 999999 !important;
   }
 
   .m-reward-menu-log-out-active-bg {
@@ -554,7 +554,7 @@ onMounted(async () => {
     width: 100% !important;
     height: 30px !important;
     position: fixed;
-    z-index: 100000000 !important;
+    z-index: 999999 !important;
   }
 
   .m-reward-drawer-close-button {
@@ -592,7 +592,11 @@ onMounted(async () => {
     height: 160px;
     border-radius: 8px;
     border: 1px solid #1d2027;
-    background: conic-gradient(from 47deg at 50.17% 49.69%, #07070a 0deg, #1d2027 360deg);
+    background: conic-gradient(
+      from 47deg at 50.17% 49.69%,
+      #07070a 0deg,
+      #1d2027 360deg
+    );
 
     .m-reward-pic-img {
       position: absolute;
@@ -619,6 +623,7 @@ onMounted(async () => {
       position: absolute;
       right: 16px;
       bottom: 30px;
+      padding: 0 6px;
 
       .v-btn__content {
         color: #fff;

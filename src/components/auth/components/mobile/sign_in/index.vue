@@ -1,47 +1,51 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, watch, ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { authStore } from "@/store/auth";
-import { userStore } from "@/store/user";
-import { socketStore } from "@/store/socket";
-import { inviteStore } from "@/store/invite";
-import { vipStore } from "@/store/vip";
-import { refferalStore } from "@/store/refferal";
-import { appBarStore } from "@/store/appBar";
-import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
-import { useDisplay } from "vuetify";
-import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
-import WarningIcon from "@/components/global/notification/WarningIcon.vue";
-import { useToast } from "vue-toastification";
-import { throwStatement } from "@babel/types";
-import { bannerStore } from "@/store/banner";
-import { currencyStore } from "@/store/currency";
-import { googleTokenLogin } from "vue3-google-login";
-import AdjustClass from "@/utils/adjust";
-import EventToken from "@/constants/EventToken";
-import { useRoute } from "vue-router";
-import { gameStore } from "@/store/game";
-import { jwtDecode } from "jwt-decode";
-import { loginWithSocialMedia, loginType, loginOrRegister } from "@/plugins/third-party-login";
+import { defineComponent, reactive, toRefs, computed, watch, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { authStore } from '@/store/auth'
+import { userStore } from '@/store/user'
+import { socketStore } from '@/store/socket'
+import { inviteStore } from '@/store/invite'
+import { vipStore } from '@/store/vip'
+import { refferalStore } from '@/store/refferal'
+import { appBarStore } from '@/store/appBar'
+import { loginBonusStore } from '@/store/loginBonus'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+import { useDisplay } from 'vuetify'
+import SuccessIcon from '@/components/global/notification/SuccessIcon.vue'
+import WarningIcon from '@/components/global/notification/WarningIcon.vue'
+import { useToast } from 'vue-toastification'
+import { throwStatement } from '@babel/types'
+import { bannerStore } from '@/store/banner'
+import { currencyStore } from '@/store/currency'
+import { googleTokenLogin } from 'vue3-google-login'
+import AdjustClass from '@/utils/adjust'
+import EventToken from '@/constants/EventToken'
+import { useRoute } from 'vue-router'
+import { gameStore } from '@/store/game'
+import { jwtDecode } from 'jwt-decode'
+import { loginWithSocialMedia, loginType, loginOrRegister } from '@/plugins/third-party-login'
 import { ThirdPartyWayEnum } from '@/enums/userEnum'
-import { getQueryParams } from "@/utils/getPublicInformation";
-import { activityAppStore } from "@/store/activityApp";
-import { mainStore } from "@/store/main";
-import { ElLoading } from "element-plus";
+import { getQueryParams } from '@/utils/getPublicInformation'
+import { activityAppStore } from '@/store/activityApp'
+import { mainStore } from '@/store/main'
+import { ElLoading } from 'element-plus'
+import LoadingBtn from "@/components/global/loadingBtn.vue"
+
 // 获取平台货币
-import { appCurrencyStore } from "@/store/app";
+import { appCurrencyStore } from '@/store/app'
 const platformCurrency = computed(() => {
-  const { getPlatformCurrency } = storeToRefs(appCurrencyStore());
-  return getPlatformCurrency.value;
-});
+  const { getPlatformCurrency } = storeToRefs(appCurrencyStore())
+  return getPlatformCurrency.value
+})
 
 const Login = defineComponent({
   components: {
     SuccessIcon,
     WarningIcon,
+    LoadingBtn
   },
-  emits: ["close", "switch"],
+  emits: ['close', 'switch'],
   props: {
     signInForm: {
       type: Object as any,
@@ -49,97 +53,106 @@ const Login = defineComponent({
   },
   setup(props, { emit }) {
     // translation
-    const { t } = useI18n();
-    const route = useRoute();
-    const { dispatchSignIn, dispatchQuickLogin } = authStore();
-    const { dispatchUserProfile } = authStore();
-    const { setAuthModalType } = authStore();
-    const { setAuthDialogVisible } = authStore();
-    const { dispatchUserBalance } = userStore();
-    const { setOverlayScrimShow } = appBarStore();
-    const { setRefferalDialogShow } = refferalStore();
-    const { setToken } = authStore();
-    const { dispatchSocketConnect } = socketStore();
-    const { dispatchUserInvite } = inviteStore();
-    const { dispatchVipInfo } = vipStore();
-    const { dispatchVipLevels } = vipStore();
-    const { dispatchVipLevelAward } = vipStore();
-    const { width } = useDisplay();
-    const { dispatchCurrencyList } = currencyStore();
-    const {  getGameBetbyInit, closeKill } = gameStore();
-    const {  downloadApprReceive } = activityAppStore();
-    const {  userDownloadAppAcquisition } = activityAppStore();
+    const { t } = useI18n()
+    const route = useRoute()
+    const { dispatchSignIn, dispatchQuickLogin } = authStore()
+    const { dispatchUserProfile } = authStore()
+    const { setAuthModalType } = authStore()
+    const { setAuthDialogVisible } = authStore()
+    const { dispatchUserBalance } = userStore()
+    const { setOverlayScrimShow } = appBarStore()
+    const { setRefferalDialogShow } = refferalStore()
+    const { setToken } = authStore()
+    const { dispatchSocketConnect } = socketStore()
+    const { dispatchUserInvite } = inviteStore()
+    const { dispatchVipInfo, dispatchVipSignIn } = vipStore()
+    const { dispatchVipLevels } = vipStore()
+    const { dispatchVipLevelAward } = vipStore()
+    const { width } = useDisplay()
+    const { dispatchCurrencyList } = currencyStore()
+    const { getGameBetbyInit, closeKill } = gameStore()
+    const { downloadApprReceive } = activityAppStore()
+    const { userDownloadAppAcquisition } = activityAppStore()
     const { dispatchTimeunix } = mainStore()
+    const { setLoginBonusDialogVisible } = loginBonusStore()
 
     // initiate component state
     const state = reactive({
       currentPage: 0, // default login form
+      emailCollection: [
+        'gmail.com',
+        'hotmail.com',
+        'yahoo.com',
+        'icloud.com',
+        'outlook.com'
+      ], // 邮箱集合
+      emailFormat: <any>[], // 用于显示
       PAGE_TYPE: {
         LOGIN_FORM: 0,
         FORGOT_PASSWORD: 1,
       },
       formData: {
-        emailAddress: "",
-        password: "",
+        emailAddress: '',
+        password: '',
       },
       socialIconList: [
         {
-          url: new URL("@/assets/public/svg/icon_public_28.svg", import.meta.url).href,
-          value: ThirdPartyWayEnum.FACEBOOK_LOGIN
+          url: new URL('@/assets/public/svg/icon_public_28.svg', import.meta.url).href,
+          value: ThirdPartyWayEnum.FACEBOOK_LOGIN,
         },
         {
-          url: new URL("@/assets/public/svg/icon_public_google.svg", import.meta.url).href,
-          value: ThirdPartyWayEnum.GOOGLE_LOGIN
+          url: new URL('@/assets/public/svg/icon_public_google.svg', import.meta.url).href,
+          value: ThirdPartyWayEnum.GOOGLE_LOGIN,
         },
       ],
       isShowPassword: false,
       notificationShow: false,
-      checkIcon: new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href,
-      notificationText: t("login.forgotPasswordPage.notification"),
+      checkIcon: new URL('@/assets/public/svg/icon_public_18.svg', import.meta.url).href,
+      notificationText: t('login.forgotPasswordPage.notification'),
       loading: false,
       mailCardHeight: 0,
-      emailPartName: "",
+      emailPartName: '',
       closeBtnHeight: 0,
       containerHeight: 0 as number | undefined,
       bodyHeight: 0,
-      clientId:
-        "315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com",
-      indexValue: "",
-      typeValue: "",
-    });
+      clientId: '315002729492-ij8mt521q04m5hmqmdl1gdgc70oedbsi.apps.googleusercontent.com',
+      indexValue: '',
+      typeValue: '',
+    })
     const mobileWidth = computed(() => {
-      return width.value;
-    });
+      return width.value
+    })
 
+    const vipSignIn = computed(() => {
+      const { getVipSignIn } = storeToRefs(vipStore())
+      return getVipSignIn.value
+    })
     // computed variables
-    const isFormDataReady = computed(
-      (): boolean =>
-        state.formData.emailAddress.length > 0 && state.formData.password.length > 0
-    );
+    const isFormDataReady = computed((): boolean => state.formData.emailAddress.length > 0 && state.formData.password.length > 0)
 
     // flag when login successed
     const success = computed(() => {
-      const { getSuccess } = storeToRefs(authStore());
-      return getSuccess.value;
-    });
+      const { getSuccess } = storeToRefs(authStore())
+      return getSuccess.value
+    })
 
     // error message when login failed
 
     const errMessage = computed(() => {
-      const { getErrMessage } = storeToRefs(authStore());
-      return getErrMessage.value;
-    });
+      const { getErrMessage } = storeToRefs(authStore())
+      return getErrMessage.value
+    })
 
     const userInfo = computed(() => {
-      const { getUserInfo } = storeToRefs(authStore());
-      return getUserInfo.value;
-    });
+      const { getUserInfo } = storeToRefs(authStore())
+      return getUserInfo.value
+    })
 
     // forgot password function when password fogot
 
     const handleForgotPassword = () => {
-      const toast = useToast();
-      toast.success(t("login.forgotPasswordPage.notification"), {
+      const toast = useToast()
+      toast.success(t('login.forgotPasswordPage.notification'), {
         timeout: 3000,
         closeOnClick: false,
         pauseOnFocusLoss: false,
@@ -147,33 +160,34 @@ const Login = defineComponent({
         draggable: false,
         showCloseButtonOnHover: false,
         hideProgressBar: true,
-        closeButton: "button",
+        closeButton: 'button',
         icon: SuccessIcon,
         rtl: false,
-      });
-      state.currentPage = state.PAGE_TYPE.LOGIN_FORM;
-    };
+      })
+      state.currentPage = state.PAGE_TYPE.LOGIN_FORM
+    }
 
     const loginSuccess = async () => {
-      console.log('loginSuccess', success.value);
+      console.log('loginSuccess', success.value)
 
       if (success.value) {
-        await dispatchUserProfile();
-        await dispatchUserBalance();
-        await dispatchCurrencyList();
+        await dispatchUserProfile()
+        await dispatchUserBalance()
+        await dispatchCurrencyList()
         // await dispatchUserInvite();
-        await dispatchVipInfo();
-        await dispatchVipLevels();
-        await dispatchVipLevelAward();
+        await dispatchVipInfo()
+        await dispatchVipLevels()
+        await dispatchVipLevelAward()
+        await dispatchVipSignIn();
 
         // 获取服务器时间戳
         dispatchTimeunix()
         // await dispatchSocketConnect();
-        setOverlayScrimShow(false);
-        setRefferalDialogShow(true);
+        setOverlayScrimShow(false)
+        // setRefferalDialogShow(true);
 
-        const toast = useToast();
-        toast.success(t("login.submit_result.success_text"), {
+        const toast = useToast()
+        toast.success(t('login.submit_result.success_text'), {
           timeout: 3000,
           closeOnClick: false,
           pauseOnFocusLoss: false,
@@ -181,30 +195,29 @@ const Login = defineComponent({
           draggable: false,
           showCloseButtonOnHover: false,
           hideProgressBar: true,
-          closeButton: "button",
+          closeButton: 'button',
           icon: SuccessIcon,
           rtl: false,
-        });
+        })
 
         // 埋点统计
         AdjustClass.getInstance().adjustTrackEvent({
-          key: "LOGIN",
+          key: 'LOGIN',
           value: String(userInfo.value.id),
-          params: "",
-        });
+          params: '',
+        })
         setTimeout(() => {
-          setAuthModalType("");
-          setAuthDialogVisible(false);
-        }, 100);
+          setAuthModalType('')
+          setAuthDialogVisible(false)
+        }, 100)
         if (route.name == 'Sports') {
-          await closeKill();
-          await getGameBetbyInit();
+          await closeKill()
+          await getGameBetbyInit()
         }
-        await dispatchSocketConnect();
-
+        await dispatchSocketConnect()
       } else {
-        const toast = useToast();
-        toast.success(t("login.submit_result.err_text"), {
+        const toast = useToast()
+        toast.success(t('login.submit_result.err_text'), {
           timeout: 3000,
           closeOnClick: false,
           pauseOnFocusLoss: false,
@@ -212,44 +225,49 @@ const Login = defineComponent({
           draggable: false,
           showCloseButtonOnHover: false,
           hideProgressBar: true,
-          closeButton: "button",
+          closeButton: 'button',
           icon: WarningIcon,
           rtl: false,
-        });
+        })
       }
-    };
+    }
 
     // 获取活动奖金
     const activityAppBonus = computed(() => {
-      const { getActivityBonus } = storeToRefs(activityAppStore());
-      return getActivityBonus.value;
-    });
+      const { getActivityBonus } = storeToRefs(activityAppStore())
+      return getActivityBonus.value
+    })
 
     // 获取app下载活动id
     let downloadID = computed(() => {
-      const { getDownloadID } = storeToRefs(activityAppStore());
-      return getDownloadID.value;
-    });
+      const { getDownloadID } = storeToRefs(activityAppStore())
+      return getDownloadID.value
+    })
 
     // methods
     const handleLoginFormSubmit = async (event) => {
       // 不是回车键不触发  event.keyCode判断是不是软键盘触发
-      if(event.keyCode !== undefined && event.keyCode !== 13) return
+      if (event.keyCode !== undefined && event.keyCode !== 13) return
       //关闭手机软键盘
-      document.activeElement.blur();
+      document.activeElement.blur()
 
-      state.loading = true;
+      state.loading = true
 
       await dispatchSignIn({
         uid: state.formData.emailAddress,
         password: state.formData.password,
-      });
+      })
 
-      await loginSuccess();
-      if(!localStorage.getItem(userInfo.value.name)){
-        localStorage.setItem(userInfo.value.name,'0');
-      }else{
-        localStorage.setItem(userInfo.value.name,'1');
+      await loginSuccess()
+      if (!localStorage.getItem(userInfo.value.name)) {
+        localStorage.setItem(userInfo.value.name, '0')
+      } else {
+        localStorage.setItem(userInfo.value.name, '1')
+      }
+
+      // 打开VIP活动签到  is_signin = 2就是领取了
+      if (userInfo.value.id && vipSignIn.value.is_signin != 2) {
+        setLoginBonusDialogVisible(true)
       }
 
       setTimeout(async () => {
@@ -257,97 +275,129 @@ const Login = defineComponent({
         // 如果用户是app登录，那就领取奖励
         if (queryParams['mobile']) {
           try {
-            await downloadApprReceive({id: Number(downloadID.value)})
-            const toast = useToast();
-            toast.success(`${t('activity_app.text_1')} ${platformCurrency.value}${activityAppBonus.value}`, {
-              timeout: 3000,
-              closeOnClick: false,
-              pauseOnFocusLoss: false,
-              pauseOnHover: false,
-              draggable: false,
-              showCloseButtonOnHover: false,
-              hideProgressBar: true,
-              closeButton: "button",
-              icon: SuccessIcon,
-              rtl: false,
-            });
-
+            if (Number(activityAppBonus.value)) {
+              await downloadApprReceive({ id: Number(downloadID.value) })
+              const toast = useToast()
+              toast.success(`${t('activity_app.text_1')} ${platformCurrency.value}${activityAppBonus.value}`, {
+                timeout: 3000,
+                closeOnClick: false,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: 'button',
+                icon: SuccessIcon,
+                rtl: false,
+              })
+            }
+            
             await userDownloadAppAcquisition()
-          } catch (error) {
 
-          }
+          } catch (error) {}
         }
-      }, 500);
+      }, 500)
 
-      state.loading = false;
-    };
+      state.loading = false
+    }
 
     const showPassword = () => {
-      state.isShowPassword = !state.isShowPassword;
-    };
+      state.isShowPassword = !state.isShowPassword
+    }
 
-    const handleEmailBlur = (e:any) => {
+    const handleEmailBlur = (e: any) => {
       // console.log("onblur")
       // 去除空格和特殊符号
-      state.formData.emailAddress =e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
+      state.formData.emailAddress = e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
       setTimeout(() => {
-        state.mailCardHeight = 0;
-      }, 100);
-    };
+        state.mailCardHeight = 0
+      }, 100)
+    }
 
-    const handleEmailChange = (e:any) => {
+    const handleEmailChange = (e: any) => {
       // 去除空格和特殊符号
-      state.formData.emailAddress =e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
-      if (state.formData.emailAddress.includes("@")) {
-        state.emailPartName = state.formData.emailAddress.split("@")[0];
-        state.mailCardHeight = 220;
+      state.formData.emailAddress = e.target.value.replace(/([^@.])[\s~`!#$%^&*()_+=[\]{};:"<>?/,]/g, '$1')
+      if (state.formData.emailAddress.includes('@')) {
+        if (!state.formData.emailAddress.split('@')[1].charAt(0)) {
+          state.emailFormat = state.emailCollection
+          state.mailCardHeight = 220
+          return
+        } else {
+          // 查找包含符合的字符串
+          const filteredEmails = state.emailCollection.filter(email => email.includes(state.formData.emailAddress.split('@')[1]) && email !== state.formData.emailAddress.split('@')[1]);
+          if (filteredEmails[0]) {
+            state.emailFormat = [filteredEmails[0]]
+            state.mailCardHeight = 220
+          } else {
+            state.emailFormat = []
+            state.mailCardHeight = 0
+          }
+        }
       } else {
         setTimeout(() => {
-          state.mailCardHeight = 0;
-        }, 100);
+          state.mailCardHeight = 0
+        }, 100)
       }
-    };
+    }
 
     const handleEmailFocus = () => {
       // console.log("onFocus")
-      if (state.formData.emailAddress.includes("@")) {
-        state.emailPartName = state.formData.emailAddress.split("@")[0];
-        state.mailCardHeight = 220;
+      if (state.formData.emailAddress.includes('@')) {
+        if (!state.formData.emailAddress.split('@')[1].charAt(0)) {
+          state.emailFormat = state.emailCollection
+          state.mailCardHeight = 220
+          return
+        } else {
+          // 查找包含符合的字符串
+          const filteredEmails = state.emailCollection.filter(email => email.includes(state.formData.emailAddress.split('@')[1]) && email !== state.formData.emailAddress.split('@')[1]);
+          if (filteredEmails[0]) {
+            state.emailFormat = [filteredEmails[0]]
+            state.mailCardHeight = 220
+          } else {
+            state.emailFormat = []
+            state.mailCardHeight = 0
+          }
+        }
       }
-    };
+    }
 
     const mergeEmail = (mail: string) => {
-      state.formData.emailAddress = state.formData.emailAddress.split("@")[0] + mail;
+      state.formData.emailAddress = state.formData.emailAddress.split('@')[0] + mail
       setTimeout(() => {
-        state.mailCardHeight = 0;
-      }, 100);
-    };
+        state.mailCardHeight = 0
+      }, 100)
+    }
 
     const loginState = async (response: any) => {
       if (response.access_token) {
         const params = {
           id_token: response.access_token,
           type: 2,
-        };
-        await dispatchQuickLogin(params);
-        await loginSuccess();
+        }
+        await dispatchQuickLogin(params)
+        await loginSuccess()
       }
-    };
+    }
 
     // 全局 window 对象
-    const globalWindow: any = window;
+    const globalWindow: any = window
 
     // 接受android傳遞的token - google 登录模拟
     globalWindow.googleLogin = async (token: string) => {
-      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
-      if(token) {
-        await loginOrRegister(token, state.indexValue, state.typeValue);
-        await loginSuccess();
-        elLoading.close();
-        loginType(state.indexValue);
+      const elLoading = ElLoading.service({
+        lock: true,
+        text: '',
+        background: 'rgba(0, 0, 0, 0.7)',
+        customClass: 'top-loading',
+      })
+      if (token) {
+        await loginOrRegister(token, state.indexValue, state.typeValue)
+        await loginSuccess()
+        elLoading.close()
+        loginType(state.indexValue)
       } else {
-        const toast = useToast();
-        toast.error(t("login.submit_result.err_text"), {
+        const toast = useToast()
+        toast.error(t('login.submit_result.err_text'), {
           timeout: 3000,
           closeOnClick: false,
           pauseOnFocusLoss: false,
@@ -355,24 +405,29 @@ const Login = defineComponent({
           draggable: false,
           showCloseButtonOnHover: false,
           hideProgressBar: true,
-          closeButton: "button",
+          closeButton: 'button',
           icon: WarningIcon,
           rtl: false,
-        });
-        elLoading.close();
+        })
+        elLoading.close()
       }
     }
     // 接受android傳遞的token  - facebook 登录模拟
     globalWindow.fbrLogin = async (token: string) => {
-      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
-      if(token) {
-        await loginOrRegister(token, state.indexValue, state.typeValue);
-        await loginSuccess();
-        elLoading.close();
-        loginType(state.indexValue);
+      const elLoading = ElLoading.service({
+        lock: true,
+        text: '',
+        background: 'rgba(0, 0, 0, 0.7)',
+        customClass: 'top-loading',
+      })
+      if (token) {
+        await loginOrRegister(token, state.indexValue, state.typeValue)
+        await loginSuccess()
+        elLoading.close()
+        loginType(state.indexValue)
       } else {
-        const toast = useToast();
-        toast.error(t("login.submit_result.err_text"), {
+        const toast = useToast()
+        toast.error(t('login.submit_result.err_text'), {
           timeout: 3000,
           closeOnClick: false,
           pauseOnFocusLoss: false,
@@ -380,58 +435,62 @@ const Login = defineComponent({
           draggable: false,
           showCloseButtonOnHover: false,
           hideProgressBar: true,
-          closeButton: "button",
+          closeButton: 'button',
           icon: WarningIcon,
           rtl: false,
-        });
-        elLoading.close();
+        })
+        elLoading.close()
       }
     }
 
     // social login function
     const handleSocialSigin = async (value: string) => {
-      const elLoading = ElLoading.service({ lock: true, text: '', background: 'rgba(0, 0, 0, 0.7)', customClass: 'top-loading' });
+      const elLoading = ElLoading.service({
+        lock: true,
+        text: '',
+        background: 'rgba(0, 0, 0, 0.7)',
+        customClass: 'top-loading',
+      })
       try {
-        state.loading = true;
+        state.loading = true
         if (AdjustClass.getInstance().isMobileWebview) {
-            state.indexValue = value;
-            state.typeValue = 'login';
-            // 啟動android原生登錄流程
-            if (value === "google") {
-              globalWindow["AndroidWebView"].googleLogin();
-            }
-            if (value === "facebook") {
-              globalWindow["AndroidWebView"].facebookLogin();
-            }
+          state.indexValue = value
+          state.typeValue = 'login'
+          // 啟動android原生登錄流程
+          if (value === 'google') {
+            globalWindow['AndroidWebView'].googleLogin()
+          }
+          if (value === 'facebook') {
+            globalWindow['AndroidWebView'].facebookLogin()
+          }
         } else {
-          await loginWithSocialMedia(value, 'login');
-          await loginSuccess();
-          loginType(value);
+          await loginWithSocialMedia(value, 'login')
+          await loginSuccess()
+          loginType(value)
         }
       } catch (err) {
-        console.error(err);
+        console.error(err)
       } finally {
-        state.loading = false;
-        elLoading.close();
+        state.loading = false
+        elLoading.close()
       }
-    };
+    }
 
     watch(
       mobileWidth,
       (newValue) => {
-        state.containerHeight = window.innerHeight - 54;
-        state.bodyHeight = window.innerHeight - 194;
+        state.containerHeight = window.innerHeight - 54
+        state.bodyHeight = window.innerHeight - 194
       },
       { deep: true }
-    );
+    )
 
     onMounted(() => {
-      if(props.signInForm.emailAddress){
-        state.formData.emailAddress=props.signInForm.emailAddress
-        state.formData.password=props.signInForm.password
+      if (props.signInForm.emailAddress) {
+        state.formData.emailAddress = props.signInForm.emailAddress
+        state.formData.password = props.signInForm.password
       }
-    });
-
+    })
 
     return {
       t,
@@ -445,11 +504,11 @@ const Login = defineComponent({
       handleEmailFocus,
       mergeEmail,
       loginSuccess,
-      handleSocialSigin
-    };
+      handleSocialSigin,
+    }
   },
-});
-export default Login;
+})
+export default Login
 </script>
 
 <template>
@@ -459,10 +518,10 @@ export default Login;
       <img src="@/assets/public/image/logo_public_04.png" width="86" />
       <div class="ml-2">
         <div class="text-800-16 white">
-          {{ t("signup.formPage.header.titleLine1") }}
+          {{ t('signup.formPage.header.titleLine1') }}
         </div>
         <div class="text-900-20 white">
-          {{ t("signup.formPage.header.titleLine2") }}
+          {{ t('signup.formPage.header.titleLine2') }}
         </div>
       </div>
     </div>
@@ -485,37 +544,13 @@ export default Login;
           />
           <div class="m-login-mail-card" :style="{ height: mailCardHeight + 'px' }">
             <v-list theme="dark" bg-color="#15161C">
-              <v-list-item
-                class="text-600-12 white"
-                value="gmail"
-                @click="mergeEmail('@gmail.com')"
-              >
-                {{ emailPartName }}@gmail.com
-              </v-list-item>
-              <v-list-item
-                class="text-600-12 white"
-                value="hotmail"
-                @click="mergeEmail('@hotmail.com')"
-                >{{ emailPartName }}@hotmail.com</v-list-item
-              >
-              <v-list-item
-                class="text-600-12 white"
-                value="yahoo"
-                @click="mergeEmail('@yahoo.com')"
-                >{{ emailPartName }}@yahoo.com</v-list-item
-              >
-              <v-list-item
-                class="text-600-12 white"
-                value="icloud"
-                @click="mergeEmail('@icloud.com')"
-                >{{ emailPartName }}@icloud.com</v-list-item
-              >
-              <v-list-item
-                class="text-600-12 white"
-                value="outlook"
-                @click="mergeEmail('@outlook.com')"
-                >{{ emailPartName }}@outlook.com</v-list-item
-              >
+              <!-- <v-list-item class="text-600-12 white" value="gmail" @click="mergeEmail('@gmail.com')"> {{ emailPartName }}@gmail.com </v-list-item>
+              <v-list-item class="text-600-12 white" value="hotmail" @click="mergeEmail('@hotmail.com')">{{ emailPartName }}@hotmail.com</v-list-item>
+              <v-list-item class="text-600-12 white" value="yahoo" @click="mergeEmail('@yahoo.com')">{{ emailPartName }}@yahoo.com</v-list-item>
+              <v-list-item class="text-600-12 white" value="icloud" @click="mergeEmail('@icloud.com')">{{ emailPartName }}@icloud.com</v-list-item>
+              <v-list-item class="text-600-12 white" value="outlook" @click="mergeEmail('@outlook.com')">{{ emailPartName }}@outlook.com</v-list-item> -->
+              <v-list-item v-for="item in emailFormat" :key="item" class="text-600-12 white" :value="`@${item}`" @click="mergeEmail(`@${item}`)">{{ emailPartName }}@{{ item }}</v-list-item>
+
             </v-list>
           </div>
         </div>
@@ -530,64 +565,37 @@ export default Login;
             @keypress="handleLoginFormSubmit"
           />
           <div v-if="isShowPassword" @click="showPassword" class="m-password-icon">
-            <img
-              src="@/assets/public/svg/icon_public_07.svg"
-              class="m-disable-password"
-              width="16"
-            />
+            <img src="@/assets/public/svg/icon_public_07.svg" class="m-disable-password" width="20" />
           </div>
           <div v-else @click="showPassword" class="m-password-icon">
-            <img
-              src="@/assets/public/svg/icon_public_06.svg"
-              class="m-disable-password"
-              width="16"
-            />
+            <img src="@/assets/public/svg/icon_public_06.svg" class="m-disable-password" width="20" />
           </div>
         </div>
         <v-row class="mt-2">
-          <p
-            class="ml-9 login-forget-passwrod-text text-400-12"
-            @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD"
-          >
-            {{ t("login.formPage.forgetPassword") }}
+          <p class="ml-9 login-forget-passwrod-text text-400-12" @click="currentPage = PAGE_TYPE.FORGOT_PASSWORD">
+            {{ t('login.formPage.forgetPassword') }}
           </p>
         </v-row>
       </form>
       <v-row style="margin-top: 100px">
-          <v-btn
-            type="search"
-            class="ma-3 button-bright m-signin-btn-text"
-            width="94%"
-            height="48px"
-            :loading="loading"
-            :onclick="handleLoginFormSubmit"
-          >
-            {{ t("login.formPage.button") }}
-          </v-btn>
+        <v-btn type="search" class="ma-3 button-bright m-signin-btn-text" width="94%" height="48px" :onclick="handleLoginFormSubmit">
+          <LoadingBtn v-if="loading"></LoadingBtn>
+          <div v-else>
+            {{ t('login.formPage.button') }}
+          </div>
+        </v-btn>
       </v-row>
       <v-row class="mt-4">
         <p class="m-divide-text">
-          {{ t("signup.formPage.divider") }}
+          {{ t('signup.formPage.divider') }}
         </p>
         <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
       </v-row>
       <v-row class="mt-6 m-justify-content">
         <v-col cols="4">
           <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
-            <v-sheet
-              v-for="(item, index) in socialIconList"
-              :key="index"
-              color="#131828"
-              class="rounded"
-            >
-              <v-btn
-                color="grey-darken-4"
-                class="m-social-icon-button"
-                icon=""
-                width="36px"
-                height="36px"
-                @click="handleSocialSigin(item.value)"
-              >
+            <v-sheet v-for="(item, index) in socialIconList" :key="index" color="#131828" class="rounded">
+              <v-btn color="grey-darken-4" class="m-social-icon-button" icon="" width="36px" height="36px" @click="handleSocialSigin(item.value)">
                 <img :src="item.url" width="36" />
               </v-btn>
             </v-sheet>
@@ -613,84 +621,35 @@ export default Login;
         />
         <div class="m-forgot-mail-card" :style="{ height: mailCardHeight + 'px' }">
           <v-list theme="dark" bg-color="#1D2027">
-            <v-list-item
-              class="text-600-12 white"
-              value="gmail"
-              @click="mergeEmail('@gmail.com')"
-            >
-              {{ emailPartName }}@gmail.com
-            </v-list-item>
-            <v-list-item
-              class="text-600-12 white"
-              value="hotmail"
-              @click="mergeEmail('@hotmail.com')"
-              >{{ emailPartName }}@hotmail.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="yahoo"
-              @click="mergeEmail('@yahoo.com')"
-              >{{ emailPartName }}@yahoo.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="icloud"
-              @click="mergeEmail('@icloud.com')"
-              >{{ emailPartName }}@icloud.com</v-list-item
-            >
-            <v-list-item
-              class="text-600-12 white"
-              value="outlook"
-              @click="mergeEmail('@outlook.com')"
-              >{{ emailPartName }}@outlook.com</v-list-item
-            >
+            <v-list-item class="text-600-12 white" value="gmail" @click="mergeEmail('@gmail.com')"> {{ emailPartName }}@gmail.com </v-list-item>
+            <v-list-item class="text-600-12 white" value="hotmail" @click="mergeEmail('@hotmail.com')">{{ emailPartName }}@hotmail.com</v-list-item>
+            <v-list-item class="text-600-12 white" value="yahoo" @click="mergeEmail('@yahoo.com')">{{ emailPartName }}@yahoo.com</v-list-item>
+            <v-list-item class="text-600-12 white" value="icloud" @click="mergeEmail('@icloud.com')">{{ emailPartName }}@icloud.com</v-list-item>
+            <v-list-item class="text-600-12 white" value="outlook" @click="mergeEmail('@outlook.com')">{{ emailPartName }}@outlook.com</v-list-item>
           </v-list>
         </div>
       </v-row>
       <v-row style="margin-top: 100px">
-        <v-btn
-          class="ma-3 button-bright m-signin-btn-text"
-          width="94%"
-          height="48"
-          autocapitalize="off"
-          @click="handleForgotPassword"
-        >
-          {{ t("login.forgotPasswordPage.submit") }}
+        <v-btn class="ma-3 button-bright m-signin-btn-text" width="94%" height="48" autocapitalize="off" @click="handleForgotPassword">
+          {{ t('login.forgotPasswordPage.submit') }}
         </v-btn>
       </v-row>
       <v-row>
-        <v-btn
-          class="ma-3 m-forgot-back-btn"
-          width="94%"
-          height="48"
-          autocapitalize="off"
-          @click="currentPage = PAGE_TYPE.LOGIN_FORM"
-        >
-          {{ t("login.forgotPasswordPage.back_text") }}
+        <v-btn class="ma-3 m-forgot-back-btn" width="94%" height="48" autocapitalize="off" @click="currentPage = PAGE_TYPE.LOGIN_FORM">
+          {{ t('login.forgotPasswordPage.back_text') }}
         </v-btn>
       </v-row>
       <v-row class="mt-4">
         <p class="m-divide-text">
-          {{ t("signup.formPage.divider") }}
+          {{ t('signup.formPage.divider') }}
         </p>
         <v-divider class="mx-10" style="border: 1px solid #414968 !important" />
       </v-row>
-      <v-row class="mt-6  m-justify-content">
+      <v-row class="mt-6 m-justify-content">
         <v-col cols="4">
           <div class="d-flex justify-space-around bg-surface-variant social-icon-wrapper">
-            <v-sheet
-              v-for="(item, index) in socialIconList"
-              :key="index"
-              color="#131828"
-              class="rounded"
-            >
-              <v-btn
-                color="grey-darken-4"
-                class="m-social-icon-button"
-                icon=""
-                width="36px"
-                height="36px"
-              >
+            <v-sheet v-for="(item, index) in socialIconList" :key="index" color="#131828" class="rounded">
+              <v-btn color="grey-darken-4" class="m-social-icon-button" icon="" width="36px" height="36px">
                 <img :src="item.url" width="36" />
               </v-btn>
             </v-sheet>
@@ -701,13 +660,30 @@ export default Login;
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media (max-width: 600px) {
+  // .form-textfield {
+  //   height: 40px !important;
+
+  //   .v-input__control {
+  //     height: 40px;
+
+  //     .v-field__field {
+  //       height: 40px !important;
+
+  //       .v-field__input {
+  //         padding-top: 10px !important;
+  //         height: 40px !important;
+  //         min-height: 40px !important;
+  //         line-height: 30px;
+  //         box-sizing: border-box;
+  //       }
+  //     }
+  //   }
+  // }
   .v-field__field {
     color: var(--sec-text-7782-aa, #7782aa);
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
-      Microsoft Yahei, sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -715,10 +691,7 @@ export default Login;
     height: 40px !important;
 
     input {
-      padding-top: 6px !important;
-      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 600;
@@ -726,9 +699,7 @@ export default Login;
     }
 
     .v-label.v-field-label {
-      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;
@@ -736,6 +707,7 @@ export default Login;
     }
 
     .v-label.v-field-label--floating {
+      top: 4px !important;
       --v-field-label-scale: 0.88em;
       font-size: var(--v-field-label-scale);
       max-width: 100%;
@@ -743,14 +715,44 @@ export default Login;
   }
 }
 
-.m-forgot-back-btn {
+:deep .v-field__field {
+  color: var(--sec-text-7782-aa, #7782aa);
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: 40px !important;
+  input {
+    padding-top: 2px !important;
+    padding-right: 30px !important;
+  }
+
+  .v-label.v-field-label {
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+    font-size: 12px !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #7782aa !important;
+    opacity: 1 !important;
+  }
+
+  .v-label.v-field-label--floating {
+    --v-field-label-scale: 0.88em;
+    font-size: 8px !important;
+    max-width: 100%;
+    color: #7782aa !important;
+    opacity: 1 !important;
+  }
+}
+
+:deep.m-forgot-back-btn {
   background: #23262f;
   box-shadow: 0px 4px 6px 1px #0000004d;
 
   .v-btn__content {
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
-      Microsoft Yahei, sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     font-size: 14px;
     font-weight: 700;
     line-height: 17px;
@@ -793,9 +795,7 @@ export default Login;
 .m-signin-btn-text {
   .v-btn__content {
     text-align: center;
-    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
-      Microsoft Yahei, sans-serif;
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -807,7 +807,7 @@ export default Login;
   position: absolute;
   top: 0;
   right: 0;
-  width: 50px;
+  width: 70px;
   height: 40px;
 }
 
@@ -841,9 +841,7 @@ export default Login;
 
 // divider
 .m-divide-text {
-  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
-    sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -863,9 +861,7 @@ export default Login;
 
 // divider
 .divide-text {
-  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
-    sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -896,9 +892,7 @@ export default Login;
 
 .login-forget-passwrod-text {
   cursor: pointer;
-  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
-    sans-serif;
+  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -915,9 +909,7 @@ export default Login;
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -945,9 +937,7 @@ export default Login;
     }
 
     .v-label.v-field-label {
-      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -971,9 +961,7 @@ export default Login;
 
   .v-field__field {
     .v-label.v-field-label {
-      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed,
-        DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-        WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
+      font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular, Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei, sans-serif;
       font-size: 12px !important;
       font-style: normal;
       font-weight: 400;
@@ -994,7 +982,7 @@ export default Login;
 
 .top-loading {
   z-index: 99999999999999 !important;
-  color: var(--Primary-Button-32CFEC, #009B3A) !important;
+  color: var(--Primary-Button-32CFEC, #009b3a) !important;
   background: rgba(0, 0, 0, 0.7);
 }
 </style>

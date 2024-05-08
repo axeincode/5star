@@ -80,4 +80,4 @@ const mobileWidth: any = computed(() => {
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

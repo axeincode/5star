@@ -853,8 +853,8 @@ button:active:enabled {
 }
 
 .Vue-Toastification__toast.m-custom-toast-class {
-    height: 40px;
-    min-height: 40px;
+    // height: 50px;
+    // min-height: 50px;
     padding: 0 20px;
     border-radius: 8px 0 0 8px;
     background: #23262F;
@@ -869,6 +869,7 @@ button:active:enabled {
         line-height: 16px;
         font-size: 10px;
         color: #fff;
+        max-width: 80vw;
     }
     .Vue-Toastification__close-button {
         background-image: url("@/assets/public/svg/icon_public_10.svg");
@@ -895,6 +896,48 @@ button:active:enabled {
   animation-duration: 0.3s;
 }
 /*the animation definition*/
+
+//  关于说明
+.m-about-collapse {
+  .el-collapse {
+    border-top: unset !important;
+    border-bottom: unset !important;
+  }
+  .el-collapse-item {
+    border-bottom: 2px solid #1d2027;
+  }
+  .el-collapse-item__header {
+    background-color: #15161c !important;
+    border-bottom: unset !important;
+    color: var(--White-BG, #fff);
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .el-collapse-item__wrap {
+    background-color: #15161c !important;
+  }
+  .el-collapse-item__content {
+    padding-bottom: 16px;
+    color: var(--Sec-Text-7782AA, #7782aa);
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei,
+      Microsoft Yahei, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 19.2px */
+  }
+  .el-icon {
+    color: white !important;
+    font-size: 14px;
+  }
+}
+
 @-webkit-keyframes slideInDown {
     0% {
       -webkit-transform: translate3d(0, -100%, 0);
@@ -981,3 +1024,168 @@ button:active:enabled {
 // .fadeOutDown-enter-active, .fadeOutDown-leave-active {
 //   transition: opacity 0.3s ease-out;
 // }
+/*the animation definition*/
+@-webkit-keyframes tada {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1)
+    }
+    10%,
+    20% {
+      -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)
+    }
+    40%,
+    60%,
+    80% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1)
+    }
+  }
+  @keyframes tada {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+      -ms-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1)
+    }
+    10%,
+    20% {
+      -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+      -ms-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      -ms-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)
+    }
+    40%,
+    60%,
+    80% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      -ms-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+      -ms-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1)
+    }
+  }
+  .tada {
+    -webkit-animation-name: tada;
+    animation-name: tada
+  }
+
+  .animated-lr {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  .animated-lr.infinite-lr {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+  .animated-lr.hinge-lr {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+  }
+  /*左淡出*/
+  @-webkit-keyframes fadeOutRight {
+    0% {
+      opacity: 1;
+      transform: scaleX(100%);
+      transform-origin: right;
+      overflow: hidden;
+    }
+    100% {
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: right;
+      overflow: hidden;
+    }
+  }
+  @keyframes fadeOutRight {
+    0% {
+      opacity: 1;
+      transform: scaleX(100%);
+      transform-origin: right;
+      overflow: hidden;
+    }
+    100% {
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: right;
+      overflow: hidden;
+    }
+  }
+  .fadeOutRight {
+    -webkit-animation-name: fadeOutRight;
+    animation-name: fadeOutRight
+  }
+
+  /*右淡出*/
+  @-webkit-keyframes fadeInRight {
+    0% {
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: right;
+      overflow: hidden;
+    }
+    100% {
+      opacity: 1;
+      transform: scaleX(100%);
+      transform-origin: right;
+      overflow: hidden;
+    }
+  }
+  @keyframes fadeInRight {
+    0% {
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: right;
+      overflow: hidden;
+    }
+    100% {
+      opacity: 1;
+      transform: scaleX(100%);
+      transform-origin: right;
+      overflow: hidden;
+    }
+
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(-30px); /* 回弹的距离 */
+    }
+  }
+  .fadeInRight {
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight
+  }
+
+  .Vue-Toastification__container {
+    right: 0 !important;
+    left: unset !important;
+    width: 290px !important;
+    margin-right: 37px;
+    height: 60px !important;
+    z-index: 10000000000000000;
+  }
+  

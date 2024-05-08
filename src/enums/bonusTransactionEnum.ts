@@ -5,4 +5,5 @@ export enum BtTabEnum {
     deposit = 'deposit',
     withdrawal = 'withdrawal',
     vip = 'vip',
+    report = 'report',
 }

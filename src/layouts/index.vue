@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted,watch, onUnmounted } from "vue";
 import { defineAsyncComponent } from "vue";
 import { useRoute } from "vue-router";
 
@@ -21,6 +21,9 @@ import { refferalStore } from "@/store/refferal";
 import { gameStore } from "@/store/game";
 import { storeToRefs } from "pinia";
 import { appBarStore } from "@/store/appBar";
+import { agentStore } from "@/store/agent";
+import { menuStore } from "@/store/menu";
+import { useDialog } from "@/hooks/dialog";
 
 // const AppBarLayout = defineAsyncComponent(() => import("./AppBar.vue"));
 // const MainLayout = defineAsyncComponent(() => import("./Main.vue"));
@@ -39,8 +42,25 @@ const MBonusDashboardDialog = defineAsyncComponent(
 );
 const LiveChat = defineAsyncComponent(() => import("./live_chat/index.vue"));
 
+const agentNavBarToggle = computed(() => {
+  const { getAgentNavBarToggle } = storeToRefs(agentStore());
+  return getAgentNavBarToggle.value;
+});
+
+const { agentNavBarDrawer, vipDrawer } = useDialog();
+
 const route = useRoute();
 const { width } = useDisplay();
+
+const rewardNavigationShow = computed(() => {
+  const { getRewardNavShow } = storeToRefs(menuStore());
+  return getRewardNavShow.value;
+});
+
+const rewardNavShow = ref<boolean>(false);
+watch(rewardNavigationShow, (value) => {
+  rewardNavShow.value = value;
+});
 
 const refferalAppBarShow = computed(() => {
   const { getRefferalAppBarShow } = storeToRefs(refferalStore());
@@ -55,7 +75,7 @@ const isGameScroll = computed(() => {
 
 const isScroll = ref(false)
 
-const agentNavBarToggle = computed(() => {});
+
 
 const mobileWidth = computed(() => {
   return width.value||300;
@@ -71,33 +91,24 @@ const bonusDashboardDialogShow = computed(() => {
   return getBonusDashboardDialogVisible.value;
 });
 
-const judgeScreen = () => {
-  if (window.orientation == 90 || window.orientation == -90) {
-    isScroll.value = true
-  }
-  window.addEventListener(
-    "onorientationchange" in window ? "orientationchange" : "resize",
-    function () {
-      if (window.orientation === 180 || window.orientation === 0) {
-        setTimeout(() => {
-          isScroll.value = false
-        }, 200);
-      }
-      if (window.orientation === 90 || window.orientation === -90) {
-        isScroll.value = true
-      }
-    },
-    false
-  );
+const updateOrientation = () => {
+  const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+  isScroll.value = isLandscape;
 };
+
+onMounted(() => {
+  updateOrientation(); // 初始化时检查一次屏幕方向
+  window.addEventListener("resize", updateOrientation); // 监听屏幕方向变化
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateOrientation); // 组件销毁时移除事件监听器
+});
 
 const handleScroll = () => {
   console.log("scroll");
 };
 
-onMounted(() => {
-  judgeScreen();
-});
 </script>
 
 <template>
@@ -111,8 +122,8 @@ onMounted(() => {
     </template>
     <template v-else>
       <MNavBarLayout />
-      <RewardBarLayout v-if="route.name !== 'Sports'" />
-      <AgentBarLayout />
+      <RewardBarLayout v-show="route.name !== 'Sports'&&rewardNavShow" v-model="rewardNavShow" />
+      <AgentBarLayout v-show="agentNavBarToggle" v-model="agentNavBarToggle" />
       <VipBar />
     </template>
     <UserNavBarLayout />

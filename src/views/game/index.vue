@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted, onUnmounted, defineAsyncComponent } from "vue";
+import { ref, computed, nextTick, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import { gameStore } from "@/store/game";
 import { mailStore } from "@/store/mail";
+import { vipStore } from '@/store/vip'
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
@@ -17,11 +18,17 @@ import { useRoute, useRouter } from "vue-router";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 import CloseIframe from "@/components/close_iframe/index.vue";
+import gameBonusDrawer from "./components/gameBonusDrawer.vue";
 import { getDeviceType } from "@/utils/getPublicInformation";
 import { getQueryParams } from "@/utils/getPublicInformation";
+import { appCurrencyStore } from "@/store/app";
+// 设置首屏是否显示
+const { setIsShowSkeleton } = appCurrencyStore()
 
 // 是否显示关闭按钮
 const displayedCloseBtn = ref<boolean>(false)
+// 奖金使用弹窗
+const bonusDrawer=ref(true)
 
 const { t } = useI18n();
 const { width } = useDisplay();
@@ -29,6 +36,7 @@ const { setMailMenuShow } = mailStore();
 const { dispatchGameEnter } = gameStore();
 const { setIsScroll } = gameStore();
 const { setMobileMenuShow } = gameStore();
+const { dispatchVipInfo } = vipStore()
 const route = useRoute();
 const router = useRouter();
 const mobileHeight = ref<number | undefined>(0);
@@ -398,11 +406,13 @@ const handleResize = () => {
 const queryParams = getQueryParams()
 
 // 点击关闭按钮回调
-const closeGame = () => {
+const closeGame = async() => {
   // 关闭游戏，打开横屏遮罩层的监听
   setIsScroll(true)
-  // router.go(-1);
-  router.push({path: "/", query: queryParams})
+  //退出游戏获取进度条 
+  await dispatchVipInfo()
+  router.go(-1);
+  // router.push({path: "/", query: queryParams})
   // 关闭按钮显示
   // displayedCloseBtn.value = false
 }
@@ -469,6 +479,12 @@ onMounted(async () => {
     };
     (window as any).sg.launch(gameLaunchOptions);
   }
+
+  nextTick(() => {
+    // 设置首屏加载动画关闭
+    setIsShowSkeleton(false)
+  })
+
 });
 
 onUnmounted(() => {
@@ -477,10 +493,9 @@ onUnmounted(() => {
 });
 </script>
 <template>
-
-  <CloseIframe v-if="displayedCloseBtn" @close="closeGame"></CloseIframe>
-
+  <gameBonusDrawer v-if="bonusDrawer" v-model="bonusDrawer"></gameBonusDrawer>
   <div class="game-body" v-if="mobileWidth < 600 || ['ios', 'android'].includes(getDeviceType())">
+    <CloseIframe v-if="displayedCloseBtn" @close="closeGame"></CloseIframe>
     <div class="m-game-frame-body">
       <div class="m-loading-container relative" v-if="!frameShow">
         <div class="loading-body">
@@ -510,6 +525,7 @@ onUnmounted(() => {
     </div>
   </div>
   <div class="game-body" v-else>
+    <CloseIframe v-if="displayedCloseBtn" @close="closeGame"></CloseIframe>
     <div class="game-frame-body">
       <div class="loading-container relative" v-if="!frameShow">
         <div class="loading-body">
@@ -683,7 +699,6 @@ _:future,
     scale: 0.8;
   }
 }
-
 .game-body {
   width: 100%;
 

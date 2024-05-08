@@ -23,6 +23,7 @@ export const appBarStore = defineStore({
     depositWithdrawToggle: false as boolean,
     bonusDashboardDialogVisible: false as boolean,
     activeAccountIndex: 0 as number,
+    controlLevel: false as boolean, // 控制主页按钮层级 
   }),
   getters: {
     getSuccess: (state) => state.success,
@@ -44,6 +45,7 @@ export const appBarStore = defineStore({
     getDepositWithdrawToggle: (state) => state.depositWithdrawToggle,
     getBonusDashboardDialogVisible: (state) => state.bonusDashboardDialogVisible,
     getActiveAccountIndex: (state) => state.activeAccountIndex,
+    getControlLevel: (state) => state.controlLevel,
   },
   actions: {
     setSuccess(success: boolean) {
@@ -57,6 +59,9 @@ export const appBarStore = defineStore({
     },
     setNavBarToggle(navBarToggle: boolean) {
       this.navBarToggle = navBarToggle;
+    },
+    setControlLevel(controlLevel: boolean) {
+      this.controlLevel = controlLevel;
     },
     setDepositDialogToggle(depositDialogToggle: boolean) {
       this.depositDialogToggle = depositDialogToggle;

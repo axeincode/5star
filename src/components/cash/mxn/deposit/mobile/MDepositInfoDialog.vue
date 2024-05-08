@@ -120,7 +120,7 @@ const handleCopyUrlCode = async () => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-depositinfo-dialog-container {
   width: 328px;
   height: 545px;

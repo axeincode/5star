@@ -8,6 +8,7 @@ import { appBarStore } from "@/store/appBar";
 import { authStore } from "@/store/auth";
 import { mailStore } from "@/store/mail";
 import { vipStore } from "@/store/vip";
+import { activityAppStore } from '@/store/activityApp';
 import { agentStore } from "@/store/agent";
 import { storeToRefs } from "pinia";
 import { useDisplay } from 'vuetify';
@@ -30,7 +31,6 @@ import img_vipemblem_200 from "@/assets/vip/image/img_vipemblem_200.png";
 import { menuStore } from "@/store/menu";
 import { BtTabEnum } from '@/enums/bonusTransactionEnum';
 import { toFormatNum } from '@/utils/numFormat';
-import { activityAppStore } from '@/store/activityApp';
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 import BScroll from '@better-scroll/core'
@@ -406,6 +406,12 @@ const betRateVal = computed(() => {
   }
 })
 
+// 获取模式
+const mobile = computed(() => {
+  const { getMobile } = storeToRefs(activityAppStore());
+  return getMobile.value;
+});
+
 watch(vipLevels, (value) => {
   value.map(item => {
     if (item.level == vipInfo.value.level) {
@@ -465,13 +471,13 @@ onMounted(async () => {
     :on-scroll="handleScroll"
   >
     <template v-slot:prepend>
-      <div :class="refferalAppBarShow ? 'user-navbar-position' : ''"></div>
+      <div :class="refferalAppBarShow&&mobile ? 'user-navbar-position' : ''"></div>
     </template>
     <div ref="navScroll" class="v-navigation-drawer__content" @scroll="handleScroll">
       <div class="scroll-wrapper" ref='bscrollRef'>
         <div class="content">
           <v-list class="mobile-nav" density="compact" nav>
-            <v-list-item class="m-user-item">
+            <v-list-item class="m-user-item fs12">
               <template v-slot:prepend>
                 <img src="@/assets/public/svg/icon_public_58.svg" width="18" />
               </template>
@@ -550,47 +556,47 @@ onMounted(async () => {
                       v-if="vipInfo.level >= 200"
                     />
                   </div>
-                  <div class="text-800-10 color-F9BC01 text-center" v-if="vipInfo.level == 0">
+                  <div class="text-800-10 color-F9BC01 text-center font-size-12" v-if="vipInfo.level == 0">
                     {{ vipLevelImgs[0].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 1 && vipInfo.level < 25"
                   >
                     {{ vipLevelImgs[1].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 25 && vipInfo.level < 50"
                   >
                     {{ vipLevelImgs[2].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 50 && vipInfo.level < 75"
                   >
                     {{ vipLevelImgs[3].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 75 && vipInfo.level < 100"
                   >
                     {{ vipLevelImgs[4].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 100 && vipInfo.level < 150"
                   >
                     {{ vipLevelImgs[5].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 150 && vipInfo.level < 200"
                   >
                     {{ vipLevelImgs[6].content }}
                   </div>
                   <div
-                    class="text-800-10 color-F9BC01 text-center level-text"
+                    class="text-800-10 color-F9BC01 text-center level-text font-size-12"
                     v-if="vipInfo.level >= 200"
                   >
                     {{ vipLevelImgs[7].content }}
@@ -601,8 +607,8 @@ onMounted(async () => {
               <v-list-item-title class="ml-2">
                 <div class="deposit-progress-bg mb-1">
                   <div class="d-flex mx-1">
-                    <div class="white text-500-8">{{ t("appBar.deposit") }}</div>
-                    <div class="ml-auto text-800-8">
+                    <div class="white text-400-12">{{ t("appBar.deposit") }}</div>
+                    <div class="ml-auto text-700-10">
                       <font>{{ platformCurrency }} {{ toFormatNum(vipInfo.deposit_exp) }}</font> /
                       <font color="#F9BC01">{{ platformCurrency }} {{ toFormatNum(vipInfo.rank_deposit_exp) }}</font>
                     </div>
@@ -618,8 +624,8 @@ onMounted(async () => {
                 </div>
                 <div class="deposit-progress-bg">
                   <div class="d-flex mx-1">
-                    <div class="white text-500-8">{{ t("appBar.wager") }}</div>
-                    <div class="ml-auto text-800-8">
+                    <div class="white text-400-12" style="font-size: 12px;">{{ t("appBar.wager") }}</div>
+                    <div class="ml-auto text-700-10">
                       <font>{{ platformCurrency }} {{ toFormatNum(vipInfo.bet_exp) }}</font> /
                       <font color="#623AEC">{{ platformCurrency }} {{ toFormatNum(vipInfo.rank_bet_exp) }}</font>
                     </div>
@@ -763,7 +769,7 @@ onMounted(async () => {
               <v-list-item-title class="ml-2">{{ t("appBar.statistics") }}</v-list-item-title>
             </v-list-item> -->
             <div
-              class="d-flex justify-center align-center m-sign-out-btn text-400-12"
+              class="d-flex justify-center align-center m-sign-out-btn text-700-14"
               v-ripple.center
               @click="showSignoutDialog"
             >
@@ -837,7 +843,7 @@ onMounted(async () => {
 
 .m-refer-friend-img-position {
   position: absolute;
-  right: 26px;
+  right: 22px;
   top: -15px;
 }
 
@@ -848,7 +854,7 @@ onMounted(async () => {
 }
 
 .user-navbar-position {
-  margin-top: 35px;
+  margin-top: 45px;
 }
 
 .m-nav-drawer-content {
@@ -892,14 +898,27 @@ onMounted(async () => {
 
   .v-list-item-title {
     font-weight: 600;
-    font-size: 12px !important;
+    font-size: 14px !important;
     color: #7782aa;
+  }
+
+  &.fs12 {
+    .v-list-item-title {
+      font-size: 12px !important;
+    }
+  }
+
+  .font-size-12 {
+    font-size: 12px;
+  }
+  .font-size-14 {
+    font-size: 14px;
   }
 }
 
 .m-refer-friend-text-position {
   position: absolute;
-  right: 17px;
+  right: 9px;
   top: 16px;
   background: #1d2027;
   border-radius: 20px;
@@ -911,7 +930,7 @@ onMounted(async () => {
 
 .m-app-text-position {
   position: absolute;
-  right: 13px;
+  right: 10px;
   top: 17px;
   background: #1d2027;
   border-radius: 20px;

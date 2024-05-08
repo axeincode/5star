@@ -98,8 +98,12 @@ export const gameStore = defineStore({
         },
         setSearchTextList(searchText: string) {
             let sameSearchText = this.searchTextList.filter(item => item == searchText)
+            console.log(sameSearchText, 'sameSearchTextsameSearchTextsameSearchTextsameSearchText');
+            
             if (sameSearchText.length == 0) {
                 this.searchTextList.push(searchText);
+                // 过滤掉['']空数据情况
+                this.searchTextList = this.searchTextList.filter(item => item !== "");
             }
         },
         removeSearchTextList(index: number) {
@@ -158,6 +162,9 @@ export const gameStore = defineStore({
         setGameBigWinItem(gameBigWinItem: Game.GameBigWinData) {
             this.gameBigWinItem = gameBigWinItem;
         },
+        updateOptionsBy(options:any){
+            (this.betby as any)?.updateOptions(options);
+        },
         async getGameBetbyInit() {
             const { setRefferalAppBarShow } = refferalStore();
             setRefferalAppBarShow(false)
@@ -168,9 +175,9 @@ export const gameStore = defineStore({
                     lang: this.language,
                     target: document.getElementById('betby'),
                     brand_id: "2331516940205559808",
-                    betSlipOffsetTop: 60,
+                    betSlipOffsetTop: 0,
                     betslipZIndex: 999,
-                    stickyTop: 60,
+                    stickyTop: 0,
                     themeName: "demo-green-dark-table",
                     onLogin: async () => {
                         if (Cookies.get(CacheKey.TOKEN) == "" || !Cookies.get(CacheKey.TOKEN)) {
@@ -195,6 +202,9 @@ export const gameStore = defineStore({
                     },
                     onRecharge: () => {
                         this.openDepositDialog();
+                    },
+                    onRouteChange:()=>{
+                        console.log('路由切换','onRouteChangeonRouteChangeonRouteChangeonRouteChange')
                     }
                 });
         },
@@ -228,6 +238,7 @@ export const gameStore = defineStore({
             const next = (response: Game.GetGameSearchResponse) => {
                 if (response.code == 200) {
                     this.setSuccess(true);
+                    
                     this.setGameSearchList(response.data);
                 } else {
                     this.setGameSearchList({ list: [], total: 0 });
@@ -288,6 +299,25 @@ export const gameStore = defineStore({
                 }
             }
             await network.sendMsg(route, data, next, 1);
+        },
+        async dispatchGameEnterRequest(data: Game.GameEnterBody) {
+            const route: string = NETWORK.GAME_INFO.GAME_ENTER;
+            const network: Network = Network.getInstance();
+            return new Promise(async (resolve, reject) => {
+                network.request({
+                    url: route,
+                    method: 'POST',
+                    data
+                }).then((response:any )=> {
+                    if (response.code == 200) {
+                        resolve(response.data)
+                    } else {
+                        reject(response)
+                    }
+                }).catch((err:any) => {
+                    reject(err)
+                })
+            })
         },
         // game history api response
         async dispatchGameHistory(data: any) {

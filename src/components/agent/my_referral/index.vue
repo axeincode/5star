@@ -14,6 +14,7 @@ import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
 import { appCurrencyStore } from "@/store/app";
 import { toFormatNum } from '@/utils/numFormat';
 import { useOpenUrl } from '@/plugins/openPage'
+import { getUrl } from "@/utils";
 const { dispatchUserInvite } = inviteStore();
 const { dispatchInviteAward } = inviteStore();
 // 获取平台货币
@@ -22,7 +23,7 @@ const platformCurrency = computed(() => {
   return getPlatformCurrency.value;
 });
 
-const emit = defineEmits<{ (e: "goReportTab", index: number): void }>();
+const emit = defineEmits<{ (e: "goReportTab", index: number): void, (e: 'inited', val: boolean): void }>();
 
 const { t } = useI18n();
 const svgColor = ref<string>("#ffffff");
@@ -83,9 +84,9 @@ const goReportTab = () => {
 
 const sendTelegramAppInvite = () => {
   const Telegram_BASE_URL = "https://t.me/share/url?url=";
-  const BASE_URL = token
-    ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
-    : import.meta.env.VITE_BASE_URL;
+  const BASE_URL = (token&&inviteItem.value.invite_code)
+    ? `${getUrl('base')}?code=${inviteItem.value.invite_code}`
+    : getUrl('base');
   const url = `${Telegram_BASE_URL}${BASE_URL}`;
   // window.location.href = url;
   openUrl(url)
@@ -94,9 +95,9 @@ const sendTelegramAppInvite = () => {
 const sendWhatsAppInvite = () => {
   const inviteMessage = encodeURIComponent("message");
   const WHATSAPP_BASE_URL = "https://api.whatsapp.com/send?text=";
-  const BASE_URL = token
-    ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
-    : import.meta.env.VITE_BASE_URL;
+  const BASE_URL = (token&&inviteItem.value.invite_code)
+    ? `${getUrl('base')}?code=${inviteItem.value.invite_code}`
+    : getUrl('base');
   const url = `${WHATSAPP_BASE_URL}${BASE_URL}`;
   // window.location.href = url;
   openUrl(url)
@@ -104,9 +105,9 @@ const sendWhatsAppInvite = () => {
 
 const sendFacebookAppInvite = () => {
   const FACEBOOK_BASE_URL = "https://www.facebook.com/sharer/sharer.php?u=";
-  const BASE_URL = token
-    ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
-    : import.meta.env.VITE_BASE_URL;
+  const BASE_URL = (token&&inviteItem.value.invite_code)
+    ? `${getUrl('base')}?code=${inviteItem.value.invite_code}`
+    : getUrl('base');
   const url = `${FACEBOOK_BASE_URL}${BASE_URL}`;
   // window.location.href = url;
   openUrl(url)
@@ -114,9 +115,9 @@ const sendFacebookAppInvite = () => {
 
 const sendTwitterAppInvite = () => {
   const TWITTER_BASE_URL = "https://twitter.com/intent/tweet?url=";
-  const BASE_URL = token
-    ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
-    : import.meta.env.VITE_BASE_URL;
+  const BASE_URL = (token&&inviteItem.value.invite_code)
+    ? `${getUrl('base')}?code=${inviteItem.value.invite_code}`
+    : getUrl('base');
   const url = `${TWITTER_BASE_URL}${BASE_URL}`;
   // window.location.href = url;
   openUrl(url)
@@ -124,9 +125,9 @@ const sendTwitterAppInvite = () => {
 
 const sendEmailAppInvite = () => {
   const EMAIL_BASE_URL = "mailto:?body=";
-  const BASE_URL = token
-    ? `${import.meta.env.VITE_BASE_URL}?code=${inviteItem.value.invite_code}`
-    : import.meta.env.VITE_BASE_URL;
+  const BASE_URL = (token&&inviteItem.value.invite_code)
+    ? `${getUrl('base')}?code=${inviteItem.value.invite_code}`
+    : getUrl('base');
   const url = `${EMAIL_BASE_URL}${BASE_URL}`;
   // window.location.href = url;
   openUrl(url)
@@ -154,6 +155,7 @@ const inviteAward = async () => {
 
 onMounted(async () => {
   await dispatchUserInvite();
+  emit('inited', false)
 });
 </script>
 

@@ -32,7 +32,7 @@ const userDialogHide = () => {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // header container
 .account-header {
     background-color: #1D2027;

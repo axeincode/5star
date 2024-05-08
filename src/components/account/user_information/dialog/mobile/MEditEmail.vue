@@ -112,7 +112,7 @@ const updateEmail = async () => {
 </script>
 
 <template>
-  <div class="m-user-container">
+  <div class="m-user-container--email">
     <div class="mt-8 text-700-14 text-center white">{{ title }}</div>
     <v-row class="mt-6 relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
       <v-text-field
@@ -174,7 +174,7 @@ const updateEmail = async () => {
 
 <style lang="scss">
 // account dialog container
-.m-user-container {
+.m-user-container--email {
   .form-textfield div.v-field__field {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }

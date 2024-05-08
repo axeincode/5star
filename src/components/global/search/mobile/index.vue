@@ -10,12 +10,20 @@ import { mailStore } from "@/store/mail";
 import { ProgressiveImage } from "vue-progressive-image";
 import img_public_42 from "@/assets/public/image/img_public_42.png";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
+import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
+import { appBarStore } from "@/store/appBar";
+import type * as Game from "@/interface/game";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import { Pagination } from "swiper/modules";
+import { NETWORK } from '@/net/NetworkCfg'
+import { Network } from '@/net/Network'
+import { debounce } from "lodash-es"
 
+const network: Network = Network.getInstance()
 const { t } = useI18n();
 const { width } = useDisplay();
 const router = useRouter();
@@ -28,44 +36,44 @@ const { setMailMenuShow } = mailStore();
 const searchText = ref<string>("");
 const searchLoading = ref<boolean>(false);
 const page_no = ref<number>(1);
-const currentPage = ref<number>(1);
 const moreCurrentPage = ref<number>(1);
-const limit = ref<number>(6);
+const limit = ref<number>(30);
+const initLimit = 6
 const moreLoading = ref<boolean>(false);
 const swiper = ref<any>(null);
 
 const modules = [Pagination];
 
-const testGames = [
-  new URL("@/assets/home/image/img_pg_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_pg_02.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_pg_03.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_pg_04.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_pg_05.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_pg_06.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_pg_07.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_02.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_03.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_04.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_05.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_06.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_og_07.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_02.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_03.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_04.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_05.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_06.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_slots_07.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_01.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_02.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_03.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_04.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_05.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_06.png", import.meta.url).href,
-  new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
-];
+// const testGames = [
+//   new URL("@/assets/home/image/img_pg_01.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_pg_02.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_pg_03.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_pg_04.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_pg_05.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_pg_06.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_pg_07.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_01.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_02.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_03.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_04.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_05.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_06.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_og_07.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_01.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_02.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_03.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_04.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_05.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_06.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_slots_07.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_01.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_02.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_03.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_04.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_05.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_06.png", import.meta.url).href,
+//   new URL("@/assets/home/image/img_lc_07.png", import.meta.url).href,
+// ];
 
 const searchedGameList = ref<Array<Search>>([]);
 
@@ -82,6 +90,10 @@ const props = defineProps<{ searchDialogShow: boolean }>();
 const { searchDialogShow } = toRefs(props);
 
 const searchContainerHeight = ref<number>(590);
+
+const currentTotal = computed(() => {
+  return limit.value * (page_no.value - 1) + initLimit
+})
 
 const mobileWidth = computed(() => {
   return width.value;
@@ -114,21 +126,41 @@ const getSwiperRef = (swiperInstance: any) => {
   swiper.value = swiperInstance;
 };
 
-const handleEnterGame = async (id: number, name: string) => {
+// 是否打开二级确认框
+const gameConfirmDialogShow = ref<boolean>(false);
+// 游戏内容
+const selectedGameItem = ref<Game.GameItem>({
+  id: 0,
+  name: "",
+  image: "",
+  provider: "",
+  provider_name: '',
+  producer: "",
+  is_demo: false
+})
+
+const handleEnterGame = async (item: Game.GameItem, id: number, name: string) => {
   setSearchTextList(searchText.value);
-  searchText.value = "";
-  page_no.value = 1;
-  setGameSearchList({
-    list: [],
-    total: 0,
-  });
-  searchedGameList.value = [];
+  // searchText.value = "";
+  // page_no.value = 1;
+  // setGameSearchList({
+  //   list: [],
+  //   total: 0,
+  // });
+  // searchedGameList.value = [];
   let replaceName = name.replace(/ /g, "-");
   if (mobileWidth.value < 600) {
     setMailMenuShow(true);
   }
-  router.push(`/game/${id}/${replaceName}`);
+  // router.push(`/game-${id}-${replaceName}`);
+  selectedGameItem.value = item;
+  gameConfirmDialogShow.value = true
 };
+
+const { setControlLevel } = appBarStore();
+watch(gameConfirmDialogShow, (value: boolean) => {
+  setControlLevel(value)
+})
 
 const handleSearchInput = async (event) => {
   // 不是回车键不触发  event.keyCode判断是不是软键盘触发
@@ -136,30 +168,18 @@ const handleSearchInput = async (event) => {
     //关闭手机软键盘
     document.activeElement.blur();
   }
+
+  // 查询触发重置数组和页码
+  page_no.value = 1;
+  searchedGameList.value = [];
+
   if (searchText.value.length >= 3) {
-    searchLoading.value = true;
-    await dispatchGameSearch(
-      `?search=${searchText.value}&page=${currentPage.value}&limit=${
-        limit.value * page_no.value
-      }`
-    );
-    searchLoading.value = false;
-    // if (success.value) {
-    searchedGameCount.value = gameSearchList.value.total;
-    searchedGameList.value = gameSearchList.value.list;
-    searchedGameList.value.map((item) => {
-      // item.image = testGames[Math.floor(Math.random() * 7)];
-    });
-    // }
-  } else {
-    page_no.value = 1;
-    setGameSearchList({
-      list: [],
-      total: 0,
-    });
-    searchedGameList.value = [];
-  }
+    gameSearchFunc(`?search=${searchText.value}&page=${page_no.value}&limit=${
+        initLimit
+      }`, searchLoading)
+  } 
 };
+const debouncedHandleSearchInput = debounce(handleSearchInput, 500)
 
 const handleResize = () => {
   if (window.visualViewport?.height != undefined) {
@@ -168,23 +188,13 @@ const handleResize = () => {
   }
 };
 
+// 更多游戏
 const handleMoreGame = async () => {
-  moreLoading.value = true;
+  // moreLoading.value = true;
   page_no.value += 1;
   moreCurrentPage.value += 1;
   if (searchText.value.length >= 3) {
-    searchLoading.value = true;
-    await dispatchGameSearch(
-      `?search=${searchText.value}&page=${moreCurrentPage.value}&limit=${limit.value}`
-    );
-    moreLoading.value = false;
-    searchLoading.value = false;
-    if (success.value) {
-      searchedGameList.value = [...searchedGameList.value, ...gameSearchList.value.list];
-      searchedGameList.value.map((item) => {
-        // item.image = testGames[Math.floor(Math.random() * 28)];
-      });
-    }
+    gameSearchFunc(`?search=${searchText.value}&page=${moreCurrentPage.value}&limit=${limit.value}&existing=${searchedGameList.value.length}`, moreLoading)
   }
 };
 
@@ -200,26 +210,28 @@ const removeAllSearchKeyword = () => {
 const handleSearchGame = async (keyword: string) => {
   searchText.value = keyword;
   if (searchText.value.length >= 3) {
-    searchLoading.value = true;
-    await dispatchGameSearch(
-      `?search=${searchText.value}&page=${currentPage.value}&limit=${
-        limit.value * page_no.value
-      }`
-    );
-    searchLoading.value = false;
-    // if (success.value) {
-    searchedGameCount.value = gameSearchList.value.total;
-    searchedGameList.value = gameSearchList.value.list;
-    searchedGameList.value.map((item) => {
-      // item.image = testGames[Math.floor(Math.random() * 7)];
-    });
-    // }
+    // searchLoading.value = true;
+    // await dispatchGameSearch(
+    //   `?search=${searchText.value}&page=${page_no.value}&limit=${
+    //     limit.value
+    //   }`
+    // );
+    // searchLoading.value = false;
+    // searchedGameCount.value = gameSearchList.value.total;
+    // searchedGameList.value = gameSearchList.value.list;
+    // searchedGameList.value.map((item) => {
+    //   // item.image = testGames[Math.floor(Math.random() * 7)];
+    // });
+    page_no.value = 1
+    gameSearchFunc(`?search=${searchText.value}&page=${page_no.value}&limit=${
+        initLimit
+      }`, searchLoading)
   } else {
     page_no.value = 1;
-    setGameSearchList({
-      list: [],
-      total: 0,
-    });
+    // setGameSearchList({
+    //   list: [],
+    //   total: 0,
+    // });
     searchedGameList.value = [];
   }
 };
@@ -229,11 +241,11 @@ watch(
   (value) => {
     if (value == null) searchText.value = "";
     if (searchText.value == "") {
+      // setGameSearchList({
+      //   list: [],
+      //   total: 0,
+      // });
       page_no.value = 1;
-      setGameSearchList({
-        list: [],
-        total: 0,
-      });
       searchedGameList.value = [];
     }
   },
@@ -262,19 +274,63 @@ onMounted(async () => {
   // if (searchRef.value != undefined) {
   //   searchRef.value.focus();
   // }
-  window.addEventListener("resize", handleResize);
-  await dispatchGameSearch(
-    `?game_categories_slug=recommend&page=${currentPage.value}&limit=${
-      limit.value * page_no.value
-    }`
-  );
-  recommendedGameList.value = gameSearchList.value.list;
-  if (recommendedGameList.value.length > 0) {
-    recommendedGameList.value.map((item) => {
-      // item.image = testGames[Math.floor(Math.random() * 28)];
-    });
-  }
+  // window.addEventListener("resize", handleResize);
+  // await dispatchGameSearch(
+  //   `?game_categories_slug=HOT&page=${page_no.value}&limit=${
+  //     limit.value
+  //   }`
+  // );
+  // recommendedGameList.value = gameSearchList.value.list;
+  // if (recommendedGameList.value.length > 0) {
+  //   recommendedGameList.value.map((item) => {
+  //     // item.image = testGames[Math.floor(Math.random() * 28)];
+  //   });
+  // }
+  init()
 });
+
+const init = async() => {
+  window.addEventListener("resize", handleResize);
+  
+  // 查询热门游戏
+  network.request({
+    url: NETWORK.GAME_INFO.GAME_SEARCH + `?game_categories_slug=HOT&page=${page_no.value}&limit=${
+      initLimit
+    }`,
+    method: 'GET',
+    data: {},
+  }).then(res => {
+    const { list } = res.data
+    recommendedGameList.value = list;
+    // if (recommendedGameList.value.length > 0) {
+    //   recommendedGameList.value.map((item) => {
+        // item.image = testGames[Math.floor(Math.random() * 28)];
+    //   });
+    // }
+  })
+}
+
+const gameSearchFunc = (sub_api:string, apiloading: any) => {
+  apiloading.value = true;
+  network.request({
+    url: NETWORK.GAME_INFO.GAME_SEARCH + sub_api,
+    method: 'GET',
+    data: {},
+  })
+  .then((res: any) => {
+    if (res.code === 200) {
+      const { total, list } = res.data
+      searchedGameList.value = [...searchedGameList.value, ...list]
+      searchedGameCount.value = total
+      console.log(searchedGameList.value, 'providerGameList.value');
+      console.log(searchedGameCount.value, 'gameSearchTotal.value');
+    }
+  }).catch(err => {
+    console.log(err);
+  }).finally(() => {
+    apiloading.value = false;
+  })
+}
 </script>
 
 <template>
@@ -307,8 +363,8 @@ onMounted(async () => {
           prepend-inner-icon="mdi-magnify"
           color="#7782AA"
           :class="mobileWidth < 600 ? 'home-search-text-height' : ''"
-          @input="handleSearchInput"
-          @keypress="handleSearchInput"
+          @input="debouncedHandleSearchInput"
+          @keypress="debouncedHandleSearchInput"
           v-model="searchText"
         />
       </form>
@@ -382,7 +438,7 @@ onMounted(async () => {
               <v-col
                 cols="4"
                 class="py-0 px-1"
-                v-if="index < 6 * page_no"
+                v-if="index < currentTotal"
                 style="position: relative"
               >
                 <ProgressiveImage
@@ -390,7 +446,7 @@ onMounted(async () => {
                   lazy-placeholder
                   :placeholder-src="img_public_42"
                   blur="30"
-                  @click="handleEnterGame(item.id, item.name)"
+                  @click="handleEnterGame(item, item.id, item.name)"
                 >
                   <div class="text-overlay">
                     <h2>{{ item.name }}</h2>
@@ -409,7 +465,7 @@ onMounted(async () => {
               variant="outlined"
               width="100%"
               height="41"
-              v-if="searchedGameCount > 3 && searchedGameCount > 3 * page_no"
+              v-if="searchedGameCount > initLimit && searchedGameCount > currentTotal"
               @click="handleMoreGame()"
             >
               <div v-if="!moreLoading">{{ t("home.more") }}</div>
@@ -444,7 +500,7 @@ onMounted(async () => {
             <img
               :src="gameItem.image"
               class="m-home-search-swiper-img"
-              @click="handleEnterGame(gameItem.id, gameItem.name)"
+              @click="handleEnterGame(gameItem, gameItem.id, gameItem.name)"   
             />
             <div class="text-overlay--search">
               <h2>{{ gameItem.name }}</h2>
@@ -455,6 +511,43 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+
+  <v-navigation-drawer
+    v-model="gameConfirmDialogShow"
+    location="bottom"
+    class="m-game-confirm-bar"
+    temporary
+    :touchless="true"
+    :style="{
+      height: 'unset',
+      bottom: '0px',
+      zIndex: 300000,
+      background: 'unset !important',
+    }"
+    v-if="mobileWidth < 600"
+  >
+    <template v-if="gameConfirmDialogShow">
+
+      <div  class="m-game-confirm-drawer-close-button-box" style="display:flex; justify-content: flex-end;">
+        <v-btn
+          class="m-game-confirm-drawer-close-button"
+          icon="true"
+          width="24"
+          height="24"
+          @click="gameConfirmDialogShow = false"
+        >
+          <inline-svg :src="icon_public_10" width="20" height="20"></inline-svg>
+        </v-btn>
+      </div>
+      <!-- 打开游戏 确认弹窗 - 二级页面 -->
+      <MGameConfirm
+        :selectedGameItem="selectedGameItem"
+        :is_favorite="false"
+        :gameConfirmDialogShow="gameConfirmDialogShow"
+        @closeGameConfirmDialog="gameConfirmDialogShow = false"
+      />
+    </template>
+  </v-navigation-drawer>
 </template>
 
 <style lang="scss">

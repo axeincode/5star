@@ -153,6 +153,9 @@ const vipCardInfo = [
                 height: 64px;
             }
             &-info {
+                flex: 1;
+                -ms-flex: 1; /* IE 10 */
+
                 &-title {
                     font-size: 16px;
                     font-weight: 900;

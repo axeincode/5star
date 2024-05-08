@@ -126,11 +126,9 @@ const BannerComponent = defineComponent({
 
     // 提前手动关闭swiper，缓存组件时，就可以避免不动的问题
     onActivated(() => {
-      console.log('onActivated=============');
       swiperShow.value = true;
     })
     onDeactivated(() => {
-      console.log('onDeactivated=============');
       swiperShow.value = false;
     })
 
@@ -146,17 +144,14 @@ const BannerComponent = defineComponent({
     // - 8 具体游戏 此情况下需要关注content内容, 为具体游戏id 比如 1234
     // - 9 打开活动广告页面 此情况下需要关注content内容, 为活动广告页面id 比如 1
     const slideImageClick = async (index: number) => {
-      console.log("slideImageClick", index);
       const currentIndex = index % bannerList.value.length
       const currentItem = bannerList.value[currentIndex]
       let type: number =
         bannerList.value[currentIndex].click_feedback;
-      console.log(type, 'type');
 
       // 5 站内页面 此情况下需要关注content内容
       if (type == 5) {
         const contentValue = currentItem.content;
-        console.log(contentValue, 'contentValue');
         
         switch (contentValue) {
           case "invite_popup":
@@ -406,7 +401,10 @@ export default BannerComponent;
   }
 
   .m-slider-img-width {
-    height: fit-content !important;
+    // height: fit-content !important;
+    // object-fit: cover;
+    height: 195px;
+    width: 100%;
   }
 }
 </style>

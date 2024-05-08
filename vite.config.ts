@@ -118,10 +118,11 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       }
     },
     server: {
+      hmr: true,
       port: 3000,
       proxy: {
         '/api': {
-          target: 'http://dev.api.HOY777.com', // 后端接口的域名
+          target: 'http://dev.api.Hoy777.com', // 后端接口的域名
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },

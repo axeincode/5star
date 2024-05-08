@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
+import { useDisplay } from 'vuetify';
 import { useI18n } from 'vue-i18n';
 // 获取平台货币
 import { storeToRefs } from "pinia";
@@ -9,8 +10,27 @@ const platformCurrency = computed(() => {
   return getPlatformCurrency.value;
 });
 
-const emit = defineEmits<{ (e: 'closeLoginBonusDialog'): void }>()
+const props = defineProps({
+  modelValue: {
+    type: Boolean
+  }
+});
+const emit = defineEmits(["update:modelValue","closeLoginBonusDialog"]);
 const { t } = useI18n();
+const { name, width } = useDisplay();
+
+const modelValueNew = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit("update:modelValue", val);
+  },
+});
+
+const mobileWidth = computed(() => {
+  return width.value
+})
 
 const vipGrade = ref("VIP1");
 const loginBonusItem = ref({
@@ -27,6 +47,13 @@ const handleLoginBonus = (day: number) => {
 </script>
 
 <template>
+<v-dialog
+      v-model="modelValueNew"
+      :width="mobileWidth < 600 ? '340' : '471'"
+      @click:outside="emit('closeLoginBonusDialog')"
+      :class="mobileWidth < 600 ? 'm-login-bonus-dialog' : ''"
+      style="z-index: 2147483646"
+    >
     <div class="login-bonus-dialog-container">
         <img src="@/assets/public/image/bg_public_03_01.png" class="header-bar-img-position" />
         <v-btn class="close-login-bonus-button" icon="true" @click="emit('closeLoginBonusDialog')" height="32" width="32">
@@ -198,9 +225,10 @@ const handleLoginBonus = (day: number) => {
             </v-row>
         </div>
     </div>
+    </v-dialog>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login-bonus-dialog-container {
     height: 620px;
     border-radius: 16px;

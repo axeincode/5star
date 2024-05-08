@@ -274,7 +274,7 @@ onMounted(() => {
 }
 
 .m-bonus-transaction-tabs {
-  padding-top: 50px;
+  padding-top: $appBarHeight;
 
   .m-bonus-transaction-tab-body {
     display: flex;

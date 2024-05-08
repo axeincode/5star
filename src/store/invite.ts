@@ -3,6 +3,7 @@ import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
 import type * as Invite from "@/interface/invite";
 import { handleException } from './exception';
+import { getUrl } from '@/utils';
 
 export const inviteStore = defineStore({
   id: 'invite',
@@ -20,7 +21,7 @@ export const inviteStore = defineStore({
       deposit_users_yesterdays: 0,
       invite_code: "",
       invited_users: 0,
-      web_invite_url: import.meta.env.VITE_BASE_URL,
+      web_invite_url: getUrl('base'),
       available_bonus: 0,
     } as Invite.InviteData,
     personalInvitationInfo: {

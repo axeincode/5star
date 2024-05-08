@@ -1,16 +1,22 @@
 import { defineStore } from 'pinia';
 import { NETWORK } from '@/net/NetworkCfg';
 import { Network } from "@/net/Network";
-import { getQueryParams } from "@/utils/getPublicInformation";
+import { getQueryParams, getDeviceType } from "@/utils/getPublicInformation";
 
 export const activityAppStore = defineStore({
   id: 'activityApp',
   state: () => ({
-    appConfirmDialogShow: true as boolean, // 控制下载app弹框是否显示
+    appConfirmDialogShow: false as boolean, // 控制下载app弹框是否显示
     activityBonus: '0' as string, // 活动奖金
     downloadLink: '' as string, // app下载链接
     downloadID: '' as string, // app活动id
     mobile: true as boolean, // 是否浏览器运行/非app
+    automaticAppTimeout: null as NodeJS.Timeout | null,
+    appGuidanceTimeout: null as NodeJS.Timeout | null,
+    openAppGuidanceTimeout: null as NodeJS.Timeout | null,
+    showAppGuidance: false as boolean, // 是否显示下载app引导框
+    appGuidanceNum: 0, // 黄色引导弹框最多弹出三次（在首页，30秒弹出一次）
+    appConfirmNum: 0, // app下载弹框最多弹出一次（在首页浏览2分钟后弹出）
   }),
   getters: {
     getAppConfirmDialogShow: (state) => state.appConfirmDialogShow,
@@ -18,6 +24,7 @@ export const activityAppStore = defineStore({
     getDownloadLink: (state) => state.downloadLink,
     getDownloadID: (state) => state.downloadID,
     getMobile: (state) => state.mobile,
+    getShowAppGuidance: (state) => state.showAppGuidance,
   },
   actions: {
     setAppConfirmDialogShow(param: boolean) {
@@ -32,8 +39,12 @@ export const activityAppStore = defineStore({
         if (response.code == 200) {
           const data = response.data          
           this.downloadID = String(data.id)
-          this.downloadLink = data.link
-          this.activityBonus = data.bonus
+          if (['mac', 'ios'].includes(getDeviceType())) {
+            this.downloadLink = data.ios_link
+          } else {
+            this.downloadLink = data.android_link
+          }
+          this.activityBonus = data.bonus || 0
         } else {
           
         }
@@ -49,8 +60,13 @@ export const activityAppStore = defineStore({
         if (response.code == 200) {
           const data = response.data          
           this.downloadID = String(data.id)
-          this.downloadLink = data.link
-          this.activityBonus = data.bonus
+          if (['mac', 'ios'].includes(getDeviceType())) {
+            this.downloadLink = data.ios_link
+          } else {
+            this.downloadLink = data.android_link
+          }
+          
+          this.activityBonus = data.bonus || 0
         } else {
           
         }
@@ -70,7 +86,6 @@ export const activityAppStore = defineStore({
     },
     // 用户通过app登录，领取奖励
     async downloadApprReceive(data: any) {
-      console.log(data, 'downloadApprReceivedownloadApprReceivedownloadApprReceivedownloadApprReceivedownloadApprReceivedownloadApprReceive');
       const route: string = NETWORK.DOWNLOADAPP.DOWAPP_RECEIVE;
       const network: Network = Network.getInstance();
       // response call back function
@@ -81,5 +96,73 @@ export const activityAppStore = defineStore({
       }
       await network.sendMsg(route, data, next, 1);
     },
+    // 判断下载app是否需要自动弹出
+    automaticPopUpApp(state: boolean, isPopUp: boolean = false) {
+      // 如果已经弹出超过1次，清空定时器，不再执行弹框
+      if (this.appConfirmNum === 1) {
+        if (this.automaticAppTimeout) {
+          clearTimeout(this.automaticAppTimeout); // 删除定时器
+          this.automaticAppTimeout = null; // 清空定时器变量
+        }
+        return
+      } else {
+        this.appConfirmNum++
+      }
+
+      if (state) {
+        if (this.automaticAppTimeout) {
+          clearTimeout(this.automaticAppTimeout); // 删除定时器
+          this.automaticAppTimeout = null; // 清空定时器变量
+        }
+      } else {
+        this.automaticAppTimeout = setTimeout(() => {
+          // 判断是否存在打开弹框
+          if (!isPopUp) {
+            this.appConfirmDialogShow = true
+          }
+        }, 120000);
+      }
+    },
+    setShowAppGuidance(param: boolean) {
+      this.showAppGuidance = param;
+    },
+    // 定时关闭下载引导弹框
+    setAppGuidance(state: boolean) {
+      if (state) {
+        if (this.appGuidanceTimeout) {
+          clearTimeout(this.appGuidanceTimeout); // 删除定时器
+          this.automaticAppTimeout = null; // 清空定时器变量
+        }
+      } else {
+        this.appGuidanceTimeout = setTimeout(() => {
+          this.showAppGuidance = false
+        }, 5000);
+      }
+    },
+    // 定时打开下载引导弹框
+    setOpenAppGuidance(state: boolean) {
+      // 如果已经弹出超过三次，清空定时器，不再执行弹框
+      if (this.appGuidanceNum === 3) {
+        if (this.openAppGuidanceTimeout) {
+          clearTimeout(this.openAppGuidanceTimeout); // 删除定时器
+          this.openAppGuidanceTimeout = null; // 清空定时器变量
+        }
+
+        return
+      } else {
+        this.appGuidanceNum++
+      }
+
+      if (state) {
+        if (this.openAppGuidanceTimeout) {
+          clearTimeout(this.openAppGuidanceTimeout); // 删除定时器
+          this.openAppGuidanceTimeout = null; // 清空定时器变量
+        }
+      } else {
+        this.openAppGuidanceTimeout = setTimeout(() => {
+          this.showAppGuidance = true
+        }, 30000);
+      }
+    }
   }
 })

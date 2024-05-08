@@ -728,7 +728,7 @@ const goReferFriend = (index: number) => {
         :transform-source="homeSvgTransform"
       ></inline-svg>
       <div
-        class="text-600-10 menu-text"
+        class="text-600-11 menu-text"
         :class="homeIconColor == 'white' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.home") }}
@@ -742,7 +742,7 @@ const goReferFriend = (index: number) => {
         :transform-source="searchSvgTransform"
       ></inline-svg>
       <div
-        class="text-600-10 menu-text"
+        class="text-600-11 menu-text"
         :class="searchIconColor == 'white' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.search") }}
@@ -954,7 +954,7 @@ const goReferFriend = (index: number) => {
         :transform-source="sportSvgTransform"
       ></inline-svg>
       <div
-        class="text-600-10 menu-text"
+        class="text-600-11 menu-text"
         :class="sportIconColor == 'white' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.sport") }}
@@ -972,7 +972,7 @@ const goReferFriend = (index: number) => {
         :transform-source="rewardSvgTransform"
       ></inline-svg>
       <div
-        class="text-600-10 menu-text"
+        class="text-600-11 menu-text"
         :class="rewardIconColor == 'white' ? 'white' : 'gray'"
       >
         {{ t("mobile_menu.reward") }}
@@ -1294,9 +1294,9 @@ const goReferFriend = (index: number) => {
     line-height: 20px;
 
     .menu-text {
-      padding-top: 6px;
+      padding-top: 4px;
       height: 20px;
-      line-height: 10px;
+      line-height: 11px;
     }
   }
 

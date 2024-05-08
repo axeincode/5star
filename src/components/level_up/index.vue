@@ -66,7 +66,7 @@ onMounted(() => {});
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .level-up-container {
   position: relative;
   height: 619px;
@@ -89,6 +89,11 @@ onMounted(() => {});
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
+}
+</style>
+
+<style lang="scss">
+.level-up-container {
   .level-up-reward-btn {
     .v-btn__content {
       color: var(--Text-Dark-Black-000000, #000);
@@ -118,4 +123,5 @@ onMounted(() => {});
     }
   }
 }
+
 </style>

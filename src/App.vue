@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { ref, onMounted, Suspense } from "vue";
+import { computed, onMounted, Suspense, defineAsyncComponent, nextTick, ref } from "vue";
 import { RouterView } from "vue-router";
-
+import { useToast } from "vue-toastification";
+const FirstScreenSkeleton = defineAsyncComponent(() => import("@/components/first_screen_skeleton/index.vue"));
 // // 自动更新
 // function autoUpdate(): void {
 //   if (window.plus) {
@@ -80,12 +81,84 @@ import { RouterView } from "vue-router";
 //   });
 // }
 
+// 禁止页面缩放
+window.onload = function () {
+  var lastTouchEnd = 0;
+  document.addEventListener("touchstart", function (event) {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  });
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      var now = new Date().getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    },
+    false
+  );
+  /* 阻止双指指掐放大*/
+  document.addEventListener("gesturestart", function (event) {
+    event.preventDefault();
+  });
+  /* 阻止双指点击放大*/
+  document.addEventListener("dblclick", function (e) {
+    e.preventDefault();
+  });
+};
+
 onMounted(async () => {
   // autoUpdate()
+
+  // 判断是否为IOS系统以添加CSS属性
+  let u = navigator.userAgent;
+  let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); // ios终端
+  if (isIOS) {
+    // let iosApp = document.getElementById("app");
+    // iosApp.style.backfaceVisibility = "hidden";
+    // iosApp.style.transform = "translate3d(0,0,0)";
+
+    document.addEventListener(
+      "blur",
+      (event) => {
+        // 当页面没出现滚动条时才执行，因为有滚动条时，不会出现这问题
+        // input textarea 标签才执行，因为 a 等标签也会触发 blur 事件
+        // document.documentElement.offsetHeight <=
+        // document.documentElement.clientHeight &&
+        if (["input", "textarea"].includes(event.target.localName)) {
+          // document.body.scrollIntoView() // 回顶部
+          const scrollHeight =
+            document.documentElement.scrollTop || document.body.scrollTop || 0;
+          setTimeout(() => {
+            window.scrollTo({
+              top: -Math.max(scrollHeight - 1, 0),
+              behavior: "smooth",
+            });
+          }, 200);
+        }
+      },
+      true
+    );
+    // window.addEventListener("focusin", (event) => {
+      // var inputElements = document.querySelectorAll('input, textarea');
+      // const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+      // toast.success(`focusin - ${event.target.localName} + ${scrollHeight}`)
+      //   if (
+      //       ['input', 'textarea'].includes(event.targetlocalName)
+      //   ) {
+      // document.body.scrollIntoView() // 回顶部
+      // }
+    // });
+    // focusin
+  } 
 });
 </script>
 
 <template>
+  <FirstScreenSkeleton></FirstScreenSkeleton>
   <Suspense>
     <template #default>
       <router-view />
@@ -105,6 +178,15 @@ onMounted(async () => {
 
 @font-face {
   font-family: "Bauhaus 93";
-  src: local("Bauhaus 93"), url(./fonts/Bauhaus/BauhausRegular.ttf) format("truetype");
+  src: local("Bauhaus 93"),
+    url(./fonts/Bauhaus/BauhausRegular.ttf) format("truetype");
+}
+
+input:focus,
+textarea,
+textarea:focus,
+select,
+select:focus {
+  font-size: 16px !important;
 }
 </style>

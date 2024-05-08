@@ -42,10 +42,6 @@ onMounted(async () => {
   });
   loading.value = true;
   await dispatchGameCategories("?type=providers");
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
   loading.value = false;
 });
 </script>

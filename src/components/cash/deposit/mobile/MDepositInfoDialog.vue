@@ -1,32 +1,44 @@
 <script lang="ts" setup>
 import { ref, toRefs } from "vue";
 import { useI18n } from "vue-i18n";
-import { type GetPaymentItem } from '@/interface/deposit';
-import { type GetCurrencyItem } from '@/interface/deposit';
-import QrcodeVue from 'qrcode.vue'
+import { type GetPaymentItem } from "@/interface/deposit";
+import { type GetCurrencyItem } from "@/interface/deposit";
+import QrcodeVue from "qrcode.vue";
 import { useToast } from "vue-toastification";
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
-import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import * as clipboard from "clipboard-polyfill";
 
 const { t } = useI18n();
 
 const emit = defineEmits<{ (e: "depositInfoDialogClose"): void }>();
-const props = defineProps<{ selectedPaymentItem: GetPaymentItem, selectedCurrencyItem: GetCurrencyItem, depositAmount: string | number, codeUrl: string, depositAmountWithCurrency: string }>();
+const props = defineProps<{
+  selectedPaymentItem: GetPaymentItem;
+  selectedCurrencyItem: GetCurrencyItem;
+  depositAmount: string | number;
+  codeUrl: string;
+  depositAmountWithCurrency: string;
+}>();
 
-const { selectedPaymentItem, selectedCurrencyItem, depositAmount, codeUrl, depositAmountWithCurrency } = toRefs(props);
+const {
+  selectedPaymentItem,
+  selectedCurrencyItem,
+  depositAmount,
+  codeUrl,
+  depositAmountWithCurrency,
+} = toRefs(props);
 
 const closeDepositInfoDialog = async () => {
   emit("depositInfoDialogClose");
 };
 
-const size = ref<number>(132)
-const notificationText = ref<string>('successful copied');
+const size = ref<number>(132);
+const notificationText = ref<string>("successful copied");
 
 const handleCopyUrlCode = async () => {
   clipboard.writeText(codeUrl.value).then(
     () => {
-      console.log('Copied to clipboard!');
+      console.log("Copied to clipboard!");
       const toast = useToast();
       toast.success(notificationText.value, {
         timeout: 3000,
@@ -42,10 +54,10 @@ const handleCopyUrlCode = async () => {
       });
     },
     (error) => {
-      console.error('Could not copy text: ', error);
+      console.error("Could not copy text: ", error);
     }
   );
-}
+};
 </script>
 
 <template>
@@ -120,12 +132,12 @@ const handleCopyUrlCode = async () => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-depositinfo-dialog-container {
   width: 328px;
   height: 545px;
   border-radius: 20px;
-  background: #1D2027;
+  background: #1d2027;
   overflow-y: auto;
   position: relative;
 
@@ -139,7 +151,7 @@ const handleCopyUrlCode = async () => {
     width: 288px;
     height: 252px;
     border-radius: 8px;
-    background: var(--BG-5-1C1929, #15161C);
+    background: var(--BG-5-1C1929, #15161c);
 
     /* Text Box */
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
@@ -158,7 +170,7 @@ const handleCopyUrlCode = async () => {
 
   .m-deposit-url-copy-btn {
     border-radius: 4px;
-    background: var(--secondary-button-353652, #23262F);
+    background: var(--secondary-button-353652, #23262f);
   }
 }
 

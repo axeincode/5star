@@ -19,6 +19,7 @@ import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 import { useToast } from "vue-toastification";
 import { bannerStore } from "@/store/banner";
 import { currencyStore } from "@/store/currency";
+import { loginBonusStore } from "@/store/loginBonus";
 
 const Login = defineComponent({
   components: {
@@ -46,6 +47,7 @@ const Login = defineComponent({
     const { dispatchVipLevelAward } = vipStore();
     const { width } = useDisplay();
     const { dispatchCurrencyList } = currencyStore();
+    const { setLoginBonusDialogVisible } = loginBonusStore();
 
     // initiate component state
     const state = reactive({
@@ -103,6 +105,11 @@ const Login = defineComponent({
     const dialogCheckbox = computed(() => {
       const { getDialogCheckbox } = storeToRefs(authStore());
       return getDialogCheckbox.value;
+    });
+
+    const vipSignIn = computed(() => {
+        const { getVipSignIn } = storeToRefs(vipStore());
+        return getVipSignIn.value;
     });
 
     watch(
@@ -168,7 +175,7 @@ const Login = defineComponent({
         await dispatchVipLevelAward();
         // await dispatchSocketConnect();
         setOverlayScrimShow(false);
-        setRefferalDialogShow(true);
+        // setRefferalDialogShow(true);
         const toast = useToast();
         toast.success(t("login.submit_result.success_text"), {
           timeout: 3000,
@@ -214,7 +221,10 @@ const Login = defineComponent({
         // ).href;
         // state.notificationText = t("login.submit_result.err_text");
       }
-
+      // 打开VIP活动签到
+      if(vipSignIn.value.is_signin!=2){
+        setLoginBonusDialogVisible(true);
+      }
       state.loading = false;
     };
 

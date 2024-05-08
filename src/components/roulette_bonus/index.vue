@@ -562,7 +562,7 @@ const showWinnerBody = () => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .roulette-bonus-help-menu {
   left: 50% !important;
   transform: translateX(-50%) !important;
@@ -796,15 +796,6 @@ const showWinnerBody = () => {
       left: 51%;
       transform: translateX(-50%);
 
-      .v-btn__content {
-        text-align: center;
-        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 900;
-        line-height: normal;
-      }
-
       .roulette-bonus-dialog-spin-number-bg {
         display: flex;
         align-items: center;
@@ -845,16 +836,6 @@ const showWinnerBody = () => {
       left: 51%;
       transform: translateX(-50%);
       z-index: 2;
-
-      .v-btn__content {
-        color: #fff;
-        text-align: center;
-        font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-        font-size: 10px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-      }
     }
   }
 
@@ -960,6 +941,33 @@ const showWinnerBody = () => {
       /* Text Box */
       box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
       overflow-y: auto;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.roulette-bonus-dialog-body {
+  .roulette-bonus-dialog-body-2 {
+    .v-btn__content {
+      text-align: center;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+    }
+  }
+
+  .roulette-bonus-dialog-body-4 {
+    .v-btn__content {
+      color: #fff;
+      text-align: center;
+      font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
     }
   }
 }

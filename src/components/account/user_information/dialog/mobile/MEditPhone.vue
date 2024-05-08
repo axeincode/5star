@@ -105,7 +105,7 @@ const updatePhone = async () => {
 </script>
 
 <template>
-  <div class="user-container">
+  <div class="user-container--phone">
     <v-row class="mt-10 relative" :class="mobileWidth < 600 ? 'ma-2' : 'ma-10'">
       <v-text-field
         :label="t('account.item.phone_text')"
@@ -133,7 +133,7 @@ const updatePhone = async () => {
 
 <style lang="scss">
 // account dialog container
-.user-container {
+.user-container--phone {
   .form-textfield div.v-field__field {
     box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset !important;
   }

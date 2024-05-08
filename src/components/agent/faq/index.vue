@@ -8,6 +8,7 @@ import BScroll from '@better-scroll/core'
 const { t } = useI18n();
 const bscrollRef:any = ref(null)
 const BS:any = ref(null)
+const emit = defineEmits<{ (e: 'inited', val:boolean): void }>();
 
 onMounted(async() => {
   await nextTick()
@@ -30,6 +31,8 @@ onMounted(async() => {
   setTimeout(() => {
     BS.value.refresh()
   }, 500)
+  
+  emit('inited', false)
 })
 </script>
 

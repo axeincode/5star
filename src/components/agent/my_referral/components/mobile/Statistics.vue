@@ -101,7 +101,7 @@ const { inviteItem } = toRefs(props);
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-agent-statistics-card {
   border-radius: 8px;
   background: $agent_card_notmet_bg;

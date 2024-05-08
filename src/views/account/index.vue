@@ -18,6 +18,7 @@ import MDialog from "./dialog/index.vue";
 import AdjustClass from "@/utils/adjust";
 import EventToken from "@/constants/EventToken";
 import { getQueryParams } from "@/utils/getPublicInformation";
+import Loading from "@/components/global/loading.vue";
 
 // const UserInformation = defineAsyncComponent(() => import("@/components/account/user_information/pc/index.vue"));
 // const MUserInformation = defineAsyncComponent(() => import("@/components/account/user_information/mobile/index.vue"));
@@ -39,6 +40,7 @@ const activeMenuIndex = ref<any>(0);
 const mobileDialogVisible = ref<boolean>(false);
 const selectedMenuItem = ref<string>(t('account.menu.user_info_text'));
 const accountMenuShow = ref<boolean>(false);
+const pageLoading = ref<boolean>(false);
 
 const menuList = ref<Array<string>>([
   t('account.menu.user_info_text'),
@@ -143,6 +145,7 @@ watch(activeAccountIndex, (value) => {
 })
 
 onMounted(() => {
+  pageLoading.value = true;
   AdjustClass.getInstance().adjustTrackEvent({
     key: "PAGE_VIEW",
     value: "account",
@@ -169,6 +172,7 @@ onMounted(() => {
     top: 0,
     behavior: 'smooth'
   });
+  pageLoading.value = false;
 })
 </script>
 
@@ -211,12 +215,14 @@ onMounted(() => {
       :class="refferalAppBarShow ? 'pt-8' : 'pt-12'"
       :style="{ height: accountHeight + 'px' }"
     >
+      <!-- 顶部栏 -->
       <div class="m-account-tab-body mx-3 d-flex align-center">
         <v-btn class="m-account-back-btn text-none" @click="goBeforePage">
           <v-icon class="header-mdi-icon">mdi-chevron-left</v-icon>
           <!-- <img src="@/assets/public/svg/icon_public_11.svg" width="18" /> -->
           {{ t("account.back_text") }}
         </v-btn>
+        
         <v-menu
           offset="20"
           v-model:model-value="accountMenuShow"
@@ -250,8 +256,11 @@ onMounted(() => {
           </v-list>
         </v-menu>
       </div>
-      <MUserInformation v-if="activeMenuIndex == 0" />
-      <MSuspendAccount v-if="activeMenuIndex == 4" />
+      <Loading v-if="pageLoading" height="100%"></Loading>
+      <template v-else>
+        <MUserInformation v-if="activeMenuIndex == 0" />
+        <MSuspendAccount v-if="activeMenuIndex == 4" />
+      </template>
     </div>
   </div>
   <div class="mx-2 pt-10">

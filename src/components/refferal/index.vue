@@ -22,9 +22,9 @@ const { setRefferalDialogShow } = refferalStore();
 
 const invitedUser = ref<number>(28560);
 const earnMoney = ref<number>(85601479);
-const host = ref<string>("HOY777.com");
+const host = ref<string>("Hoy777.com");
 const refferalCode = ref<string>("xxxxxxxxxx");
-const siteUrl = ref<string>("https://HOY777.com/xxxxxxxxxx");
+const siteUrl = ref<string>("https://Hoy777.com/xxxxxxxxxx");
 
 const descriptionVisible = ref<boolean>(false);
 
@@ -153,7 +153,7 @@ onMounted(() => {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .refferal-container {
     background: #2E274C;
     border-radius: 16px;

@@ -631,8 +631,8 @@ onMounted(async () => {
   </v-dialog>
 </template>
 
-<style lang="scss">
-.m-bonus-forfeit-btn {
+<style lang="scss" scoped>
+:deep.m-bonus-forfeit-btn {
   width: 64px;
   height: 24px !important;
   border-radius: 4px;
@@ -651,7 +651,10 @@ onMounted(async () => {
   }
 }
 
-.v-expansion-panel-title__overlay {
+:deep.v-expansion-panel-title--active:hover > .v-expansion-panel-title__overlay {
+  opacity: 0 !important;
+}
+:deep.v-expansion-panel-title:hover > .v-expansion-panel-title__overlay {
   opacity: 0 !important;
 }
 
@@ -661,7 +664,7 @@ onMounted(async () => {
   transition: scale 0.2s;
 }
 
-.m-bonus-card-body {
+:deep.m-bonus-card-body {
   min-height: 233px;
   overflow-y: auto;
   margin-bottom: 6px;
@@ -700,7 +703,7 @@ onMounted(async () => {
   width: 100% !important;
 }
 
-.v-expansion-panel-title:active:enabled {
+:deep.v-expansion-panel-title:active:enabled {
   transform: none !important;
   filter: none !important;
 }
@@ -710,7 +713,7 @@ onMounted(async () => {
   border-right: 1px solid #1d2027;
 }
 
-.m-collapse-body .v-expansion-panel-title {
+:deep.m-collapse-body .v-expansion-panel-title {
   border-radius: 8px !important;
   padding: 14px 8px !important;
   height: 100px !important;
@@ -730,21 +733,21 @@ onMounted(async () => {
   background: linear-gradient(90deg, #221f32 0%, #424567 100%) !important;
 }
 
-.v-expansion-panel:not(:first-child)::after {
+:deep.v-expansion-panel:not(:first-child)::after {
   content: none !important;
 }
 
-.v-progress-linear {
+:deep.v-progress-linear {
   background: #1d2027 !important;
   box-shadow: inset 2px 0px 4px 1px rgba(0, 0, 0, 0.12) !important;
   border-radius: 8px !important;
 }
 
-.v-progress-linear__background {
+:deep.v-progress-linear__background {
   background: transparent !important;
 }
 
-.real-completion-progress {
+:deep.real-completion-progress {
   .v-progress-linear__determinate {
     background: #009b3a !important;
     border-radius: 8px !important;
@@ -752,7 +755,7 @@ onMounted(async () => {
   }
 }
 
-.bonus-completion-progress {
+:deep.bonus-completion-progress {
   .v-progress-linear__determinate {
     background: #235ac5 !important;
     border-radius: 8px !important;
@@ -760,14 +763,14 @@ onMounted(async () => {
   }
 }
 
-.failure-progress {
+:deep.failure-progress {
   .v-progress-linear__determinate {
     background: linear-gradient(0deg, #15161c 0%, #393a71 100%);
     border-radius: 8px;
   }
 }
 
-.v-expansion-panel {
+:deep.v-expansion-panel {
   border-radius: 8px !important;
 }
 
@@ -781,11 +784,11 @@ onMounted(async () => {
   font-weight: 700;
 }
 
-.v-expansion-panel-text__wrapper {
+:deep.v-expansion-panel-text__wrapper {
   padding: 8px 8px 16px !important;
 }
 
-.m-bonus-deposit-group {
+:deep.m-bonus-deposit-group {
   border-radius: 8px;
   background: #1d2027;
   padding: 4px;

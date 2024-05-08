@@ -13,6 +13,7 @@ import phones from "@/utils/phoneValidation";
 import currencyList from "@/utils/currencyList";
 import { getPhoneCodeByLocale } from "@/utils/phoneCodes";
 import { authStore } from "@/store/auth";
+import LoadingBtn from "@/components/global/loadingBtn.vue"
 
 const { t } = useI18n();
 const { dispatchSmsVerificationCode } = withdrawStore();
@@ -204,11 +205,13 @@ onMounted(() => {
           width="288"
           height="48"
           :disabled="submitDisabled"
-          :loading="submitLoading"
           class="m-phone-binding-submit-btn"
           @click="submitSMS"
         >
-          {{ t("phone_binding_dialog.text_8") }}
+          <LoadingBtn v-if="submitLoading"></LoadingBtn>
+          <div v-else>
+            {{ t("phone_binding_dialog.text_8") }}
+          </div>
         </v-btn>
       </div>
     </div>

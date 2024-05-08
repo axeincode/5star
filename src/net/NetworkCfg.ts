@@ -6,6 +6,9 @@ export namespace NETWORK {
     static REGISTER: string = '/register' //Registration
     static QUICK_LOGIN: string = '/quick/login'
     static QUICK_REGISTER: string = '/quick/register'
+    static REGISTER_CONFIG: string = '/register/config' //注册配置信息
+    static VERIFY_SEND: string = '/verify/send' //发送验证码
+    static CLOUDFLARE_VERIFY: string = '/cloudflare/verify' //验证CloudFlare token
   }
 
   //Business logic after entering the home page
@@ -152,8 +155,8 @@ export namespace NETWORK {
 
   // 下载app活动 api
   export class DOWNLOADAPP {
-    static  USER_DOWAPP_INFO_ACQUISTION = '/user/downloadapp/list';
-    static DOWAPP_INFO_ACQUISTION = '/downloadapp/list';
+    static USER_DOWAPP_INFO_ACQUISTION = '/user/downloadapp/list';//下載app送bonus活動信息顯示（登录后）
+    static DOWAPP_INFO_ACQUISTION = '/downloadapp/list';//下載app送bonus活動信息顯示（登陆前）
     static DOWAPP_RECEIVE = '/user/downloadapp/receive';
   }
 

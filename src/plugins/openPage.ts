@@ -6,11 +6,11 @@ export const useOpenUrl = () => {
     const isApp = appInstance.isMobileWebview
     const openUrl = (url: string, blank: boolean = false) => {
         console.log(url, isApp, 'useOpenUrl');
-        
+
         if (!url) return;
         if (!isApp) {
             // 浏览器端打开页面
-            if( blank ) {
+            if (blank) {
                 window.open(url, '_blank');
             } else {
                 window.location.href = url

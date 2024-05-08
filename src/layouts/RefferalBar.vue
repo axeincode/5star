@@ -5,8 +5,9 @@ import { appBarStore } from "@/store/appBar";
 import { refferalStore } from "@/store/refferal";
 import { useDisplay } from "vuetify";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/store/auth";
 import { activityAppStore } from '@/store/activityApp';
-const { setAppConfirmDialogShow, downloadAppAcquisition, runningSystem } = activityAppStore();
+const { setAppConfirmDialogShow, downloadAppAcquisition,userDownloadAppAcquisition, runningSystem, automaticPopUpApp } = activityAppStore();
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -39,29 +40,53 @@ const activityAppBonus = computed(() => {
   return getActivityBonus.value;
 });
 
+const userInfo = computed(() => {
+  const { getUserInfo } = storeToRefs(authStore());
+  return getUserInfo.value;
+});
+
 const openRefferalDialogShow = () => {
   setOverlayScrimShow(false);
   setRefferalDialogShow(true);
 };
 
-// 获取下载app活动信息
-downloadAppAcquisition()
+
+const downloadAppEvent = () => {
+  setAppConfirmDialogShow(true)
+  // automaticPopUpApp(true)
+}
+
+// 获取模式
+const mobile = computed(() => {
+  const { getMobile } = storeToRefs(activityAppStore());
+  return getMobile.value;
+});
 
 onMounted(() => {
   // 获取当前运行的是否浏览器
   runningSystem()
+  if(userInfo.value.id){
+    // 获取登录之后下载app活动的数据
+    userDownloadAppAcquisition()
+  }else{
+    // 未登录时下载app活动的数据
+    downloadAppAcquisition()
+  }
 })
 
 </script>
 
 <template>
   <v-app-bar
+    id="refferalBar"
     app
     class="refferal-app-bar-background justify-center"
     :class="headerBlurEffectShow ? 'header-bg-blur' : ''"
     density="compact"
     :inverted-scroll="invertedScroll"
     :elevate-on-scroll="elevateOnScroll"
+    v-if="mobile"
+    @click="downloadAppEvent"
   >
     <v-toolbar-title class="d-flex align-center justify-center">
       <p class="white" :class="mobileWidth < 600 ? 'text-500-10 wrap' : 'text-700-16'">
@@ -75,10 +100,11 @@ onMounted(() => {
       <v-btn
         rounded
         :height="mobileWidth < 600 ? '24px' : '28px'"
-        class="text-none ml-3 earn-btn-bg"
-        @click="setAppConfirmDialogShow(true)"
+        class="text-none ml-3 earn-btn-bg "
+        style=""
+        @click="downloadAppEvent"
       >
-        EARM
+      GANAR
       </v-btn>
     </v-toolbar-title>
     <v-btn
@@ -113,21 +139,22 @@ onMounted(() => {
   background: url(@/assets/activity_app/activity-app-header.png) !important;
 
   .v-toolbar__content {
-    height: 48px;
+    height: $refferalBarHeight;
   }
 
   @media (max-width: 600px) {
     .v-toolbar__content {
-      height: 32px !important;
+      height: $refferalBarHeight !important;
     }
     .wrap {
       min-width: 180px;
-      max-width: 220px;
       white-space: pre-wrap;
       word-break: keep-all;
       // word-warp: break-word;
       text-align: center;
-      line-height: 14px;
+      line-height: 13px;
+      font-size: 11px;
+      max-width: 55vw;
     }
   }
 
@@ -153,7 +180,9 @@ onMounted(() => {
 
     @media (max-width: 600px) {
       .v-btn__content {
-        font-size: 12px;
+        // font-size: 12px;
+        font-size: 13px;
+        font-weight: 800;
       }
     }
   }

@@ -34,6 +34,8 @@ const platformCurrency = computed<string>(() => {
   return getPlatformCurrency.value;
 });
 
+const emit = defineEmits<{ (e: "openGame", item: any): void }>();
+
 const { t } = useI18n();
 const { width } = useDisplay();
 const modules = [Pagination, Autoplay, Navigation];
@@ -103,7 +105,14 @@ const mobileWidth = computed(() => {
 });
 
 const goGame = (item: any) => {
-  router.push(`/game/${item.game_id}`);
+  // emit到上一层触发公共的打开游戏的方法， 和游戏列表的打开游戏类似，字段做了重新keyValue处理
+  emit('openGame', {
+    image: item.game_icon,
+    id: item.game_id,
+    name: item.game_name,
+    provider_name: '',
+    is_demo: false,
+  })
 }
 
 const swiper = ref<any>(null);
@@ -132,6 +141,7 @@ const liveWinList = ()=>{
 </script>
 
 <template>
+  <!-- H5 -->
   <div class="m-home-live-win" v-if="mobileWidth < 600">
     <!-- <img src="@/assets/home/svg/live_win_1.svg" class="m-live-win-img-width" /> -->
     <!-- 标题 -->
@@ -194,6 +204,8 @@ const liveWinList = ()=>{
       </Swiper>
     </div>
   </div>
+
+  <!-- PC -->
   <div class="home-live-win" v-else>
     <!-- <img src="@/assets/home/svg/live_win.svg" class="live-win-img-width" /> -->
     <div class="live-win-header">

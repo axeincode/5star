@@ -10,6 +10,7 @@ import mxBankList from "@/utils/mx_bank";
 import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
 import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
+import LoadingBtn from "@/components/global/loadingBtn.vue"
 
 const { t } = useI18n();
 const props = defineProps<{ withdraw_type: string }>();
@@ -49,7 +50,7 @@ const typeList = ref<Array<string>>([
   "RFC",
   "CURP"
 ]);
-
+const loading = ref<boolean>(false)
 const userFundsIdentity = computed(() => {
   const { getUserFundsIdentity } = storeToRefs(userStore());
   return getUserFundsIdentity.value
@@ -83,6 +84,7 @@ const svgTransform = (el: any, color: string) => {
 };
 
 const addWithdrawInfo = () => {
+  loading.value = true
   localStorage.setItem(userInfo.value.id.toString(), JSON.stringify(withdrawInfoItem.value))
   const toast = useToast();
   toast.success('Successfully added !', {
@@ -97,6 +99,7 @@ const addWithdrawInfo = () => {
     icon: SuccessIcon,
     rtl: false,
   });
+  loading.value = false
 }
 
 watch(withdrawInfoItem, (newValue) => {
@@ -422,7 +425,10 @@ onMounted(() => {
             height="40"
             @click="addWithdrawInfo"
           >
-            {{ t("withdraw_info_dialog.text_19") }}
+            <LoadingBtn v-if="loading"></LoadingBtn>
+            <div v-else>
+              {{ t("withdraw_info_dialog.text_19") }}
+            </div>
           </v-btn>
         </v-col>
       </v-row>

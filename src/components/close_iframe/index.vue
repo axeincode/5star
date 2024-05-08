@@ -143,7 +143,7 @@ window.addEventListener('resize', () => {
 .draggable-button {
   width: 40px;
   height: 40px;
-  position: absolute;
+  position: fixed;
   left: 20px;
   top: 20px;
   cursor: pointer;
@@ -154,7 +154,7 @@ window.addEventListener('resize', () => {
   background-size: 100% 100%;
   color: transparent;
   opacity: 1;
-  z-index: 111111111;
+  z-index: 999999999;
   outline: none;
   opacity: 0.5;
   transition: opacity .5s;

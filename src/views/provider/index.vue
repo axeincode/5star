@@ -13,8 +13,12 @@ import icon_public_10 from "@/assets/public/svg/icon_public_10.svg";
 import type * as Game from "@/interface/game";
 import MGameConfirm from "@/views/home/components/mobile/GameConfirm.vue";
 import AdjustClass from "@/utils/adjust";
+import { appBarStore } from "@/store/appBar";
 import EventToken from "@/constants/EventToken";
+import { NETWORK } from '@/net/NetworkCfg'
+import { Network } from '@/net/Network'
 
+const network: Network = Network.getInstance()
 const { t } = useI18n();
 const { width } = useDisplay();
 const route = useRoute();
@@ -25,7 +29,9 @@ const { dispatchGameFavoriteList } = gameStore();
 const { setMailMenuShow } = mailStore();
 
 const currentPage = ref<number>(1);
-const limit = ref<number>(8);
+// 初始展示数量 6
+const initLimit = 6
+const limit = ref<number>(30);
 const loading = ref<boolean>(false);
 const searchLoading = ref<boolean>(false);
 const moreLoading = ref<boolean>(false);
@@ -42,6 +48,7 @@ const selectedGameItem = ref<Game.GameItem>({
   producer: "",
   is_demo: false
 })
+const gameSearchTotal = ref(0)
 
 const mobileWidth: any = computed(() => {
   return width.value;
@@ -62,18 +69,23 @@ const favoriteGameList = computed(() => {
   return getFavoriteGameList.value
 })
 
+const currentTotal = computed(() => {
+  return limit.value * (currentPage.value - 1) + initLimit
+})
+
 const goToBackPage = () => {
   router.go(-1);
 };
 
 const handleMoreGame = async () => {
-  moreLoading.value = true;
+  // moreLoading.value = true;
   currentPage.value += 1;
-  await dispatchGameSearch(
-    "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
-  );
-  providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
-  moreLoading.value = false;
+  // await dispatchGameSearch(
+  //   "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value + "&existing=" + providerGameList.value.length
+  // );
+  // providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+  // moreLoading.value = false;
+  gameSearch("?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value + "&existing=" + providerGameList.value.length, moreLoading)
 };
 
 // const handleEnterGame = async (id: number, name: string) => {
@@ -92,37 +104,46 @@ const showGameConfirmationDialog = async (game_item: Game.GameItem) => {
   selectedGameItem.value = game_item;
 }
 
-const handleInputChange = async (event: any) => {
-  providerGameList.value = [];
-  searchLoading.value = true;
-  await dispatchGameSearch(
-    "?game_categories_slug=" + slug.value + "&search=" + searchText.value + "&page=" + currentPage.value + "&limit=" + limit.value
-  );
-  providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
-  searchLoading.value = false;
-}
+const { setControlLevel } = appBarStore();
+watch(gameConfirmDialogShow, (value: boolean) => {
+  setControlLevel(value)
+})
+
+// const handleInputChange = async (event: any) => {
+//   providerGameList.value = [];
+//   searchLoading.value = true;
+//   await dispatchGameSearch(
+//     "?game_categories_slug=" + slug.value + "&search=" + searchText.value + "&page=" + currentPage.value + "&limit=" + initLimit
+//   );
+//   providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+//   searchLoading.value = false;
+// }
 
 const refreshGameFavoriteList = (id: string | number) => {
 }
 
 watch(searchText, async (value) => {
-  console.log(slug.value, 'slug.value');
+  // console.log(slug.value, 'slug.value');
 
+  // 重置页数
+  currentPage.value = 1
   providerGameList.value = [];
   if (value) {
-    searchLoading.value = true;
-    await dispatchGameSearch(
-      "?game_categories_slug=" + slug.value + "&search=" + value + "&page=" + currentPage.value + "&limit=" + limit.value
-    );
-    providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
-    searchLoading.value = false;
+    // searchLoading.value = true;
+    // await dispatchGameSearch(
+    //   "?game_categories_slug=" + slug.value + "&search=" + value + "&page=" + currentPage.value + "&limit=" + initLimit
+    // );
+    // providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+    // searchLoading.value = false;
+    gameSearch("?game_categories_slug=" + slug.value + "&search=" + value + "&page=" + currentPage.value + "&limit=" + initLimit, searchLoading)
   } else {
-    searchLoading.value = true;
-    await dispatchGameSearch(
-      "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
-    );
-    providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
-    searchLoading.value = false;
+    // searchLoading.value = true;
+    // await dispatchGameSearch(
+    //   "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + initLimit
+    // );
+    // providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+    // searchLoading.value = false;
+    gameSearch("?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + initLimit, searchLoading)
   }
 })
 
@@ -138,12 +159,37 @@ onMounted(async () => {
     behavior: "smooth",
   });
   slug.value = route.query.slug ? route.query.slug : "";
-  await dispatchGameSearch(
-    "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + limit.value
-  );
-  providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
-  loading.value = false;
+  // await dispatchGameSearch(
+  //   "?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + initLimit
+  // );
+  gameSearch("?game_categories_slug=" + slug.value + "&page=" + currentPage.value + "&limit=" + initLimit, loading)
+  // providerGameList.value = [...providerGameList.value, ...providerGames.value.list];
+
+  
+  
 });
+
+const gameSearch = (sub_api, apiloading) => {
+  apiloading.value = true;
+  network.request({
+    url: NETWORK.GAME_INFO.GAME_SEARCH + sub_api,
+    method: 'GET',
+    data: {},
+  })
+  .then((res: any) => {
+    if (res.code === 200) {
+      const { total, list } = res.data
+      providerGameList.value = [...providerGameList.value, ...list]
+      gameSearchTotal.value = total
+      console.log(providerGameList.value, 'providerGameList.value');
+      console.log(gameSearchTotal.value, 'gameSearchTotal.value');
+    }
+  }).catch(err => {
+    console.log(err);
+  }).finally(() => {
+    apiloading.value = false;
+  })
+}
 </script>
 
 <template>
@@ -175,23 +221,29 @@ onMounted(async () => {
       }"
       v-if="mobileWidth < 600"
     >
-      <v-btn
-        class="m-game-confirm-drawer-close-button"
-        icon="true"
-        width="24"
-        height="24"
-        @click="gameConfirmDialogShow = false"
-      >
-        <inline-svg :src="icon_public_10" width="20" height="20"></inline-svg>
-      </v-btn>
-      <MGameConfirm
-        :selectedGameItem="selectedGameItem"
-        :is_favorite="is_favorite"
-        :gameConfirmDialogShow="gameConfirmDialogShow"
-        @closeGameConfirmDialog="gameConfirmDialogShow = false"
-        @refreshGameFavoriteList="refreshGameFavoriteList"
-      />
+      <template v-if="gameConfirmDialogShow">
+        <div class="m-game-confirm-drawer-close-button-box" style="display:flex; justify-content: flex-end;">
+          <v-btn
+            class="m-game-confirm-drawer-close-button"
+            icon="true"
+            width="24"
+            height="24"
+            @click="gameConfirmDialogShow = false"
+          >
+            <inline-svg :src="icon_public_10" width="20" height="20"></inline-svg>
+          </v-btn>
+        </div>
+        <MGameConfirm
+          :selectedGameItem="selectedGameItem"
+          :is_favorite="is_favorite"
+          :gameConfirmDialogShow="gameConfirmDialogShow"
+          @closeGameConfirmDialog="gameConfirmDialogShow = false"
+          @refreshGameFavoriteList="refreshGameFavoriteList"
+        />
+      </template>
     </v-navigation-drawer>
+    
+    <!-- 展示部分 -->
     <div
       class="mx-3 m-provider-loading-container"
       :class="gameConfirmDialogShow ? 'm-provider-bg-blur' : ''"
@@ -245,7 +297,7 @@ onMounted(async () => {
               md="2"
               sm="3"
               class="px-1 relative py-0 m-provider-game-img"
-              v-if="index < 6 * currentPage"
+              v-if="index < currentTotal"
             >
               <ProgressiveImage
                 :src="game.image"
@@ -263,12 +315,12 @@ onMounted(async () => {
         </v-row>
         <div
           class="mt-4 text-center text-700-14 gray"
-          v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+          v-if="gameSearchTotal > initLimit && gameSearchTotal > currentTotal"
         >
           {{ t("provider.text_3") }}
-          <font class="white">&nbsp;{{ 6 * currentPage }}&nbsp;</font>
+          <font class="white">&nbsp;{{ currentTotal }}&nbsp;</font>
           {{ t("provider.text_4") }}
-          <font class="white">&nbsp;{{ providerGames.total }}&nbsp;</font>
+          <font class="white">&nbsp;{{ gameSearchTotal }}&nbsp;</font>
           {{ t("provider.text_5") }}
         </div>
         <v-btn
@@ -276,7 +328,7 @@ onMounted(async () => {
           variant="outlined"
           :width="mobileWidth < 600 ? '100%' : 164"
           :height="mobileWidth < 600 ? 41 : 48"
-          v-if="providerGames.total > 6 && providerGames.total > 6 * currentPage"
+          v-if="gameSearchTotal > initLimit && gameSearchTotal > currentTotal"
           @click="handleMoreGame()"
         >
           <div v-if="!moreLoading">{{ t("home.more") }}</div>

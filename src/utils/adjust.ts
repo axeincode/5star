@@ -1,5 +1,6 @@
 
 import Adjust from "@adjustcom/adjust-web-sdk";
+import { getQueryParams } from "@/utils/getPublicInformation";
 
 export interface AdjustData {
   key: string
@@ -26,8 +27,9 @@ export default class AdjustClass {
    */
   public static getInstance(isMobile: boolean = false) {
     if (!AdjustClass.instance) {
+      const queryParams = getQueryParams()
       AdjustClass.instance = new AdjustClass()
-      AdjustClass.instance.setMobile(isMobile)
+      AdjustClass.instance.setMobile(!!queryParams['mobile'])
       // if (!isMobile) {
       //   AdjustClass.instance.init()
       // }

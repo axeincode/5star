@@ -70,40 +70,6 @@ const mobileWidth: any = computed(() => {
   </div>
 </template>
 
-<style lang="scss">
-.m-about-collapse {
-  .el-collapse {
-    border-top: unset !important;
-    border-bottom: unset !important;
-  }
-  .el-collapse-item {
-    border-bottom: 2px solid #1D2027;
-  }
-  .el-collapse-item__header {
-    background-color: #15161C !important;
-    border-bottom: unset !important;
-    color: var(--White-BG, #fff);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
-  .el-collapse-item__wrap {
-    background-color: #15161C !important;
-  }
-  .el-collapse-item__content {
-    padding-bottom: 16px;
-    color: var(--Sec-Text-7782AA, #7782aa);
-    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 160%; /* 19.2px */
-  }
-  .el-icon {
-    color: white !important;
-    font-size: 14px;
-  }
-}
+<style lang="scss" scoped>
+
 </style>

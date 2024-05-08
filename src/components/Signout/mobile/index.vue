@@ -1,32 +1,55 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import router from "@/router";
 import { authStore } from "@/store/auth";
 import { useI18n } from "vue-i18n";
 import { resetAllStores } from "@/store";
 import { gameStore } from "@/store/game";
 import { getQueryParams } from "@/utils/getPublicInformation";
+import { useDisplay } from 'vuetify';
+import LoadingBtn from "@/components/global/loadingBtn.vue"
 
-const emit = defineEmits<{
-  (e: "close"): void;
-}>();
+const { name, width } = useDisplay();
+const mobileWidth = computed(() => {
+  return width.value
+})
+
+const props = defineProps({
+  signoutDialog: {
+    type: Boolean,
+  },
+});
+
+const emit = defineEmits(["update:signoutDialog", 'close']);
+
+const signoutDialog = computed({
+  get() {
+    return props.signoutDialog;
+  },
+  set(val) {
+    emit("update:signoutDialog", val);
+  },
+});
+
 const { t } = useI18n();
 const { dispatchSignout } = authStore();
 
 const signoutContainerBackground = ref<string>("transparent");
 const signoutContainerHeight = ref<number>(201);
 const signoutContainerOverflow = ref<string>("hidden");
-
+const loading = ref<boolean>(false)
 const queryParams = getQueryParams()
 
 const signOut = (): void => {
-  emit("close");
+  loading.value = true
   dispatchSignout();
   resetAllStores();
+  emit("close");
   router.push({ path: '/', query: queryParams })
-  setTimeout(() => {
-    window.location.reload();
-  }, 300);
+  loading.value = false
+  // setTimeout(() => {
+  //   window.location.reload();
+  // }, 300);
 };
 
 onMounted(() => {
@@ -41,45 +64,55 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="m-signout-container">
-    <div
-      class="m-signout-animation-container"
-      :style="{
-        height: signoutContainerHeight + 'px',
-        background: signoutContainerBackground,
-        overflow: signoutContainerOverflow,
-      }"
-    >
-      <div class="m-header">
-        <img src="@/assets/public/image/img_public_03.png" class="m-logout-logo" />
-        <p class="text-700-16 white mt-3 m-header-10">{{ t("signout.text_1") }}</p>
-      </div>
-      <p class="m-signout-text">{{ t("signout.text_2") }}</p>
-      <p class="m-signout-notice">{{ t("signout.text_3") }}</p>
-      <div class="mt-8 text-center m-signout-box">
+  <v-dialog
+    v-model="signoutDialog"
+    :width="mobileWidth < 600 ? 328 : 471"
+    :scrim="true"
+    @click:outside="$emit('close')"
+  >
+    <div class="m-signout-container">
+      <div
+        class="m-signout-animation-container"
+        :style="{
+          height: signoutContainerHeight + 'px',
+          background: signoutContainerBackground,
+          overflow: signoutContainerOverflow,
+        }"
+      >
+        <div class="m-header">
+          <img src="@/assets/public/image/img_public_03.png" class="m-logout-logo" />
+          <p class="text-700-16 white mt-3 m-header-10">{{ t("signout.text_1") }}</p>
+        </div>
+        <p class="m-signout-text">{{ t("signout.text_2") }}</p>
+        <p class="m-signout-notice">{{ t("signout.text_3") }}</p>
+        <div class="mt-8 text-center m-signout-box">
+          <v-btn
+            class="m-signout-btn button-bright"
+            width="-webkit-fill-available"
+            height="48px"
+            @click="signOut"
+          >
+            <LoadingBtn v-if="loading"></LoadingBtn>
+            <div v-else>
+              {{ t("signout.button") }}
+            </div>
+          </v-btn>
+        </div>
         <v-btn
-          class="m-signout-btn button-bright"
-          width="-webkit-fill-available"
-          height="48px"
-          @click="signOut"
+          class="close-button"
+          icon="true"
+          @click="$emit('close')"
+          width="30"
+          height="30"
         >
-          {{ t("signout.button") }}
+          <img src="@/assets/public/svg/icon_public_10.svg" />
         </v-btn>
       </div>
-      <v-btn
-        class="close-button"
-        icon="true"
-        @click="$emit('close')"
-        width="30"
-        height="30"
-      >
-        <img src="@/assets/public/svg/icon_public_10.svg" />
-      </v-btn>
     </div>
-  </div>
+  </v-dialog>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes scaling {
   0% {
     transform: scale(0);

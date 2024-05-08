@@ -37,6 +37,7 @@ import { bannerStore } from "@/store/banner";
 import { depositStore } from "@/store/deposit";
 import icon_public_81 from "@/assets/public/svg/icon_public_81.svg";
 import { BtTabEnum } from '@/enums/bonusTransactionEnum';
+import { activityAppStore } from '@/store/activityApp';
 
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
@@ -47,6 +48,11 @@ const platformCurrency = computed(() => {
   return getPlatformCurrency.value;
 });
 
+// 获取模式
+const mobile = computed(() => {
+  const { getMobile } = storeToRefs(activityAppStore());
+  return getMobile.value;
+});
 
 const { setAuthModalType } = authStore();
 const { setAuthDialogVisible } = authStore();
@@ -660,7 +666,7 @@ onMounted(async () => {
   if (token.value != undefined) {
     await dispatchUserProfile();
     await dispatchUserBalance();
-    await dispatchCurrencyList();
+    await dispatchCurrencyList(); 
     // await dispatchSocketConnect();
   }
 });
@@ -676,6 +682,7 @@ onMounted(async () => {
       headerBlurEffectShow ? 'header-bg-blur' : mobileWidth > 1200 ? 'pc-header-l' : '',
     ]"
     class="app-bar-height"
+    :style="{ top: !mobile ? '0 !important' : '' }"
   >
     <v-app-bar-nav-icon
       @click.stop="setNavBarToggle(true)"
@@ -808,7 +815,7 @@ onMounted(async () => {
                         style="height: 40px"
                       >
                         <!-- <p class="mr-1 text-700-12">{{ user.currency }}</p> -->
-                        <p class="text-700-12">{{ user.wallet }}</p>
+                        <p class="text-700-14 white">{{ user.wallet }}</p>
                         <img
                           src="@/assets/public/svg/icon_public_50.svg"
                           class="mr-3"
@@ -860,7 +867,7 @@ onMounted(async () => {
                       class="deposit-icon-position cursor-pointer"
                       width="20"
                     />
-                    <div class="text-700-8 white m-deposit-text-position">
+                    <div class="text-700-10 white m-deposit-text-position">
                       {{ t("appBar.deposit") }}
                     </div>
                   </div>
@@ -1417,14 +1424,14 @@ onMounted(async () => {
 
 @media (max-width: 600px) {
   .app-bar-position {
-    top: 32px !important;
+    top: 48px !important;
   }
 
   .app-bar-height {
-    height: 60px !important;
+    height: $appBarHeight !important;
 
     .v-toolbar__content {
-      height: 60px !important;
+      height: $appBarHeight !important;
     }
   }
 }

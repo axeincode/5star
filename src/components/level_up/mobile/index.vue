@@ -99,7 +99,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-level-up-container {
   position: relative;
   height: 458px;
@@ -153,6 +153,37 @@ onMounted(async () => {
       box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
       border-radius: 4px;
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.m-level-up-reward-btn {
+  .v-btn__content {
+    color: var(--Text-Dark-Black-000000, #000);
+    text-align: center;
+    font-family: Inter,-apple-system,Framedcn,Helvetica Neue,Condensed,DisplayRegular,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}
+
+.m-show-checkbox {
+  i.v-icon {
+    color: #15161C;
+    background-color: #01983a;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    margin-top: 4px;
+  }
+
+  i.mdi-checkbox-blank-outline {
+    background-color: #15161C;
+    box-shadow: inset 1px 0px 2px 1px rgba(0, 0, 0, 0.11);
+    border-radius: 4px;
   }
 }
 </style>

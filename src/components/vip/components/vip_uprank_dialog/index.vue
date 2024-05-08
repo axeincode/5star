@@ -214,7 +214,7 @@ onMounted(async () => {
 }
 .vip-position {
   position: fixed !important;
-  z-index: 99999 !important;
+  z-index: 1000001 !important;
 }
 ::v-deep(.v-overlay__content) {
   width: 100%;

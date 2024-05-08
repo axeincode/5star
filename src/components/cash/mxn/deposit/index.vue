@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted } from 'vue';
-import { appBarStore } from '@/store/appBar';
+import { ref, computed, watch, onMounted } from "vue";
+import { appBarStore } from "@/store/appBar";
 import { authStore } from "@/store/auth";
-import { depositStore } from '@/store/deposit';
-import { type GetCurrencyItem } from '@/interface/deposit';
-import { type GetPaymentItem } from '@/interface/deposit';
+import { depositStore } from "@/store/deposit";
+import { type GetCurrencyItem } from "@/interface/deposit";
+import { type GetPaymentItem } from "@/interface/deposit";
 import { type GetUserInfo } from "@/interface/user";
-import ValidationBox from './ValidationBox.vue';
+import ValidationBox from "./ValidationBox.vue";
 import Notification from "@/components/global/notification/index.vue";
-import { useI18n } from 'vue-i18n';
-import { useDisplay } from 'vuetify';
-import { ElNotification } from 'element-plus'
-import { storeToRefs } from 'pinia';
+import { useI18n } from "vue-i18n";
+import { useDisplay } from "vuetify";
+import { ElNotification } from "element-plus";
+import { storeToRefs } from "pinia";
 import ParticipatingDialog from "./ParticipatingDialog.vue";
-import { toFormatNum } from '@/utils/numFormat';
+import { toFormatNum } from "@/utils/numFormat";
 // 获取平台货币
 import { appCurrencyStore } from "@/store/app";
 const platformCurrency = computed(() => {
@@ -27,16 +27,16 @@ const { setWithdrawDialogToggle } = appBarStore();
 const { setCashDialogToggle } = appBarStore();
 const { dispatchUserDepositCfg } = depositStore();
 const { dispatchUserDepositSubmit } = depositStore();
-import SuccessIcon from '@/components/global/notification/SuccessIcon.vue';
-import WarningIcon from '@/components/global/notification/WarningIcon.vue';
+import SuccessIcon from "@/components/global/notification/SuccessIcon.vue";
+import WarningIcon from "@/components/global/notification/WarningIcon.vue";
 
 const promotionDialogVisible = ref<boolean>(false);
 
 const selectedCurrencyItem = ref<GetCurrencyItem>({
   icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
   name: platformCurrency.value,
-  value: 5.25
-})
+  value: 5.25,
+});
 const selectedPaymentItem = ref<GetPaymentItem>({
   id: "",
   icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
@@ -44,134 +44,151 @@ const selectedPaymentItem = ref<GetPaymentItem>({
   description: "20~150.000 " + platformCurrency.value,
   min: 149,
   max: 588.88,
-  channel_type: ''
-})
+  channel_type: "",
+});
 
 const currencyList = ref<Array<GetCurrencyItem>>([
   {
-    icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_84.svg", import.meta.url)
+      .href,
     name: "BRL",
-    value: 5.25
+    value: 5.25,
   },
   {
-    icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_85.svg", import.meta.url)
+      .href,
     name: "PHP",
-    value: 0
+    value: 0,
   },
   {
-    icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_86.svg", import.meta.url)
+      .href,
     name: "PEN",
-    value: 0
+    value: 0,
   },
   {
-    icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_87.svg", import.meta.url)
+      .href,
     name: "MXN",
-    value: 0
+    value: 0,
   },
   {
-    icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_88.svg", import.meta.url)
+      .href,
     name: "CLP",
-    value: 0
+    value: 0,
   },
   {
-    icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_89.svg", import.meta.url)
+      .href,
     name: "USD",
-    value: 0
+    value: 0,
   },
   {
-    icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_90.svg", import.meta.url)
+      .href,
     name: "COP",
-    value: 0
+    value: 0,
   },
-])
+]);
 
 const paymentList = ref<Array<GetPaymentItem>>([
   {
     id: "1",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_1",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "2",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_2",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "3",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_3",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "4",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_4",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "5",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_5",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "6",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_6",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "7",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_7",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
   {
     id: "8",
-    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
+    icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+      .href,
     name: "PIX_8",
     description: "20~150.000 " + platformCurrency.value,
     min: 149,
-    max: 588.88
+    max: 588.88,
   },
-])
+]);
 
 const depositAmountList = ref<Array<string>>([
-  '20',
-  '200',
-  '500',
-  '2000',
-  '5000',
-  '19999',
-])
+  "20",
+  "200",
+  "500",
+  "2000",
+  "5000",
+  "19999",
+]);
 
 const depositToggleSwitch = ref<boolean>(false);
 
 const depositRate = ref<string>("+100%");
 
-const depositAmount = ref<string>("")
+const depositAmount = ref<string>("");
 
 const bonusCheck = ref<boolean>(false);
 
 const notificationShow = ref<boolean>(false);
 
-const checkIcon = ref<any>(new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href);
+const checkIcon = ref<any>(
+  new URL("@/assets/public/svg/icon_public_18.svg", import.meta.url).href
+);
 
 const notificationText = ref<string>("");
 
@@ -182,54 +199,64 @@ const isDepositBtnReady = ref<boolean>(false);
 const userInfo = computed((): GetUserInfo => {
   const { getUserInfo } = storeToRefs(authStore());
   return getUserInfo.value;
-})
+});
 
 const depositConfig = computed(() => {
   const { getDepositCfg } = storeToRefs(depositStore());
-  return getDepositCfg.value
-})
+  return getDepositCfg.value;
+});
 
-watch(depositConfig, (newValue) => {
-  paymentList.value = [];
-  newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
-    paymentList.value.push({
-      id: item.channel_id,
-      icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-      name: item.channel_name,
-      description: item.min + "~" + item.max + " " + item.channel_type,
-      min: item.min,
-      max: item.max
-    })
-  })
-  depositAmountList.value = newValue["list"];
-}, { deep: true });
+watch(
+  depositConfig,
+  (newValue) => {
+    paymentList.value = [];
+    newValue["cfg"][selectedCurrencyItem.value.name].map((item: any) => {
+      paymentList.value.push({
+        id: item.channel_id,
+        icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+          .href,
+        name: item.channel_name,
+        description: item.min + "~" + item.max + " " + item.channel_type,
+        min: item.min,
+        max: item.max,
+      });
+    });
+    depositAmountList.value = newValue["list"];
+  },
+  { deep: true }
+);
 
 const handleDepositAmount = (amount: string) => {
   depositAmount.value = amount;
-}
+};
 
 const handleSelectCurrency = (item: GetCurrencyItem) => {
   selectedCurrencyItem.value = item;
   paymentList.value = [];
-  depositConfig.value["cfg"][selectedCurrencyItem.value.name]?.map((item: any) => {
-    paymentList.value.push({
-      id: item.channel_id,
-      icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url).href,
-      name: item.channel_name,
-      description: item.min + "~" + item.max + " " + item.channel_type,
-      min: item.min,
-      max: item.max
-    })
-  })
-}
+  depositConfig.value["cfg"][selectedCurrencyItem.value.name]?.map(
+    (item: any) => {
+      paymentList.value.push({
+        id: item.channel_id,
+        icon: new URL("@/assets/public/svg/icon_public_74.svg", import.meta.url)
+          .href,
+        name: item.channel_name,
+        description: item.min + "~" + item.max + " " + item.channel_type,
+        min: item.min,
+        max: item.max,
+      });
+    }
+  );
+};
 
 const handleSelectPayment = (item: GetPaymentItem) => {
   selectedPaymentItem.value = item;
-}
+};
 
 const validateAmount = (): boolean => {
-  return Number(depositAmount.value) >= 20 && Number(depositAmount.value) <= 100000;
-}
+  return (
+    Number(depositAmount.value) >= 20 && Number(depositAmount.value) <= 100000
+  );
+};
 
 const handleAmountInputFocus = (): void => {
   if (validateAmount()) {
@@ -237,7 +264,7 @@ const handleAmountInputFocus = (): void => {
   } else {
     isShowAmountValidaton.value = true;
   }
-}
+};
 
 const handleAmountInputChange = (): void => {
   if (validateAmount()) {
@@ -245,7 +272,7 @@ const handleAmountInputChange = (): void => {
   } else {
     isShowAmountValidaton.value = true;
   }
-}
+};
 
 const handleAmountInputBlur = (): void => {
   // if (validateAmount()) {
@@ -253,29 +280,31 @@ const handleAmountInputBlur = (): void => {
   // } else {
   //     isShowAmountValidaton.value = true;
   // }
-}
+};
 
 const handleDepositSubmit = async () => {
   await dispatchUserDepositSubmit({
     id_number: userInfo.value.uid,
-    first_name: userInfo.value.first_name == "" ? "test" : userInfo.value.first_name,
-    last_name: userInfo.value.last_name == "" ? "test" : userInfo.value.last_name,
+    first_name:
+      userInfo.value.first_name == "" ? "test" : userInfo.value.first_name,
+    last_name:
+      userInfo.value.last_name == "" ? "test" : userInfo.value.last_name,
     channels_id: selectedPaymentItem.value.id,
-    amount: Number(depositAmount.value)
-  })
+    amount: Number(depositAmount.value),
+  });
   setDepositDialogToggle(false);
   setCashDialogToggle(false);
-}
+};
 
 const handleParticipate = () => {
-  promotionDialogVisible.value = false
-}
+  promotionDialogVisible.value = false;
+};
 
 watch(bonusCheck, (newValue) => {
   if (newValue) {
-    promotionDialogVisible.value = newValue
+    promotionDialogVisible.value = newValue;
   }
-})
+});
 
 watch(depositAmount, (newValue) => {
   if (validateAmount()) {
@@ -284,7 +313,7 @@ watch(depositAmount, (newValue) => {
     isDepositBtnReady.value = false;
   }
   isShowAmountValidaton.value = !validateAmount();
-})
+});
 
 watch(depositToggleSwitch, (newValue) => {
   if (newValue) {
@@ -294,16 +323,16 @@ watch(depositToggleSwitch, (newValue) => {
     setWithdrawDialogToggle(false);
     setDepositDialogToggle(true);
   }
-})
+});
 
 onMounted(async () => {
   await dispatchUserDepositCfg();
-})
+});
 
 const overlayScrimShow = computed(() => {
   const { getOverlayScrimShow } = storeToRefs(appBarStore());
   return getOverlayScrimShow.value;
-})
+});
 </script>
 
 <template>
@@ -317,7 +346,11 @@ const overlayScrimShow = computed(() => {
     </v-row>
     <v-menu offset="4" class="mt-1">
       <template v-slot:activator="{ props }">
-        <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
+        <v-card
+          color="#15161C"
+          theme="dark"
+          class="mx-12 mt-4 deposit-card-height"
+        >
           <v-list-item
             v-bind="props"
             class="currency-item deposit-card-height"
@@ -344,7 +377,9 @@ const overlayScrimShow = computed(() => {
           <template v-slot:prepend>
             <img :src="currencyItem.icon" width="26" />
           </template>
-          <v-list-item-title class="ml-2">{{ currencyItem.name }}</v-list-item-title>
+          <v-list-item-title class="ml-2">{{
+            currencyItem.name
+          }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -353,7 +388,11 @@ const overlayScrimShow = computed(() => {
     </v-row>
     <v-menu offset="4" class="mt-1">
       <template v-slot:activator="{ props }">
-        <v-card color="#15161C" theme="dark" class="mx-12 mt-4 deposit-card-height">
+        <v-card
+          color="#15161C"
+          theme="dark"
+          class="mx-12 mt-4 deposit-card-height"
+        >
           <v-list-item
             v-bind="props"
             class="payment-item deposit-card-height"
@@ -377,7 +416,11 @@ const overlayScrimShow = computed(() => {
             :key="paymentIndex"
             class="pa-1"
           >
-            <v-card color="#15161C" theme="dark" class="deposit-card-height text-center">
+            <v-card
+              color="#15161C"
+              theme="dark"
+              class="deposit-card-height text-center"
+            >
               <v-list-item
                 class="payment-select-item pa-2"
                 :value="paymentItem.name"
@@ -385,7 +428,9 @@ const overlayScrimShow = computed(() => {
               >
                 <img :src="paymentItem.icon" />
                 <v-list-item-title>{{ paymentItem.name }}</v-list-item-title>
-                <v-list-item-title>{{ paymentItem.description }}</v-list-item-title>
+                <v-list-item-title>{{
+                  paymentItem.description
+                }}</v-list-item-title>
               </v-list-item>
             </v-card>
           </v-col>
@@ -414,7 +459,9 @@ const overlayScrimShow = computed(() => {
         >
           {{ platformCurrency }} {{ toFormatNum(depositAmountItem) }}
           <div class="deposit-amount-area" v-if="!bonusCheck"></div>
-          <div class="deposit-amount-rate-text" v-if="!bonusCheck">{{ depositRate }}</div>
+          <div class="deposit-amount-rate-text" v-if="!bonusCheck">
+            {{ depositRate }}
+          </div>
         </v-btn>
       </v-col>
     </v-row>
@@ -444,10 +491,17 @@ const overlayScrimShow = computed(() => {
     </v-row>
     <v-row class="mt-0 mx-10 align-center">
       <v-col cols="1">
-        <v-checkbox hide-details icon class="amount-checkbox" v-model="bonusCheck" />
+        <v-checkbox
+          hide-details
+          icon
+          class="amount-checkbox"
+          v-model="bonusCheck"
+        />
       </v-col>
       <v-col cols="11" class="d-flex">
-        <p class="deposit-text mt-1 ml-1">{{ t("deposit_dialog.check_text") }}</p>
+        <p class="deposit-text mt-1 ml-1">
+          {{ t("deposit_dialog.check_text") }}
+        </p>
         <img src="@/assets/public/svg/icon_public_22.svg" class="ml-auto" />
       </v-col>
     </v-row>

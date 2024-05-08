@@ -44,7 +44,7 @@ const submitPromotion = async () => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .m-promotion-dialog-container {
   background-color: #1D2027;
   border-radius: 16px !important;
@@ -56,7 +56,7 @@ const submitPromotion = async () => {
   button {
     border-radius: 8px !important;
 
-    .v-btn__content {
+    ::v-deep(.v-btn__content) {
       font-weight: 700;
       font-size: 10px;
     }
@@ -70,7 +70,7 @@ const submitPromotion = async () => {
     box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.21);
     border-radius: 26px;
 
-    .v-btn__content {
+    ::v-deep(.v-btn__content) {
       font-weight: 700;
       font-size: 10px;
       color: #ffffff;

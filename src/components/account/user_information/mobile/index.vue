@@ -20,6 +20,7 @@ import WarningIcon from '@/components/global/notification/WarningIcon.vue';
 import { useToast } from "vue-toastification";
 import { liveChatStore } from "@/store/liveChat";
 import { useRoute, useRouter } from "vue-router";
+import LoadingBtn from "@/components/global/loadingBtn.vue"
 
 const { t } = useI18n();
 const { width } = useDisplay()
@@ -241,7 +242,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative user_information">
     <v-row class="mx-4 mt-4 text-700-12 text-white">
       {{ t("account.menu.user_info_text") }}
     </v-row>
@@ -291,10 +292,12 @@ onMounted(async () => {
           class="text-none m-email-verify-btn-color"
           @click="handleVerifyCode"
           height="40px"
-          :loading="loading"
           v-if="!userInfo.email_confirmd"
         >
-          {{ t("account.verify_code_text") }}
+          <LoadingBtn v-if="loading"></LoadingBtn>
+          <div v-else>
+            {{ t("account.verify_code_text") }}
+          </div>
         </v-btn>
       </v-col>
     </v-row>
@@ -400,98 +403,83 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
-.m-account-speaker-bg {
-  width: 44px;
-  height: 44px;
-  background: #009b3a;
-  border-radius: 44px;
-  position: absolute;
-  right: 20px;
-  top: 328px;
-
-  .m-account-speaker-img-position {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.user_information {
+  .m-user-info-item {
+    height: 40px !important;
+    box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
   }
-}
 
-.m-user-info-item {
-  height: 40px !important;
-  box-shadow: 2px 0px 4px 1px rgba(0, 0, 0, 0.12) inset;
-}
+  .m-account-edit-btn {
+    background: transparent !important;
+    box-shadow: none !important;
+    min-width: auto !important;
 
-.m-account-edit-btn {
-  background: transparent !important;
-  box-shadow: none !important;
-  min-width: auto !important;
-
-  .v-btn__content {
-    font-weight: 400;
-    font-size: 12px;
-    color: #7782aa;
+    .v-btn__content {
+      font-weight: 400;
+      font-size: 12px;
+      color: #7782aa;
+    }
   }
-}
 
-.user-pwd-spacing {
-  letter-spacing: 2px;
-}
-
-.m-email-verify-btn-color {
-  width: 100%;
-  background: transparent;
-  border: 1px solid #009b3a;
-  border-radius: 8px;
-
-  .v-btn__content {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    color: #009b3a;
+  .user-pwd-spacing {
+    letter-spacing: 2px;
   }
-}
 
-.Vue-Toastification__container {
-  right: 0 !important;
-  left: unset !important;
-  width: 290px !important;
-  margin-right: 37px;
-  height: 60px !important;
-  //flex-direction: unset!important;
-}
+  .m-email-verify-btn-color {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #009b3a;
+    border-radius: 8px;
 
-.Vue-Toastification__toast {
-  align-items: center !important;
-  z-index: 1000000000 !important;
-  top: 70px;
-  right: -20px !important;
-  width: 320px !important;
-  height: 60px;
-  border: none;
-  border-radius: 16px 0px 0px 16px;
-  background: var(--bg-2, #15161c);
-  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
-}
+    .v-btn__content {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      color: #009b3a;
+    }
+  }
 
-.Vue-Toastification__toast-body {
-  color: var(--sec-text, #7782aa);
-  font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
-    Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
-    sans-serif;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-align: left;
-}
+  .Vue-Toastification__container {
+    right: 0 !important;
+    left: unset !important;
+    width: 290px !important;
+    margin-right: 37px;
+    height: 60px !important;
+    //flex-direction: unset!important;
+  }
 
-.Vue-Toastification__close-button {
-  top: 22px !important;
-  background-image: url("@/assets/public/svg/icon_public_52.svg");
-  background-repeat: no-repeat;
-  background-size: 18px;
-  color: transparent;
-  opacity: 1;
+  .Vue-Toastification__toast {
+    align-items: center !important;
+    z-index: 1000000000 !important;
+    top: 70px;
+    right: -20px !important;
+    width: 320px !important;
+    height: 60px;
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+    background: var(--bg-2, #15161c);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  .Vue-Toastification__toast-body {
+    color: var(--sec-text, #7782aa);
+    font-family: Inter, -apple-system, Framedcn, Helvetica Neue, Condensed, DisplayRegular,
+      Helvetica, Arial, PingFang SC, Hiragino Sans GB, WenQuanYi Micro Hei, Microsoft Yahei,
+      sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: left;
+  }
+
+  .Vue-Toastification__close-button {
+    top: 22px !important;
+    background-image: url("@/assets/public/svg/icon_public_52.svg");
+    background-repeat: no-repeat;
+    background-size: 18px;
+    color: transparent;
+    opacity: 1;
+  }
 }
 </style>

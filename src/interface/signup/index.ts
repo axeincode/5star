@@ -7,6 +7,7 @@ export interface SignupRequestData {
     model: string
     brand: string
     imei: string
+    code: string
 }
 
 export type GetSignupResponseData = {
