@@ -8,7 +8,7 @@ yarn
 
 # npm
 npm install
-
+dadf
 # pnpm
 pnpm install
 ```
