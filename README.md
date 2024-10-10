@@ -33,7 +33,7 @@ pnpm dev
 yarn build
 adfad
 # npm
-npm run build
+npm run builddf
 
 # pnpm
 pnpm build
